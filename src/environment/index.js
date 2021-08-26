@@ -1,0 +1,75 @@
+import {
+    dashboardBlack,
+    jobBlack,
+    customerBlack,
+    search,
+    invoice,
+    document,
+    vehicle,
+    sitesBlack,
+    ticketsBlack,
+    tipingBlack,
+    statementBlack
+} from '../assets/images/index'
+
+export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
+export const API_URL = `${APP_URL}`;
+export const FILE_DIR = '/storage';
+export const LABELS = {
+    GO_BACK: '← Back',
+    LOGOUT: '↶ Logout',
+    LOGIN: 'Login',
+    SIGNUP: 'Sign Up',
+    REGISTER: 'Create User',
+    EMAIL: 'Email Address',
+    NAME: 'Username',
+    FULL_NAME: 'Full Name',
+    PASSWORD: 'Password',
+    CONFIRM_PASSWORD: 'Confirm Password'
+};
+export const ERRORS = {
+    NAME_REQUIRED: "Name is required",
+    EMAIL_INVALID: "Invalid Username/Email Format",
+    PASSWORD_INVALID: "Password is Required"
+};
+export const REGISTER = {
+    SUCCESS_HEADER: "Success",
+    SUCCESS_MESSAGE: "User Created Successfully!",
+    FAILURE_HEADER: "Failure",
+    FAILURE_MESSAGE: "Cannot Create User! User may already have been created with the given email!"
+};
+export const LOGIN = {
+    FAILURE_HEADER: "Failure",
+    FAILURE_MESSAGE: "Invalid Username AND/OR Password!",
+};
+export const REGEXP_EMAIL = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2;3})+$/;
+export const C_OTC_STORAGE = 'c_d_storage';
+
+export const sidebarTabsList = [
+    {text: 'Dashboard', key: 'dashboard', sub: false, icon: dashboardBlack},
+    {
+        text: 'Jobs', key: 'jobs', sub: true, subList: [
+            {text: 'All', key: 'jobs', sub: false, icon: jobBlack},
+            {text: 'Delivery', key: 'delivery', sub: false, icon: jobBlack},
+            {text: 'Exchange', key: 'exchange', sub: false, icon: jobBlack},
+            {text: 'Collection', key: 'collection', sub: false, icon: jobBlack},
+        ], icon: jobBlack
+    },
+    {text: 'Site Managers', key: 'site-managers', sub: false, icon: customerBlack},
+    {text: 'Sites', key: 'sites', sub: false, icon: sitesBlack},
+    {text: 'Tiping', key: 'tiping', sub: false, icon: tipingBlack},
+    {text: 'Tickets', key: 'tickets', sub: false, icon: ticketsBlack},
+    {text: 'Statements', key: 'statement', sub: false, icon: statementBlack},
+    {text: 'search', key: 'search', icon: search},
+];
+
+export const jobStatusDelivery = [
+    {id:0, status: 'Pending', stage_id: 26},
+    {id:2 , status: 'En route', stage_id: 27},
+    {id:4 , status: 'Delivered', stage_id: 29}
+];
+export const jobStatusExchange = [
+    {id:0, status: 'Pending', stage_id: 32},
+    {id:2 , status: 'En route', stage_id: 33},
+    {id:3 , status: 'Completed', stage_id: 34}
+];

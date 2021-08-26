@@ -1,0 +1,80 @@
+$theme-color: #00c2ad;
+$active-link-color: #00aa99;
+$white-color: #fff;
+$app-primary-color: red;
+
+$lightGray: #fbfbfc;
+$dividerColor: rgba(0, 0, 0, 0.12) !default;
+$text: #696969;
+$title: #464646;
+$subtitle: #545454;
+$categoryTitle: #161616;
+$tint: #4d226d;
+$listColor: rgba(255, 107, 114, 0.53);
+$description: #bbbbbb;
+$white: #ffffff;
+$primaryPlaceholder: #874cb073;
+$background: "#f2f2f2";
+$primaryColor: #4d286e;
+$lightPrimaryColor: #996cc3;
+$primaryTextColor: #ffffff;
+$borderColor: #c2c1c0;
+$gray: #8c8781;
+$error: #f30c0c;
+$errorBorder: #f3051f;
+$primaryBlack: #0d0d39;
+$primaryRed: #ff0476;
+$primaryBlue: #52a9dd;
+$lightBlue: #dee7f1;
+$primaryDarkBlue: #227dc7;
+$primaryGreen: #00ca72;
+$cardTextColor: #4b686e;
+$capitalize: capitalize;
+$uppercase: uppercase;
+
+$full-width: 100% !default;
+$standard-width: 75% !default;
+$small-width: 25% !default;
+
+$pt: "../../assets/images/Path8573.svg";
+
+$v5: 5px;
+$v10: 10px;
+$v12: 12px;
+$v15: 15px;
+$v20: 20px;
+$v25: 25px;
+$v30: 30px;
+$v35: 35px;
+$v40: 40px;
+$v50: 50px;
+$v55: 55px;
+$v60: 60px;
+$v65: 65px;
+$v70: 70px;
+$v80: 80px;
+$v90: 90px;
+$v100: 100px;
+$v110: 110px;
+
+.common-title {
+  font-family: Basier Circle;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14.7582px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+}
+.primary-title {
+  @extend .common-title;
+  color: #52a9dd;
+}
+.pending-title {
+  @extend .common-title;
+  color: #ff9013;
+}
+.completed-title{
+  @extend .common-title;
+  color: #0FB36B;
+}

@@ -1,0 +1,83 @@
+.sidebar-container {
+  .sidebar-handler-arrow {
+    margin-top: 19px;
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 28px;
+
+    .MuiListItem-gutters {
+      justify-content: flex-start;
+      margin-bottom: 33px;
+      padding: 0px 26px;
+      .current-user {
+        flex: 0 1 auto;
+      }
+    }
+  }
+
+  .menuList {
+    margin-top: 27px;
+
+    .MuiListItem-gutters {
+      padding: 6px 17px;
+      margin-bottom: 8px;
+
+      .MuiListItemIcon-root {
+        min-width: 40px;
+      }
+
+      span.MuiTypography-root {
+        font-family: "DM Sans", sans-serif;
+        line-height: 18.23px;
+        font-weight: 700;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .drawerClose1 {
+    ul {
+      .MuiListItem-gutters {
+        padding: 5px 0px !important;
+        margin-bottom: 10px !important;
+        justify-content: center;
+
+        .MuiListItemIcon-root {
+          justify-content: center;
+        }
+
+        .MuiListItemText-root {
+          display: none;
+        }
+      }
+    }
+
+    .skrapLogin {
+      width: 55px;
+    }
+
+    .toolbar {
+      li {
+        display: block;
+        padding: 0px;
+
+        .driver-icon-section {
+          margin: auto;
+        }
+      }
+
+      .current-user {
+        text-align: center;
+
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

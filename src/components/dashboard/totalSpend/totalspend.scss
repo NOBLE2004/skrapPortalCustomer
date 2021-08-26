@@ -1,0 +1,34 @@
+.listViewWp {
+  .lineChartWp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 11.6836px;
+    padding: 20px;
+    border: 2px solid #ececec;
+    box-sizing: border-box;
+    .chartInfo {
+      h1 {
+        font-family: Basier Circle;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 32px;
+        line-height: 38px;
+        display: flex;
+        align-items: center;
+        color: #0d0d39;
+        margin: 0px;
+      }
+    }
+
+    .lineChart {
+      position: relative;
+
+      canvas {
+        width: 180px !important;
+        height: auto !important;
+      }
+    }
+  }
+}

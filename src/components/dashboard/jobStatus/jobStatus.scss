@@ -1,0 +1,27 @@
+.jobcard {
+  width: 190px;
+  .MuiPaper-root{
+    box-shadow: none;
+  }
+}
+
+.box {
+  text-align: center;
+  background-color: #fff;
+  padding: 52px 14px 18px;
+  border: 2px solid #ececec;
+  box-sizing: border-box;
+  height: 130px;
+  border-radius: 11.6836px !important;
+  h1 {
+    font-family: Basier Circle;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 38px;
+    display: flex;
+    align-items: center;
+    color: #0d0d39;
+    margin: 0px;
+  }
+}

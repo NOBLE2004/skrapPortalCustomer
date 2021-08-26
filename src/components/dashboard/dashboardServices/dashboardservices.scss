@@ -1,0 +1,98 @@
+
+.dashboard-services-main {
+  background: #ffffff;
+  border: 2px solid #ececec;
+  box-sizing: border-box;
+  border-radius: 11.6836px;
+  padding: 0px 12px;
+  height: 206px;
+  .services-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .MuiFormControlLabel-label {
+      font-family: Basier Circle;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14.7582px;
+      line-height: 18px;
+      display: flex;
+      align-items: center;
+      color: #52a9dd;
+    }
+  }
+  .CircularProgressbar-text {
+    font-family: Basier Circle;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    fill: #000;
+  }
+  .progress-main {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+    .circular-progress {
+      width: 112px;
+      height: 112px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .CircularProgressbar {
+        width: fit-content;
+      }
+      p {
+        font-family: Basier Circle;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #000000;
+        margin: 0px;
+        margin-bottom: 9px;
+      }
+    }
+    .progress-sub {
+      display: flex;
+      .order-percentage {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 112px;
+        margin-top: 15px;
+        .order-title {
+          font-family: Basier Circle;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 12px;
+          line-height: 12px;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          color: #52a9dd;
+        }
+        .orders {
+          font-family: Basier Circle;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 10px;
+          line-height: 6px;
+          margin-top: 5px;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          color: #000000;
+        }
+      }
+    }
+  }
+}
