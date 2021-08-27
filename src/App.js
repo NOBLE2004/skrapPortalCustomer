@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import DashBoard from "./containers/mainDashBoard/DashBoard";
 import { createBrowserHistory } from "history";
+import SiteManagers from "./containers/mainSiteManagers/SiteManagers";
+import Sites from "./containers/mainSites/Sites"
 const history = createBrowserHistory();
 
 function App() {
@@ -13,6 +15,8 @@ function App() {
         <Layout>
           <Route path="/" component={() => <Testing />} exact />
           <Route path="/dashboard" component={() => <DashBoard />} />
+          <Route path="/site-managers" component={() => <SiteManagers />} />
+          <Route path="/sites" component={() => <Sites />} />
         </Layout>
       </Switch>
     </Router>

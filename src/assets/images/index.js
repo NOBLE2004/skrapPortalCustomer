@@ -40,9 +40,12 @@ import statementBlack from './statements.svg';
 import mapMarker from './map.svg';
 import editIcon from "./edit_icon.svg"
 import showIcon from "./show_icon.svg"
-
+import viewMoreBtn from './view_more_btn.svg'
+import RightArrowBtn from './right_arrow.svg'
 
 export {
+    RightArrowBtn,
+    viewMoreBtn,
     showIcon,
     editIcon,
     mapMarker,
