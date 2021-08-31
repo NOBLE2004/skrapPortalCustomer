@@ -10,11 +10,7 @@ import SpendChart from "../../components/dashboard/spendChart/SpendChart";
 import DashboardServices from "../../components/dashboard/dashboardServices/DashboardServices";
 import DashboardMap from "../../components/dashboard/map/DashboardMap";
 import { mapMarker } from "../../assets/images";
-const dummyStatus = [
-  { id: 0, price: 1000, status: "Total Delivered" , statusName:"primary" },
-  { id: 1, price: 500, status: "Pending" , statusName:"pending" },
-  { id: 2, price: 200, status: "Completed" , statusName:"completed" },
-];
+import { dummyStatus } from "../../environment";
 
 const DashBoard = () => {
   return (

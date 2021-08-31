@@ -1,0 +1,51 @@
+.common-jobcard {
+  
+  .MuiPaper-root {
+    box-shadow: none;
+  }
+}
+
+.common-box {
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #ececec;
+  box-sizing: border-box;
+  border-radius: 11.6836px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  .common-price {
+    font-family: Basier Circle;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 38px;
+    display: flex;
+    align-items: center;
+    color: #0d0d39;
+    margin: 0px;
+  }
+  .common-price1 {
+    font-family: Basier Circle;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    color: #0d0d39;
+    margin: 0px;
+  }
+  .common-status {
+    font-family: Basier Circle;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #52a9dd;
+  }
+}

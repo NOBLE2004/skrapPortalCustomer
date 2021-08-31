@@ -1,22 +1,13 @@
 import React from "react";
 import "./dashboardservices.scss";
 import { CircularProgressbar } from "react-circular-progressbar";
-import { Switch, makeStyles } from "@material-ui/core";
+import { Switch } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { dashboardServiceStyle } from "../../../assets/styles/muiStyles/MuiStyles";
 
-const useStyles = makeStyles((theme) => ({
-  toggle: {
-    "& .Mui-checked": {
-      color: "#52a9dd",
-      transform: "translateX(25px) !important",
-    },
-    "& .MuiSwitch-track": {
-      backgroundColor: "#52a9dd",
-    },
-  },
-}));
+
 const DashboardServices = () => {
-  const classes = useStyles();
+  const classes = dashboardServiceStyle();
   return (
     <div className="dashboard-services-main">
       <div className="services-main">

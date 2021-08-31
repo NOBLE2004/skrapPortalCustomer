@@ -1,0 +1,42 @@
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .filter-title {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #0d0d39;
+    margin-right: 10px;
+  }
+  .filter-option {
+    padding: 5px 4px;
+    cursor: pointer;
+    outline: none;
+    min-width: 50px;
+    text-transform: capitalize;
+    background: #fbfbfc;
+    border-radius: 3px;
+    border: none;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #52a9dd;
+  }
+  .filter-buttons {
+    margin-right: 10px;
+    span {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  .all-filters{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import "./sites-item.scss";
-import { downlaod } from "../../../assets/images";
+import { downlaod , downloadSite } from "../../../assets/images";
 const SitesItem = () => {
   return (
     <>
@@ -20,7 +20,7 @@ const SitesItem = () => {
           <div className="item-title">5</div>
           <div className="item-title">£3,432.00</div>
           <div className="items-more-option">
-            <img src={downlaod} alt="download-icon" />
+            <img src={downloadSite} alt="download-icon" />
             <div>...</div>
           </div>
         </div>
@@ -33,7 +33,7 @@ const SitesItem = () => {
           <div className="item-title">5</div>
           <div className="item-title">£3,432.00</div>
           <div className="items-more-option">
-            <img src={downlaod} alt="download-icon" />
+            <img src={downloadSite} alt="download-icon" />
             <div>...</div>
           </div>
         </div>
@@ -46,7 +46,7 @@ const SitesItem = () => {
           <div className="item-title">5</div>
           <div className="item-title">£3,432.00</div>
           <div className="items-more-option">
-            <img src={downlaod} alt="download-icon" />
+            <img src={downloadSite} alt="download-icon" />
             <div>...</div>
           </div>
         </div>
@@ -59,7 +59,7 @@ const SitesItem = () => {
           <div className="item-title">5</div>
           <div className="item-title">£3,432.00</div>
           <div className="items-more-option">
-            <img src={downlaod} alt="download-icon" />
+            <img src={downloadSite} alt="download-icon" />
             <div>...</div>
           </div>
         </div>
@@ -72,7 +72,7 @@ const SitesItem = () => {
           <div className="item-title">5</div>
           <div className="item-title">£3,432.00</div>
           <div className="items-more-option">
-            <img src={downlaod} alt="download-icon" />
+            <img src={downloadSite} alt="download-icon" />
             <div>...</div>
           </div>
         </div>

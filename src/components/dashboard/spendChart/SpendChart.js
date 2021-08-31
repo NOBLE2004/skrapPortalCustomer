@@ -134,7 +134,7 @@ const SpendChart = () => {
           </div>
           <Box
             sx={{
-              height: 206,
+              height: 110,
               position: "relative",
             }}
           >

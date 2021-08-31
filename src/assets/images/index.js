@@ -31,60 +31,79 @@ import invoice from "./invoice.svg";
 import document from "./document.svg";
 import vehicle from "./vehicle.svg";
 import downlaod from "./Downlaod.png";
-import addCredits from './add_credit.svg';
-import deliveredMarker from './delivered.svg';
-import sitesBlack from './sites.svg';
-import tipingBlack from './tiping.svg';
-import ticketsBlack from './tickets.svg';
-import statementBlack from './statements.svg';
-import mapMarker from './map.svg';
-import editIcon from "./edit_icon.svg"
-import showIcon from "./show_icon.svg"
-import viewMoreBtn from './view_more_btn.svg'
-import RightArrowBtn from './right_arrow.svg'
-
+import addCredits from "./add_credit.svg";
+import deliveredMarker from "./delivered.svg";
+import sitesBlack from "./sites.svg";
+import tipingBlack from "./tiping.svg";
+import ticketsBlack from "./tickets.svg";
+import statementBlack from "./statements.svg";
+import mapMarker from "./map.svg";
+import editIcon from "./edit_icon.svg";
+import showIcon from "./show_icon.svg";
+import viewMoreBtn from "./view_more_btn.svg";
+import RightArrowBtn from "./right_arrow.svg";
+import searchIcon from "./searchIcon.svg";
+import ploygonIcon from "./polygon.svg";
+import likeIcon from "./like.svg";
+import costIcon from "./cost.svg";
+import envirementIcon from "./envirement.svg";
+import serviceIcon from "./service.svg";
+import supportIcon from "./support.svg";
+import appIcon from "./logo.svg";
+import showPassword from "./show_password.svg"
+import downloadSite from "./download_sites.svg"
 export {
-    RightArrowBtn,
-    viewMoreBtn,
-    showIcon,
-    editIcon,
-    mapMarker,
-    sitesBlack,
-    tipingBlack,
-    ticketsBlack,
-    statementBlack,
-    dashboardBlack,
-    dashboardWhite,
-    jobBlack,
-    jobWhite,
-    driverBlack,
-    driverWhite,
-    customerBlack,
-    customerWhite,
-    notificationBlack,
-    notificationWhite,
-    search,
-    personImage,
-    graphImage,
-    skrap_blue,
-    skrap_logo,
-    location,
-    closeBtn,
-    roundImage,
-    resetImage,
-    phoneCall,
-    leftArrow,
-    rightArrow,
-    assignMarker,
-    pendingMarker,
-    cancelMarker,
-    enRouteMarker,
-    completeMarker,
-    destination,
-    invoice,
-    document,
-    vehicle,
-    downlaod,
-    addCredits,
-    deliveredMarker
+  downloadSite,
+  showPassword,
+  appIcon,
+  likeIcon,
+  costIcon,
+  envirementIcon,
+  serviceIcon,
+  supportIcon,
+  ploygonIcon,
+  searchIcon,
+  RightArrowBtn,
+  viewMoreBtn,
+  showIcon,
+  editIcon,
+  mapMarker,
+  sitesBlack,
+  tipingBlack,
+  ticketsBlack,
+  statementBlack,
+  dashboardBlack,
+  dashboardWhite,
+  jobBlack,
+  jobWhite,
+  driverBlack,
+  driverWhite,
+  customerBlack,
+  customerWhite,
+  notificationBlack,
+  notificationWhite,
+  search,
+  personImage,
+  graphImage,
+  skrap_blue,
+  skrap_logo,
+  location,
+  closeBtn,
+  roundImage,
+  resetImage,
+  phoneCall,
+  leftArrow,
+  rightArrow,
+  assignMarker,
+  pendingMarker,
+  cancelMarker,
+  enRouteMarker,
+  completeMarker,
+  destination,
+  invoice,
+  document,
+  vehicle,
+  downlaod,
+  addCredits,
+  deliveredMarker,
 };

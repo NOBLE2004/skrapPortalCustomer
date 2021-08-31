@@ -1,0 +1,17 @@
+.table-testing {
+  border-collapse: separate;
+  border-spacing: 10px 5px;
+
+  .MuiTableRow-root {
+    border: 2px solid;
+    // padding: 10px;
+    // margin: 10px;
+  }
+  .MuiTableCell-root {
+    border-bottom: none;
+  }
+}
+.MuiTable-root {
+  border-collapse: separate;
+  border-spacing: 10px 5px;
+}

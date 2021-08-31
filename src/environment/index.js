@@ -48,12 +48,7 @@ export const C_OTC_STORAGE = 'c_d_storage';
 export const sidebarTabsList = [
     {text: 'Dashboard', key: 'dashboard', sub: false, icon: dashboardBlack},
     {
-        text: 'Jobs', key: 'jobs', sub: true, subList: [
-            {text: 'All', key: 'jobs', sub: false, icon: jobBlack},
-            {text: 'Delivery', key: 'delivery', sub: false, icon: jobBlack},
-            {text: 'Exchange', key: 'exchange', sub: false, icon: jobBlack},
-            {text: 'Collection', key: 'collection', sub: false, icon: jobBlack},
-        ], icon: jobBlack
+        text: 'Jobs', key: 'jobs', sub: false, icon: jobBlack
     },
     {text: 'Site Managers', key: 'site-managers', sub: false, icon: customerBlack},
     {text: 'Sites', key: 'sites', sub: false, icon: sitesBlack},
@@ -73,3 +68,14 @@ export const jobStatusExchange = [
     {id:2 , status: 'En route', stage_id: 33},
     {id:3 , status: 'Completed', stage_id: 34}
 ];
+
+export const loginHeader = {
+    title : "Customer portal",
+    description : "Log in to cotinue to access to the platform"
+}
+
+export const dummyStatus = [
+    { id: 0, price: 1000, status: "Total Delivered" , statusName:"primary" },
+    { id: 1, price: 500, status: "Pending" , statusName:"pending" },
+    { id: 2, price: 200, status: "Completed" , statusName:"completed" },
+  ];

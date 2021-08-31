@@ -1,7 +1,8 @@
 import React, { useMemo, useEffect, useState } from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import axios from "axios";
 import Table from "./Table";
-const Sites = () => {
+const SitesTable = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios("http://api.tvmaze.com/search/shows?q=girls")
@@ -58,9 +59,10 @@ const Sites = () => {
 
   return (
     <>
+      {/* <CssBaseline /> */}
       <Table columns={columns} data={data} />
     </>
   );
 };
 
-export default Sites;
+export default SitesTable;

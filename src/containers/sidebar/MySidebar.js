@@ -60,7 +60,6 @@ const MySidebar = (props) => {
     setOpen(!open);
   };
 
-
   const onTabHandler = (e, tab) => {
     e.preventDefault();
     setSubMenu(0);
@@ -122,11 +121,7 @@ const MySidebar = (props) => {
       }}
     >
       <IconButton onClick={handleDrawer} className="sidebar-handler-arrow">
-        <img
-          className="skrapLogin"
-          src={skrap_logo}
-          alt="Skrap-Logo"
-        />
+        <img className="skrapLogin" src={skrap_logo} alt="Skrap-Logo" />
       </IconButton>
       <List
         className="menuList"
@@ -161,36 +156,6 @@ const MySidebar = (props) => {
                       className="text-capitalize"
                     />
                   </ListItem>
-                  {obj.sub &&
-                    obj.subList.map((sub) => {
-                      let [textClassSub, iconColorSub] =
-                        activeTab === sub.key.toLowerCase()
-                          ? ["active-tab", "white_icon"]
-                          : ["sidebar-tab-text", "black_icon"];
-                      return (
-                        <Collapse
-                          in={index === subMenu && openCollapse}
-                          timeout="auto"
-                          unmountOnExit
-                        >
-                          <List component="div" disablePadding>
-                            <ListItem
-                              button
-                              onClick={(e) => onTabHandlerSub(e, sub)}
-                              className={textClassSub}
-                            >
-                              <ListItemIcon>
-                                
-                              </ListItemIcon>
-                              <ListItemText
-                                primary={sub.text}
-                                className="text-capitalize"
-                              />
-                            </ListItem>
-                          </List>
-                        </Collapse>
-                      );
-                    })}
                 </>
               }
             </React.Fragment>
@@ -232,15 +197,10 @@ const MySidebar = (props) => {
             className="current-user"
           />
         </ListItem>
-        <button  className="sidebar-signout-btn">
-          Sign out
-        </button>
+        <button className="sidebar-signout-btn">Sign out</button>
       </div>
     </Drawer>
   );
 };
 
-
-export default withRouter(
-  connect(null, null)(MySidebar)
-);
+export default withRouter(connect(null, null)(MySidebar));
