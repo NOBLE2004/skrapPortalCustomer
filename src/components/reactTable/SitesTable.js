@@ -1,5 +1,4 @@
 import React, { useMemo, useEffect, useState } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import axios from "axios";
 import Table from "./Table";
 const SitesTable = () => {
@@ -59,7 +58,6 @@ const SitesTable = () => {
 
   return (
     <>
-      {/* <CssBaseline /> */}
       <Table columns={columns} data={data} />
     </>
   );

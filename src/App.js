@@ -6,6 +6,7 @@ import { createBrowserHistory } from "history";
 import SiteManagers from "./containers/mainSiteManagers/SiteManagers";
 import Sites from "./containers/mainSites/Sites"
 import SignIn from "./containers/registration/SignIn/SignIn";
+import MainJobs from "./containers/jobs/MainJobs";
 const history = createBrowserHistory();
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/dashboard" component={() => <DashBoard />} />
           <Route path="/site-managers" component={() => <SiteManagers />} />
           <Route path="/sites" component={() => <Sites />} /> 
+          <Route path="/jobs" component={() => <MainJobs />} /> 
         </Layout>
       </Switch>
     </Router>

@@ -72,9 +72,13 @@ $v110: 110px;
 }
 .pending-title {
   @extend .common-title;
-  color: #ff9013;
+  color: #ff0000;
 }
-.completed-title{
+.completed-title {
   @extend .common-title;
-  color: #0FB36B;
+  color: #0fb36b;
+}
+.assigned-title {
+  @extend .common-title;
+  color: #ff9013;
 }

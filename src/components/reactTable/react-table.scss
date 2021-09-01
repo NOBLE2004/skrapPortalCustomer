@@ -1,17 +1,42 @@
-.table-testing {
-  border-collapse: separate;
-  border-spacing: 10px 5px;
+// .table-testing {
+//   border-collapse: separate;
+//   border-spacing: 10px 5px;
 
-  .MuiTableRow-root {
-    border: 2px solid;
-    // padding: 10px;
-    // margin: 10px;
+//   .MuiTableRow-root {
+//     border: 2px solid;
+//     // padding: 10px;
+//     // margin: 10px;
+//   }
+//   .MuiTableCell-root {
+//     border-bottom: none;
+//   }
+// }
+// .MuiTable-root {
+//   border-collapse: separate;
+//   border-spacing: 10px 5px;
+// }
+
+.MuiTable-root {
+  .table-headings {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #0d0d39;
   }
-  .MuiTableCell-root {
-    border-bottom: none;
+  .table-body-cell {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 13px;
+    color: #4b686e;
   }
 }
-.MuiTable-root {
-  border-collapse: separate;
-  border-spacing: 10px 5px;
+.filter-outer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
 }
