@@ -63,8 +63,8 @@ export const sidebarTabsList = [
   { text: "Sites", key: "sites", sub: false, icon: sitesBlack },
   { text: "Tiping", key: "tiping", sub: false, icon: tipingBlack },
   { text: "Tickets", key: "tickets", sub: false, icon: ticketsBlack },
-  { text: "Statements", key: "statement", sub: false, icon: statementBlack },
-  { text: "search", key: "search", icon: search },
+  // { text: "Statements", key: "statement", sub: false, icon: statementBlack },
+  // { text: "search", key: "search", icon: search },
 ];
 
 export const jobStatusDelivery = [
@@ -89,7 +89,7 @@ export const dummyStatus = [
   { id: 2, price: 200, status: "Completed", statusName: "completed" },
 ];
 
-export const jobsTableData = () => [
+export const jobsTableData = [
   {
     name: "Jane Cooper",
     email: "jane.cooper@example.com",

@@ -1,11 +1,12 @@
+import React, { Fragment } from "react";
 import {
   useTable,
-  useGlobalFilter,
-  useAsyncDebounce,
-  useFilters,
   useSortBy,
+  useFilters,
   usePagination,
+  useGlobalFilter
 } from "react-table";
+import { TextField } from "@material-ui/core";
 import MaUTable from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -14,21 +15,21 @@ import TableRow from "@material-ui/core/TableRow";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Link from "@material-ui/core/Link";
+import { Filter, DefaultColumnFilter } from "./filters";
 import CommonSearch from "../commonComponent/commonSearch/CommonSearch";
 import CommonFilter from "../commonComponent/commonfilter/CommonFilter";
-import "./react-table.scss";
-import React from "react";
 
-function Table({ columns, data }) {
+const TableContainer = ({ columns, data, renderRowSubComponent }) => {
   const {
     getTableProps,
+    getTableBodyProps,
     headerGroups,
-    rows,
+    page,
     prepareRow,
     preGlobalFilteredRows,
     state,
     setGlobalFilter,
-    page,
+    visibleColumns,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -42,14 +43,15 @@ function Table({ columns, data }) {
     {
       columns,
       data,
-      defaultColumn: { Filter: CommonFilter },
-      initialState: { pageIndex: 1, pageSize: 10 },
+      defaultColumn: { Filter: DefaultColumnFilter },
+      initialState: { pageIndex: 0, pageSize: 5 },
     },
-    useFilters,
     useGlobalFilter,
+    useFilters,
     useSortBy,
-    usePagination
+    usePagination,
   );
+
   const generateSortingIndicator = (column) => {
     return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : "";
   };
@@ -58,67 +60,49 @@ function Table({ columns, data }) {
     setPageSize(Number(event.target.value));
   };
 
-  const Filter = ({ column }) => {
-    return (
-      <div style={{ marginTop: 5 }}>
-        {column.canFilter && column.render("Filter")}
-      </div>
-    );
-  };
-
   return (
-    <>
-      <div className="filter-outer">
-        <CommonSearch
+    <Fragment>
+       <CommonSearch
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
-      </div>
-
-      <MaUTable {...getTableProps()} className="table-testing">
+      <MaUTable bordered hover {...getTableProps()} >
         <TableHead>
           {headerGroups.map((headerGroup) => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <TableCell
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  style={{ width: "10%" }}
-                  className="table-headings"
-                >
-                  {column.render("Header")}
-                  {generateSortingIndicator(column)}
+                <TableCell {...column.getHeaderProps()} className="table-headings">
+                  <div {...column.getSortByToggleProps()}>
+                    {column.render("Header")}
+                    {generateSortingIndicator(column)}
+                  </div>
                   <Filter column={column} />
                 </TableCell>
               ))}
             </TableRow>
           ))}
         </TableHead>
-        <TableBody>
-          {rows.map((row, i) => {
+
+        <TableBody {...getTableBodyProps()}>
+          {page.map((row) => {
             prepareRow(row);
             return (
-              <React.Fragment key={row.getRowProps().key}>
-                <TableRow
-                  {...row.getRowProps()}
-                >
+              <Fragment key={row.getRowProps().key}>
+                <TableRow>
                   {row.cells.map((cell) => {
                     return (
-                      <TableCell
-                        {...cell.getCellProps()}
-                        className="table-body-cell"
-                      >
+                      <TableCell {...cell.getCellProps()} className="table-body-cell">
                         {cell.render("Cell")}
                       </TableCell>
                     );
                   })}
                 </TableRow>
-              </React.Fragment>
+              </Fragment>
             );
           })}
         </TableBody>
       </MaUTable>
-      {/* pagination */}
 
       <List className="pagination">
         <ListItem
@@ -170,8 +154,8 @@ function Table({ columns, data }) {
           ))}
         </select>
       </List>
-    </>
+    </Fragment>
   );
-}
+};
 
-export default Table;
+export default TableContainer;

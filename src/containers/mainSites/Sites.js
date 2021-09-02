@@ -44,9 +44,8 @@ const Sites = () => {
         <Grid item md={10}>
           <div className="filter-outer">
             <CommonSearch />
-            <CommonFilter />
+            
           </div>
-          {/* <SitesTable /> */}
           <SitesItem />
         </Grid>
         <Grid item md={2} style={{marginTop:"95px"}}>
