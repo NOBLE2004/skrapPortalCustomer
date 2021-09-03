@@ -7,6 +7,7 @@ import SiteManagers from "./containers/mainSiteManagers/SiteManagers";
 import Sites from "./containers/mainSites/Sites"
 import SignIn from "./containers/registration/SignIn/SignIn";
 import MainJobs from "./containers/jobs/MainJobs";
+import MainTiping from "./containers/mainTiping/MainTiping";
 const history = createBrowserHistory();
 
 function App() {
@@ -15,19 +16,16 @@ function App() {
       <Switch>
         <Route path="/login" component={() => <SignIn />} exact />
         <Layout>
-          <Route path="/" component={() => <Testing />} exact />
+          <Route path="/" component={() => <DashBoard />} exact />
           <Route path="/dashboard" component={() => <DashBoard />} />
           <Route path="/site-managers" component={() => <SiteManagers />} />
           <Route path="/sites" component={() => <Sites />} /> 
           <Route path="/jobs" component={() => <MainJobs />} /> 
+          <Route path="/tiping" component={() => <MainTiping />} /> 
         </Layout>
       </Switch>
     </Router>
   );
 }
 
-
-const Testing = () => {
-  return <h1>asdfasdf </h1>;
-};
 export default App;

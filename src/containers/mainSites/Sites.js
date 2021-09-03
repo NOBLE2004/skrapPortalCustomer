@@ -3,7 +3,6 @@ import CommonFilter from "../../components/commonComponent/commonfilter/CommonFi
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
-import SitesTable from "../../components/reactTable/SitesTable";
 import SitesItem from "../../components/sites/sitesItem/SitesItem";
 import { Grid } from "@material-ui/core";
 import "./sites.scss";

@@ -52,7 +52,9 @@ import supportIcon from "./support.svg";
 import appIcon from "./logo.svg";
 import showPassword from "./show_password.svg"
 import downloadSite from "./download_sites.svg"
+import craneIcon from "./crane.svg"
 export {
+  craneIcon,
   downloadSite,
   showPassword,
   appIcon,

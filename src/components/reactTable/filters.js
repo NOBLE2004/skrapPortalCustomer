@@ -46,6 +46,7 @@ export const SelectColumnFilter = ({
       onChange={(e) => {
         setFilter(e.target.value || undefined);
       }}
+      className="custom-filter"
     >
       <option value=''>All</option>
       {options.map((option) => (
