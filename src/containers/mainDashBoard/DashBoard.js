@@ -5,12 +5,12 @@ import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
 import { Grid } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import "./dashboard.scss";
 import SpendChart from "../../components/dashboard/spendChart/SpendChart";
 import DashboardServices from "../../components/dashboard/dashboardServices/DashboardServices";
 import DashboardMap from "../../components/dashboard/map/DashboardMap";
 import { mapMarker } from "../../assets/images";
 import { dummyStatus } from "../../environment";
+import "./dashboard.scss";
 
 const DashBoard = () => {
   return (
@@ -21,10 +21,9 @@ const DashBoard = () => {
         </Grid>
         <Grid item md={6}>
           <div className="job-status-outer">
-            {dummyStatus.length > 0 &&
-              dummyStatus.map((status, index) => (
-                <JobStatus jobStatus={status} key={index} />
-              ))}
+            {dummyStatus.map((status, index) => (
+              <JobStatus jobStatus={status} key={index} />
+            ))}
           </div>
         </Grid>
         <Grid item md={2}>
@@ -50,11 +49,9 @@ const DashBoard = () => {
       <Grid container>
         <Grid item xs={12} className="jobMpWp">
           <div className="live-job-title">
-            {" "}
             <img src={mapMarker} alt="map-marker" />
             <h1>Orders On Map</h1>
           </div>
-
           <Card className="mapCard">
             <CardContent>
               <DashboardMap

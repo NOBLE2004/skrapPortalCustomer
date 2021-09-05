@@ -5,7 +5,8 @@ import store from './store/store';
 import App from "./App"
 import reportWebVitals from './reportWebVitals';
 import "../src/assets/styles/index.scss";
-import '../src/assets/fonts/basier.ttf';
+// import '../src/assets/fonts/basier.ttf';
+import './index.css';
 import 'react-circular-progressbar/dist/styles.css';
 ReactDOM.render(
   <Provider store={store}>

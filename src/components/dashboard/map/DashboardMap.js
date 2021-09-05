@@ -8,6 +8,7 @@ import {
 } from "react-google-maps";
 import mapStyles from "./mapStyles";
 import TipingCard from "../../tiping/TipingCard";
+
 function DashboardMap(props) {
   return (
     <GoogleMap
@@ -21,7 +22,7 @@ function DashboardMap(props) {
       <Marker
         position={{
           lat: -34.397,
-        lng: 150.644,
+          lng: 150.644,
         }}
       >
         <InfoWindow>
@@ -29,15 +30,15 @@ function DashboardMap(props) {
         </InfoWindow>
       </Marker>
       <Marker
-          position={{
-            lat: -33.397,
-            lng: 150.50,
-          }}
-        >
-          <InfoWindow>
-            <TipingCard />
-          </InfoWindow>
-        </Marker>
+        position={{
+          lat: -33.397,
+          lng: 150.50,
+        }}
+      >
+        <InfoWindow>
+          <TipingCard />
+        </InfoWindow>
+      </Marker>
     </GoogleMap>
   );
 }

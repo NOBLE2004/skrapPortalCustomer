@@ -1,5 +1,4 @@
 .common-jobcard {
-  
   .MuiPaper-root {
     box-shadow: none;
   }
@@ -18,9 +17,8 @@
   padding-left: 10px;
   padding-right: 10px;
   .common-price {
-    font-family: Basier Circle;
+    font-family: "BasierCircleBold";
     font-style: normal;
-    font-weight: bold;
     font-size: 32px;
     line-height: 38px;
     display: flex;
@@ -29,9 +27,8 @@
     margin: 0px;
   }
   .common-price1 {
-    font-family: Basier Circle;
+    font-family: "BasierCircleBold";
     font-style: normal;
-    font-weight: bold;
     font-size: 24px;
     line-height: 29px;
     display: flex;
@@ -40,7 +37,7 @@
     margin: 0px;
   }
   .common-status {
-    font-family: Basier Circle;
+    font-family: "BasierCircleReg";
     font-style: normal;
     font-weight: normal;
     font-size: 13px;

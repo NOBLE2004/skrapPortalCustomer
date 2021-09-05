@@ -5,12 +5,12 @@
     justify-content: space-between;
     background: #fff;
     border-radius: 11.6836px;
-    padding: 20px;
+    padding: 33px 20px 20px;
     border: 2px solid #ececec;
     box-sizing: border-box;
     .chartInfo {
       h1 {
-        font-family: Basier Circle;
+        font-family: "BasierCircleBold";
         font-style: normal;
         font-weight: bold;
         font-size: 32px;
@@ -19,14 +19,14 @@
         align-items: center;
         color: #0d0d39;
         margin: 0px;
+        margin-bottom: 3px;
       }
     }
 
     .lineChart {
       position: relative;
-
       canvas {
-        width: 180px !important;
+        width: 151px !important;
         height: auto !important;
       }
     }

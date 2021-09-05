@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper} from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import "./jobStatus.scss";
 
 const JobStatus = ({ jobStatus }) => {
@@ -8,8 +8,7 @@ const JobStatus = ({ jobStatus }) => {
       <Paper className="box">
         <h1>{jobStatus.price}</h1>
         <span className={`${jobStatus.statusName}-title`}>
-          {" "}
-          {jobStatus.status}{" "}
+          {jobStatus.status}
         </span>
       </Paper>
     </div>

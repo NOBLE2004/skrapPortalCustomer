@@ -1,9 +1,8 @@
 import React from "react";
-import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
-import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
-import JobsTable from "../../components/reactTable/JobsTable"
+import JobsTable from "../../components/reactTable/JobsTable";
+
 const MainJobs = () => {
   return (
     <div>
@@ -44,8 +43,8 @@ const MainJobs = () => {
             height: "84px",
           }}
         />
-      </CommonHeader>  
-      <JobsTable /> 
+      </CommonHeader>
+      <JobsTable />
     </div>
   );
 };

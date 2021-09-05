@@ -84,9 +84,9 @@ export const loginHeader = {
 };
 
 export const dummyStatus = [
-  { id: 0, price: 1000, status: "Total Delivered", statusName: "primary" },
-  { id: 1, price: 500, status: "Pending", statusName: "pending" },
-  { id: 2, price: 200, status: "Completed", statusName: "completed" },
+  { id: 0, price: 30, status: "Total Delivered", statusName: "primary" },
+  { id: 1, price: 2, status: "Pending", statusName: "pending" },
+  { id: 2, price: 20, status: "Completed", statusName: "completed" },
 ];
 
 export const jobsTableData = [

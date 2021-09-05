@@ -1,7 +1,7 @@
 import React from "react";
 import { Paper } from "@material-ui/core";
-import "./commonJobStatus.scss";
 import CommonStatus from "../commonStatus/CommonStatus";
+import "./commonJobStatus.scss";
 
 const CommonJobStatus = ({ jobStatus }) => {
   return (
@@ -14,13 +14,12 @@ const CommonJobStatus = ({ jobStatus }) => {
           {jobStatus.price}
         </h1>
         {(jobStatus.statusName === "pending") |
-        (jobStatus.statusName === "completed") |
-        (jobStatus.statusName === "assigned") ? (
+          (jobStatus.statusName === "completed") |
+          (jobStatus.statusName === "assigned") ? (
           <CommonStatus status={jobStatus.statusName} />
         ) : (
           <span className={`${jobStatus.statusName}-title`}>
-            {" "}
-            {jobStatus.status}{" "}
+            {jobStatus.status}
           </span>
         )}
       </Paper>
