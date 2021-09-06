@@ -3,28 +3,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 52px;
-  .header-btn {
-    background: #52a9dd;
-    border-radius: 64px;
-    border: none;
-    color: #fff;
-    font-family: DM Sans;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 16px;
-    cursor: pointer;
-    padding: 5px 15px;
-  }
-  .header-link {
-    font-family: DM Sans;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 16px;
-    color: #52a9dd;
-    cursor: pointer;
-  }
+  width: 100%;
   .view-container {
     display: flex;
     justify-content: center;

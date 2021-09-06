@@ -1,0 +1,21 @@
+.jobdetail-header-main{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 42px;
+    .sites-header-title {
+        font-family: DM Sans;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 32px;
+        line-height: 42px;
+        color: #0d0d39;
+      }
+
+      .common-header-links-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 40%;
+      }
+}

@@ -82,3 +82,43 @@ $v110: 110px;
   @extend .common-title;
   color: #ff9013;
 }
+
+.header-btn {
+  background: #52a9dd;
+  border-radius: 64px;
+  border: none;
+  color: #fff;
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  cursor: pointer;
+  padding: 5px 15px;
+}
+.header-link {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  color: #52a9dd;
+  cursor: pointer;
+}
+.normal-dsans-10-dark {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 13px;
+  color: #4b686e;
+}
+
+.bold-dsans-12-primary {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  color: #52a9dd;
+}

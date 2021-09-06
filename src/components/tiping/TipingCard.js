@@ -38,7 +38,6 @@ const TipingCard = ({ tipTime }) => {
 
             <Button
               size="small"
-              //   startIcon={<img src={phoneCall} alt="phone-icon"/>}
               className="tip-call-btn"
             >
               ... More
@@ -51,10 +50,3 @@ const TipingCard = ({ tipTime }) => {
 };
 
 export default TipingCard;
-
-
-//  <div className="crane">
-// <Card>
-// <img src={craneIcon} alt="crane-icon" />
-// </Card>
-// </div>

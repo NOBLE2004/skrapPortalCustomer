@@ -6,8 +6,10 @@ import { createBrowserHistory } from "history";
 import SiteManagers from "./containers/mainSiteManagers/SiteManagers";
 import Sites from "./containers/mainSites/Sites"
 import SignIn from "./containers/registration/SignIn/SignIn";
-import MainJobs from "./containers/jobs/MainJobs";
+import MainJobs from "./containers/mainJobs/MainJobs";
 import MainTiping from "./containers/mainTiping/MainTiping";
+import MainTickets from "./containers/mainTickets/MainTickets";
+import MainJobDetail from "./containers/mainJobDetail/MainJobDetail";
 const history = createBrowserHistory();
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route path="/sites" component={() => <Sites />} /> 
           <Route path="/jobs" component={() => <MainJobs />} /> 
           <Route path="/tiping" component={() => <MainTiping />} /> 
+          <Route path="/tickets" component={() => <MainTickets />} /> 
+          {/* <Route path="/job-detail" component={() => <MainJobDetail />} /> */}
         </Layout>
       </Switch>
     </Router>

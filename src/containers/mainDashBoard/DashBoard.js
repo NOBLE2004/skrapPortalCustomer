@@ -7,11 +7,12 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import SpendChart from "../../components/dashboard/spendChart/SpendChart";
 import DashboardServices from "../../components/dashboard/dashboardServices/DashboardServices";
-import DashboardMap from "../../components/dashboard/map/DashboardMap";
 import { mapMarker } from "../../assets/images";
 import { dummyStatus } from "../../environment";
 import "./dashboard.scss";
-
+import MainMap from "../../components/map/MainMap";
+import { Marker, InfoWindow } from "react-google-maps";
+import TipingCard from "../../components/tiping/TipingCard";
 const DashBoard = () => {
   return (
     <div>
@@ -54,14 +55,27 @@ const DashBoard = () => {
           </div>
           <Card className="mapCard">
             <CardContent>
-              <DashboardMap
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyCBlokJrUARpKy_uFh-JYAl_MEyYdzw5FI`}
+              <MainMap
+                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={<div style={{ height: `100%` }} />}
                 mapElement={
                   <div style={{ height: `100%`, borderRadius: "12px" }} />
                 }
-              />
+              >
+                <Marker
+                  position={{
+                    lat: -34.397,
+                    lng: 150.644,
+                  }}
+                >
+                  <InfoWindow>
+                    <TipingCard />
+                  </InfoWindow>
+                </Marker>
+
+               
+              </MainMap>
             </CardContent>
           </Card>
         </Grid>

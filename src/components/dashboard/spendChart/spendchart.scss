@@ -31,7 +31,7 @@
         font-weight: bold;
         font-size: 12px;
         line-height: 16px;
-        color: #0D0D39;
+        color: #0d0d39;
         opacity: 0.5;
         margin-right: 15px;
       }
@@ -51,10 +51,17 @@
       }
     }
   }
-  .MuiCardContent-root:last-child{
+  .MuiCardContent-root:last-child {
     padding-bottom: 10px !important;
   }
   .MuiInput-underline:before {
     border-bottom: 1px solid #52a9dd !important;
   }
+
+  // .spend-bar-chart{
+  //   height: 185px;
+  //   .barchart-main{
+  //     height: fit-content;
+  //   }
+  // }
 }

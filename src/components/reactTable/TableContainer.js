@@ -64,29 +64,32 @@ const TableContainer = ({ columns, data, renderRowSubComponent }) => {
 
   return (
     <Fragment>
-      <CommonSearch
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
+      <div className="common-search-for-tables">
+        <CommonSearch
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={state.globalFilter}
+          setGlobalFilter={setGlobalFilter}
+        />
+        <CommonFilter />
+      </div>
       <MaUTable {...getTableProps()}>
         <TableHead>
           {headerGroups.map((headerGroup) => (
             // <Paper elevation={0} className="table-header">
-              <TableRow {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <TableCell
-                    {...column.getHeaderProps()}
-                    className="table-headings"
-                  >
-                    <div {...column.getSortByToggleProps()}>
-                      {column.render("Header")}
-                      {generateSortingIndicator(column)}
-                    </div>
-                    <Filter column={column} />
-                  </TableCell>
-                ))}
-              </TableRow>
+            <TableRow {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <TableCell
+                  {...column.getHeaderProps()}
+                  className="table-headings"
+                >
+                  <div {...column.getSortByToggleProps()}>
+                    {column.render("Header")}
+                    {generateSortingIndicator(column)}
+                  </div>
+                  <Filter column={column} />
+                </TableCell>
+              ))}
+            </TableRow>
             // </Paper>
           ))}
         </TableHead>
@@ -97,18 +100,18 @@ const TableContainer = ({ columns, data, renderRowSubComponent }) => {
             return (
               <Fragment key={row.getRowProps().key}>
                 {/* <Paper elevation={1} className={classes.root} > */}
-                  <TableRow className="table-body">
-                    {row.cells.map((cell) => {
-                      return (
-                        <TableCell
-                          {...cell.getCellProps()}
-                          className="table-body-cell"
-                        >
-                          {cell.render("Cell")}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
+                <TableRow className="table-body">
+                  {row.cells.map((cell) => {
+                    return (
+                      <TableCell
+                        {...cell.getCellProps()}
+                        className="table-body-cell"
+                      >
+                        {cell.render("Cell")}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
                 {/* </Paper> */}
               </Fragment>
             );

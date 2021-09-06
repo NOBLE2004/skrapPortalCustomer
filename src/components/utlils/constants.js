@@ -80,6 +80,7 @@ export const spendChartOptions = {
   scales: {
     xAxes: [
       {
+        padding: 0,
         barThickness: 12,
         maxBarThickness: 10,
         barPercentage: 0.5,
@@ -96,7 +97,8 @@ export const spendChartOptions = {
           callback: function (value) {
             return '£' + value.toFixed(0);
           },
-          beginAtZero: true
+          beginAtZero: true,
+          stepSize: 2
         },
         gridLines: {
           borderDash: [2],
