@@ -63,17 +63,6 @@ const DashBoard = () => {
                   <div style={{ height: `100%`, borderRadius: "12px" }} />
                 }
               >
-                <Marker
-                  position={{
-                    lat: -34.397,
-                    lng: 150.644,
-                  }}
-                >
-                  <InfoWindow>
-                    <TipingCard />
-                  </InfoWindow>
-                </Marker>
-
                
               </MainMap>
             </CardContent>

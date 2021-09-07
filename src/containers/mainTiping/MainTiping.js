@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
 import { Grid, Card, CardContent } from "@material-ui/core";
 import { mapMarker } from "../../assets/images";
 import TipingCard from "../../components/tiping/TipingCard";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
-import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRenderer";
 import { locationOval } from "../../assets/images";
+import TipingCrane from "../../components/tiping/TipingCrane";
+import "./mainTiping.scss";
 const MainTiping = () => {
-  const [showInfo, setShowInfo] = useState(false);
-  const dumyplaces = [
-    { latitude: 51.55063, longitude: -0.0461 },
-    { latitude: 51.56078, longitude: -0.25256 },
-  ];
-  const handleMarkerClick = () => {
-    setShowInfo(true);
-  };
   return (
-    <div>
+    <div className="main-tiping">
       <div className="header-main">
         <div className="sites-header-title">Tiping Sites </div>
         <DashboardFilter title={"Tiping "} />
@@ -41,29 +34,114 @@ const MainTiping = () => {
                 }
               >
                 <Marker
+                  visible={false}
                   position={{
-                    lat: 51.55063,
-                    lng: -0.0461,
+                    lat: 51.5905,
+                    lng: -0.70461,
                   }}
                   icon={locationOval}
-                  onClick={() => {
-                    setShowInfo(!showInfo);
-                  }}
                 >
-                  {showInfo && (
-                    <InfoWindow>
-                      <TipingCard />
-                    </InfoWindow>
-                  )}
+                  <InfoWindow>
+                    <TipingCrane />
+                  </InfoWindow>
                 </Marker>
-                {
-                  showInfo && <NewMapDirectionsRenderer
-                  places={dumyplaces}
-                  onMarkerClick={handleMarkerClick}
-                  info={showInfo}
-                />
-                }
-                
+                <Marker
+                  visible={false}
+                  position={{
+                    lat: 51.5705,
+                    lng: -0.60461,
+                  }}
+                  icon={locationOval}
+                >
+                  <InfoWindow>
+                    <TipingCard />
+                  </InfoWindow>
+                </Marker>
+                <Marker
+                  visible={false}
+                  position={{
+                    lat: 51.4805,
+                    lng: -0.70461,
+                  }}
+                  icon={locationOval}
+                >
+                  <InfoWindow>
+                    <TipingCrane />
+                  </InfoWindow>
+                </Marker>
+                <Marker
+                  visible={false}
+                  position={{
+                    lat: 51.4505,
+                    lng: -0.60461,
+                  }}
+                  icon={locationOval}
+                >
+                  <InfoWindow>
+                    <TipingCard />
+                  </InfoWindow>
+                </Marker>
+
+                <Marker
+                  visible={false}
+                  position={{
+                    lat: 51.65063,
+                    lng: -0.05461,
+                  }}
+                  icon={locationOval}
+                >
+                  <InfoWindow>
+                    <TipingCard />
+                  </InfoWindow>
+                </Marker>
+                {/* small crane tiping */}
+
+                <Marker
+                  visible={false}
+                  position={{
+                    lat: 51.67963,
+                    lng: -0.15461,
+                  }}
+                  icon={locationOval}
+                >
+                  <InfoWindow>
+                    <TipingCrane />
+                  </InfoWindow>
+                </Marker>
+
+                <Marker
+                  visible={false}
+                  position={{
+                    lat: 51.46063,
+                    lng: -0.16161,
+                  }}
+                  icon={locationOval}
+                >
+                  <InfoWindow>
+                    <TipingCrane />
+                  </InfoWindow>
+                </Marker>
+
+                <Marker
+                  visible={false}
+                  position={{
+                    lat: 51.44063,
+                    lng: -0.05461,
+                  }}
+                  icon={locationOval}
+                >
+                  <InfoWindow>
+                    <TipingCard />
+                  </InfoWindow>
+                </Marker>
+
+                <Marker
+                  position={{
+                    lat: 51.55063,
+                    lng: -0.30461,
+                  }}
+                  icon={locationOval}
+                ></Marker>
               </MainMap>
             </CardContent>
           </Card>

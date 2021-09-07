@@ -1,11 +1,12 @@
 .tiping-main {
   .MuiPaper-root {
-    // background: #ffffff;
-    // box-shadow: 4.1617px 4.1617px 15.2596px 6.93617px rgba(0, 0, 0, 0.100743);
-    // border-radius: 13.8723px;
+    background: #ffffff;
+    box-shadow: 4.1617px 4.1617px 15.2596px 6.93617px rgba(0, 0, 0, 0.100743);
+    // box-shadow: 0 2px 7px 1px rgba(0 ,0 ,0, 50%);
+    border-radius: 13.8723px;
     width: 178px;
-    padding: 10px;
-    box-shadow: none;
+    padding: 20px;
+    // box-shadow: none;
     .MuiCardContent-root:last-child {
       padding-bottom: 0px;
     }
@@ -80,4 +81,19 @@
       border-radius: 50%;
     }
   }
+}
+
+.tiping-crane {
+  display: inline-flex;
+  padding: 10px;
+  border-radius: 50% !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+
+  // .gm-style .gm-style-iw-c {
+  //   border-radius: 50% !important;
+  //   padding: 0px !important;
+  // }
+  // .gm-ui-hover-effect {
+  //   display: none !important;
+  // }
 }

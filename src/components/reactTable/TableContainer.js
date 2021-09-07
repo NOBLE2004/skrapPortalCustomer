@@ -72,7 +72,7 @@ const TableContainer = ({ columns, data, renderRowSubComponent }) => {
         />
         <CommonFilter />
       </div>
-      <MaUTable {...getTableProps()}>
+      <MaUTable {...getTableProps()} className="table-main">
         <TableHead>
           {headerGroups.map((headerGroup) => (
             // <Paper elevation={0} className="table-header">

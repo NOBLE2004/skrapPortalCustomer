@@ -31,7 +31,6 @@
 
       .profile-action {
         display: flex;
-        align-items: baseline;
         cursor: pointer;
         .edit-title {
           font-family: DM Sans;
@@ -42,8 +41,8 @@
           color: #52a9dd;
         }
         img {
-          width: 11px;
-          height: 11px;
+          width: 12px;
+          height: 12px;
           margin-right: 8px;
         }
       }

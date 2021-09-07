@@ -122,3 +122,20 @@ $v110: 110px;
   line-height: 16px;
   color: #52a9dd;
 }
+
+// info window of google map 
+
+.gm-style .gm-style-iw-c{
+  padding: 0px !important;
+   box-shadow: none !important;
+}
+.gm-style .gm-style-iw-t::after {
+  background: none !important;
+  box-shadow: none !important;
+}
+.gm-style-iw-d{
+  overflow: unset !important;
+}
+.gm-ui-hover-effect {
+  display: none !important;
+}

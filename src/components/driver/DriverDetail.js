@@ -1,12 +1,15 @@
 import React from "react";
 import Rating from "@material-ui/lab/Rating";
 import { Grid, Card, CardContent } from "@material-ui/core";
+import MainMap from "../map/MainMap";
+import { Marker } from "react-google-maps";
 import {
   personImage,
   emailIcon,
   refreshIcon,
   phoneCall,
   showIcon,
+  locationOval
 } from "../../assets/images";
 import "./driverDetail.scss";
 const DriverDetail = () => {
@@ -106,6 +109,30 @@ const DriverDetail = () => {
                 Rate Driver <span className="bold-dsans-12-primary">Here</span>
               </div>
             </div>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            <Card className="driver-mapCard">
+              <CardContent>
+                <MainMap
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `100%` }} />}
+                  mapElement={
+                    <div style={{ height: `100%`, borderRadius: "12px" }} />
+                  }
+                >
+                  <Marker
+                    position={{
+                      lat: 51.55063,
+                      lng: -0.0461,
+                    }}
+                    icon={locationOval}
+                  ></Marker>
+                </MainMap>
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
       </CardContent>
