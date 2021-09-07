@@ -21,56 +21,28 @@ const ManagerDetail = ({ title }) => {
             </div>
           </Grid>
           <Grid item md={8} className="personal-info">
-            <Grid container>
-              <Grid item md={6} className="personal-info">
-                <div className="info">
-                  <div className="designation">Manager</div>
-                  <div className="personal-title">Terri Ongolo</div>
-                </div>
-                <div className="info">
-                  <div className="designation">Site Assigned</div>
-                  <div className="personal-title">Hackney Site</div>
-                </div>
-                <div className="info">
-                  <div className="designation">Address</div>
-                  <div className="personal-title">
-                    113 Ibsley, Gardens London, SW15 4NQ
-                  </div>
-                </div>
-                <div className="info">
-                  <div className="designation">Email</div>
-                  <div className="personal-title">terriongolo@gmail.com</div>
-                </div>
-                <div className="info">
-                  <div className="designation">Phone</div>
-                  <div className="personal-title">0745678955</div>
-                </div>
-              </Grid>
-              <Grid item md={6} className="personal-info">
-                <div className="info">
-                  <div className="designation">Manager</div>
-                  <div className="personal-title">Terri Ongolo</div>
-                </div>
-                <div className="info">
-                  <div className="designation">Site Assigned</div>
-                  <div className="personal-title">Hackney Site</div>
-                </div>
-                <div className="info">
-                  <div className="designation">Address</div>
-                  <div className="personal-title">
-                    113 Ibsley, Gardens London, SW15 4NQ
-                  </div>
-                </div>
-                <div className="info">
-                  <div className="designation">Email</div>
-                  <div className="personal-title">terriongolo@gmail.com</div>
-                </div>
-                <div className="info">
-                  <div className="designation">Phone</div>
-                  <div className="personal-title">0745678955</div>
-                </div>
-              </Grid>
-            </Grid>
+            <div className="info">
+              <div className="designation">Manager</div>
+              <div className="personal-title">Terri Ongolo</div>
+            </div>
+            <div className="info">
+              <div className="designation">Site Assigned</div>
+              <div className="personal-title">Hackney Site</div>
+            </div>
+            <div className="info">
+              <div className="designation">Address</div>
+              <div className="personal-title">
+                113 Ibsley, Gardens London, SW15 4NQ
+              </div>
+            </div>
+            <div className="info">
+              <div className="designation">Email</div>
+              <div className="personal-title">terriongolo@gmail.com</div>
+            </div>
+            <div className="info">
+              <div className="designation">Phone</div>
+              <div className="personal-title">0745678955</div>
+            </div>
           </Grid>
         </Grid>
       </CardContent>

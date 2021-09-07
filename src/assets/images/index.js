@@ -52,8 +52,14 @@ import supportIcon from "./support.svg";
 import appIcon from "./logo.svg";
 import showPassword from "./show_password.svg"
 import downloadSite from "./download_sites.svg"
-import craneIcon from "./crane.svg"
+import craneIcon from "./crane.svg";
+import emailIcon from "./email.svg";
+import refreshIcon from "./refresh.svg";
+import locationOval from "./oval.svg";
 export {
+  locationOval,
+  emailIcon,
+  refreshIcon,
   craneIcon,
   downloadSite,
   showPassword,

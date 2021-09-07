@@ -8,7 +8,7 @@ import mapStyles from "./mapStyles";
 const MainMap = ({children}) => {
   return (
     <GoogleMap
-      defaultZoom={12}
+      defaultZoom={11}
       defaultCenter={{
         lat: 51.55063,
         lng: -0.0461,

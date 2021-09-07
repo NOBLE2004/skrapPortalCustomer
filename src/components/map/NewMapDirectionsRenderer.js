@@ -67,22 +67,22 @@ function MapDirectionsRenderer({
               }}
             />
             <Marker
-              key={2}
+              key={1}
               position={
                 new window.google.maps.LatLng(
-                  updatedData.lat ? updatedData.lat : places[0].latitude,
-                  updatedData.lng ? updatedData.lng : places[0].longitude
+                  updatedData.lat ? updatedData.lat : places[1].latitude,
+                  updatedData.lng ? updatedData.lng : places[1].longitude
                 )
               }
               icon={{ url: enRouteMarker }}
               onClick={onMarkerClick}
             />
             <Marker
-              key={1}
+              key={2}
               position={
                 new window.google.maps.LatLng(
-                  places[1].latitude,
-                  places[1].longitude
+                  places[0].latitude,
+                  places[0].longitude
                 )
               }
               icon={{ url: destination }}

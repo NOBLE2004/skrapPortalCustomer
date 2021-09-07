@@ -6,6 +6,7 @@ import TipingCard from "../../components/tiping/TipingCard";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRenderer";
+import { locationOval } from "../../assets/images";
 const MainTiping = () => {
   const [showInfo, setShowInfo] = useState(false);
   const dumyplaces = [
@@ -41,9 +42,10 @@ const MainTiping = () => {
               >
                 <Marker
                   position={{
-                    lat: 51.56078,
-                    lng: -0.25256,
+                    lat: 51.55063,
+                    lng: -0.0461,
                   }}
+                  icon={locationOval}
                   onClick={() => {
                     setShowInfo(!showInfo);
                   }}
@@ -54,12 +56,14 @@ const MainTiping = () => {
                     </InfoWindow>
                   )}
                 </Marker>
-                <NewMapDirectionsRenderer
+                {
+                  showInfo && <NewMapDirectionsRenderer
                   places={dumyplaces}
-                  // travelMode={window.google.maps.TravelMode.DRIVING}
                   onMarkerClick={handleMarkerClick}
                   info={showInfo}
                 />
+                }
+                
               </MainMap>
             </CardContent>
           </Card>

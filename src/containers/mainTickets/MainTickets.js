@@ -4,12 +4,12 @@ import TicketsTable from "../../components/tickets/TicketsTable";
 const MainTickets = () => {
   return (
     <div>
-      <div className="header-main">
+      {/* <div className="header-main">
         <div className="sites-header-title">Tickets </div>
         <DashboardFilter title={"Tickets"} />
       </div>
       
-      <TicketsTable />
+      <TicketsTable /> */}
     </div>
   );
 };
