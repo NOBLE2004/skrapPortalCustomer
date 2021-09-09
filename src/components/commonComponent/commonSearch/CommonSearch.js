@@ -24,7 +24,7 @@ const CommonSearch = ({
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        placeholder={`records...`}
+        placeholder={`Search...`}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import TotalSpend from "../../components/dashboard/totalSpend/TotalSpend";
 import JobStatus from "../../components/dashboard/jobStatus/JobStatus";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
@@ -13,7 +13,68 @@ import "./dashboard.scss";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
+import {
+  assignMarker,
+  pendingMarker,
+  cancelMarker,
+  enRouteMarker,
+  completeMarker,
+  deliveredMarker
+} from "../../assets/images";
+
+
+const markersList = [
+  {
+    lat: 51.5905,
+    lng: -0.70461,
+    icon: assignMarker
+  },
+  {
+    lat: 51.5705,
+    lng: -0.60461,
+    icon: pendingMarker
+  },
+  {
+    lat: 51.4805,
+    lng: -0.70461,
+    icon: cancelMarker
+  },
+  {
+    lat: 51.4505,
+    lng: -0.60461,
+    icon: enRouteMarker
+  },
+  {
+    lat: 51.65063,
+    lng: -0.05461,
+    icon: completeMarker
+  },
+  {
+    lat: 51.67963,
+    lng: -0.15461,
+    icon: deliveredMarker
+  },
+  {
+    lat: 51.46063,
+    lng: -0.16161,
+    icon: deliveredMarker
+  },
+  {
+    lat: 51.44063,
+    lng: -0.05461,
+    icon: deliveredMarker
+  },
+  {
+    lat: 51.55063,
+    lng: -0.30461,
+    icon: deliveredMarker
+  }
+]
+
 const DashBoard = () => {
+
+  const [showInfoIndex, setShowInfoIndex] = useState(null);
+
   return (
     <div>
       <Grid container spacing={3}>
@@ -63,7 +124,29 @@ const DashBoard = () => {
                   <div style={{ height: `100%`, borderRadius: "12px" }} />
                 }
               >
-               
+                {
+                  markersList.map((data, index) => {
+                    return (
+                      <Marker
+                        key={index}
+                        position={{
+                          lat: data.lat,
+                          lng: data.lng,
+                        }}
+                        icon={data.icon}
+                        onClick={() => {
+                          setShowInfoIndex(index);
+                        }}
+                      >
+                        {(showInfoIndex == index) &&
+                          <InfoWindow>
+                            <TipingCard />
+                          </InfoWindow>
+                        }
+                      </Marker>
+                    )
+                  })
+                }
               </MainMap>
             </CardContent>
           </Card>

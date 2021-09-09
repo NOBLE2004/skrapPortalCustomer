@@ -1,4 +1,3 @@
-// leave off @2x/@3x
 import dashboardBlack from "./dashboard_black.svg";
 import dashboardWhite from "./dashboard_white.svg";
 import jobBlack from "./clock_black.svg";

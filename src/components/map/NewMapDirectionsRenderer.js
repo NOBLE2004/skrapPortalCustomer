@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Marker, Polyline } from "react-google-maps";
-import { locationOval, destination } from "../../assets/images/index";
+import { enRouteMarker, destination } from "../../assets/images/index";
 
 function MapDirectionsRenderer({
   places,
@@ -74,7 +74,7 @@ function MapDirectionsRenderer({
                   places[0].longitude
                 )
               }
-              icon={{ url: locationOval }}
+              icon={{ url: enRouteMarker }}
               onClick={onMarkerClick}
             />
             <Marker

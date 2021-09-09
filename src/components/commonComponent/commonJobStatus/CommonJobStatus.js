@@ -7,9 +7,9 @@ const CommonJobStatus = ({ jobStatus }) => {
   return (
     <div
       className="common-jobcard"
-      style={{ width: `${jobStatus.width}`, marginLeft: "10px" }}
+      style={{ minWidth: `${jobStatus.width}`, marginLeft: "10px" }}
     >
-      <Paper className="common-box" style={{ height: `${jobStatus.height}` }}>
+      <Paper className="common-box" style={{ height: `${jobStatus.height}`, marginBottom: jobStatus.marginBottom ? jobStatus.marginBottom : ""  }}>
         <h1 className={jobStatus.fontSize ? "common-price1" : "common-price"}>
           {jobStatus.price}
         </h1>

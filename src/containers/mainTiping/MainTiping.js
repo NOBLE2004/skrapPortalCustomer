@@ -8,6 +8,7 @@ import { Marker, InfoWindow } from "react-google-maps";
 import { locationOval } from "../../assets/images";
 import TipingCrane from "../../components/tiping/TipingCrane";
 import "./mainTiping.scss";
+
 const MainTiping = () => {
   return (
     <div className="main-tiping">
@@ -18,7 +19,6 @@ const MainTiping = () => {
       <Grid container>
         <Grid item xs={12} className="jobMpWp">
           <div className="live-job-title">
-            {" "}
             <img src={mapMarker} alt="map-marker" />
             <h1>Sites On Map</h1>
           </div>
@@ -94,7 +94,6 @@ const MainTiping = () => {
                     <TipingCard />
                   </InfoWindow>
                 </Marker>
-                {/* small crane tiping */}
 
                 <Marker
                   visible={false}
@@ -134,14 +133,6 @@ const MainTiping = () => {
                     <TipingCard />
                   </InfoWindow>
                 </Marker>
-
-                <Marker
-                  position={{
-                    lat: 51.55063,
-                    lng: -0.30461,
-                  }}
-                  icon={locationOval}
-                ></Marker>
               </MainMap>
             </CardContent>
           </Card>

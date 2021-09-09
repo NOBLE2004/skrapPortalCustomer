@@ -6,7 +6,7 @@ import {
   usePagination,
   useGlobalFilter,
 } from "react-table";
-import { TextField } from "@material-ui/core";
+import { Table, TextField } from "@material-ui/core";
 import MaUTable from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -72,7 +72,7 @@ const TableContainer = ({ columns, data, renderRowSubComponent }) => {
         />
         <CommonFilter />
       </div>
-      <MaUTable {...getTableProps()} className="table-main">
+      <Table className="table-main">
         <TableHead>
           {headerGroups.map((headerGroup) => (
             // <Paper elevation={0} className="table-header">
@@ -99,12 +99,10 @@ const TableContainer = ({ columns, data, renderRowSubComponent }) => {
             prepareRow(row);
             return (
               <Fragment key={row.getRowProps().key}>
-                {/* <Paper elevation={1} className={classes.root} > */}
                 <TableRow className="table-body">
                   {row.cells.map((cell) => {
                     return (
                       <TableCell
-                        {...cell.getCellProps()}
                         className="table-body-cell"
                       >
                         {cell.render("Cell")}
@@ -112,63 +110,11 @@ const TableContainer = ({ columns, data, renderRowSubComponent }) => {
                     );
                   })}
                 </TableRow>
-                {/* </Paper> */}
               </Fragment>
             );
           })}
         </TableBody>
-      </MaUTable>
-
-      <List className="pagination">
-        <ListItem
-          className="page-item"
-          onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}
-        >
-          <Link className="page-link">First</Link>
-        </ListItem>
-        <ListItem
-          className="page-item"
-          onClick={previousPage}
-          disabled={!canPreviousPage}
-        >
-          <Link className="page-link">{"<"}</Link>
-        </ListItem>
-        <ListItem
-          className="page-item"
-          onClick={nextPage}
-          disabled={!canNextPage}
-        >
-          <Link className="page-link">{">"}</Link>
-        </ListItem>
-        <ListItem
-          className="page-item"
-          onClick={() => gotoPage(pageCount - 1)}
-          disabled={!canNextPage}
-        >
-          <Link className="page-link">Last</Link>
-        </ListItem>
-        <ListItem>
-          <Link className="page-link">
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{" "}
-          </Link>
-        </ListItem>
-        <select
-          className="pagination-control"
-          value={pageSize}
-          onChange={onChangeInSelect}
-          style={{ width: "120px", height: "38px" }}
-        >
-          {[5, 10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </List>
+      </Table>
     </Fragment>
   );
 };

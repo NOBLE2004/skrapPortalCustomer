@@ -47,7 +47,7 @@ const Sites = () => {
           </div>
           <SitesItem />
         </Grid>
-        <Grid item md={2} style={{marginTop:"95px"}}>
+        <Grid item md={2} style={{marginTop:"82px"}}>
           <CommonJobStatus
             jobStatus={{
               status: "Sales By Site",
@@ -55,7 +55,52 @@ const Sites = () => {
               statusName: "primary",
               width: "219px",
               height: "62px",
-              fontSize : "sales"
+              fontSize : "sales",
+              marginBottom: "20px"
+            }}
+          />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Sales By Site",
+              price: "£7,142.00",
+              statusName: "primary",
+              width: "219px",
+              height: "62px",
+              fontSize : "sales",
+              marginBottom: "20px"
+            }}
+          />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Sales By Site",
+              price: "£7,142.00",
+              statusName: "primary",
+              width: "219px",
+              height: "62px",
+              fontSize : "sales",
+              marginBottom: "20px"
+            }}
+          />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Sales By Site",
+              price: "£7,142.00",
+              statusName: "primary",
+              width: "219px",
+              height: "62px",
+              fontSize : "sales",
+              marginBottom: "20px"
+            }}
+          />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Sales By Site",
+              price: "£7,142.00",
+              statusName: "primary",
+              width: "219px",
+              height: "62px",
+              fontSize : "sales",
+              marginBottom: "20px"
             }}
           />
         </Grid>

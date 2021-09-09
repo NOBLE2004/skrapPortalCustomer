@@ -6,13 +6,15 @@ import { Card, CardContent } from "@material-ui/core";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
-import { locationOval,mapMarker } from "../../assets/images";
+import { locationOval,enRouteMarker } from "../../assets/images";
 import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRenderer";
 import "./mainjobs.scss";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
+import JobTable from "../../components/dataTable/JobTable";
+
 const MainJobs = () => {
-  const [isMapView, setMapView] = useState(false);
+  const [isMapView, setMapView] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
 
   const handleShowMap = () => {
@@ -64,9 +66,18 @@ const MainJobs = () => {
             height: "84px",
           }}
         />
+        <CommonJobStatus
+          jobStatus={{
+            status: "Assigned",
+            price: "2",
+            statusName: "assigned",
+            width: "115px",
+            height: "84px",
+          }}
+        />
       </CommonHeader>
       {isMapView ? (
-        <JobsTable />
+        <JobTable />
       ) : (
         <>
           <div className="jobs-search-header">
@@ -92,7 +103,7 @@ const MainJobs = () => {
                     lat: 51.55063,
                     lng: -0.0461,
                   }}
-                  icon={locationOval}
+                  icon={enRouteMarker}
                   onClick={() => {
                     setShowInfo(!showInfo);
                   }}

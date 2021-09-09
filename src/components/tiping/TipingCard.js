@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent, Button } from "@material-ui/core";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
-import { phoneCall, craneIcon } from "../../assets/images/index";
+import { phoneCall } from "../../assets/images/index";
 import "./tipingcard.scss";
 
 const TipingCard = ({ tipTime }) => {
