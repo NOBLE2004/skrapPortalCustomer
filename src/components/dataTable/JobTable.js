@@ -197,16 +197,17 @@ const JobTable = (props) => {
                   }
                 >
                   <TableCell
-                    onClick={() => {
-                    }}
+                   onClick={() => {
+                    detail(row.job_id);
+                  }}
                     className={[classes.tableCell, "text-capitalize"]}
                   >
                     {row.ref}
                   </TableCell>
                   <TableCell
-                    onClick={() => {
-                      // detail(row.job_id);
-                    }}
+                   onClick={() => {
+                    detail(row.job_id);
+                  }}
                     className={classes.tableCell}
                   >
                     {row.job_date}

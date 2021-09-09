@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   useTable,
   useSortBy,
@@ -6,41 +6,33 @@ import {
   usePagination,
   useGlobalFilter,
 } from "react-table";
-import { Table, TextField } from "@material-ui/core";
-import MaUTable from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Link from "@material-ui/core/Link";
-import { Filter, DefaultColumnFilter } from "./filters";
-import { jobsUseStyles } from "../../assets/styles/muiStyles/MuiStyles";
-import Paper from "@material-ui/core/Paper";
+import { DefaultColumnFilter } from "./filters";
 import CommonSearch from "../commonComponent/commonSearch/CommonSearch";
 import CommonFilter from "../commonComponent/commonfilter/CommonFilter";
 
-const TableContainer = ({ columns, data, renderRowSubComponent }) => {
+const TableContainer = ({ columns, data, name }) => {
+  const [cellWidth, setCellWidth] = useState(100);
+  const [cellPadding, setCellPadding] = useState("10px");
+
+  useEffect(() => {
+    if (name === "jobs") {
+      setCellWidth(100);
+      setCellPadding("10px");
+    } else {
+      setCellWidth(152);
+      setCellPadding("16px");
+    }
+  }, []);
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    page,
     prepareRow,
     preGlobalFilteredRows,
     state,
     setGlobalFilter,
-    visibleColumns,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
+    rows,
   } = useTable(
     {
       columns,
@@ -53,14 +45,6 @@ const TableContainer = ({ columns, data, renderRowSubComponent }) => {
     useSortBy,
     usePagination
   );
-  const classes = jobsUseStyles();
-  const generateSortingIndicator = (column) => {
-    return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : "";
-  };
-
-  const onChangeInSelect = (event) => {
-    setPageSize(Number(event.target.value));
-  };
 
   return (
     <Fragment>
@@ -69,52 +53,58 @@ const TableContainer = ({ columns, data, renderRowSubComponent }) => {
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
+          cname={name}
         />
-        <CommonFilter />
+        <CommonFilter cname={name} />
       </div>
-      <Table className="table-main">
-        <TableHead>
+      <div {...getTableProps()} className="table-main">
+        <div style={{ display: "table-head" }}>
           {headerGroups.map((headerGroup) => (
-            // <Paper elevation={0} className="table-header">
-            <TableRow {...headerGroup.getHeaderGroupProps()}>
+            <div
+              style={{ display: "flex" }}
+              {...headerGroup.getHeaderGroupProps()}
+            >
               {headerGroup.headers.map((column) => (
-                <TableCell
+                <div
                   {...column.getHeaderProps()}
                   className="table-headings"
+                  style={{ width: cellWidth, padding: cellPadding }}
                 >
-                  <div {...column.getSortByToggleProps()}>
-                    {column.render("Header")}
-                    {generateSortingIndicator(column)}
-                  </div>
-                  <Filter column={column} />
-                </TableCell>
+                  {column.render("Header")}
+                </div>
               ))}
-            </TableRow>
-            // </Paper>
+            </div>
           ))}
-        </TableHead>
-
-        <TableBody {...getTableBodyProps()}>
-          {page.map((row) => {
+        </div>
+        <div style={{ display: "table-body" }} {...getTableBodyProps()}>
+          {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <Fragment key={row.getRowProps().key}>
-                <TableRow className="table-body">
-                  {row.cells.map((cell) => {
-                    return (
-                      <TableCell
-                        className="table-body-cell"
-                      >
-                        {cell.render("Cell")}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              </Fragment>
+              <div
+                style={{
+                  display: "flex",
+                  border: "1px solid #ECECEC",
+                  marginBottom: 18,
+                  borderRadius: 11,
+                }}
+                {...row.getRowProps()}
+              >
+                {row.cells.map((cell) => {
+                  return (
+                    <div
+                      className="table-body-cell"
+                      style={{ width: cellWidth, padding: cellPadding }}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </div>
+                  );
+                })}
+              </div>
             );
           })}
-        </TableBody>
-      </Table>
+        </div>
+      </div>
     </Fragment>
   );
 };

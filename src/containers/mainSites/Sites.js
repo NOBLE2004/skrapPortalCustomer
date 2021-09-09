@@ -1,8 +1,6 @@
 import React from "react";
-import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
-import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import SitesItem from "../../components/sites/sitesItem/SitesItem";
 import { Grid } from "@material-ui/core";
 import "./sites.scss";
@@ -10,7 +8,7 @@ import "./sites.scss";
 const Sites = () => {
   return (
     <>
-      <CommonHeader>
+      <CommonHeader isMap={true}>
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
@@ -41,22 +39,18 @@ const Sites = () => {
       </CommonHeader>
       <Grid container>
         <Grid item md={10}>
-          <div className="filter-outer">
-            <CommonSearch />
-            
-          </div>
           <SitesItem />
         </Grid>
-        <Grid item md={2} style={{marginTop:"82px"}}>
+        <Grid item md={2} style={{marginTop:"87px"}}>
           <CommonJobStatus
             jobStatus={{
               status: "Sales By Site",
               price: "£7,142.00",
               statusName: "primary",
-              width: "219px",
+              width: "194px",
               height: "62px",
               fontSize : "sales",
-              marginBottom: "20px"
+              marginBottom: "16px"
             }}
           />
           <CommonJobStatus
@@ -64,10 +58,10 @@ const Sites = () => {
               status: "Sales By Site",
               price: "£7,142.00",
               statusName: "primary",
-              width: "219px",
+              width: "194px",
               height: "62px",
               fontSize : "sales",
-              marginBottom: "20px"
+              marginBottom: "16px"
             }}
           />
           <CommonJobStatus
@@ -75,10 +69,10 @@ const Sites = () => {
               status: "Sales By Site",
               price: "£7,142.00",
               statusName: "primary",
-              width: "219px",
+              width: "194px",
               height: "62px",
               fontSize : "sales",
-              marginBottom: "20px"
+              marginBottom: "16px"
             }}
           />
           <CommonJobStatus
@@ -86,10 +80,10 @@ const Sites = () => {
               status: "Sales By Site",
               price: "£7,142.00",
               statusName: "primary",
-              width: "219px",
+              width: "194px",
               height: "62px",
               fontSize : "sales",
-              marginBottom: "20px"
+              marginBottom: "16px"
             }}
           />
           <CommonJobStatus
@@ -97,10 +91,32 @@ const Sites = () => {
               status: "Sales By Site",
               price: "£7,142.00",
               statusName: "primary",
-              width: "219px",
+              width: "194px",
               height: "62px",
               fontSize : "sales",
-              marginBottom: "20px"
+              marginBottom: "16px"
+            }}
+          />
+           <CommonJobStatus
+            jobStatus={{
+              status: "Sales By Site",
+              price: "£7,142.00",
+              statusName: "primary",
+              width: "194px",
+              height: "62px",
+              fontSize : "sales",
+              marginBottom: "16px"
+            }}
+          />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Sales By Site",
+              price: "£7,142.00",
+              statusName: "primary",
+              width: "194px",
+              height: "62px",
+              fontSize : "sales",
+              marginBottom: "16px"
             }}
           />
         </Grid>

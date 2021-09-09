@@ -1,5 +1,8 @@
 .table-main {
+  display: table;
   table-layout: fixed;
+  width: 100%;
+
   .MuiTableCell-root {
     border-bottom: none;
   }
@@ -7,33 +10,34 @@
     vertical-align: unset;
   }
 
-  // .table-header {
-  //   .MuiTableCell-root {
-  //     width: 9%;
-  //   }
-  // }
-  // .table-body {
-  //   .MuiTableCell-root {
-  //     width: 11%;
-  //   }
-  // }
   .table-headings {
-    font-family: DM Sans;
+    font-family: 'DM Sans';
     font-style: normal;
     font-weight: bold;
     font-size: 12px;
     line-height: 16px;
     color: #0d0d39;
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 10px;
   }
   .table-body-cell {
-    font-family: DM Sans;
+    font-family: 'DM Sans';
     font-style: normal;
     font-weight: normal;
     font-size: 10px;
     line-height: 13px;
     color: #4b686e;
-    // width: fit-content;
+    word-break:break-all;
+
+  };
+  .table-body-cell:last-child{
+    display: flex;
+    align-self: flex-end;
+    text-align: center;
   }
+
+
   .custom-filter {
     padding: 0px 4px;
     cursor: pointer;
@@ -76,7 +80,7 @@
     background: #fbfbfc;
     border-radius: 3px;
     border: none;
-    font-family: DM Sans;
+    font-family: 'DM Sans';
     font-style: normal;
     font-weight: bold;
     font-size: 12px;
@@ -91,4 +95,5 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }

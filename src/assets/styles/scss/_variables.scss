@@ -123,17 +123,26 @@ $v110: 110px;
   color: #52a9dd;
 }
 
-// info window of google map 
+.normal-dsans-10-primary {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 13px;
 
-.gm-style .gm-style-iw-c{
+  color: #29aae2;
+}
+// info window of google map
+
+.gm-style .gm-style-iw-c {
   padding: 0px !important;
-   box-shadow: none !important;
+  box-shadow: none !important;
 }
 .gm-style .gm-style-iw-t::after {
   background: none !important;
   box-shadow: none !important;
 }
-.gm-style-iw-d{
+.gm-style-iw-d {
   overflow: unset !important;
 }
 .gm-ui-hover-effect {

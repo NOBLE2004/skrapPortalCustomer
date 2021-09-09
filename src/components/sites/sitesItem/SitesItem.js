@@ -1,83 +1,49 @@
-import { Grid } from "@material-ui/core";
-import React from "react";
+import React, { useMemo } from "react";
+import { sitesTableData } from "../../utlils/jobListing";
+import TableContainer from "../../reactTable/TableContainer";
 import "./sites-item.scss";
-import { downlaod , downloadSite } from "../../../assets/images";
+
 const SitesItem = () => {
+  const columns = useMemo(
+    () => [
+      {
+        Header: "SiteName",
+        accessor: "siteName",
+        disableSortBy: true,
+        filter: "equals",
+      },
+      {
+        Header: "Address",
+        accessor: "siteAddress",
+        disableFilters: true,
+      },
+      {
+        Header: "Site Contact",
+        accessor: "siteContact",
+        disableFilters: true,
+      },
+      {
+        Header: "Number of Jobs",
+        accessor: "siteJobs",
+        disableFilters: true,
+      },
+      {
+        Header: "Sales By Site",
+        accessor: "sales",
+        disableFilters: true,
+      },
+      {
+        Header: "",
+        id: "edit-id",
+        Cell: ({ rows }) => (
+          <span style={{ padding: "0px", cursor: "pointer" }}>ooo</span>
+        ),
+      },
+    ],
+    []
+  );
   return (
-    <>
-      <div className="item-header">
-        <div className="header-title">Site Name</div>
-        <div className="header-title">Address</div>
-        <div className="header-title">Site Contact</div>
-        <div className="header-title">Number of Jobs</div>
-        <div className="header-title">Sales By Site</div>
-      </div>
-      <Grid container className="sites-item-main" >
-        <div className="item">
-          <div className="item-title">Hackney site</div>
-          <div className="item-title">113 Ibsley, Gardens London, SW15 4NQ</div>
-          <div className="item-title">Noble Eldhose +44 1234 567890</div>
-          <div className="item-title">5</div>
-          <div className="item-title">£3,432.00</div>
-          <div className="items-more-option">
-            <img src={downloadSite} alt="download-icon" />
-            <div>...</div>
-          </div>
-        </div>
-      </Grid>
-      <Grid container className="sites-item-main" >
-        <div className="item">
-          <div className="item-title">Hackney site</div>
-          <div className="item-title">113 Ibsley, Gardens London, SW15 4NQ</div>
-          <div className="item-title">Noble Eldhose +44 1234 567890</div>
-          <div className="item-title">5</div>
-          <div className="item-title">£3,432.00</div>
-          <div className="items-more-option">
-            <img src={downloadSite} alt="download-icon" />
-            <div>...</div>
-          </div>
-        </div>
-      </Grid>
-      <Grid container className="sites-item-main" >
-        <div className="item">
-          <div className="item-title">Hackney site</div>
-          <div className="item-title">113 Ibsley, Gardens London, SW15 4NQ</div>
-          <div className="item-title">Noble Eldhose +44 1234 567890</div>
-          <div className="item-title">5</div>
-          <div className="item-title">£3,432.00</div>
-          <div className="items-more-option">
-            <img src={downloadSite} alt="download-icon" />
-            <div>...</div>
-          </div>
-        </div>
-      </Grid>
-      <Grid container className="sites-item-main">
-        <div className="item">
-          <div className="item-title">Hackney site</div>
-          <div className="item-title">113 Ibsley, Gardens London, SW15 4NQ</div>
-          <div className="item-title">Noble Eldhose +44 1234 567890</div>
-          <div className="item-title">5</div>
-          <div className="item-title">£3,432.00</div>
-          <div className="items-more-option">
-            <img src={downloadSite} alt="download-icon" />
-            <div>...</div>
-          </div>
-        </div>
-      </Grid>
-      <Grid container className="sites-item-main" >
-        <div className="item">
-          <div className="item-title">Hackney site</div>
-          <div className="item-title">113 Ibsley, Gardens London, SW15 4NQ</div>
-          <div className="item-title">Noble Eldhose +44 1234 567890</div>
-          <div className="item-title">5</div>
-          <div className="item-title">£3,432.00</div>
-          <div className="items-more-option">
-            <img src={downloadSite} alt="download-icon" />
-            <div>...</div>
-          </div>
-        </div>
-      </Grid>
-    </>
+    <TableContainer columns={columns} data={sitesTableData} name={"sites"} />
   );
 };
 

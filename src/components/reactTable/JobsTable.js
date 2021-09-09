@@ -1,111 +1,78 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
+import { jobsTableData } from "../utlils/jobListing";
+import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import "./jobs-react-table.scss";
 
 const JobsTable = () => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const doFetch = async () => {
-      const response = await fetch("https://randomuser.me/api/?results=100");
-      const body = await response.json();
-      const contacts = body.results;
-      console.log(contacts);
-      setData(contacts);
-    };
-    doFetch();
-  }, []);
-
   const handleButtonClick = (e, row) => {
     console.log("row click", row);
   };
 
   const columns = useMemo(
+
     () => [
       {
         Header: "Order #",
-        accessor: "name.title",
+        accessor: "ref",
         disableSortBy: true,
         Filter: SelectColumnFilter,
         filter: "equals",
       },
       {
         Header: "Booked",
-        accessor: "name.first",
+        accessor: "job_date",
         disableFilters: true,
        
       },
       {
         Header: "Delivery Date",
-        accessor: "name.last",
+        accessor: "delivery_date",
         disableFilters: true,
       },
       {
         Header: "Site Contact",
-        accessor: "email",
+        accessor: "full_name",
         disableFilters: true,
       },
       {
         Header: "Service",
-        accessor: "location.city",
+        accessor: "Service_name",
         disableFilters: true,
       },
       {
         Header: "Address",
-        accessor: (values) => {
-          const { latitude, longitude } = values.location.coordinates;
-          const first = Number(latitude) > 0 ? "N" : "S";
-          const second = Number(longitude) > 0 ? "E" : "W";
-          return first + "/" + second;
-        },
+        accessor: "job_address",
         disableSortBy: true,
         disableFilters: true,
-        // Filter: SelectColumnFilter,
-        // filter: 'equals',
-        Cell: ({ cell }) => {
-          const { value } = cell;
-
-          const pickEmoji = (value) => {
-            let first = value[0]; // N or S
-            let second = value[2]; // E or W
-            const options = ["⇖", "⇗", "⇙", "⇘"];
-            let num = first === "N" ? 0 : 2;
-            num = second === "E" ? num + 1 : num;
-            return options[num];
-          };
-
-          return (
-            <div style={{ textAlign: "center", fontSize: 18 }}>
-              {pickEmoji(value)}
-            </div>
-          );
-        },
       },
       {
         Header: "Cost",
-        accessor: "gender",
+        accessor: "cost",
         disableSortBy: true,
-        Filter: SelectColumnFilter,
+        disableFilters: true,
         filter: "equals",
       },
       {
         Header: "Status",
-        accessor: "location.state",
+        accessor: "description",
         disableFilters: true,
+        Cell : (props) => <CommonStatus status={props.value}/>
       },
       {
         Header: "Payment",
-        accessor: "location.postcode",
+        accessor: "payment",
         disableFilters: true,
       },
       {
         Header: "Booked By",
-        accessor: "login.salt",
+        accessor: "name",
         disableFilters: true,
       },
       {
         Header: "PO",
-        accessor: "login.password",
+        accessor: "job_id",
         disableFilters: true,
       },
       {
@@ -126,7 +93,7 @@ const JobsTable = () => {
 
   return (
     <div>
-      <TableContainer columns={columns} data={data} />
+      <TableContainer columns={columns} data={jobsTableData} name={"jobs"}/>
     </div>
   );
 };

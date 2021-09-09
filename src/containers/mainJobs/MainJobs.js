@@ -6,12 +6,11 @@ import { Card, CardContent } from "@material-ui/core";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
-import { locationOval,enRouteMarker } from "../../assets/images";
+import { enRouteMarker } from "../../assets/images";
 import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRenderer";
 import "./mainjobs.scss";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
-import JobTable from "../../components/dataTable/JobTable";
 
 const MainJobs = () => {
   const [isMapView, setMapView] = useState(true);
@@ -29,7 +28,11 @@ const MainJobs = () => {
   ];
   return (
     <div>
-      <CommonHeader bookSite={"Book Job"} handleShowMap={handleShowMap} isMap={isMapView}>
+      <CommonHeader
+        bookSite={"Book Job"}
+        handleShowMap={handleShowMap}
+        isMap={isMapView}
+      >
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
@@ -77,7 +80,7 @@ const MainJobs = () => {
         />
       </CommonHeader>
       {isMapView ? (
-        <JobTable />
+        <JobsTable />
       ) : (
         <>
           <div className="jobs-search-header">
@@ -108,17 +111,17 @@ const MainJobs = () => {
                     setShowInfo(!showInfo);
                   }}
                 />
-                  {showInfo && (
-                    <InfoWindow 
+                {showInfo && (
+                  <InfoWindow
                     position={{
                       lat: 51.56078,
-                      lng:-0.25256
+                      lng: -0.25256,
                     }}
-                    >
-                      <TipingCard />
-                    </InfoWindow>
-                  )}
-                
+                  >
+                    <TipingCard />
+                  </InfoWindow>
+                )}
+
                 {showInfo && (
                   <NewMapDirectionsRenderer
                     places={dumyplaces}

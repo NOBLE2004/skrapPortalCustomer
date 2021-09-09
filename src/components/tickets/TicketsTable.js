@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
-import "../reactTable/jobs-react-table.scss";
+import { downloadSite } from "../../assets/images";
 import TableContainer from "../reactTable/TableContainer";
+import "../reactTable/jobs-react-table.scss";
 
 const TicketsTable = () => {
   const columns = useMemo(
@@ -35,6 +36,29 @@ const TicketsTable = () => {
         accessor: "driver",
         disableFilters: true,
       },
+      {
+        Header: "",
+        id: "download_id",
+        Cell: ({ rows }) => (
+          <span className="normal-dsans-10-primary">
+            Download Ticket
+            <img
+              src={downloadSite}
+              alt="download-icon"
+              style={{ marginLeft: "5px" }}
+            />
+          </span>
+        ),
+        disableFilters: true,
+      },
+      {
+        Header: "",
+        id: "submenu_id",
+        Cell: ({ rows }) => (
+          <span className="normal-dsans-10-primary">ooo</span>
+        ),
+        disableFilters: true,
+      },
     ],
     []
   );
@@ -49,50 +73,66 @@ const TicketsTable = () => {
       driver: "Terri Ongolo",
     },
     {
-      orderId: 2,
-      booked: "zeeshan",
-      customer: "zeeshan akram",
-      service: "Tcs",
-      address: "gujranwala",
-      driver: "driver one",
+      orderId: "SN14662",
+      booked: "2021-03-25 09:28:01",
+      customer: "Noble Eldhose - +441234567890",
+      service: "Mixed Waste (Grab Hire)",
+      address: "113 Ibsley Gardens London,Sw15 4NQ",
+      driver: "Terri Ongolo",
     },
     {
-      orderId: 3,
-      booked: "zeeshan",
-      customer: "zeeshan akram",
-      service: "Tcs",
-      address: "gujranwala",
-      driver: "driver one",
+      orderId: "SN14662",
+      booked: "2021-03-25 09:28:01",
+      customer: "Noble Eldhose - +441234567890",
+      service: "Mixed Waste (Grab Hire)",
+      address: "113 Ibsley Gardens London,Sw15 4NQ",
+      driver: "Terri Ongolo",
     },
     {
-      orderId: 4,
-      booked: "affzaal",
-      customer: "zeeshan akram",
-      service: "Tcs",
-      address: "gujranwala",
-      driver: "driver one",
+      orderId: "SN14662",
+      booked: "2021-03-25 09:28:01",
+      customer: "Noble Eldhose - +441234567890",
+      service: "Mixed Waste (Grab Hire)",
+      address: "113 Ibsley Gardens London,Sw15 4NQ",
+      driver: "Terri Ongolo",
     },
     {
-      orderId: 5,
-      booked: "jabran",
-      customer: "zeeshan akram",
-      service: "Tcs",
-      address: "gujranwala",
-      driver: "driver one",
+      orderId: "SN14662",
+      booked: "2021-03-25 09:28:01",
+      customer: "Noble Eldhose - +441234567890",
+      service: "Mixed Waste (Grab Hire)",
+      address: "113 Ibsley Gardens London,Sw15 4NQ",
+      driver: "Terri Ongolo",
     },
     {
-      orderId: 6,
-      booked: "ahsen",
-      customer: "zeeshan akram",
-      service: "Tcs",
-      address: "gujranwala",
-      driver: "driver one",
+      orderId: "SN14662",
+      booked: "2021-03-25 09:28:01",
+      customer: "Noble Eldhose - +441234567890",
+      service: "Mixed Waste (Grab Hire)",
+      address: "113 Ibsley Gardens London,Sw15 4NQ",
+      driver: "Terri Ongolo",
+    },
+    {
+      orderId: "SN14662",
+      booked: "2021-03-25 09:28:01",
+      customer: "Noble Eldhose - +441234567890",
+      service: "Mixed Waste (Grab Hire)",
+      address: "113 Ibsley Gardens London,Sw15 4NQ",
+      driver: "Terri Ongolo",
+    },
+    {
+      orderId: "SN14662",
+      booked: "2021-03-25 09:28:01",
+      customer: "Noble Eldhose - +441234567890",
+      service: "Mixed Waste (Grab Hire)",
+      address: "113 Ibsley Gardens London,Sw15 4NQ",
+      driver: "Terri Ongolo",
     },
   ];
 
   return (
     <div>
-      <TableContainer columns={columns} data={newData} />
+      <TableContainer columns={columns} data={newData} name={"tickets"} />
     </div>
   );
 };
