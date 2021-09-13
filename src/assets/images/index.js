@@ -55,7 +55,15 @@ import craneIcon from "./crane.svg";
 import emailIcon from "./email.svg";
 import refreshIcon from "./refresh.svg";
 import locationOval from "./oval.svg";
+import postCodeIcon from "./postCode.svg";
+import brickIcon from "./brick.svg";
+import bracketIcon from "./bracket.svg";
+import appleIcon from "./apple.svg";
 export {
+  appleIcon,
+  brickIcon,
+  bracketIcon,
+  postCodeIcon,
   locationOval,
   emailIcon,
   refreshIcon,

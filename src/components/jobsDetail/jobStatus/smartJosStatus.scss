@@ -1,0 +1,106 @@
+.job-status-detail-container {
+  margin-bottom: 20px;
+
+  .MuiStepLabel-iconContainer.MuiStepLabel-alternativeLabel {
+    padding-right: 70px;
+  }
+  .stepper-container {
+    .MuiTypography-root {
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 11.7639px;
+      line-height: 15px;
+      text-align: center;
+      color: #0d0d39;
+    }
+  }
+}
+.disbale-label-text {
+  font-family: DM Sans !important;
+  text-align: center !important;
+  color: #4b686e !important;
+}
+
+.label-text1 {
+  font-family: DM Sans !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  font-size: 12px !important;
+  text-align: center !important;
+  color: #ffffff !important;
+  padding: 5px 10px;
+}
+
+.paper-container1 {
+  //height: 92px;
+  //width: 94px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.paper-container1::before {
+  border: solid;
+  border-color: inherit;
+  border-width: 0 12px 20px 12px;
+  content: "";
+  left: 36%;
+  position: absolute;
+  top: 42%;
+  //top: px;
+}
+
+.MuiStepper-root {
+  display: flex;
+  align-content: stretch !important;
+  padding: 10px 0px !important;
+}
+
+.MuiPaper-elevation0 {
+  box-shadow: none !important;
+}
+
+//
+//.MuiStepConnector-alternativeLabel {
+//  top: 7px !important;
+//  left: calc(-50% + 20px);
+//  right: calc(50% + 20px);
+//  position: absolute;
+//}
+
+.smart-status-container {
+  display: flex !important;
+  justify-content: center !important;
+  margin-top: 15px !important;
+
+  .MuiStepper-root {
+    padding: 10px 0 0 0 !important;
+  }
+}
+
+.custom-stepper {
+  //background: red;
+  padding: 0 !important;
+
+  .MuiStep-horizontal {
+    padding: 0px 4px;
+  }
+}
+
+.smart-job-status-label {
+  //background: red!important;
+  //padding:5px ;
+  text-transform: capitalize;
+}
+
+.header-sub-title {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 23px;
+
+  color: #0d0d39;
+}

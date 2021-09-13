@@ -4,6 +4,11 @@ import JobDetailHeader from "../../components/jobsDetail/jobHeader/JobDetailHead
 import { Grid } from "@material-ui/core";
 import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDetail";
 import DriverDetail from "../../components/driver/DriverDetail";
+import FindPostCode from "../../components/jobsDetail/findPostCode/FindPostCode";
+import PaymentDetail from "../../components/jobsDetail/paymentDetail/PaymentDetail";
+import SmallCard from "../../components/jobsDetail/smallCard/SmallCard"
+import JobNotes from "../../components/jobsDetail/jobNote/JobNotes";
+import JobStatus from "../../components/jobsDetail/jobStatus";
 const MainJobDetail = () => {
   return (
     <>
@@ -11,9 +16,15 @@ const MainJobDetail = () => {
       <Grid container spacing={3}>
         <Grid item md={7}>
           <JobDetail />
+          <FindPostCode />
+          <PaymentDetail />
+          
+          <JobStatus />
+          <JobNotes />
         </Grid>
         <Grid item md={5}>
           <DriverDetail />
+          <SmallCard />
         </Grid>
       </Grid>
     </>

@@ -54,12 +54,12 @@ export const sidebarTabsList = [
     sub: false,
     icon: jobBlack,
   },
-  // {
-  //   text: "Job Detail",
-  //   key: "job-detail",
-  //   sub: false,
-  //   icon: jobBlack,
-  // },
+  {
+    text: "Job Detail",
+    key: "job-detail",
+    sub: false,
+    icon: jobBlack,
+  },
   {
     text: "Site Managers",
     key: "site-managers",

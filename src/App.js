@@ -25,7 +25,7 @@ function App() {
           <Route path="/jobs" component={() => <MainJobs />} /> 
           <Route path="/tiping" component={() => <MainTiping />} /> 
           <Route path="/tickets" component={() => <MainTickets />} /> 
-          {/* <Route path="/job-detail" component={() => <MainJobDetail />} /> */}
+          <Route path="/job-detail" component={() => <MainJobDetail />} />
         </Layout>
       </Switch>
     </Router>
