@@ -19,6 +19,7 @@ const JobsTable = () => {
         disableSortBy: true,
         Filter: SelectColumnFilter,
         filter: "equals",
+        
       },
       {
         Header: "Booked",

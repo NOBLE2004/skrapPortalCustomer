@@ -9,8 +9,10 @@ import {
 import { DefaultColumnFilter } from "./filters";
 import CommonSearch from "../commonComponent/commonSearch/CommonSearch";
 import CommonFilter from "../commonComponent/commonfilter/CommonFilter";
+import { useHistory } from "react-router";
 
 const TableContainer = ({ columns, data, name }) => {
+  const history = useHistory();
   const [cellWidth, setCellWidth] = useState(100);
   const [cellPadding, setCellPadding] = useState("10px");
 
@@ -45,6 +47,12 @@ const TableContainer = ({ columns, data, name }) => {
     useSortBy,
     usePagination
   );
+
+  const handleRowClick = () => {
+    if (name === "jobs") {
+      history.push("job-detail");
+    }
+  };
 
   return (
     <Fragment>
@@ -86,8 +94,10 @@ const TableContainer = ({ columns, data, name }) => {
                   border: "1px solid #ECECEC",
                   marginBottom: 18,
                   borderRadius: 11,
+                  cursor: "pointer",
                 }}
                 {...row.getRowProps()}
+                onClick={handleRowClick}
               >
                 {row.cells.map((cell) => {
                   return (

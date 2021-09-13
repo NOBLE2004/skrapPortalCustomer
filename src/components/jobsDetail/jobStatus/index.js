@@ -181,12 +181,15 @@ function JobStatus(props) {
                 //        elevation={3}>
                 <>
                     <Typography className='label-text'> {label}</Typography>
-                    <Typography className='label-text'> {'2021-03-25 09:28:01'}</Typography>
+                    <Typography className='label-date'> {'2021-03-25 09:28:01'}</Typography>
                     </>
                  // </Paper>
             );
         else return (
-            <Typography className='disbale-label-text'> {label}</Typography>
+            <>
+            <Typography className='label-text'> {label}</Typography>
+            <Typography className='label-date'> {'2021-03-25 09:28:01'}</Typography>
+            </>
         )
     };
     const handleReset = () => {

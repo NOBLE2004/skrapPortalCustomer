@@ -10,22 +10,26 @@ import MainJobs from "./containers/mainJobs/MainJobs";
 import MainTiping from "./containers/mainTiping/MainTiping";
 import MainTickets from "./containers/mainTickets/MainTickets";
 import MainJobDetail from "./containers/mainJobDetail/MainJobDetail";
+import PrivateRoute from "./routes/PrivateRoute";
+import PublicRoute from "./routes/PublicRoute";
+
 const history = createBrowserHistory();
 
 function App() {
   return (
     <Router history={history}>
       <Switch>
-        <Route path="/login" component={() => <SignIn />} exact />
+        {/* <Route path="/login" component={() => <SignIn />} exact /> */}
+        <PublicRoute path="/login" component={() => <SignIn />} exact restricted={true}/>
         <Layout>
-          <Route path="/" component={() => <DashBoard />} exact />
-          <Route path="/dashboard" component={() => <DashBoard />} />
-          <Route path="/site-managers" component={() => <SiteManagers />} />
-          <Route path="/sites" component={() => <Sites />} /> 
-          <Route path="/jobs" component={() => <MainJobs />} /> 
-          <Route path="/tiping" component={() => <MainTiping />} /> 
-          <Route path="/tickets" component={() => <MainTickets />} /> 
-          <Route path="/job-detail" component={() => <MainJobDetail />} />
+          <PrivateRoute path="/" component={() => <DashBoard />} exact />
+          <PrivateRoute path="/dashboard" component={() => <DashBoard />} />
+          <PrivateRoute path="/site-managers" component={() => <SiteManagers />} />
+          <PrivateRoute path="/sites" component={() => <Sites />} /> 
+          <PrivateRoute path="/jobs" component={() => <MainJobs />} /> 
+          <PrivateRoute path="/tiping" component={() => <MainTiping />} /> 
+          <PrivateRoute path="/tickets" component={() => <MainTickets />} /> 
+          <PrivateRoute path="/job-detail" component={() => <MainJobDetail />} />
         </Layout>
       </Switch>
     </Router>

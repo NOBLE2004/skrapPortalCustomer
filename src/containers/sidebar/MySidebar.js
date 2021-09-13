@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "@material-ui/core/styles";
 import { Drawer, IconButton, List } from "@material-ui/core";
+import { useHistory } from "react-router";
 import clsx from "clsx";
 import {
   ListItem,
@@ -18,6 +19,7 @@ import "./mySidebar.scss";
 
 const drawerWidth = 240;
 const MySidebar = (props) => {
+  const history = useHistory()
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(true);
@@ -101,7 +103,11 @@ const MySidebar = (props) => {
     }
     setSubMenu(index);
   };
-
+  const handleLogout = () => {
+    localStorage.clear();
+    history.push("/login");
+    window.location.reload(false);
+  }
   return (
     <Drawer
       variant="permanent"
@@ -192,12 +198,12 @@ const MySidebar = (props) => {
                   " " +
                   (userData.personal_detail.hasOwnProperty("last_name") &&
                     userData.personal_detail?.last_name)) ||
-              "unknown"
+              "Test"
             }
             className="current-user"
           />
         </ListItem>
-        <button className="sidebar-signout-btn">Sign out</button>
+        <button className="sidebar-signout-btn" onClick={handleLogout}>Sign out</button>
       </div>
     </Drawer>
   );

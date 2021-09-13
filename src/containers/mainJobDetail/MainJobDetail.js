@@ -6,9 +6,10 @@ import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDet
 import DriverDetail from "../../components/driver/DriverDetail";
 import FindPostCode from "../../components/jobsDetail/findPostCode/FindPostCode";
 import PaymentDetail from "../../components/jobsDetail/paymentDetail/PaymentDetail";
-import SmallCard from "../../components/jobsDetail/smallCard/SmallCard"
+import SmallCard from "../../components/jobsDetail/smallCard/SmallCard";
 import JobNotes from "../../components/jobsDetail/jobNote/JobNotes";
 import JobStatus from "../../components/jobsDetail/jobStatus";
+import { chatIcon } from "../../assets/images";
 const MainJobDetail = () => {
   return (
     <>
@@ -18,13 +19,19 @@ const MainJobDetail = () => {
           <JobDetail />
           <FindPostCode />
           <PaymentDetail />
-          
+
           <JobStatus />
           <JobNotes />
         </Grid>
         <Grid item md={5}>
           <DriverDetail />
           <SmallCard />
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item md={12} style={{textAlign:"right" , cursor:"pointer"}}>
+         <img src={chatIcon} alt="chat-icon"/>
         </Grid>
       </Grid>
     </>

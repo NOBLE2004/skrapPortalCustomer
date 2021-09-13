@@ -8,16 +8,22 @@ import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
 import { enRouteMarker } from "../../assets/images";
 import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRenderer";
-import "./mainjobs.scss";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
+import CreateJob from "../../components/modals/createJob/CreateJob";
+import "./mainjobs.scss";
 
 const MainJobs = () => {
   const [isMapView, setMapView] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
+  const [isJobBooked, setIsJobBooked] = useState(false);
 
   const handleShowMap = () => {
     setMapView(!isMapView);
+  };
+
+  const handleBookJob = () => {
+    setIsJobBooked(true);
   };
   const handleMarkerClick = () => {
     setShowInfo(true);
@@ -32,6 +38,7 @@ const MainJobs = () => {
         bookSite={"Book Job"}
         handleShowMap={handleShowMap}
         isMap={isMapView}
+        handleBookJob={handleBookJob}
       >
         <CommonJobStatus
           jobStatus={{
@@ -84,7 +91,7 @@ const MainJobs = () => {
       ) : (
         <>
           <div className="jobs-search-header">
-            <CommonSearch />
+            <CommonSearch cname="jobs"/>
             <CommonFilter />
           </div>
           {/* <div className="live-job-title">
@@ -134,6 +141,10 @@ const MainJobs = () => {
           </Card>
         </>
       )}
+
+      {
+        isJobBooked && <CreateJob closeModal={() => setIsJobBooked(!isJobBooked)}/>
+      }
     </div>
   );
 };

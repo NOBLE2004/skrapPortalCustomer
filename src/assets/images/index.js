@@ -49,7 +49,7 @@ import envirementIcon from "./envirement.svg";
 import serviceIcon from "./service.svg";
 import supportIcon from "./support.svg";
 import appIcon from "./logo.svg";
-import showPassword from "./show_password.svg"
+import showPasswordIcon from "./show_password.svg"
 import downloadSite from "./download_sites.svg"
 import craneIcon from "./crane.svg";
 import emailIcon from "./email.svg";
@@ -59,7 +59,9 @@ import postCodeIcon from "./postCode.svg";
 import brickIcon from "./brick.svg";
 import bracketIcon from "./bracket.svg";
 import appleIcon from "./apple.svg";
+import chatIcon from "./chat.svg";
 export {
+  chatIcon,
   appleIcon,
   brickIcon,
   bracketIcon,
@@ -69,7 +71,7 @@ export {
   refreshIcon,
   craneIcon,
   downloadSite,
-  showPassword,
+  showPasswordIcon,
   appIcon,
   likeIcon,
   costIcon,

@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
 import { Grid, Card, CardContent } from "@material-ui/core";
 import { mapMarker } from "../../assets/images";
 import TipingCard from "../../components/tiping/TipingCard";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
-import { locationOval } from "../../assets/images";
+import { locationOval, craneIcon } from "../../assets/images";
 import TipingCrane from "../../components/tiping/TipingCrane";
 import "./mainTiping.scss";
 
 const MainTiping = () => {
+  const [card1, setCard1] = useState(false);
+  const [card2, setCard2] = useState(false);
+  const [card3, setCard3] = useState(false);
+  const [card4, setCard4] = useState(false);
+
+  const handleCard1 = () => {
+    setCard1(!card1);
+  };
+
+  const handleCard2 = () => {
+    setCard2(!card2);
+  };
+
+  const handleCard3 = () => {
+    setCard3(!card3);
+  };
+  const handleCard4 = () => {
+    setCard4(!card4);
+  };
   return (
     <div className="main-tiping">
       <div className="header-main">
@@ -34,17 +53,24 @@ const MainTiping = () => {
                 }
               >
                 <Marker
-                  visible={false}
+                  visible={true}
                   position={{
-                    lat: 51.5905,
+                    lat: 51.62,
                     lng: -0.70461,
                   }}
-                  icon={locationOval}
-                >
-                  <InfoWindow>
+                  icon={craneIcon}
+                  onClick={() => handleCard1()}
+                />
+                {/* {card1 && (
+                  <InfoWindow
+                    position={{
+                      lat: 51.5905,
+                      lng: -0.70461,
+                    }}
+                  >
                     <TipingCrane />
                   </InfoWindow>
-                </Marker>
+                )} */}
                 <Marker
                   visible={false}
                   position={{
@@ -52,35 +78,54 @@ const MainTiping = () => {
                     lng: -0.60461,
                   }}
                   icon={locationOval}
-                >
-                  <InfoWindow>
+                />
+                {card1 && (
+                  <InfoWindow
+                    position={{
+                      lat: 51.5705,
+                      lng: -0.60461,
+                    }}
+                  >
                     <TipingCard />
                   </InfoWindow>
-                </Marker>
+                )}
+
                 <Marker
-                  visible={false}
+                  visible={true}
                   position={{
                     lat: 51.4805,
                     lng: -0.70461,
                   }}
-                  icon={locationOval}
-                >
-                  <InfoWindow>
-                    <TipingCrane />
-                  </InfoWindow>
-                </Marker>
+                  icon={craneIcon}
+                  onClick={() => handleCard2()}
+                />
                 <Marker
                   visible={false}
                   position={{
                     lat: 51.4505,
                     lng: -0.60461,
                   }}
-                  icon={locationOval}
-                >
-                  <InfoWindow>
+                />
+                {card2 && (
+                  <InfoWindow
+                    position={{
+                      lat: 51.4505,
+                      lng: -0.60461,
+                    }}
+                  >
                     <TipingCard />
                   </InfoWindow>
-                </Marker>
+                )}
+
+                <Marker
+                  visible={true}
+                  position={{
+                    lat: 51.67963,
+                    lng: -0.15461,
+                  }}
+                  icon={craneIcon}
+                  onClick={() => handleCard3()}
+                />
 
                 <Marker
                   visible={false}
@@ -89,37 +134,27 @@ const MainTiping = () => {
                     lng: -0.05461,
                   }}
                   icon={locationOval}
-                >
-                  <InfoWindow>
+                />
+                {card3 && (
+                  <InfoWindow
+                    position={{
+                      lat: 51.65063,
+                      lng: -0.05461,
+                    }}
+                  >
                     <TipingCard />
                   </InfoWindow>
-                </Marker>
+                )}
 
                 <Marker
-                  visible={false}
-                  position={{
-                    lat: 51.67963,
-                    lng: -0.15461,
-                  }}
-                  icon={locationOval}
-                >
-                  <InfoWindow>
-                    <TipingCrane />
-                  </InfoWindow>
-                </Marker>
-
-                <Marker
-                  visible={false}
+                  visible={true}
                   position={{
                     lat: 51.46063,
                     lng: -0.16161,
                   }}
-                  icon={locationOval}
-                >
-                  <InfoWindow>
-                    <TipingCrane />
-                  </InfoWindow>
-                </Marker>
+                  icon={craneIcon}
+                  onClick={() => handleCard4()}
+                />
 
                 <Marker
                   visible={false}
@@ -128,11 +163,17 @@ const MainTiping = () => {
                     lng: -0.05461,
                   }}
                   icon={locationOval}
-                >
-                  <InfoWindow>
+                />
+                {card4 && (
+                  <InfoWindow
+                    position={{
+                      lat: 51.44063,
+                      lng: -0.05461,
+                    }}
+                  >
                     <TipingCard />
                   </InfoWindow>
-                </Marker>
+                )}
               </MainMap>
             </CardContent>
           </Card>

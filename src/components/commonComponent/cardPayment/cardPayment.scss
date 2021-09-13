@@ -1,0 +1,68 @@
+.addCard {
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: .25rem;
+  margin-top: 20px;
+  font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif;
+
+  .cardHeader {
+    padding: .1rem 1rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, .03);
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    display: flex;
+    flex-wrap: wrap;
+
+    p {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    .cardImages {
+      flex: 0 0 50%;
+      max-width: 50%;
+      text-align: right;
+    }
+  }
+
+  .cardBody {
+    padding: 1rem;
+
+    label {
+      display: inline-block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .MuiGrid-item {
+      padding-bottom: 0px;
+    }
+
+    .MuiGrid-container {
+      margin-bottom: 1rem;
+    }
+
+    .createCard {
+      background-color: #4caf50;
+      border-color: #4caf50;
+      color: #fff;
+    }
+
+    .createCardBtn {
+      text-transform: capitalize;
+      margin-bottom: 10px;
+      position: relative;
+
+      .MuiCircularProgress-colorPrimary {
+        width: 28px !important;
+        height: 28px !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        color: white;
+      }
+    }
+  }
+}
