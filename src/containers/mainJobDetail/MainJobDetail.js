@@ -10,6 +10,7 @@ import SmallCard from "../../components/jobsDetail/smallCard/SmallCard";
 import JobNotes from "../../components/jobsDetail/jobNote/JobNotes";
 import JobStatus from "../../components/jobsDetail/jobStatus";
 import { chatIcon } from "../../assets/images";
+import ChatWidget from "../../components/commonComponent/chatWidget/ChatWidget";
 const MainJobDetail = () => {
   return (
     <>
@@ -30,9 +31,12 @@ const MainJobDetail = () => {
       </Grid>
 
       <Grid container>
-        <Grid item md={12} style={{textAlign:"right" , cursor:"pointer"}}>
+        {/* <Grid item md={12} style={{textAlign:"right" , cursor:"pointer"}}>
          <img src={chatIcon} alt="chat-icon"/>
-        </Grid>
+        </Grid> */}
+        {/* <Grid item md={12}>
+          <ChatWidget />
+        </Grid> */}
       </Grid>
     </>
   );

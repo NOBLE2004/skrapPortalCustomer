@@ -20,12 +20,12 @@ const styles = {
 
     },
     root: {
-        width: '205px',
+        width: '115px',
         border: 0,
         height: '8px',
         backgroundColor: '#eaeaf0',
         borderRadius: 1,
-        marginLeft: '-59px'
+        marginLeft: '-45px',
     },
 
 
@@ -61,14 +61,14 @@ function getConnector(index) {
             return 'linear-gradient( rgba(255, 166, 38, 1), rgba(255, 166, 38, 1), rgba(255, 166, 38, 1))';
             case 5:
             return 'linear-gradient( rgba(255, 166, 38, 1), rgba(255, 166, 38, 1), rgba(255, 166, 38, 1))';
-        // case 4:
-        //     return 'linear-gradient( rgba(255, 188, 57, 1),rgba(255, 188, 57, 1), rgba(255, 188, 57, 1))';
-        // case 5:
-        //     return 'linear-gradient( rgba(128, 183, 75, 1), rgba(128, 183, 75, 1),rgba(128, 183, 75, 1))';
-        // case 6:
-        //     return 'linear-gradient(rgb(123, 230, 179), rgb(55, 191, 127), rgb(43, 206, 129))';
-        // case 7:
-        //     return 'linear-gradient( rgba(0, 178, 93, 1), rgba(0, 178, 93, 1), rgba(0, 178, 93, 1))'
+        case 4:
+            return 'linear-gradient( rgba(255, 188, 57, 1),rgba(255, 188, 57, 1), rgba(255, 188, 57, 1))';
+        case 5:
+            return 'linear-gradient( rgba(128, 183, 75, 1), rgba(128, 183, 75, 1),rgba(128, 183, 75, 1))';
+        case 6:
+            return 'linear-gradient(rgb(123, 230, 179), rgb(55, 191, 127), rgb(43, 206, 129))';
+        case 7:
+            return 'linear-gradient( rgba(0, 178, 93, 1), rgba(0, 178, 93, 1), rgba(0, 178, 93, 1))'
     }
 }
 

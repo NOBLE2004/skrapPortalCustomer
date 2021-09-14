@@ -46,7 +46,7 @@ const SpendChart = () => {
           </div>
         </div>
         <Box className="spend-bar-chart">
-          <Bar data={spendChartData} options={spendChartOptions} height={190}/>
+          <Bar data={spendChartData} options={spendChartOptions} height={231} width={448} />
         </Box>
       </CardContent>
     </Card>

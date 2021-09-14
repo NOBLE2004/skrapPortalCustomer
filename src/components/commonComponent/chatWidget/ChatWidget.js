@@ -1,27 +1,45 @@
-import React, { useEffect } from "react";
-import { Widget, addResponseMessage } from "react-chat-widget";
-import { locationOval } from "../../../assets/images/index";
-import 'react-chat-widget/lib/styles.css';
-
-function ChatWidget() {
-  useEffect(() => {
-    addResponseMessage("Welcome to this awesome chat!");
-  }, []);
-
-  const handleNewUserMessage = (newMessage) => {
-    console.log(`New message incoming! ${newMessage}`);
-    // Now send the message throught the backend API
-  };
-  return (
-    <div className="chat-widget">
-      <Widget
-        title="My new awesome title"
-        subtitle="And my cool subtitle"
-        profileAvatar={locationOval}
-        handleNewUserMessage={handleNewUserMessage}
+import React, {Component} from 'react'
+import {Launcher} from 'react-chat-window'
+import {chatIcon} from "../../../assets/images/index" 
+class ChatWidget extends Component {
+ 
+  constructor() {
+    super();
+    this.state = {
+      messageList: []
+    };
+  }
+ 
+  _onMessageWasSent(message) {
+    this.setState({
+      messageList: [...this.state.messageList, message]
+    })
+  }
+ 
+  _sendMessage(text) {
+    if (text.length > 0) {
+      this.setState({
+        messageList: [...this.state.messageList, {
+          author: 'them',
+          type: 'text',
+          data: { text }
+        }]
+      })
+    }
+  }
+ 
+  render() {
+    return (<div>
+      <Launcher
+        agentProfile={{
+          teamName: 'Skrap Portal',
+        }}
+        onMessageWasSent={this._onMessageWasSent.bind(this)}
+        messageList={this.state.messageList}
+        showEmoji
       />
-    </div>
-  );
+    </div>)
+  }
 }
 
 export default ChatWidget;

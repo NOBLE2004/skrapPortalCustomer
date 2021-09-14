@@ -13,7 +13,9 @@ import { loginHeader } from "../../../environment";
 import Header from "../../../components/header/Header";
 import { showPasswordIcon } from "../../../assets/images";
 import { Redirect } from "react-router-dom";
+import useFetch from "../../../hooks/useFetch";
 import "./signin.scss";
+import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
@@ -100,6 +102,8 @@ const SignIn = (props) => {
       });
       return;
     }
+
+    let data = { user_name: "+44" + phone, password: password, user_type: 1 };
     setState({ ...state, isLoading: true });
     if (phone === "test" && password === "test") {
       localStorage.setItem("isAuthenticated", true);
@@ -112,6 +116,27 @@ const SignIn = (props) => {
         setState({ ...state, isLoading: false, isError: true });
       }, 1000);
     }
+    // axios
+    //   .post("https://apitest2.skrap.app/scrapapi/login", data)
+    //   .then((res) => {
+    //     if (Object.keys(res.data.result).length !== 0) {
+    //       localStorage.setItem("token" , res.data.result.token)
+    //       localStorage.setItem("isAuthenticated" , true)
+    //       history.push('/')
+    //       setState({ ...state, isLoading: false, isAuth: true , isError:false });
+    //     } else {
+    //       setState({
+    //         ...state,
+    //         isLoading: false,
+    //         isError: true,
+    //         isAuth: false,
+    //       });
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.message);
+    //     setState({ ...state, isLoading: false, isError: true, isAuth: false });
+    //   });
     // await props.userLogin({ phone, password });
   };
 

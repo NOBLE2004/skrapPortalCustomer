@@ -13,6 +13,7 @@ import "./dashboard.scss";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
+import useFetch from "../../hooks/useFetch"
 import {
   assignMarker,
   pendingMarker,
@@ -72,9 +73,7 @@ const markersList = [
 ]
 
 const DashBoard = () => {
-
   const [showInfoIndex, setShowInfoIndex] = useState(null);
-
   return (
     <div>
       <Grid container spacing={3}>
@@ -93,13 +92,13 @@ const DashBoard = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={3}>
-        <Grid item md={4}>
+      <Grid container spacing={3} className="spend-service-main">
+        {/* <Grid item md={4}> */}
           <SpendChart />
-        </Grid>
-        <Grid item md={8}>
+        {/* </Grid> */}
+        {/* <Grid item md={8}> */}
           <DashboardServices />
-        </Grid>
+        {/* </Grid> */}
       </Grid>
 
       <Grid container spacing={3}>

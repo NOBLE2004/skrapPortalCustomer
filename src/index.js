@@ -8,7 +8,6 @@ import "../src/assets/styles/index.scss";
 // import '../src/assets/fonts/basier.ttf';
 import './index.css';
 import 'react-circular-progressbar/dist/styles.css';
-import "react-chat-widget/lib/styles.css";
 ReactDOM.render(
   <Provider store={store}>
     <App />

@@ -3,6 +3,8 @@
   box-sizing: border-box;
   border-radius: 12px !important;
   box-shadow: none !important;
+  
+  margin: 20px 10px;
   .MuiCardContent-root {
     padding: 12px 12px;
   }
@@ -57,11 +59,4 @@
   .MuiInput-underline:before {
     border-bottom: 1px solid #52a9dd !important;
   }
-
-  // .spend-bar-chart{
-  //   height: 185px;
-  //   .barchart-main{
-  //     height: fit-content;
-  //   }
-  // }
 }
