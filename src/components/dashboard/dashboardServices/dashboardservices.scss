@@ -36,8 +36,9 @@
   }
   .progress-main {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     padding-top: 60px;
+    overflow: auto;
     .circular-progress {
       width: 180px;
       height: 180px;
@@ -64,6 +65,7 @@
     .progress-sub {
       display: flex;
       align-items: center;
+      padding-bottom: 10px;
       .order-percentage {
         .order-title {
           font-family: "BasierCircleReg";
@@ -75,6 +77,7 @@
           align-items: center;
           text-align: center;
           color: #52a9dd;
+          width: max-content;
         }
         .orders {
           font-family: "BasierCircleReg";
@@ -88,6 +91,9 @@
           text-align: center;
           color: #000000;
         }
+      }
+      .order-percentage:last-child{
+        padding-right: 10px;
       }
     }
   }

@@ -8,7 +8,7 @@ import "./dashboardservices.scss";
 const DashboardServices = ({ servicesData }) => {
   const classes = dashboardServiceStyle();
   const [showValue, setShowValue] = useState(false);
-  const { Cage, Skip, Grab , NumberOfJobs  } = servicesData;
+  const { Cage, Skip, Grab, NumberOfJobs , Aggregate , PortableToilet } = servicesData;
   return (
     <div className="dashboard-services-main">
       <div className="services-main">
@@ -34,13 +34,24 @@ const DashboardServices = ({ servicesData }) => {
           <div className="circular-progress">
             <p>Skips</p>
             <CircularProgressbar
-              value={Skip ? Skip.count  : "50"}
-              text={showValue ? (Skip ? '£'+ Skip.total.slice(0 , Skip.total.length - 3) : "") : Skip ? Skip.count + "%" : "50%"}
+              value={Skip ? Skip.count : "50"}
+              text={
+                showValue
+                  ? Skip
+                    ? "£" + Skip.total.slice(0, Skip.total.length - 3)
+                    : ""
+                  : Skip
+                  ? Skip.count + "%"
+                  : "50%"
+              }
               strokeWidth="7"
             />
           </div>
           <div className="order-percentage">
-            <span className="order-title"> {Skip ? Skip.count : 0} / {NumberOfJobs} </span>
+            <span className="order-title">
+              {" "}
+              {Skip ? Skip.count : 0} / {NumberOfJobs}{" "}
+            </span>
             <span className="orders">orders</span>
           </div>
         </div>
@@ -49,13 +60,23 @@ const DashboardServices = ({ servicesData }) => {
           <div className="circular-progress">
             <p>Grab</p>
             <CircularProgressbar
-              value={Grab ? Grab.count  : "50"}
-              text={showValue ? (Grab ? '£'+ Grab.total.slice(0 , Grab.total.length - 3) : "") : Grab ? Grab.count + "%" : "50%"}
+              value={Grab ? Grab.count : "50"}
+              text={
+                showValue
+                  ? Grab
+                    ? "£" + Grab.total.slice(0, Grab.total.length - 3)
+                    : ""
+                  : Grab
+                  ? Grab.count + "%"
+                  : "50%"
+              }
               strokeWidth="7"
             />
           </div>
           <div className="order-percentage">
-            <span className="order-title">{Grab ? Grab.count : 0} / {NumberOfJobs} </span>
+            <span className="order-title">
+              {Grab ? Grab.count : 0} / {NumberOfJobs}{" "}
+            </span>
             <span className="orders">orders</span>
           </div>
         </div>
@@ -64,13 +85,73 @@ const DashboardServices = ({ servicesData }) => {
           <div className="circular-progress">
             <p>Cage</p>
             <CircularProgressbar
-              value={Cage ? Cage.count  : "50"}
-              text={showValue ? (Cage ? '£'+ Cage.total.slice(0 , Cage.total.length - 3) : "") : Cage ? Cage.count + "%" : "50%"}
+              value={Cage ? Cage.count : "50"}
+              text={
+                showValue
+                  ? Cage
+                    ? "£" + Cage.total.slice(0, Cage.total.length - 3)
+                    : ""
+                  : Cage
+                  ? Cage.count + "%"
+                  : "50%"
+              }
               strokeWidth="7"
             />
           </div>
           <div className="order-percentage">
-            <span className="order-title">{Cage ? Cage.count : 0 } / {NumberOfJobs} </span>
+            <span className="order-title">
+              {Cage ? Cage.count : 0} / {NumberOfJobs}{" "}
+            </span>
+            <span className="orders">orders</span>
+          </div>
+        </div>
+
+        <div className="progress-sub">
+          <div className="circular-progress">
+            <p>Aggregate</p>
+            <CircularProgressbar
+              value={Aggregate ? Aggregate.count : "50"}
+              text={
+                showValue
+                  ? Aggregate
+                    ? "£" + Aggregate.total.slice(0, Aggregate.total.length - 3)
+                    : ""
+                  : Aggregate
+                  ? Aggregate.count + "%"
+                  : "50%"
+              }
+              strokeWidth="7"
+            />
+          </div>
+          <div className="order-percentage">
+            <span className="order-title">
+              {Aggregate ? Aggregate.count : 0} / {NumberOfJobs}{" "}
+            </span>
+            <span className="orders">orders</span>
+          </div>
+        </div>
+
+        <div className="progress-sub">
+          <div className="circular-progress">
+            <p>PortableToilet</p>
+            <CircularProgressbar
+              value={PortableToilet ? PortableToilet.count : "50"}
+              text={
+                showValue
+                  ? PortableToilet
+                    ? "£" + PortableToilet.total.slice(0, PortableToilet.total.length - 3)
+                    : ""
+                  : PortableToilet
+                  ? PortableToilet.count + "%"
+                  : "50%"
+              }
+              strokeWidth="7"
+            />
+          </div>
+          <div className="order-percentage">
+            <span className="order-title">
+              {PortableToilet ? PortableToilet.count : 0} / {NumberOfJobs}{" "}
+            </span>
             <span className="orders">orders</span>
           </div>
         </div>

@@ -83,13 +83,17 @@ const SignIn = (props) => {
         if (Object.keys(res.data.result).length !== 0) {
           localStorage.setItem("token", res.data.result.token);
           localStorage.setItem("isAuthenticated", true);
-          history.push("/");
           setState({
             ...state,
             isLoading: false,
             isAuth: true,
             isError: false,
           });
+          setTimeout(() => {
+            history.push("/");
+            window.location.reload(false);
+          }, 1000);
+          
         } else {
           setState({
             ...state,
