@@ -6,45 +6,18 @@ import { connect } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
 import FadeLoader from "react-spinners/FadeLoader";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { makeStyles } from "@material-ui/core/styles";
 import NavBar from "../../../components/Navbar/NavBar";
 import Footer from "../../../components/Footer/FooterItem";
 import { loginHeader } from "../../../environment";
 import Header from "../../../components/header/Header";
 import { showPasswordIcon } from "../../../assets/images";
-import { Redirect } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch";
+import { signInStyles } from "../../../assets/styles/muiStyles/MuiStyles";
+import AuthService from "../../../services/auth.service";
 import "./signin.scss";
-import axios from "axios";
 
-const useStyles = makeStyles({
-  root: {
-    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#29a7df",
-    },
-    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#29a7df",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#29a7df",
-    },
-  },
-
-  error: {
-    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "red",
-    },
-    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "red",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "red",
-    },
-  },
-});
 const SignIn = (props) => {
   const history = useHistory();
-  const classes = useStyles();
+  const classes = signInStyles();
   const [state, setState] = useState({
     phone: "",
     password: "",
@@ -64,7 +37,7 @@ const SignIn = (props) => {
   const checkingError = (name, value) => {
     switch (name) {
       case "phone":
-        errors[name] = value.length === 0 ? "Required" : "";
+        errors[name] = value.length < 10 ? "Required" : "";
         break;
       case "password":
         errors[name] = value.length === 0 ? "Required" : "";
@@ -105,38 +78,32 @@ const SignIn = (props) => {
 
     let data = { user_name: "+44" + phone, password: password, user_type: 1 };
     setState({ ...state, isLoading: true });
-    if (phone === "test" && password === "test") {
-      localStorage.setItem("isAuthenticated", true);
-      setState({ ...state, isLoading: false, isAuth: true });
-      setTimeout(() => {
-        history.push("/");
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        setState({ ...state, isLoading: false, isError: true });
-      }, 1000);
-    }
-    // axios
-    //   .post("https://apitest2.skrap.app/scrapapi/login", data)
-    //   .then((res) => {
-    //     if (Object.keys(res.data.result).length !== 0) {
-    //       localStorage.setItem("token" , res.data.result.token)
-    //       localStorage.setItem("isAuthenticated" , true)
-    //       history.push('/')
-    //       setState({ ...state, isLoading: false, isAuth: true , isError:false });
-    //     } else {
-    //       setState({
-    //         ...state,
-    //         isLoading: false,
-    //         isError: true,
-    //         isAuth: false,
-    //       });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //     setState({ ...state, isLoading: false, isError: true, isAuth: false });
-    //   });
+    AuthService.login(data)
+      .then((res) => {
+        if (Object.keys(res.data.result).length !== 0) {
+          localStorage.setItem("token", res.data.result.token);
+          localStorage.setItem("isAuthenticated", true);
+          history.push("/");
+          setState({
+            ...state,
+            isLoading: false,
+            isAuth: true,
+            isError: false,
+          });
+        } else {
+          setState({
+            ...state,
+            isLoading: false,
+            isError: true,
+            isAuth: false,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setState({ ...state, isLoading: false, isError: true, isAuth: false });
+      });
+
     // await props.userLogin({ phone, password });
   };
 
@@ -157,18 +124,18 @@ const SignIn = (props) => {
               size="small"
               name="phone"
               type="text"
-              // InputProps={{
-              //   startAdornment: (
-              //     <InputAdornment position="start">+44</InputAdornment>
-              //   ),
-              // }}
-              // inputProps={{ maxLength: 10 }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">+44</InputAdornment>
+                ),
+              }}
+              inputProps={{ maxLength: 10 }}
               className={
                 errors["phone"].length > 0 ? classes.error : classes.root
               }
               onChange={(e) => handleChange(e)}
               value={phone}
-              // error={errors["phone"].length > 0 ? true : false}
+              error={errors["phone"].length > 0 ? true : false}
             />
             <TextField
               margin="normal"
@@ -197,7 +164,7 @@ const SignIn = (props) => {
               onChange={(e) => handleChange(e)}
               name="password"
               inputProps={() => {}}
-              // error={errors["password"].length > 0 ? true : false}
+              error={errors["password"].length > 0 ? true : false}
             />
           </div>
           {isLoading && (

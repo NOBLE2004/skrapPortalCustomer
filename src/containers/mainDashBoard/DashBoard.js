@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useEffect, useState } from "react";
 import TotalSpend from "../../components/dashboard/totalSpend/TotalSpend";
 import JobStatus from "../../components/dashboard/jobStatus/JobStatus";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
@@ -7,84 +7,96 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import SpendChart from "../../components/dashboard/spendChart/SpendChart";
 import DashboardServices from "../../components/dashboard/dashboardServices/DashboardServices";
-import { mapMarker } from "../../assets/images";
-import { dummyStatus } from "../../environment";
-import "./dashboard.scss";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
-import useFetch from "../../hooks/useFetch"
+import DashboardService from "../../services/dashboard.service";
 import {
   assignMarker,
   pendingMarker,
   cancelMarker,
   enRouteMarker,
   completeMarker,
-  deliveredMarker
+  deliveredMarker,
+  mapMarker,
 } from "../../assets/images";
-
+import "./dashboard.scss";
 
 const markersList = [
   {
     lat: 51.5905,
     lng: -0.70461,
-    icon: assignMarker
+    icon: assignMarker,
   },
   {
     lat: 51.5705,
     lng: -0.60461,
-    icon: pendingMarker
+    icon: pendingMarker,
   },
   {
     lat: 51.4805,
     lng: -0.70461,
-    icon: cancelMarker
+    icon: cancelMarker,
   },
   {
     lat: 51.4505,
     lng: -0.60461,
-    icon: enRouteMarker
+    icon: enRouteMarker,
   },
   {
     lat: 51.65063,
     lng: -0.05461,
-    icon: completeMarker
+    icon: completeMarker,
   },
   {
     lat: 51.67963,
     lng: -0.15461,
-    icon: deliveredMarker
+    icon: deliveredMarker,
   },
   {
     lat: 51.46063,
     lng: -0.16161,
-    icon: deliveredMarker
+    icon: deliveredMarker,
   },
   {
     lat: 51.44063,
     lng: -0.05461,
-    icon: deliveredMarker
+    icon: deliveredMarker,
   },
   {
     lat: 51.55063,
     lng: -0.30461,
-    icon: deliveredMarker
-  }
-]
+    icon: deliveredMarker,
+  },
+];
 
 const DashBoard = () => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
+  const [dashBoardData, setDashBoardData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    DashboardService.getDashboardData()
+      .then((res) => {
+        setDashBoardData(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  }, []);
   return (
     <div>
       <Grid container spacing={3}>
         <Grid item md={4}>
-          <TotalSpend />
+          <TotalSpend
+            totalSpend={dashBoardData.TotalSpend}
+          />
         </Grid>
         <Grid item md={6}>
           <div className="job-status-outer">
-            {dummyStatus.map((status, index) => (
-              <JobStatus jobStatus={status} key={index} />
-            ))}
+            <JobStatus jobStatus={dashBoardData} />
           </div>
         </Grid>
         <Grid item md={2}>
@@ -93,12 +105,8 @@ const DashBoard = () => {
       </Grid>
 
       <Grid container spacing={3} className="spend-service-main">
-        {/* <Grid item md={4}> */}
-          <SpendChart />
-        {/* </Grid> */}
-        {/* <Grid item md={8}> */}
-          <DashboardServices />
-        {/* </Grid> */}
+        <SpendChart />
+        <DashboardServices servicesData={dashBoardData} />
       </Grid>
 
       <Grid container spacing={3}>
@@ -123,29 +131,27 @@ const DashBoard = () => {
                   <div style={{ height: `100%`, borderRadius: "12px" }} />
                 }
               >
-                {
-                  markersList.map((data, index) => {
-                    return (
-                      <Marker
-                        key={index}
-                        position={{
-                          lat: data.lat,
-                          lng: data.lng,
-                        }}
-                        icon={data.icon}
-                        onClick={() => {
-                          setShowInfoIndex(index);
-                        }}
-                      >
-                        {(showInfoIndex == index) &&
-                          <InfoWindow>
-                            <TipingCard />
-                          </InfoWindow>
-                        }
-                      </Marker>
-                    )
-                  })
-                }
+                {markersList.map((data, index) => {
+                  return (
+                    <Marker
+                      key={index}
+                      position={{
+                        lat: data.lat,
+                        lng: data.lng,
+                      }}
+                      icon={data.icon}
+                      onClick={() => {
+                        setShowInfoIndex(index);
+                      }}
+                    >
+                      {showInfoIndex == index && (
+                        <InfoWindow>
+                          <TipingCard />
+                        </InfoWindow>
+                      )}
+                    </Marker>
+                  );
+                })}
               </MainMap>
             </CardContent>
           </Card>
