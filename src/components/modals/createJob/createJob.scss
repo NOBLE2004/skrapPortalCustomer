@@ -1,0 +1,496 @@
+.creatJobModal {
+  .MuiPaper-root {
+    border-radius: 32px;
+  }
+  .MuiDialogContent-dividers {
+    border-top: none;
+  }
+  // .MuiDialogContent-root{
+  //   overflow: hidden;
+  // }
+  .MuiDialog-paperWidthSm {
+    width: 530px;
+  }
+
+  .MuiTypography-h6 {
+    font-size: 18px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+
+    color: #0d0d39;
+  }
+
+  .MuiFormControl-marginDense {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .MuiDialogContent-dividers {
+    padding: 16px;
+  }
+
+  input,
+  .MuiInputLabel-outlined {
+    font-size: 12px;
+  }
+
+  .wasteTypeWp {
+    a {
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 16px;
+      display: flex;
+      align-items: flex-end;
+      color: #0176ff;
+    }
+  }
+
+  .MuiSelect-select {
+    font-size: 12px;
+    font-family: "DM Sans";
+  }
+
+  .newCard {
+    background-color: #2196f3;
+    color: white;
+    text-transform: initial;
+    display: block;
+
+    &:hover {
+      background-color: #2196f3;
+      // opacity: .8;
+    }
+  }
+}
+
+.creatJobModal {
+  p {
+    margin-bottom: 5px;
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #4b686e;
+  }
+
+  input {
+    font-weight: normal;
+    font-size: 12px;
+  }
+}
+
+.dateTimeWp {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+
+  p {
+    margin-top: 10px;
+  }
+
+  .MuiInput-underline:before {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42) !important;
+  }
+
+  .timeWp {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    top: -8px;
+
+    label {
+      color: #fff;
+      background-color: #0c7cd5;
+      border-color: #0b75c9;
+      padding: 7px 6px;
+      font-size: 0.765625rem;
+      line-height: 1.5;
+      border-radius: 0.2rem;
+      cursor: pointer;
+    }
+
+    .firstShift {
+      border-top-right-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
+    }
+
+    .secondShift {
+      border-top-left-radius: 0px !important;
+      border-bottom-left-radius: 0px !important;
+    }
+
+    .active {
+      background-color: #0a6fc0 !important;
+      border-width: 0px !important;
+    }
+  }
+}
+
+.dateTimeWp .MuiFormControl-marginNormal {
+  margin-top: 0px;
+}
+
+.serviceWp {
+  display: flex;
+  align-items: flex-end;
+  gap: 40px;
+}
+
+.customerSec {
+  p {
+    margin-top: 0px;
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #4b686e;
+  }
+
+  a {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    display: flex;
+    align-items: flex-end;
+    color: #0176ff;
+    margin-top: 5px;
+  }
+}
+
+.addressSec {
+  p {
+    margin-top: 10px;
+  }
+
+  input {
+    padding: 5px !important;
+  }
+}
+
+.serviceWp p {
+  margin-top: 7px;
+}
+
+.serviceWp .service {
+  width: 50%;
+}
+
+.serviceWp .service > div {
+  width: 100%;
+}
+
+.serviceCostWp {
+  display: flex;
+  gap: 20px;
+}
+
+.serviceCostWp p,
+.serviceWp p {
+  margin-bottom: 5px;
+}
+
+.paymentWp {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.paymentWp .payment {
+  width: 50%;
+}
+
+.paymentWp .payment > div {
+  width: 92%;
+}
+
+.paymentWp .discount {
+  width: 110px;
+}
+
+.note textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  border-color: rgba(0, 0, 0, 0.23);
+}
+
+.creatJobModal .confirmJob {
+  display: block;
+  margin: auto;
+  border-radius: 26px;
+  letter-spacing: 2px;
+  padding: 8px 24px;
+  margin-top: 16px;
+  background: #0176ff;
+  text-transform: capitalize;
+  font-size: 14px;
+  margin-bottom: 20px;
+
+  &:hover {
+    background: #0176ff;
+    box-shadow: none;
+  }
+
+  .MuiButton-label {
+    color: white !important;
+  }
+
+  .MuiCircularProgress-colorPrimary {
+    width: 28px !important;
+    height: 28px !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    color: white;
+  }
+}
+
+// .wasteType,
+// .wasteType1 {
+//   display: flex;
+//   align-items: center;
+//   gap: 40px;
+// }
+
+.wasteType1 {
+  margin-bottom: 10px;
+
+  .wasteTypeOption {
+    width: 75%;
+  }
+
+  .cursor-pointer {
+    color: #0176ff;
+  }
+
+  .wasteLoad {
+    input {
+      padding-right: 0px !important;
+    }
+
+    p {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.wtype {
+  width: 60%;
+}
+
+.asynAddress {
+  input {
+    padding: 5px !important;
+  }
+}
+
+.permit {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+
+  span {
+    padding-bottom: 1px;
+    padding-top: 1px;
+    font-size: 12px;
+  }
+
+  .permitOption {
+    width: 50%;
+
+    .MuiIconButton-label {
+      & div {
+        width: 20px;
+        height: 20px;
+
+        & svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+    .MuiFormGroup-root {
+      display: inline-flex;
+    }
+    .MuiFormControlLabel-root {
+      cursor: default;
+    }
+  }
+
+  .permitDays {
+    width: 50%;
+
+    .MuiFormControl-root {
+      width: 100%;
+    }
+
+    .MuiInput-underline:before {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.42) !important;
+    }
+  }
+}
+
+.ListContainer {
+  width: 300px;
+  min-height: 250px;
+  max-height: 340px;
+}
+
+#menu-waste_type_id {
+  .MuiPaper-root {
+    width: 300px;
+    height: 300px;
+
+    li {
+      white-space: inherit;
+    }
+  }
+}
+
+.skipType {
+  .MuiButtonBase-root {
+    padding: 5px;
+  }
+
+  span {
+    font-size: 12px;
+    font-family: "DM Sans";
+    font-weight: 500;
+  }
+
+  .MuiIconButton-label {
+    & div {
+      width: 20px;
+      height: 20px;
+
+      & svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.MuiMenu-list {
+  li {
+    font-size: 14px;
+    font-family: "DM Sans";
+    font-weight: 500;
+  }
+}
+
+.MuiAutocomplete-noOptions {
+  font-size: 12px !important;
+}
+
+.edit-job-detail-modal {
+  .extra-service {
+    display: flex;
+    gap: 5px !important;
+    align-items: flex-end;
+    margin-bottom: 10px;
+  }
+  .extra-service .e-service {
+    width: 70%;
+  }
+  .extra-service .e-service > div {
+    width: 100%;
+  }
+  .newloader-modal {
+    position: absolute;
+    right: 30px;
+    top: 8px;
+  }
+  .MuiCircularProgress-root {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .MuiFormControl-root {
+    position: relative !important;
+  }
+  .add {
+    width: 100%;
+    color: #0176ff !important;
+    font-size: 14px;
+  }
+  .remove-update-model {
+    color: #0176ff !important;
+    font-size: 14px;
+  }
+  .error {
+    .MuiSelect-root {
+      border-color: red !important;
+      border: 1px solid;
+      border-radius: 3px;
+    }
+    input {
+      border-color: red !important;
+      border: 1px solid;
+      border-radius: 3px;
+    }
+  }
+}
+
+.MuiCircularProgress-root {
+  width: 20px !important;
+  height: 20px !important;
+}
+.newLoader {
+  position: absolute;
+  right: 28px;
+  top: 9px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #0176ff;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #0176ff;
+}
+.newDate-design {
+  background: #fbfbfc !important;
+  border: 1px solid #c2c1c0 !important;
+  box-sizing: border-box !important;
+  border-radius: 3px !important;
+  .MuiButton-label {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #0d0d39;
+    text-transform: initial;
+  }
+}
+.new-design{
+  display: flex;
+  margin-bottom: 18px;
+}

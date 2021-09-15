@@ -1,0 +1,29 @@
+.dashboard-filter-main {
+  padding: 5px 0px;
+  max-width: 190px;
+  .title {
+    font-family: 'BasierCircleBold';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    color: #0d0d39;
+  }
+  .filter-main {
+    display: flex;
+    margin-top: 18px;
+    .postcode {
+      font-family: 'BasierCircleReg';
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 16px;
+      display: flex;
+      align-items: center;
+      color: #4b686e;
+      margin-left: 8px;
+    }
+  }
+}

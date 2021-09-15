@@ -1,0 +1,31 @@
+.mapCard {
+  border-radius: 12px;
+  height: 809px;
+  padding: none;
+  .MuiCardContent-root {
+    height: 100%;
+    padding: 0px;
+    & > div {
+      height: 100%;
+    }
+  }
+}
+.jobs-search-header {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.live-job-title {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+  h1 {
+    margin-left: 10px;
+    font-family: "BasierCircleBold";
+    font-style: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #0d0d39;
+  }
+}

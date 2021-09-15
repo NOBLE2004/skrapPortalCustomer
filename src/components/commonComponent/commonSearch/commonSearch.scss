@@ -1,0 +1,28 @@
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  img {
+    height: 15px;
+  }
+
+  input {
+    padding: 3px 5px;
+    border: none;
+    outline: none;
+    font-family: "BasierCircleReg";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    color: #8b8b8b;
+
+    &::placeholder {
+      text-transform: capitalize;
+      text-transform: capitalize;
+      font-size: 12px;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+.job-status-outer {
+  display: flex;
+  justify-content: space-between;
+}
+.landfill {
+  margin: 11px 0px;
+  font-family: "BasierCircleBold";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+  color: #1d2125;
+}
+hr {
+  border-radius: 12px;
+  background: linear-gradient(
+    90deg,
+    #ff0000 4.25%,
+    #fa8c14 48.87%,
+    #00b25d 93.5%
+  );
+  height: 9px;
+}
+
+.jobMpWp {
+  margin-top: 20px;
+  .live-job-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  h1 {
+    margin-left: 10px;
+    font-family: "BasierCircleBold";
+    font-style: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #0d0d39;
+  }
+
+  .mapCard {
+    border-radius: 12px;
+    height: 809px;
+    padding: none;
+    .MuiCardContent-root {
+      height: 100%;
+      padding: 0px;
+      & > div {
+        height: 100%;
+      }
+    }
+  }
+ 
+}
+.spend-service-main{
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+}

@@ -1,0 +1,17 @@
+.rating{
+    margin-top: 21px;
+    margin-bottom: 15px;
+}
+.driver-mapCard{
+        border-radius: 12px !important;
+        height: 350px;
+        padding: none;
+        .MuiCardContent-root {
+          height: 100%;
+          padding: 0px;
+          & > div {
+            height: 100%;
+          }
+        }
+      
+}

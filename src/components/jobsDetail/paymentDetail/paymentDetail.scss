@@ -1,0 +1,57 @@
+.payment-detail-main {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  .payment-header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .header-title {
+      width: 65%;
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 23px;
+
+      color: #0d0d39;
+    }
+    .header-sub {
+      width: 35%;
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  .card-payment {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      .card-header-sub{
+          width: 60%;
+          display: flex;
+          justify-content: space-between;
+      }
+    .card-header-sub-title {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 16px;
+      color: #000000;
+    }
+    .card-header-sub-item {
+        font-family: "DM Sans";
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 16px;
+        color: #000000;
+      }
+  }
+  .card-payment:last-child{
+      margin-bottom: 0px;
+  }
+}

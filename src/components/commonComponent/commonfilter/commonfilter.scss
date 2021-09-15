@@ -1,0 +1,46 @@
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .filter-title {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #0d0d39;
+    margin-right: 15px;
+  }
+  .filter-option {
+    padding: 0px 4px;
+    cursor: pointer;
+    outline: none;
+    text-transform: capitalize;
+    background: #fbfbfc;
+    border-radius: 3px;
+    border: none;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #52a9dd;
+    height: 30px;
+    margin-right: 10px;
+  }
+  .filter-buttons {
+    margin-right: 10px;
+    span {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  .all-filters{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .MuiInput-underline:before{
+    border-bottom: none;
+  }
+}

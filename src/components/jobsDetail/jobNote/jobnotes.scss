@@ -1,0 +1,79 @@
+.job-notes-main {
+  .note-header {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    color: #0d0d39;
+    margin-bottom: 14px;
+  }
+
+  .job-note {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .job-note-date {
+      width: 30%;
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 16px;
+      color: #0d0d39;
+    }
+    .job-note-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 70%;
+
+      .note {
+        font-family: DM Sans;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 16px;
+        color: #0d0d39;
+      }
+      .add-note {
+        font-family: DM Sans;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 16px;
+        display: flex;
+        align-items: flex-end;
+        text-align: right;
+        cursor: pointer;
+        color: #52a9dd;
+      }
+    }
+  }
+  .job-note-desc {
+    display: flex;
+    justify-content: space-between;
+    margin-top:6px ;
+    .job-note-date-desc {
+      width: 30%;
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 16px;
+      color: #4b686e;
+      display: flex;
+      align-self: baseline;
+    }
+    .job-note-sub-desc {
+      width: 70%;
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 16px;
+      color: #4b686e;
+      text-align: justify;
+    }
+  }
+}

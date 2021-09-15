@@ -1,0 +1,32 @@
+.job-card-main{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.job-card{
+  border-radius: 4px;
+  padding: 10px 0px;
+  width: 200px;
+  margin-bottom: 10px;
+  box-shadow: none;
+}
+.sm-title {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  padding-left: 10px;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+.icon-setting{
+  display: flex;
+  align-items: center;
+  margin-left: 10PX;
+}
+.icon-setting:first-child{
+  margin-left: 0px;
+}

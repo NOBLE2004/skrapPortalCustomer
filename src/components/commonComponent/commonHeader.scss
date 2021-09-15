@@ -1,0 +1,27 @@
+.common-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 52px;
+  width: 100%;
+  .view-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .view-icon {
+      margin-right: 3px;
+    }
+  }
+  .common-header-links-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 22%;
+  }
+  .header-children {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+  }
+}

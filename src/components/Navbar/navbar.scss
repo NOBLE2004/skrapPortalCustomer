@@ -1,0 +1,21 @@
+.top-nav-bar {
+  background: #fff;
+  .MuiToolbar-regular{
+    min-height: unset;
+  }
+  .MuiButton-root {
+    .MuiButton-label {
+      text-transform: initial;
+      font-family: "DM Sans" !important;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 21px;
+      color: #0f2851 !important;
+    }
+  }
+
+  .MuiIconButton-root:hover {
+    background-color: unset !important;
+  }
+}

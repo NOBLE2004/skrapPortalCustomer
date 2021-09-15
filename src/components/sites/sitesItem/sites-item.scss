@@ -1,0 +1,44 @@
+.sites-item-main {
+  background: #ffffff;
+  opacity: 0.5;
+  border: 1px solid #ececec;
+  box-sizing: border-box;
+  border-radius: 11.6836px;
+  height: 62px;
+  margin-bottom: 20px;  
+  .item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .item-title {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 13px;
+    color: #4b686e;
+    padding: 10px;
+  }
+  .items-more-option {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+    align-self: flex-end;
+    padding: 0px 10px 5px 0px;
+  }
+}
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;  
+  .header-title {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #0d0d39;
+    padding: 10px;
+  }
+}

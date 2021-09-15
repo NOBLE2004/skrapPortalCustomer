@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "BasierCircleBold";
+  src: local("BasierCircleBold"),
+    url("./assets/fonts/BasierCircle-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "BasierCircleReg";
+  src: local("BasierCircleReg"),
+    url("./assets/fonts/BasierCircle-Regular.woff") format("woff");
+}

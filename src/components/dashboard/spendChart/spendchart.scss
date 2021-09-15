@@ -1,0 +1,62 @@
+.graphCard {
+  border: 2px solid #ececec;
+  box-sizing: border-box;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  
+  margin: 20px 10px;
+  .MuiCardContent-root {
+    padding: 12px 12px;
+  }
+  .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 1px solid #52a9dd;
+  }
+  .salesWp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    .salesPrice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      h1 {
+        margin: 0px;
+      }
+    }
+    .dateWp {
+      display: flex;
+      gap: 10px;
+      p {
+        font-family: "DM Sans";
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 16px;
+        color: #0d0d39;
+        opacity: 0.5;
+        margin-right: 15px;
+      }
+      .dropdown {
+        border-radius: 3px;
+        border: 1px solid #52a9dd;
+        font-weight: bold;
+        padding-left: 10px;
+        text-decoration: none;
+        border-bottom: 0px;
+        .MuiSelect-select:focus {
+          background-color: transparent;
+        }
+      }
+      .spend-filter-year {
+        display: flex;
+      }
+    }
+  }
+  .MuiCardContent-root:last-child {
+    padding-bottom: 10px !important;
+  }
+  .MuiInput-underline:before {
+    border-bottom: 1px solid #52a9dd !important;
+  }
+}
