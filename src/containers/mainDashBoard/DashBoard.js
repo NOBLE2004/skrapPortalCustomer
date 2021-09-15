@@ -86,13 +86,12 @@ const DashBoard = () => {
         setIsLoading(false);
       });
   }, []);
+
   return (
     <div>
       <Grid container spacing={3}>
         <Grid item md={4}>
-          <TotalSpend
-            totalSpend={dashBoardData.TotalSpend}
-          />
+          <TotalSpend totalSpend={dashBoardData.TotalSpend} />
         </Grid>
         <Grid item md={6}>
           <div className="job-status-outer">
@@ -131,27 +130,41 @@ const DashBoard = () => {
                   <div style={{ height: `100%`, borderRadius: "12px" }} />
                 }
               >
-                {markersList.map((data, index) => {
-                  return (
-                    <Marker
-                      key={index}
-                      position={{
-                        lat: data.lat,
-                        lng: data.lng,
-                      }}
-                      icon={data.icon}
-                      onClick={() => {
-                        setShowInfoIndex(index);
-                      }}
-                    >
-                      {showInfoIndex == index && (
-                        <InfoWindow>
-                          <TipingCard />
-                        </InfoWindow>
-                      )}
-                    </Marker>
-                  );
-                })}
+                {dashBoardData
+                  ? dashBoardData?.Map?.data.length > 0 &&
+                    dashBoardData?.Map?.data.map((data, index) => (
+                      <Marker
+                        key={index}
+                        position={{
+                          lat: data.job_location_lat
+                            ? data.job_location_lat
+                            : "51.5506351",
+                          lng: data.job_location_lng
+                            ? data.job_location_lng
+                            : "-0.0460716",
+                        }}
+                        icon={{
+                          url:
+                            data.jobStatus === "Pending"
+                              ? pendingMarker
+                              : data.jobStatus === "Delivered"
+                              ? deliveredMarker
+                              : data.jobStatus === "Completed"
+                              ? completeMarker
+                              : assignMarker,
+                        }}
+                        onClick={() => {
+                          setShowInfoIndex(index);
+                        }}
+                      >
+                        {showInfoIndex == index && (
+                          <InfoWindow>
+                            <TipingCard />
+                          </InfoWindow>
+                        )}
+                      </Marker>
+                    ))
+                  : ""}
               </MainMap>
             </CardContent>
           </Card>

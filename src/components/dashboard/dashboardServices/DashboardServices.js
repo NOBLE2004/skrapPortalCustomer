@@ -8,7 +8,7 @@ import "./dashboardservices.scss";
 const DashboardServices = ({ servicesData }) => {
   const classes = dashboardServiceStyle();
   const [showValue, setShowValue] = useState(false);
-  const { Cage, Skip, Grab } = servicesData;
+  const { Cage, Skip, Grab , NumberOfJobs  } = servicesData;
   return (
     <div className="dashboard-services-main">
       <div className="services-main">
@@ -40,7 +40,7 @@ const DashboardServices = ({ servicesData }) => {
             />
           </div>
           <div className="order-percentage">
-            <span className="order-title">25 / 50 </span>
+            <span className="order-title"> {Skip ? Skip.count : 0} / {NumberOfJobs} </span>
             <span className="orders">orders</span>
           </div>
         </div>
@@ -55,7 +55,7 @@ const DashboardServices = ({ servicesData }) => {
             />
           </div>
           <div className="order-percentage">
-            <span className="order-title">35 / 50 </span>
+            <span className="order-title">{Grab ? Grab.count : 0} / {NumberOfJobs} </span>
             <span className="orders">orders</span>
           </div>
         </div>
@@ -70,7 +70,7 @@ const DashboardServices = ({ servicesData }) => {
             />
           </div>
           <div className="order-percentage">
-            <span className="order-title">17 / 50 </span>
+            <span className="order-title">{Cage ? Cage.count : 0 } / {NumberOfJobs} </span>
             <span className="orders">orders</span>
           </div>
         </div>
