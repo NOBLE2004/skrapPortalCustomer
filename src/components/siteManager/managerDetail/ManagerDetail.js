@@ -2,7 +2,8 @@ import React from "react";
 import { Grid, Card, CardContent } from "@material-ui/core";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
 import "./managerdetail.scss";
-const ManagerDetail = ({ title }) => {
+const ManagerDetail = ({ title, siteData }) => {
+  const { manager_name, job_address, mobile_number, site_assigned, email } = siteData;
   return (
     <Card className="manager-detail-main">
       <CardContent>
@@ -23,25 +24,23 @@ const ManagerDetail = ({ title }) => {
           <Grid item md={8} className="personal-info">
             <div className="info">
               <div className="designation">Manager</div>
-              <div className="personal-title">Terri Ongolo</div>
+              <div className="personal-title">{manager_name}</div>
             </div>
             <div className="info">
               <div className="designation">Site Assigned</div>
-              <div className="personal-title">Hackney Site</div>
+              <div className="personal-title">{site_assigned}</div>
             </div>
             <div className="info">
               <div className="designation">Address</div>
-              <div className="personal-title">
-                113 Ibsley, Gardens London, SW15 4NQ
-              </div>
+              <div className="personal-title">{job_address}</div>
             </div>
             <div className="info">
               <div className="designation">Email</div>
-              <div className="personal-title">terriongolo@gmail.com</div>
+              <div className="personal-title">{email}</div>
             </div>
             <div className="info">
               <div className="designation">Phone</div>
-              <div className="personal-title">0745678955</div>
+              <div className="personal-title">{mobile_number}</div>
             </div>
           </Grid>
         </Grid>
