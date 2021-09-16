@@ -27,7 +27,7 @@ export const jobsUseStyles = makeStyles((theme) => ({
   },
 }));
 
-export const signInStyles = makeStyles({
+export const textFieldStyles = makeStyles({
   root: {
     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
       borderColor: "#29a7df",

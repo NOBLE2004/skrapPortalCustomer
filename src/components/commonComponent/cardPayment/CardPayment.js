@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import axios from "axios";
+import PaymentService from "../../../services/payment.service"
 import "./cardPayment.scss";
 
 export default function CardPayment({user_id, handleSaveNewCard, setOpen}) {
@@ -85,51 +85,51 @@ export default function CardPayment({user_id, handleSaveNewCard, setOpen}) {
 
         // setState({...state, isLoading: true});
         let expiryDate = cardExpiry.split(" ");
-        // PaymentService.create({
-        //     "card_holder_name": cardHolderName,
-        //     "card_number": cardNumber,
-        //     "cvv": cardCVC,
-        //     "exp_month": expiryDate[0],
-        //     "exp_year": expiryDate[1],
-        //     "user_id": user_id
-        // }).then(response => {
-        //     if (response.data.description === "card created Successfully") {
-        //         handleSaveNewCard(response.data.description);
-        //     }
-        //     if (response.data.description === "Your card number is incorrect.") {
-        //         setState({
-        //             ...state,
-        //             isLoading: false,
-        //             notice: {
-        //                 type: 'error',
-        //                 text: response.data.description,
-        //             }
-        //         });
-        //         return;
-        //     }
-        //     setState({
-        //         ...state,
-        //         isLoading: false,
-        //         disabled: true,
-        //         notice: {
-        //             type: 'success',
-        //             text: response.data.description,
-        //         }
-        //     });
-        //     setTimeout(() => {
-        //         setOpen(false)
-        //     }, 2000)
-        // })
-        //     .catch(error => {
-        //         setState({
-        //             ...state,
-        //             isLoading: false,
-        //             notice: {
-        //                 type: 'error',
-        //                 text: error.message,
-        //             }
-        //         })
-        //     })
+        PaymentService.create({
+            "card_holder_name": cardHolderName,
+            "card_number": cardNumber,
+            "cvv": cardCVC,
+            "exp_month": expiryDate[0],
+            "exp_year": expiryDate[1],
+            "user_id": user_id
+        }).then(response => {
+            if (response.data.description === "card created Successfully") {
+                handleSaveNewCard(response.data.description);
+            }
+            if (response.data.description === "Your card number is incorrect.") {
+                setState({
+                    ...state,
+                    isLoading: false,
+                    notice: {
+                        type: 'error',
+                        text: response.data.description,
+                    }
+                });
+                return;
+            }
+            setState({
+                ...state,
+                isLoading: false,
+                disabled: true,
+                notice: {
+                    type: 'success',
+                    text: response.data.description,
+                }
+            });
+            setTimeout(() => {
+                setOpen(false)
+            }, 2000)
+        })
+            .catch(error => {
+                setState({
+                    ...state,
+                    isLoading: false,
+                    notice: {
+                        type: 'error',
+                        text: error.message,
+                    }
+                })
+            })
     };
 
     return (
@@ -150,28 +150,29 @@ export default function CardPayment({user_id, handleSaveNewCard, setOpen}) {
                         <TextField
                             error={errors['cardNumber'].length > 0 ? true : false}
                             fullWidth name="cardNumber" inputProps={{maxLength: 19}} value={cardNumber}
-                            onChange={(e) => handleChange(e)} variant="outlined" placeholder="•••• •••• •••• ••••"/>
+                            onChange={(e) => handleChange(e)} variant="outlined" placeholder="•••• •••• •••• ••••" size="small"/>
+                        
                     </Grid>
                     <Grid item xs={6}>
                         <label>CARD EXPIRY</label>
                         <TextField
                             error={errors['cardExpiry'].length > 0 ? true : false}
                             fullWidth name="cardExpiry" inputProps={{maxLength: 5}} value={cardExpiry}
-                            onChange={(e) => handleChange(e)} variant="outlined" placeholder="•• / ••"/>
+                            onChange={(e) => handleChange(e)} variant="outlined" placeholder="•• / ••" size="small"/>
                     </Grid>
                     <Grid item xs={6}>
                         <label>CARD CVC</label>
                         <TextField
                             error={errors['cardCVC'].length > 0 ? true : false}
                             fullWidth name="cardCVC" inputProps={{maxLength: 3}} value={cardCVC}
-                            onChange={(e) => handleChange(e)} variant="outlined" placeholder="••••"/>
+                            onChange={(e) => handleChange(e)} variant="outlined" placeholder="••••" size="small"/>
                     </Grid>
                     <Grid item xs={12}>
                         <label>CARD HOLDER NAME</label>
                         <TextField
                             error={errors['cardHolderName'].length > 0 ? true : false}
                             fullWidth name="cardHolderName" value={cardHolderName} onChange={(e) => handleChange(e)}
-                            variant="outlined"/>
+                            variant="outlined" size="small"/>
                     </Grid>
                 </Grid>
                 <Button fullWidth className={`${!disabled && 'createCard'} createCardBtn`} disabled={disabled}
