@@ -32,7 +32,8 @@ function userLogin(state = initialStorage || initialState, action) {
       };
 
       localStorage.setItem("currentUser", JSON.stringify(newState));
-
+      console.log(localStorage.getItem("currentUser"));
+      alert(newState);
       return newState;
     }
     case Constants.LOGOUT_CURRENT_USER:

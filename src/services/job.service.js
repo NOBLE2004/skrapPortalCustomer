@@ -1,7 +1,8 @@
 import HttpService from "./http.service";
 
 class JobService extends HttpService {
-    list = (params) => this.get("suppliers/job", params);
+
+    list = (data) => this.post("activeOrders", data);
 
     create = (data) => this.post(`suppliers/job`, data);
 

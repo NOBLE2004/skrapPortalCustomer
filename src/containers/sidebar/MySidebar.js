@@ -29,7 +29,8 @@ const MySidebar = (props) => {
   const _useEffect = () => {
     let userData = getUserDataFromLocalStorage();
     if (userData) {
-      let username = userData?.personal_detail?.full_name;
+      let username = userData?.personal_detail.first_name + ' ' + userData?.personal_detail.last_name;
+      console.log(userData);
       username = username.replace(/\b\w/g, (l) => l.toUpperCase());
       document.title = username;
       setUserData(userData);

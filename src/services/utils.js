@@ -10,3 +10,48 @@ export const getUserDataFromLocalStorage = () => {
 export const setUserDataInLocalStorage = (user) => {
     localStorage.setItem(C_OTC_STORAGE, JSON.stringify(user));
 };
+
+export const payment = (type) => {
+    if(type === 0){
+        return 'Stripe';
+    }else if(type === 1){
+        return 'Wallet';
+    }else if(type === 2){
+        return 'Credit';
+    } else if(type === 3){
+        return 'Card, Wallet';
+    }
+    else if(type === 4){
+        return 'Card, Credit';
+    }
+    else if(type === 5){
+        return 'Credit, Wallet';
+    }else if(type === 6){
+        return 'Credit, Card, Wallet';
+    }else if(type === 7) {
+        return 'Manual';
+    }else{
+        return '----';
+    }
+};
+export const status = (status) => {
+    if(status === 0){
+        return 'pending';
+    }else if(status === 1){
+        return 'Heading';
+    }else if(status === 2){
+        return 'Ongoing';
+    } else if(status === 3){
+        return 'Completed';
+    }
+    else if(status === 4){
+        return 'Delivered';
+    }
+    else if(status === 7){
+        return 'Exchange';
+    }else if(status === 8) {
+        return 'Collection';
+    }else{
+        return '----';
+    }
+};

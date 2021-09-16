@@ -6,6 +6,10 @@ docker-build:
   stage: docker-build
   image: docker:latest
   tags: [develop]
+  only:
+    - release/develop
+    - release/staging
+    - release/production
   services:
     - name: docker:19.03.8-dind
   before_script:
@@ -18,6 +22,10 @@ deploy:
   stage: deploy
   image: kroniak/ssh-client
   tags: [develop]
+  only:
+    - release/develop
+    - release/staging
+    - release/production
   before_script:
     - echo "deploying app on server"
   script:
