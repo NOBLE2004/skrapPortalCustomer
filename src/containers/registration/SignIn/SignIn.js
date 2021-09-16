@@ -83,6 +83,7 @@ const SignIn = (props) => {
         if (Object.keys(res.data.result).length !== 0) {
           localStorage.setItem("token", res.data.result.token);
           localStorage.setItem("isAuthenticated", true);
+          localStorage.setItem("c_d_storage", JSON.stringify(res.data.result));
           setState({
             ...state,
             isLoading: false,
@@ -91,7 +92,7 @@ const SignIn = (props) => {
           });
           setTimeout(() => {
             history.push("/");
-            window.location.reload(false);
+            //window.location.reload(false);
           }, 1000);
           
         } else {

@@ -30,6 +30,7 @@ function NavBar(props) {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    console.log(localStorage.getItem("user"));
   };
 
   const handleClose = () => {
@@ -42,8 +43,10 @@ function NavBar(props) {
     handleClose();
   };
   useEffect(() => {
+    console.log(props);
     setIsAuthenticated(localStorage.getItem("isAuthenticated"));
     setUser(localStorage.getItem("user"));
+    console.log(localStorage.getItem("user"));
   }, []);
   return (
     <div className={classes.root}>

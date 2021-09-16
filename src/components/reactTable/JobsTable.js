@@ -1,18 +1,32 @@
-import React, { useMemo, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
 import { jobsTableData } from "../utlils/jobListing";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@material-ui/core";
 import "./jobs-react-table.scss";
+import JobService from '../../services/job.service';
+import { getUserDataFromLocalStorage, payment, status } from "../../services/utils";
 
-const JobsTable = () => {
+const JobsTable = (props) => {
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
     mouseY: null,
     contextRow: null,
   });
+  const [jobs, setJobs] = useState([]);
+  useEffect(()=>{
+      let userData = getUserDataFromLocalStorage();
+      JobService.list({user_id: userData.user_id})
+          .then((response) => {
+              if(response.data.result?.data){
+                  setJobs(response.data.result.data);
+              }
+      }).catch((error)=>{
+          console.log(error)
+      });
+  }, []);
 
   const { openMenu, mouseX, mouseY, contextRow } = state;
 
@@ -54,29 +68,33 @@ const JobsTable = () => {
     () => [
       {
         Header: "Order #",
-        accessor: "ref",
+        accessor: "job_id",
         disableSortBy: true,
         Filter: SelectColumnFilter,
         filter: "equals",
+          Cell: (props) => `SK${props.value}`
       },
       {
         Header: "Booked",
-        accessor: "job_date",
+        accessor: "save_date",
         disableFilters: true,
+          Cell: (props) => new Date(props.value).toLocaleDateString()
       },
       {
         Header: "Delivery Date",
-        accessor: "delivery_date",
+        accessor: "job_start_time",
         disableFilters: true,
+          Cell: (props) => new Date(props.value).toLocaleString(),
       },
       {
         Header: "Site Contact",
-        accessor: "full_name",
+          accessor: d => d.site_contact_number !== null ? d.site_contact_number : d.mobile_number,
+          id: 'site contact',
         disableFilters: true,
       },
       {
         Header: "Service",
-        accessor: "Service_name",
+        accessor: "service_name",
         disableFilters: true,
       },
       {
@@ -87,30 +105,33 @@ const JobsTable = () => {
       },
       {
         Header: "Cost",
-        accessor: "cost",
+        accessor: "transaction_cost",
         disableSortBy: true,
         disableFilters: true,
         filter: "equals",
       },
       {
         Header: "Status",
-        accessor: "description",
+        accessor: "appointment_status",
         disableFilters: true,
-        Cell: (props) => <CommonStatus status={props.value} />,
+        Cell: (props) => <CommonStatus status={status(props.value)} />,
       },
       {
         Header: "Payment",
-        accessor: "payment",
+        accessor: "payment_type",
         disableFilters: true,
+          Cell: (props) => {
+              return payment(props.value);
+          },
       },
       {
         Header: "Booked By",
-        accessor: "name",
+        accessor: "booked_by_name",
         disableFilters: true,
       },
       {
         Header: "PO",
-        accessor: "job_id",
+        accessor: "purchase_order",
         disableFilters: true,
       },
       {
@@ -135,7 +156,7 @@ const JobsTable = () => {
     <div>
       <TableContainer
         columns={columns}
-        data={jobsTableData}
+        data={jobs}
         name={"jobs"}
       />
       <Menu
