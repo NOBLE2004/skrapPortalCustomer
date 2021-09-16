@@ -11,8 +11,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Alert from "@material-ui/lab/Alert";
 import Radio from "@material-ui/core/Radio";
@@ -23,15 +21,25 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CardPayment from "../../commonComponent/cardPayment/CardPayment";
+import { createTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import AsychronousAddress from "../../commonComponent/asychronousAddress/AsychronousAddress";
-import AutoSearchCustomer from "../../commonComponent/autoSearchCustomer/AutoSearchCustomer";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import ServiceService from "../../../services/service.service";
+import JobService from "../../../services/job.service";
+import PaymentService from "../../../services/payment.service";
+import { colors } from "@material-ui/core";
 import "./createJob.scss";
 
+const materialTheme = createTheme({
+  palette: {
+    primary: colors.blue,
+  },
+});
 export default function CreateJob({ closeModal, setJobCreated }) {
   const divRef = useRef(null);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
@@ -102,7 +110,6 @@ export default function CreateJob({ closeModal, setJobCreated }) {
   });
 
   const {
-    customer,
     service,
     subService,
     serviceCost,
@@ -118,7 +125,6 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     selectedPaymentMethod,
     paymentMethodList,
     addNewCard,
-    addCustomer,
     startTime,
     endTime,
     selectedTime,
@@ -201,28 +207,30 @@ export default function CreateJob({ closeModal, setJobCreated }) {
   };
 
   //getservices
-  // useEffect(() => {
-  //   ServiceService.list().then((response) => {
-  //     setServices(response.data.result);
-  //   });
-  // }, []);
+  useEffect(() => {
+    ServiceService.list().then((response) => {
+      setServices(response.data.result);
+    });
+
+    setState({ ...state, customerUserId: localStorage.getItem("userId") });
+  }, []);
 
   //getsubservices
-  // useEffect(() => {
-  //   if (Object.keys(serviceSelect).length !==0 && addressData.postcode) {
-  //     setNewLoader(true);
-  //       let data = {
-  //         post_code: addressData.postcode,
-  //         service_type: serviceSelect.service_id,
-  //         is_app: 0,
-  //         channel: "Booking",
-  //       };
-  //       ServiceService.subServicelist(data).then((response) => {
-  //         setSubServices(response.data.result);
-  //         setNewLoader(false);
-  //       });
-  //   }
-  // }, [serviceSelect, addressData]);
+  useEffect(() => {
+    if (Object.keys(serviceSelect).length !== 0 && addressData.postcode) {
+      setNewLoader(true);
+      let data = {
+        post_code: addressData.postcode,
+        service_type: serviceSelect.service_id,
+        is_app: 0,
+        channel: "Booking",
+      };
+      ServiceService.subServicelist(data).then((response) => {
+        setSubServices(response.data.result);
+        setNewLoader(false);
+      });
+    }
+  }, [serviceSelect, addressData]);
 
   //dynamic update service cost, haulage cost and totalcost
   useEffect(() => {
@@ -266,6 +274,8 @@ export default function CreateJob({ closeModal, setJobCreated }) {
         data1[index].percentage = value;
         setWastType(data1);
         break;
+      default:
+        break;
     }
   };
 
@@ -283,10 +293,6 @@ export default function CreateJob({ closeModal, setJobCreated }) {
       setState({ ...state, addressData: {} });
       checkingError("addressData", {});
     }
-  };
-
-  const handleSelectedCustomer = (id) => {
-    setState({ ...state, customerUserId: id });
   };
 
   const checkingError = (name, value) => {
@@ -331,7 +337,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
       return;
     }
 
-    // setState({ ...state, isLoading: true });
+    setState({ ...state, isLoading: true });
 
     const currentDayOfMonth = startSelectedDate.getDate();
     let currentMonth = startSelectedDate.getMonth();
@@ -357,7 +363,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
         is_coupon: 0,
         service_rate: serviceCost,
       },
-      customer_user_id: customerUserId,
+      customer_user_id: localStorage.getItem("userId"),
       jobs: 1,
       payment_type: paymentMethod,
       purchase_order: purchaseOrder,
@@ -394,48 +400,48 @@ export default function CreateJob({ closeModal, setJobCreated }) {
       show_on_main_portal: 0,
     };
 
-    // JobService.createOrder(data)
-    //   .then((response) => {
-    //     setTimeout(() => {
-    //       handleClose();
-    //       setJobCreated();
-    //     }, 2000);
-    //     setState({
-    //       ...state,
-    //       isLoading: false,
-    //       notice: {
-    //         type: "success",
-    //         text: "Successfuly Created Job!",
-    //       },
-    //     });
-    //     scrollToBottom();
-    //   })
-    //   .catch((err) => {
-    //     setState({
-    //       ...state,
-    //       isLoading: false,
-    //       notice: {
-    //         type: "error",
-    //         text: "Failed, Something is wrong",
-    //       },
-    //     });
-    //   });
+    JobService.createOrder(data)
+      .then((response) => {
+        setTimeout(() => {
+          handleClose();
+        }, 2000);
+        setState({
+          ...state,
+          isLoading: false,
+          notice: {
+            type: "success",
+            text: "Successfuly Created Job!",
+          },
+        });
+        scrollToBottom();
+      })
+      .catch((err) => {
+        setState({
+          ...state,
+          isLoading: false,
+          notice: {
+            type: "error",
+            text: "Failed, Something is wrong",
+          },
+        });
+      });
   };
 
   //getcardlist
-  // useEffect(() => {
-  //   console.log("customerUserId" , customerUserId)
-  //   PaymentService.list({ user_id: customerUserId }).then((response) => {
-  //     setState({ ...state, paymentMethodList: response.data.result });
-  //   });
-  // }, [customerUserId, newCardData]);
+  useEffect(() => {
+    PaymentService.list({ user_id: localStorage.getItem("userId") }).then(
+      (response) => {
+        setState({ ...state, paymentMethodList: response.data.result });
+      }
+    );
+  }, [newCardData]);
 
   //get wasType
-  // useEffect(() => {
-  //   JobService.getWasteTypes().then((response) => {
-  //     setWasteList(response.data.result);
-  //   });
-  // }, []);
+  useEffect(() => {
+    JobService.getWasteTypes().then((response) => {
+      setWasteList(response.data.result);
+    });
+  }, []);
 
   const handleSaveNewCard = (cardData) => {
     setState({ ...state, newCardData: cardData });
@@ -466,7 +472,6 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
-
   return (
     <Dialog
       open={true}
@@ -477,19 +482,6 @@ export default function CreateJob({ closeModal, setJobCreated }) {
       <DialogTitle onClose={handleClose}> Create Job </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
-          <div className="customerSec">
-            <p>Customer</p>
-            <AutoSearchCustomer
-              handleSelectedCustomer={(id) => handleSelectedCustomer(id)}
-            />
-          
-            <Link
-              href="#"
-              onClick={() => setState({ ...state, addCustomer: true })}
-            >
-              + Add New Customer
-            </Link>
-          </div>
           <div className="addressSec">
             <p>Site Address</p>
             <AsychronousAddress
@@ -501,16 +493,18 @@ export default function CreateJob({ closeModal, setJobCreated }) {
             <div className="dateTimeWp">
               <div>
                 <p>Delivery Date Time</p>
-                <KeyboardDatePicker
-                  margin="normal"
-                  format="MM/dd/yyyy"
-                  disablePast
-                  value={startSelectedDate}
-                  onChange={handleStartDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                />
+                <ThemeProvider theme={materialTheme}>
+                  <KeyboardDatePicker
+                    margin="normal"
+                    format="MM/dd/yyyy"
+                    disablePast
+                    value={startSelectedDate}
+                    onChange={handleStartDateChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                </ThemeProvider>
               </div>
               <div className="timeWp">
                 <label
@@ -703,6 +697,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
                 name="serviceCost"
                 type="number"
                 variant="outlined"
+                disabled={(serviceCost !== null) | (serviceCost !== undefined)}
                 margin="dense"
                 // error= {errors['serviceCost'].length > 0 ? true : false}
               />
@@ -717,6 +712,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
                 type="number"
                 variant="outlined"
                 margin="dense"
+                disabled={(haulageCost !== null) | (haulageCost !== undefined)}
               />
             </div>
             <div>
@@ -729,6 +725,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
                 type="number"
                 variant="outlined"
                 margin="dense"
+                disabled={(discount !== null) | (discount !== undefined)}
               />
             </div>
           </div>
@@ -767,6 +764,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
                 type="number"
                 variant="outlined"
                 margin="dense"
+                disabled={(totalCost !== null) | (totalCost !== undefined)}
                 // error= {errors['totalCost'].length > 0 ? true : false}
               />
             </div>
@@ -800,25 +798,25 @@ export default function CreateJob({ closeModal, setJobCreated }) {
                 </Button>
               ) : (
                 <CardPayment
-                  user_id={customerUserId}
+                  user_id={localStorage.getItem("userId")}
                   handleSaveNewCard={(value) => handleSaveNewCard(value)}
                   setOpen={() => setState({ ...state, addNewCard: false })}
                 />
               )}
               {addNewCard && (
                 <CardPayment
-                  user_id={customerUserId}
+                  user_id={localStorage.getItem("userId")}
                   handleSaveNewCard={(value) => handleSaveNewCard(value)}
                   setOpen={() => setState({ ...state, addNewCard: false })}
                 />
               )}
             </>
           )}
-
           <div>
             <p>Purchase Order</p>
             <TextField
               value={purchaseOrder}
+              // error={errors["purchaseOrder"].length > 0 ? true : false}
               name="purchaseOrder"
               onChange={handleChange}
               fullWidth={true}
@@ -827,7 +825,6 @@ export default function CreateJob({ closeModal, setJobCreated }) {
               size="small"
             />
           </div>
-
           <div className="note">
             <p>Notes</p>
             <TextareaAutosize

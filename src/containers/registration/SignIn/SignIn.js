@@ -11,13 +11,13 @@ import Footer from "../../../components/Footer/FooterItem";
 import { loginHeader } from "../../../environment";
 import Header from "../../../components/header/Header";
 import { showPasswordIcon } from "../../../assets/images";
-import { signInStyles } from "../../../assets/styles/muiStyles/MuiStyles";
+import { textFieldStyles } from "../../../assets/styles/muiStyles/MuiStyles";
 import AuthService from "../../../services/auth.service";
 import "./signin.scss";
 
 const SignIn = (props) => {
   const history = useHistory();
-  const classes = signInStyles();
+  const classes = textFieldStyles();
   const [state, setState] = useState({
     phone: "",
     password: "",
@@ -80,10 +80,12 @@ const SignIn = (props) => {
     setState({ ...state, isLoading: true });
     AuthService.login(data)
       .then((res) => {
+       
         if (Object.keys(res.data.result).length !== 0) {
           localStorage.setItem("token", res.data.result.token);
           localStorage.setItem("isAuthenticated", true);
           localStorage.setItem("c_d_storage", JSON.stringify(res.data.result));
+          localStorage.setItem("userId", res.data.result.user_id);
           setState({
             ...state,
             isLoading: false,
