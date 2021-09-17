@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
-import { jobsTableData } from "../utlils/jobListing";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@material-ui/core";
 import "./jobs-react-table.scss";
@@ -40,17 +39,6 @@ const JobsTable = ({data}) => {
     });
   };
 
-  const onRowClick = (state, rowInfo, column, instance) => {
-    return {
-      onClick: (e) => {
-        console.log("A Td Element was clicked!");
-        console.log("it produced this event:", e);
-        console.log("It was in this column:", column);
-        console.log("It was in this row:", rowInfo);
-        console.log("It was in this table instance:", instance);
-      },
-    };
-  };
   const columns = useMemo(
     () => [
       {

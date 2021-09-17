@@ -12,8 +12,9 @@ import {
 } from "../../utlils/constants";
 import "./spendchart.scss";
 
-const SpendChart = ({ chartData , getDashBoardData }) => {
-  const [selectedDate, setSelectedDate] = useState(2021);
+const SpendChart = ({ chartData , getDashBoardData , latestYear}) => {
+  console.log('latest' , latestYear)
+  const [selectedDate, setSelectedDate] = useState(latestYear);
   const handleYearChange = (event) => {
     setSelectedDate(event.target.value);
     getDashBoardData(event.target.value)
@@ -77,7 +78,7 @@ const SpendChart = ({ chartData , getDashBoardData }) => {
                 >
                   {dates.map((date) => {
                     return (
-                      <MenuItem key={date.id} value={date.id} name={date.value}>
+                      <MenuItem key={date.id} value={date.value} name={date.value}>
                         {date.value}
                       </MenuItem>
                     );
