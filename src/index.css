@@ -9,3 +9,8 @@
   src: local("BasierCircleReg"),
     url("./assets/fonts/BasierCircle-Regular.woff") format("woff");
 }
+.rdrDateRangeWrapper{
+  position: absolute;
+  top: 25%;
+  border: 1px solid gainsboro;
+}
