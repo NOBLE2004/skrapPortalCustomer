@@ -1,6 +1,6 @@
 import React from "react";
 import "./commonstatus.scss";
-const CommonStatus = ({ status, statusTitle }) => {
+const CommonStatus = ({ status }) => {
   function capitalize(str) {
     const lower = str.toLowerCase();
     return str.charAt(0).toUpperCase() + lower.slice(1);
@@ -11,23 +11,21 @@ const CommonStatus = ({ status, statusTitle }) => {
         className="circle"
         style={{
           backgroundColor: `${
-            status === "pending"
+            status.toLowerCase() === "pending"
               ? "red"
-              : status === "completed"
+              : status.toLowerCase() === "completed"
               ? "#00B25D"
-              : "#FF9013"
+              : status.toLowerCase() === "assigned"
+              ? "#FF9013"
+              : "#52a9dd"
           }`,
         }}
       ></span>
-      {statusTitle ? (
-        <span className={`active-title`}>
-          {statusTitle ? statusTitle : ""}
-        </span>
-      ) : (
-        <span className={`${status}-title`}>
+      {
+        <span className={`${status.toLowerCase()}-title`}>
           {status ? capitalize(status) : ""}
         </span>
-      )}
+      }
     </div>
   );
 };

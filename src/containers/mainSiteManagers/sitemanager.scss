@@ -1,26 +1,30 @@
-.header-main{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 29px;
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 29px;
 
-    .sites-header-title {
-        font-family: DM Sans;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 32px;
-        line-height: 42px;
-        color: #0d0d39;
-      }
+  .sites-header-title {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 42px;
+    color: #0d0d39;
+  }
 }
-.view-more-btn{
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    img{
-        cursor: pointer;
-    }
+.view-more-btn {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    cursor: pointer;
+  }
 }
 
-
+.main-site-manager {
+  display: inline-flex ;
+  justify-content: space-around ;
+  flex-wrap: wrap ;
+}
