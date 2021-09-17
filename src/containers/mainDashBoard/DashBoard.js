@@ -11,6 +11,7 @@ import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
 import DashboardService from "../../services/dashboard.service";
+import { useHistory } from "react-router-dom";
 import {
   assignMarker,
   pendingMarker,
@@ -24,7 +25,7 @@ const DashBoard = () => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
   const [dashBoardData, setDashBoardData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
+  const history = useHistory()
   const getDashBoardData = (year) => {
     setIsLoading(true);
     DashboardService.getDashboardData(year)
@@ -42,6 +43,9 @@ const DashBoard = () => {
     getDashBoardData();
   }, []);
 
+  const gotoJobDetail = () => {
+    history.push("/job-detail")
+  }
   return (
     <>
           <Grid container spacing={3}>
@@ -117,7 +121,7 @@ const DashBoard = () => {
                           >
                             {showInfoIndex === index && (
                               <InfoWindow>
-                                <TipingCard jobInfo={data} />
+                                <TipingCard jobInfo={data} gotoJobDetail={gotoJobDetail}/>
                               </InfoWindow>
                             )}
                           </Marker>

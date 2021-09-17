@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import { sidebarTabsList } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
-import { skrap_logo, roundImage } from "../../assets/images";
+import { skrap_logo , personImage } from "../../assets/images";
 import "./mySidebar.scss";
 
 const drawerWidth = 240;
@@ -188,7 +188,7 @@ const MySidebar = (props) => {
                 alt={""}
               />
             ) : (
-              <img src={roundImage} alt={""} />
+              <img src={personImage} alt={""} />
             )}
           </div>
           <ListItemText

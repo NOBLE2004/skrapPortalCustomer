@@ -6,7 +6,6 @@ import TipingCard from "../../components/tiping/TipingCard";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import { locationOval, craneIcon } from "../../assets/images";
-import TipingCrane from "../../components/tiping/TipingCrane";
 import "./mainTiping.scss";
 
 const MainTiping = () => {
@@ -61,16 +60,6 @@ const MainTiping = () => {
                   icon={craneIcon}
                   onClick={() => handleCard1()}
                 />
-                {/* {card1 && (
-                  <InfoWindow
-                    position={{
-                      lat: 51.5905,
-                      lng: -0.70461,
-                    }}
-                  >
-                    <TipingCrane />
-                  </InfoWindow>
-                )} */}
                 <Marker
                   visible={false}
                   position={{

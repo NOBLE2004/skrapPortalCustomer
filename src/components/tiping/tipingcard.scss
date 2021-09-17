@@ -53,12 +53,22 @@
     background: #dee7f1;
     border-radius: 2px;
     margin-right: 10px;
+    a{
+      text-decoration: none;
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 9px;
+      line-height: 12px;
+      color: #0D0D39
+    }
     .MuiButton-label {
       font-family: DM Sans;
       font-style: normal;
       font-weight: normal;
       font-size: 9px;
       line-height: 12px;
+      color: #0D0D39
     }
   }
   .tiping-action {
