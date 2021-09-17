@@ -5,26 +5,23 @@ import { Grid } from "@material-ui/core";
 import { viewMoreBtn, RightArrowBtn } from "../../assets/images";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
 import FadeLoader from "react-spinners/FadeLoader";
+import { connect } from "react-redux";
 import "./sitemanager.scss";
-import SitesService from "../../services/sites.service";
-const SiteManagers = () => {
-  const [state, setState] = useState({
-    siteData: [],
-    isLoading: false,
-  });
+import { getSiteManager } from "../../store/actions/site.action";
+const SiteManagers = (props) => {
+  
   const handleViewMore = () => {
     console.log("handle view more ");
   };
-  const { isLoading, siteData } = state;
+
   useEffect(() => {
-    setState({ ...state, isLoading: true });
-    SitesService.getSitesList()
-      .then((res) => {
-        setState({ ...state, siteData: res.data.data.data, isLoading: false });
-      })
-      .catch((err) => {
-        console.log("err", err.message);
-      });
+    async function fetchData() {
+      if (!props.siteManager.sites) {
+        await props.getSiteManager();
+      }
+    }
+
+    fetchData()
   }, []);
 
   return (
@@ -34,12 +31,16 @@ const SiteManagers = () => {
         <DashboardFilter />
       </div>
       <Grid container className="main-site-manager">
-        {isLoading ? (
-          <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+        {props.siteManager.loading ? (
+          <FadeLoader
+            color={"#29a7df"}
+            loading={props.siteManager.loading}
+            width={4}
+          />
         ) : (
-          siteData &&
-          siteData.length > 0 &&
-          siteData.map((site, index) => (
+          props.siteManager.sites &&
+          props.siteManager.sites.length > 0 &&
+          props.siteManager.sites.map((site, index) => (
             <ManagerDetail siteData={site} key={index} />
           ))
         )}
@@ -61,4 +62,14 @@ const SiteManagers = () => {
   );
 };
 
-export default SiteManagers;
+const mapStateToProps = ({ siteManager }) => {
+  return { siteManager };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSiteManager: (year) => dispatch(getSiteManager(year)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SiteManagers);

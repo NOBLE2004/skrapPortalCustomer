@@ -10,8 +10,10 @@ import DashboardServices from "../../components/dashboard/dashboardServices/Dash
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
-import DashboardService from "../../services/dashboard.service";
+import { connect } from "react-redux";
+import { getDashboardsData } from "../../store/actions/dashboard.action";
 import { useHistory } from "react-router-dom";
+import FadeLoader from "react-spinners/FadeLoader";
 import {
   assignMarker,
   pendingMarker,
@@ -21,53 +23,54 @@ import {
 } from "../../assets/images";
 import "./dashboard.scss";
 
-const DashBoard = () => {
+const DashBoard = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
-  const [dashBoardData, setDashBoardData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory()
-  const getDashBoardData = (year) => {
-    setIsLoading(true);
-    DashboardService.getDashboardData(year)
-      .then((res) => {
-        console.log('res' , res.data)
-        setDashBoardData(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
+  const [isNewYear, setNewYear] = useState(false);
+  const [latestYear , setLatestYear] = useState(2021)
+
+  const history = useHistory();
+  const { info, loading } = props.dashboard;
+
+  const getData = async (year) => {
+    setLatestYear(year)
+    if (isNewYear) {
+      await props.getDashboardsData(year);
+    }
+    setNewYear(true);
   };
 
   useEffect(() => {
-    getDashBoardData();
-  }, []);
+    if (!info) {
+      getData();
+    }
+  }, [isNewYear]);
 
   const gotoJobDetail = () => {
-    history.push("/job-detail")
-  }
+    history.push("/job-detail");
+  };
   return (
-    <>
+    <div className="main-loading">
+      {loading ? (
+        <div>...Loading</div>
+        // <FadeLoader color={"#29a7df"} loading={!loading} width={4} />
+      ) : (
+        <>
           <Grid container spacing={3}>
             <Grid item md={4}>
-              <TotalSpend totalSpend={dashBoardData.TotalSpend} />
+              <TotalSpend totalSpend={info ? info.TotalSpend : ""} />
             </Grid>
             <Grid item md={6}>
               <div className="job-status-outer">
-                <JobStatus jobStatus={dashBoardData} />
+                <JobStatus jobStatus={info ? info : ""} />
               </div>
             </Grid>
             <Grid item md={2}>
               <DashboardFilter />
             </Grid>
           </Grid>
-
           <Grid container spacing={3} className="spend-service-main">
-            <SpendChart
-              chartData={dashBoardData}
-              getDashBoardData={getDashBoardData}
-            />
-            <DashboardServices servicesData={dashBoardData} />
+            <SpendChart chartData={info} getDashBoardData={getData} latestYear={latestYear ? latestYear : 2021}/>
+            <DashboardServices servicesData={info ? info : ""} />
           </Grid>
 
           <Grid container spacing={3}>
@@ -92,9 +95,9 @@ const DashBoard = () => {
                       <div style={{ height: `100%`, borderRadius: "12px" }} />
                     }
                   >
-                    {dashBoardData
-                      ? dashBoardData?.Map?.data.length > 0 &&
-                        dashBoardData?.Map?.data.map((data, index) => (
+                    {info
+                      ? info?.Map?.data.length > 0 &&
+                        info?.Map?.data.map((data, index) => (
                           <Marker
                             key={index}
                             position={{
@@ -121,7 +124,10 @@ const DashBoard = () => {
                           >
                             {showInfoIndex === index && (
                               <InfoWindow>
-                                <TipingCard jobInfo={data} gotoJobDetail={gotoJobDetail}/>
+                                <TipingCard
+                                  jobInfo={data}
+                                  gotoJobDetail={gotoJobDetail}
+                                />
                               </InfoWindow>
                             )}
                           </Marker>
@@ -132,10 +138,20 @@ const DashBoard = () => {
               </Card>
             </Grid>
           </Grid>
-        {/* </>
-      )} */}
-    </>
+        </>
+      )}
+    </div>
   );
 };
 
-export default DashBoard;
+const mapStateToProps = ({ dashboard }) => {
+  return { dashboard };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getDashboardsData: (year) => dispatch(getDashboardsData(year)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashBoard);

@@ -1,41 +1,44 @@
+import authService from "../../services/auth.service";
 import * as Constants from "../constants/constants";
 
-export const loginUser = (creds) => async (dispatch) => {};
-
-export const logoutUser = () => {
-  return {
-    type: Constants.LOGOUT_REQUEST,
+export const userlogin = (data) => {
+  return (dispatch) => {
+    dispatch(loginStart());
+   authService.login(data)
+      .then((response) => {
+        if (Object.keys(response.data.result).length !== 0) {
+          localStorage.setItem("isAuthenticated", true);
+          localStorage.setItem("token", response.data.result.token);
+          localStorage.setItem("user_id", response.data.result.user_id);
+          localStorage.setItem("c_d_storage", JSON.stringify(response.data.result));
+          dispatch(loginSuccess(response.data.result));
+        } else {
+          dispatch(loginFailure(response.data.description));
+        }
+      })
+      .catch((err) => {
+        dispatch(loginFailure(err.message));
+      });
   };
 };
 
-export const unsetCurrentUser = () => ({
-  type: Constants.UNSET_CURRENT_USER,
-});
+export const loginStart = () => {
+  return {
+    type: Constants.LOGIN_START,
+  };
+};
 
-export const refreshTokenPending = () => ({
-  type: Constants.REFRESH_TOKEN_PENDING,
-});
+export const loginSuccess = (data) => {
+  return {
+    type: Constants.LOGIN_SUCCESS,
+    payload: data,
+  };
+};
 
-export const refreshTokenSuccess = (response) => ({
-  type: Constants.REFRESH_TOKEN_SUCCESS,
-  currentUser: response.data.data,
-});
+export const loginFailure = (error) => {
+  return {
+    type: Constants.LOGIN_FAILURE,
+    payload: error,
+  };
+};
 
-export const refreshTokenError = (error) => ({
-  type: Constants.REFRESH_TOKEN_ERROR,
-  error: error,
-});
-
-// export function refreshToken() {
-//   return (dispatch) => {
-//     dispatch(refreshTokenPending());
-//     window.API.Misc.RefreshUserAuthToken({})
-//       .then((response) => {
-//         dispatch(refreshTokenSuccess(response));
-//       })
-//       .catch((error) => {
-//         const errorMessage = handleError(error);
-//         dispatch(refreshTokenError(errorMessage));
-//       });
-//   };
-// }
