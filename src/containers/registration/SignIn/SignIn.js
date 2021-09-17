@@ -94,7 +94,7 @@ const SignIn = (props) => {
           });
           setTimeout(() => {
             history.push("/");
-            //window.location.reload(false);
+            window.location.reload(false);
           }, 1000);
           
         } else {
