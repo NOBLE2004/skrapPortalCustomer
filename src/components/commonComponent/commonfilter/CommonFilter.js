@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import "./commonfilter.scss";
+import { JOB_STATUS } from '../../../environment/';
 
 const CommonFilter = ({ cname }) => {
   const [state, setState] = useState({
     // jobs filter
     status: "",
     date: "",
-    customer: "",
     service: "",
     location: "",
-    bookby: "",
     driver: "",
 
     // sites filter
@@ -55,18 +54,6 @@ const CommonFilter = ({ cname }) => {
               <option value={"date"}>Date </option>
               <option value={"date 1"}>Date 1</option>
               <option value={"date 2"}>Date 2</option>
-            </select>
-            <select
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-              name="customer"
-              value={customer}
-              onChange={handleChange}
-              className={"filter-option"}
-            >
-              <option value={"customer"}>Customer </option>
-              <option value={"customer 1"}>Customer 1</option>
-              <option value={"customer 2"}>Customer 2</option>
             </select>
             <select
               labelId="demo-simple-select-filled-label"
@@ -117,21 +104,10 @@ const CommonFilter = ({ cname }) => {
                   onChange={handleChange}
                   className={"filter-option"}
                 >
-                  <option value={"status "}>Status </option>
-                  <option value={"status 1"}>Status 1</option>
-                  <option value={"status 2"}>Status 2</option>
-                </select>
-                <select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  name="bookby"
-                  value={bookby}
-                  onChange={handleChange}
-                  className={"filter-option"}
-                >
-                  <option value={"bookby"}>Book By </option>
-                  <option value={"bookby 1"}>Book By 1</option>
-                  <option value={"bookby 2"}>Book By 2</option>
+                  <option value="">All Statuses </option>
+                  {JOB_STATUS.map((status)=>{
+                    return(<option value={status.id}>{status.status}</option>)
+                  })}
                 </select>
               </>
             )}

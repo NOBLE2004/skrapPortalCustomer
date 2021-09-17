@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import JobsTable from "../../components/reactTable/JobsTable";
@@ -9,15 +9,37 @@ import TipingCard from "../../components/tiping/TipingCard";
 import { enRouteMarker } from "../../assets/images";
 import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRenderer";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
-import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
+import JobFilters from "../../components/filters/jobFilters";
 import CreateJob from "../../components/modals/createJob/CreateJob";
 import "./mainjobs.scss";
+import JobService from '../../services/job.service';
+import { getUserDataFromLocalStorage, payment, status } from "../../services/utils";
 
 const MainJobs = () => {
   const [isMapView, setMapView] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
   const [isJobBooked, setIsJobBooked] = useState(false);
-
+  const [jobs, setJobs] = useState([]);
+  const [filters, setFilters] = useState({
+      status: "",
+      date: "",
+      service: "",
+      address: "",
+      search: "",
+  });
+    useEffect(()=>{
+        let userData = getUserDataFromLocalStorage();
+        JobService.list({user_id: userData.user_id}, filters)
+            .then((response) => {
+                if(response.data.result?.data){
+                    setJobs(response.data.result.data);
+                }else{
+                    setJobs([]);
+                }
+            }).catch((error)=>{
+            console.log(error)
+        });
+    }, [filters]);
   const handleShowMap = () => {
     setMapView(!isMapView);
   };
@@ -32,6 +54,14 @@ const MainJobs = () => {
     { latitude: 51.55063, longitude: -0.0461 },
     { latitude: 51.56078, longitude: -0.25256 },
   ];
+  const handleChangeFilters = filtersList => {
+      setFilters(filtersList);
+  };
+  const handleChangeSearch = search => {
+      console.log(search);
+
+      setFilters({...filters, search: search});
+  };
   return (
     <div>
       <CommonHeader
@@ -86,14 +116,14 @@ const MainJobs = () => {
           }}
         />
       </CommonHeader>
+        <div className="jobs-search-header">
+            <CommonSearch handleChangeSearch={handleChangeSearch} cname="jobs"/>
+            <JobFilters handleChangeFilters={handleChangeFilters} />
+        </div>
       {isMapView ? (
-        <JobsTable />
+        <JobsTable data={jobs}/>
       ) : (
         <>
-          <div className="jobs-search-header">
-            <CommonSearch cname="jobs"/>
-            <CommonFilter />
-          </div>
           {/* <div className="live-job-title">
             <img src={mapMarker} alt="map-marker" />
             <h1>Orders On Map</h1>

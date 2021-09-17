@@ -41,13 +41,15 @@ export const status = (status) => {
         return 'Heading';
     }else if(status === 2){
         return 'Ongoing';
-    } else if(status === 3){
+    }else if(status === 3){
         return 'Completed';
-    }
-    else if(status === 4){
+    }else if(status === 4){
         return 'Delivered';
-    }
-    else if(status === 7){
+    }else if(status === 5){
+        return 'Pickup Heading';
+    }else if(status === 6){
+        return 'Pickup Ongoing';
+    }else if(status === 7){
         return 'Exchange';
     }else if(status === 8) {
         return 'Collection';

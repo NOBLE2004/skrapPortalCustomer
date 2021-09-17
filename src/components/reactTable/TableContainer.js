@@ -7,8 +7,6 @@ import {
   useGlobalFilter,
 } from "react-table";
 import { DefaultColumnFilter } from "./filters";
-import CommonSearch from "../commonComponent/commonSearch/CommonSearch";
-import CommonFilter from "../commonComponent/commonfilter/CommonFilter";
 import { useHistory } from "react-router";
 
 const TableContainer = ({ columns, data, name }) => {
@@ -56,15 +54,6 @@ const TableContainer = ({ columns, data, name }) => {
 
   return (
     <Fragment>
-      <div className="common-search-for-tables">
-        <CommonSearch
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          globalFilter={state.globalFilter}
-          setGlobalFilter={setGlobalFilter}
-          cname={name}
-        />
-        <CommonFilter cname={name} />
-      </div>
       <div {...getTableProps()} className="table-main">
         <div style={{ display: "table-head" }}>
           {headerGroups.map((headerGroup) => (

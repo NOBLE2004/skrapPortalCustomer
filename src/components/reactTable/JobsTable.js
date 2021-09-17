@@ -5,28 +5,15 @@ import { jobsTableData } from "../utlils/jobListing";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@material-ui/core";
 import "./jobs-react-table.scss";
-import JobService from '../../services/job.service';
-import { getUserDataFromLocalStorage, payment, status } from "../../services/utils";
+import { payment, status } from "../../services/utils";
 
-const JobsTable = (props) => {
+const JobsTable = ({data}) => {
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
     mouseY: null,
     contextRow: null,
   });
-  const [jobs, setJobs] = useState([]);
-  useEffect(()=>{
-      let userData = getUserDataFromLocalStorage();
-      JobService.list({user_id: userData.user_id})
-          .then((response) => {
-              if(response.data.result?.data){
-                  setJobs(response.data.result.data);
-              }
-      }).catch((error)=>{
-          console.log(error)
-      });
-  }, []);
 
   const { openMenu, mouseX, mouseY, contextRow } = state;
 
@@ -84,7 +71,7 @@ const JobsTable = (props) => {
         Header: "Delivery Date",
         accessor: "job_start_time",
         disableFilters: true,
-          Cell: (props) => new Date(props.value).toLocaleString(),
+          Cell: (props) => new Date(props.value).toLocaleString().substring(0, 17),
       },
       {
         Header: "Site Contact",
@@ -156,7 +143,7 @@ const JobsTable = (props) => {
     <div>
       <TableContainer
         columns={columns}
-        data={jobs}
+        data={data}
         name={"jobs"}
       />
       <Menu
