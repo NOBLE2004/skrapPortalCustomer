@@ -66,7 +66,7 @@ const SignIn = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((phone === "") | (password === "")) {
+    if ((phone.length < 10) | (password === "")) {
       Object.keys(errors).forEach((error, index) => {
         checkingError(error, state[error]);
       });
@@ -103,7 +103,6 @@ const SignIn = (props) => {
               variant="outlined"
               size="small"
               name="phone"
-              type="text"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">+44</InputAdornment>

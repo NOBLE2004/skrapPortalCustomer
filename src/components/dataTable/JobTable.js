@@ -316,7 +316,7 @@ const JobTable = (props) => {
                   <TableCell
                     className={[classes.tableCell, " cursor-pointer"]}
                   >
-                    0006
+                    0000
                   </TableCell>
 
                   <TableCell
