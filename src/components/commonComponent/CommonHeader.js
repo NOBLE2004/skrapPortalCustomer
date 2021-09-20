@@ -3,7 +3,7 @@ import { location } from "../../assets/images";
 import "./commonHeader.scss";
 
 const CommonHeader = ({ downloadCSV, mapView, bookSite, children , handleShowMap, isMap, handleBookJob }) => {
-console.log('isMap' , isMap)
+
   return (
     <div className="common-header-main">
       <div className="header-children">{children}</div>
