@@ -2,7 +2,7 @@ import HttpService from "./http.service";
 
 class DashBoardService extends HttpService {
     
-  getDashboardData = () => this.get("customers/dashboard");
+  getDashboardData = (params) => this.get("customers/dashboard" , {year:params});
 
 }
 

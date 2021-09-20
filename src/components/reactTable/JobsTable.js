@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
-import { jobsTableData } from "../utlils/jobListing";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@material-ui/core";
 import "./jobs-react-table.scss";

@@ -12,7 +12,7 @@ import { loginHeader } from "../../../environment";
 import Header from "../../../components/header/Header";
 import { showPasswordIcon } from "../../../assets/images";
 import { textFieldStyles } from "../../../assets/styles/muiStyles/MuiStyles";
-import AuthService from "../../../services/auth.service";
+import { userlogin } from "../../../store/actions/signIn";
 import "./signin.scss";
 
 const SignIn = (props) => {
@@ -23,9 +23,6 @@ const SignIn = (props) => {
     password: "",
     notice: null,
     showPassword: false,
-    isLoading: false,
-    isAuth: false,
-    isError: false,
   });
 
   const [errors, setErrors] = useState({
@@ -33,7 +30,7 @@ const SignIn = (props) => {
     password: "",
   });
 
-  const { phone, password, showPassword, isLoading, isAuth, isError } = state;
+  const { phone, password, showPassword } = state;
   const checkingError = (name, value) => {
     switch (name) {
       case "phone":
@@ -77,42 +74,18 @@ const SignIn = (props) => {
     }
 
     let data = { user_name: "+44" + phone, password: password, user_type: 1 };
-    setState({ ...state, isLoading: true });
-    AuthService.login(data)
-      .then((res) => {
-       
-        if (Object.keys(res.data.result).length !== 0) {
-          localStorage.setItem("token", res.data.result.token);
-          localStorage.setItem("isAuthenticated", true);
-          localStorage.setItem("c_d_storage", JSON.stringify(res.data.result));
-          localStorage.setItem("userId", res.data.result.user_id);
-          setState({
-            ...state,
-            isLoading: false,
-            isAuth: true,
-            isError: false,
-          });
-          setTimeout(() => {
-            history.push("/");
-            //window.location.reload(false);
-          }, 1000);
-          
-        } else {
-          setState({
-            ...state,
-            isLoading: false,
-            isError: true,
-            isAuth: false,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setState({ ...state, isLoading: false, isError: true, isAuth: false });
-      });
-
-    // await props.userLogin({ phone, password });
+    await props.userLogin(data);
   };
+
+  useEffect(() => {
+    if (props.auth.isAuthenticated) {
+      setTimeout(() => {
+        history.push("/");
+        window.location.reload(false);
+      }, 2000);
+    }
+  }, [props.auth.isAuthenticated]);
+
 
   return (
     <div className="main">
@@ -174,14 +147,18 @@ const SignIn = (props) => {
               error={errors["password"].length > 0 ? true : false}
             />
           </div>
-          {isLoading && (
-            <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
-          )}
-          {isAuth && (
+          {props.auth.loading ? (
+            <FadeLoader
+              color={"#29a7df"}
+              loading={props.auth.loading}
+              width={4}
+            />
+          ) : props.auth.isAuthenticated ? (
             <Alert severity={"success"}>{"Customer Login Successfully"}</Alert>
-          )}
-          {isError && (
+          ) : props.auth.error ? (
             <Alert severity={"error"}>{"Username or Password invalid"}</Alert>
+          ) : (
+            ""
           )}
           <div className="login-next-btn">
             <Button onClick={handleSubmit}>Sign In</Button>
@@ -196,12 +173,14 @@ const SignIn = (props) => {
   );
 };
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = ({ auth }) => {
+  return { auth };
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLogin: (credential) => dispatch(userlogin(credential)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

@@ -10,168 +10,148 @@ import DashboardServices from "../../components/dashboard/dashboardServices/Dash
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
-import DashboardService from "../../services/dashboard.service";
+import { connect } from "react-redux";
+import { getDashboardsData } from "../../store/actions/dashboard.action";
+import { useHistory } from "react-router-dom";
+import FadeLoader from "react-spinners/FadeLoader";
 import {
   assignMarker,
   pendingMarker,
-  cancelMarker,
-  enRouteMarker,
   completeMarker,
   deliveredMarker,
   mapMarker,
 } from "../../assets/images";
 import "./dashboard.scss";
 
-const markersList = [
-  {
-    lat: 51.5905,
-    lng: -0.70461,
-    icon: assignMarker,
-  },
-  {
-    lat: 51.5705,
-    lng: -0.60461,
-    icon: pendingMarker,
-  },
-  {
-    lat: 51.4805,
-    lng: -0.70461,
-    icon: cancelMarker,
-  },
-  {
-    lat: 51.4505,
-    lng: -0.60461,
-    icon: enRouteMarker,
-  },
-  {
-    lat: 51.65063,
-    lng: -0.05461,
-    icon: completeMarker,
-  },
-  {
-    lat: 51.67963,
-    lng: -0.15461,
-    icon: deliveredMarker,
-  },
-  {
-    lat: 51.46063,
-    lng: -0.16161,
-    icon: deliveredMarker,
-  },
-  {
-    lat: 51.44063,
-    lng: -0.05461,
-    icon: deliveredMarker,
-  },
-  {
-    lat: 51.55063,
-    lng: -0.30461,
-    icon: deliveredMarker,
-  },
-];
-
-const DashBoard = () => {
+const DashBoard = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
-  const [dashBoardData, setDashBoardData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isNewYear, setNewYear] = useState(false);
+  const [latestYear , setLatestYear] = useState(2021)
+
+  const history = useHistory();
+  const { info, loading } = props.dashboard;
+
+  const getData = async (year) => {
+    setLatestYear(year)
+    if (isNewYear) {
+      await props.getDashboardsData(year);
+    }
+    setNewYear(true);
+  };
 
   useEffect(() => {
-    setIsLoading(true);
-    DashboardService.getDashboardData()
-      .then((res) => {
-        setDashBoardData(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
-  }, []);
+    if (!info) {
+      getData();
+    }
+  }, [isNewYear]);
 
+  const gotoJobDetail = () => {
+    history.push("/job-detail");
+  };
   return (
-    <div>
-      <Grid container spacing={3}>
-        <Grid item md={4}>
-          <TotalSpend totalSpend={dashBoardData.TotalSpend} />
-        </Grid>
-        <Grid item md={6}>
-          <div className="job-status-outer">
-            <JobStatus jobStatus={dashBoardData} />
-          </div>
-        </Grid>
-        <Grid item md={2}>
-          <DashboardFilter />
-        </Grid>
-      </Grid>
+    <div className="main-loading">
+      {loading ? (
+        <div>...Loading</div>
+        // <FadeLoader color={"#29a7df"} loading={!loading} width={4} />
+      ) : (
+        <>
+          <Grid container spacing={3}>
+            <Grid item md={4}>
+              <TotalSpend totalSpend={info ? info.TotalSpend : ""} />
+            </Grid>
+            <Grid item md={6}>
+              <div className="job-status-outer">
+                <JobStatus jobStatus={info ? info : ""} />
+              </div>
+            </Grid>
+            <Grid item md={2}>
+              <DashboardFilter />
+            </Grid>
+          </Grid>
+          <Grid container spacing={3} className="spend-service-main">
+            <SpendChart chartData={info} getDashBoardData={getData} latestYear={latestYear ? latestYear : 2021}/>
+            <DashboardServices servicesData={info ? info : ""} />
+          </Grid>
 
-      <Grid container spacing={3} className="spend-service-main">
-        <SpendChart />
-        <DashboardServices servicesData={dashBoardData} />
-      </Grid>
-
-      <Grid container spacing={3}>
-        <Grid item md={12}>
-          <div className="landfill">Landfill Diversion Rate</div>
-          <hr />
-        </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={12} className="jobMpWp">
-          <div className="live-job-title">
-            <img src={mapMarker} alt="map-marker" />
-            <h1>Orders On Map</h1>
-          </div>
-          <Card className="mapCard">
-            <CardContent>
-              <MainMap
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `100%` }} />}
-                mapElement={
-                  <div style={{ height: `100%`, borderRadius: "12px" }} />
-                }
-              >
-                {dashBoardData
-                  ? dashBoardData?.Map?.data.length > 0 &&
-                    dashBoardData?.Map?.data.map((data, index) => (
-                      <Marker
-                        key={index}
-                        position={{
-                          lat: data.job_location_lat
-                            ? data.job_location_lat
-                            : "51.5506351",
-                          lng: data.job_location_lng
-                            ? data.job_location_lng
-                            : "-0.0460716",
-                        }}
-                        icon={{
-                          url:
-                            data.jobStatus === "Pending"
-                              ? pendingMarker
-                              : data.jobStatus === "Delivered"
-                              ? deliveredMarker
-                              : data.jobStatus === "Completed"
-                              ? completeMarker
-                              : assignMarker,
-                        }}
-                        onClick={() => {
-                          setShowInfoIndex(index);
-                        }}
-                      >
-                        {showInfoIndex == index && (
-                          <InfoWindow>
-                            <TipingCard />
-                          </InfoWindow>
-                        )}
-                      </Marker>
-                    ))
-                  : ""}
-              </MainMap>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+          <Grid container spacing={3}>
+            <Grid item md={12}>
+              <div className="landfill">Landfill Diversion Rate</div>
+              <hr />
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={12} className="jobMpWp">
+              <div className="live-job-title">
+                <img src={mapMarker} alt="map-marker" />
+                <h1>Orders On Map</h1>
+              </div>
+              <Card className="mapCard">
+                <CardContent>
+                  <MainMap
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `100%` }} />}
+                    mapElement={
+                      <div style={{ height: `100%`, borderRadius: "12px" }} />
+                    }
+                  >
+                    {info
+                      ? info?.Map?.data.length > 0 &&
+                        info?.Map?.data.map((data, index) => (
+                          <Marker
+                            key={index}
+                            position={{
+                              lat: data.job_location_lat
+                                ? data.job_location_lat
+                                : "51.5506351",
+                              lng: data.job_location_lng
+                                ? data.job_location_lng
+                                : "-0.0460716",
+                            }}
+                            icon={{
+                              url:
+                                data.jobStatus === "Pending"
+                                  ? pendingMarker
+                                  : data.jobStatus === "Delivered"
+                                  ? deliveredMarker
+                                  : data.jobStatus === "Completed"
+                                  ? completeMarker
+                                  : assignMarker,
+                            }}
+                            onClick={() => {
+                              setShowInfoIndex(index);
+                            }}
+                          >
+                            {showInfoIndex === index && (
+                              <InfoWindow>
+                                <TipingCard
+                                  jobInfo={data}
+                                  gotoJobDetail={gotoJobDetail}
+                                />
+                              </InfoWindow>
+                            )}
+                          </Marker>
+                        ))
+                      : ""}
+                  </MainMap>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </>
+      )}
     </div>
   );
 };
 
-export default DashBoard;
+const mapStateToProps = ({ dashboard }) => {
+  return { dashboard };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getDashboardsData: (year) => dispatch(getDashboardsData(year)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashBoard);

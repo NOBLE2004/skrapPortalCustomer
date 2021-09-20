@@ -33,6 +33,7 @@ import ServiceService from "../../../services/service.service";
 import JobService from "../../../services/job.service";
 import PaymentService from "../../../services/payment.service";
 import { colors } from "@material-ui/core";
+import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./createJob.scss";
 
 const materialTheme = createTheme({
@@ -52,6 +53,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
   const [subServiceSelect, setSubServiceSelect] = useState({});
   const [wasteList, setWasteList] = useState([]);
   const [newLoader, setNewLoader] = useState(false);
+  const [credit, setCredit] = useState(0);
   const [errors, setError] = useState({
     customer: "",
     service: "",
@@ -211,8 +213,12 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     ServiceService.list().then((response) => {
       setServices(response.data.result);
     });
-
-    setState({ ...state, customerUserId: localStorage.getItem("userId") });
+    const userCredit = getUserDataFromLocalStorage();
+    setCredit(userCredit.credit_balance);
+    setState({
+      ...state,
+      customerUserId: localStorage.getItem("user_id"),
+    });
   }, []);
 
   //getsubservices
@@ -363,7 +369,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
         is_coupon: 0,
         service_rate: serviceCost,
       },
-      customer_user_id: localStorage.getItem("userId"),
+      customer_user_id: localStorage.getItem("user_id"),
       jobs: 1,
       payment_type: paymentMethod,
       purchase_order: purchaseOrder,
@@ -429,7 +435,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
 
   //getcardlist
   useEffect(() => {
-    PaymentService.list({ user_id: localStorage.getItem("userId") }).then(
+    PaymentService.list({ user_id: localStorage.getItem("user_id") }).then(
       (response) => {
         setState({ ...state, paymentMethodList: response.data.result });
       }
@@ -472,6 +478,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
+  console.log("credit", credit);
   return (
     <Dialog
       open={true}
@@ -747,9 +754,11 @@ export default function CreateJob({ closeModal, setJobCreated }) {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value="7">Manual</MenuItem>
-                  <MenuItem value="0">Stripe</MenuItem>
-                  <MenuItem value="2">Credit</MenuItem>
+                  {credit === 0 ? (
+                    <MenuItem value="0">Stripe</MenuItem>
+                  ) : (
+                    <MenuItem value="2">Credit</MenuItem>
+                  )}
                 </Select>
               </FormControl>
             </div>
@@ -798,14 +807,14 @@ export default function CreateJob({ closeModal, setJobCreated }) {
                 </Button>
               ) : (
                 <CardPayment
-                  user_id={localStorage.getItem("userId")}
+                  user_id={localStorage.getItem("user_id")}
                   handleSaveNewCard={(value) => handleSaveNewCard(value)}
                   setOpen={() => setState({ ...state, addNewCard: false })}
                 />
               )}
               {addNewCard && (
                 <CardPayment
-                  user_id={localStorage.getItem("userId")}
+                  user_id={localStorage.getItem("user_id")}
                   handleSaveNewCard={(value) => handleSaveNewCard(value)}
                   setOpen={() => setState({ ...state, addNewCard: false })}
                 />
