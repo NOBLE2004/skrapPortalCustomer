@@ -29,11 +29,13 @@
     line-height: 13px;
     color: #4b686e;
     word-break:break-all;
-
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
   };
   .table-body-cell:last-child{
     display: flex;
-    align-self: flex-end;
+    align-self: center;
     text-align: center;
   }
 

@@ -20,6 +20,7 @@ const MainJobs = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [isJobBooked, setIsJobBooked] = useState(false);
   const [jobs, setJobs] = useState([]);
+  const [updateJobs, setUpdateJobs] = useState(false);
   const [filters, setFilters] = useState({
       status: "",
       date: "",
@@ -39,7 +40,7 @@ const MainJobs = () => {
             }).catch((error)=>{
             console.log(error)
         });
-    }, [filters]);
+    }, [filters, updateJobs]);
   const handleShowMap = () => {
     setMapView(!isMapView);
   };
@@ -58,10 +59,11 @@ const MainJobs = () => {
       setFilters(filtersList);
   };
   const handleChangeSearch = search => {
-      console.log(search);
-
       setFilters({...filters, search: search});
   };
+    const handleUpdateJobs = () => {
+        setUpdateJobs(true);
+    };
   return (
     <div>
       <CommonHeader
@@ -121,7 +123,7 @@ const MainJobs = () => {
             <JobFilters handleChangeFilters={handleChangeFilters} />
         </div>
       {isMapView ? (
-        <JobsTable data={jobs}/>
+        <JobsTable data={jobs} handleUpdateJobs={handleUpdateJobs}/>
       ) : (
         <>
           {/* <div className="live-job-title">

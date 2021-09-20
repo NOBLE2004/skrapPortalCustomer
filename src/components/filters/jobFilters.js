@@ -14,11 +14,10 @@ const JobFilters = ({ handleChangeFilters }) => {
         address: ""
     });
     const [togle, setTogle] = useState(false);
-    const [value, setValue] = React.useState([null, null]);
     const [state, setState] = useState([
         {
-            startDate: new Date(),
-            endDate: null,
+            startDate:  new Date(),
+            endDate:  new Date(),
             key: 'selection'
         }
     ]);
@@ -65,7 +64,14 @@ const JobFilters = ({ handleChangeFilters }) => {
             service: "",
             address: ""
         });
-    }
+        setState([
+            {
+                startDate:  new Date(),
+                endDate:  new Date(),
+                key: 'selection'
+            }
+        ]);
+    };
     return (
         <div className="filter-container">
             <div className="filter-title">Filter : </div>
@@ -73,7 +79,7 @@ const JobFilters = ({ handleChangeFilters }) => {
                     <>
                         <button onClick={toggle} className={"filter-option"}>Date</button>
                         {togle  && <DateRange
-                            editableDateInputs={true}
+                            editableDateInputs={false}
                             onChange={handleDate}
                             moveRangeOnFirstSelection={false}
                             ranges={state}
