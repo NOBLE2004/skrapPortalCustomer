@@ -6,16 +6,21 @@ import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@material-ui/core";
 import "./jobs-react-table.scss";
 import { payment, status } from "../../services/utils";
+import CreateJob from "../modals/createJob/CreateJob";
+import CreateExchange from "../modals/createExchange/CreateExchange";
 
-const JobsTable = ({data}) => {
+const JobsTable = ({data, handleUpdateJobs}) => {
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
     mouseY: null,
     contextRow: null,
   });
+  const [exchange, setExchange] = useState(false);
+  const [updateJobs, setUpdateJobs] = useState();
 
   const { openMenu, mouseX, mouseY, contextRow } = state;
+  const [row, setRow] = useState({});
 
   const handleButtonClick = (e, props) => {
     e.stopPropagation();   
@@ -26,7 +31,8 @@ const JobsTable = ({data}) => {
           mouseY: e.clientY - 4
         });
       // }
-    
+      console.log(props);
+    setRow(props);
   };
   const handleClose = () => {
     console.log("close called");
@@ -50,6 +56,10 @@ const JobsTable = ({data}) => {
         console.log("It was in this table instance:", instance);
       },
     };
+  };
+  const handleShowExchangeDialog = () =>{
+      setExchange(true);
+      handleClose();
   };
   const columns = useMemo(
     () => [
@@ -141,6 +151,14 @@ const JobsTable = ({data}) => {
   );
   return (
     <div>
+        {
+            exchange && <CreateExchange
+                closeModal={() => setExchange(!exchange)}
+                updateJobs={handleUpdateJobs}
+                row={row}
+                isfromJob={true}
+            />
+        }
       <TableContainer
         columns={columns}
         data={data}
@@ -158,7 +176,7 @@ const JobsTable = ({data}) => {
             : undefined
         }
       >
-        <MenuItem onClick={handleClose}>Exchange</MenuItem>
+          {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>}
         <MenuItem onClick={handleClose}>Reorder</MenuItem>
         <MenuItem onClick={handleClose}>Collection</MenuItem>
         <MenuItem onClick={handleClose}>Waste Report</MenuItem>
