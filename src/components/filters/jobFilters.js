@@ -58,12 +58,20 @@ const JobFilters = ({ handleChangeFilters }) => {
         const end = item.selection.endDate.toISOString().split('T')[0];
         setFilters({ ...filters, date: `${start},${end}` });
     };
+    const resetFilters = () =>{
+        setFilters({
+            status: "",
+            date: "",
+            service: "",
+            address: ""
+        });
+    }
     return (
         <div className="filter-container">
             <div className="filter-title">Filter : </div>
             <div className="all-filters">
                     <>
-                        <button onClick={toggle}>Date</button>
+                        <button onClick={toggle} className={"filter-option"}>Date</button>
                         {togle  && <DateRange
                             editableDateInputs={true}
                             onChange={handleDate}
@@ -103,6 +111,7 @@ const JobFilters = ({ handleChangeFilters }) => {
                                 return(<option value={status.id}>{status.status}</option>)
                             })}
                         </select>
+                        <button onClick={resetFilters} className={"filter-option"}>reset</button>
                     </>
             </div>
         </div>
