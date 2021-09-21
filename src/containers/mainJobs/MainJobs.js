@@ -131,7 +131,12 @@ const MainJobs = () => {
             <JobFilters handleChangeFilters={handleChangeFilters} />
         </div>
       {isMapView ? (
-        <JobsTable data={jobs} pagination={pagination} handleUpdateJobs={handleUpdateJobs} handlePagination={handlePagination}/>
+        <JobsTable
+            data={jobs}
+            pagination={pagination}
+            handleUpdateJobs={handleUpdateJobs}
+            handlePagination={handlePagination}
+        />
       ) : (
         <>
           {/* <div className="live-job-title">
