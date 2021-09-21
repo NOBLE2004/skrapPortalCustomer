@@ -29,6 +29,7 @@ import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import JobService from "../../../services/job.service";
 import { useHistory } from "react-router-dom";
 import "./createExchange.scss";
+import {getUserDataFromLocalStorage} from "../../../services/utils";
 
 const styles = (theme) => ({
   root: {
@@ -71,6 +72,7 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
  const {postcode, customer_user_id, job_id, parent_id} = row;
   let history = useHistory();
   const [serviceList, setServiceList] = useState([]);
+  const [credit, setCredit] = useState(0);
   const [state, setState] = useState({
     startSelectedDate: new Date(),
     cost: "",
@@ -148,6 +150,12 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
     };
     ServiceService.subServicelist(data).then((response) => {
       setServiceList(response.data.result);
+    });
+    const userCredit = getUserDataFromLocalStorage();
+    setCredit(userCredit.credit_balance);
+    setState({
+      ...state,
+      customerUserId: localStorage.getItem("user_id"),
     });
   }, []);
 
@@ -370,9 +378,11 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value="7">Manual</MenuItem>
-                <MenuItem value="0">Stripe</MenuItem>
-                <MenuItem value="2">Credit</MenuItem>
+                {credit === 0 ? (
+                    <MenuItem value="0">Stripe</MenuItem>
+                ) : (
+                    <MenuItem value="2">Credit</MenuItem>
+                )}
               </Select>
             </FormControl>
           </div>
