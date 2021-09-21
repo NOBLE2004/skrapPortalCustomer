@@ -4,6 +4,8 @@ import CommonJobStatus from "../../components/commonComponent/commonJobStatus/Co
 import SitesItem from "../../components/sites/sitesItem/SitesItem";
 import { Grid } from "@material-ui/core";
 import "./sites.scss";
+import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
+import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
 
 const Sites = () => {
  
@@ -38,6 +40,10 @@ const Sites = () => {
           }}
         />
       </CommonHeader>
+        <div className="common-search-for-tables">
+            <CommonSearch cname="sites" handleChangeSearch={()=>{}}/>
+            <CommonFilter cname="sites" />
+        </div>
       <Grid container>
         <Grid item md={10}>
           <SitesItem />

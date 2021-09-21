@@ -16,7 +16,7 @@ export default class HttpService {
 
     get = (url, params) => axios.get(`${API_URL}/${url}`, {params});
 
-    post = (url, data) => axios.post(`${API_URL}/${url}`, data);
+    post = (url, data, params) => axios.post(`${API_URL}/${url}`, data, {params});
 
     put = (url, data, params) => axios.put(`${API_URL}/${url}`, data, {params});
 

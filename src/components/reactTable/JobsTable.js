@@ -4,30 +4,29 @@ import { SelectColumnFilter } from "./filters";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@material-ui/core";
 import "./jobs-react-table.scss";
+import { payment, status } from "../../services/utils";
+import CreateExchange from "../modals/createExchange/CreateExchange";
+import RequestCollection from "../modals/requestCollection/RequestCollection";
 import JobService from '../../services/job.service';
-import { getUserDataFromLocalStorage, payment, status } from "../../services/utils";
+import LoadingModal from "../modals/LoadingModal/LoadingModal";
+import Pagination from "./pagination";
 
-const JobsTable = (props) => {
+const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
     mouseY: null,
     contextRow: null,
   });
-  const [jobs, setJobs] = useState([]);
-  useEffect(()=>{
-      let userData = getUserDataFromLocalStorage();
-      JobService.list({user_id: userData.user_id})
-          .then((response) => {
-              if(response.data.result?.data){
-                  setJobs(response.data.result.data);
-              }
-      }).catch((error)=>{
-          console.log(error)
-      });
-  }, []);
+  const [exchange, setExchange] = useState(false);
+  const [collection, setCollection] = useState(false);
 
   const { openMenu, mouseX, mouseY, contextRow } = state;
+  const [row, setRow] = useState({});
+  const [reorder, setReorder] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isLoading, setLoading] = useState(false);
+  const [notice, setNotice] = React.useState(null);
 
   const handleButtonClick = (e, props) => {
     e.stopPropagation();   
@@ -38,7 +37,8 @@ const JobsTable = (props) => {
           mouseY: e.clientY - 4
         });
       // }
-    
+      console.log(props);
+    setRow(props);
   };
   const handleClose = () => {
     console.log("close called");
@@ -52,6 +52,50 @@ const JobsTable = (props) => {
     });
   };
 
+  const onRowClick = (state, rowInfo, column, instance) => {
+    return {
+      onClick: (e) => {
+        console.log("A Td Element was clicked!");
+        console.log("it produced this event:", e);
+        console.log("It was in this column:", column);
+        console.log("It was in this row:", rowInfo);
+        console.log("It was in this table instance:", instance);
+      },
+    };
+  };
+  const handleShowExchangeDialog = () =>{
+      setExchange(true);
+      handleClose();
+  };
+  const handleShowCollectionDialog = () =>{
+      setCollection(true);
+      handleClose();
+  };
+    const handlereorder1 = () => {
+        setReorder(true);
+        setAnchorEl(null);
+    };
+
+    const handleReorderResponse = (id) => {
+        JobService.copy({ job_id: id })
+            .then((response) => {
+                setNotice({
+                    type: "success",
+                    text: "Job Successfully reorder",
+                });
+                setTimeout(() => {
+                    handleUpdateJobs();
+                    setReorder(false);
+                }, 2000);
+            })
+            .catch((err) => {
+                setLoading(false);
+                setNotice({
+                    type: "error",
+                    text: "Job Reorder failed",
+                });
+            });
+    };
   const columns = useMemo(
     () => [
       {
@@ -72,7 +116,7 @@ const JobsTable = (props) => {
         Header: "Delivery Date",
         accessor: "job_start_time",
         disableFilters: true,
-          Cell: (props) => new Date(props.value).toLocaleString(),
+          Cell: (props) => new Date(props.value).toLocaleString().substring(0, 17),
       },
       {
         Header: "Site Contact",
@@ -142,10 +186,46 @@ const JobsTable = (props) => {
   );
   return (
     <div>
+        {
+            exchange && <CreateExchange
+                closeModal={() => setExchange(!exchange)}
+                updateJobs={handleUpdateJobs}
+                row={row}
+                isfromJob={true}
+            />
+        }
+        {
+            collection && <RequestCollection
+                closeModal={() => setCollection(!collection)}
+                updateJobs={handleUpdateJobs}
+                row={row}
+                isfromJob={true}
+            />
+        }
+        {reorder && (
+            <LoadingModal
+                handleClose={() => setReorder(false)}
+                show={reorder}
+                handleRes={() => handleReorderResponse(row.job_id)}
+                noticeData={notice}
+                isLoading={isLoading}
+            >
+                Please wait while we reordring the data
+            </LoadingModal>
+        )}
       <TableContainer
         columns={columns}
-        data={jobs}
+        data={data}
         name={"jobs"}
+      />
+      <Pagination
+          last={pagination.last_page}
+          current={pagination.current_page}
+          from={pagination.from}
+          to={pagination.to}
+          total={pagination.total}
+          handleNext={(page)=>{handlePagination(page)}}
+          handlePrevious={(page)=>{handlePagination(page)}}
       />
       <Menu
         keepMounted
@@ -159,9 +239,9 @@ const JobsTable = (props) => {
             : undefined
         }
       >
-        <MenuItem onClick={handleClose}>Exchange</MenuItem>
-        <MenuItem onClick={handleClose}>Reorder</MenuItem>
-        <MenuItem onClick={handleClose}>Collection</MenuItem>
+          {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>}
+          <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
+          {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>}
         <MenuItem onClick={handleClose}>Waste Report</MenuItem>
         <MenuItem onClick={handleClose}>Track Driver</MenuItem>
       </Menu>{" "}

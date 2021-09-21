@@ -12,6 +12,7 @@ import { enRouteMarker } from "../../../assets/images";
 import sitesService from "../../../services/sites.service";
 import NewMapDirectionsRenderer from "../../map/NewMapDirectionsRenderer";
 import FadeLoader from "react-spinners/FadeLoader";
+import JobFilters from "../../filters/jobFilters";
 import { useParams } from "react-router";
 import "./siteManagerDetailPage.scss";
 const SiteManagerDetailPage = () => {
@@ -19,6 +20,15 @@ const SiteManagerDetailPage = () => {
   const [isMapView, setMapView] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
   const [isJobBooked, setIsJobBooked] = useState(false);
+  const [updateJobs, setUpdateJobs] = useState(false);
+  const [filters, setFilters] = useState({
+    status: "",
+    date: "",
+    service: "",
+    address: "",
+    search: "",
+    page: 1,
+  });
 
   const [state, setState] = useState({
     isLoading: false,
@@ -42,6 +52,15 @@ const SiteManagerDetailPage = () => {
     { latitude: 51.56078, longitude: -0.25256 },
   ];
 
+  const handleChangeSearch = (search) => {
+    setFilters({ ...filters, search: search });
+  };
+  const handleUpdateJobs = () => {
+    setUpdateJobs(true);
+  };
+  const handleChangeFilters = (filtersList) => {
+    setFilters(filtersList);
+  };
   useEffect(() => {
     setState({ ...state, isLoading: true });
     sitesService
@@ -69,12 +88,20 @@ const SiteManagerDetailPage = () => {
         ) : (
           <>
             <Grid item md={12}>
-              <NewManagerDetail managerData={managerData}/>
+              <NewManagerDetail managerData={managerData} />
             </Grid>
-            {isMapView ? (
-              <div className="site-table">
-                <SiteManagerTable />
+            <Grid item md={12} className="site-manager-filter">
+              <div className="jobs-search-header">
+                <CommonSearch
+                  handleChangeSearch={handleChangeSearch}
+                  cname="jobs"
+                />
+                <JobFilters handleChangeFilters={handleChangeFilters} />
               </div>
+            </Grid>
+
+            {isMapView ? (
+              <SiteManagerTable managerData={managerData} />
             ) : (
               <Grid item md={12} className="site-manager-map-view">
                 <div className="jobs-search-header">

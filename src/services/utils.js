@@ -12,6 +12,7 @@ export const setUserDataInLocalStorage = (user) => {
 };
 
 export const payment = (type) => {
+    console.log('type' , type)
     if(type === 0){
         return 'Stripe';
     }else if(type === 1){
@@ -36,18 +37,20 @@ export const payment = (type) => {
 };
 export const status = (status) => {
     if(status === 0){
-        return 'pending';
+        return 'Pending';
     }else if(status === 1){
         return 'Heading';
     }else if(status === 2){
         return 'Ongoing';
-    } else if(status === 3){
+    }else if(status === 3){
         return 'Completed';
-    }
-    else if(status === 4){
+    }else if(status === 4){
         return 'Delivered';
-    }
-    else if(status === 7){
+    }else if(status === 5){
+        return 'Pickup Heading';
+    }else if(status === 6){
+        return 'Pickup Ongoing';
+    }else if(status === 7){
         return 'Exchange';
     }else if(status === 8) {
         return 'Collection';

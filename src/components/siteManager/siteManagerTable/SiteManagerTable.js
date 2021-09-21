@@ -1,13 +1,13 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../reactTable/TableContainer";
 import { SelectColumnFilter } from "../../reactTable/filters";
 import CommonStatus from "../../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@material-ui/core";
 import "../../reactTable/jobs-react-table.scss";
-import JobService from '../../../services/job.service';
-import { getUserDataFromLocalStorage, payment, status } from "../../../services/utils";
+import { payment, status } from "../../../services/utils";
 
-const SiteManagerTable = (props) => {
+const SiteManagerTable = ({ managerData }) => {
+  console.log('site data' , managerData)
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
@@ -15,28 +15,19 @@ const SiteManagerTable = (props) => {
     contextRow: null,
   });
   const [jobs, setJobs] = useState([]);
-  useEffect(()=>{
-      let userData = getUserDataFromLocalStorage();
-      JobService.list({user_id: userData.user_id})
-          .then((response) => {
-              if(response.data.result?.data){
-                  setJobs(response.data.result.data);
-              }
-      }).catch((error)=>{
-          console.log(error)
-      });
+  useEffect(() => {
+    setJobs(managerData?.jobs?.data);
   }, []);
-
   const { openMenu, mouseX, mouseY, contextRow } = state;
 
   const handleButtonClick = (e, props) => {
-    e.stopPropagation();   
-        setState({...state,
-          openMenu: true,
-          mouseX: e.clientX - 2,
-          mouseY: e.clientY - 4
-        });
-    
+    e.stopPropagation();
+    setState({
+      ...state,
+      openMenu: true,
+      mouseX: e.clientX - 2,
+      mouseY: e.clientY - 4,
+    });
   };
   const handleClose = () => {
     setState({
@@ -56,25 +47,31 @@ const SiteManagerTable = (props) => {
         disableSortBy: true,
         Filter: SelectColumnFilter,
         filter: "equals",
-          Cell: (props) => `SK${props.value}`
+        Cell: (props) => `SK${props.value}`,
       },
       {
         Header: "Booked",
-        accessor: "save_date",
+        accessor: "job_date",
         disableFilters: true,
-          Cell: (props) => new Date(props.value).toLocaleDateString()
+        Cell: (props) => new Date(props.value).toLocaleDateString(),
       },
       {
         Header: "Delivery Date",
         accessor: "job_start_time",
         disableFilters: true,
-          Cell: (props) => new Date(props.value).toLocaleString(),
+        Cell: (props) => new Date(props.value).toLocaleString(),
       },
       {
         Header: "Site Contact",
-          accessor: d => d.site_contact_number !== null ? d.site_contact_number : d.mobile_number,
-          id: 'site contact',
+        accessor: (d) =>
+          d.site_contact_number !== null
+            ? d.site_contact_number
+            : d.mobile_number,
+        id: "site contact",
         disableFilters: true,
+        Cell: props => {
+          return (<span>{props.value || 'n/a' }</span>); 
+        },
       },
       {
         Header: "Service",
@@ -104,19 +101,25 @@ const SiteManagerTable = (props) => {
         Header: "Payment",
         accessor: "payment_type",
         disableFilters: true,
-          Cell: (props) => {
-              return payment(props.value);
-          },
+        Cell: (props) => {
+          return payment(props.value);
+        },
       },
       {
         Header: "Booked By",
-        accessor: "booked_by_name",
+        accessor: "booked_by",
         disableFilters: true,
+        Cell: props => {
+          return (<span>{props.value || 'n/a' }</span>); 
+        },
       },
       {
         Header: "PO",
         accessor: "purchase_order",
         disableFilters: true,
+        Cell: props => {
+          return (<span>{props.value || 'n/a' }</span>); 
+        },
       },
       {
         Header: "",
@@ -136,13 +139,10 @@ const SiteManagerTable = (props) => {
     ],
     []
   );
+  console.log("job", jobs);
   return (
     <div>
-      <TableContainer
-        columns={columns}
-        data={jobs}
-        name={"jobs"}
-      />
+      <TableContainer columns={columns} data={jobs} name={"jobs"} />
       <Menu
         keepMounted
         className="job-table-menu"

@@ -1,6 +1,7 @@
 import React from "react";
 import "./commonstatus.scss";
 const CommonStatus = ({ status }) => {
+  console.log('status' , status)
   function capitalize(str) {
     const lower = str.toLowerCase();
     return str.charAt(0).toUpperCase() + lower.slice(1);
@@ -15,17 +16,21 @@ const CommonStatus = ({ status }) => {
               ? "red"
               : status.toLowerCase() === "completed"
               ? "#00B25D"
-              : status.toLowerCase() === "assigned"
+              : status.toLowerCase() === "delivered"
               ? "#FF9013"
-              : "#52a9dd"
+                    : status.toLowerCase() === "heading"
+              ? "#3ca5e3"
+              : status.toLowerCase() === "ongoing"
+              ? "#ecac63" 
+                            : status.toLowerCase() === "pickup-ongoing"
+              ? "#6fff22"
+              : "#FF9013"
           }`,
         }}
       ></span>
-      {
-        <span className={`${status.toLowerCase()}-title`}>
+        <span className={`${status.toLowerCase().replace(' ', '-')}-title`}>
           {status ? capitalize(status) : ""}
         </span>
-      }
     </div>
   );
 };
