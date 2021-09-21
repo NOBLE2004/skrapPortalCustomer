@@ -78,9 +78,25 @@ $v110: 110px;
   @extend .common-title;
   color: #0fb36b;
 }
-.assigned-title {
+.delivered-title {
   @extend .common-title;
   color: #ff9013;
+}
+.ongoing-title {
+  @extend .common-title;
+  color: #ecac63;
+}
+.heading-title {
+  @extend .common-title;
+  color: #3ca5e3;
+}
+.pickup-ongoing-title {
+  @extend .common-title;
+  color: #6fff22;
+}
+.assigned-title {
+  @extend .common-title;
+  color: #ffd446;
 }
 
 .header-btn {

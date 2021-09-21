@@ -11,44 +11,25 @@ const CommonStatus = ({ status }) => {
         className="circle"
         style={{
           backgroundColor: `${
-<<<<<<< HEAD
-            status == "pending"
-              ? "red"
-              : status == "completed"
-=======
             status.toLowerCase() === "pending"
               ? "red"
               : status.toLowerCase() === "completed"
->>>>>>> 2e1d7d354ecb3efb0bb67654915478e5d85cf608
               ? "#00B25D"
-              : status.toLowerCase() === "assigned"
+              : status.toLowerCase() === "delivered"
               ? "#FF9013"
-              : "#52a9dd"
+                    : status.toLowerCase() === "heading"
+              ? "#3ca5e3"
+              : status.toLowerCase() === "ongoing"
+              ? "#ecac63" 
+                            : status.toLowerCase() === "pickup-ongoing"
+              ? "#6fff22"
+              : "#FF9013"
           }`,
         }}
       ></span>
-<<<<<<< HEAD
-      {statusTitle ? (
-        <span className={`active-title`}>
-          {statusTitle ? statusTitle : ""}
-        </span>
-      ) : (
-        <span style={{
-            color: `${
-                status == "pending"
-                    ? "red"
-                    : status == "completed"
-                    ? "#00B25D"
-                    : "#FF9013"
-            }`,
-        }} className={`${status}-title`}>
-=======
-      {
-        <span className={`${status.toLowerCase()}-title`}>
->>>>>>> 2e1d7d354ecb3efb0bb67654915478e5d85cf608
+        <span className={`${status.toLowerCase().replace(' ', '-')}-title`}>
           {status ? capitalize(status) : ""}
         </span>
-      }
     </div>
   );
 };
