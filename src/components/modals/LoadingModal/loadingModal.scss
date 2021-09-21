@@ -1,0 +1,24 @@
+.loadingModal {
+  .MuiTypography-h6 {
+    font-size: 20px;
+  }
+
+  .MuiDialogTitle-root {
+    width: 400px;
+  }
+
+  .MuiDialog-scrollPaper {
+    align-items: flex-start;
+  }
+
+  .MuiDialogContent-root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .MuiCircularProgress-root {
+    margin-top: 20px;
+  }
+}

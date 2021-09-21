@@ -1,0 +1,11 @@
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  align-items: center;
+  margin-right: 2.5%;
+  .MuiTablePagination-actions{
+    display: block ruby;
+    width: 4%;
+  }
+}

@@ -20,6 +20,7 @@ const MainJobs = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [isJobBooked, setIsJobBooked] = useState(false);
   const [jobs, setJobs] = useState([]);
+  const [pagination, setPagination] = useState({});
   const [updateJobs, setUpdateJobs] = useState(false);
   const [filters, setFilters] = useState({
       status: "",
@@ -27,6 +28,7 @@ const MainJobs = () => {
       service: "",
       address: "",
       search: "",
+      page: 1,
   });
     useEffect(()=>{
         let userData = getUserDataFromLocalStorage();
@@ -34,6 +36,8 @@ const MainJobs = () => {
             .then((response) => {
                 if(response.data.result?.data){
                     setJobs(response.data.result.data);
+                    delete response.data.result.data;
+                    setPagination(response.data.result)
                 }else{
                     setJobs([]);
                 }
@@ -61,9 +65,13 @@ const MainJobs = () => {
   const handleChangeSearch = search => {
       setFilters({...filters, search: search});
   };
-    const handleUpdateJobs = () => {
-        setUpdateJobs(true);
-    };
+  const handleUpdateJobs = () => {
+      setUpdateJobs(true);
+  };
+  const handlePagination = (page) => {
+      setFilters({...filters, page: page});
+  };
+
   return (
     <div>
       <CommonHeader
@@ -123,7 +131,12 @@ const MainJobs = () => {
             <JobFilters handleChangeFilters={handleChangeFilters} />
         </div>
       {isMapView ? (
-        <JobsTable data={jobs} handleUpdateJobs={handleUpdateJobs}/>
+        <JobsTable
+            data={jobs}
+            pagination={pagination}
+            handleUpdateJobs={handleUpdateJobs}
+            handlePagination={handlePagination}
+        />
       ) : (
         <>
           {/* <div className="live-job-title">

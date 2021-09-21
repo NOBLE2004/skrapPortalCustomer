@@ -29,10 +29,11 @@ const TableContainer = ({ columns, data, name }) => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    preGlobalFilteredRows,
-    state,
-    setGlobalFilter,
     rows,
+    canPreviousPage,
+    canNextPage,
+    nextPage,
+    previousPage,
   } = useTable(
     {
       columns,
