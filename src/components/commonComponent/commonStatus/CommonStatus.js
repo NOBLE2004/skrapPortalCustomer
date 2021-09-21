@@ -11,9 +11,9 @@ const CommonStatus = ({ status, statusTitle }) => {
         className="circle"
         style={{
           backgroundColor: `${
-            status === "pending"
+            status == "pending"
               ? "red"
-              : status === "completed"
+              : status == "completed"
               ? "#00B25D"
               : "#FF9013"
           }`,
@@ -24,7 +24,15 @@ const CommonStatus = ({ status, statusTitle }) => {
           {statusTitle ? statusTitle : ""}
         </span>
       ) : (
-        <span className={`${status}-title`}>
+        <span style={{
+            color: `${
+                status == "pending"
+                    ? "red"
+                    : status == "completed"
+                    ? "#00B25D"
+                    : "#FF9013"
+            }`,
+        }} className={`${status}-title`}>
           {status ? capitalize(status) : ""}
         </span>
       )}

@@ -1,15 +1,17 @@
 import React, {useEffect, useMemo, useState} from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
-import { jobsTableData } from "../utlils/jobListing";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@material-ui/core";
 import "./jobs-react-table.scss";
 import { payment, status } from "../../services/utils";
-import CreateJob from "../modals/createJob/CreateJob";
 import CreateExchange from "../modals/createExchange/CreateExchange";
+import RequestCollection from "../modals/requestCollection/RequestCollection";
+import JobService from '../../services/job.service';
+import LoadingModal from "../modals/LoadingModal/LoadingModal";
+import Pagination from "./pagination";
 
-const JobsTable = ({data, handleUpdateJobs}) => {
+const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
@@ -17,10 +19,14 @@ const JobsTable = ({data, handleUpdateJobs}) => {
     contextRow: null,
   });
   const [exchange, setExchange] = useState(false);
-  const [updateJobs, setUpdateJobs] = useState();
+  const [collection, setCollection] = useState(false);
 
   const { openMenu, mouseX, mouseY, contextRow } = state;
   const [row, setRow] = useState({});
+  const [reorder, setReorder] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isLoading, setLoading] = useState(false);
+  const [notice, setNotice] = React.useState(null);
 
   const handleButtonClick = (e, props) => {
     e.stopPropagation();   
@@ -61,6 +67,35 @@ const JobsTable = ({data, handleUpdateJobs}) => {
       setExchange(true);
       handleClose();
   };
+  const handleShowCollectionDialog = () =>{
+      setCollection(true);
+      handleClose();
+  };
+    const handlereorder1 = () => {
+        setReorder(true);
+        setAnchorEl(null);
+    };
+
+    const handleReorderResponse = (id) => {
+        JobService.copy({ job_id: id })
+            .then((response) => {
+                setNotice({
+                    type: "success",
+                    text: "Job Successfully reorder",
+                });
+                setTimeout(() => {
+                    handleUpdateJobs();
+                    setReorder(false);
+                }, 2000);
+            })
+            .catch((err) => {
+                setLoading(false);
+                setNotice({
+                    type: "error",
+                    text: "Job Reorder failed",
+                });
+            });
+    };
   const columns = useMemo(
     () => [
       {
@@ -159,10 +194,38 @@ const JobsTable = ({data, handleUpdateJobs}) => {
                 isfromJob={true}
             />
         }
+        {
+            collection && <RequestCollection
+                closeModal={() => setCollection(!collection)}
+                updateJobs={handleUpdateJobs}
+                row={row}
+                isfromJob={true}
+            />
+        }
+        {reorder && (
+            <LoadingModal
+                handleClose={() => setReorder(false)}
+                show={reorder}
+                handleRes={() => handleReorderResponse(row.job_id)}
+                noticeData={notice}
+                isLoading={isLoading}
+            >
+                Please wait while we reordring the data
+            </LoadingModal>
+        )}
       <TableContainer
         columns={columns}
         data={data}
         name={"jobs"}
+      />
+      <Pagination
+          last={pagination.last_page}
+          current={pagination.current_page}
+          from={pagination.from}
+          to={pagination.to}
+          total={pagination.total}
+          handleNext={(page)=>{handlePagination(page)}}
+          handlePrevious={(page)=>{handlePagination(page)}}
       />
       <Menu
         keepMounted
@@ -177,8 +240,8 @@ const JobsTable = ({data, handleUpdateJobs}) => {
         }
       >
           {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>}
-        <MenuItem onClick={handleClose}>Reorder</MenuItem>
-        <MenuItem onClick={handleClose}>Collection</MenuItem>
+          <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
+          {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>}
         <MenuItem onClick={handleClose}>Waste Report</MenuItem>
         <MenuItem onClick={handleClose}>Track Driver</MenuItem>
       </Menu>{" "}

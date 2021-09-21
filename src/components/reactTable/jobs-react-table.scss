@@ -59,40 +59,6 @@
     margin-right: 10px;
   }
 }
-
-.pagination {
-  display: flex;
-  justify-content: flex-end;
-  .MuiListItem-root {
-    width: fit-content;
-    font-family: DM Sans;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 16px;
-    color: #52a9dd;
-    cursor: pointer;
-  }
-  .pagination-control {
-    padding: 0px 4px;
-    cursor: pointer;
-    outline: none;
-    min-width: 50px;
-    text-transform: capitalize;
-    background: #fbfbfc;
-    border-radius: 3px;
-    border: none;
-    font-family: 'DM Sans';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 16px;
-    color: #52a9dd;
-    height: 30px;
-    margin-right: 10px;
-  }
-}
-
 .common-search-for-tables {
   display: flex;
   justify-content: space-between;

@@ -1,4 +1,7 @@
 .creatJobModal {
+  form{
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
   .MuiPaper-root {
     border-radius: 32px;
   }
@@ -89,6 +92,7 @@
   display: flex;
   justify-content: space-between;
   gap: 40px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
   p {
     margin-top: 10px;
@@ -103,6 +107,7 @@
     align-items: flex-end;
     position: relative;
     top: -8px;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
     label {
       color: #fff;
