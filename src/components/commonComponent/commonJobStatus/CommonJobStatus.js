@@ -15,7 +15,7 @@ const CommonJobStatus = ({ jobStatus }) => {
         </h1>
         {(jobStatus.statusName === "pending") |
           (jobStatus.statusName === "completed") |
-          (jobStatus.statusName === "assigned") ? (
+          (jobStatus.statusName === "delivered") ? (
           <CommonStatus status={jobStatus.statusName} />
         ) : (
           <span className={`${jobStatus.statusName}-title`}>

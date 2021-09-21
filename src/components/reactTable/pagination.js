@@ -1,5 +1,7 @@
 import React from "react";
 import './pagination.scss';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 function Pagination({from, to, total, current, last, handleNext, handlePrevious}) {
     const previousPage = () => {
@@ -26,16 +28,11 @@ function Pagination({from, to, total, current, last, handleNext, handlePrevious}
                     className="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
                     tabIndex="0"
                     type="button"
-                    title="Previous page"
+                    title="Next page"
                     onClick={previousPage}
-                    aria-label="Previous page">
+                    aria-label="Next page">
                     <span className="MuiIconButton-label">
-                        <svg className="MuiSvgIcon-root"
-                             focusable="false"
-                             viewBox="0 0 24 24"
-                             aria-hidden="true">
-                            <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"></path>
-                        </svg>
+                        <KeyboardArrowLeftIcon/>
                     </span>
                     <span className="MuiTouchRipple-root">
                     </span>
@@ -48,13 +45,7 @@ function Pagination({from, to, total, current, last, handleNext, handlePrevious}
                     onClick={nextPage}
                     aria-label="Next page">
                     <span className="MuiIconButton-label">
-                        <svg
-                            className="MuiSvgIcon-root"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true">
-                            <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
-                        </svg>
+                        <KeyboardArrowRightIcon/>
                     </span>
                     <span className="MuiTouchRipple-root">
                     </span>

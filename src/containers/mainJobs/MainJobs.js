@@ -6,7 +6,7 @@ import { Card, CardContent } from "@material-ui/core";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
-import { enRouteMarker } from "../../assets/images";
+import { enRouteMarker, pendingMarker, completeMarker, deliveredMarker } from "../../assets/images";
 import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRenderer";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import JobFilters from "../../components/filters/jobFilters";
@@ -14,14 +14,19 @@ import CreateJob from "../../components/modals/createJob/CreateJob";
 import "./mainjobs.scss";
 import JobService from '../../services/job.service';
 import { getUserDataFromLocalStorage, payment, status } from "../../services/utils";
+import {connect} from "react-redux";
+import { useHistory } from "react-router-dom";
 
-const MainJobs = () => {
+const MainJobs = (props) => {
   const [isMapView, setMapView] = useState(true);
-  const [showInfo, setShowInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(null);
   const [isJobBooked, setIsJobBooked] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [pagination, setPagination] = useState({});
   const [updateJobs, setUpdateJobs] = useState(false);
+  const [limit, setLimit] = useState(10);
+  const { info, loading } = props.dashboard;
+  const history = useHistory();
   const [filters, setFilters] = useState({
       status: "",
       date: "",
@@ -31,8 +36,9 @@ const MainJobs = () => {
       page: 1,
   });
     useEffect(()=>{
+        console.log(props);
         let userData = getUserDataFromLocalStorage();
-        JobService.list({user_id: userData.user_id}, filters)
+        JobService.list({user_id: userData.user_id, limit}, filters)
             .then((response) => {
                 if(response.data.result?.data){
                     setJobs(response.data.result.data);
@@ -44,8 +50,13 @@ const MainJobs = () => {
             }).catch((error)=>{
             console.log(error)
         });
-    }, [filters, updateJobs]);
+    }, [filters, updateJobs, limit]);
   const handleShowMap = () => {
+      if(isMapView === true){
+          setLimit(10000);
+      }else{
+          setLimit(10);
+      }
     setMapView(!isMapView);
   };
 
@@ -71,6 +82,9 @@ const MainJobs = () => {
   const handlePagination = (page) => {
       setFilters({...filters, page: page});
   };
+  const gotoJobDetail = () => {
+      history.push("/job-detail");
+  };
 
   return (
     <div>
@@ -83,7 +97,7 @@ const MainJobs = () => {
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
-            price: "£7,142.00",
+            price: `£${info? info.TotalSpend : 0}`,
             statusName: "primary",
             width: "184px",
             height: "84px",
@@ -92,7 +106,7 @@ const MainJobs = () => {
         <CommonJobStatus
           jobStatus={{
             status: "Jobs",
-            price: "10",
+            price: `${info? info.NumberOfJobs : 0}`,
             statusName: "primary",
             width: "115px",
             height: "84px",
@@ -101,7 +115,7 @@ const MainJobs = () => {
         <CommonJobStatus
           jobStatus={{
             status: "Pending",
-            price: "4",
+            price: `${info? info.Pending : 0}`,
             statusName: "pending",
             width: "115px",
             height: "84px",
@@ -110,7 +124,7 @@ const MainJobs = () => {
         <CommonJobStatus
           jobStatus={{
             status: "Completed",
-            price: "4",
+              price: `${info? info.Completed : 0}`,
             statusName: "completed",
             width: "115px",
             height: "84px",
@@ -118,9 +132,9 @@ const MainJobs = () => {
         />
         <CommonJobStatus
           jobStatus={{
-            status: "Assigned",
-            price: "2",
-            statusName: "assigned",
+            status: "Delivered",
+            price: `${info? info.Delivered : 0}`,
+            statusName: "delivered",
             width: "115px",
             height: "84px",
           }}
@@ -153,34 +167,37 @@ const MainJobs = () => {
                   <div style={{ height: `100%`, borderRadius: "12px" }} />
                 }
               >
-                <Marker
-                  position={{
-                    lat: 51.55063,
-                    lng: -0.0461,
-                  }}
-                  icon={enRouteMarker}
-                  onClick={() => {
-                    setShowInfo(!showInfo);
-                  }}
-                />
-                {showInfo && (
-                  <InfoWindow
-                    position={{
-                      lat: 51.56078,
-                      lng: -0.25256,
-                    }}
-                  >
-                    <TipingCard />
-                  </InfoWindow>
-                )}
+                  {jobs.map((job,index)=>{
+                      return(<Marker
+                          position={{
+                              lat: job.latitude ? parseFloat(job.latitude) : 51.55063,
+                              lng: job.longitude ?  parseFloat(job.longitude) : -0.0461,
+                          }}
+                          icon={
+                              status(job.appointment_status) === 'Pending' ? pendingMarker
+                                  :status(job.appointment_status) === 'Completed' ? completeMarker
+                                  :status(job.appointment_status) === 'Heading' ? enRouteMarker
+                                      :status(job.appointment_status) === 'Delivered' ? deliveredMarker
+                                          : enRouteMarker
+                          }
+                          onClick={() => {
+                              setShowInfo(index);
+                          }}
+                      >
 
-                {showInfo && (
-                  <NewMapDirectionsRenderer
-                    places={dumyplaces}
-                    onMarkerClick={handleMarkerClick}
-                    info={showInfo}
-                  />
-                )}
+                      {showInfo === index && (
+                          <InfoWindow>
+                              <TipingCard
+                                  jobInfo={{
+                                      job_address: job.job_address,
+                                      jobStatus: status(job.appointment_status),
+                                      site_manager_mobile_number: job.site_contact_number !== null ? job.site_contact_number : job.mobile_number
+                                  }}
+                                  gotoJobDetail={gotoJobDetail}
+                              />
+                          </InfoWindow>
+                      )}</Marker>)
+                  })}
               </MainMap>
             </CardContent>
           </Card>
@@ -193,5 +210,7 @@ const MainJobs = () => {
     </div>
   );
 };
-
-export default MainJobs;
+const mapStateToProps = ({ dashboard }) => {
+    return { dashboard };
+};
+export default connect(mapStateToProps)(MainJobs);
