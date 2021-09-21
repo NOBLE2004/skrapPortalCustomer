@@ -32,10 +32,11 @@ const MainJobs = () => {
     { latitude: 51.55063, longitude: -0.0461 },
     { latitude: 51.56078, longitude: -0.25256 },
   ];
+
   return (
     <div>
       <CommonHeader
-        bookSite={"Book Job"}
+        bookSite={"Create Job"}
         handleShowMap={handleShowMap}
         isMap={isMapView}
         handleBookJob={handleBookJob}
@@ -91,13 +92,9 @@ const MainJobs = () => {
       ) : (
         <>
           <div className="jobs-search-header">
-            <CommonSearch cname="jobs"/>
+            <CommonSearch cname="jobs" />
             <CommonFilter />
           </div>
-          {/* <div className="live-job-title">
-            <img src={mapMarker} alt="map-marker" />
-            <h1>Orders On Map</h1>
-          </div> */}
           <Card className="mapCard">
             <CardContent>
               <MainMap
@@ -142,9 +139,9 @@ const MainJobs = () => {
         </>
       )}
 
-      {
-        isJobBooked && <CreateJob closeModal={() => setIsJobBooked(!isJobBooked)}/>
-      }
+      {isJobBooked && (
+        <CreateJob closeModal={() => setIsJobBooked(!isJobBooked)} />
+      )}
     </div>
   );
 };

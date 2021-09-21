@@ -1,11 +1,33 @@
 import React from "react";
 import { Grid, Card, CardContent } from "@material-ui/core";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
+import sitesService from "../../../services/sites.service";
+import { useHistory } from "react-router";
 import "./managerdetail.scss";
 const ManagerDetail = ({ title, siteData }) => {
-  const { manager_name, job_address, mobile_number, site_assigned, email } = siteData;
+  const history = useHistory();
+  const {
+    manager_name,
+    job_address,
+    mobile_number,
+    site_assigned,
+    email,
+    site_manager_id,
+  } = siteData;
+
+  const handleManagerDetail = (id) => {
+    history.push("site-managers/" + id);
+  };
+
+  const handleViewJob = () => {
+    // history.push({ pathname: "/jobs" , state:"siteManager" });
+  };
+
   return (
-    <Card className="manager-detail-main">
+    <Card
+      className="manager-detail-main"
+      onClick={() => handleManagerDetail(site_manager_id)}
+    >
       <CardContent>
         <div className="title">{title ? title : "Managers Details"}</div>
         <Grid container spacing={3} className="manager-sub-detail">
@@ -18,7 +40,9 @@ const ManagerDetail = ({ title, siteData }) => {
             </div>
             <div className="profile-action">
               <img src={showIcon} alt="person-img" />
-              <div className="edit-title">View Jobs</div>
+              <div className="edit-title" onClick={handleViewJob}>
+                View Jobs
+              </div>
             </div>
           </Grid>
           <Grid item md={8} className="personal-info">

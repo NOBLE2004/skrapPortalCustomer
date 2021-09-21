@@ -12,9 +12,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Button, MenuItem, FormControl, Select } from "@material-ui/core";
 import siteService from "../../../services/sites.service";
-import axios from "axios";
-import "./booksite.scss";
-function BookSite(props) {
+import "./createmanager.scss";
+function CreateManager(props) {
   const { handleClose } = props;
   const [state, setState] = useState({
     isLoading: false,
@@ -31,7 +30,6 @@ function BookSite(props) {
   const [errors, setErrors] = useState({
     firstname: "",
     lastname: "",
-    site: "",
     email: "",
     phone: "",
     password: "",
@@ -48,11 +46,8 @@ function BookSite(props) {
       case "email":
         errors[name] = value.length === 0 ? "Required" : "";
         break;
-      case "site":
-        errors[name] = value.length === 0 ? "Required" : "";
-        break;
       case "phone":
-        errors[name] = value.length < 13 ? "Required" : "";
+        errors[name] = value.length < 10 ? "Required" : "";
         break;
       case "password":
         errors[name] = value.length === 0 ? "Required" : "";
@@ -111,10 +106,9 @@ function BookSite(props) {
     setState({ ...state, [name]: value });
   };
   useEffect(() => {
-    axios
-      .get("https://apitest2.skrap.app/scrapapi/sites")
+    siteService
+      .getAllSites()
       .then((res) => {
-        console.log("res.data.data", res.data.data);
         setState({ ...state, siteData: res.data.data });
       })
       .catch((err) => {
@@ -128,7 +122,6 @@ function BookSite(props) {
       (firstname === "") |
       (firstname === "") |
       (email === "") |
-      (site === "") |
       (phone.length < 10) |
       (password === "")
     ) {
@@ -140,7 +133,7 @@ function BookSite(props) {
 
     const data = {
       email,
-      mobile_number: phone,
+      mobile_number: "+44" + phone,
       password,
       user_type: 1,
       first_name: firstname,
@@ -149,8 +142,7 @@ function BookSite(props) {
       site_id: site,
     };
     setState({ ...state, isLoading: true });
-    axios
-      .post("https://apitest2.skrap.app/scrapapi/siteManager/register", data)
+    siteService.addNewSite(data)
       .then((res) => {
         setState({
           ...state,
@@ -160,9 +152,9 @@ function BookSite(props) {
           },
           isLoading: false,
         });
-        setTimeout(()=>{
-          handleClose()
-        },2000)
+        setTimeout(() => {
+          handleClose();
+        }, 2000);
       })
       .catch((err) => {
         setState({
@@ -177,7 +169,7 @@ function BookSite(props) {
   };
   return (
     <Dialog open={true} onClose={handleClose} className="booksitemodal">
-      <DialogTitle onClose={handleClose}> Book Site </DialogTitle>
+      <DialogTitle onClose={handleClose}> Create Manager </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
           <div className="customer-input-field">
@@ -217,7 +209,6 @@ function BookSite(props) {
                 name="site"
                 fullWidth
                 onChange={handleOnChange}
-                error={errors["site"].length > 0 ? true : false}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -297,4 +288,4 @@ function BookSite(props) {
   );
 }
 
-export default BookSite;
+export default CreateManager;

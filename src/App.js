@@ -12,6 +12,7 @@ import MainTickets from "./containers/mainTickets/MainTickets";
 import MainJobDetail from "./containers/mainJobDetail/MainJobDetail";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
+import SiteManagerDetailPage from "./components/siteManager/siteManagerDetailPage/SiteManagerDetailPage";
 
 const history = createBrowserHistory();
 
@@ -24,7 +25,8 @@ function App() {
         <Layout>
           <PrivateRoute path="/" component={() => <DashBoard />} exact />
           <PrivateRoute path="/dashboard" component={() => <DashBoard />} />
-          <PrivateRoute path="/site-managers" component={() => <SiteManagers />} />
+          <PrivateRoute path="/site-managers" component={() => <SiteManagers />} exact/>
+          <PrivateRoute path="/site-managers/:id" component={() => <SiteManagerDetailPage />} exact/>
           <PrivateRoute path="/sites" component={() => <Sites />} /> 
           <PrivateRoute path="/jobs" component={() => <MainJobs />} /> 
           <PrivateRoute path="/tiping" component={() => <MainTiping />} /> 
