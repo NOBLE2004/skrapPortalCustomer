@@ -36,7 +36,7 @@ export const payment = (type) => {
 };
 export const status = (status) => {
     if(status === 0){
-        return 'pending';
+        return 'Pending';
     }else if(status === 1){
         return 'Heading';
     }else if(status === 2){
