@@ -16,6 +16,7 @@ import JobService from '../../services/job.service';
 import { getUserDataFromLocalStorage, payment, status } from "../../services/utils";
 import {connect} from "react-redux";
 import { useHistory } from "react-router-dom";
+import {getDashboardsData} from "../../store/actions/dashboard.action";
 
 const MainJobs = (props) => {
   const [isMapView, setMapView] = useState(true);
@@ -59,7 +60,9 @@ const MainJobs = (props) => {
       }
     setMapView(!isMapView);
   };
-
+  useEffect(()=>{
+      props.getDashboardsData('');
+  }, []);
   const handleBookJob = () => {
     setIsJobBooked(true);
   };
@@ -213,4 +216,9 @@ const MainJobs = (props) => {
 const mapStateToProps = ({ dashboard }) => {
     return { dashboard };
 };
-export default connect(mapStateToProps)(MainJobs);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getDashboardsData: (year) => dispatch(getDashboardsData(year)),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(MainJobs);
