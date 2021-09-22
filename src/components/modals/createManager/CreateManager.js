@@ -109,6 +109,7 @@ function CreateManager(props) {
     siteService
       .getAllSites()
       .then((res) => {
+        console.log('res.data' , res.data)
         setState({ ...state, siteData: res.data.data });
       })
       .catch((err) => {
@@ -142,7 +143,7 @@ function CreateManager(props) {
       site_id: site,
     };
     setState({ ...state, isLoading: true });
-    siteService.addNewSite(data)
+    siteService.addNewManager(data)
       .then((res) => {
         setState({
           ...state,
@@ -157,6 +158,7 @@ function CreateManager(props) {
         }, 2000);
       })
       .catch((err) => {
+        console.log('res' , err)
         setState({
           ...state,
           notice: {
@@ -216,8 +218,8 @@ function CreateManager(props) {
                 {siteData &&
                   siteData.map((data, index) => {
                     return (
-                      <MenuItem key={index} value={data.id}>
-                        {data.name}
+                      <MenuItem key={index} value={data.address_id}>
+                        {data.job_address}
                       </MenuItem>
                     );
                   })}

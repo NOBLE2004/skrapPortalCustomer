@@ -51,7 +51,6 @@ function MapDirectionsRenderer({
   if (error) {
     return <h1>{error}</h1>;
   }
-  console.log('coordinates', coords)
   return (
     directions && (
       <>

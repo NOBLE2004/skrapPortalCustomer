@@ -3,7 +3,6 @@ import { Grid, Card, CardContent } from "@material-ui/core";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
 import "./newmanagerdetail.scss";
 const NewManagerDetail = ({managerData}) => {
-  console.log('manager' , managerData)
   const {data , site} = managerData
   return (
     <div>
@@ -17,12 +16,12 @@ const NewManagerDetail = ({managerData}) => {
             <Grid item md={3} className="new-personal-info">
               <div className="info">
                 <div className="designation">Manager</div>
-                <div className="personal-title">{data ? data.first_name + " " + data.last_name : ""}</div>
+                <div className="personal-title">{data ? data.first_name + " " + data.last_name : "n/a"}</div>
               </div>
               <div className="change-info">
                 <div className="info">
                   <div className="designation">Site Assigned</div>
-                  <div className="personal-title">{site ? site.name : ""}</div>
+                  <div className="personal-title">{`${site && site.site_name ? site.site_name  : "n/a"}`}</div>
                 </div>
                 <div className="change-title">Change</div>
               </div>
@@ -31,7 +30,7 @@ const NewManagerDetail = ({managerData}) => {
               <div className="info">
                 <div className="designation">Address</div>
                 <div className="personal-title">
-                  {site ? site.address : ""}
+                {`${site ? site.line_1 +" "+ site.postcode +" "+site.postal_county : ""}`}
                 </div>
               </div>
               <div className="info">
@@ -44,17 +43,6 @@ const NewManagerDetail = ({managerData}) => {
               <div className="info">
                 <div className="designation">Phone</div>
                 <div className="personal-title">{data ? data.mobile_number : ""}</div>
-              </div>
-            </Grid>
-            <Grid item md={2} className="profile-info">
-              <div className="p-title">Action</div>
-              <div className="profile-action">
-                <img src={editIcon} alt="person-img" />
-                <div className="edit-title">Edit</div>
-              </div>
-              <div className="profile-action">
-                <img src={showIcon} alt="person-img" />
-                <div className="edit-title">View Jobs</div>
               </div>
             </Grid>
           </Grid>
