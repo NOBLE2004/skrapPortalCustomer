@@ -5,9 +5,12 @@ export const getSiteManager = () => {
   return (dispatch) => {
     dispatch(siteManagerStart());
     sitesService
-      .getSitesList()
+      .getManagerList()
       .then((res) => {
-        dispatch(siteManagerSuccess(res.data.data.data));
+        if(Object.keys(res.data).length === 0){
+        }else{
+          dispatch(siteManagerSuccess(res.data.data.data));
+        }
       })
       .catch((err) => {
         dispatch(siteManagerFailure(err.message));

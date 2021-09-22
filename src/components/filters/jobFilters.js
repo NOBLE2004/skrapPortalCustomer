@@ -30,7 +30,6 @@ const JobFilters = ({ handleChangeFilters }) => {
     } = filters;
     const handleChange = (event) => {
         const { name, value } = event.target;
-        console.log(name, value);
         setFilters({ ...filters, [name]: value });
     };
     useEffect(()=>{

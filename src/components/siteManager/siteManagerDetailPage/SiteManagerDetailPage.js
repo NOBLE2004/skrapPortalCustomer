@@ -33,13 +33,16 @@ const SiteManagerDetailPage = () => {
   const [state, setState] = useState({
     isLoading: false,
     managerData: [],
+    isCreateManager:false
   });
 
-  const { isLoading, managerData } = state;
+  const { isLoading, managerData , isCreateManager } = state;
   const handleShowMap = () => {
     setMapView(!isMapView);
   };
-
+  const handleCreateManager = () => {
+    setState({...state , isCreateManager : true})
+  };
   const handleBookJob = () => {
     setIsJobBooked(true);
   };
@@ -74,14 +77,12 @@ const SiteManagerDetailPage = () => {
   }, []);
   return (
     <div className="site-manager-detail-page-main">
-      <CommonHeader
-        bookSite={"Create Manager"}
-        handleShowMap={handleShowMap}
-        isMap={isMapView}
-        handleBookJob={handleBookJob}
-      >
-        <div className="sites-header-title">Site Manager</div>
-      </CommonHeader>
+     <div className="header-main">
+        <div className="sites-header-title">Site Managers </div>
+        <button className="header-btn" onClick={handleCreateManager}>
+          Create Manager
+        </button>
+      </div>
       <Grid container className="manager-detail-page">
         {isLoading ? (
           <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
@@ -104,10 +105,6 @@ const SiteManagerDetailPage = () => {
               <SiteManagerTable managerData={managerData} />
             ) : (
               <Grid item md={12} className="site-manager-map-view">
-                <div className="jobs-search-header">
-                  <CommonSearch cname="jobs" />
-                  <CommonFilter />
-                </div>
                 <Card className="mapCard">
                   <CardContent>
                     <MainMap

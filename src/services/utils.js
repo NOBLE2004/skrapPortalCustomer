@@ -12,7 +12,6 @@ export const setUserDataInLocalStorage = (user) => {
 };
 
 export const payment = (type) => {
-    console.log('type' , type)
     if(type === 0){
         return 'Stripe';
     }else if(type === 1){
