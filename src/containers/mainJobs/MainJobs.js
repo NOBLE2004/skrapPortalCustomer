@@ -92,7 +92,7 @@ const MainJobs = (props) => {
   return (
     <div>
       <CommonHeader
-        bookSite={"Book Job"}
+        bookSite={"Create Job"}
         handleShowMap={handleShowMap}
         isMap={isMapView}
         handleBookJob={handleBookJob}
@@ -207,9 +207,9 @@ const MainJobs = (props) => {
         </>
       )}
 
-      {
-        isJobBooked && <CreateJob closeModal={() => setIsJobBooked(!isJobBooked)}/>
-      }
+      {isJobBooked && (
+        <CreateJob closeModal={() => setIsJobBooked(!isJobBooked)} />
+      )}
     </div>
   );
 };

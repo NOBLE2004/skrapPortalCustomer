@@ -3,20 +3,15 @@ import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import SitesItem from "../../components/sites/sitesItem/SitesItem";
 import { Grid } from "@material-ui/core";
-import BookSite from "../../components/modals/bookSite/BookSite"
 import "./sites.scss";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
 
 const Sites = () => {
-  const [isSiteBooked , setSiteBooked] = React.useState(false)
-
-  const handleBookSite = () => {
-    setSiteBooked(true)
-  }
+ 
   return (
     <>
-      <CommonHeader isMap={true} handleBookJob={handleBookSite}>
+      <CommonHeader isMap={true}>
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
@@ -134,9 +129,7 @@ const Sites = () => {
         </Grid>
       </Grid>
 
-      {
-        isSiteBooked && <BookSite handleClose={() => setSiteBooked(!isSiteBooked)} />
-      }
+    
     </>
   );
 };
