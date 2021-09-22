@@ -17,7 +17,7 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 import JobService from "../../../services/job.service";
 import { useHistory } from "react-router-dom";
-import "./requestCollection.scss";
+import "../createJob/createJob.scss";
 
 const styles = (theme) => ({
   root: {
@@ -155,7 +155,7 @@ function RequestCollection({ row, updateJobs, closeModal, isfromJob }) {
     <Dialog
       maxWidth="md"
       onClose={handleClose}
-      className="createExchangeModal"
+      className="creatJobModal"
       open={true}
     >
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
@@ -229,7 +229,7 @@ function RequestCollection({ row, updateJobs, closeModal, isfromJob }) {
             style={{ marginTop: "20px", marginBottom: "20px" }}
             onClick={() => handleCreate()}
             color="primary"
-            className="createExchangeBtn"
+            className="confirmJob"
           >
             create
             {isLoading && <CircularProgress />}

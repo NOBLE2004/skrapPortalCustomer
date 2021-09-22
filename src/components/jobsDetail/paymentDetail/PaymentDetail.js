@@ -1,14 +1,40 @@
 import { Card, CardContent } from "@material-ui/core";
-import React from "react";
+import React, {useState} from "react";
 import "./paymentDetail.scss";
-const PaymentDetail = ({job}) => {
+import {payment} from "../../../services/utils";
+import JobService from '../../../services/job.service';
+import PayNow from "../../modals/payNow";
+const PaymentDetail = ({job, updateJobs}) => {
+    const [payNowModal, setPayNowModal] = useState(false);
+    const downloadInvoice =()=>{
+        JobService.invoice({job_id: job.job_id})
+            .then((response) => {
+                if (response.data.code === 0) {
+                    window.open(response.data.result.Url, '_blank');
+                } else {
+                    alert(response.data.description);
+                }
+            }).catch((error)=>{
+            console.log(error)
+        });
+    };
+    const openPayNowModal = () => {
+        setPayNowModal(!payNowModal);
+    };
   return (
     <div className="payment-detail-main">
+        {payNowModal &&
+        <PayNow cost={job?.transaction_cost} user_id={job?.customer_user_id} jobId={job?.job_id}
+                handleClose={() => setPayNowModal(false)}
+                updateJobs={updateJobs}
+        />}
       <div className="payment-header-main">
         <div className="header-title">Payment Details</div>
         <div className="header-sub">
-          <span className="bold-dsans-12-primary">Pay</span>
-          <span className="bold-dsans-12-primary">Download invoice</span>
+          <span className="bold-dsans-12-primary" onClick={() => {
+              openPayNowModal()
+          }}>Pay Now</span>
+          <span onClick={downloadInvoice} className="bold-dsans-12-primary">Download invoice</span>
         </div>
       </div>
 
@@ -25,12 +51,12 @@ const PaymentDetail = ({job}) => {
           </div>
 
           <div className="card-payment">
-            <div className="card-header-sub-item">Pending - Manual</div> 
+            <div className="card-header-sub-item">{payment(job?.payment_type)} - {job?.is_paid ? 'Paid':'Pending'}</div>
             <div className="card-header-sub ">
               <span className="card-header-sub-item">£{job?.service_rate?.toFixed(2)}</span>
-              <span className="card-header-sub-item">£660.00</span>
+              <span className="card-header-sub-item">£{job?.haulage ? job?.haulage?.toFixed(2) : '0.00'}</span>
               <span className="card-header-sub-item">£{job?.transaction_cost?.toFixed(2)}</span>
-              <span className="card-header-sub-item">£0.00</span>
+              <span className="card-header-sub-item">£{job?.discount ? parseInt(job?.discount)?.toFixed(2) : '0.00'}</span>
             </div>
           </div>
         </CardContent>

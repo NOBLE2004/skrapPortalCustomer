@@ -17,11 +17,11 @@ const JobDetail = ({job}) => {
         </div>
         <div className="info">
           <div className="designation">Purchase Order</div>
-          <div className="personal-title">SN14662</div>
+          <div className="personal-title">{job?.purchase_order ? job?.purchase_order : '-----'}</div>
         </div>
         <div className="info">
           <div className="designation">Booked By</div>
-          <div className="personal-title">Skarp</div>
+          <div className="personal-title">{job?.bookedby ? `${job?.bookedby.first_name} ${job?.bookedby.last_name}` : 'Skarp'}</div>
         </div>
         <div className="info">
           <div className="designation">Site Address</div>
@@ -42,12 +42,23 @@ const JobDetail = ({job}) => {
         </div>
         <div className="info">
           <div className="designation">Service</div>
-          <div className="personal-title">{job?.service_name} (Grab Hire)</div>
+          <div className="personal-title">{job?.service_name} ({job?.parent_service_name})</div>
         </div>
         <div className="info">
           <div className="designation">Waste Type</div>
           <div className="personal-title">
-            Organic waste 20%
+              {job?.job_waste?.length === 0 && (
+                  <p className="item-value">-------</p>
+              )}
+              {(job?.job_waste || []).map((waste, index) => {
+                  if (index === 0) {
+                      return (
+                          <p className="item-value">
+                              {waste.waste_type.name.substr(0, 24)}.. {waste.percentage}%
+                          </p>
+                      );
+                  }
+              })}
           </div>
         </div>
       </div>
