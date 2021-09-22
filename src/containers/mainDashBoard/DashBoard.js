@@ -143,8 +143,6 @@ const DashBoard = (props) => {
             </Grid>
           </Grid>
         </>
-      )}
-    </div>
   );
 };
 
