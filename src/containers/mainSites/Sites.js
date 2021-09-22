@@ -8,6 +8,7 @@ import CommonSearch from "../../components/commonComponent/commonSearch/CommonSe
 import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
 
 const Sites = () => {
+ 
   return (
     <>
       <CommonHeader isMap={true}>
@@ -127,6 +128,8 @@ const Sites = () => {
           />
         </Grid>
       </Grid>
+
+    
     </>
   );
 };

@@ -26,13 +26,13 @@ import "./dashboard.scss";
 const DashBoard = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
   const [isNewYear, setNewYear] = useState(false);
-  const [latestYear , setLatestYear] = useState(2021)
+  const [latestYear, setLatestYear] = useState(2021);
 
   const history = useHistory();
   const { info, loading } = props.dashboard;
 
   const getData = async (year) => {
-    setLatestYear(year)
+    setLatestYear(year);
     if (isNewYear) {
       await props.getDashboardsData(year);
     }
@@ -48,30 +48,34 @@ const DashBoard = (props) => {
   const gotoJobDetail = (id) => {
     history.push({pathname: `job-detail/${id}`});
   };
+
+  if (loading) {
+    // return <FadeLoader color={"#29a7df"} loading={loading} width={4}/>;
+    return <div>...Loading</div>
+  }
   return (
-    <div className="main-loading">
-      {loading ? (
-        <div>...Loading</div>
-        // <FadeLoader color={"#29a7df"} loading={!loading} width={4} />
-      ) : (
-        <>
-          <Grid container spacing={3}>
-            <Grid item md={4}>
-              <TotalSpend totalSpend={info ? info.TotalSpend : ""} />
-            </Grid>
-            <Grid item md={6}>
-              <div className="job-status-outer">
-                <JobStatus jobStatus={info ? info : ""} />
-              </div>
-            </Grid>
-            <Grid item md={2}>
-              <DashboardFilter />
-            </Grid>
-          </Grid>
-          <Grid container spacing={3} className="spend-service-main">
-            <SpendChart chartData={info} getDashBoardData={getData} latestYear={latestYear ? latestYear : 2021}/>
-            <DashboardServices servicesData={info ? info : ""} />
-          </Grid>
+    <>
+      <Grid container spacing={3}>
+        <Grid item md={4}>
+          <TotalSpend totalSpend={info ? info.TotalSpend : ""} />
+        </Grid>
+        <Grid item md={6}>
+          <div className="job-status-outer">
+            <JobStatus jobStatus={info ? info : ""} />
+          </div>
+        </Grid>
+        <Grid item md={2}>
+          <DashboardFilter />
+        </Grid>
+      </Grid>
+      <Grid container spacing={3} className="spend-service-main">
+        <SpendChart
+          chartData={info}
+          getDashBoardData={getData}
+          latestYear={latestYear ? latestYear : 2021}
+        />
+        <DashboardServices servicesData={info ? info : ""} />
+      </Grid>
 
           <Grid container spacing={3}>
             <Grid item md={12}>

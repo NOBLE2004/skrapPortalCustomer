@@ -405,7 +405,6 @@ export default function CreateJob({ closeModal, setJobCreated }) {
       what3word: "",
       show_on_main_portal: 0,
     };
-
     JobService.createOrder(data)
       .then((response) => {
         setTimeout(() => {
@@ -754,11 +753,8 @@ export default function CreateJob({ closeModal, setJobCreated }) {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  {credit === 0 ? (
-                    <MenuItem value="0">Stripe</MenuItem>
-                  ) : (
-                    <MenuItem value="2">Credit</MenuItem>
-                  )}
+                  {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
+                  <MenuItem value="0">Strip</MenuItem>
                 </Select>
               </FormControl>
             </div>

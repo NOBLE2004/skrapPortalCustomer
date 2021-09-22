@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Grid } from "@material-ui/core";
 import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDetail";
 import NewManagerDetail from "../../components/siteManager/newManagerDetail/NewManagerDetail";
-import { Grid } from "@material-ui/core";
 import { viewMoreBtn, RightArrowBtn } from "../../assets/images";
-import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
 import FadeLoader from "react-spinners/FadeLoader";
-import { connect } from "react-redux";
-import "./sitemanager.scss";
 import { getSiteManager } from "../../store/actions/site.action";
+import CreateManager from "../../components/modals/createManager/CreateManager";
+import "./sitemanager.scss";
 const SiteManagers = (props) => {
-  
+  const [isSiteBooked, setSiteBooked] = React.useState(false);
+
+  const handleBookSite = () => {
+    setSiteBooked(true);
+  };
   const handleViewMore = () => {
     console.log("handle view more ");
   };
@@ -21,14 +25,16 @@ const SiteManagers = (props) => {
       }
     }
 
-    fetchData()
+    fetchData();
   }, []);
 
   return (
     <div>
       <div className="header-main">
         <div className="sites-header-title">Site Managers </div>
-        <DashboardFilter />
+        <button className="header-btn" onClick={handleBookSite}>
+          Create Manager
+        </button>
       </div>
       <Grid container className="main-site-manager">
         {props.siteManager.loading ? (
@@ -45,7 +51,9 @@ const SiteManagers = (props) => {
           ))
         )}
       </Grid>
-
+      {isSiteBooked && (
+        <CreateManager handleClose={() => setSiteBooked(!isSiteBooked)} />
+      )}
       {/* <Grid container spacing={5}>
         <Grid item md={11}>
           <NewManagerDetail />
