@@ -29,7 +29,7 @@ function App() {
           <PrivateRoute path="/jobs" component={() => <MainJobs />} /> 
           <PrivateRoute path="/tiping" component={() => <MainTiping />} /> 
           <PrivateRoute path="/tickets" component={() => <MainTickets />} /> 
-          <PrivateRoute path="/job-detail" component={() => <MainJobDetail />} />
+          <PrivateRoute path="/job-detail/:id" component={() => <MainJobDetail />} />
         </Layout>
       </Switch>
     </Router>

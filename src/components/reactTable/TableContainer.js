@@ -47,9 +47,9 @@ const TableContainer = ({ columns, data, name }) => {
     usePagination
   );
 
-  const handleRowClick = () => {
+  const handleRowClick = (row) => {
     if (name === "jobs") {
-      history.push("job-detail");
+      history.push({pathname: `job-detail/${row.job_id}`});
     }
   };
 
@@ -87,7 +87,7 @@ const TableContainer = ({ columns, data, name }) => {
                   cursor: "pointer",
                 }}
                 {...row.getRowProps()}
-                onClick={handleRowClick}
+                onClick={()=>handleRowClick(row.original)}
               >
                 {row.cells.map((cell) => {
                   return (

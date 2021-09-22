@@ -45,8 +45,8 @@ const DashBoard = (props) => {
     }
   }, [isNewYear]);
 
-  const gotoJobDetail = () => {
-    history.push("/job-detail");
+  const gotoJobDetail = (id) => {
+    history.push({pathname: `job-detail/${id}`});
   };
   return (
     <div className="main-loading">
@@ -126,7 +126,7 @@ const DashBoard = (props) => {
                               <InfoWindow>
                                 <TipingCard
                                   jobInfo={data}
-                                  gotoJobDetail={gotoJobDetail}
+                                  gotoJobDetail={()=>gotoJobDetail(data.job_id)}
                                 />
                               </InfoWindow>
                             )}
