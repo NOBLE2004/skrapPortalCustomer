@@ -19,6 +19,7 @@ const SiteManagers = (props) => {
   };
 
   useEffect(() => {
+    console.log('called again')
     async function fetchData() {
       if (!props.siteManager.sites) {
         await props.getSiteManager();
@@ -26,7 +27,7 @@ const SiteManagers = (props) => {
     }
 
     fetchData();
-  }, []);
+  }, [isSiteBooked]);
 
   return (
     <div>
@@ -36,7 +37,7 @@ const SiteManagers = (props) => {
           Create Manager
         </button>
       </div>
-      <Grid container className="main-site-manager">
+      <Grid container className="main-site-manager" spacing={5}>
         {props.siteManager.loading ? (
           <FadeLoader
             color={"#29a7df"}
@@ -45,22 +46,21 @@ const SiteManagers = (props) => {
           />
         ) : (
           props.siteManager.sites &&
-          props.siteManager.sites.length > 0 &&
+          props.siteManager.sites.length > 0 ?
           props.siteManager.sites.map((site, index) => (
-            <ManagerDetail siteData={site} key={index} />
-          ))
+            <Grid item md={6}>
+              <ManagerDetail siteData={site} key={index} />
+            </Grid>
+          )) : <div className="site-error">{props.siteManager.error}</div>
         )}
       </Grid>
       {isSiteBooked && (
         <CreateManager handleClose={() => setSiteBooked(!isSiteBooked)} />
       )}
       {/* <Grid container spacing={5}>
-        <Grid item md={11}>
-          <NewManagerDetail />
-        </Grid>
-        <Grid item md={1} className="view-more-btn">
+        <Grid item md={12} className="view-more-btn">
           <img
-            src={RightArrowBtn}
+            src={viewMoreBtn}
             alt="view-more-btn"
             onClick={handleViewMore}
           />

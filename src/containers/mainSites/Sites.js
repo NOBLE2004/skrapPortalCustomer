@@ -8,7 +8,6 @@ import CommonSearch from "../../components/commonComponent/commonSearch/CommonSe
 import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
 
 const Sites = () => {
- 
   return (
     <>
       <CommonHeader isMap={true}>
@@ -40,15 +39,16 @@ const Sites = () => {
           }}
         />
       </CommonHeader>
-        <div className="common-search-for-tables">
-            <CommonSearch cname="sites" handleChangeSearch={()=>{}}/>
-            <CommonFilter cname="sites" />
-        </div>
+
       <Grid container>
         <Grid item md={10}>
+          <div className="common-search-for-tables">
+            <CommonSearch cname="sites" handleChangeSearch={() => {}} />
+            <CommonFilter cname="sites" />
+          </div>
           <SitesItem />
         </Grid>
-        <Grid item md={2} style={{marginTop:"87px"}}>
+        <Grid item md={2} style={{ marginTop: "87px" }}>
           <CommonJobStatus
             jobStatus={{
               status: "Sales By Site",
@@ -56,8 +56,8 @@ const Sites = () => {
               statusName: "primary",
               width: "194px",
               height: "62px",
-              fontSize : "sales",
-              marginBottom: "16px"
+              fontSize: "sales",
+              marginBottom: "16px",
             }}
           />
           <CommonJobStatus
@@ -67,8 +67,8 @@ const Sites = () => {
               statusName: "primary",
               width: "194px",
               height: "62px",
-              fontSize : "sales",
-              marginBottom: "16px"
+              fontSize: "sales",
+              marginBottom: "16px",
             }}
           />
           <CommonJobStatus
@@ -78,8 +78,8 @@ const Sites = () => {
               statusName: "primary",
               width: "194px",
               height: "62px",
-              fontSize : "sales",
-              marginBottom: "16px"
+              fontSize: "sales",
+              marginBottom: "16px",
             }}
           />
           <CommonJobStatus
@@ -89,8 +89,8 @@ const Sites = () => {
               statusName: "primary",
               width: "194px",
               height: "62px",
-              fontSize : "sales",
-              marginBottom: "16px"
+              fontSize: "sales",
+              marginBottom: "16px",
             }}
           />
           <CommonJobStatus
@@ -100,19 +100,8 @@ const Sites = () => {
               statusName: "primary",
               width: "194px",
               height: "62px",
-              fontSize : "sales",
-              marginBottom: "16px"
-            }}
-          />
-           <CommonJobStatus
-            jobStatus={{
-              status: "Sales By Site",
-              price: "£7,142.00",
-              statusName: "primary",
-              width: "194px",
-              height: "62px",
-              fontSize : "sales",
-              marginBottom: "16px"
+              fontSize: "sales",
+              marginBottom: "16px",
             }}
           />
           <CommonJobStatus
@@ -122,14 +111,23 @@ const Sites = () => {
               statusName: "primary",
               width: "194px",
               height: "62px",
-              fontSize : "sales",
-              marginBottom: "16px"
+              fontSize: "sales",
+              marginBottom: "16px",
+            }}
+          />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Sales By Site",
+              price: "£7,142.00",
+              statusName: "primary",
+              width: "194px",
+              height: "62px",
+              fontSize: "sales",
+              marginBottom: "16px",
             }}
           />
         </Grid>
       </Grid>
-
-    
     </>
   );
 };

@@ -3,7 +3,6 @@ import { Paper } from "@material-ui/core";
 import "./jobStatus.scss";
 
 const JobStatus = ({ jobStatus }) => {
-  console.log("data", jobStatus);
   return (
     <>
       <div className="jobcard">

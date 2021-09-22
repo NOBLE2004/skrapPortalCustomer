@@ -5,6 +5,7 @@ import sitesService from "../../../services/sites.service";
 import { useHistory } from "react-router";
 import "./managerdetail.scss";
 const ManagerDetail = ({ title, siteData }) => {
+  console.log("siteData" , siteData)
   const history = useHistory();
   const {
     manager_name,
@@ -12,7 +13,7 @@ const ManagerDetail = ({ title, siteData }) => {
     mobile_number,
     site_assigned,
     email,
-    site_manager_id,
+    user_id,
   } = siteData;
 
   const handleManagerDetail = (id) => {
@@ -26,7 +27,7 @@ const ManagerDetail = ({ title, siteData }) => {
   return (
     <Card
       className="manager-detail-main"
-      onClick={() => handleManagerDetail(site_manager_id)}
+      onClick={() => handleManagerDetail(user_id)}
     >
       <CardContent>
         <div className="title">{title ? title : "Managers Details"}</div>
@@ -52,7 +53,7 @@ const ManagerDetail = ({ title, siteData }) => {
             </div>
             <div className="info">
               <div className="designation">Site Assigned</div>
-              <div className="personal-title">{site_assigned}</div>
+              <div className="personal-title">{manager_name}</div>
             </div>
             <div className="info">
               <div className="designation">Address</div>
