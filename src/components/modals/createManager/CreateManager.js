@@ -36,6 +36,7 @@ function CreateManager(props) {
   });
 
   const checkingError = (name, value) => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     switch (name) {
       case "firstname":
         errors[name] = value.length === 0 ? "Required" : "";
@@ -44,7 +45,7 @@ function CreateManager(props) {
         errors[name] = value.length === 0 ? "Required" : "";
         break;
       case "email":
-        errors[name] = value.length === 0 ? "Required" : "";
+        errors[name] =  reg.test(value) === false ? "Required" : "";
         break;
       case "phone":
         errors[name] = value.length < 10 ? "Required" : "";
@@ -119,10 +120,11 @@ function CreateManager(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (
       (firstname === "") |
       (firstname === "") |
-      (email === "") |
+      (reg.test(email) === false) |
       (phone.length < 10) |
       (password === "")
     ) {
