@@ -139,7 +139,6 @@ const SiteManagerTable = ({ managerData }) => {
     ],
     []
   );
-  console.log("job", jobs);
   return (
     <div>
       <TableContainer columns={columns} data={jobs} name={"jobs"} />
