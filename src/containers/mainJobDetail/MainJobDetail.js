@@ -15,6 +15,7 @@ const MainJobDetail = () => {
     let { id } = useParams();
     const history = useHistory();
     const [job, setJob] = useState({});
+    const [update, setUpdate] = useState(false);
     useEffect(()=>{
         JobService.show({job_id: id})
             .then((response) => {
@@ -26,12 +27,11 @@ const MainJobDetail = () => {
             }).catch((error)=>{
             console.log(error)
         });
-    }, []);
+    }, [update]);
 
 const redirectBack = () =>{
     history.goBack();
 };
-
 
   return (
     <>
@@ -40,14 +40,14 @@ const redirectBack = () =>{
         <Grid item md={7}>
           <JobDetail job={job} />
           <FindPostCode lat={parseFloat(job?.latitude)} lng={parseFloat(job?.longitude)}/>
-          <PaymentDetail job={job}/>
+          <PaymentDetail job={job} updateJobs={()=>{setUpdate(!update)}}/>
 
           <JobStatus status={job?.appointment_status} />
-          <JobNotes />
+          <JobNotes comments={job?.comments}/>
         </Grid>
         <Grid item md={5}>
-          <DriverDetail />
-          <SmallCard />
+            {job?.driver_number && <DriverDetail job={job}/>}
+           {/* <SmallCard />*/}
         </Grid>
       </Grid>
 

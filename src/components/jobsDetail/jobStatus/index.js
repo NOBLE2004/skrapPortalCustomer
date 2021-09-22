@@ -104,7 +104,7 @@ const stepperIcon = makeStyles({
         borderRadius: '50%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: '11px',
+        //marginLeft: '11px',
         marginTop: '5px',
     },
     active: {
