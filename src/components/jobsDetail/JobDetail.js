@@ -2,17 +2,18 @@ import React from "react";
 import { Card, CardContent, Grid } from "@material-ui/core";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import "./jobDetail.scss";
-const JobDetail = () => {
+import { payment, status } from "../../services/utils";
+const JobDetail = ({job}) => {
   return (
     <Card className="job-detail-main">
       <CardContent className="personal-info">
         <div className="info">
           <div className="designation">Manager</div>
-          <CommonStatus status="assigned" />
+          <CommonStatus status={status(job?.appointment_status)} />
         </div>
         <div className="info">
           <div className="designation">Order #</div>
-          <div className="personal-title">SN14662</div>
+          <div className="personal-title">SK{job?.job_id}</div>
         </div>
         <div className="info">
           <div className="designation">Purchase Order</div>
@@ -25,7 +26,7 @@ const JobDetail = () => {
         <div className="info">
           <div className="designation">Site Address</div>
           <div className="personal-title">
-            113 Ibsley GardensLondon Sw15 4NQ
+            {job?.job_address}
           </div>
         </div>
       </CardContent>
@@ -33,15 +34,15 @@ const JobDetail = () => {
       <div className="personal-info">
         <div className="info">
           <div className="designation">Booked</div>
-          <div className="personal-title">2021-03-25 09:28:01</div>
+          <div className="personal-title">{new Date(job?.save_date).toLocaleDateString()}</div>
         </div>
         <div className="info">
           <div className="designation">Deliver Date</div>
-          <div className="personal-title">2021-03-26 12:00 to 17:00</div>
+          <div className="personal-title">{new Date(job?.job_start_time).toLocaleString().substring(0, 17)}</div>
         </div>
         <div className="info">
           <div className="designation">Service</div>
-          <div className="personal-title">Mixed Waste (Grab Hire)</div>
+          <div className="personal-title">{job?.service_name} (Grab Hire)</div>
         </div>
         <div className="info">
           <div className="designation">Waste Type</div>

@@ -45,8 +45,8 @@ const DashBoard = (props) => {
     }
   }, [isNewYear]);
 
-  const gotoJobDetail = () => {
-    history.push("/job-detail");
+  const gotoJobDetail = (id) => {
+    history.push({pathname: `job-detail/${id}`});
   };
 
   if (loading) {
@@ -77,72 +77,74 @@ const DashBoard = (props) => {
         <DashboardServices servicesData={info ? info : ""} />
       </Grid>
 
-      <Grid container spacing={3}>
-        <Grid item md={12}>
-          <div className="landfill">Landfill Diversion Rate</div>
-          <hr />
-        </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={12} className="jobMpWp">
-          <div className="live-job-title">
-            <img src={mapMarker} alt="map-marker" />
-            <h1>Orders On Map</h1>
-          </div>
-          <Card className="mapCard">
-            <CardContent>
-              <MainMap
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `100%` }} />}
-                mapElement={
-                  <div style={{ height: `100%`, borderRadius: "12px" }} />
-                }
-              >
-                {info
-                  ? info?.Map?.data.length > 0 &&
-                    info?.Map?.data.map((data, index) => (
-                      <Marker
-                        key={index}
-                        position={{
-                          lat: data.job_location_lat
-                            ? data.job_location_lat
-                            : "51.5506351",
-                          lng: data.job_location_lng
-                            ? data.job_location_lng
-                            : "-0.0460716",
-                        }}
-                        icon={{
-                          url:
-                            data.jobStatus === "Pending"
-                              ? pendingMarker
-                              : data.jobStatus === "Delivered"
-                              ? deliveredMarker
-                              : data.jobStatus === "Completed"
-                              ? completeMarker
-                              : assignMarker,
-                        }}
-                        onClick={() => {
-                          setShowInfoIndex(index);
-                        }}
-                      >
-                        {showInfoIndex === index && (
-                          <InfoWindow>
-                            <TipingCard
-                              jobInfo={data}
-                              gotoJobDetail={gotoJobDetail}
-                            />
-                          </InfoWindow>
-                        )}
-                      </Marker>
-                    ))
-                  : ""}
-              </MainMap>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </>
+          <Grid container spacing={3}>
+            <Grid item md={12}>
+              <div className="landfill">Landfill Diversion Rate</div>
+              <hr />
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={12} className="jobMpWp">
+              <div className="live-job-title">
+                <img src={mapMarker} alt="map-marker" />
+                <h1>Orders On Map</h1>
+              </div>
+              <Card className="mapCard">
+                <CardContent>
+                  <MainMap
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `100%` }} />}
+                    mapElement={
+                      <div style={{ height: `100%`, borderRadius: "12px" }} />
+                    }
+                  >
+                    {info
+                      ? info?.Map?.data.length > 0 &&
+                        info?.Map?.data.map((data, index) => (
+                          <Marker
+                            key={index}
+                            position={{
+                              lat: data.job_location_lat
+                                ? data.job_location_lat
+                                : "51.5506351",
+                              lng: data.job_location_lng
+                                ? data.job_location_lng
+                                : "-0.0460716",
+                            }}
+                            icon={{
+                              url:
+                                data.jobStatus === "Pending"
+                                  ? pendingMarker
+                                  : data.jobStatus === "Delivered"
+                                  ? deliveredMarker
+                                  : data.jobStatus === "Completed"
+                                  ? completeMarker
+                                  : assignMarker,
+                            }}
+                            onClick={() => {
+                              setShowInfoIndex(index);
+                            }}
+                          >
+                            {showInfoIndex === index && (
+                              <InfoWindow>
+                                <TipingCard
+                                  jobInfo={data}
+                                  gotoJobDetail={()=>gotoJobDetail(data.job_id)}
+                                />
+                              </InfoWindow>
+                            )}
+                          </Marker>
+                        ))
+                      : ""}
+                  </MainMap>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </>
+      )}
+    </div>
   );
 };
 

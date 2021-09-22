@@ -4,21 +4,11 @@ class JobService extends HttpService {
 
     list = (data, params) => this.post("activeOrders", data,  Object.entries(params).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {}));
 
-    create = (data) => this.post(`suppliers/job`, data);
-
     createOrder = (data) => this.post(`orderRequest`, data);
 
-    assignDriver = (data) => this.post("suppliers/jobs/assignDriver", data);
-
-    show = (id) => this.get(`suppliers/job/${id}`);
-
-    update = (id, data) => this.put(`suppliers/job/${id}`, data);
-
-    editJob = (id, data) => this.post(`suppliers/job/${id}/edit `, data);
+    show = (data) => this.post(`getBookingDetail`, data);
 
     invoice = (data) => this.post(`downloadJobInvoice`, data);
-
-    ticket = (data) => this.post(`drivers/wasteHierchyDoc`, data);
 
     cancel = (data) => this.post(`cancelAppointment`, data);
 
@@ -27,8 +17,6 @@ class JobService extends HttpService {
     requestCollection = (data) => this.post(`requestCollection`, data);
 
     copy = (data) => this.post(`copyJob`, data);
-
-    addWaste = (id, data) => this.put(`suppliers/job/${id}/waste`, data);
 
     getWasteTypes = (params) => this.get(`suppliers/waste-types`, params);
 

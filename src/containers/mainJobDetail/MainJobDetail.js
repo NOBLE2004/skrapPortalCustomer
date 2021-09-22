@@ -1,27 +1,48 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import JobDetail from "../../components/jobsDetail/JobDetail";
 import JobDetailHeader from "../../components/jobsDetail/jobHeader/JobDetailHeader";
 import { Grid } from "@material-ui/core";
-import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDetail";
 import DriverDetail from "../../components/driver/DriverDetail";
 import FindPostCode from "../../components/jobsDetail/findPostCode/FindPostCode";
 import PaymentDetail from "../../components/jobsDetail/paymentDetail/PaymentDetail";
 import SmallCard from "../../components/jobsDetail/smallCard/SmallCard";
 import JobNotes from "../../components/jobsDetail/jobNote/JobNotes";
 import JobStatus from "../../components/jobsDetail/jobStatus";
-import { chatIcon } from "../../assets/images";
-import ChatWidget from "../../components/commonComponent/chatWidget/ChatWidget";
+import JobService from '../../services/job.service';
+import { useHistory, useParams } from "react-router-dom";
+
 const MainJobDetail = () => {
+    let { id } = useParams();
+    const history = useHistory();
+    const [job, setJob] = useState({});
+    useEffect(()=>{
+        JobService.show({job_id: id})
+            .then((response) => {
+                if(response.data.result.length > 0){
+                    setJob(response.data.result[0]);
+                }else{
+                    setJob({});
+                }
+            }).catch((error)=>{
+            console.log(error)
+        });
+    }, []);
+
+const redirectBack = () =>{
+    history.goBack();
+};
+
+
   return (
     <>
-      <JobDetailHeader />
+      <JobDetailHeader job={job} redirectBack={redirectBack}/>
       <Grid container spacing={3}>
         <Grid item md={7}>
-          <JobDetail />
-          <FindPostCode />
-          <PaymentDetail />
+          <JobDetail job={job} />
+          <FindPostCode lat={parseFloat(job?.latitude)} lng={parseFloat(job?.longitude)}/>
+          <PaymentDetail job={job}/>
 
-          <JobStatus />
+          <JobStatus status={job?.appointment_status} />
           <JobNotes />
         </Grid>
         <Grid item md={5}>
