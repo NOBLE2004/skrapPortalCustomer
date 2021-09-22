@@ -85,8 +85,8 @@ const MainJobs = (props) => {
   const handlePagination = (page) => {
       setFilters({...filters, page: page});
   };
-  const gotoJobDetail = () => {
-      history.push("/job-detail");
+  const gotoJobDetail = (id) => {
+      history.push({pathname: `job-detail/${id}`});
   };
 
   return (
@@ -196,7 +196,7 @@ const MainJobs = (props) => {
                                       jobStatus: status(job.appointment_status),
                                       site_manager_mobile_number: job.site_contact_number !== null ? job.site_contact_number : job.mobile_number
                                   }}
-                                  gotoJobDetail={gotoJobDetail}
+                                  gotoJobDetail={()=>gotoJobDetail(job.job_id)}
                               />
                           </InfoWindow>
                       )}</Marker>)

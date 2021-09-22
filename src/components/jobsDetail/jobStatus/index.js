@@ -104,22 +104,21 @@ const stepperIcon = makeStyles({
         borderRadius: '50%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: '11px'
-
+        marginLeft: '11px',
+        marginTop: '5px',
     },
     active: {
         backgroundImage: props => getIcon(props),
-        marginLeft: '0px'
+        //marginLeft: '0px'
     },
     completed: {
         backgroundImage:
             props => getIcon(props),
-        marginLeft: '0px'
+        //marginLeft: '0px'
     },
 });
 
-function JobStatus(props) {
-    const status = 2;
+function JobStatus({status}) {
 
     const [activeStep, setActiveStep] = useState(0);
 
@@ -181,14 +180,14 @@ function JobStatus(props) {
                 //        elevation={3}>
                 <>
                     <Typography className='label-text'> {label}</Typography>
-                    <Typography className='label-date'> {'2021-03-25 09:28:01'}</Typography>
+                    {/*<Typography className='label-date'> {'2021-03-25 09:28:01'}</Typography>*/}
                     </>
                  // </Paper>
             );
         else return (
             <>
             <Typography className='label-text'> {label}</Typography>
-            <Typography className='label-date'> {'2021-03-25 09:28:01'}</Typography>
+            {/*<Typography className='label-date'> {'2021-03-25 09:28:01'}</Typography>*/}
             </>
         )
     };

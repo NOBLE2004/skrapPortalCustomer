@@ -141,6 +141,9 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
         disableSortBy: true,
         disableFilters: true,
         filter: "equals",
+          Cell: (props) => {
+              return `£${props.value.toFixed(2)}`;
+          },
       },
       {
         Header: "Status",
@@ -160,11 +163,17 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
         Header: "Booked By",
         accessor: "booked_by_name",
         disableFilters: true,
+          Cell: (props) => {
+              return props.value == null ? 'Skrap' : props.value;
+          },
       },
       {
         Header: "PO",
         accessor: "purchase_order",
         disableFilters: true,
+          Cell: (props) => {
+              return props.value == null ? '---' : props.value;
+          },
       },
       {
         Header: "",

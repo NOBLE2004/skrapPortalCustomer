@@ -6,10 +6,10 @@ import { Card, CardContent } from "@material-ui/core";
 import MainMap from "../../map/MainMap";
 import { Marker } from "react-google-maps";
 import "./findpostcode.scss";
-const FindPostCode = () => {
+const FindPostCode = ({lat, lng}) => {
   return (
     <div className="postcode-main">
-      <TextField
+      {/*<TextField
         variant="outlined"
         size="small"
         placeholder="Find Postcode"
@@ -25,7 +25,7 @@ const FindPostCode = () => {
             </InputAdornment>
           ),
         }}
-      />
+      />*/}
       <Card className="driver-mapCard">
         <CardContent>
           <MainMap
@@ -38,8 +38,8 @@ const FindPostCode = () => {
           >
             <Marker
               position={{
-                lat: 51.55063,
-                lng: -0.0461,
+                lat,
+                lng,
               }}
               icon={mapMarker}
             ></Marker>
