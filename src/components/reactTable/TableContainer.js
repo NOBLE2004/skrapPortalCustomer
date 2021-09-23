@@ -8,6 +8,7 @@ import {
 } from "react-table";
 import { DefaultColumnFilter } from "./filters";
 import { useHistory } from "react-router";
+import GlobalFilter from "../filters/GlobalFilter";
 
 const TableContainer = ({ columns, data, name }) => {
   const history = useHistory();
@@ -34,6 +35,9 @@ const TableContainer = ({ columns, data, name }) => {
     canNextPage,
     nextPage,
     previousPage,
+    state,
+    preGlobalFilteredRows,
+    setGlobalFilter,
   } = useTable(
     {
       columns,
@@ -49,12 +53,17 @@ const TableContainer = ({ columns, data, name }) => {
 
   const handleRowClick = (row) => {
     if (name === "jobs") {
-      history.push({pathname: `job-detail/${row.job_id}`});
+      history.push({ pathname: `job-detail/${row.job_id}` });
     }
   };
 
   return (
     <Fragment>
+      {/* <GlobalFilter
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        globalFilter={state.globalFilter}
+        setGlobalFilter={setGlobalFilter}
+      /> */}
       <div {...getTableProps()} className="table-main">
         <div style={{ display: "table-head" }}>
           {headerGroups.map((headerGroup) => (
@@ -87,7 +96,7 @@ const TableContainer = ({ columns, data, name }) => {
                   cursor: "pointer",
                 }}
                 {...row.getRowProps()}
-                onClick={()=>handleRowClick(row.original)}
+                onClick={() => handleRowClick(row.original)}
               >
                 {row.cells.map((cell) => {
                   return (

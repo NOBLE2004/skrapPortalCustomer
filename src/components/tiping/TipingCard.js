@@ -5,10 +5,11 @@ import { phoneCall } from "../../assets/images/index";
 import "./tipingcard.scss";
 
 const TipingCard = (props) => {
-  const {tipTime, jobInfo , gotoJobDetail} = props
-  const { site, job_address, jobStatus, site_manager_mobile_number } = jobInfo;
+  const { tipTime, jobInfo, gotoJobDetail } = props;
+  const { job_address, jobStatus, site_manager_mobile_number } = jobInfo;
+
   const handleMore = () => {
-    gotoJobDetail()
+    gotoJobDetail();
   };
   return (
     <div className="tiping-main">
@@ -18,8 +19,18 @@ const TipingCard = (props) => {
             <div className="tip-site">Site</div>
             <div className="tip-site-name">{site ? site : "N/A"}</div>
           </div> */}
+          {props.site ? (
+            <div className="tip-info">
+              <div className="tip-site">Site</div>
+              <div className="tip-site-name">
+                {job_address ? job_address : "N/A"}
+              </div>
+            </div>
+          ) : (
+            <>
+         
           <div className="tip-info">
-            <div className="tip-site">Site</div>
+            <div className="tip-site">Site Address</div>
             <div className="tip-site-name">
               {job_address ? job_address : "N/A"}
             </div>
@@ -50,6 +61,8 @@ const TipingCard = (props) => {
               ... More
             </Button>
           </div>
+          </>
+           )}
         </CardContent>
       </Card>
     </div>
