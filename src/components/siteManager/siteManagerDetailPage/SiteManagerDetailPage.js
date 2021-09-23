@@ -11,7 +11,6 @@ import { useParams } from "react-router";
 import "./siteManagerDetailPage.scss";
 const SiteManagerDetailPage = () => {
   const { id } = useParams();
-  const [isMapView, setMapView] = useState(true);
   const [filters, setFilters] = useState({
     status: "",
     date: "",
@@ -28,18 +27,9 @@ const SiteManagerDetailPage = () => {
   });
 
   const { isLoading, managerData, isCreateManager } = state;
-  const handleShowMap = () => {
-    setMapView(!isMapView);
-  };
   const handleCreateManager = () => {
     setState({ ...state, isCreateManager: true });
   };
-
-
-  const dumyplaces = [
-    { latitude: 51.55063, longitude: -0.0461 },
-    { latitude: 51.56078, longitude: -0.25256 },
-  ];
 
   const handleChangeSearch = (search) => {
     setFilters({ ...filters, search: search });

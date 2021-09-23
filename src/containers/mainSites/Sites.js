@@ -4,76 +4,50 @@ import CommonJobStatus from "../../components/commonComponent/commonJobStatus/Co
 import SitesTable from "../../components/sites/sitesTable/SitesTable";
 import { Grid, Card, CardContent } from "@material-ui/core";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
-import CommonFilter from "../../components/commonComponent/commonfilter/CommonFilter";
-import sitesService from "../../services/sites.service";
-import JobFilters from "../../components/filters/jobFilters";
-import Pagination from "../../components/reactTable/pagination";
 import MainMap from "../../components/map/MainMap";
 import TipingCard from "../../components/tiping/TipingCard";
 import { Marker, InfoWindow } from "react-google-maps";
 import { enRouteMarker } from "../../assets/images/index";
-import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRenderer";
 import FadeLoader from "react-spinners/FadeLoader";
+import { connect } from "react-redux";
+import AssignToManager from "../../components/modals/assignToManager/AssignToManager";
+import { getSites  , getSitesList} from "../../store/actions/sites.action";
 import "./sites.scss";
 
-const Sites = () => {
-  const [siteData, setSiteData] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [isLoading, setIsLoading] = useState(false);
-  const [updateJobs, setUpdateJobs] = useState(false);
-  const [pagination, setPagination] = useState({});
+const Sites = (props) => {
+  const { siteData, isLoading, error } = props.sites;
   const [showInfo, setShowInfo] = useState(false);
   const [isMapView, setIsMapView] = useState(true);
-
-  const [filters, setFilters] = useState({
-    status: "",
-    date: "",
-    service: "",
-    address: "",
-    search: "",
-    page: 1,
-  });
-
+  const [filters, setFilters] = useState({page: 1});
+  const [isManagerOpen , setIsManagerOpen] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    sitesService
-      .getSitesList(limit, filters)
-      .then((res) => {
-        setSiteData(res.data.data.data);
-        delete res.data.data;
-        setPagination(res.data.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
+    async function fetchData() {
+      if (!siteData) {
+        await props.getSitesList();
+      }
+    }
+
+    fetchData();
   }, []);
 
-  const handleChangeFilters = (filtersList) => {
-    setFilters(filtersList);
-  };
+
+
   const handleChangeSearch = (search) => {
     setFilters({ ...filters, search: search });
   };
 
-  const handleUpdateJobs = () => {
-    setUpdateJobs(true);
-  };
-  const handlePagination = (page) => {
-    setFilters({ ...filters, page: page });
-  };
-  const handleMarkerClick = () => {
-    setShowInfo(true);
-  };
   const handleShowMap = () => {
     setIsMapView(!isMapView);
   };
 
-  console.log("siteData", siteData);
+  const handleMangerModal = () => {
+    setIsManagerOpen(true)
+  }
+
   return (
     <>
-      <CommonHeader handleShowMap={handleShowMap} isMap={isMapView}>
+      <CommonHeader handleShowMap={handleShowMap} isMap={isMapView} handleBookJob={handleMangerModal}>
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
@@ -113,40 +87,47 @@ const Sites = () => {
           </div>
         </Grid>
       </Grid>
+      {
+        isManagerOpen && <AssignToManager handleClose={() => setIsManagerOpen(false)}/>
+      }
       {isMapView ? (
-        <Grid container className="sites-table-loader">
-          {isLoading ? (
-            <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
-          ) : (
-            <>
-              <Grid item md={10}>
-                <SitesTable
-                  data={siteData}
-                  pagination={pagination}
-                  handleUpdateJobs={handleUpdateJobs}
-                  handlePagination={handlePagination}
-                />
-              </Grid>
-              <Grid item md={2} style={{ marginTop: "47px" }}>
-                {siteData &&
-                  siteData.map((site, index) => (
-                    <CommonJobStatus
-                      key={index}
-                      jobStatus={{
-                        status: "Sales By Site",
-                        price: site ? "£" + site.sales_by_site : "£7,142.00",
-                        statusName: "primary",
-                        width: "194px",
-                        height: "62px",
-                        fontSize: "sales",
-                        marginBottom: "16px",
-                      }}
-                    />
-                  ))}
-              </Grid>
-            </>
-          )}
-        </Grid>
+        <>
+          <Grid container className="sites-table-loader">
+            {isLoading ? (
+              <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+            ) : (
+              siteData && (
+                <>
+                  <Grid item md={10}>
+                    <SitesTable data={siteData} />
+                  </Grid>
+                  <Grid item md={2} style={{ marginTop: "47px" }}>
+                    {siteData ? (
+                      siteData.map((site, index) => (
+                        <CommonJobStatus
+                          key={index}
+                          jobStatus={{
+                            status: "Sales By Site",
+                            price: site
+                              ? "£" + site.sales_by_site
+                              : "£7,142.00",
+                            statusName: "primary",
+                            width: "194px",
+                            height: "62px",
+                            fontSize: "sales",
+                            marginBottom: "16px",
+                          }}
+                        />
+                      ))
+                    ) : (
+                      <div className="site-error">{error}</div>
+                    )}
+                  </Grid>{" "}
+                </>
+              )
+            )}
+          </Grid>
+        </>
       ) : (
         <Grid item md={12} className="site-manager-map-view">
           <Card className="mapCard">
@@ -159,42 +140,58 @@ const Sites = () => {
                   <div style={{ height: `100%`, borderRadius: "12px" }} />
                 }
               >
-                {siteData.map((job, index) => {
-                  return (
-                    <Marker
-                      position={{
-                        lat: job.latitude ? parseFloat(job.latitude) : 51.55063,
-                        lng: job.longitude
-                          ? parseFloat(job.longitude)
-                          : -0.0461,
-                      }}
-                      icon={enRouteMarker}
-                      onClick={() => {
-                        setShowInfo(index);
-                      }}
-                    >
-                      {showInfo === index && (
-                        <InfoWindow>
-                          <TipingCard
-                            jobInfo={{
-                              job_address: job.job_address,
-                              jobStatus: "",
-                              site_manager_mobile_number: "",
-                            }}
-                            site="sites"
-                          />
-                        </InfoWindow>
-                      )}
-                    </Marker>
-                  );
-                })}
+                {siteData &&
+                  siteData.map((job, index) => {
+                    return (
+                      <Marker
+                        position={{
+                          lat: job.latitude
+                            ? parseFloat(job.latitude)
+                            : 51.55063,
+                          lng: job.longitude
+                            ? parseFloat(job.longitude)
+                            : -0.0461,
+                        }}
+                        icon={enRouteMarker}
+                        onClick={() => {
+                          setShowInfo(index);
+                        }}
+                      >
+                        {showInfo === index && (
+                          <InfoWindow>
+                            <TipingCard
+                              jobInfo={{
+                                job_address: job.job_address,
+                                jobStatus: "",
+                                site_manager_mobile_number: "",
+                              }}
+                              site="sites"
+                            />
+                          </InfoWindow>
+                        )}
+                      </Marker>
+                    );
+                  })}
               </MainMap>
             </CardContent>
           </Card>
         </Grid>
       )}
+
+     
     </>
   );
 };
 
-export default Sites;
+const mapStateToProps = ({ sites }) => {
+  return { sites };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSites: () => dispatch(getSites()),
+    getSitesList: () => dispatch(getSitesList()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sites);

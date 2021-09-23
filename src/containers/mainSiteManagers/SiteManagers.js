@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDetail";
-import NewManagerDetail from "../../components/siteManager/newManagerDetail/NewManagerDetail";
 import { viewMoreBtn, RightArrowBtn } from "../../assets/images";
 import FadeLoader from "react-spinners/FadeLoader";
-import { getSiteManager } from "../../store/actions/site.action";
+import { getSiteManager } from "../../store/actions/siteManager.action";
 import CreateManager from "../../components/modals/createManager/CreateManager";
 import "./sitemanager.scss";
 const SiteManagers = (props) => {
@@ -19,7 +18,6 @@ const SiteManagers = (props) => {
   };
 
   useEffect(() => {
-    console.log('called again')
     async function fetchData() {
       if (!props.siteManager.sites) {
         await props.getSiteManager();

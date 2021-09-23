@@ -32,6 +32,7 @@ function App() {
           <PrivateRoute path="/tiping" component={() => <MainTiping />} /> 
           <PrivateRoute path="/tickets" component={() => <MainTickets />} /> 
           <PrivateRoute path="/job-detail/:id" component={() => <MainJobDetail />} />
+          <PrivateRoute path="/site-managers/job-detail/:id" component={() => <MainJobDetail />} />
         </Layout>
       </Switch>
     </Router>

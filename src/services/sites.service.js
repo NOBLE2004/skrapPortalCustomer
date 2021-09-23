@@ -1,7 +1,6 @@
 import HttpService from "./http.service";
 
 class SiteService extends HttpService {
-    
   //site manager
   getManagerList = () => this.get("customers/siteManagerList");
   getAllSites = () => this.get("sites");
@@ -11,15 +10,7 @@ class SiteService extends HttpService {
 
   // sites
 
-  getSitesList = (data, params) =>
-    this.get(
-      "sites/list",
-      data,
-      Object.entries(params).reduce(
-        (a, [k, v]) => (v ? ((a[k] = v), a) : a),
-        {}
-      )
-    );
+  getSitesList = (params) => this.get("sites/list" , params);
 }
 
 export default new SiteService();
