@@ -13,7 +13,8 @@ const SitesTable = ({
     () => [
       {
         Header: "SiteName",
-        accessor: "site_contact_name",
+        accessor: (d) => d.job_address.slice(0,22),
+        id:"site_name",
         disableSortBy: true,
         filter: "equals",
         Cell: (props) => {

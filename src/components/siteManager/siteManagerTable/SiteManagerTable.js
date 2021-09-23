@@ -95,15 +95,12 @@ const SiteManagerTable = ({ managerData }) => {
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
-        Cell: (props) => <CommonStatus status={status(props.value)} />,
+        Cell: (props) => <CommonStatus status={props.value} />,
       },
       {
         Header: "Payment",
         accessor: "payment_type",
         disableFilters: true,
-        Cell: (props) => {
-          return payment(props.value);
-        },
       },
       {
         Header: "Booked By",
@@ -139,6 +136,8 @@ const SiteManagerTable = ({ managerData }) => {
     ],
     []
   );
+
+  console.log('jobs' , jobs)
   return (
     <div>
       <TableContainer columns={columns} data={jobs} name={"jobs"} />

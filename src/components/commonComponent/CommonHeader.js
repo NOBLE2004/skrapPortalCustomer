@@ -15,7 +15,7 @@ const CommonHeader = ({ downloadCSV, mapView, bookSite, children , handleShowMap
         </div>
         
         <button className="header-btn" onClick={handleBookJob}>
-          {bookSite ? bookSite : "Create Site"}
+          {bookSite ? bookSite : "Assign to manager"}
         </button>
       </div>
     </div>

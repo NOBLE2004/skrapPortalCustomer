@@ -1,0 +1,72 @@
+.booksitemodal {
+    .MuiPaper-root {
+      border-radius: 22px;
+    }
+    .MuiDialogContent-dividers {
+      border-top: none;
+    }
+    .MuiDialog-paperWidthSm {
+      width: 530px;
+    }
+    .Component-root-30 {
+      margin: 0;
+      padding: 22px;
+    }
+    .MuiDialogTitle-root {
+      .MuiTypography-h6 {
+        font-size: 18px;
+        font-family: DM Sans;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 23px;
+        color: #0d0d39;
+      }
+    }
+  
+    .customer-input-field {
+      .MuiFormLabel-root {
+        font-family: "DM Sans";
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 16px;
+        color: #4b686e;
+      }
+    }
+  
+    .confirmJob {
+      display: block;
+      margin: auto;
+      border-radius: 26px;
+      letter-spacing: 2px;
+      padding: 8px 24px;
+      margin-top: 16px;
+      background: #29a7df;
+      text-transform: capitalize;
+      font-size: 14px;
+      margin-bottom: 20px;
+  
+      &:hover {
+        background: #29a7df;
+        box-shadow: none;
+      }
+  
+      .MuiButton-label {
+        color: white !important;
+      }
+  
+      .MuiCircularProgress-colorPrimary {
+        width: 28px !important;
+        height: 28px !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        color: white;
+      }
+    }
+  }
+  
