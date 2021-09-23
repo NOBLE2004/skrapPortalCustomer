@@ -11,7 +11,7 @@ const CommonHeader = ({ downloadCSV, mapView, bookSite, children , handleShowMap
         <div className="header-link">{downloadCSV ? downloadCSV : "Download CSV"}</div>
         <div className="view-container" onClick={handleShowMap}>
           { isMap && <img src={location} alt="location-icon" className="view-icon" />}
-          <div className="header-link">{isMap ? "Map View" : "Job View"}</div>
+          <div className="header-link">{isMap ? "Map View" : "Table View"}</div>
         </div>
         
         <button className="header-btn" onClick={handleBookJob}>

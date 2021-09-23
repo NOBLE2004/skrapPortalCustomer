@@ -30,7 +30,7 @@ const DashBoard = (props) => {
 
   const history = useHistory();
   const { info, loading } = props.dashboard;
-
+  console.log('info', info)
   const getData = async (year) => {
     setLatestYear(year);
     if (isNewYear) {
