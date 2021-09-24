@@ -65,7 +65,7 @@ const DashBoard = (props) => {
           </div>
         </Grid>
         <Grid item md={2}>
-          <DashboardFilter />
+          <DashboardFilter handelSearch={()=>{}}/>
         </Grid>
       </Grid>
       <Grid container spacing={3} className="spend-service-main">

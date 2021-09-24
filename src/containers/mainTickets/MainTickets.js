@@ -8,7 +8,7 @@ const MainTickets = () => {
     <div>
       <div className="header-main">
         <div className="sites-header-title">Tickets </div>
-        <DashboardFilter title={"Tickets"} />
+        <DashboardFilter handelSearch={()=>{}} title={"Tickets"} />
       </div>
         <div className="common-search-for-tables">
             <CommonSearch cname="tickets" handleChangeSearch={()=>{}}/>
