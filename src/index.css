@@ -14,3 +14,9 @@
   top: 25%;
   border: 1px solid gainsboro;
 }
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10%;
+}

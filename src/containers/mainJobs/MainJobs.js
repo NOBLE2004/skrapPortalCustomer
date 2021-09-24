@@ -12,11 +12,12 @@ import CommonSearch from "../../components/commonComponent/commonSearch/CommonSe
 import JobFilters from "../../components/filters/jobFilters";
 import CreateJob from "../../components/modals/createJob/CreateJob";
 import "./mainjobs.scss";
-import JobService from '../../services/job.service';
 import { getUserDataFromLocalStorage, payment, status } from "../../services/utils";
 import {connect} from "react-redux";
 import { useHistory } from "react-router-dom";
 import {getDashboardsData} from "../../store/actions/dashboard.action";
+import {getJobList} from "../../store/actions/jobs.action";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const MainJobs = (props) => {
   const [isMapView, setMapView] = useState(true);
@@ -28,6 +29,7 @@ const MainJobs = (props) => {
   const [limit, setLimit] = useState(10);
   const { info, loading } = props.dashboard;
   const history = useHistory();
+  const { jobData, isLoading, error } = props.jobs;
   const [filters, setFilters] = useState({
       status: "",
       date: "",
@@ -36,7 +38,25 @@ const MainJobs = (props) => {
       search: "",
       page: 1,
   });
+    let userData = getUserDataFromLocalStorage();
+    useEffect(() => {
+        async function fetchData() {
+            if (!jobData) {
+                await props.getJobList({user_id: userData.user_id, limit}, filters);
+            }
+        }
+        fetchData();
+    }, []);
+    useEffect(() => {
+        async function fetchData() {
+                await props.getJobList({user_id: userData.user_id, limit}, filters);
+        }
+        fetchData();
+    }, [filters, updateJobs, limit]);
     useEffect(()=>{
+        console.log(jobData)
+    },[jobData]);
+    /*useEffect(()=>{
         console.log(props);
         let userData = getUserDataFromLocalStorage();
         JobService.list({user_id: userData.user_id, limit}, filters)
@@ -51,7 +71,7 @@ const MainJobs = (props) => {
             }).catch((error)=>{
             console.log(error)
         });
-    }, [filters, updateJobs, limit]);
+    }, [filters, updateJobs, limit]);*/
   const handleShowMap = () => {
       if(isMapView === true){
           setLimit(10000);
@@ -148,12 +168,21 @@ const MainJobs = (props) => {
             <JobFilters handleChangeFilters={handleChangeFilters} />
         </div>
       {isMapView ? (
+          <>
+          {isLoading ? (
+              <div className="loader">
+              <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+              </div>
+          ) : (
+          jobData && (
         <JobsTable
-            data={jobs}
-            pagination={pagination}
+            data={jobData?.data ? jobData?.data : []}
+            pagination={jobData}
             handleUpdateJobs={handleUpdateJobs}
             handlePagination={handlePagination}
-        />
+        />))
+          }
+        </>
       ) : (
         <>
           {/* <div className="live-job-title">
@@ -170,7 +199,14 @@ const MainJobs = (props) => {
                   <div style={{ height: `100%`, borderRadius: "12px" }} />
                 }
               >
-                  {jobs.map((job,index)=>{
+                  {isLoading ? (
+                      <div className="loader">
+                          <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+                      </div>
+                  ) : (
+                      jobData && (
+                          <>
+                  {jobData?.data.map((job,index)=>{
                       return(<Marker
                           position={{
                               lat: job.latitude ? parseFloat(job.latitude) : 51.55063,
@@ -201,6 +237,8 @@ const MainJobs = (props) => {
                           </InfoWindow>
                       )}</Marker>)
                   })}
+                  </>
+                      ))}
               </MainMap>
             </CardContent>
           </Card>
@@ -213,12 +251,13 @@ const MainJobs = (props) => {
     </div>
   );
 };
-const mapStateToProps = ({ dashboard }) => {
-    return { dashboard };
+const mapStateToProps = ({ dashboard, jobs }) => {
+    return { dashboard, jobs };
 };
 const mapDispatchToProps = (dispatch) => {
     return {
         getDashboardsData: (year) => dispatch(getDashboardsData(year)),
+        getJobList: (data, filters) => dispatch(getJobList(data, filters)),
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MainJobs);
