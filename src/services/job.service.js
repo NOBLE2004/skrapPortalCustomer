@@ -2,7 +2,7 @@ import HttpService from "./http.service";
 
 class JobService extends HttpService {
 
-    list = (data, params) => this.post("activeOrders", data,  Object.entries(params).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {}));
+    list = (data, params) => this.post("activeOrders", data, params);
 
     createOrder = (data) => this.post(`orderRequest`, data);
 

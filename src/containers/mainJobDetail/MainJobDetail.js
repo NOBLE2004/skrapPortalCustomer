@@ -10,23 +10,22 @@ import JobNotes from "../../components/jobsDetail/jobNote/JobNotes";
 import JobStatus from "../../components/jobsDetail/jobStatus";
 import JobService from '../../services/job.service';
 import { useHistory, useParams } from "react-router-dom";
+import {getJob} from "../../store/actions/jobs.action";
+import FadeLoader from "react-spinners/FadeLoader";
+import {connect} from "react-redux";
 
-const MainJobDetail = () => {
+const MainJobDetail = (props) => {
     let { id } = useParams();
     const history = useHistory();
-    const [job, setJob] = useState({});
+    const { job, isLoading, error } = props.jobs;
     const [update, setUpdate] = useState(false);
-    useEffect(()=>{
-        JobService.show({job_id: id})
-            .then((response) => {
-                if(response.data.result.length > 0){
-                    setJob(response.data.result[0]);
-                }else{
-                    setJob({});
-                }
-            }).catch((error)=>{
-            console.log(error)
-        });
+    useEffect(() => {
+        async function fetchData() {
+            if (!job) {
+                await props.getJob({job_id: id});
+            }
+        }
+        fetchData();
     }, [update]);
 
 const redirectBack = () =>{
@@ -63,4 +62,12 @@ const redirectBack = () =>{
   );
 };
 
-export default MainJobDetail;
+const mapStateToProps = ({ jobs }) => {
+    return { jobs };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getJob: (data) => dispatch(getJob(data))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(MainJobDetail);

@@ -216,11 +216,11 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
         name={"jobs"}
       />
       <Pagination
-          last={pagination.last_page}
-          current={pagination.current_page}
-          from={pagination.from}
-          to={pagination.to}
-          total={pagination.total}
+          last={pagination?.last_page}
+          current={pagination?.current_page}
+          from={pagination?.from}
+          to={pagination?.to}
+          total={pagination?.total}
           handleNext={(page)=>{handlePagination(page)}}
           handlePrevious={(page)=>{handlePagination(page)}}
       />

@@ -8,38 +8,57 @@ import { Marker, InfoWindow } from "react-google-maps";
 import { locationOval, craneIcon } from "../../assets/images";
 import "./mainTiping.scss";
 import TippingService from '../../services/tipping.service';
-import {status} from "../../services/utils";
 import Pagination from "../../components/reactTable/pagination";
+import {getTippingList} from "../../store/actions/tipping.action";
+import {connect} from "react-redux";
 
-const MainTiping = () => {
+const MainTiping = (props) => {
   const [card, setCard] = useState(false);
-  const [tippingList, setTippingList] = useState([]);
   const [pagination, setPagination] = useState({});
-    const [filters, setFilters] = useState({page: 1});
-
+  const [postcode, setPostcode] = useState('');
+  const [filters, setFilters] = useState({page: 1, geolocation: ''});
+  const {tippingList, isLoading, error} = props.tippings;
   const handleCard1 = (index) => {
     setCard(index);
   };
-  useEffect(()=>{
-      TippingService.list(filters).then((response) => {
-          console.log(response.data?.data);
-        if(response.data?.data) {
-            setTippingList(response.data.data.data);
-            delete response.data.data.data;
-            setPagination(response.data.data)
+    useEffect(() => {
+        async function fetchData() {
+            if (!tippingList) {
+                await props.getTippingList(filters);
+            }
         }
-      }).catch((error)=>{
-          console.log(error);
-      })
-  },[filters]);
+        fetchData();
+    }, []);
+    useEffect(()=> {
+        async function fetchData() {
+            await props.getTippingList(filters);
+        }
+        fetchData();
+    }, [filters])
+    useEffect(()=>{
+        fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${postcode},+UK&sensor=false&&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`, {
+            method: 'get',
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data.results.length > 0){
+                    const {lat, lng} = data.results[0]?.geometry?.location;
+                    postcode.length > 4 && setFilters({...filters, geolocation: `${lat},${lng}`});
+                }
+            });
+
+    }, [postcode]);
     const handlePagination = (page) => {
         setFilters({...filters, page: page});
+    };
+    const handelSearch = postcode => {
+        postcode.length > 4 && setPostcode(postcode);
     };
   return (
     <div className="main-tiping">
       <div className="header-main">
         <div className="sites-header-title">Tiping Sites </div>
-        <DashboardFilter title={"Tiping "} />
+        <DashboardFilter handelSearch={handelSearch} title={"Tiping "} />
       </div>
       <Grid container>
         <Grid item xs={12} className="jobMpWp">
@@ -48,11 +67,11 @@ const MainTiping = () => {
             <h1>Sites On Map</h1>
           </div>
             <Pagination
-                last={pagination.last_page}
-                current={pagination.current_page}
-                from={pagination.from}
-                to={pagination.to}
-                total={pagination.total}
+                last={tippingList?.last_page}
+                current={tippingList?.current_page}
+                from={tippingList?.from}
+                to={tippingList?.to}
+                total={tippingList?.total}
                 handleNext={(page)=>{handlePagination(page)}}
                 handlePrevious={(page)=>{handlePagination(page)}}
             />
@@ -66,7 +85,7 @@ const MainTiping = () => {
                   <div style={{ height: `100%`, borderRadius: "12px" }} />
                 }
               >
-                  {tippingList?.map((tipping, index)=>{
+                  {tippingList?.data?.map((tipping, index)=>{
                       return(<Marker
                           visible={true}
                           position={{
@@ -99,5 +118,12 @@ const MainTiping = () => {
     </div>
   );
 };
-
-export default MainTiping;
+const mapStateToProps = ({ tippings }) => {
+    return { tippings };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getTippingList: (filters) => dispatch(getTippingList(filters)),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(MainTiping);
