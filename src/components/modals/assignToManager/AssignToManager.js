@@ -73,8 +73,7 @@ function AssignToManager(props) {
       if (!props.siteManager.sites) {
         await props.getSiteManager();
       }
-      console.log('called')
-      if(!props.allsites){
+      if(!props.allsites.data){
         await props.getSites()
       }
     }
@@ -87,7 +86,7 @@ function AssignToManager(props) {
     console.log('site' , site)
     console.log('site' , manager)
   };
-
+console.log('props.allsites.data', props.allsites.data)
   return (
     <Dialog open={true} onClose={handleClose} className="booksitemodal">
       <DialogTitle onClose={handleClose}> Assign to manager </DialogTitle>

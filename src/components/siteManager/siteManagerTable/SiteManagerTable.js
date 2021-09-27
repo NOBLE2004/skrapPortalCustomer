@@ -3,11 +3,11 @@ import TableContainer from "../../reactTable/TableContainer";
 import { SelectColumnFilter } from "../../reactTable/filters";
 import CommonStatus from "../../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@material-ui/core";
+import Pagination from "../../reactTable/pagination";
 import "../../reactTable/jobs-react-table.scss";
 import { payment, status } from "../../../services/utils";
 
-const SiteManagerTable = ({ managerData }) => {
-  console.log('site data' , managerData)
+const SiteManagerTable = ({ managerData , pagination , handlePagination }) => {
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
@@ -69,8 +69,8 @@ const SiteManagerTable = ({ managerData }) => {
             : d.mobile_number,
         id: "site contact",
         disableFilters: true,
-        Cell: props => {
-          return (<span>{props.value || 'n/a' }</span>); 
+        Cell: (props) => {
+          return <span>{props.value || "n/a"}</span>;
         },
       },
       {
@@ -106,16 +106,16 @@ const SiteManagerTable = ({ managerData }) => {
         Header: "Booked By",
         accessor: "booked_by",
         disableFilters: true,
-        Cell: props => {
-          return (<span>{props.value || 'n/a' }</span>); 
+        Cell: (props) => {
+          return <span>{props.value || "n/a"}</span>;
         },
       },
       {
         Header: "PO",
         accessor: "purchase_order",
         disableFilters: true,
-        Cell: props => {
-          return (<span>{props.value || 'n/a' }</span>); 
+        Cell: (props) => {
+          return <span>{props.value || "n/a"}</span>;
         },
       },
       {
@@ -137,10 +137,23 @@ const SiteManagerTable = ({ managerData }) => {
     []
   );
 
-  console.log('jobs' , jobs)
+  console.log("jobs", jobs);
   return (
     <div>
       <TableContainer columns={columns} data={jobs} name={"jobs"} />
+      <Pagination
+        last={pagination?.last_page}
+        current={pagination?.current_page}
+        from={pagination?.from}
+        to={pagination?.to}
+        total={pagination?.total}
+        handleNext={(page) => {
+          handlePagination(page);
+        }}
+        handlePrevious={(page) => {
+          handlePagination(page);
+        }}
+      />
       <Menu
         keepMounted
         className="job-table-menu"

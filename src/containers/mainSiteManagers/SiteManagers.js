@@ -28,7 +28,7 @@ const SiteManagers = (props) => {
   }, [isSiteBooked]);
 
   return (
-    <div>
+    <div className="site-manager-margin">
       <div className="header-main">
         <div className="sites-header-title">Site Managers </div>
         <button className="header-btn" onClick={handleBookSite}>
@@ -42,28 +42,30 @@ const SiteManagers = (props) => {
             loading={props.siteManager.loading}
             width={4}
           />
-        ) : (
-          props.siteManager.sites &&
-          props.siteManager.sites.length > 0 ?
+        ) : props.siteManager.sites && props.siteManager.sites.length > 0 ? (
           props.siteManager.sites.map((site, index) => (
             <Grid item md={6}>
               <ManagerDetail siteData={site} key={index} />
             </Grid>
-          )) : <div className="site-error">{props.siteManager.error}</div>
+          ))
+        ) : (
+          <div className="site-error">{props.siteManager.error}</div>
         )}
       </Grid>
       {isSiteBooked && (
         <CreateManager handleClose={() => setSiteBooked(!isSiteBooked)} />
       )}
-      {/* <Grid container spacing={5}>
-        <Grid item md={12} className="view-more-btn">
-          <img
-            src={viewMoreBtn}
-            alt="view-more-btn"
-            onClick={handleViewMore}
-          />
-        </Grid>
-          </Grid> */}
+      <Grid container spacing={5}>
+        {props.siteManager.sites && props.siteManager.sites.length > 10 && (
+          <Grid item md={12} className="view-more-btn">
+            <img
+              src={viewMoreBtn}
+              alt="view-more-btn"
+              onClick={handleViewMore}
+            />
+          </Grid>
+        )}
+      </Grid>
     </div>
   );
 };

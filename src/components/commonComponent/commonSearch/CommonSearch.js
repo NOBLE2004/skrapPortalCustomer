@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import { searchIcon } from "../../../assets/images";
 import "./commonSearch.scss";
 
-const CommonSearch = ({ globalFilter, cname, handleChangeSearch }) => {
-  const [value, setValue] = useState(globalFilter);
+const CommonSearch = ({  cname, handleChangeSearch }) => {
+  const [value, setValue] = useState('');
   useEffect(()=>{
       handleChangeSearch(value);
   }, [value]);

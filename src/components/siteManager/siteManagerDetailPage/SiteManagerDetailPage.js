@@ -34,7 +34,7 @@ const SiteManagerDetailPage = () => {
   const handleChangeSearch = (search) => {
     setFilters({ ...filters, search: search });
   };
- 
+
   const handleChangeFilters = (filtersList) => {
     setFilters(filtersList);
   };
@@ -43,12 +43,17 @@ const SiteManagerDetailPage = () => {
     sitesService
       .showManagerDetail(id)
       .then((res) => {
+        console.log("res/", res.data);
         setState({ ...state, managerData: res.data, isLoading: false });
       })
       .catch((error) => {
         setState({ ...state, isLoading: false });
       });
   }, []);
+
+  const handlePagination = (page) => {
+    setFilters({ ...filters, page: page });
+  };
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
@@ -74,8 +79,13 @@ const SiteManagerDetailPage = () => {
                 <JobFilters handleChangeFilters={handleChangeFilters} />
               </div>
             </Grid>
-
-            <SiteManagerTable managerData={managerData} />
+            {managerData && (
+              <SiteManagerTable
+                managerData={managerData}
+                pagination={managerData.jobs}
+                handlePagination={handlePagination}
+              />
+            )}
           </>
         )}
       </Grid>

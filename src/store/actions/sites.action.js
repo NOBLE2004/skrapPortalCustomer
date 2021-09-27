@@ -8,7 +8,6 @@ export const getSites = () => {
     sitesService
     .getAllSites()
       .then((res) => {
-        
         dispatch(sitesSuccess(res.data.data));
       })
       .catch((err) => {
@@ -41,13 +40,14 @@ export const sitesFailure = (error) => {
 
 // getSiteList 
 
-export const getSitesList = () => {
+export const getSitesList = (filters) => {
   return (dispatch) => {
     dispatch(sitesListStart());
+    const params = Object.entries(filters).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
     sitesService
-      .getSitesList()
+      .getSitesList(params)
       .then((res) => {
-        dispatch(sitesListSuccess(res.data.data.data));
+        dispatch(sitesListSuccess(res.data.data));
       })
       .catch((err) => {
         dispatch(sitesListFailure(err.message));
