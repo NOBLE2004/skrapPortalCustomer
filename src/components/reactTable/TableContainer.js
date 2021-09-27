@@ -8,7 +8,6 @@ import {
 } from "react-table";
 import { DefaultColumnFilter } from "./filters";
 import { useHistory } from "react-router";
-import GlobalFilter from "../filters/GlobalFilter";
 
 const TableContainer = ({ columns, data, name }) => {
   const history = useHistory();
@@ -31,13 +30,7 @@ const TableContainer = ({ columns, data, name }) => {
     headerGroups,
     prepareRow,
     rows,
-    canPreviousPage,
-    canNextPage,
-    nextPage,
-    previousPage,
-    state,
-    preGlobalFilteredRows,
-    setGlobalFilter,
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -59,11 +52,7 @@ const TableContainer = ({ columns, data, name }) => {
 
   return (
     <Fragment>
-      {/* <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      /> */}
+     
       <div {...getTableProps()} className="table-main">
         <div style={{ display: "table-head" }}>
           {headerGroups.map((headerGroup) => (
@@ -84,34 +73,35 @@ const TableContainer = ({ columns, data, name }) => {
           ))}
         </div>
         <div style={{ display: "table-body" }} {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <div
-                style={{
-                  display: "flex",
-                  border: "1px solid #ECECEC",
-                  marginBottom: 18,
-                  borderRadius: 11,
-                  cursor: "pointer",
-                }}
-                {...row.getRowProps()}
-                onClick={() => handleRowClick(row.original)}
-              >
-                {row.cells.map((cell) => {
-                  return (
-                    <div
-                      className="table-body-cell"
-                      style={{ width: cellWidth, padding: cellPadding }}
-                      {...cell.getCellProps()}
-                    >
-                      {cell.render("Cell")}
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
+          {
+            rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    border: "1px solid #ECECEC",
+                    marginBottom: 18,
+                    borderRadius: 11,
+                    cursor: "pointer",
+                  }}
+                  {...row.getRowProps()}
+                  onClick={() => handleRowClick(row.original)}
+                >
+                  {row.cells.map((cell) => {
+                    return (
+                      <div
+                        className="table-body-cell"
+                        style={{ width: cellWidth, padding: cellPadding }}
+                        {...cell.getCellProps()}
+                      >
+                        {cell.render("Cell")}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
         </div>
       </div>
     </Fragment>

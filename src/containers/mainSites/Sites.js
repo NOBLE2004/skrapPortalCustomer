@@ -11,43 +11,74 @@ import { enRouteMarker } from "../../assets/images/index";
 import FadeLoader from "react-spinners/FadeLoader";
 import { connect } from "react-redux";
 import AssignToManager from "../../components/modals/assignToManager/AssignToManager";
-import { getSites  , getSitesList} from "../../store/actions/sites.action";
+import { getSites, getSitesList } from "../../store/actions/sites.action";
 import "./sites.scss";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
   const [showInfo, setShowInfo] = useState(false);
   const [isMapView, setIsMapView] = useState(true);
-  const [filters, setFilters] = useState({page: 1});
-  const [isManagerOpen , setIsManagerOpen] = useState(false);
+  const [postcode, setPostcode] = useState("");
+  const [isManagerOpen, setIsManagerOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    page: 1,
+    geolocation: "",
+  });
 
   useEffect(() => {
     async function fetchData() {
       if (!siteData) {
-        await props.getSitesList();
+        await props.getSitesList(filters);
       }
     }
 
     fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   props.getSitesList(filters);
+  // }, [filters]);
 
-
-  const handleChangeSearch = (search) => {
-    setFilters({ ...filters, search: search });
+  const handlePagination = (page) => {
+    setFilters({ ...filters, page: page });
   };
-
+  const handleChangeSearch = (postcode) => {
+    console.log('postcode', postcode)
+    postcode.length > 4 && setPostcode(postcode);
+  };
+ 
   const handleShowMap = () => {
     setIsMapView(!isMapView);
   };
 
   const handleMangerModal = () => {
-    setIsManagerOpen(true)
-  }
+    setIsManagerOpen(true);
+  };
+
+  useEffect(() => {
+    fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${postcode},+UK&sensor=false&&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`,
+      {
+        method: "get",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.results.length > 0) {
+          const { lat, lng } = data.results[0]?.geometry?.location;
+          postcode.length > 4 &&
+            setFilters({ ...filters, geolocation: `${lat},${lng}` });
+        }
+      });
+  }, [postcode]);
 
   return (
     <>
-      <CommonHeader handleShowMap={handleShowMap} isMap={isMapView} handleBookJob={handleMangerModal}>
+      <CommonHeader
+        handleShowMap={handleShowMap}
+        isMap={isMapView}
+        handleBookJob={handleMangerModal}
+      >
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
@@ -83,13 +114,12 @@ const Sites = (props) => {
               cname="postcode"
               handleChangeSearch={handleChangeSearch}
             />
-            {/* <JobFilters handleChangeFilters={handleChangeFilters} /> */}
           </div>
         </Grid>
       </Grid>
-      {
-        isManagerOpen && <AssignToManager handleClose={() => setIsManagerOpen(false)}/>
-      }
+      {isManagerOpen && (
+        <AssignToManager handleClose={() => setIsManagerOpen(false)} />
+      )}
       {isMapView ? (
         <>
           <Grid container className="sites-table-loader">
@@ -99,11 +129,16 @@ const Sites = (props) => {
               siteData && (
                 <>
                   <Grid item md={10}>
-                    <SitesTable data={siteData} />
+                    <SitesTable
+                      data={siteData ? siteData.data : []}
+                      pagination={siteData}
+                      handlePagination={handlePagination}
+                    />
                   </Grid>
-                  <Grid item md={2} style={{ marginTop: "47px" }}>
+                  {/* style={{ marginTop: "47px" }} */}
+                  <Grid item md={2}>
                     {siteData ? (
-                      siteData.map((site, index) => (
+                      siteData.data.map((site, index) => (
                         <CommonJobStatus
                           key={index}
                           jobStatus={{
@@ -141,7 +176,7 @@ const Sites = (props) => {
                 }
               >
                 {siteData &&
-                  siteData.map((job, index) => {
+                  siteData.data.map((job, index) => {
                     return (
                       <Marker
                         position={{
@@ -177,8 +212,6 @@ const Sites = (props) => {
           </Card>
         </Grid>
       )}
-
-     
     </>
   );
 };
@@ -190,7 +223,7 @@ const mapStateToProps = ({ sites }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSites: () => dispatch(getSites()),
-    getSitesList: () => dispatch(getSitesList()),
+    getSitesList: (filters) => dispatch(getSitesList(filters)),
   };
 };
 

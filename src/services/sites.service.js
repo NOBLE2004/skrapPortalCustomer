@@ -10,7 +10,7 @@ class SiteService extends HttpService {
 
   // sites
 
-  getSitesList = (params) => this.get("sites/list" , params);
+  getSitesList = (params) => this.get("sites/list"  , params);
 }
 
 export default new SiteService();

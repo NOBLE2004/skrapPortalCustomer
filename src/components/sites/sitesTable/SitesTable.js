@@ -6,7 +6,6 @@ import "./sites-table.scss";
 const SitesTable = ({
   data,
   pagination,
-  handleUpdateJobs,
   handlePagination,
 }) => {
   const columns = useMemo(
@@ -66,7 +65,7 @@ const SitesTable = ({
   return (
     <>
       <TableContainer columns={columns} data={data} name={"sites"} />
-      {/* <Pagination
+      <Pagination
         last={pagination.last_page}
         current={pagination.current_page}
         from={pagination.from}
@@ -78,7 +77,7 @@ const SitesTable = ({
         handlePrevious={(page) => {
           handlePagination(page);
         }}
-      /> */}
+      />
     </>
   );
 };
