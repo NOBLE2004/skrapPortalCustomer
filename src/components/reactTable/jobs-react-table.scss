@@ -11,7 +11,7 @@
   }
 
   .table-headings {
-    font-family: 'DM Sans';
+    font-family: "DM Sans";
     font-style: normal;
     font-weight: bold;
     font-size: 12px;
@@ -21,22 +21,29 @@
     padding-top: 0px;
     padding-bottom: 10px;
   }
+  .table-headings:last-child{
+    display: flex;
+    align-self: flex-end;
+    width: 50px !important;
+    padding: 10px !important;
+  }
   .table-body-cell {
-    font-family: 'DM Sans';
+    font-family: "DM Sans";
     font-style: normal;
     font-weight: normal;
     font-size: 10px;
     line-height: 13px;
     color: #4b686e;
-    word-break:break-all;
+    word-break: break-all;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-  };
-  .table-body-cell:last-child{
+  }
+  .table-body-cell:last-child {
     display: flex;
-    align-self: center;
-    text-align: center;
+    align-self: flex-end;
+    width: 50px !important;
+    padding: 10px !important;
   }
 
 
@@ -65,8 +72,8 @@
   align-items: center;
   margin-bottom: 10px;
 }
-.job-table-menu{
-  .MuiPaper-root{
+.job-table-menu {
+  .MuiPaper-root {
     border-radius: 11px;
   }
 }

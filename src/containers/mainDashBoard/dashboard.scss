@@ -58,6 +58,7 @@ hr {
   display: flex;
   justify-content: space-between !important;
   align-items: center;
+  flex-wrap: unset !important;
 }
 .main-loading{
  width: 100%;

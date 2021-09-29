@@ -8,6 +8,7 @@ import {
 } from "react-table";
 import { DefaultColumnFilter } from "./filters";
 import { useHistory } from "react-router";
+import "./jobs-react-table.scss"
 
 const TableContainer = ({ columns, data, name }) => {
   const history = useHistory();
@@ -19,7 +20,7 @@ const TableContainer = ({ columns, data, name }) => {
       setCellWidth(100);
       setCellPadding("10px");
     } else {
-      setCellWidth(152);
+      setCellWidth(172);
       setCellPadding("16px");
     }
   }, []);
@@ -85,6 +86,7 @@ const TableContainer = ({ columns, data, name }) => {
                     borderRadius: 11,
                     cursor: "pointer",
                   }}
+                  className="table-body-row"
                   {...row.getRowProps()}
                   onClick={() => handleRowClick(row.original)}
                 >
@@ -92,7 +94,7 @@ const TableContainer = ({ columns, data, name }) => {
                     return (
                       <div
                         className="table-body-cell"
-                        style={{ width: cellWidth, padding: cellPadding }}
+                        style={{ width: cellWidth, padding: cellPadding}}
                         {...cell.getCellProps()}
                       >
                         {cell.render("Cell")}

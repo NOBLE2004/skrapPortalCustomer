@@ -13,7 +13,6 @@ import {
 import "./spendchart.scss";
 
 const SpendChart = ({ chartData , getDashBoardData , latestYear}) => {
-  console.log('latest' , latestYear)
   const [selectedDate, setSelectedDate] = useState(latestYear);
   const handleYearChange = (event) => {
     setSelectedDate(event.target.value);
