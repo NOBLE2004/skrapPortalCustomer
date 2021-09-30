@@ -6,7 +6,7 @@ class JobService extends HttpService {
 
     createOrder = (data) => this.post(`orderRequest`, data);
 
-    show = (data) => this.post(`getBookingDetail`, data);
+    show = (data) => this.post(`customers/getBookingDetail`, data);
 
     invoice = (data) => this.post(`downloadJobInvoice`, data);
 

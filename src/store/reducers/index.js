@@ -6,6 +6,7 @@ import {sitesReducer} from "./sitesReducer";
 import { allSiteReducer } from "./allSiteReducer";
 import {jobReducer} from "./jobReducer";
 import {tippingReducer} from "./tippingReducer";
+import {ticketReducer} from "./ticketReducer";
 export default combineReducers({
   auth: authReducer,
   siteManager: siteManagerReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
   sites : sitesReducer,
   jobs : jobReducer,
   allsites: allSiteReducer,
-  tippings: tippingReducer
+  tippings: tippingReducer,
+  tickets: ticketReducer
 });
