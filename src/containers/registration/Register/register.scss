@@ -1,0 +1,117 @@
+.register-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  flex-direction: column;
+  border-bottom-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+  .register-section {
+    .another-account {
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 21px;
+      text-align: center;
+      color: #0f2851;
+      padding-bottom: 98px;
+
+      span{
+        text-decoration: underline;
+      }
+    }
+    width: 508px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .search-input {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .MuiInputBase-input {
+        background-color: transparent;
+      }
+      .MuiOutlinedInput-adornedStart {
+        padding-left: 0px;
+      }
+      .MuiInputBase-root {
+        width: 400px;
+        border-radius: 45px;
+        margin-bottom: 16px;
+        .MuiTypography-root {
+          background-color: #29a7df;
+          color: #fff;
+          padding: 8px;
+          border-bottom-left-radius: 20px;
+          border-top-left-radius: 20px;
+        }
+      }
+      .MuiFormControl-root {
+        margin: 0px;
+      }
+    }
+    .register-next-btn {
+      padding-top: 53px;
+      padding-bottom: 40px;
+      .MuiButton-root {
+        border-radius: 64px;
+        background: #36b8fc;
+        width: 400px;
+        height: 48px;
+      }
+      .MuiButton-label {
+        font-family: "DM Sans";
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        color: #ffffff;
+        line-height: 19px;
+        text-transform: initial;
+      }
+    }
+  }
+  .signin{
+    text-align: center;
+    padding-top: 15px;
+  }
+  .sign-in-link{
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 31px;
+    color: #29a7df;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .register-loader{
+    display: flex;
+  }
+}
+@media (max-width: 500px) and (min-width: 1px){
+  .register-main {
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    .register-section {
+      width: 100%;
+      .search-input {
+        width: 90%;
+        .MuiFormControl-root{
+          width: 100%;
+          .MuiInputBase-root {
+            width: 100%;
+          }
+        }
+      }
+    }
+    .register-next-btn{
+      width: 90%;
+      .MuiButton-root{
+        width: 100% !important;
+      }
+    }
+  }
+}

@@ -13,6 +13,7 @@ import MainJobDetail from "./containers/mainJobDetail/MainJobDetail";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
 import SiteManagerDetailPage from "./components/siteManager/siteManagerDetailPage/SiteManagerDetailPage";
+import Register from "./containers/registration/Register/Register";
 
 const history = createBrowserHistory();
 
@@ -22,6 +23,7 @@ function App() {
       <Switch>
         {/* <Route path="/login" component={() => <SignIn />} exact /> */}
         <PublicRoute path="/login" component={() => <SignIn />} exact restricted={true}/>
+        <PublicRoute path="/signup" component={() => <Register />} exact restricted={true}/>
         <Layout>
           <PrivateRoute path="/" component={() => <DashBoard />} exact />
           <PrivateRoute path="/dashboard" component={() => <DashBoard />} />
