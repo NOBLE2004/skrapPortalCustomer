@@ -1,0 +1,161 @@
+.add-phone-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  flex-direction: column;
+  border-bottom-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+
+  .add-phone-section {
+    width: 508px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .notice-alert {
+      padding-top: 20px;
+      display: flex;
+      .MuiPaper-root {
+        width: 400px;
+      }
+    }
+  }
+  .search-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .otp-title {
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 23px;
+      color: #29a7df;
+      cursor: pointer;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+    .MuiInputBase-root {
+      width: 508px;
+      border-radius: 45px;
+      padding-left: 0px;
+      .MuiTypography-root {
+        background-color: #29a7df;
+        color: #fff;
+        padding: 8px;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+      }
+      .MuiInputAdornment-positionStart{
+        margin: 0px;
+      }
+    }
+    .MuiFormControl-root {
+      margin: 0px;
+    }
+    .title {
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 23px;
+      color: #29a7df;
+      cursor: pointer;
+      padding-bottom: 24px;
+    }
+    .search-input{
+      .MuiOutlinedInput-inputAdornedStart{
+        padding-left: 10px;
+      }
+      .MuiInputBase-input{
+        background-color: transparent;
+      }
+    }
+  }
+  .addphone-next-btn {
+    padding-top: 50px;
+    padding-bottom: 129px;
+    .MuiButton-root {
+      border-radius: 64px;
+      background: #36b8fc;
+      width: 400px;
+      height: 48px;
+    }
+    .Mui-disabled {
+      opacity: 0.4 !important;
+      cursor: not-allowed !important;
+      pointer-events: all !important;
+      background-color: #36b8fc !important;
+    }
+    .MuiButton-label {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      color: #ffffff;
+      line-height: 19px;
+      text-transform: initial;
+    }
+  }
+  .password-title{
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 23px;
+    color: #29a7df;
+    cursor: pointer;
+    padding-bottom: 24px;
+    padding-top: 15px;
+  }
+  .new-notice-alert{
+    margin-top: 10px;
+  }
+}
+@media (max-width: 768px) and (min-width: 1px){
+  .add-phone-main{
+    .add-phone-section{
+      width: 100%;
+      .search-section{
+        width: 70%;
+        .MuiFormControl-root{
+          width: 100%;
+          .MuiInputBase-root{
+            width: 100%;
+          }
+        }
+        .search-input{
+          width: 100%;
+          .MuiFormControl-root{
+            width: 100%;
+            .MuiInputBase-root{
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+    .addphone-next-btn{
+      width: 70%;
+      .MuiButton-root{
+        width: 100%;
+      }
+    }
+  }
+}
+@media (max-width: 425px) and (min-width: 1px){
+  .add-phone-main{
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    .add-phone-section{
+      .search-section{
+        width: 90%;
+      }
+    }
+    .addphone-next-btn{
+      width: 90%;
+    }
+  }
+}

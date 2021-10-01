@@ -6,6 +6,7 @@ export const userSignUp = (data) => {
         dispatch(signUpStart());
         authService.signup(data)
             .then((response) => {
+                console.log(response.data.result);
                 if (Object.keys(response.data.result).length !== 0) {
                     localStorage.setItem("isAuthenticated", true);
                     localStorage.setItem("token", response.data.result.token);
