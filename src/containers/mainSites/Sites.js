@@ -78,6 +78,7 @@ const Sites = (props) => {
         handleShowMap={handleShowMap}
         isMap={isMapView}
         handleBookJob={handleMangerModal}
+        downloadCSV={false}
       >
         <CommonJobStatus
           jobStatus={{
