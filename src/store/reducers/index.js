@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { authReducer } from "./authReducer";
+import { authReducer, signUpReducer } from "./authReducer";
 import { siteManagerReducer } from "./siteManagerReducer";
 import { dashboardReducer } from "./dashboardReducer";
 import {sitesReducer} from "./sitesReducer";
@@ -9,6 +9,7 @@ import {tippingReducer} from "./tippingReducer";
 import {ticketReducer} from "./ticketReducer";
 export default combineReducers({
   auth: authReducer,
+  signup: signUpReducer,
   siteManager: siteManagerReducer,
   dashboard: dashboardReducer,
   sites : sitesReducer,

@@ -80,7 +80,11 @@ export const jobStatusExchange = [
 
 export const loginHeader = {
   title: "Customer portal",
-  description: "Log in to cotinue to access to the platform",
+  description: "Log in to continue to access to the platform",
+};
+export const registerHeaderData = {
+  title: "Customer portal",
+  description: "Sign up to continue to hire",
 };
 
 export const dummyStatus = [

@@ -18,4 +18,16 @@ const initialState = {
         return { ...state };
     }
   };
-  
+
+export const signUpReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case constants.SIGNUP_START:
+            return { ...state, loading: true, error: null, user: null , isAuthenticated:false };
+        case constants.SIGNUP_SUCCESS:
+            return { ...state, loading: false, error: null, user: action.payload , isAuthenticated:true};
+        case constants.SIGNUP_FAILURE:
+            return { ...state, loading: false, error: action.payload, user: null , isAuthenticated:false };
+        default:
+            return { ...state };
+    }
+};
