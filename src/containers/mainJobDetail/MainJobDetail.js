@@ -21,9 +21,7 @@ const MainJobDetail = (props) => {
     const [update, setUpdate] = useState(false);
     useEffect(() => {
         async function fetchData() {
-            if (!job) {
-                await props.getJob({job_id: id});
-            }
+            await props.getJob({job_id: id});
         }
         fetchData();
     }, [update]);
@@ -45,7 +43,7 @@ const redirectBack = () =>{
           <JobNotes comments={job?.comments}/>
         </Grid>
         <Grid item md={5}>
-            {job?.driver_number && <DriverDetail job={job}/>}
+            {job?.driver_id && <DriverDetail job={job}/>}
            {/* <SmallCard />*/}
         </Grid>
       </Grid>

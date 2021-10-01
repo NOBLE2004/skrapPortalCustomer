@@ -11,16 +11,18 @@
     font-family: Roboto;
     font-style: normal;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 2em;
     line-height: 37px;
     color: #fff;
     padding-bottom: 36px;
+    text-align: center;
   }
   .footer-item-main {
     width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
   }
   .footer-item {
     display: flex;
@@ -28,7 +30,7 @@
     justify-content: center;
     align-items: center;
     width: 190px;
-    height: 148px;
+    height: 200px;
   }
   .footer-title {
     font-family: "Roboto";
@@ -52,10 +54,11 @@
 
   .footer-get-quote {
     padding-top: 73px;
+    width: 30%;
     .MuiButton-root {
       border-radius: 64px;
       background: #fff;
-      width: 425px;
+      width: 100%;
       height: 48px;
     }
     .MuiButton-label {
@@ -65,6 +68,23 @@
       font-size: 16px;
       line-height: 19px;
       text-transform: initial;
+    }
+  }
+}
+@media (max-width: 1024px) and (min-width: 1px){
+  .footer-main {
+    .footer-top-title {
+      font-size: 1.5em;
+    }
+    .footer-get-quote {
+      width: 40%;
+    }
+  }
+}
+@media (max-width: 768px) and (min-width: 1px){
+  .footer-main {
+    .footer-get-quote {
+      width: 90%;
     }
   }
 }

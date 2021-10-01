@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import AssignToManager from "../../components/modals/assignToManager/AssignToManager";
 import { getSites, getSitesList } from "../../store/actions/sites.action";
 import "./sites.scss";
+import {getDashboardsData} from "../../store/actions/dashboard.action";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
@@ -20,6 +21,7 @@ const Sites = (props) => {
   const [isMapView, setIsMapView] = useState(true);
   const [postcode, setPostcode] = useState("");
   const [isManagerOpen, setIsManagerOpen] = useState(false);
+  const { info, loading } = props.dashboard;
   const [filters, setFilters] = useState({
     page: 1,
     geolocation: "",
@@ -27,11 +29,9 @@ const Sites = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      if (!siteData) {
-        await props.getSitesList(filters);
-      }
+        !siteData && await props.getSitesList(filters);
+        !info && await props.getDashboardsData('');
     }
-
     fetchData();
   }, []);
 
@@ -82,7 +82,7 @@ const Sites = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
-            price: "£7,142.00",
+            price: `£${info? info.TotalSpend : 0}`,
             statusName: "primary",
             width: "184px",
             height: "84px",
@@ -91,7 +91,7 @@ const Sites = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Jobs",
-            price: "10",
+            price: `${info? info.NumberOfJobs : 0}`,
             statusName: "primary",
             width: "115px",
             height: "84px",
@@ -100,7 +100,7 @@ const Sites = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Sites",
-            price: "8",
+            price: `${siteData? siteData.total : 0}`,
             statusName: "primary",
             width: "115px",
             height: "84px",
@@ -216,14 +216,15 @@ const Sites = (props) => {
   );
 };
 
-const mapStateToProps = ({ sites }) => {
-  return { sites };
+const mapStateToProps = ({ sites, dashboard }) => {
+  return { sites, dashboard };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSites: () => dispatch(getSites()),
-    getSitesList: (filters) => dispatch(getSitesList(filters)),
+      getSites: () => dispatch(getSites()),
+      getSitesList: (filters) => dispatch(getSitesList(filters)),
+      getDashboardsData: (year) => dispatch(getDashboardsData(year)),
   };
 };
 

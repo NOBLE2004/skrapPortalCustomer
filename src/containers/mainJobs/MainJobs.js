@@ -41,9 +41,8 @@ const MainJobs = (props) => {
     let userData = getUserDataFromLocalStorage();
     useEffect(() => {
         async function fetchData() {
-            if (!jobData) {
-                await props.getJobList({user_id: userData.user_id, limit}, filters);
-            }
+            !jobData && await props.getJobList({user_id: userData.user_id, limit}, filters);
+            !info && await props.getDashboardsData('');
         }
         fetchData();
     }, []);
@@ -53,25 +52,6 @@ const MainJobs = (props) => {
         }
         fetchData();
     }, [filters, updateJobs, limit]);
-    useEffect(()=>{
-        console.log(jobData)
-    },[jobData]);
-    /*useEffect(()=>{
-        console.log(props);
-        let userData = getUserDataFromLocalStorage();
-        JobService.list({user_id: userData.user_id, limit}, filters)
-            .then((response) => {
-                if(response.data.result?.data){
-                    setJobs(response.data.result.data);
-                    delete response.data.result.data;
-                    setPagination(response.data.result)
-                }else{
-                    setJobs([]);
-                }
-            }).catch((error)=>{
-            console.log(error)
-        });
-    }, [filters, updateJobs, limit]);*/
   const handleShowMap = () => {
       if(isMapView === true){
           setLimit(10000);
@@ -80,9 +60,6 @@ const MainJobs = (props) => {
       }
     setMapView(!isMapView);
   };
-  useEffect(()=>{
-      props.getDashboardsData('');
-  }, []);
   const handleBookJob = () => {
     setIsJobBooked(true);
   };
