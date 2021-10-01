@@ -39,7 +39,7 @@ const DriverDetail = ({job}) => {
                   <div className="personal-title">{job?.driver_number ? job?.driver_number : '-------------'}</div>
                 </div>
               </Grid>
-              <Grid item md={6} className="personal-info">
+              {/*<Grid item md={6} className="personal-info">
                 <div className="info">
                   <div className="designation">Manager</div>
                   <div className="personal-title">{job?.manager_first_name ? job?.manager_first_name : '-------------'}</div>
@@ -48,13 +48,13 @@ const DriverDetail = ({job}) => {
                   <div className="designation">Phone</div>
                   <div className="personal-title">{job?.manager_number ? job?.manager_number : '-------------'}</div>
                 </div>
-              </Grid>
+              </Grid>*/}
             </Grid>
           </Grid>
         </Grid>
-        <Grid container>
+        <Grid container style={{marginTop: '5px'}}>
           <Grid item md={12}>
-            <div className="rating">
+            {/*<div className="rating">
               <Rating
                 name="simple-controlled"
                 value={value}
@@ -68,7 +68,7 @@ const DriverDetail = ({job}) => {
               >
                 Rate Driver <span className="bold-dsans-12-primary">Here</span>
               </div>
-            </div>
+            </div>*/}
           </Grid>
         </Grid>
         <Grid container>
