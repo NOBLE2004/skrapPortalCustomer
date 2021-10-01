@@ -10,6 +10,10 @@ export const SIGNUP_START = "SIGNUP_START";
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const SIGNUP_FAILURE = "SIGNUP_FAILURE";
 
+export const PHONE_START = "PHONE_START";
+export const PHONE_SUCCESS = "PHONE_SUCCESS";
+export const PHONE_FAILURE = "PHONE_FAILURE";
+
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 
 export const SET_CURRENT_USER = "SET_CURRENT_USER";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Alert from "@material-ui/lab/Alert";
@@ -20,7 +20,6 @@ const Register = (props) => {
   const [state, setState] = useState({
     firstname: "",
     lastname: "",
-    mobile_number: "",
     email: "",
     password: "",
     confirmpassword: "",
@@ -32,7 +31,6 @@ const Register = (props) => {
   const [errors, setErrors] = useState({
     firstname: "",
     lastname: "",
-    mobile_number: "",
     email: "",
     password: "",
     confirmpassword: "",
@@ -65,7 +63,14 @@ const Register = (props) => {
     notice,
     isRegistered,
   } = state;
-
+  useEffect(() => {
+    if (props.auth.isAuthenticated || props.signup.isAuthenticated) {
+      setTimeout(() => {
+        history.push("/");
+        window.location.reload(false);
+      }, 2000);
+    }
+  }, [props.auth.isAuthenticated, props.signup.isAuthenticated]);
   const handleChange = async (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -78,9 +83,6 @@ const Register = (props) => {
         break;
       case "lastname":
         setState({ ...state, lastname: value });
-        break;
-      case "mobile_number":
-        setState({ ...state, mobile_number: value });
         break;
       case "password":
         setState({ ...state, password: value });
@@ -111,7 +113,11 @@ const Register = (props) => {
       alert("password does not match");
       return;
     }
-
+    if (!props.phone.phone) {
+      alert("phone no is required");
+      history.push("/phone");
+      return;
+    }
     let newData = {
       device_type: 1,
       email: email,
@@ -119,7 +125,7 @@ const Register = (props) => {
       invitation_code: "",
       last_name: lastname,
       marketing: false,
-      mobile_number: mobile_number,
+      mobile_number: props.phone ? `+44` + props.phone.phone.phone : "",
       password: password,
       referal: "",
       user_name: firstname + lastname,
@@ -166,25 +172,6 @@ const Register = (props) => {
                     errors["lastname"].length > 0 ? classes.error : classes.root
                   }
                   error={errors["lastname"].length > 0 ? true : false}
-                />
-                <TextField
-                    placeholder="Mobile number"
-                    margin="normal"
-                    variant="outlined"
-                    size="small"
-                    name="mobile_number"
-                    InputProps={{
-                      startAdornment: (
-                          <InputAdornment position="start">+44</InputAdornment>
-                      ),
-                    }}
-                    inputProps={{ maxLength: 10 }}
-                    className={
-                      errors["mobile_number"].length > 0 ? classes.error : classes.root
-                    }
-                    onChange={(e) => handleChange(e)}
-                    value={mobile_number}
-                    error={errors["mobile_number"].length > 0 ? true : false}
                 />
                 <TextField
                   label="email"
@@ -264,8 +251,8 @@ const Register = (props) => {
   );
 };
 
-const mapStateToProps = ({ signup }) => {
-  return { signup };
+const mapStateToProps = ({ signup, phone, auth }) => {
+  return { signup, phone, auth };
 };
 
 const mapDispatchToProps = (dispatch) => {

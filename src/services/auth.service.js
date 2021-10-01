@@ -4,7 +4,9 @@ class AuthService extends HttpService {
     
   login = (data) => this.post("login", data);
   signup = (data) => this.post("registerCustomer", data);
-  userlogout = () => this.get("logout");
+  checkUserMobile = (data) => this.post("checkUserMobile", data);
+  getVerificationCode = (data) => this.post("getVerificationCode", data);
+  verifyPinCode = (data) => this.post("verifyPinCode", data);
 }
 
 export default new AuthService();
