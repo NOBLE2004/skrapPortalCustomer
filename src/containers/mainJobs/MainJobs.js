@@ -94,6 +94,7 @@ const MainJobs = (props) => {
         isMap={isMapView}
         handleBookJob={handleBookJob}
         downloadCSV={false}
+        showButton={true}
       >
         <CommonJobStatus
           jobStatus={{
