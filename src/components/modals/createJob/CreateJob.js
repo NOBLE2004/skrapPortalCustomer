@@ -35,6 +35,7 @@ import PaymentService from "../../../services/payment.service";
 import { colors } from "@material-ui/core";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./createJob.scss";
+import { serviceList } from '../../utlils/constants';
 
 const materialTheme = createTheme({
   palette: {
@@ -210,9 +211,9 @@ export default function CreateJob({ closeModal, setJobCreated }) {
 
   //getservices
   useEffect(() => {
-    ServiceService.list().then((response) => {
-      setServices(response.data.result);
-    });
+    //ServiceService.list().then((response) => {
+      setServices(serviceList);
+    //});
     const userCredit = getUserDataFromLocalStorage();
     setCredit(userCredit.credit_balance);
     setState({

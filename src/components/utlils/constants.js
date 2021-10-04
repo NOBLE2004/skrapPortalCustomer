@@ -3869,4 +3869,49 @@ export const data = [
     },
     "labels": []
   }
-]
+],
+    serviceList =[
+
+  {
+
+    "service_id":2,
+
+    "service_name":"Skip Hire",
+
+    "description":"<p>Ideal for disposing of large amounts of building, construction and garden waste. Skips come&nbsp;in varied sizes and are measured in yards.<\/p>",
+
+    "full_url":"https:\/\/portaltest2.skrap.app\/service_images\/5fdc817505c54skip-hire.png",
+
+    "img_url":"\/service_images\/5fdc817505c54skip-hire.png"
+
+  },
+
+  {
+
+    "service_id":1,
+
+    "service_name":"Grab Hire",
+
+    "description":"<p>Ideal for disposing of&nbsp;large amounts of building, construction and garden waste.&nbsp;&nbsp;A&nbsp;grab lorry uses a grab arm and bucket to collect and clear away large quantities of waste from otherwise inaccessible areas<\/p>",
+
+    "full_url":"https:\/\/portaltest2.skrap.app\/service_images\/61546f4cae16c5f9fe0d6d5062Group 48624@3x.png",
+
+    "img_url":"\/service_images\/61546f4cae16c5f9fe0d6d5062Group 48624@3x.png"
+
+  },
+
+  {
+
+    "service_id":3,
+
+    "service_name":"Cage Hire",
+
+    "description":"<p>An alternative removal solution to skip hire, suitable for all types of waste removals and includes a professional and experienced driver who will assist you in loading your waste. Ideal for removal of bulky items or for locations where a skip isn&#39;t practical, such as more congested roads or busy urban areas with parking restrictions.<\/p>",
+
+    "full_url":"https:\/\/portaltest2.skrap.app\/service_images\/5f9fd84dca502Group 49016@3x.png",
+
+    "img_url":"\/service_images\/5f9fd84dca502Group 49016@3x.png"
+
+  }
+
+];
