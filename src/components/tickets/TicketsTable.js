@@ -15,7 +15,7 @@ const TicketsTable = ({data, pagination, handlePagination}) => {
   const download = async (url) => {
     var element = document.createElement("a");
     element.href = await toDataURL(url);
-    element.download = url.split('ticket_attachment')[1];
+    element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
     element.click();
   };
   const columns = useMemo(
