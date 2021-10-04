@@ -79,6 +79,7 @@ const Sites = (props) => {
         isMap={isMapView}
         handleBookJob={handleMangerModal}
         downloadCSV={false}
+        showButton={false}
       >
         <CommonJobStatus
           jobStatus={{

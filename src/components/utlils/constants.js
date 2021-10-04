@@ -97,8 +97,7 @@ export const spendChartOptions = {
           callback: function (value) {
             return '£' + value.toFixed(0);
           },
-          beginAtZero: true,
-          stepSize: 2
+          beginAtZero: true
         },
         gridLines: {
           borderDash: [2],
