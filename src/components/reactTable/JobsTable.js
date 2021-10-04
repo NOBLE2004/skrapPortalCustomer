@@ -63,7 +63,21 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
         setReorder(true);
         setAnchorEl(null);
     };
+    const toDataURL = (url) => {
+        return fetch(url).then((response) => {
+            return response.blob();
+        }).then(blob => {
+            return URL.createObjectURL(blob);
+        });
+    }
+    const handleShowReport = async (url) => {
+        var element = document.createElement("a");
+        element.href = await toDataURL(url);
+        element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
+        element.click();
+        handleClose();
 
+    };
     const handleReorderResponse = (id) => {
         JobService.copy({ job_id: id })
             .then((response) => {
@@ -239,7 +253,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
           {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>}
           <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
           {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>}
-        <MenuItem onClick={handleClose}>Waste Report</MenuItem>
+          {row?.waste_transfer_document != "" && <MenuItem onClick={()=>handleShowReport(row?.waste_transfer_document)}>Waste Report</MenuItem>}
         <MenuItem onClick={handleClose}>Track Driver</MenuItem>
       </Menu>{" "}
     </div>
