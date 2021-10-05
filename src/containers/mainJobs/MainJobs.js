@@ -54,9 +54,7 @@ const MainJobs = (props) => {
 
     useEffect(() => {
       async function fetchData() {
-          if (!jobData) {
-              await props.getJobList({user_id: userData.user_id, limit}, filters);
-          }
+          await props.getJobList({user_id: userData.user_id, limit}, filters);
       }
       fetchData();
   }, [isJobCreated]);
