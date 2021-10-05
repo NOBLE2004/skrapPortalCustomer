@@ -23,6 +23,7 @@ const MainJobs = (props) => {
   const [isMapView, setMapView] = useState(true);
   const [showInfo, setShowInfo] = useState(null);
   const [isJobBooked, setIsJobBooked] = useState(false);
+  const [isJobCreated, setIsJobCreated] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [pagination, setPagination] = useState({});
   const [updateJobs, setUpdateJobs] = useState(false);
@@ -39,6 +40,10 @@ const MainJobs = (props) => {
       page: 1,
   });
     let userData = getUserDataFromLocalStorage();
+    const handleJobCreated = () => {
+      setIsJobCreated(true)
+    }
+
     useEffect(() => {
         async function fetchData() {
             if (!jobData) {
@@ -47,6 +52,16 @@ const MainJobs = (props) => {
         }
         fetchData();
     }, []);
+
+    useEffect(() => {
+      async function fetchData() {
+          if (!jobData) {
+              await props.getJobList({user_id: userData.user_id, limit}, filters);
+          }
+      }
+      fetchData();
+  }, [isJobCreated]);
+
     useEffect(() => {
         async function fetchData() {
                 await props.getJobList({user_id: userData.user_id, limit}, filters);
@@ -56,22 +71,9 @@ const MainJobs = (props) => {
     useEffect(()=>{
         console.log(jobData)
     },[jobData]);
-    /*useEffect(()=>{
-        console.log(props);
-        let userData = getUserDataFromLocalStorage();
-        JobService.list({user_id: userData.user_id, limit}, filters)
-            .then((response) => {
-                if(response.data.result?.data){
-                    setJobs(response.data.result.data);
-                    delete response.data.result.data;
-                    setPagination(response.data.result)
-                }else{
-                    setJobs([]);
-                }
-            }).catch((error)=>{
-            console.log(error)
-        });
-    }, [filters, updateJobs, limit]);*/
+
+
+   
   const handleShowMap = () => {
       if(isMapView === true){
           setLimit(10000);
@@ -246,7 +248,7 @@ const MainJobs = (props) => {
       )}
 
       {isJobBooked && (
-        <CreateJob closeModal={() => setIsJobBooked(!isJobBooked)} />
+        <CreateJob closeModal={() => setIsJobBooked(!isJobBooked)} handleJobCreated={handleJobCreated}/>
       )}
     </div>
   );

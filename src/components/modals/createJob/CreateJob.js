@@ -41,7 +41,7 @@ const materialTheme = createTheme({
     primary: colors.blue,
   },
 });
-export default function CreateJob({ closeModal, setJobCreated }) {
+export default function CreateJob({ closeModal, setJobCreated , handleJobCreated }) {
   const divRef = useRef(null);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
@@ -419,18 +419,30 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     };
     JobService.createOrder(data)
       .then((response) => {
-        setTimeout(() => {
-          handleClose();
-        }, 2000);
-        setState({
-          ...state,
-          isLoading: false,
-          notice: {
-            type: "success",
-            text: "Successfuly Created Job!",
-          },
-        });
-        scrollToBottom();
+        if(Object.keys(response.data.result).length === 0){
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "error",
+              text: response.data.description,
+            },
+          });
+        }else{
+          handleJobCreated()
+          setTimeout(() => {
+            handleClose();
+          }, 2000);
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: "Successfuly Created Job!",
+            },
+          });
+          scrollToBottom();
+        }
       })
       .catch((err) => {
         setState({
