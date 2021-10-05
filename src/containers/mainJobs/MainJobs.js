@@ -46,9 +46,8 @@ const MainJobs = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            if (!jobData) {
-                await props.getJobList({user_id: userData.user_id, limit}, filters);
-            }
+            !jobData && await props.getJobList({user_id: userData.user_id, limit}, filters);
+            !info && await props.getDashboardsData('');
         }
         fetchData();
     }, []);
@@ -68,12 +67,6 @@ const MainJobs = (props) => {
         }
         fetchData();
     }, [filters, updateJobs, limit]);
-    useEffect(()=>{
-        console.log(jobData)
-    },[jobData]);
-
-
-   
   const handleShowMap = () => {
       if(isMapView === true){
           setLimit(10000);
@@ -82,9 +75,6 @@ const MainJobs = (props) => {
       }
     setMapView(!isMapView);
   };
-  useEffect(()=>{
-      props.getDashboardsData('');
-  }, []);
   const handleBookJob = () => {
     setIsJobBooked(true);
   };
@@ -118,6 +108,8 @@ const MainJobs = (props) => {
         handleShowMap={handleShowMap}
         isMap={isMapView}
         handleBookJob={handleBookJob}
+        downloadCSV={false}
+        showButton={true}
       >
         <CommonJobStatus
           jobStatus={{

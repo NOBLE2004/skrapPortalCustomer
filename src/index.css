@@ -1,3 +1,10 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+.main{
+  overflow: hidden;
+}
 @font-face {
   font-family: "BasierCircleBold";
   src: local("BasierCircleBold"),

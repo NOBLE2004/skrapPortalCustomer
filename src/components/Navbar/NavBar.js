@@ -61,10 +61,10 @@ function NavBar(props) {
             <img src={appIcon} alt="app-icon" />
           </IconButton>
           <div className={classes.title}></div>
-          <Button color="inherit">For contractors</Button>
-          <Button color="inherit">For enterprise</Button>
+          {/*<Button color="inherit">Contractors</Button>
+          <Button color="inherit">Enterprise</Button>
           <Button color="inherit">About us</Button>
-          <Button color="inherit">Get started</Button>
+          <Button color="inherit">Book Now</Button>*/}
           {localStorage.getItem("isAuthenticated") ? (
             <>
               <Button

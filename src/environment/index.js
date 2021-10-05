@@ -12,7 +12,7 @@ import {
   statementBlack,
 } from "../assets/images/index";
 
-export const APP_URL = `https://apitest.skrap.app/scrapapi`;
+export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
 export const API_URL = `${APP_URL}`;
 export const FILE_DIR = "/storage";
 export const LABELS = {
@@ -54,12 +54,12 @@ export const sidebarTabsList = [
     sub: false,
     icon: jobBlack,
   },
-  {
+  /*{
     text: "Site Managers",
     key: "site-managers",
     sub: false,
     icon: customerBlack,
-  },
+  },*/
   { text: "Sites", key: "sites", sub: false, icon: sitesBlack },
   { text: "Tiping", key: "tiping", sub: false, icon: tipingBlack },
   { text: "Tickets", key: "tickets", sub: false, icon: ticketsBlack },
@@ -80,7 +80,11 @@ export const jobStatusExchange = [
 
 export const loginHeader = {
   title: "Customer portal",
-  description: "Log in to cotinue to access to the platform",
+  description: "Log in to continue to access to the platform",
+};
+export const registerHeaderData = {
+  title: "Customer portal",
+  description: "Sign up to continue to hire",
 };
 
 export const dummyStatus = [

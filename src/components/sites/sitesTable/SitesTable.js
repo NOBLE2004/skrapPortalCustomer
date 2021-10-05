@@ -52,13 +52,13 @@ const SitesTable = ({
           return <span>{props.value || "n/a"}</span>;
         },
       },
-      {
+      /*{
         Header: "",
         id: "edit-id",
         Cell: ({ rows }) => (
           <span style={{ padding: "0px", cursor: "pointer" }}>ooo</span>
         ),
-      },
+      },*/
     ],
     []
   );

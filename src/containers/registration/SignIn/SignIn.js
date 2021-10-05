@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router";
+import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
 import FadeLoader from "react-spinners/FadeLoader";
@@ -163,7 +164,7 @@ const SignIn = (props) => {
             <Button onClick={handleSubmit}>Sign In</Button>
           </div>
           <div className="another-account">
-            Don’t have an account? <span>Sign up</span>{" "}
+            Don’t have an account? <NavLink to={`phone`}><span>Sign Up</span></NavLink>{" "}
           </div>
         </div>
       </div>
