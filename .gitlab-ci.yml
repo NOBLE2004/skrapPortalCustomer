@@ -33,7 +33,7 @@ deploy:
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker pull registry.gitlab.com/noble2/skrap-customer-portal:production
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker stop customer-portal || true
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker rm customer-portal || true
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker run -p 3010:80 -d --restart unless-stopped --name customer-portal registry.gitlab.com/noble2/skrap-customer-portal:production
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker run -p 3002:80 -d --restart unless-stopped --name customer-portal registry.gitlab.com/noble2/skrap-customer-portal:production
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker system prune -f
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker volume prune -f
   environment:
