@@ -44,6 +44,7 @@ const materialTheme = createTheme({
 export default function CreateJob({ closeModal, setJobCreated }) {
   const divRef = useRef(null);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
+  const [timeSlots, setTimeSlots] = useState([]);
   const [services, setServices] = useState([]);
   const [subServices, setSubServices] = useState([]);
   const [wasteType, setWastType] = useState([
@@ -85,9 +86,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     selectedPaymentMethod: "",
     addNewCard: false,
     addCustomer: false,
-    selectedTime: "firstShift",
-    startTime: "08:00:00",
-    endTime: "12:00:00",
+    selectedTime: "12:00 PM - 05:00 PM",
     customerUserId: null,
     newCardData: null,
     permitOption: "0",
@@ -96,6 +95,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     permitted_cost: "",
     permitted_reference: "",
     skip_loc: "0",
+    time_slot_loading: false,
   });
 
   const styles = (theme) => ({
@@ -127,8 +127,6 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     selectedPaymentMethod,
     paymentMethodList,
     addNewCard,
-    startTime,
-    endTime,
     selectedTime,
     customerUserId,
     newCardData,
@@ -138,6 +136,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     permitted_cost,
     permitted_reference,
     skip_loc,
+    time_slot_loading,
   } = state;
 
   const handleChange = (event) => {
@@ -187,12 +186,10 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     checkingError(name, value);
   };
 
-  const handleTime = (start, end, option) => {
+  const handleTime = (time) => {
     setState({
       ...state,
-      startTime: start,
-      endTime: end,
-      selectedTime: option,
+      selectedTime: time.time_slot,
     });
   };
 
@@ -345,18 +342,33 @@ export default function CreateJob({ closeModal, setJobCreated }) {
 
     setState({ ...state, isLoading: true });
 
-    const currentDayOfMonth = startSelectedDate.getDate();
+    let currentDayOfMonth = startSelectedDate.getDate();
     let currentMonth = startSelectedDate.getMonth();
-    if (currentMonth < 10) {
-      currentMonth = "0" + (currentMonth + 1);
-    } else {
-      currentMonth = currentMonth + 1;
+    
+
+    if(currentDayOfMonth < 10) {
+      currentDayOfMonth = "0" + currentDayOfMonth;
     }
+    let newCurrentMonth = currentMonth + 1;
+
+    if (newCurrentMonth < 10) {
+      newCurrentMonth = "0" + currentMonth;
+    }
+   
+    const time =
+    selectedTime &&
+    selectedTime.split("-");
+    const startTime = time[0];
+    const endTime = time[1];
+
+    const newStartTime = startTime.trim().slice(0, 5);
+    const newEndTime = endTime.trim().slice(0, 5);
+
     const currentYear = startSelectedDate.getFullYear();
     const dateString =
-      currentYear + "-" + currentMonth + "-" + currentDayOfMonth;
-    const job_start_time = Date.parse(`${dateString}T${startTime}`);
-    const job_end_time = Date.parse(`${dateString}T${endTime}`);
+      currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
+    const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
+    const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
     let data = {
       acm_id: "",
       address_data: addressData,
@@ -377,7 +389,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
       permitted_weeks: noOfDays,
       permitted_cost: permitted_cost,
       permitted_reference: permitted_reference,
-      skip_loc: skip_loc,
+      skip_loc_type: skip_loc,
       services: [
         {
           is_permit: 0,
@@ -441,6 +453,23 @@ export default function CreateJob({ closeModal, setJobCreated }) {
     );
   }, [newCardData]);
 
+  useEffect(() => {
+    let t_date = Date.parse(new Date());
+    let d_date = Date.parse(startSelectedDate);
+    console.log(t_date, d_date);
+    setState({ ...state, time_slot_loading: true });
+    PaymentService.getData({ t_date, d_date })
+      .then((res) => {
+        console.log("res", res.data.result.time_slots);
+        setTimeSlots(res.data.result.time_slots);
+        setState({ ...state, time_slot_loading: false });
+      })
+      .catch((err) => {
+        console.log("res", err);
+        setState({ ...state, time_slot_loading: false });
+      });
+  }, [startSelectedDate]);
+
   //get wasType
   useEffect(() => {
     JobService.getWasteTypes().then((response) => {
@@ -497,7 +526,7 @@ export default function CreateJob({ closeModal, setJobCreated }) {
           </div>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <div className="dateTimeWp">
-              <div>
+              <div className="datewp">
                 <p>Delivery Date Time</p>
                 <ThemeProvider theme={materialTheme}>
                   <KeyboardDatePicker
@@ -512,27 +541,28 @@ export default function CreateJob({ closeModal, setJobCreated }) {
                   />
                 </ThemeProvider>
               </div>
+
               <div className="timeWp">
-                <label
-                  className={`firstShift ${
-                    selectedTime === "firstShift" && "active"
-                  }`}
-                  onClick={() =>
-                    handleTime("08:00:00", "12:00:00", "firstShift")
-                  }
-                >
-                  8:00 AM - 12:00PM
-                </label>
-                <label
-                  className={`secondShift ${
-                    selectedTime === "secondShift" && "active"
-                  }`}
-                  onClick={() =>
-                    handleTime("12:00:00", "17:00:00", "secondShift")
-                  }
-                >
-                  12:00 PM - 5:00PM
-                </label>
+                {time_slot_loading ? (
+                  <CircularProgress />
+                ) : timeSlots.length > 0 ? (
+                  timeSlots.map((elem, index) => (
+                    <label
+                      className={`firstShift ${
+                        selectedTime === elem.time_slot && "active"
+                      }`}
+                      onClick={() => handleTime(elem)}
+                      key={index}
+                    >
+                      {elem.time_slot}
+                    </label>
+                  ))
+                ) : (
+                  <p className="errorMsg">
+                    Oops! Looks like we do not have any available slots for your
+                    chosen date, at the moment. Try another date?
+                  </p>
+                )}
               </div>
             </div>
           </MuiPickersUtilsProvider>

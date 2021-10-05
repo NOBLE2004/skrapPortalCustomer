@@ -1,6 +1,6 @@
 .creatJobModal {
-  form{
-    font-family: DM Sans
+  form {
+    font-family: DM Sans;
   }
   .MuiPaper-root {
     border-radius: 32px;
@@ -102,13 +102,22 @@
   .MuiInput-underline:before {
     border-bottom: 1px solid rgba(0, 0, 0, 0.42) !important;
   }
-
+  .datewp {
+    width: 35%;
+  }
   .timeWp {
+    width: 65%;
     display: flex;
     align-items: flex-end;
     position: relative;
+    justify-content: center;
     top: -8px;
     font-family: DM Sans;
+    .errorMsg {
+      color: #e14141;
+      padding: 5%;
+      text-align: center;
+    }
     label {
       color: #fff;
       background-color: #0c7cd5;
@@ -496,7 +505,8 @@
     text-transform: initial;
   }
 }
-.new-design{
+.new-design {
   display: flex;
   margin-bottom: 18px;
 }
+
