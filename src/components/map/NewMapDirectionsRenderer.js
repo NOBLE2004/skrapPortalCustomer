@@ -11,16 +11,19 @@ function MapDirectionsRenderer({
     directions: null,
     error: null,
     coords: null,
-    updatedData: {},
   });
-  const { directions, error, coords, updatedData } = state;
+  const { directions, error, coords } = state;
 
   useEffect(() => {
+    const waypoints = places.map((p) => {
+      return (
+        {
+          location: { lat: p.latitude, lng: p.longitude },
+          stopover: true,
+        }
+      )
+    });
     
-    const waypoints = places.map((p) => ({
-      location: { lat: p.latitude, lng: p.longitude },
-      stopover: true,
-    }));
     const origin = waypoints.shift().location;
     const destination = waypoints.pop().location;
     const directionsService = new window.google.maps.DirectionsService();
@@ -29,7 +32,7 @@ function MapDirectionsRenderer({
       {
         origin: origin,
         destination: destination,
-        travelMode: window.google.maps.TravelMode.DRIVING,
+        travelMode: travelMode,
         waypoints: waypoints,
       },
       (result, status) => {
@@ -40,7 +43,7 @@ function MapDirectionsRenderer({
             coords: result.routes[0].overview_path,
           });
         } else {
-          console.error(`error fetching directions ${result}`);
+          setState({ ...state, error: result.status });
         }
       }
     );
