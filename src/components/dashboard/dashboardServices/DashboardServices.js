@@ -41,7 +41,7 @@ const DashboardServices = ({ servicesData }) => {
                     ? "£" + Skip.total.slice(0, Skip.total.length - 3)
                     : ""
                   : Skip
-                  ? ((Skip.count / NumberOfJobs) * 100).toFixed(0)  + "%"
+                  ? Skip.count > 0 ? ((Skip.count / NumberOfJobs) * 100).toFixed(0) :  Skip.count + "%"
                   : "50%"
               }
               strokeWidth="7"
@@ -67,7 +67,7 @@ const DashboardServices = ({ servicesData }) => {
                     ? "£" + Grab.total.slice(0, Grab.total.length - 3)
                     : ""
                   : Grab
-                  ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) + "%"
+                  ? Grab.count > 0 ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) :  Grab.count + "%"
                   : "50%"
               }
               strokeWidth="7"
@@ -92,7 +92,7 @@ const DashboardServices = ({ servicesData }) => {
                     ? "£" + Cage.total.slice(0, Cage.total.length - 3)
                     : ""
                   : Cage
-                  ? ((Cage.count / NumberOfJobs) * 100).toFixed(0) + "%"
+                  ? Cage.count > 0 ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) :  Cage.count + "%"
                   : "50%"
               }
               strokeWidth="7"
@@ -117,7 +117,7 @@ const DashboardServices = ({ servicesData }) => {
                     ? "£" + Aggregate.total.slice(0, Aggregate.total.length - 3)
                     : ""
                   : Aggregate
-                  ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0) + "%"
+                  ? Aggregate.count > 0 ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0) :  Aggregate.count + "%"
                   : "50%"
               }
               strokeWidth="7"
@@ -142,7 +142,7 @@ const DashboardServices = ({ servicesData }) => {
                     ? "£" + PortableToilet.total.slice(0, PortableToilet.total.length - 3)
                     : ""
                   : PortableToilet
-                  ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0) + "%"
+                  ? PortableToilet.count > 0 ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0) :  PortableToilet.count + "%"
                   : "50%"
               }
               strokeWidth="7"
