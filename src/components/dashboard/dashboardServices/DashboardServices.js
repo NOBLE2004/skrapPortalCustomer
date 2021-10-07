@@ -34,14 +34,14 @@ const DashboardServices = ({ servicesData }) => {
           <div className="circular-progress">
             <p>Skips</p>
             <CircularProgressbar
-              value={Skip ? Skip.count : "50"}
+              value={Skip ? ((Skip.count / NumberOfJobs) * 100).toFixed(0) : "50"}
               text={
                 showValue
                   ? Skip
                     ? "£" + Skip.total.slice(0, Skip.total.length - 3)
                     : ""
                   : Skip
-                  ? Skip.count + "%"
+                  ? ((Skip.count / NumberOfJobs) * 100).toFixed(0)  + "%"
                   : "50%"
               }
               strokeWidth="7"
@@ -60,14 +60,14 @@ const DashboardServices = ({ servicesData }) => {
           <div className="circular-progress">
             <p>Grab</p>
             <CircularProgressbar
-              value={Grab ? Grab.count : "50"}
+              value={Grab ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) : "50"}
               text={
                 showValue
                   ? Grab
                     ? "£" + Grab.total.slice(0, Grab.total.length - 3)
                     : ""
                   : Grab
-                  ? Grab.count + "%"
+                  ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) + "%"
                   : "50%"
               }
               strokeWidth="7"
@@ -85,14 +85,14 @@ const DashboardServices = ({ servicesData }) => {
           <div className="circular-progress">
             <p>Cage</p>
             <CircularProgressbar
-              value={Cage ? Cage.count : "50"}
+              value={Cage ? ((Cage.count / NumberOfJobs) * 100).toFixed(0) : "50"}
               text={
                 showValue
                   ? Cage
                     ? "£" + Cage.total.slice(0, Cage.total.length - 3)
                     : ""
                   : Cage
-                  ? Cage.count + "%"
+                  ? ((Cage.count / NumberOfJobs) * 100).toFixed(0) + "%"
                   : "50%"
               }
               strokeWidth="7"
@@ -110,14 +110,14 @@ const DashboardServices = ({ servicesData }) => {
           <div className="circular-progress">
             <p>Aggregate</p>
             <CircularProgressbar
-              value={Aggregate ? Aggregate.count : "50"}
+              value={Aggregate ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0) : "50"}
               text={
                 showValue
                   ? Aggregate
                     ? "£" + Aggregate.total.slice(0, Aggregate.total.length - 3)
                     : ""
                   : Aggregate
-                  ? Aggregate.count + "%"
+                  ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0) + "%"
                   : "50%"
               }
               strokeWidth="7"
@@ -135,14 +135,14 @@ const DashboardServices = ({ servicesData }) => {
           <div className="circular-progress">
             <p>PortableToilet</p>
             <CircularProgressbar
-              value={PortableToilet ? PortableToilet.count : "50"}
+              value={PortableToilet ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0) : "50"}
               text={
                 showValue
                   ? PortableToilet
                     ? "£" + PortableToilet.total.slice(0, PortableToilet.total.length - 3)
                     : ""
                   : PortableToilet
-                  ? PortableToilet.count + "%"
+                  ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0) + "%"
                   : "50%"
               }
               strokeWidth="7"
