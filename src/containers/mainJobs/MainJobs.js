@@ -46,25 +46,11 @@ const MainJobs = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            !jobData && await props.getJobList({user_id: userData.user_id, limit}, filters);
-            !info && await props.getDashboardsData('');
+            await props.getJobList({user_id: userData.user_id, limit, orders_type: 4}, filters);
+            await props.getDashboardsData('');
         }
         fetchData();
-    }, []);
-
-    useEffect(() => {
-      async function fetchData() {
-          await props.getJobList({user_id: userData.user_id, limit}, filters);
-      }
-      fetchData();
-  }, [isJobCreated]);
-
-    useEffect(() => {
-        async function fetchData() {
-                await props.getJobList({user_id: userData.user_id, limit, orders_type: 4}, filters);
-        }
-        fetchData();
-    }, [filters, updateJobs, limit]);
+    }, [filters, updateJobs, limit, isJobCreated]);
   const handleShowMap = () => {
       if(isMapView === true){
           setLimit(10000);
