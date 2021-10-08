@@ -36,7 +36,7 @@ const SpendChart = ({ chartData , getDashBoardData , latestYear}) => {
           chartData?.salesTotal?.Months[11].total,
           chartData?.salesTotal?.Months[12].total,
         ],
-        label: "This year",
+        label: 'This Year £',
         borderWidth: 2,
         borderRadius: 5,
         borderColor: "#52A9DD",

@@ -84,7 +84,7 @@ const Sites = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
-            price: `£${info? info.TotalSpend : 0}`,
+            price: `£${info? parseFloat(info.TotalSpend).toLocaleString() : 0}`,
             statusName: "primary",
             width: "184px",
             height: "84px",
@@ -146,8 +146,8 @@ const Sites = (props) => {
                           jobStatus={{
                             status: "Sales By Site",
                             price: site
-                              ? "£" + site.sales_by_site
-                              : "£7,142.00",
+                              ? "£" + parseFloat(site.sales_by_site).toLocaleString()
+                              : "£0",
                             statusName: "primary",
                             width: "194px",
                             height: "62px",
