@@ -50,7 +50,7 @@ import serviceIcon from "./service.svg";
 import supportIcon from "./support.svg";
 import appIcon from "./logo.svg";
 import showPasswordIcon from "./show_password.svg"
-import downloadSite from "./download_sites.svg"
+import downloadSite from "./Downlaod.svg"
 import craneIcon from "./crane.svg";
 import emailIcon from "./email.svg";
 import refreshIcon from "./refresh.svg";
