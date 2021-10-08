@@ -95,7 +95,7 @@ export const spendChartOptions = {
       {
         ticks: {
           callback: function (value) {
-            return '£' + value.toFixed(0);
+            return '£' + parseInt(value.toFixed(0)).toLocaleString();
           },
           beginAtZero: true
         },

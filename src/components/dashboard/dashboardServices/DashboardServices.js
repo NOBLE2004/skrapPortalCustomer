@@ -38,10 +38,10 @@ const DashboardServices = ({ servicesData }) => {
                   text={
                     showValue
                         ? Skip
-                        ? "£" + Skip.total.slice(0, Skip.total.length - 3)
+                        ? "£" + (parseInt(Skip.total).toLocaleString())
                         : ""
                         : Skip
-                        ? Skip.count > 0 ? ((Skip.count / NumberOfJobs) * 100).toFixed(0) :  Skip.count + "%"
+                        ? Skip.count > 0 ? ((Skip.count / NumberOfJobs) * 100).toFixed(0) + "%" :  Skip.count + "%"
                         : "50%"
                   }
                   strokeWidth="7"
@@ -64,10 +64,10 @@ const DashboardServices = ({ servicesData }) => {
                   text={
                     showValue
                         ? Grab
-                        ? "£" + Grab.total.slice(0, Grab.total.length - 3)
+                        ? "£" + (parseInt(Grab.total).toLocaleString())
                         : ""
                         : Grab
-                        ? Grab.count > 0 ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) :  Grab.count + "%"
+                        ? Grab.count > 0 ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) + "%" :  Grab.count + "%"
                         : "50%"
                   }
                   strokeWidth="7"
@@ -89,10 +89,10 @@ const DashboardServices = ({ servicesData }) => {
                   text={
                     showValue
                         ? Cage
-                        ? "£" + Cage.total.slice(0, Cage.total.length - 3)
+                        ? "£" + (parseInt(Cage.total).toLocaleString())
                         : ""
                         : Cage
-                        ? Cage.count > 0 ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) :  Cage.count + "%"
+                        ? Cage.count > 0 ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) + "%" :  Cage.count + "%"
                         : "50%"
                   }
                   strokeWidth="7"
@@ -114,10 +114,10 @@ const DashboardServices = ({ servicesData }) => {
                   text={
                     showValue
                         ? Aggregate
-                        ? "£" + Aggregate.total.slice(0, Aggregate.total.length - 3)
+                        ? "£" + (parseInt(Aggregate.total).toLocaleString())
                         : ""
                         : Aggregate
-                        ? Aggregate.count > 0 ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0) :  Aggregate.count + "%"
+                        ? Aggregate.count > 0 ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0) + "%" :  Aggregate.count + "%"
                         : "50%"
                   }
                   strokeWidth="7"
@@ -139,10 +139,10 @@ const DashboardServices = ({ servicesData }) => {
                   text={
                     showValue
                         ? PortableToilet
-                        ? "£" + PortableToilet.total.slice(0, PortableToilet.total.length - 3)
+                        ? "£" + (parseInt(PortableToilet.total).toLocaleString())
                         : ""
                         : PortableToilet
-                        ? PortableToilet.count > 0 ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0) :  PortableToilet.count + "%"
+                        ? PortableToilet.count > 0 ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0) + "%" :  PortableToilet.count + "%"
                         : "50%"
                   }
                   strokeWidth="7"
