@@ -5,7 +5,7 @@ stages:
 docker-build:
   stage: docker-build
   image: docker:latest
-  tags: [production]
+  tags: [develop]
   only:
     - release/develop
     - release/staging
@@ -15,13 +15,13 @@ docker-build:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build --pull -t registry.gitlab.com/noble2/skrap-customer-portal:production .
-    - docker push registry.gitlab.com/noble2/skrap-customer-portal:production
+    - docker build --pull -t registry.gitlab.com/noble2/skrap-customer-portal:develop .
+    - docker push registry.gitlab.com/noble2/skrap-customer-portal:develop
 
 deploy:
   stage: deploy
   image: kroniak/ssh-client
-  tags: [production]
+  tags: [develop]
   only:
     - release/develop
     - release/staging
@@ -30,11 +30,11 @@ deploy:
     - echo "deploying app on server"
   script:
     - chmod 400 $SSH_PRIVATE_KEY
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker pull registry.gitlab.com/noble2/skrap-customer-portal:production
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker stop customer-portal || true
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker rm customer-portal || true
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker run -p 3002:80 -d --restart unless-stopped --name customer-portal registry.gitlab.com/noble2/skrap-customer-portal:production
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker system prune -f
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker volume prune -f
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_IP sudo docker pull registry.gitlab.com/noble2/skrap-customer-portal:develop
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_IP sudo docker stop cusrtomer-portal || true
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_IP sudo docker rm cusrtomer-portal || true
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_IP sudo docker run -p 3010:80 -d --restart unless-stopped --name cusrtomer-portal registry.gitlab.com/noble2/skrap-customer-portal:develop
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_IP sudo docker system prune -f
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_IP sudo docker volume prune -f
   environment:
-    name: production
+    name: develop
