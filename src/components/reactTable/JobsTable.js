@@ -10,6 +10,7 @@ import RequestCollection from "../modals/requestCollection/RequestCollection";
 import JobService from '../../services/job.service';
 import LoadingModal from "../modals/LoadingModal/LoadingModal";
 import Pagination from "./pagination";
+import {downloadSite} from "../../assets/images";
 
 const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
   const [state, setState] = useState({
@@ -70,13 +71,24 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
             return URL.createObjectURL(blob);
         });
     }
-    const handleShowReport = async (url) => {
+    const handleShowReport = async (e, url) => {
+        e.stopPropagation();
         var element = document.createElement("a");
         element.href = await toDataURL(url);
         element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
         element.click();
         handleClose();
 
+    };
+    const downloadInvoice = (e, job_id) => {
+        e.stopPropagation();
+        JobService.invoice({job_id}).then(response => {
+            if(response.data?.code === 0){
+                handleShowReport(response.data?.result?.Url);
+            }
+        }).catch(error => {
+            console.log(error);
+        })
     };
     const handleReorderResponse = (id) => {
         JobService.copy({ job_id: id })
@@ -177,21 +189,56 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
               return props.value == null ? '---' : props.value;
           },
       },
-      {
-        Header: "",
-        id: "id-edit",
-        Cell: ({ cell }) => (
-          <>
+        {
+            Header: "",
+            accessor: "job_id",
+            id: "invoice",
+            Cell: (props) => (
+                <span className="normal-dsans-10-primary" onClick={(e) => downloadInvoice(e, props.value)}>
+                    Invoice
+                    <img
+                        src={downloadSite}
+                        alt="download-icon"
+                        style={{ marginLeft: "5px" }}
+                    />
+                </span>
+            ),
+        },
+        {
+            Header: "",
+            accessor: "waste_transfer_document",
+            id: "ticket",
+            Cell: (props) => (
+                <>
+                {props.value !== "" ? <span className="normal-dsans-10-primary" onClick={(e) => handleShowReport(e, props.value)}>
+                    Ticket
+                        <img
+                            src={downloadSite}
+                            alt="download-icon"
+                            style={{ marginLeft: "5px" }}
+                        />
+                    </span> :
+                    <span className="normal-dsans-10-primary" style={{color: 'lightgrey'}} onClick={(e) => e.stopPropagation()}>
+                        Ticket
+                    </span>}
+                </>
+            ),
+        },
+        {
+            Header: "",
+            id: "id-edit",
+            Cell: ({ cell }) => (
+                <>
             <span
-              onClick={(e) => handleButtonClick(e, cell?.row?.original)}
-              style={{ padding: "0px", cursor: "pointer" }}
-              id="simple-menu"
+                onClick={(e) => handleButtonClick(e, cell?.row?.original)}
+                style={{ padding: "0px", cursor: "pointer" }}
+                id="simple-menu"
             >
               ooo
             </span>
-          </>
-        ),
-      },
+                </>
+            ),
+        },
     ],
     []
   );
@@ -253,7 +300,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
           {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>}
           <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
           {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>}
-          {row?.waste_transfer_document != "" && <MenuItem onClick={()=>handleShowReport(row?.waste_transfer_document)}>Waste Report</MenuItem>}
+          {row?.waste_transfer_document != "" && <MenuItem onClick={(e)=>handleShowReport(e, row?.waste_transfer_document)}>Waste Report</MenuItem>}
         <MenuItem onClick={handleClose}>Track Driver</MenuItem>
       </Menu>{" "}
     </div>
