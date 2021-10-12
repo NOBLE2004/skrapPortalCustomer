@@ -15,6 +15,7 @@ import PublicRoute from "./routes/PublicRoute";
 import SiteManagerDetailPage from "./components/siteManager/siteManagerDetailPage/SiteManagerDetailPage";
 import Register from "./containers/registration/Register/Register";
 import AddPhone from "./containers/registration/addPhone/AddPhone";
+import MainReports from "./containers/mainReports/MainReports";
 
 const history = createBrowserHistory();
 
@@ -35,6 +36,7 @@ function App() {
           <PrivateRoute path="/jobs" component={() => <MainJobs />} /> 
           <PrivateRoute path="/tiping" component={() => <MainTiping />} /> 
           <PrivateRoute path="/tickets" component={() => <MainTickets />} /> 
+          <PrivateRoute path="/reports" component={() => <MainReports />} /> 
           <PrivateRoute path="/job-detail/:id" component={() => <MainJobDetail />} />
           <PrivateRoute path="/site-managers/job-detail/:id" component={() => <MainJobDetail />} />
         </Layout>
