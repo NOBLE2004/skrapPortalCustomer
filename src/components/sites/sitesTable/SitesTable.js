@@ -49,7 +49,7 @@ const SitesTable = ({
         accessor: "sales_by_site",
         disableFilters: true,
         Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
+          return <span>{ "£" + parseFloat(props.value).toLocaleString() || "n/a"}</span>;
         },
       },
       /*{

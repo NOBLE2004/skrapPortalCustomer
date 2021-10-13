@@ -51,33 +51,17 @@ const MainJobs = (props) => {
     search: "",
     page: 1,
   });
-  let userData = getUserDataFromLocalStorage();
-  const handleJobCreated = () => {
-    setIsJobCreated(true);
-  };
-
-  useEffect(() => {
-    async function fetchData() {
-      !jobData &&
-        (await props.getJobList({ user_id: userData.user_id, limit }, filters));
-      !info && (await props.getDashboardsData(""));
+    let userData = getUserDataFromLocalStorage();
+    const handleJobCreated = () => {
+      setIsJobCreated(true)
     }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      await props.getJobList({ user_id: userData.user_id, limit }, filters);
-    }
-    fetchData();
-  }, [isJobCreated]);
-
-  useEffect(() => {
-    async function fetchData() {
-      await props.getJobList({ user_id: userData.user_id, limit }, filters);
-    }
-    fetchData();
-  }, [filters, updateJobs, limit]);
+    useEffect(() => {
+        async function fetchData() {
+            await props.getJobList({user_id: userData.user_id, limit, orders_type: 4}, filters);
+            await props.getDashboardsData('');
+        }
+        fetchData();
+    }, [filters, updateJobs, limit, isJobCreated]);
   const handleShowMap = () => {
     if (isMapView === true) {
       setLimit(10000);
@@ -135,7 +119,7 @@ const MainJobs = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
-            price: `£${info ? info.TotalSpend : 0}`,
+            price: `£${info? parseFloat(info.TotalSpend).toLocaleString() : 0}`,
             statusName: "primary",
             width: "184px",
             height: "84px",

@@ -60,7 +60,7 @@ const DashBoard = (props) => {
     <>
       <Grid container spacing={3}>
         <Grid item md={4}>
-          <TotalSpend totalSpend={info ? info.TotalSpend : ""} />
+          <TotalSpend totalSpend={info ? parseFloat(info.TotalSpend).toLocaleString() : ""} />
         </Grid>
         <Grid item md={6}>
           <div className="job-status-outer">
