@@ -80,6 +80,17 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
         handleClose();
 
     };
+    const handleInvoice = () => {
+        JobService.xeroInvoice(row.job_id).then(response => {
+            if(response.data.status === 0){
+                window.open(response.data?.url);
+            }else{
+                alert('Cannot create invoice for this job');
+            }
+        }).catch(error => {
+            console.log(error)
+        })
+    };
     const downloadInvoice = (e, job_id) => {
         e.stopPropagation();
         JobService.invoice({job_id}).then(response => {
@@ -162,6 +173,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
       {
         Header: "Status",
         accessor: "appointment_status",
+          id: 'status',
         disableFilters: true,
         Cell: (props) => <CommonStatus status={status(props.value)} />,
       },
@@ -231,7 +243,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
                 <>
             <span
                 onClick={(e) => handleButtonClick(e, cell?.row?.original)}
-                style={{ padding: "0px", cursor: "pointer" }}
+                style={{ padding: "0px",cursor: "pointer",height: '30px',justifyContent: 'center',display: 'flex',alignItems: 'center',width: '100%' }}
                 id="simple-menu"
             >
               ooo
@@ -302,6 +314,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
           {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>}
           {row?.waste_transfer_document != "" && <MenuItem onClick={(e)=>handleShowReport(e, row?.waste_transfer_document)}>Waste Report</MenuItem>}
         <MenuItem onClick={handleClose}>Track Driver</MenuItem>
+          <MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>
       </Menu>{" "}
     </div>
   );

@@ -11,7 +11,7 @@ const CommonStatus = ({ status }) => {
         className="circle"
         style={{
           backgroundColor: `${
-            status.toLowerCase() === "pending"
+              (status.toLowerCase() === "pending" || status.toLowerCase() === "cancelled") 
               ? "red"
               : status.toLowerCase() === "completed"
               ? "#00B25D"
@@ -27,7 +27,7 @@ const CommonStatus = ({ status }) => {
           }`,
         }}
       ></span>
-        <span className={`${status.toLowerCase().replace(' ', '-')}-title`}>
+        <span className={`${status.toLowerCase().replace(/\s/g, '-')}-title`}>
           {status ? capitalize(status) : ""}
         </span>
     </div>

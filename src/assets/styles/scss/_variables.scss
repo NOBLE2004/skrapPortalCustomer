@@ -94,11 +94,34 @@ $v110: 110px;
   @extend .common-title;
   color: #6fff22;
 }
+.canceled-title {
+  @extend .common-title;
+  color: #ff0000;
+}
+.pickup-booked-title {
+  @extend .common-title;
+  color: #ff9013;
+}
+.collection-requested-title {
+  @extend .common-title;
+  color: #ff9013;
+}
+.to-be-allocated-title {
+  @extend .common-title;
+  color: #ff9013;
+}
+.allocated-to-supplier-title {
+  @extend .common-title;
+  color: #ff9013;
+}
+.confirmed-by-supplier-title {
+  @extend .common-title;
+  color: #ff9013;
+}
 .assigned-title {
   @extend .common-title;
   color: #ffd446;
 }
-
 .header-btn {
   background: #52a9dd;
   border-radius: 64px;
