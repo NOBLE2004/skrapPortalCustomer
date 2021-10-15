@@ -18,6 +18,7 @@ import { useHistory } from "react-router-dom";
 import {getDashboardsData} from "../../store/actions/dashboard.action";
 import {getJobList} from "../../store/actions/jobs.action";
 import FadeLoader from "react-spinners/FadeLoader";
+import Swal from 'sweetalert2'
 
 const MainJobs = (props) => {
   const [isMapView, setMapView] = useState(true);

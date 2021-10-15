@@ -11,7 +11,7 @@ import {
   tipingBlack,
   statementBlack,
 } from "../assets/images/index";
-export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
+export const APP_URL = `https://apitest.skrap.app/scrapapi`;
 export const API_URL = `${APP_URL}`;
 export const FILE_DIR = "/storage";
 export const LABELS = {

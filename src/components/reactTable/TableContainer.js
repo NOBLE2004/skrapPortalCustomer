@@ -65,7 +65,7 @@ const TableContainer = ({ columns, data, name }) => {
                 <div
                   {...column.getHeaderProps()}
                   className="table-headings"
-                  style={{ width: cellWidth, padding: cellPadding }}
+                  style={{ width: column.id === 'status' ? '160px' : column.id === 'id-edit' ? '50px': cellWidth, padding: cellPadding }}
                 >
                   {column.render("Header")}
                 </div>
@@ -94,7 +94,7 @@ const TableContainer = ({ columns, data, name }) => {
                     return (
                       <div
                         className="table-body-cell"
-                        style={{ width: cellWidth, padding: cellPadding}}
+                        style={{ width: cell.column.id === 'status' ? '160px' : cell.column.id === 'id-edit' ? '50px': cellWidth, padding: cellPadding}}
                         {...cell.getCellProps()}
                       >
                         {cell.render("Cell")}
