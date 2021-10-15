@@ -1,0 +1,17 @@
+.reports-component {
+  .reports-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 50%;
+    .reports {
+      width: 200px;
+    }
+    .sites {
+      width: 200px;
+    }
+    .report-date {
+      width: 200px;
+    }
+  }
+}
