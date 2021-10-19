@@ -52,7 +52,17 @@ export const status = (status) => {
     }else if(status === 7){
         return 'Exchange';
     }else if(status === 8) {
-        return 'Collection';
+        return 'Canceled';
+    }else if(status === 9) {
+        return 'Pickup Booked';
+    }else if(status === 10) {
+        return 'collection requested';
+    }else if(status === 11) {
+        return 'To be allocated';
+    }else if(status === 12) {
+        return 'Allocated to supplier';
+    }else if(status === 13) {
+        return 'Confirmed by supplier';
     }else{
         return '----';
     }
