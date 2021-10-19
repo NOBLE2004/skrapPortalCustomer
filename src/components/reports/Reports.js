@@ -38,6 +38,7 @@ const Reports = (props) => {
     site: "",
     show: false,
   });
+  
   const { reportType, report, startSelectedDate, site, show } = state;
 
   const handleChange = (event) => {
