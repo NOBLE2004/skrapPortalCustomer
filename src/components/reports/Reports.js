@@ -68,7 +68,7 @@ const Reports = (props) => {
 
     return false;
   };
-// gernerate report 
+
   const handleGenerateReport = () => {
     const rdata = {
       address_id: site,
