@@ -8,6 +8,7 @@ import {jobReducer} from "./jobReducer";
 import {tippingReducer} from "./tippingReducer";
 import {ticketReducer} from "./ticketReducer";
 import {phoneReducer} from "./phoneReducer";
+import { reportReducer } from "./reportReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   tippings: tippingReducer,
   tickets: ticketReducer,
   phone: phoneReducer,
+  report: reportReducer
 });
