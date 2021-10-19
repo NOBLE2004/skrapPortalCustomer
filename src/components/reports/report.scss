@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    width: 50%;
+    width: 70%;
     .reports {
       width: 200px;
     }
@@ -12,6 +12,29 @@
     }
     .report-date {
       width: 200px;
+    }
+  }
+  .download-reports {
+    margin-top: 10px;
+    a {
+      color: #52a9dd !important;
+    }
+  }
+  .generate-report {
+    background: #52a9dd;
+    color: white;
+    .MuiCircularProgress-root {
+      position: absolute;
+      color: #fff;
+    }
+  }
+  .generate-report-disable {
+    background: #52a9dd;
+    color: white;
+    opacity: 50%;
+    .MuiCircularProgress-root {
+      position: absolute;
+      color: #fff;
     }
   }
 }

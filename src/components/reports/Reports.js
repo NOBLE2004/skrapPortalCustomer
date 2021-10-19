@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getSites } from "../../store/actions/sites.action";
-import { MenuItem } from "@material-ui/core";
+import { getAllReports } from "../../store/actions/action.reports";
+import { CircularProgress, MenuItem } from "@material-ui/core";
 import { Select } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import { colors } from "@material-ui/core";
+import { colors, Button } from "@material-ui/core";
 import "./report.scss";
 import {
   MuiPickersUtilsProvider,
@@ -14,6 +15,7 @@ import {
 import { InputLabel } from "@material-ui/core";
 import DateFnsUtils from "@date-io/date-fns";
 import { FormControl } from "@material-ui/core";
+import DownLoadCSV from "./DownLoadCSV";
 
 const materialTheme = createTheme({
   palette: {
@@ -23,6 +25,7 @@ const materialTheme = createTheme({
 
 const Reports = (props) => {
   const { data } = props.allsites;
+  const { reports, isLoading } = props.report;
   const [state, setState] = useState({
     reportType: [
       { reportId: 0, reportName: "Carbon footprint" },
@@ -33,12 +36,13 @@ const Reports = (props) => {
     report: "",
     startSelectedDate: new Date(),
     site: "",
+    show: false,
   });
-  const { reportType, report, startSelectedDate, site } = state;
+  const { reportType, report, startSelectedDate, site, show } = state;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setState({ ...state, [name]: value });
+    setState({ ...state, [name]: value , show : false});
   };
 
   useEffect(() => {
@@ -54,6 +58,24 @@ const Reports = (props) => {
     setState({ ...state, startSelectedDate: date });
   };
 
+  const checkVisibility = (abc) => {
+    if ((abc.site === undefined) | (abc.site === "")) {
+      return true;
+    }
+    if ((abc.report === undefined) | (abc.report === "")) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const handleGenerateReport = () => {
+    const rdata = {
+      address_id: site,
+    };
+    props.getReports(rdata);
+    setState({ ...state, show: true });
+  };
   return (
     <div className="reports-component">
       <div className="reports-filter">
@@ -115,18 +137,40 @@ const Reports = (props) => {
               })}
           </Select>
         </FormControl>
+
+        <Button
+          variant="contained"
+          disabled={checkVisibility(state)}
+          className={
+            checkVisibility(state)
+              ? "generate-report-disable"
+              : "generate-report"
+          }
+          onClick={handleGenerateReport}
+        >
+          Generate Reports
+          {isLoading && <CircularProgress />}
+        </Button>
+      </div>
+      <div className="download-reports">
+        {reports && !checkVisibility(state) && show ? (
+          <DownLoadCSV data={reports} />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ allsites }) => {
-  return { allsites };
+const mapStateToProps = ({ allsites, report }) => {
+  return { allsites, report };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getSites: () => dispatch(getSites()),
+    getReports: (data) => dispatch(getAllReports(data)),
   };
 };
 
