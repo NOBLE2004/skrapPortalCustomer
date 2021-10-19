@@ -68,7 +68,7 @@ const Reports = (props) => {
 
     return false;
   };
-// add comment in report using dev-zohaib branch
+
   const handleGenerateReport = () => {
     const rdata = {
       address_id: site,
