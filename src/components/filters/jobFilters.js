@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "../commonComponent/commonfilter/commonfilter.scss";
 import { JOB_STATUS } from '../../environment/';
 import ServicesService from '../../services/service.service';
-import { DateRange } from 'react-date-range';
+import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
@@ -77,11 +77,12 @@ const JobFilters = ({ handleChangeFilters }) => {
             <div className="all-filters">
                     <>
                         <button onClick={toggle} className={"filter-option"}>Date</button>
-                        {togle  && <DateRange
+                        {togle  && <DateRangePicker
                             editableDateInputs={false}
                             onChange={handleDate}
                             moveRangeOnFirstSelection={false}
                             ranges={state}
+                            direction="horizontal"
                         />}
                         <select
                             labelId="demo-simple-select-filled-label"

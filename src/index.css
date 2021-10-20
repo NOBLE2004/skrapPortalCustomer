@@ -17,9 +17,13 @@ body{
     url("./assets/fonts/BasierCircle-Regular.woff") format("woff");
 }
 .rdrDateRangeWrapper{
+  border-left: 1px solid gainsboro;
+}
+.rdrDateRangePickerWrapper{
   position: absolute;
   top: 25%;
   border: 1px solid gainsboro;
+  right: 5%;
 }
 .loader{
   display: flex;
