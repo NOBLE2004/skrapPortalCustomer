@@ -18,13 +18,11 @@ export const payment = (type) => {
         return 'Wallet';
     }else if(type === 2){
         return 'Credit';
-    } else if(type === 3){
+    }else if(type === 3){
         return 'Card, Wallet';
-    }
-    else if(type === 4){
+    }else if(type === 4){
         return 'Card, Credit';
-    }
-    else if(type === 5){
+    }else if(type === 5){
         return 'Credit, Wallet';
     }else if(type === 6){
         return 'Credit, Card, Wallet';
