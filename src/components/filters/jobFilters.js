@@ -52,8 +52,8 @@ const JobFilters = ({ handleChangeFilters }) => {
     }
     const handleDate = (item) => {
         setState([item.selection]);
-        const start = item.selection.startDate.toISOString().split('T')[0];
-        const end = item.selection.endDate.toISOString().split('T')[0];
+        const start = item.selection.startDate.toLocaleDateString().replace(/\//g, '-');
+        const end = item.selection.endDate.toLocaleDateString().replace(/\//g, '-');
         setFilters({ ...filters, date: `${start},${end}` });
     };
     const resetFilters = () =>{
