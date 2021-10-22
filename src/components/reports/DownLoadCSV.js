@@ -110,7 +110,7 @@ const DownLoadCSV = ({ rdata }) => {
           return [
             { value: order.job_id ? order.job_id : "" },
             { value: order.job_address ? order.job_address :"" },
-            { value: order.job_date ? moment(order.job_date).format('MM/DD/YYYY') : "" },
+            { value: order.job_date ? moment(order.job_date).format('DD/MM/YYYY') : "" },
             { value: order.service_name ? order.service_name : "" },
             {
               value: order.EWC_Code,
