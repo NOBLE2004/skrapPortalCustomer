@@ -4,24 +4,15 @@ import { getSites } from "../../store/actions/sites.action";
 import { getAllReports } from "../../store/actions/action.reports";
 import { CircularProgress, MenuItem } from "@material-ui/core";
 import { Select } from "@material-ui/core";
-import { createTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
-import { colors, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import "./report.scss";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
 import { InputLabel } from "@material-ui/core";
-import DateFnsUtils from "@date-io/date-fns";
 import { FormControl } from "@material-ui/core";
 import DownLoadCSV from "./DownLoadCSV";
+import DateRangePicker from "react-bootstrap-daterangepicker";
+import "bootstrap-daterangepicker/daterangepicker.css";
+import moment from "moment";
 
-const materialTheme = createTheme({
-  palette: {
-    primary: colors.blue,
-  },
-});
 
 const Reports = (props) => {
   const { data } = props.allsites;
@@ -34,16 +25,27 @@ const Reports = (props) => {
       { reportId: 3, reportName: "Finance report" },
     ],
     report: "",
-    startSelectedDate: new Date(),
     site: "",
     show: false,
+    startDate: "",
+    endDate: "",
+    isReportGenerated: false,
   });
-  
-  const { reportType, report, startSelectedDate, site, show } = state;
+  const [allReports, setAllReports] = useState([]);
+
+  const {
+    reportType,
+    report,
+    site,
+    show,
+    startDate,
+    endDate,
+    isReportGenerated,
+  } = state;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setState({ ...state, [name]: value , show : false});
+    setState({ ...state, [name]: value, show: false });
   };
 
   useEffect(() => {
@@ -55,9 +57,42 @@ const Reports = (props) => {
     fetchData();
   }, []);
 
-  const handleStartDateChange = (date) => {
-    setState({ ...state, startSelectedDate: date });
+  
+  const handleGenerateReport = () => {
+    const rdata = {
+      address_id: site,
+      date: `${startDate},${endDate}`,
+    };
+    props.getReports(rdata);
+    setTimeout(() => {
+      setState({ ...state, show: true, isReportGenerated: true });
+    }, 2000);
   };
+
+  useEffect(() => {
+    if (reports) {
+      const newRow = {
+        job_id: "",
+        job_address: "",
+        job_date: "",
+        service_name: "",
+        description: "",
+        transaction_cost: reports.All_Transactions_Subtotal,
+        first_name: "",
+        last_name: "",
+        EWC_Code: "Sub Result",
+        WTN_Number: "",
+        Disposal_Site: "",
+        Tonnage: "",
+        Diverted_Tonnage: "",
+        Volume: "",
+        Landfill_Diversion_Rate: "",
+      };
+      const totalData = reports.jobsRepost;
+      totalData.push(newRow);
+      setAllReports(totalData);
+    }
+  }, [isReportGenerated]);
 
   const checkVisibility = (abc) => {
     if ((abc.site === undefined) | (abc.site === "")) {
@@ -70,13 +105,18 @@ const Reports = (props) => {
     return false;
   };
 
-  const handleGenerateReport = () => {
-    const rdata = {
-      address_id: site,
-    };
-    props.getReports(rdata);
-    setState({ ...state, show: true });
+  const handleEvent = (event, picker) => {
+    console.log(picker.startDate);
   };
+
+  const handleDateCallback = (start, end) => {
+    setState({
+      ...state,
+      startDate: moment(start._d).format("Y-MM-DD"),
+      endDate: moment(end._d).format("Y-MM-DD"),
+    });
+  };
+
   return (
     <div className="reports-component">
       <div className="reports-filter">
@@ -101,21 +141,19 @@ const Reports = (props) => {
             })}
           </Select>
         </FormControl>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <ThemeProvider theme={materialTheme}>
-            <KeyboardDatePicker
-              margin="dense"
-              inputVariant="outlined"
-              format="MM/dd/yyyy"
-              value={startSelectedDate}
-              onChange={handleStartDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-              className="report-date"
-            />
-          </ThemeProvider>
-        </MuiPickersUtilsProvider>
+
+        <DateRangePicker
+          className="date-range-picker"
+          onCallback={handleDateCallback}
+          onEvent={handleEvent}
+          initialSettings={{ startDate: new Date(), endDate: new Date() }}
+        >
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Select Date"
+          />
+        </DateRangePicker>
         <FormControl variant="outlined" margin="dense">
           <InputLabel>site</InputLabel>
           <Select
@@ -154,8 +192,8 @@ const Reports = (props) => {
         </Button>
       </div>
       <div className="download-reports">
-        {reports && !checkVisibility(state) && show ? (
-          <DownLoadCSV data={reports} />
+        {allReports && allReports.length > 0 && !checkVisibility(state) && show  ? (
+          <DownLoadCSV rdata={allReports} />
         ) : (
           ""
         )}
