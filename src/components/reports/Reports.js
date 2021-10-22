@@ -79,7 +79,7 @@ const Reports = (props) => {
         transaction_cost: reports.All_Transactions_Subtotal,
         first_name: "",
         last_name: "",
-        EWC_Code: "Sub Result",
+        EWC_Code: "Sub Total",
         WTN_Number: "",
         Disposal_Site: "",
         Tonnage: "",
