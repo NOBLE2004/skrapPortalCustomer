@@ -4,37 +4,9 @@ import ReactExport from "react-data-export";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
-// const data = [
-//   {
-//     columns: [
-//       { title: "Order #" },
-//       { title: "Customer" },
-//       { title: "Ref #" },
-//       { title: "Status" },
-//       { title: "Total" },
-//       { title: "Sub Total" },
-//       { title: "Order Time" },
-//       { title: "Items Count" },
-//     ],
-//     data: csvData.map((order, index) => {
-//       return [
-//         { value: order.order_no },
-//         { value: order.customer_name },
-//         { value: order.ref_id},
-//         { value: this.getStatusName(order) },
-//         { value: order.total.toFixed(2) },
-//         { value: humanizeT(order.order_time) },
-//         { value: order.customer_name },
-//         { value: order.order_item_count },
-//       ];
-//     }),
-//   },
-// ]
-
-
-const DownLoadCSV = ({data}) => {
-  console.log('data' , data)
-  const multiDataSet = [
+const DownLoadCSV = ({ rdata }) => {
+  
+  const data = [
     {
       columns: [
         {
@@ -46,7 +18,7 @@ const DownLoadCSV = ({data}) => {
         },
         {
           title: "Site",
-          width: {wch: 30},
+          width: { wch: 40 },
           style: {
             font: { sz: "10", bold: true },
             fill: { patternType: "solid", fgColor: { rgb: "52a9dd" } },
@@ -54,6 +26,7 @@ const DownLoadCSV = ({data}) => {
         },
         {
           title: "Service Date",
+          width: { wch: 25 },
           style: {
             font: { sz: "10", bold: true },
             fill: { patternType: "solid", fgColor: { rgb: "52a9dd" } },
@@ -67,6 +40,7 @@ const DownLoadCSV = ({data}) => {
           },
         },
         {
+          width: { wch: 40 },
           title: "Description",
           style: {
             font: { sz: "10", bold: true },
@@ -131,271 +105,47 @@ const DownLoadCSV = ({data}) => {
         },
         {
           title: "Landfill Diversion Rate",
-          width: {wch: 30},
+          width: { wch: 30 },
           style: {
             font: { sz: "10", bold: true },
             fill: { patternType: "solid", fgColor: { rgb: "52a9dd" } },
           },
         },
       ],
-      data: [
-        [
-          { value: "H1"},
-          { value: "Bold alkjsdfkljalskfa asldfj"},
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Hello world this",
-          },
-        ],
-        [
-          { value: "H2"},
-          { value: "underline" },
-          {
-            value: "Blue",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-        ],
-        [
-          { value: "H3" },
-          { value: "italic" },
-          {
-            value: "Green",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-        ],
-        [
-          { value: "H4" },
-          { value: "strike"},
-          {
-            value: "Orange",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-        ],
-        [
-          { value: "H5" },
-          { value: "outline" },
-          {
-            value: "Hello world",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-          {
-            value: "Red",
-          },
-        ],
-        [
-          { value: "" },
-          {
-            value: "",
-          },
-  
-          {
-            value: "",
-          },
-          {
-            value: "",
-          },
-          {
-            value: "",
-          },
-          {
-            value: "Sub Total",
-            style: {
-              font: { bold: true, sz: "10" },
-              fill: { patternType: "solid", fgColor: { rgb: "52a9dd" } },
+      data:
+        rdata.length > 0 &&
+        rdata.map((order, index) => {
+          return [
+            { value: order.job_id ? order.job_id : "" },
+            { value: order.job_address ? order.job_address :"" },
+            { value: order.job_date ? order.job_date : "" },
+            { value: order.service_name ? order.service_name : "" },
+            { value: order.description ? order.description : "" },
+            {
+              value: order.EWC_Code,
+              ...order.EWC_Code === 'Sub Result'? {
+                style: {
+                  font: { sz: "10", bold: true },
+                  fill: { patternType: "solid", fgColor: { rgb: "52a9dd" } },
+                }
+              }: order.EWC_Code ? order.EWC_Code : ''
             },
-          },
-          {
-            value: "20000",
-            style: {
-              font: { bold: true, sz: "10" },
-            },
-          },
-          {
-            value: "",
-          },
-          {
-            value: "",
-          },
-          {
-            value: "",
-          },
-          {
-            value: "",
-          },
-          {
-            value: "",
-          },
-          {
-            value: "",
-          },
-          {
-            value: "",
-          },
-        ],
-      ],
+            { value: order.transaction_cost ? "£" + order.transaction_cost : ""  },
+            { value: order.first_name + order.last_name ? order.first_name + order.last_name : "" },
+            { value: order.WTN_Nnumber ? order.WTN_Nnumber : "" },
+            { value: order.Disposal_Site ? order.Disposal_Site :"" },
+            { value: order.Tonnage ? order.Tonnage : "" },
+            { value: order.Diverted_Tonnage ? order.Diverted_Tonnage :"" },
+            { value: order.Volume ? order.Volume : "" },
+            { value: order.Landfill_Diversion_Rate ? order.Landfill_Diversion_Rate : "" },
+          ];
+        }),
     },
   ];
   return (
     <div>
       <ExcelFile element={<button>Download Reports</button>} filename="reports">
-        <ExcelSheet dataSet={multiDataSet} name="Organization" />
+        <ExcelSheet dataSet={data} name="Organization" />
       </ExcelFile>
     </div>
   );
