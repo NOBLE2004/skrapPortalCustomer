@@ -76,7 +76,6 @@ const Reports = (props) => {
         job_address: "",
         job_date: "",
         service_name: "",
-        description: "",
         transaction_cost: reports.All_Transactions_Subtotal,
         first_name: "",
         last_name: "",

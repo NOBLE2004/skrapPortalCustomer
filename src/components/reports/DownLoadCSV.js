@@ -1,6 +1,6 @@
 import React from "react";
 import ReactExport from "react-data-export";
-
+import moment from "moment";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
@@ -34,14 +34,6 @@ const DownLoadCSV = ({ rdata }) => {
         },
         {
           title: "Service Type",
-          style: {
-            font: { sz: "10", bold: true },
-            fill: { patternType: "solid", fgColor: { rgb: "52a9dd" } },
-          },
-        },
-        {
-          width: { wch: 40 },
-          title: "Description",
           style: {
             font: { sz: "10", bold: true },
             fill: { patternType: "solid", fgColor: { rgb: "52a9dd" } },
@@ -118,9 +110,8 @@ const DownLoadCSV = ({ rdata }) => {
           return [
             { value: order.job_id ? order.job_id : "" },
             { value: order.job_address ? order.job_address :"" },
-            { value: order.job_date ? order.job_date : "" },
+            { value: order.job_date ? moment(order.job_date).format('MM/DD/YYYY') : "" },
             { value: order.service_name ? order.service_name : "" },
-            { value: order.description ? order.description : "" },
             {
               value: order.EWC_Code,
               ...order.EWC_Code === 'Sub Result'? {
