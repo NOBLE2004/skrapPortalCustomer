@@ -114,7 +114,7 @@ const DownLoadCSV = ({ rdata }) => {
             { value: order.service_name ? order.service_name : "" },
             {
               value: order.EWC_Code,
-              ...order.EWC_Code === 'Sub Result'? {
+              ...order.EWC_Code === 'Sub Total'? {
                 style: {
                   font: { sz: "10", bold: true },
                   fill: { patternType: "solid", fgColor: { rgb: "52a9dd" } },
@@ -122,7 +122,7 @@ const DownLoadCSV = ({ rdata }) => {
               }: order.EWC_Code ? order.EWC_Code : ''
             },
             { value: order.transaction_cost ? "£" + order.transaction_cost : ""  },
-            { value: order.first_name + order.last_name ? order.first_name + order.last_name : "" },
+            { value: order.full_name ? order.full_name: "" },
             { value: order.WTN_Nnumber ? order.WTN_Nnumber : "" },
             { value: order.Disposal_Site ? order.Disposal_Site :"" },
             { value: order.Tonnage ? order.Tonnage : "" },
