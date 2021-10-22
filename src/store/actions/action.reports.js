@@ -8,7 +8,30 @@ export const getAllReports = (data) => {
       .getReports(data)
       .then((response) => {
         if (Object.keys(response.data).length !== 0) {
-          dispatch(reportsSuccess(response.data));
+          const { jobsRepost } = response.data;
+          const newRow = {
+            job_id: "",
+            job_address: "",
+            job_date: "",
+            service_name: "",
+            transaction_cost: response.data.All_Transactions_Subtotal,
+            first_name: "",
+            last_name: "",
+            EWC_Code: "Sub Total",
+            WTN_Number: "",
+            Disposal_Site: "",
+            Tonnage: "",
+            Diverted_Tonnage: "",
+            Volume: "",
+            Landfill_Diversion_Rate: "",
+          };
+          if (Object.keys(jobsRepost).length !== 0) {
+            const totalReport = jobsRepost;
+            const updatedReports = totalReport.concat(newRow);
+            dispatch(reportsSuccess(updatedReports));
+          } else {
+            dispatch(reportsFailure(jobsRepost));
+          }
         } else {
           dispatch(reportsFailure(response.data.description));
         }
