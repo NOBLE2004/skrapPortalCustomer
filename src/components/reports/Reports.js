@@ -13,10 +13,9 @@ import DateRangePicker from "react-bootstrap-daterangepicker";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import moment from "moment";
 
-
 const Reports = (props) => {
   const { data } = props.allsites;
-  const { reports, isLoading } = props.report;
+  const { reports, isLoading, error } = props.report;
   const [state, setState] = useState({
     reportType: [
       { reportId: 0, reportName: "Carbon footprint" },
@@ -31,21 +30,12 @@ const Reports = (props) => {
     endDate: "",
     isReportGenerated: false,
   });
-  const [allReports, setAllReports] = useState([]);
 
-  const {
-    reportType,
-    report,
-    site,
-    show,
-    startDate,
-    endDate,
-    isReportGenerated,
-  } = state;
+  const { reportType, report, site, show, startDate, endDate } = state;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setState({ ...state, [name]: value, show: false });
+    setState({ ...state, [name]: value, show: false, allReports: null });
   };
 
   useEffect(() => {
@@ -57,41 +47,16 @@ const Reports = (props) => {
     fetchData();
   }, []);
 
-  
-  const handleGenerateReport = () => {
+  const handleGenerateReport = async () => {
     const rdata = {
       address_id: site,
       date: `${startDate},${endDate}`,
     };
-    props.getReports(rdata);
-    setTimeout(() => {
-      setState({ ...state, show: true, isReportGenerated: true });
-    }, 2000);
-  };
 
-  useEffect(() => {
-    if (reports) {
-      const newRow = {
-        job_id: "",
-        job_address: "",
-        job_date: "",
-        service_name: "",
-        transaction_cost: reports.All_Transactions_Subtotal,
-        first_name: "",
-        last_name: "",
-        EWC_Code: "Sub Total",
-        WTN_Number: "",
-        Disposal_Site: "",
-        Tonnage: "",
-        Diverted_Tonnage: "",
-        Volume: "",
-        Landfill_Diversion_Rate: "",
-      };
-      const totalData = reports.jobsRepost;
-      totalData.push(newRow);
-      setAllReports(totalData);
-    }
-  }, [isReportGenerated]);
+    await props.getReports(rdata);
+
+    setState({ ...state, show: true });
+  };
 
   const checkVisibility = (abc) => {
     if ((abc.site === undefined) | (abc.site === "")) {
@@ -191,10 +156,10 @@ const Reports = (props) => {
         </Button>
       </div>
       <div className="download-reports">
-        {allReports && allReports.length > 0 && !checkVisibility(state) && show  ? (
-          <DownLoadCSV rdata={allReports} />
+        {reports && reports.length > 0 && !checkVisibility(state) && show ? (
+          <DownLoadCSV rdata={reports} />
         ) : (
-          ""
+          error && <div>No Match Found!</div>
         )}
       </div>
     </div>
