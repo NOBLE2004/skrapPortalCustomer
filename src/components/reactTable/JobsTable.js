@@ -85,7 +85,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
             if(response.data.status === 0){
                 window.open(response.data?.url);
             }else{
-                alert('Cannot create invoice for this job');
+                alert(response.data.message);
             }
         }).catch(error => {
             console.log(error)
