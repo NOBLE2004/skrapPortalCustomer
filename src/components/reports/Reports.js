@@ -159,7 +159,7 @@ const Reports = (props) => {
         {reports && reports.length > 0 && !checkVisibility(state) && show ? (
           <DownLoadCSV rdata={reports} />
         ) : (
-          error && <div>No Match Found!</div>
+          show && error && <div>No Match Found!</div>
         )}
       </div>
     </div>
