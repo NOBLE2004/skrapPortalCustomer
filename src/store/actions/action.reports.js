@@ -14,11 +14,16 @@ export const getAllReports = (data) => {
             job_address: "",
             job_date: "",
             service_name: "",
-            transaction_cost: response.data.All_Transactions_Subtotal,
-            first_name: "",
-            last_name: "",
-            EWC_Code: "Sub Total",
-            WTN_Number: "",
+            transaction_cost: response.data.All_Transactions_Subtotal
+              ? response.data.All_Transactions_Subtotal
+              : "",
+            full_name: response.data.co2_emissions_average ? "Average" : "",
+            EWC_Code: response.data.All_Transactions_Subtotal
+              ? "Sub Total"
+              : "",
+            WTN_Number: response.data.co2_emissions_average
+              ? response.data.co2_emissions_average
+              : "",
             Disposal_Site: "",
             Tonnage: "",
             Diverted_Tonnage: "",
