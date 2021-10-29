@@ -416,7 +416,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
       ],
       wastes: wasteType,
       what3word: "",
-      show_on_main_portal: 0,
+      show_on_main_portal: 1,
     };
     JobService.createOrder(data)
       .then((response) => {
