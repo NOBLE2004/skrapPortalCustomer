@@ -11,7 +11,7 @@ import {
   tipingBlack,
   statementBlack,
 } from "../assets/images/index";
-export const APP_URL = `https://apitest.skrap.app/scrapapi`;
+export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
 export const API_URL = `${APP_URL}`;
 export const FILE_DIR = "/storage";
 export const LABELS = {
@@ -60,9 +60,9 @@ export const sidebarTabsList = [
     icon: customerBlack,
   },*/
   { text: "Sites", key: "sites", sub: false, icon: sitesBlack },
-  { text: "Tiping", key: "tiping", sub: false, icon: tipingBlack },
+  { text: "Tipping", key: "tiping", sub: false, icon: tipingBlack },
   { text: "Tickets", key: "tickets", sub: false, icon: ticketsBlack },
-  { text: "Reports", key: "reports", sub: false, icon: statementBlack },
+ /* { text: "Reports", key: "reports", sub: false, icon: statementBlack },*/
   // { text: "search", key: "search", icon: search },
 ];
 
