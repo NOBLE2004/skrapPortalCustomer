@@ -26,8 +26,8 @@ const Reports = (props) => {
     report: "",
     site: "",
     show: false,
-    startDate: "",
-    endDate: "",
+    startDate:  moment(new Date()).format("Y-MM-DD"),
+    endDate:  moment(new Date()).format("Y-MM-DD"),
     isReportGenerated: false,
   });
 
