@@ -95,7 +95,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
         e.stopPropagation();
         JobService.invoice({job_id}).then(response => {
             if(response.data?.code === 0){
-                handleShowReport(response.data?.result?.Url);
+                handleShowReport(e, response.data?.result?.Url);
             }
         }).catch(error => {
             console.log(error);
