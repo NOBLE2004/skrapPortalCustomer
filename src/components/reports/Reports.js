@@ -18,10 +18,10 @@ const Reports = (props) => {
   const { reports, isLoading, error } = props.report;
   const [state, setState] = useState({
     reportType: [
-      { reportId: 0, reportName: "Carbon footprint" },
-      { reportId: 1, reportName: "Site movements" },
-      { reportId: 2, reportName: "Waste report" },
-      { reportId: 3, reportName: "Finance report" },
+      { reportId: "Carbon_footprint", reportName: "Carbon footprint" },
+      { reportId: "Site_movements", reportName: "Site movements" },
+      { reportId: "Waste_report", reportName: "Waste report" },
+      { reportId: "Finance_report", reportName: "Finance report" },
     ],
     report: "",
     site: "",
@@ -49,10 +49,10 @@ const Reports = (props) => {
 
   const handleGenerateReport = async () => {
     const rdata = {
+      report,
       address_id: site,
       date: `${startDate},${endDate}`,
     };
-
     await props.getReports(rdata);
 
     setState({ ...state, show: true });
