@@ -81,7 +81,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
 
     };
     const handleInvoice = () => {
-        JobService.xeroInvoice(row.job_id).then(response => {
+        JobService.xeroInvoice({jobs: [row.job_id]}).then(response => {
             if(response.data.status === 0){
                 window.open(response.data?.url);
             }else{
