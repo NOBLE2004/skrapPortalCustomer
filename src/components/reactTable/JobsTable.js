@@ -19,6 +19,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
     mouseY: null,
     contextRow: null,
   });
+  const [jobIds ,setJobIds] = useState([]);
   const [exchange, setExchange] = useState(false);
   const [collection, setCollection] = useState(false);
 
@@ -81,15 +82,17 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
 
     };
     const handleInvoice = () => {
-        JobService.xeroInvoice({jobs: [row.job_id]}).then(response => {
-            if(response.data.status === 0){
-                window.open(response.data?.url);
-            }else{
-                alert(response.data.message);
-            }
-        }).catch(error => {
-            console.log(error)
-        })
+        if(jobIds.length > 0){
+            JobService.xeroInvoice({jobs: jobIds}).then(response => {
+                if(response.data.status === 0){
+                    window.open(response.data?.url);
+                }else{
+                    alert(response.data.message);
+                }
+            }).catch(error => {
+                console.log(error)
+            })
+        }
     };
     const downloadInvoice = (e, job_id) => {
         e.stopPropagation();
@@ -120,6 +123,17 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
                     text: "Job Reorder failed",
                 });
             });
+    };
+    const selectJob = (event, job_id) => {
+        const ids = jobIds;
+        if(event.target.checked === true){
+            ids.push(job_id);
+            setJobIds();
+        }else{
+            const index = ids.indexOf(job_id);
+            ids.splice(index, 1)
+        }
+        setJobIds(ids);
     };
   const columns = useMemo(
     () => [
@@ -232,7 +246,8 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
                     </span> :
                     <span className="normal-dsans-10-primary" style={{color: 'lightgrey'}} onClick={(e) => e.stopPropagation()}>
                         Ticket
-                    </span>}
+                    </span>
+                }
                 </>
             ),
         },
@@ -241,13 +256,27 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
             id: "id-edit",
             Cell: ({ cell }) => (
                 <>
-            <span
-                onClick={(e) => handleButtonClick(e, cell?.row?.original)}
-                style={{ padding: "0px",cursor: "pointer",height: '30px',justifyContent: 'center',display: 'flex',alignItems: 'center',width: '100%' }}
-                id="simple-menu"
-            >
-              ooo
-            </span>
+                    <span
+                        onClick={(e) => handleButtonClick(e, cell?.row?.original)}
+                        style={{ padding: "0px",cursor: "pointer",height: '30px',justifyContent: 'center',display: 'flex',alignItems: 'center',width: '100%' }}
+                        id="simple-menu"
+                    >
+                      ooo
+                    </span>
+                </>
+            ),
+        },
+        {
+            Header: "",
+            id: "select",
+            Cell: ({ cell }) => (
+                <>
+                    <span  onClick={(e) => e.stopPropagation()}
+                           style={{ padding: "0px",cursor: "pointer",height: '30px',justifyContent: 'center',display: 'flex',alignItems: 'center',width: '100%' }}
+                           className="normal-dsans-10-primary">
+                    <input style={{cursor: "pointer", width: '100%', height: "15px"}} onChange={(e) => selectJob(e, cell?.row?.original.job_id)}
+                           type="checkbox" id="job" name="job" />
+                    </span>
                 </>
             ),
         },
@@ -283,6 +312,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
                 Please wait while we reordring the data
             </LoadingModal>
         )}
+        <button style={{float: "right"}} className="header-btn" onClick={()=>handleInvoice()}>Create Xero Invoices</button>
       <TableContainer
         columns={columns}
         data={data}
@@ -314,7 +344,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
           {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>}
           {row?.waste_transfer_document != "" && <MenuItem onClick={(e)=>handleShowReport(e, row?.waste_transfer_document)}>Waste Report</MenuItem>}
         <MenuItem onClick={handleClose}>Track Driver</MenuItem>
-          <MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>
+          {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
       </Menu>{" "}
     </div>
   );
