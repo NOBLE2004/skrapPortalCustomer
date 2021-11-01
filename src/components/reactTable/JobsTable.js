@@ -271,12 +271,11 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
             id: "select",
             Cell: ({ cell }) => (
                 <>
-                    <span
-                        style={{ padding: "0px",cursor: "pointer",height: '30px',justifyContent: 'center',display: 'flex',alignItems: 'center',width: '100%' }}
-                        id="simple-menu"
-                    >
-                    <input onChange={(e) => selectJob(e, cell?.row?.original.job_id)}
-                        type="checkbox" id="job" name="job" />
+                    <span  onClick={(e) => e.stopPropagation()}
+                           style={{ padding: "0px",cursor: "pointer",height: '30px',justifyContent: 'center',display: 'flex',alignItems: 'center',width: '100%' }}
+                           className="normal-dsans-10-primary">
+                    <input style={{cursor: "pointer", width: '100%', height: "15px"}} onChange={(e) => selectJob(e, cell?.row?.original.job_id)}
+                           type="checkbox" id="job" name="job" />
                     </span>
                 </>
             ),
@@ -345,7 +344,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
           {(row.parent_id === 2 && row.appointment_status === 4) && <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>}
           {row?.waste_transfer_document != "" && <MenuItem onClick={(e)=>handleShowReport(e, row?.waste_transfer_document)}>Waste Report</MenuItem>}
         <MenuItem onClick={handleClose}>Track Driver</MenuItem>
-          <MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>
+          {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
       </Menu>{" "}
     </div>
   );

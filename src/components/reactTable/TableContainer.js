@@ -88,7 +88,7 @@ const TableContainer = ({ columns, data, name }) => {
                   }}
                   className="table-body-row"
                   {...row.getRowProps()}
-                  //onClick={() => handleRowClick(row.original)}
+                  onClick={() => handleRowClick(row.original)}
                 >
                   {row.cells.map((cell) => {
                     return (
