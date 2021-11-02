@@ -11,6 +11,7 @@ import JobService from '../../services/job.service';
 import LoadingModal from "../modals/LoadingModal/LoadingModal";
 import Pagination from "./pagination";
 import {downloadSite} from "../../assets/images";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
   const [state, setState] = useState({
@@ -96,9 +97,11 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
     };
     const downloadInvoice = (e, job_id) => {
         e.stopPropagation();
+        setLoading(true);
         JobService.invoice({job_id}).then(response => {
             if(response.data?.code === 0){
                 handleShowReport(e, response.data?.result?.Url);
+                setLoading(false);
             }
         }).catch(error => {
             console.log(error);
@@ -313,6 +316,12 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
             </LoadingModal>
         )}
         <button style={{float: "right"}} className="header-btn" onClick={()=>handleInvoice()}>Create Xero Invoices</button>
+        {isLoading && <div className="loader" style={{
+            padding: '5%', position: 'absolute',
+            top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(255, 255, 255, 0.5)', height: '100%'}}>
+            <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+        </div>}
       <TableContainer
         columns={columns}
         data={data}
