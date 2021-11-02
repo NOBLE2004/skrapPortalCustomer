@@ -24,7 +24,7 @@ class JobService extends HttpService {
 
     paymentStatus = (data) => this.post('jobs/payments/status', data);
 
-    xeroInvoice = (id, params) => this.get(`uploadInvoice/${id}`, params);
+    xeroInvoice = (params) => this.get('uploadInvoice', params);
 }
 
 export default new JobService();

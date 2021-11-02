@@ -13,7 +13,6 @@ import {
 } from "../assets/images/index";
 
 export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
-
 export const API_URL = `${APP_URL}`;
 export const FILE_DIR = "/storage";
 export const LABELS = {
@@ -64,7 +63,11 @@ export const sidebarTabsList = [
   { text: "Sites", key: "sites", sub: false, icon: sitesBlack },
   { text: "Tipping", key: "tipping", sub: false, icon: tipingBlack },
   { text: "Tickets", key: "tickets", sub: false, icon: ticketsBlack },
+<<<<<<< HEAD
   /*{ text: "Reports", key: "reports", sub: false, icon: statementBlack },*/
+=======
+  { text: "Reports", key: "reports", sub: false, icon: statementBlack },
+>>>>>>> 455577c40b7d902ee9133b24921844afeff048c8
   // { text: "search", key: "search", icon: search },
 ];
 
