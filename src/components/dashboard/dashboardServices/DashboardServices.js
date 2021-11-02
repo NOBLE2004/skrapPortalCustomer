@@ -92,7 +92,7 @@ const DashboardServices = ({ servicesData }) => {
                         ? "£" + (parseInt(Cage.total).toLocaleString())
                         : ""
                         : Cage
-                        ? Cage.count > 0 ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) + "%" :  Cage.count + "%"
+                        ? Cage.count > 0 ? ((Cage.count / NumberOfJobs) * 100).toFixed(0) + "%" :  Cage.count + "%"
                         : "50%"
                   }
                   strokeWidth="7"
