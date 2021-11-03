@@ -269,20 +269,20 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
                 </>
             ),
         },
-        {
-            Header: "",
-            id: "select",
-            Cell: ({ cell }) => (
-                <>
-                    <span  onClick={(e) => e.stopPropagation()}
-                           style={{ padding: "0px",cursor: "pointer",height: '30px',justifyContent: 'center',display: 'flex',alignItems: 'center',width: '100%' }}
-                           className="normal-dsans-10-primary">
-                    <input style={{cursor: "pointer", width: '100%', height: "15px"}} onChange={(e) => selectJob(e, cell?.row?.original.job_id)}
-                           type="checkbox" id="job" name="job" />
-                    </span>
-                </>
-            ),
-        },
+        // {
+        //     Header: "",
+        //     id: "select",
+        //     Cell: ({ cell }) => (
+        //         <>
+        //             <span  onClick={(e) => e.stopPropagation()}
+        //                    style={{ padding: "0px",cursor: "pointer",height: '30px',justifyContent: 'center',display: 'flex',alignItems: 'center',width: '100%' }}
+        //                    className="normal-dsans-10-primary">
+        //             <input style={{cursor: "pointer", width: '100%', height: "15px"}} onChange={(e) => selectJob(e, cell?.row?.original.job_id)}
+        //                    type="checkbox" id="job" name="job" />
+        //             </span>
+        //         </>
+        //     ),
+        // },
     ],
     []
   );
@@ -315,13 +315,13 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
                 Please wait while we reordring the data
             </LoadingModal>
         )}
-        <button style={{float: "right"}} className="header-btn" onClick={()=>handleInvoice()}>Create Xero Invoices</button>
-        {isLoading && <div className="loader" style={{
-            padding: '5%', position: 'absolute',
-            top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: 'rgba(255, 255, 255, 0.5)', height: '100%'}}>
-            <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
-        </div>}
+        {/*<button style={{float: "right"}} className="header-btn" onClick={()=>handleInvoice()}>Create Xero Invoices</button>*/}
+        {/*{isLoading && <div className="loader" style={{*/}
+        {/*    padding: '5%', position: 'absolute',*/}
+        {/*    top: 0, left: 0, right: 0, bottom: 0,*/}
+        {/*    backgroundColor: 'rgba(255, 255, 255, 0.5)', height: '100%'}}>*/}
+        {/*    <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />*/}
+        {/*</div>}*/}
       <TableContainer
         columns={columns}
         data={data}
