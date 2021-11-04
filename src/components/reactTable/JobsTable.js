@@ -12,6 +12,7 @@ import LoadingModal from "../modals/LoadingModal/LoadingModal";
 import Pagination from "./pagination";
 import {downloadSite} from "../../assets/images";
 import FadeLoader from "react-spinners/FadeLoader";
+import Swal from 'sweetalert2'
 
 const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
   const [state, setState] = useState({
@@ -88,7 +89,7 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
                 if(response.data.status === 0){
                     window.open(response.data?.url);
                 }else{
-                    alert(response.data.message);
+                    Swal.fire("Info!", response.data.message, "info")
                 }
             }).catch(error => {
                 console.log(error)
