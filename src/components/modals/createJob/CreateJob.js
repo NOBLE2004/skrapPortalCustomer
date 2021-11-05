@@ -466,7 +466,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
         setState({ ...state, paymentMethodList: response.data.result });
       }
     );
-  }, [paymentMethod]);
+  }, [paymentMethod, addNewCard]);
 
   useEffect(() => {
     let t_date = Date.parse(new Date());
