@@ -169,7 +169,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
         setSubServiceSelect(subServices[value]);
         break;
       case "paymentMethod":
-        setState({ ...state, [name]: value });
+        setState({ ...state, [name]: value, addNewCard: false });
         break;
       case "permit":
         if (value == 0) {
@@ -186,7 +186,9 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
 
     checkingError(name, value);
   };
-
+  useEffect(()=>{
+    console.log(state);
+  }, [state])
   const handleTime = (time) => {
     setState({
       ...state,
@@ -464,21 +466,18 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
         setState({ ...state, paymentMethodList: response.data.result });
       }
     );
-  }, [newCardData]);
+  }, [paymentMethod]);
 
   useEffect(() => {
     let t_date = Date.parse(new Date());
     let d_date = Date.parse(startSelectedDate);
-    console.log(t_date, d_date);
     setState({ ...state, time_slot_loading: true });
     PaymentService.getData({ t_date, d_date })
       .then((res) => {
-        console.log("res", res.data.result.time_slots);
         setTimeSlots(res.data.result.time_slots);
         setState({ ...state, time_slot_loading: false });
       })
       .catch((err) => {
-        console.log("res", err);
         setState({ ...state, time_slot_loading: false });
       });
   }, [startSelectedDate]);
@@ -519,7 +518,6 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
-  console.log("credit", credit);
   return (
     <Dialog
       open={true}
@@ -797,7 +795,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
                     <em>None</em>
                   </MenuItem>
                   {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
-                  <MenuItem value="0">Strip</MenuItem>
+                  <MenuItem value="0">Stripe</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -818,13 +816,14 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
             </div>
           </div>
 
-          {paymentMethod === "0" && (
+          {paymentMethod == "0" && (
             <>
               <RadioGroup
                 name="selectedPaymentMethod"
                 value={selectedPaymentMethod}
                 onChange={handleChange}
               >
+                {paymentMethodList.length > 0 && <>
                 {paymentMethodList.map((data, index) => {
                   return (
                     <FormControlLabel
@@ -835,6 +834,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
                     />
                   );
                 })}
+                </>}
               </RadioGroup>
               {paymentMethodList.length > 0 ? (
                 <Button
