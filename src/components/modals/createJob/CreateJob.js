@@ -464,7 +464,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
         setState({ ...state, paymentMethodList: response.data.result });
       }
     );
-  }, [newCardData]);
+  }, [paymentMethod, addNewCard]);
 
   useEffect(() => {
     let t_date = Date.parse(new Date());
@@ -797,7 +797,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
                     <em>None</em>
                   </MenuItem>
                   {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
-                  <MenuItem value="0">Strip</MenuItem>
+                  <MenuItem value="0">Stripe</MenuItem>
                 </Select>
               </FormControl>
             </div>
