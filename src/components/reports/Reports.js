@@ -4,7 +4,8 @@ import { getSites } from "../../store/actions/sites.action";
 import { getAllReports } from "../../store/actions/action.reports";
 import { CircularProgress, MenuItem } from "@material-ui/core";
 import { Select } from "@material-ui/core";
-import { Button } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
+import ReportTable from "../reports/ReportTable";
 import "./report.scss";
 import { InputLabel } from "@material-ui/core";
 import { FormControl } from "@material-ui/core";
@@ -26,8 +27,8 @@ const Reports = (props) => {
     report: "",
     site: "",
     show: false,
-    startDate:  moment(new Date()).format("Y-MM-DD"),
-    endDate:  moment(new Date()).format("Y-MM-DD"),
+    startDate: moment(new Date()).format("Y-MM-DD"),
+    endDate: moment(new Date()).format("Y-MM-DD"),
     isReportGenerated: false,
   });
 
@@ -80,6 +81,14 @@ const Reports = (props) => {
       endDate: moment(end._d).format("Y-MM-DD"),
     });
   };
+
+  let lastCalculatedReport = null;
+  if (report === "Site_movements") {
+    lastCalculatedReport = reports && reports.length > 0 ? `£${reports.slice(-1)[0].transaction_cost}` : "n/a";
+  }
+  else if (report === "Carbon_footprint") {
+    lastCalculatedReport = reports && reports.length > 0 && reports.slice(-1)[0].WTN_Number;
+  }
 
   return (
     <div className="reports-component">
@@ -162,6 +171,16 @@ const Reports = (props) => {
           show && error && <div>No Match Found!</div>
         )}
       </div>
+      {reports && reports.length > 0 && !checkVisibility(state) && show && <Grid container className="sites-table-loader">
+        <Grid item md={12}>
+          <ReportTable
+            data={reports ? reports.slice(0, -1) : []}
+            lastCalculatedReport={lastCalculatedReport}
+            reportType={report}
+          />
+        </Grid>
+      </Grid>
+      }
     </div>
   );
 };

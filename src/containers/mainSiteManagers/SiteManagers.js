@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDetail";
-import { viewMoreBtn, RightArrowBtn } from "../../assets/images";
+import { viewMoreBtn } from "../../assets/images";
 import FadeLoader from "react-spinners/FadeLoader";
 import { getSiteManager } from "../../store/actions/siteManager.action";
 import CreateManager from "../../components/modals/createManager/CreateManager";
 import "./sitemanager.scss";
+
 const SiteManagers = (props) => {
-  const [isSiteBooked, setSiteBooked] = React.useState(false);
+  const [isSiteBooked, setSiteBooked] = useState(false);
 
   const handleBookSite = () => {
     setSiteBooked(true);
