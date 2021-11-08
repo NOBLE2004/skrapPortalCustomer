@@ -4,6 +4,7 @@ import ReactExport from "react-data-export";
 import moment from "moment";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+
 const DownLoadCSV = ({ rdata }) => {
   const footPrintData = [
     {
@@ -30,24 +31,24 @@ const DownLoadCSV = ({ rdata }) => {
               value: String(order.full_name),
               ...(order.full_name == "Average"
                 ? {
-                    style: {
-                      font: { sz: "10", bold: true },
-                      fill: {
-                        patternType: "solid",
-                        fgColor: { rgb: "52a9dd" },
-                      },
+                  style: {
+                    font: { sz: "10", bold: true },
+                    fill: {
+                      patternType: "solid",
+                      fgColor: { rgb: "52a9dd" },
                     },
-                  }
+                  },
+                }
                 : order.full_name
-                ? String(order.full_name)
-                : ""),
+                  ? String(order.full_name)
+                  : ""),
             },
             {
               value: order.co2_emissions
                 ? order.co2_emissions + "2"
                 : order.WTN_Number
-                ? order.WTN_Number + " kg Co2"
-                : "",
+                  ? order.WTN_Number + " kg CO2"
+                  : "",
             },
           ];
         }),
@@ -72,17 +73,17 @@ const DownLoadCSV = ({ rdata }) => {
               value: order.EWC_Code,
               ...(order.EWC_Code === "Sub Total"
                 ? {
-                    style: {
-                      font: { sz: "10", bold: true },
-                      fill: {
-                        patternType: "solid",
-                        fgColor: { rgb: "52a9dd" },
-                      },
+                  style: {
+                    font: { sz: "10", bold: true },
+                    fill: {
+                      patternType: "solid",
+                      fgColor: { rgb: "52a9dd" },
                     },
-                  }
+                  },
+                }
                 : order.EWC_Code
-                ? order.EWC_Code
-                : ""),
+                  ? order.EWC_Code
+                  : ""),
             },
             {
               value: order.transaction_cost ? "£" + order.transaction_cost : "",
