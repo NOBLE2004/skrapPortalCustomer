@@ -5,7 +5,6 @@ import { useHistory } from "react-router";
 import clsx from "clsx";
 import {
   ListItem,
-  Collapse,
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
@@ -14,7 +13,7 @@ import { connect } from "react-redux";
 import { sidebarTabsList } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
-import { skrap_logo , personImage } from "../../assets/images";
+import { skrap_logo, personImage } from "../../assets/images";
 import "./mySidebar.scss";
 
 const drawerWidth = 240;
@@ -196,9 +195,9 @@ const MySidebar = (props) => {
               (userData.hasOwnProperty("personal_detail") &&
                 (userData.personal_detail.hasOwnProperty("first_name") &&
                   userData.personal_detail?.first_name) +
-                  " " +
-                  (userData.personal_detail.hasOwnProperty("last_name") &&
-                    userData.personal_detail?.last_name)) ||
+                " " +
+                (userData.personal_detail.hasOwnProperty("last_name") &&
+                  userData.personal_detail?.last_name)) ||
               "Test"
             }
             className="current-user"

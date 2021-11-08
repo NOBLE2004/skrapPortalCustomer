@@ -1,5 +1,5 @@
 import React from "react";
-import {useStyles} from "../../containers/sidebar/styles";
+import { useStyles } from "../../containers/sidebar/styles";
 import SideBar from '../../containers/sidebar/MySidebar';
 
 const Layout = (props) => {
