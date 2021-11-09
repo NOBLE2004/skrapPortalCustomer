@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy the React App to the container
 COPY . /app/
 
-RUN apk add g++ gcc libgcc libstdc++ linux-headers make python --quiet
+RUN apk add g++ gcc libgcc libstdc++ linux-headers make python3 --quiet
 
 # Prepare the container for building React
 # RUN npm install
