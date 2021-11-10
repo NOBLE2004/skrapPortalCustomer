@@ -10,16 +10,17 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { Button, MenuItem, FormControl, Select } from "@material-ui/core";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import { getSiteManager } from "../../../store/actions/siteManager.action";
-import { getSites} from "../../../store/actions/sites.action";
-
+import { getSites } from "../../../store/actions/sites.action";
+import SiteService from "../../../services/sites.service";
 import "./assignToManager.scss";
 
 function AssignToManager(props) {
-  const { handleClose } = props;
+  const { handleClose, managerId, setReload } = props;
+
   const [state, setState] = useState({
-    manager:"",
+    manager: "",
     site: "",
     notice: null,
   });
@@ -67,26 +68,54 @@ function AssignToManager(props) {
 
     setState({ ...state, [name]: value });
   };
- 
+
   useEffect(() => {
     async function fetchData() {
       if (!props.siteManager.sites) {
         await props.getSiteManager();
       }
-      if(!props.allsites.data){
+      if (!props.allsites.data) {
         await props.getSites()
       }
     }
 
     fetchData();
   }, []);
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('site' , site)
-    console.log('site' , manager)
+    setState({ ...state, isLoading: true })
+
+    SiteService.siteAssignToManager({
+      manager_id: managerId ? managerId : manager,
+      address_id: site
+    }).then(response => {
+      setState({
+        ...state,
+        isLoading: false,
+        notice: {
+          type: 'success',
+          text: response.data.description,
+        }
+      });
+      if (managerId) {
+        setTimeout(() => {
+          setReload();
+        }, 2000);
+      }
+    })
+      .catch(error => {
+        setState({
+          ...state,
+          isLoading: false,
+          notice: {
+            type: 'error',
+            text: error.message,
+          }
+        })
+      })
   };
-console.log('props.allsites.data', props.allsites.data)
+
   return (
     <Dialog open={true} onClose={handleClose} className="booksitemodal">
       <DialogTitle onClose={handleClose}> Assign to manager </DialogTitle>
@@ -119,32 +148,34 @@ console.log('props.allsites.data', props.allsites.data)
             </FormControl>
           </div>
 
-          <div className="customer-input-field">
-            <InputLabel>Managers List</InputLabel>
-            <FormControl variant="outlined" margin="dense" fullWidth>
-              <InputLabel id="demo-simple-select-outlined-label">
-                Manager
-              </InputLabel>
-              <Select
-                label="manager"
-                name="manager"
-                fullWidth
-                onChange={handleOnChange}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {props.siteManager.sites &&
-                  props.siteManager.sites.map((data, index) => {
-                    return (
-                      <MenuItem key={index} value={data.user_id}>
-                        {data.manager_name}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </FormControl>
-          </div>
+          {!managerId &&
+            <div className="customer-input-field">
+              <InputLabel>Managers List</InputLabel>
+              <FormControl variant="outlined" margin="dense" fullWidth>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Manager
+                </InputLabel>
+                <Select
+                  label="manager"
+                  name="manager"
+                  fullWidth
+                  onChange={handleOnChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {props.siteManager.sites &&
+                    props.siteManager.sites.map((data, index) => {
+                      return (
+                        <MenuItem key={index} value={data.user_id}>
+                          {data.manager_name}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </FormControl>
+            </div>
+          }
           <Button
             className="confirmJob"
             variant="contained"
@@ -161,14 +192,14 @@ console.log('props.allsites.data', props.allsites.data)
     </Dialog>
   );
 }
-const mapStateToProps = ({ siteManager , allsites }) => {
-  return { siteManager , allsites};
+const mapStateToProps = ({ siteManager, allsites }) => {
+  return { siteManager, allsites };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getSiteManager: (year) => dispatch(getSiteManager(year)),
-    getSites : () => dispatch(getSites())
+    getSites: () => dispatch(getSites()),
   };
 };
 
