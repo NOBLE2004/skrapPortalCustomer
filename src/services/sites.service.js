@@ -11,6 +11,9 @@ class SiteService extends HttpService {
   // sites
 
   getSitesList = (params) => this.get("sites/list"  , params);
+
+  //site assign to manager
+  siteAssignToManager = (data) => this.post("siteManager/addAddress" , data);
 }
 
-export default new SiteService();
+ export default new SiteService();

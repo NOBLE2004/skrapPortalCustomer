@@ -75,11 +75,12 @@ const Sites = (props) => {
   return (
     <>
       <CommonHeader
+        bookSite={"Assign to manager"}
         handleShowMap={handleShowMap}
         isMap={isMapView}
         handleBookJob={handleMangerModal}
         downloadCSV={false}
-        showButton={false}
+        showButton={true}
       >
         <CommonJobStatus
           jobStatus={{

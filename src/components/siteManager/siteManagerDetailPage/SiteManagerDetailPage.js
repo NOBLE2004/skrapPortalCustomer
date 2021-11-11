@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import NewManagerDetail from "../newManagerDetail/NewManagerDetail";
 import SiteManagerTable from "../siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
-
 import { Grid } from "@material-ui/core";
 import sitesService from "../../../services/sites.service";
 import FadeLoader from "react-spinners/FadeLoader";
 import JobFilters from "../../filters/jobFilters";
 import { useParams } from "react-router";
 import "./siteManagerDetailPage.scss";
+
 const SiteManagerDetailPage = () => {
   const { id } = useParams();
   const [filters, setFilters] = useState({
@@ -25,6 +25,7 @@ const SiteManagerDetailPage = () => {
     managerData: [],
     isCreateManager: false,
   });
+  const [reload, setReload] = useState(false);
 
   const { isLoading, managerData, isCreateManager } = state;
   const handleCreateManager = () => {
@@ -43,17 +44,17 @@ const SiteManagerDetailPage = () => {
     sitesService
       .showManagerDetail(id)
       .then((res) => {
-        console.log("res/", res.data);
         setState({ ...state, managerData: res.data, isLoading: false });
       })
       .catch((error) => {
         setState({ ...state, isLoading: false });
       });
-  }, []);
+  }, [reload]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
   };
+
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
@@ -68,7 +69,7 @@ const SiteManagerDetailPage = () => {
         ) : (
           <>
             <Grid item md={12}>
-              <NewManagerDetail managerData={managerData} />
+              <NewManagerDetail managerData={managerData} setReload={() => setReload(!reload)} />
             </Grid>
             <Grid item md={12} className="site-manager-filter">
               <div className="jobs-search-header">

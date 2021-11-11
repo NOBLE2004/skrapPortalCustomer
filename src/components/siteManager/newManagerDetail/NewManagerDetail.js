@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Card, CardContent } from "@material-ui/core";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
+import AssignToManager from "../../../components/modals/assignToManager/AssignToManager";
 import "./newmanagerdetail.scss";
-const NewManagerDetail = ({managerData}) => {
-  const {data , site} = managerData
+
+const NewManagerDetail = ({ managerData, setReload }) => {
+  const { data, site } = managerData;
+  const [isManagerOpen, setIsManagerOpen] = useState(false);
+
   return (
     <div>
       <Card className="new-manager-detail-main">
@@ -21,16 +25,16 @@ const NewManagerDetail = ({managerData}) => {
               <div className="change-info">
                 <div className="info">
                   <div className="designation">Site Assigned</div>
-                  <div className="personal-title">{`${site && site.site_name ? site.site_name  : "n/a"}`}</div>
+                  <div className="personal-title">{`${site && site.site_name ? site.site_name : "n/a"}`}</div>
                 </div>
-                <div className="change-title">Change</div>
+                <div className="change-title" onClick={() => setIsManagerOpen(true)}>Change</div>
               </div>
             </Grid>
             <Grid item md={3} className="new-personal-info">
               <div className="info">
                 <div className="designation">Address</div>
                 <div className="personal-title">
-                {`${site ? site.line_1 +" "+ site.postcode +" "+site.postal_county : ""}`}
+                  {`${site ? site.line_1 + " " + site.postcode + " " + site.postal_county : ""}`}
                 </div>
               </div>
               <div className="info">
@@ -48,6 +52,9 @@ const NewManagerDetail = ({managerData}) => {
           </Grid>
         </CardContent>
       </Card>
+      {isManagerOpen && (
+        <AssignToManager handleClose={() => setIsManagerOpen(false)} setReload={() => setReload()} managerId={data.user_id} />
+      )}
     </div>
   );
 };
