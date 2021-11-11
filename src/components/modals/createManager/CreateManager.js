@@ -45,7 +45,7 @@ function CreateManager(props) {
         errors[name] = value.length === 0 ? "Required" : "";
         break;
       case "email":
-        errors[name] =  reg.test(value) === false ? "Required" : "";
+        errors[name] = reg.test(value) === false ? "Required" : "";
         break;
       case "phone":
         errors[name] = value.length < 10 ? "Required" : "";
@@ -103,14 +103,28 @@ function CreateManager(props) {
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-    setState({ ...state, [name]: value });
+    switch (name) {
+      case "email":
+        if (reg.test(email) === false) {
+          setState({ ...state, email: value });
+        }
+        break;
+      case "firstname":
+      case "lastname":
+      case "phone":
+      case "password":
+        setState({ ...state, [name]: value });
+        break;
+      default:
+        setState({ ...state });
+    }
   };
   useEffect(() => {
     siteService
       .getAllSites()
       .then((res) => {
-        console.log('res.data' , res.data)
         setState({ ...state, siteData: res.data.data });
       })
       .catch((err) => {
@@ -123,8 +137,8 @@ function CreateManager(props) {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (
       (firstname === "") |
-      (firstname === "") |
-      (reg.test(email) === false) |
+      (lastname === "") |
+      ((email === "") | (reg.test(email) === false)) |
       (phone.length < 10) |
       (password === "")
     ) {
@@ -145,7 +159,8 @@ function CreateManager(props) {
       site_id: site,
     };
     setState({ ...state, isLoading: true });
-    siteService.addNewManager(data)
+    siteService
+      .addNewManager(data)
       .then((res) => {
         setState({
           ...state,
@@ -160,7 +175,6 @@ function CreateManager(props) {
         }, 2000);
       })
       .catch((err) => {
-        console.log('res' , err)
         setState({
           ...state,
           notice: {
@@ -185,7 +199,7 @@ function CreateManager(props) {
               margin="dense"
               name="firstname"
               fullWidth
-              onChange={handleOnChange}
+              onChange={(e) => handleOnChange(e)}
               error={errors["firstname"].length > 0 ? true : false}
             />
           </div>
@@ -198,7 +212,7 @@ function CreateManager(props) {
               margin="dense"
               name="lastname"
               fullWidth
-              onChange={handleOnChange}
+              onChange={(e) => handleOnChange(e)}
               error={errors["lastname"].length > 0 ? true : false}
             />
           </div>
@@ -212,7 +226,7 @@ function CreateManager(props) {
                 label="Site"
                 name="site"
                 fullWidth
-                onChange={handleOnChange}
+                onChange={(e) => handleOnChange(e)}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -238,7 +252,7 @@ function CreateManager(props) {
               size="small"
               margin="dense"
               fullWidth
-              onChange={handleOnChange}
+              onChange={(e) => handleOnChange(e)}
               error={errors["email"].length > 0 ? true : false}
             />
           </div>
@@ -251,14 +265,20 @@ function CreateManager(props) {
               fullWidth
               margin="dense"
               name="phone"
-              onChange={handleOnChange}
-              inputProps={{ maxLength: 10 }}
+              type="number"
+              onChange={(e) => handleOnChange(e)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">+44</InputAdornment>
                 ),
               }}
+              characterLimit={10}
               error={errors["phone"].length > 0 ? true : false}
+              onInput={(e) => {
+                e.target.value = Math.max(0, parseInt(e.target.value))
+                  .toString()
+                  .slice(0, 10);
+              }}
             />
           </div>
           <div className=" customer-input-field">
@@ -271,7 +291,7 @@ function CreateManager(props) {
               placeholder="***********"
               name="password"
               type="password"
-              onChange={handleOnChange}
+              onChange={(e) => handleOnChange(e)}
               error={errors["password"].length > 0 ? true : false}
             />
           </div>

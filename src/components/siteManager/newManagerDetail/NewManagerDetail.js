@@ -25,7 +25,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
               <div className="change-info">
                 <div className="info">
                   <div className="designation">Site Assigned</div>
-                  <div className="personal-title">{`${site && site.site_name ? site.site_name : "n/a"}`}</div>
+                  <div className="personal-title">{`${site && site.line_1 ? site.line_1 : "n/a"}`}</div>
                 </div>
                 <div className="change-title" onClick={() => setIsManagerOpen(true)}>Change</div>
               </div>
