@@ -108,7 +108,7 @@ function CreateManager(props) {
     switch (name) {
       case "email":
         if (reg.test(email) === false) {
-          setState({ ...state, email: value });
+          setState({ ...state, [name]: value });
         }
         break;
       case "firstname":
@@ -118,8 +118,9 @@ function CreateManager(props) {
         setState({ ...state, [name]: value });
         break;
       default:
-        setState({ ...state });
+        setState({ ...state, [name]:value });
     }
+    checkingError(name, value);
   };
   useEffect(() => {
     siteService
