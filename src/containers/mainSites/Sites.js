@@ -19,6 +19,7 @@ const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
   const [showInfo, setShowInfo] = useState(false);
   const [isMapView, setIsMapView] = useState(true);
+  const [isReload, setIsReload] = useState(false);
   const [postcode, setPostcode] = useState("");
   const [isManagerOpen, setIsManagerOpen] = useState(false);
   const { info, loading } = props.dashboard;
@@ -32,18 +33,17 @@ const Sites = (props) => {
         !siteData && await props.getSitesList(filters);
         !info && await props.getDashboardsData('');
     }
+    if(isReload){
+      props.getSitesList(filters)
+    }
     fetchData();
-  }, []);
-
-  // useEffect(() => {
-  //   props.getSitesList(filters);
-  // }, [filters]);
+  }, [isReload]);
+  
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
   };
   const handleChangeSearch = (postcode) => {
-    console.log('postcode', postcode)
     postcode.length > 4 && setPostcode(postcode);
   };
  
@@ -136,6 +136,7 @@ const Sites = (props) => {
                       data={siteData ? siteData.data : []}
                       pagination={siteData}
                       handlePagination={handlePagination}
+                      reload={() => setIsReload(!isReload)}
                     />
                   </Grid>
                   {/* style={{ marginTop: "47px" }} */}

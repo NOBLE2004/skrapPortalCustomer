@@ -1,13 +1,23 @@
-import React, { useMemo } from "react";
+import React, { useMemo , useState } from "react";
 import TableContainer from "../../reactTable/TableContainer";
 import Pagination from "../../reactTable/pagination";
 import "./sites-table.scss";
+import SiteAssignToManager from "../../modals/siteAssignToManager/SiteAssignToManager";
 
 const SitesTable = ({
   data,
   pagination,
   handlePagination,
+  reload
 }) => {
+  const [isManagerOpen, setIsManagerOpen] = useState(false);
+  const [siteData, setSiteData] = useState(null);
+
+  const handleButtonClick = (e, props) => {
+    e.stopPropagation();   
+    setIsManagerOpen(true)
+    setSiteData(props)
+  };
   const columns = useMemo(
     () => [
       {
@@ -52,16 +62,25 @@ const SitesTable = ({
           return <span>{ "£" + parseFloat(props.value).toLocaleString() || "n/a"}</span>;
         },
       },
-      /*{
+      {
+        Header: "Manager",
+        accessor: "manager_name",
+        disableFilters: true,
+        Cell: (props) => {
+          return <span>{"n/a"}</span>;
+        },
+      },
+      {
         Header: "",
         id: "edit-id",
-        Cell: ({ rows }) => (
-          <span style={{ padding: "0px", cursor: "pointer" }}>ooo</span>
+        Cell: ({ cell }) => (
+          <span style={{ padding: "0px", cursor: "pointer" }}><button className="header-btn" onClick={(e) => handleButtonClick(e, cell?.row?.original)}>Assign</button></span>
         ),
-      },*/
+      },
     ],
     []
   );
+  
   return (
     <>
       <TableContainer columns={columns} data={data} name={"sites"} />
@@ -78,6 +97,10 @@ const SitesTable = ({
           handlePagination(page);
         }}
       />
+      {
+        isManagerOpen && 
+      <SiteAssignToManager handleClose={()=> setIsManagerOpen(false)} siteData={siteData} setReload={() => reload()}/>
+      }
     </>
   );
 };
