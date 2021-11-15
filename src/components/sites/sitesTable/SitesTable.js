@@ -1,29 +1,33 @@
-import React, { useMemo , useState } from "react";
+import React, { useMemo, useState } from "react";
 import TableContainer from "../../reactTable/TableContainer";
 import Pagination from "../../reactTable/pagination";
 import "./sites-table.scss";
 import SiteAssignToManager from "../../modals/siteAssignToManager/SiteAssignToManager";
+import AllocatePoModal from "../../modals/allocatePo/AllocatePoModal";
 
-const SitesTable = ({
-  data,
-  pagination,
-  handlePagination,
-  reload
-}) => {
+const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const [isManagerOpen, setIsManagerOpen] = useState(false);
+  const [isAllocate, setIsAllocate] = useState(false);
   const [siteData, setSiteData] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const handleButtonClick = (e, props) => {
-    e.stopPropagation();   
-    setIsManagerOpen(true)
-    setSiteData(props)
+    e.stopPropagation();
+    setIsManagerOpen(true);
+    setSiteData(props);
+  };
+
+  const handleAllocate = (e, props) => {
+    e.stopPropagation();
+    setUserId(props.site_manager_user_id);
+    setIsAllocate(true);
   };
   const columns = useMemo(
     () => [
       {
         Header: "SiteName",
-        accessor: (d) => d.job_address.slice(0,22),
-        id:"site_name",
+        accessor: (d) => d.job_address.slice(0, 22),
+        id: "site_name",
         disableSortBy: true,
         filter: "equals",
         Cell: (props) => {
@@ -59,28 +63,46 @@ const SitesTable = ({
         accessor: "sales_by_site",
         disableFilters: true,
         Cell: (props) => {
-          return <span>{ "£" + parseFloat(props.value).toLocaleString() || "n/a"}</span>;
+          return (
+            <span>
+              {"£" + parseFloat(props.value).toLocaleString() || "n/a"}
+            </span>
+          );
         },
       },
       {
         Header: "Manager",
-        accessor: "manager_name",
+        accessor: "site_concat_name",
         disableFilters: true,
         Cell: (props) => {
-          return <span>{"n/a"}</span>;
+          return <span>{props.value || "n/a"}</span>;
         },
       },
       {
         Header: "",
         id: "edit-id",
         Cell: ({ cell }) => (
-          <span style={{ padding: "0px", cursor: "pointer" }}><button className="header-btn" onClick={(e) => handleButtonClick(e, cell?.row?.original)}>Assign</button></span>
+          <>
+            <button
+              className="sites-header-btn"
+              onClick={(e) => handleButtonClick(e, cell?.row?.original)}
+            >
+              Assign
+            </button>
+            <button
+              className="sites-header-btn"
+              style={{marginLeft:"2px"}}
+              onClick={(e) => handleAllocate(e, cell?.row?.original)}
+            >
+              Allocate Po
+            </button>
+          </>
         ),
       },
     ],
     []
   );
-  
+
   return (
     <>
       <TableContainer columns={columns} data={data} name={"sites"} />
@@ -97,10 +119,20 @@ const SitesTable = ({
           handlePagination(page);
         }}
       />
-      {
-        isManagerOpen && 
-      <SiteAssignToManager handleClose={()=> setIsManagerOpen(false)} siteData={siteData} setReload={() => reload()}/>
-      }
+      {isManagerOpen && (
+        <SiteAssignToManager
+          handleClose={() => setIsManagerOpen(false)}
+          siteData={siteData}
+          setReload={() => reload()}
+        />
+      )}
+
+      {isAllocate && (
+        <AllocatePoModal
+          handleClose={() => setIsAllocate(false)}
+          userId={userId}
+        />
+      )}
     </>
   );
 };

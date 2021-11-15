@@ -64,7 +64,7 @@ const TableContainer = ({ columns, data, name }) => {
               {headerGroup.headers.map((column) => (
                 <div
                   {...column.getHeaderProps()}
-                  className="table-headings"
+                  className={name === "sites" ? "sites-table-headings" : "table-headings"}
                   style={{ width: column.id === 'status' ? '160px' : column.id === 'id-edit' ? '50px': cellWidth, padding: cellPadding }}
                 >
                   {column.render("Header")}
@@ -93,7 +93,7 @@ const TableContainer = ({ columns, data, name }) => {
                   {row.cells.map((cell) => {
                     return (
                       <div
-                        className="table-body-cell"
+                        className={name === "sites" ? "sites-table-body-cell" : "table-body-cell" }
                         style={{ width: cell.column.id === 'status' ? '160px' : cell.column.id === 'id-edit' ? '50px': cellWidth, padding: cellPadding}}
                         {...cell.getCellProps()}
                       >

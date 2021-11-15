@@ -10,6 +10,37 @@
     vertical-align: unset;
   }
 
+  .sites-table-headings {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    color: #0d0d39;
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+  }
+  .sites-table-headings:last-child{
+    width: 260px !important;
+  }
+  .sites-table-body-cell {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 13px;
+    color: #4b686e;
+    word-break: break-all;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .sites-table-body-cell:last-child{
+    width: 260px !important;
+  }
+
   .table-headings {
     font-family: "DM Sans";
     font-style: normal;
@@ -21,6 +52,7 @@
     padding-top: 0px;
     padding-bottom: 10px;
   }
+  
   .table-body-cell {
     font-family: "DM Sans";
     font-style: normal;
@@ -33,6 +65,8 @@
     justify-content: flex-start;
     align-items: center;
   }
+
+  
   .custom-filter {
     padding: 0px 4px;
     cursor: pointer;
