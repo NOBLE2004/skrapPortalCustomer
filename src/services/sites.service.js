@@ -14,6 +14,9 @@ class SiteService extends HttpService {
 
   //site assign to manager
   siteAssignToManager = (data) => this.post("siteManager/addAddress" , data);
+
+  getAllSubServicesOnly = () => this.get("getAllSubServicesOnly")
+  purchaseOrder = (data) => this.post("PurchaseOrder", data)
 }
 
  export default new SiteService();
