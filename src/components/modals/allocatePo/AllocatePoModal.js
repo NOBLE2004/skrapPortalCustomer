@@ -125,6 +125,10 @@ const AllocatePoModal = (props) => {
             text: res.data.description,
           },
         });
+
+        setTimeout(()=>{
+          handleClose()
+        },2000)
       })
       .catch((err) => {
         setState({
