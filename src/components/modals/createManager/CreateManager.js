@@ -15,6 +15,8 @@ import siteService from "../../../services/sites.service";
 import "./createmanager.scss";
 function CreateManager(props) {
   const { handleClose } = props;
+  const [value, setValue] = React.useState(12);
+  const [radioPermission, setRadioPermission] = useState([]);
   const [state, setState] = useState({
     isLoading: false,
     siteData: [],
@@ -34,6 +36,10 @@ function CreateManager(props) {
     phone: "",
     password: "",
   });
+
+  const handleChange = (event, id) => {
+    setValue(id);
+  };
 
   const checkingError = (name, value) => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -118,7 +124,7 @@ function CreateManager(props) {
         setState({ ...state, [name]: value });
         break;
       default:
-        setState({ ...state, [name]:value });
+        setState({ ...state, [name]: value });
     }
     checkingError(name, value);
   };
@@ -130,6 +136,15 @@ function CreateManager(props) {
       })
       .catch((err) => {
         console.log(err);
+      });
+
+    siteService
+      .getPermission()
+      .then((res) => {
+        setRadioPermission(res.data.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
       });
   }, []);
 
@@ -158,6 +173,7 @@ function CreateManager(props) {
       last_name: lastname,
       device_type: 1,
       site_id: site,
+      role_id: value, 
     };
     setState({ ...state, isLoading: true });
     siteService
@@ -295,6 +311,26 @@ function CreateManager(props) {
               onChange={(e) => handleOnChange(e)}
               error={errors["password"].length > 0 ? true : false}
             />
+          </div>
+          <div>
+            {radioPermission.map((data, index) => {
+              return (
+                <div className="radio-main">
+                  <input
+                    id={data.id}
+                    type="radio"
+                    key={index}
+                    checked={value === data.id}
+                    onChange={(e) => handleChange(e, data.id)}
+                    value={data.id}
+                    label={data.name}
+                  />
+                  <label for={data.id} className="radio-label">
+                    {data.name}
+                  </label>
+                </div>
+              );
+            })}
           </div>
           <Button
             className="confirmJob"

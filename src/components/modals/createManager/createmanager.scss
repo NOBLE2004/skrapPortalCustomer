@@ -68,4 +68,23 @@
       color: white;
     }
   }
+  .radio-main {
+    display: inline-flex;
+    align-items: end;
+    cursor: pointer;
+    margin-top: 10px;
+
+    input{
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .radio-label {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
 }

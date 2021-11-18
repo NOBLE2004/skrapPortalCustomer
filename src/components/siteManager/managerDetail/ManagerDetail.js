@@ -14,8 +14,8 @@ const ManagerDetail = ({ title, siteData }) => {
     site_assigned,
     email,
     user_id,
+    name
   } = siteData;
-
   const handleManagerDetail = (id) => {
     history.push("site-managers/" + id);
   };
@@ -49,23 +49,23 @@ const ManagerDetail = ({ title, siteData }) => {
           <Grid item md={8} className="personal-info">
             <div className="info">
               <div className="designation">Manager</div>
-              <div className="personal-title">{manager_name}</div>
+              <div className="personal-title">{name ? name : "n/a"}</div>
             </div>
             <div className="info">
               <div className="designation">Site Assigned</div>
-              <div className="personal-title">{manager_name}</div>
+              <div className="personal-title">{manager_name ? manager_name : "n/a"}</div>
             </div>
             <div className="info">
               <div className="designation">Address</div>
-              <div className="personal-title">{job_address}</div>
+              <div className="personal-title">{job_address ? job_address : "n/a"}</div>
             </div>
             <div className="info">
               <div className="designation">Email</div>
-              <div className="personal-title">{email}</div>
+              <div className="personal-title">{email ? email : 'n/a'}</div>
             </div>
             <div className="info">
               <div className="designation">Phone</div>
-              <div className="personal-title">{mobile_number}</div>
+              <div className="personal-title">{mobile_number ? mobile_number : "n/a"}</div>
             </div>
           </Grid>
         </Grid>

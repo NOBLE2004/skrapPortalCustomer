@@ -7,7 +7,7 @@ export const getSiteManager = () => {
     sitesService
       .getManagerList()
       .then((res) => {
-        dispatch(siteManagerSuccess(res.data.data.data));
+        dispatch(siteManagerSuccess(res.data.result));
       })
       .catch((err) => {
         dispatch(siteManagerFailure(err.message));

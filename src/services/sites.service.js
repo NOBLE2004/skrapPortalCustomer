@@ -2,11 +2,13 @@ import HttpService from "./http.service";
 
 class SiteService extends HttpService {
   //site manager
-  getManagerList = () => this.get("customers/siteManagerList");
+  getManagerList = () => this.post("multiuser/getUserList");
   getAllSites = () => this.get("sites");
   addNewManager = (data) => this.post("siteManager/register", data);
+  getPermission = () => this.post('multiuser/permissions')
   showManagerDetail = (params) =>
     this.post("siteManager/details", { id: params });
+    
 
   // sites
 
