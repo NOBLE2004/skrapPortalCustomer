@@ -54,7 +54,6 @@ const SiteManagerDetailPage = () => {
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
   };
-
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
@@ -80,13 +79,13 @@ const SiteManagerDetailPage = () => {
                 <JobFilters handleChangeFilters={handleChangeFilters} />
               </div>
             </Grid>
-            {managerData && (
+            {managerData && managerData.jobs?.data?.length ?(
               <SiteManagerTable
                 managerData={managerData}
                 pagination={managerData.jobs}
                 handlePagination={handlePagination}
               />
-            )}
+            ) : "Jobs Not Found Yet !"}
           </>
         )}
       </Grid>
