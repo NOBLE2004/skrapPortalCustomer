@@ -20,40 +20,63 @@ const NewManagerDetail = ({ managerData, setReload }) => {
             <Grid item md={3} className="new-personal-info">
               <div className="info">
                 <div className="designation">Manager</div>
-                <div className="personal-title">{data ? data.first_name + " " + data.last_name : "n/a"}</div>
+                <div className="personal-title">
+                  {data ? data.first_name + " " + data.last_name : "n/a"}
+                </div>
               </div>
               <div className="change-info">
                 <div className="info">
                   <div className="designation">Site Assigned</div>
-                  <div className="personal-title">{`${site && site.line_1 ? site.line_1 : "n/a"}`}</div>
+                  <div className="personal-title">{`${
+                    site && site.line_1 ? site.line_1 : "n/a"
+                  }`}</div>
                 </div>
-                <div className="change-title" onClick={() => setIsManagerOpen(true)}>Change</div>
+                <div
+                  className="change-title"
+                  onClick={() => setIsManagerOpen(true)}
+                >
+                  Change
+                </div>
               </div>
             </Grid>
             <Grid item md={3} className="new-personal-info">
               <div className="info">
                 <div className="designation">Address</div>
                 <div className="personal-title">
-                  {`${site ? site.line_1 + " " + site.postcode + " " + site.postal_county : ""}`}
+                  {`${
+                    site
+                      ? site.line_1 +
+                        " " +
+                        site.postcode +
+                        " " +
+                        site.postal_county
+                      : "n/a"
+                  }`}
                 </div>
               </div>
               <div className="info">
                 <div className="designation">Email</div>
-                <div className="personal-title">{data ? data.email : ""}</div>
+                <div className="personal-title">{data ? data.email : "n/a"}</div>
               </div>
             </Grid>
 
             <Grid item md={2} className="new-personal-info">
               <div className="info">
                 <div className="designation">Phone</div>
-                <div className="personal-title">{data ? data.mobile_number : ""}</div>
+                <div className="personal-title">
+                  {data ? data.mobile_number : ""}
+                </div>
               </div>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
       {isManagerOpen && (
-        <AssignToManager handleClose={() => setIsManagerOpen(false)} setReload={() => setReload()} managerId={data.user_id} />
+        <AssignToManager
+          handleClose={() => setIsManagerOpen(false)}
+          setReload={() => setReload()}
+          managerId={data.user_id}
+        />
       )}
     </div>
   );

@@ -8,8 +8,11 @@ import FadeLoader from "react-spinners/FadeLoader";
 import JobFilters from "../../filters/jobFilters";
 import { useParams } from "react-router";
 import "./siteManagerDetailPage.scss";
+import PoDetail from "../poDetail/PoDetail";
+import { connect } from "react-redux";
 
-const SiteManagerDetailPage = () => {
+const SiteManagerDetailPage = (props) => {
+  console.log("po", props.po.poData);
   const { id } = useParams();
   const [filters, setFilters] = useState({
     status: "",
@@ -68,7 +71,13 @@ const SiteManagerDetailPage = () => {
         ) : (
           <>
             <Grid item md={12}>
-              <NewManagerDetail managerData={managerData} setReload={() => setReload(!reload)} />
+              <NewManagerDetail
+                managerData={managerData}
+                setReload={() => setReload(!reload)}
+              />
+            </Grid>
+            <Grid className="po-detail-page">
+              <PoDetail data={props.po.poData} />
             </Grid>
             <Grid item md={12} className="site-manager-filter">
               <div className="jobs-search-header">
@@ -79,18 +88,22 @@ const SiteManagerDetailPage = () => {
                 <JobFilters handleChangeFilters={handleChangeFilters} />
               </div>
             </Grid>
-            {managerData && managerData.jobs?.data?.length ?(
+            {managerData && managerData.jobs?.data?.length ? (
               <SiteManagerTable
                 managerData={managerData}
                 pagination={managerData.jobs}
                 handlePagination={handlePagination}
               />
-            ) : "Jobs Not Found Yet !"}
+            ) : (
+              "Jobs Not Found Yet !"
+            )}
           </>
         )}
       </Grid>
     </div>
   );
 };
-
-export default SiteManagerDetailPage;
+const mapStateToProps = ({ sites, po }) => {
+  return { sites, po };
+};
+export default connect(mapStateToProps, "")(SiteManagerDetailPage);
