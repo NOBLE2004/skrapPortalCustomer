@@ -3,9 +3,11 @@ import { Grid, Card, CardContent } from "@material-ui/core";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
 import sitesService from "../../../services/sites.service";
 import { useHistory } from "react-router";
+import { connect } from "react-redux";
+import { getPoOrders } from "../../../store/actions/poOrder.action";
 import "./managerdetail.scss";
-const ManagerDetail = ({ title, siteData }) => {
-  console.log("siteData" , siteData)
+const ManagerDetail = (props) => {
+  const { title, siteData } = props
   const history = useHistory();
   const {
     manager_name,
@@ -14,9 +16,10 @@ const ManagerDetail = ({ title, siteData }) => {
     site_assigned,
     email,
     user_id,
-    name
+    name,
   } = siteData;
-  const handleManagerDetail = (id) => {
+  const handleManagerDetail = (id, data) => {
+    props.getPo(data.purchase_orders)
     history.push("site-managers/" + id);
   };
 
@@ -27,7 +30,7 @@ const ManagerDetail = ({ title, siteData }) => {
   return (
     <Card
       className="manager-detail-main"
-      onClick={() => handleManagerDetail(user_id)}
+      onClick={() => handleManagerDetail(user_id, siteData)}
     >
       <CardContent>
         <div className="title">{title ? title : "Managers Details"}</div>
@@ -53,19 +56,25 @@ const ManagerDetail = ({ title, siteData }) => {
             </div>
             <div className="info">
               <div className="designation">Site Assigned</div>
-              <div className="personal-title">{manager_name ? manager_name : "n/a"}</div>
+              <div className="personal-title">
+                {manager_name ? manager_name : "n/a"}
+              </div>
             </div>
             <div className="info">
               <div className="designation">Address</div>
-              <div className="personal-title">{job_address ? job_address : "n/a"}</div>
+              <div className="personal-title">
+                {job_address ? job_address : "n/a"}
+              </div>
             </div>
             <div className="info">
               <div className="designation">Email</div>
-              <div className="personal-title">{email ? email : 'n/a'}</div>
+              <div className="personal-title">{email ? email : "n/a"}</div>
             </div>
             <div className="info">
               <div className="designation">Phone</div>
-              <div className="personal-title">{mobile_number ? mobile_number : "n/a"}</div>
+              <div className="personal-title">
+                {mobile_number ? mobile_number : "n/a"}
+              </div>
             </div>
           </Grid>
         </Grid>
@@ -74,4 +83,16 @@ const ManagerDetail = ({ title, siteData }) => {
   );
 };
 
-export default ManagerDetail;
+const mapStateToProps = ({ sites }) => {
+  return { sites };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPo: (data) => dispatch(getPoOrders(data)),
+  };
+};
+
+
+
+export default connect(mapStateToProps , mapDispatchToProps)(ManagerDetail);

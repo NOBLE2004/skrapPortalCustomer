@@ -2,23 +2,25 @@ import { combineReducers } from "redux";
 import { authReducer, signUpReducer } from "./authReducer";
 import { siteManagerReducer } from "./siteManagerReducer";
 import { dashboardReducer } from "./dashboardReducer";
-import {sitesReducer} from "./sitesReducer";
+import { sitesReducer } from "./sitesReducer";
 import { allSiteReducer } from "./allSiteReducer";
-import {jobReducer} from "./jobReducer";
-import {tippingReducer} from "./tippingReducer";
-import {ticketReducer} from "./ticketReducer";
-import {phoneReducer} from "./phoneReducer";
+import { jobReducer } from "./jobReducer";
+import { tippingReducer } from "./tippingReducer";
+import { ticketReducer } from "./ticketReducer";
+import { phoneReducer } from "./phoneReducer";
 import { reportReducer } from "./reportReducer";
+import { poReducer } from "./poReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
   siteManager: siteManagerReducer,
   dashboard: dashboardReducer,
-  sites : sitesReducer,
-  jobs : jobReducer,
+  sites: sitesReducer,
+  jobs: jobReducer,
   allsites: allSiteReducer,
   tippings: tippingReducer,
   tickets: ticketReducer,
   phone: phoneReducer,
-  report: reportReducer
+  report: reportReducer,
+  po: poReducer,
 });

@@ -188,7 +188,7 @@ function CreateManager(props) {
           isLoading: false,
         });
         setTimeout(() => {
-          handleClose();
+           handleClose();
         }, 2000);
       })
       .catch((err) => {
