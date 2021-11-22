@@ -1,11 +1,9 @@
 import React from "react";
 import { Grid, Card, CardContent } from "@material-ui/core";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
-import sitesService from "../../../services/sites.service";
 import { useHistory } from "react-router";
-import { connect } from "react-redux";
-import { getPoOrders } from "../../../store/actions/poOrder.action";
 import "./managerdetail.scss";
+
 const ManagerDetail = (props) => {
   const { title, siteData } = props
   const history = useHistory();
@@ -19,7 +17,6 @@ const ManagerDetail = (props) => {
     name,
   } = siteData;
   const handleManagerDetail = (id, data) => {
-    props.getPo(data.purchase_orders)
     history.push("site-managers/" + id);
   };
 
@@ -83,16 +80,9 @@ const ManagerDetail = (props) => {
   );
 };
 
-const mapStateToProps = ({ sites }) => {
-  return { sites };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getPo: (data) => dispatch(getPoOrders(data)),
-  };
-};
 
 
 
-export default connect(mapStateToProps , mapDispatchToProps)(ManagerDetail);
+
+
+export default ManagerDetail

@@ -12,8 +12,8 @@ const PoTable = ({ data }) => {
         },
       },
       {
-        Header: "Service Name",
-        accessor: (d) => d.service.service_name,
+        Header: "Service Id",
+        accessor: "service_id",
         disableSortBy: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;

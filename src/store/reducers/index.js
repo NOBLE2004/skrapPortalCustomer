@@ -9,7 +9,6 @@ import { tippingReducer } from "./tippingReducer";
 import { ticketReducer } from "./ticketReducer";
 import { phoneReducer } from "./phoneReducer";
 import { reportReducer } from "./reportReducer";
-import { poReducer } from "./poReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -22,5 +21,4 @@ export default combineReducers({
   tickets: ticketReducer,
   phone: phoneReducer,
   report: reportReducer,
-  po: poReducer,
 });

@@ -29,7 +29,7 @@ const SiteManagerDetailPage = (props) => {
   });
   const [reload, setReload] = useState(false);
 
-  const { isLoading, managerData, isCreateManager } = state;
+  const { isLoading, managerData } = state;
   const handleCreateManager = () => {
     setState({ ...state, isCreateManager: true });
   };
@@ -46,7 +46,11 @@ const SiteManagerDetailPage = (props) => {
     sitesService
       .showManagerDetail(id)
       .then((res) => {
-        setState({ ...state, managerData: res.data, isLoading: false });
+        setState({
+          ...state,
+          managerData: res.data,
+          isLoading: false,
+        });
       })
       .catch((error) => {
         setState({ ...state, isLoading: false });
@@ -76,7 +80,7 @@ const SiteManagerDetailPage = (props) => {
               />
             </Grid>
             <Grid className="po-detail-page">
-              <PoDetail data={props.po.poData} />
+              <PoDetail managerData={managerData} />
             </Grid>
             <Grid item md={12} className="site-manager-filter">
               <div className="jobs-search-header">
