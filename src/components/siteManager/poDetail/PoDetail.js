@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Grid, Card, CardContent } from "@material-ui/core";
-import { personImage, editIcon, showIcon } from "../../../assets/images";
+import React from "react";
+import { Card, CardContent } from "@material-ui/core";
 import "./poDetail.scss";
 import PoTable from "./poTable/PoTable";
 
-const PoDetail = ({ data }) => {
+const PoDetail = ({ managerData }) => {
+  const { data } = managerData;
   return (
     <div>
       <Card className="new-manager-detail-main">
         <CardContent>
           <div className="title">Purchase Order Detail</div>
 
-          {data && data.length > 0 ? (
-            <PoTable data={data} />
+          {data && data.purchase_orders && data.purchase_orders.length > 0 ? (
+            <PoTable data={data.purchase_orders} />
           ) : (
             "Purchase Order not found!"
           )}
