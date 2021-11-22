@@ -1,26 +1,33 @@
-.services-main{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.services-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.add-more-btn{
-    margin-top: 20px !important;
+.add-more-btn {
+  margin-top: 20px !important;
 }
-.add-more-link{
-    margin-top: 15px;
-    font-family: DM Sans;
-    font-style: normal;
-    font-size: 14px;
-    line-height: 18px;
-    cursor: pointer;
-    color: #0176ff;
-    text-decoration: underline;
+.add-more-link {
+  margin-top: 15px;
+  font-family: DM Sans;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 18px;
+  cursor: pointer;
+  color: #0176ff;
+  text-decoration: underline;
 }
-.remove-link{
-    font-family: DM Sans;
-    font-style: normal;
-    font-size: 14px;
-    line-height: 18px;
-    cursor: pointer;
-    color: #ff0000;
+.remove-link {
+  font-family: DM Sans;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 18px;
+  cursor: pointer;
+  color: #ff0000;
+}
+.service-error {
+  font-family: DM Sans;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 18px;
+  color: #ff0000;
 }
