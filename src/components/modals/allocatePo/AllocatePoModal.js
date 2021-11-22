@@ -49,11 +49,27 @@ const AllocatePoModal = (props) => {
     notice: null,
     isLoading: false,
     subServices: [],
+    po: "",
+    isServiceEmpty: false,
   });
+  const [errors, setError] = useState({
+    po: "",
+  });
+
+  const checkingError = (name, value) => {
+    switch (name) {
+      case "po":
+        errors[name] = value.length === 0 ? "Required" : "";
+        break;
+      default:
+        break;
+    }
+    setError({ ...errors });
+  };
   const [serviceType, setServiceType] = useState([
     { user_id: userId, service_id: "", quantity: 0 },
   ]);
-  const { notice, isLoading, subServices } = state;
+  const { notice, isLoading, subServices, po, isServiceEmpty } = state;
 
   useEffect(() => {
     sitesService
@@ -73,6 +89,12 @@ const AllocatePoModal = (props) => {
     ]);
   };
 
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    setState({ ...state, po: event.target.value });
+    checkingError(name, value);
+  };
+
   const handleServiceType = (event, index) => {
     const { name, value } = event.target;
     switch (name) {
@@ -80,6 +102,7 @@ const AllocatePoModal = (props) => {
         const data = [...serviceType];
         data[index].service_id = value;
         setServiceType(data);
+        setState({ ...state, isServiceEmpty: false });
         break;
       case "quantity":
         const data1 = [...serviceType];
@@ -97,6 +120,21 @@ const AllocatePoModal = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (po === "") {
+      Object.keys(errors).forEach((error) => {
+        checkingError(error, state[error]);
+      });
+      return;
+    }
+
+    const serReq = serviceType.some((elem) => {
+      return elem.service_id !== "";
+    });
+
+    if (!serReq) {
+      setState({ ...state, isServiceEmpty: true });
+      return;
+    }
     if (userId === null) {
       setState({
         ...state,
@@ -112,8 +150,10 @@ const AllocatePoModal = (props) => {
     setState({ ...state, isLoading: true });
     const data = {
       services: serviceType,
+      purchase_order: po,
     };
 
+    
     sitesService
       .purchaseOrder(data)
       .then((res) => {
@@ -126,9 +166,9 @@ const AllocatePoModal = (props) => {
           },
         });
 
-        setTimeout(()=>{
-          handleClose()
-        },2000)
+        setTimeout(() => {
+          handleClose();
+        }, 2000);
       })
       .catch((err) => {
         setState({
@@ -147,6 +187,16 @@ const AllocatePoModal = (props) => {
         <DialogTitle onClose={handleClose}> Allocate to Po </DialogTitle>
         <DialogContent dividers>
           <form noValidate>
+            <TextField
+              name="po"
+              placeholder="Purchase Order"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              size="small"
+              onChange={(e) => handleOnChange(e)}
+              error={errors["po"].length > 0 ? true : false}
+            />
             {serviceType.map((data, index) => {
               return (
                 <Grid container className="services-main" key={index}>
@@ -203,6 +253,11 @@ const AllocatePoModal = (props) => {
                 </Grid>
               );
             })}
+            {isServiceEmpty && (
+              <div className="service-error">
+                Atleast One Service is Required
+              </div>
+            )}
             <span className="add-more-link" onClick={handleAddService}>
               Add More
             </span>

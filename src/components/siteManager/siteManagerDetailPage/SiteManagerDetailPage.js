@@ -12,7 +12,6 @@ import PoDetail from "../poDetail/PoDetail";
 import { connect } from "react-redux";
 
 const SiteManagerDetailPage = (props) => {
-  console.log("po", props.po.poData);
   const { id } = useParams();
   const [filters, setFilters] = useState({
     status: "",
