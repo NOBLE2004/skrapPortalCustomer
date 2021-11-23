@@ -5,19 +5,11 @@ const PoTable = ({ data }) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Service Id",
+        Header: "Service Name",
         accessor: (d) => d.service.service_name,
         disableSortBy: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
-        },
-      },
-      {
-        Header: "Services Order",
-        accessor: "uses",
-        disableFilters: true,
-        Cell: (props) => {
-          return <span>{props.value || "0"}</span>;
         },
       },
       {
@@ -26,6 +18,14 @@ const PoTable = ({ data }) => {
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
+        },
+      },
+      {
+        Header: "Services Ordered",
+        accessor: "uses",
+        disableFilters: true,
+        Cell: (props) => {
+          return <span>{props.value || "0"}</span>;
         },
       },
       {
@@ -52,7 +52,6 @@ const PoTable = ({ data }) => {
             .format("DD-MM-YYYY")
         },
         disableFilters: true,
-        
       },
     ],
     []
