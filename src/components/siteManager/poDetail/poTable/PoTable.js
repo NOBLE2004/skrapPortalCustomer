@@ -1,19 +1,12 @@
 import React, { useMemo } from "react";
 import TableContainer from "../../../reactTable/TableContainer";
+import Moment from "moment";
 const PoTable = ({ data }) => {
   const columns = useMemo(
     () => [
       {
-        Header: "User Id",
-        accessor: "user_id",
-        disableSortBy: true,
-        Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
-        },
-      },
-      {
         Header: "Service Id",
-        accessor: "service_id",
+        accessor: (d) => d.service.service_name,
         disableSortBy: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -28,7 +21,7 @@ const PoTable = ({ data }) => {
         },
       },
       {
-        Header: "PO Allocate",
+        Header: "PO Allocated",
         accessor: "max",
         disableFilters: true,
         Cell: (props) => {
@@ -48,24 +41,18 @@ const PoTable = ({ data }) => {
         accessor: "purchase_order",
         disableFilters: true,
         Cell: (props) => {
-          return (
-            <span>
-              {"PO-" + props.value || "n/a"}
-            </span>
-          );
+          return <span>{"PO-" + props.value || "n/a"}</span>;
         },
       },
       {
         Header: "Created At",
-        accessor: "created_at",
-        disableFilters: true,
-        Cell: (props) => {
-          return (
-            <span>
-              { props.value || "n/a"}
-            </span>
-          );
+        accessor: d => {
+          return Moment(d.created_at)
+            .local()
+            .format("DD-MM-YYYY")
         },
+        disableFilters: true,
+        
       },
     ],
     []
