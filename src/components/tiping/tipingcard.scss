@@ -13,6 +13,7 @@
   }
   .tip-info {
     margin-bottom: 5px;
+    width: fit-content;
     .tip-site {
       font-family: DM Sans;
       font-style: normal;
@@ -53,14 +54,14 @@
     background: #dee7f1;
     border-radius: 2px;
     margin-right: 10px;
-    a{
+    a {
       text-decoration: none;
       font-family: DM Sans;
       font-style: normal;
       font-weight: normal;
       font-size: 9px;
       line-height: 12px;
-      color: #0D0D39
+      color: #0d0d39;
     }
     .MuiButton-label {
       font-family: DM Sans;
@@ -68,7 +69,7 @@
       font-weight: normal;
       font-size: 9px;
       line-height: 12px;
-      color: #0D0D39
+      color: #0d0d39;
     }
   }
   .tiping-action {
@@ -106,4 +107,31 @@
   // .gm-ui-hover-effect {
   //   display: none !important;
   // }
+}
+.driver {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  .name {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 9px;
+    line-height: 12px;
+  }
+  .name-value {
+    font-family: DM Sans;
+    font-weight: normal;
+    font-size: 9px;
+    line-height: 12px;
+  }
+  .email{
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 9px;
+    margin-right: 5px;
+    line-height: 12px;
+  }
 }

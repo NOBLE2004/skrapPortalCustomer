@@ -1,0 +1,17 @@
+.booksitemodal {
+  .MuiPaper-root {
+    width: 100%;
+  }
+}
+.track-mapCard {
+  border-radius: 12px !important;
+  height: 550px;
+  padding: none;
+  .MuiCardContent-root {
+    height: 100%;
+    padding: 0px;
+    & > div {
+      height: 100%;
+    }
+  }
+}

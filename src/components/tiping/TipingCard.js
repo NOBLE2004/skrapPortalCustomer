@@ -2,12 +2,13 @@ import React from "react";
 import { Card, CardContent, Button } from "@material-ui/core";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import { phoneCall } from "../../assets/images/index";
+import moment from "moment";
 import "./tipingcard.scss";
 
 const TipingCard = (props) => {
-  const { tipTime, jobInfo, gotoJobDetail } = props;
-  const { job_address, jobStatus, site_manager_mobile_number } = jobInfo;
-
+  const { tipTime, jobInfo, gotoJobDetail, driverInfo } = props;
+  const { job_address, jobStatus, site_manager_mobile_number, driver } =
+    jobInfo;
   const handleMore = () => {
     gotoJobDetail();
   };
@@ -15,54 +16,93 @@ const TipingCard = (props) => {
     <div className="tiping-main">
       <Card>
         <CardContent>
-          {/* {site && <div className="tip-info">
-            <div className="tip-site">Site</div>
-            <div className="tip-site-name">{site ? site : "N/A"}</div>
-          </div> } */}
-          {props.site ? (
+          {driverInfo === "driver" ? (
             <div className="tip-info">
-              <div className="tip-site">Site</div>
-              <div className="tip-site-name">
-                {job_address ? job_address : "N/A"}
+              <div className="tip-site">Deiver Info</div>
+              <div className="driver">
+                <div className="name">Name</div>
+                <div className="name-value">
+                  {driver ? driver.first_name + driver.last_name : "n/a"}
+                </div>
+              </div>
+              <div className="driver">
+                <div className="email">Email</div>
+                <div className="name-value">
+                  {driver ? driver.email : "n/a"}
+                </div>
+              </div>
+              <div className="driver">
+                <div className="name">Phone</div>
+                <div className="name-value">
+                  {driver ? driver.mobile_number : "n/a"}
+                </div>
+              </div>
+              <div className="driver">
+                <div className="name">Date</div>
+                <div className="name-value">
+                  {driver
+                    ? moment(driver.save_date).local().format("DD-MM-YYYY")
+                    : "n/a"}
+                </div>
               </div>
             </div>
           ) : (
             <>
-         
-          <div className="tip-info">
-            <div className="tip-site">Site Address</div>
-            <div className="tip-site-name">
-              {job_address ? job_address : "N/A"}
-            </div>
-          </div>
-          {jobStatus && <div className="tip-info">
-            <div className="tip-site">Status</div>
-            <div className="tip-info-status">
-              <CommonStatus
-                status={jobStatus}
-                statusTitle={jobStatus ? jobStatus : "Active"}
-              />
-              {/*<button className="tip-time-btn">
+              {props.site ? (
+                <div className="tip-info">
+                  <div className="tip-site">Site</div>
+                  <div className="tip-site-name">
+                    {job_address ? job_address : "N/A"}
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="tip-info">
+                    <div className="tip-site">Site Address</div>
+                    <div className="tip-site-name">
+                      {job_address ? job_address : "N/A"}
+                    </div>
+                  </div>
+                  {jobStatus && (
+                    <div className="tip-info">
+                      <div className="tip-site">Status</div>
+                      <div className="tip-info-status">
+                        <CommonStatus
+                          status={jobStatus}
+                          statusTitle={jobStatus ? jobStatus : "Active"}
+                        />
+                        {/*<button className="tip-time-btn">
                 {tipTime ? tipTime : "7 Mins"}
               </button>*/}
-            </div>
-          </div>}
+                      </div>
+                    </div>
+                  )}
 
-          <div className="tiping-action">
-            {site_manager_mobile_number && <Button
-              size="small"
-              startIcon={<img src={phoneCall} alt="phone-icon" />}
-              className="tip-call-btn"
-            >
-              <a href={"callto:" + site_manager_mobile_number}>Call</a>
-            </Button>}
+                  <div className="tiping-action">
+                    {site_manager_mobile_number && (
+                      <Button
+                        size="small"
+                        startIcon={<img src={phoneCall} alt="phone-icon" />}
+                        className="tip-call-btn"
+                      >
+                        <a href={"callto:" + site_manager_mobile_number}>
+                          Call
+                        </a>
+                      </Button>
+                    )}
 
-            <Button size="small" className="tip-call-btn" onClick={handleMore}>
-              ... More
-            </Button>
-          </div>
-          </>
-           )}
+                    <Button
+                      size="small"
+                      className="tip-call-btn"
+                      onClick={handleMore}
+                    >
+                      ... More
+                    </Button>
+                  </div>
+                </>
+              )}
+            </>
+          )}
         </CardContent>
       </Card>
     </div>

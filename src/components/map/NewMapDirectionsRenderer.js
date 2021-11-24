@@ -43,7 +43,7 @@ function MapDirectionsRenderer({
             coords: result.routes[0].overview_path,
           });
         } else {
-          setState({ ...state, error: result.status });
+          setState({ ...state });
         }
       }
     );
