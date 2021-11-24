@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, Button } from "@material-ui/core";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import { phoneCall } from "../../assets/images/index";
+import moment from "moment";
 import "./tipingcard.scss";
 
 const TipingCard = (props) => {
@@ -25,7 +26,7 @@ const TipingCard = (props) => {
                 </div>
               </div>
               <div className="driver">
-                <div className="email" >Email</div>
+                <div className="email">Email</div>
                 <div className="name-value">
                   {driver ? driver.email : "n/a"}
                 </div>
@@ -39,7 +40,9 @@ const TipingCard = (props) => {
               <div className="driver">
                 <div className="name">Date</div>
                 <div className="name-value">
-                  {driver ? driver.save_date : "n/a"}
+                  {driver
+                    ? moment(driver.save_date).local().format("DD-MM-YYYY")
+                    : "n/a"}
                 </div>
               </div>
             </div>
