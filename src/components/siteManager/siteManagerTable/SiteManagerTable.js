@@ -66,11 +66,11 @@ const SiteManagerTable = ({
         disableFilters: true,
         Cell: (props) => new Date(props.value).toLocaleString(),
       },
-      // {
-      //   Header: "Service",
-      //   accessor: "service_name",
-      //   disableFilters: true,
-      // },
+      {
+        Header: "Service",
+        accessor: "service_name",
+        disableFilters: true,
+      },
 
       {
         Header: "Cost",
@@ -79,12 +79,12 @@ const SiteManagerTable = ({
         disableFilters: true,
         filter: "equals",
       },
-      // {
-      //   Header: "Status",
-      //   accessor: "appointment_status",
-      //   disableFilters: true,
-      //   Cell: (props) => <CommonStatus status={props.value} />,
-      // },
+      {
+        Header: "Status",
+        accessor: "appointment_status",
+        disableFilters: true,
+        Cell: (props) => <CommonStatus status={status(props.value)} />,
+      },
       {
         Header: "Ewc Code",
         accessor: "ewc_code",
@@ -189,7 +189,7 @@ const SiteManagerTable = ({
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
-        Cell: (props) => <CommonStatus status={props.value} />,
+        Cell: (props) => <CommonStatus status={status(props.value)} />,
       },
       {
         Header: "Payment",
