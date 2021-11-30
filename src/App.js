@@ -16,6 +16,7 @@ import SiteManagerDetailPage from "./components/siteManager/siteManagerDetailPag
 import Register from "./containers/registration/Register/Register";
 import AddPhone from "./containers/registration/addPhone/AddPhone";
 import MainReports from "./containers/mainReports/MainReports";
+import SitesDetailPage from "./components/sites/sitesDetailPage/SitesDetailPage";
 
 const history = createBrowserHistory();
 
@@ -32,7 +33,8 @@ function App() {
           <PrivateRoute path="/dashboard" component={() => <DashBoard />} />
           <PrivateRoute path="/site-managers" component={() => <SiteManagers />} exact/>
           <PrivateRoute path="/site-managers/:id" component={() => <SiteManagerDetailPage />} exact/>
-          <PrivateRoute path="/sites" component={() => <Sites />} /> 
+          <PrivateRoute path="/sites" component={() => <Sites />} exact/> 
+          <PrivateRoute path="/sites/:id" component={() => <SitesDetailPage />} exact/> 
           <PrivateRoute path="/jobs" component={() => <MainJobs />} /> 
           <PrivateRoute path="/tiping" component={() => <MainTiping />} /> 
           <PrivateRoute path="/tickets" component={() => <MainTickets />} /> 
