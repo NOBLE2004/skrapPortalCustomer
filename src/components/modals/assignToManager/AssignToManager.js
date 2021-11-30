@@ -25,12 +25,7 @@ function AssignToManager(props) {
     notice: null,
   });
 
-  const {
-    isLoading,
-    site,
-    manager,
-    notice,
-  } = state;
+  const { isLoading, site, manager, notice } = state;
 
   const styles = (theme) => ({
     root: {
@@ -75,7 +70,7 @@ function AssignToManager(props) {
         await props.getSiteManager();
       }
       if (!props.allsites.data) {
-        await props.getSites()
+        await props.getSites();
       }
     }
 
@@ -84,36 +79,37 @@ function AssignToManager(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setState({ ...state, isLoading: true })
+    setState({ ...state, isLoading: true });
 
     SiteService.siteAssignToManager({
       manager_id: managerId ? managerId : manager,
-      address_id: site
-    }).then(response => {
-      setState({
-        ...state,
-        isLoading: false,
-        notice: {
-          type: 'success',
-          text: response.data.description,
-        }
-      });
-      if (managerId) {
-        setTimeout(() => {
-          setReload();
-        }, 2000);
-      }
+      address_id: site,
     })
-      .catch(error => {
+      .then((response) => {
         setState({
           ...state,
           isLoading: false,
           notice: {
-            type: 'error',
-            text: error.message,
-          }
-        })
+            type: "success",
+            text: response.data.description,
+          },
+        });
+        if (managerId) {
+          setTimeout(() => {
+            setReload();
+          }, 2000);
+        }
       })
+      .catch((error) => {
+        setState({
+          ...state,
+          isLoading: false,
+          notice: {
+            type: "error",
+            text: error.message,
+          },
+        });
+      });
   };
 
   return (
@@ -148,7 +144,7 @@ function AssignToManager(props) {
             </FormControl>
           </div>
 
-          {!managerId &&
+          {!managerId && (
             <div className="customer-input-field">
               <InputLabel>Managers List</InputLabel>
               <FormControl variant="outlined" margin="dense" fullWidth>
@@ -168,14 +164,14 @@ function AssignToManager(props) {
                     props.siteManager.sites.map((data, index) => {
                       return (
                         <MenuItem key={index} value={data.user_id}>
-                          {data.manager_name}
+                          {data.name}
                         </MenuItem>
                       );
                     })}
                 </Select>
               </FormControl>
             </div>
-          }
+          )}
           <Button
             className="confirmJob"
             variant="contained"
@@ -204,4 +200,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssignToManager);
-

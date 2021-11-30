@@ -131,7 +131,7 @@ function SiteAssignToManager(props) {
                     props.siteManager.sites.map((data, index) => {
                       return (
                         <MenuItem key={index} value={data.user_id}>
-                          {data.manager_name}
+                          {data.name}
                         </MenuItem>
                       );
                     })}
@@ -148,9 +148,10 @@ function SiteAssignToManager(props) {
             Submit
             {isLoading && <CircularProgress />}
           </Button>
+          <div className="alert-msg">
+            {notice && <Alert severity={notice.type}>{notice.text}</Alert>}
+          </div>
         </form>
-
-        {notice && <Alert severity={notice.type}>{notice.text}</Alert>}
       </DialogContent>
     </Dialog>
   );

@@ -141,7 +141,7 @@ const AllocatePoModal = (props) => {
         isLoading: false,
         notice: {
           type: "error",
-          text: "User Id is mandartory",
+          text: "Please first assign manager to the site",
         },
       });
 
@@ -153,7 +153,6 @@ const AllocatePoModal = (props) => {
       purchase_order: po,
     };
 
-    
     sitesService
       .purchaseOrder(data)
       .then((res) => {
@@ -271,9 +270,10 @@ const AllocatePoModal = (props) => {
               Submit
               {isLoading && <CircularProgress />}
             </Button>
+            <div className="alert-msg">
+              {notice && <Alert severity={notice.type}>{notice.text}</Alert>}
+            </div>
           </form>
-
-          {notice && <Alert severity={notice.type}>{notice.text}</Alert>}
         </DialogContent>
       </Dialog>
     </div>
