@@ -64,7 +64,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
               <div className="info">
                 <div className="designation">Phone</div>
                 <div className="personal-title">
-                  {data ? data.mobile_number : ""}
+                  {data ? data.mobile_number : "n/a"}
                 </div>
               </div>
             </Grid>

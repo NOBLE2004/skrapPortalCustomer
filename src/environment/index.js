@@ -48,6 +48,7 @@ export const C_OTC_STORAGE = "c_d_storage";
 
 export const sidebarTabsList = [
   { text: "Dashboard", key: "dashboard", sub: false, icon: dashboardBlack },
+  { text: "Sites", key: "sites", sub: false, icon: sitesBlack },
   {
     text: "Jobs",
     key: "jobs",
@@ -60,7 +61,6 @@ export const sidebarTabsList = [
     sub: false,
     icon: customerBlack,
   },
-  { text: "Sites", key: "sites", sub: false, icon: sitesBlack },
   { text: "Tipping", key: "tiping", sub: false, icon: tipingBlack },
   { text: "Tickets", key: "tickets", sub: false, icon: ticketsBlack },
   { text: "Reports", key: "reports", sub: false, icon: statementBlack },
@@ -94,10 +94,10 @@ export const dummyStatus = [
 ];
 
 export const JOB_STATUS = [
-  {id: 0, status: "Pending"},
-  {id: 1, status: "Heading"},
-  {id: 2, status: "Ongoing"},
-  {id: 3, status: "Completed"},
-  {id: 4, status: "Delivered"},
-  {id: 6, status: "Pickup Ongoing"},
+  { id: 0, status: "Pending" },
+  { id: 1, status: "Heading" },
+  { id: 2, status: "Ongoing" },
+  { id: 3, status: "Completed" },
+  { id: 4, status: "Delivered" },
+  { id: 6, status: "Pickup Ongoing" },
 ];

@@ -8,7 +8,7 @@ import {
 } from "react-table";
 import { DefaultColumnFilter } from "./filters";
 import { useHistory } from "react-router";
-import "./jobs-react-table.scss"
+import "./jobs-react-table.scss";
 
 const TableContainer = ({ columns, data, name }) => {
   const history = useHistory();
@@ -49,11 +49,16 @@ const TableContainer = ({ columns, data, name }) => {
     if (name === "jobs") {
       history.push({ pathname: `job-detail/${row.job_id}` });
     }
+    if (name === "sites") {
+      history.push({
+        pathname: `sites/${row.address_id}`,
+        state: { site_address: row.job_address },
+      });
+    }
   };
 
   return (
     <Fragment>
-     
       <div {...getTableProps()} className="table-main">
         <div style={{ display: "table-head" }}>
           {headerGroups.map((headerGroup) => (
@@ -64,8 +69,18 @@ const TableContainer = ({ columns, data, name }) => {
               {headerGroup.headers.map((column) => (
                 <div
                   {...column.getHeaderProps()}
-                  className={name === "sites" ? "sites-table-headings" : "table-headings"}
-                  style={{ width: column.id === 'status' ? '160px' : column.id === 'id-edit' ? '50px': cellWidth, padding: cellPadding }}
+                  className={
+                    name === "sites" ? "sites-table-headings" : "table-headings"
+                  }
+                  style={{
+                    width:
+                      column.id === "status"
+                        ? "160px"
+                        : column.id === "id-edit"
+                        ? "50px"
+                        : cellWidth,
+                    padding: cellPadding,
+                  }}
                 >
                   {column.render("Header")}
                 </div>
@@ -74,36 +89,47 @@ const TableContainer = ({ columns, data, name }) => {
           ))}
         </div>
         <div style={{ display: "table-body" }} {...getTableBodyProps()}>
-          {
-            rows.map((row, i) => {
-              prepareRow(row);
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    border: "1px solid #ECECEC",
-                    marginBottom: 18,
-                    borderRadius: 11,
-                    cursor: "pointer",
-                  }}
-                  className="table-body-row"
-                  {...row.getRowProps()}
-                  onClick={() => handleRowClick(row.original)}
-                >
-                  {row.cells.map((cell) => {
-                    return (
-                      <div
-                        className={name === "sites" ? "sites-table-body-cell" : "table-body-cell" }
-                        style={{ width: cell.column.id === 'status' ? '160px' : cell.column.id === 'id-edit' ? '50px': cellWidth, padding: cellPadding}}
-                        {...cell.getCellProps()}
-                      >
-                        {cell.render("Cell")}
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  border: "1px solid #ECECEC",
+                  marginBottom: 18,
+                  borderRadius: 11,
+                  cursor: "pointer",
+                }}
+                className="table-body-row"
+                {...row.getRowProps()}
+                onClick={() => handleRowClick(row.original)}
+              >
+                {row.cells.map((cell) => {
+                  return (
+                    <div
+                      className={
+                        name === "sites"
+                          ? "sites-table-body-cell"
+                          : "table-body-cell"
+                      }
+                      style={{
+                        width:
+                          cell.column.id === "status"
+                            ? "160px"
+                            : cell.column.id === "id-edit"
+                            ? "50px"
+                            : cellWidth,
+                        padding: cellPadding,
+                      }}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       </div>
     </Fragment>

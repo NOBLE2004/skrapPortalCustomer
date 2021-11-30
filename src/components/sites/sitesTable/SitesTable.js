@@ -36,7 +36,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
       },
       {
         Header: "Address",
-        accessor: "job_address",
+        accessor: (d) => d.job_address.slice(0 , 40),
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
