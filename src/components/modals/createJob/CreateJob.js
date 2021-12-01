@@ -35,14 +35,18 @@ import PaymentService from "../../../services/payment.service";
 import { colors } from "@material-ui/core";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./createJob.scss";
-import { serviceList } from '../../utlils/constants';
+import { serviceList } from "../../utlils/constants";
 
 const materialTheme = createTheme({
   palette: {
     primary: colors.blue,
   },
 });
-export default function CreateJob({ closeModal, setJobCreated , handleJobCreated }) {
+export default function CreateJob({
+  closeModal,
+  setJobCreated,
+  handleJobCreated,
+}) {
   const divRef = useRef(null);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
@@ -67,6 +71,8 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
     // totalCost: '',
     purchaseOrder: "",
     addressData: "",
+    quantity: "",
+    week:''
   });
 
   const [state, setState] = useState({
@@ -97,6 +103,8 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
     permitted_reference: "",
     skip_loc: "0",
     time_slot_loading: false,
+    quantity: 5,
+    portableweeks:0
   });
 
   const styles = (theme) => ({
@@ -138,6 +146,8 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
     permitted_reference,
     skip_loc,
     time_slot_loading,
+    quantity,
+    portableweeks
   } = state;
 
   const handleChange = (event) => {
@@ -209,7 +219,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
   //getservices
   useEffect(() => {
     //ServiceService.list().then((response) => {
-      setServices(serviceList);
+    setServices(serviceList);
     //});
     const userCredit = getUserDataFromLocalStorage();
     setCredit(userCredit.credit_balance);
@@ -345,9 +355,8 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
 
     let currentDayOfMonth = startSelectedDate.getDate();
     let currentMonth = startSelectedDate.getMonth();
-    
 
-    if(currentDayOfMonth < 10) {
+    if (currentDayOfMonth < 10) {
       currentDayOfMonth = "0" + currentDayOfMonth;
     }
     let newCurrentMonth = currentMonth + 1;
@@ -355,10 +364,8 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
     if (newCurrentMonth < 10) {
       newCurrentMonth = "0" + currentMonth;
     }
-   
-    const time =
-    selectedTime &&
-    selectedTime.split("-");
+
+    const time = selectedTime && selectedTime.split("-");
     const startTime = time[0];
     const endTime = time[1];
 
@@ -404,7 +411,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
           permit_cost: 0,
           service_cost: subServiceSelect.price,
           service_id: subServiceSelect.sub_service_id,
-          service_name: subServiceSelect.service_name,
+          service_name: service === 3 ? `${quantity}M³${subServiceSelect.service_name}`: subServiceSelect.service_name,
           service_type: 2,
           skip_loc_type: "1",
           skip_req_days: 0,
@@ -420,7 +427,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
     };
     JobService.createOrder(data)
       .then((response) => {
-        if(Object.keys(response.data.result).length === 0){
+        if (Object.keys(response.data.result).length === 0) {
           setState({
             ...state,
             isLoading: false,
@@ -429,8 +436,8 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
               text: response.data.description,
             },
           });
-        }else{
-          handleJobCreated()
+        } else {
+          handleJobCreated();
           setTimeout(() => {
             handleClose();
           }, 2000);
@@ -519,7 +526,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
-  console.log("credit", credit);
+  console.log("service", portableweeks);
   return (
     <Dialog
       open={true}
@@ -632,7 +639,8 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
                         {data.service_name}
                       </MenuItem>
                     );
-                  })}
+                  }) 
+                  }
                 </Select>
                 <span className="newLoader">
                   {newLoader && <CircularProgress />}
@@ -666,6 +674,44 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
                   label="Wait & Load"
                 />
               </RadioGroup>
+            </div>
+          )}
+
+          {service === 3 && (
+            <div>
+              <p>
+                How many M<sup>3</sup> you need
+              </p>
+              <TextField
+                value={quantity}
+                onChange={handleChange}
+                placeholder="£"
+                name="quantity"
+                InputProps={{ inputProps: { min: 5 } }}
+                type="number"
+                variant="outlined"
+                margin="dense"
+                fullWidth
+                // error= {errors['quantity'].length > 0 ? true : false}
+              />
+            </div>
+          )}
+
+          {service === 4 && (
+            <div>
+              <p>How many weeks you need</p>
+              <TextField
+                value={portableweeks}
+                onChange={handleChange}
+                placeholder="£"
+                name="portableweeks"
+                InputProps={{ inputProps: { min: 0 } }}
+                type="number"
+                variant="outlined"
+                margin="dense"
+                fullWidth
+                // error= {errors['portableweeks'].length > 0 ? true : false}
+              />
             </div>
           )}
 
