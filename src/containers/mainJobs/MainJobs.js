@@ -188,10 +188,6 @@ const MainJobs = (props) => {
         </>
       ) : (
         <>
-          {/* <div className="live-job-title">
-            <img src={mapMarker} alt="map-marker" />
-            <h1>Orders On Map</h1>
-          </div> */}
           <Card className="mapCard">
             <CardContent>
               <MainMap

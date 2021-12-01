@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import AssignToManager from "../../components/modals/assignToManager/AssignToManager";
 import { getSites, getSitesList } from "../../store/actions/sites.action";
 import "./sites.scss";
-import {getDashboardsData} from "../../store/actions/dashboard.action";
+import { getDashboardsData } from "../../store/actions/dashboard.action";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
@@ -25,28 +25,31 @@ const Sites = (props) => {
   const { info, loading } = props.dashboard;
   const [filters, setFilters] = useState({
     page: 1,
-    geolocation: "",
+    search: "",
   });
 
   useEffect(() => {
     async function fetchData() {
-        !siteData && await props.getSitesList(filters);
-        !info && await props.getDashboardsData('');
+      !siteData && (await props.getSitesList(filters));
+      !info && (await props.getDashboardsData(""));
     }
-    if(isReload){
-      props.getSitesList(filters)
+    if (isReload) {
+      props.getSitesList(filters);
     }
     fetchData();
   }, [isReload]);
-  
+
+  useEffect(() => {
+    props.getSitesList(filters);
+  }, [filters]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
   };
   const handleChangeSearch = (postcode) => {
-    postcode.length > 4 && setPostcode(postcode);
+    setFilters({ ...filters, search: postcode });
   };
- 
+
   const handleShowMap = () => {
     setIsMapView(!isMapView);
   };
@@ -54,23 +57,6 @@ const Sites = (props) => {
   const handleMangerModal = () => {
     setIsManagerOpen(true);
   };
-
-  useEffect(() => {
-    fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${postcode},+UK&sensor=false&&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`,
-      {
-        method: "get",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.results.length > 0) {
-          const { lat, lng } = data.results[0]?.geometry?.location;
-          postcode.length > 4 &&
-            setFilters({ ...filters, geolocation: `${lat},${lng}` });
-        }
-      });
-  }, [postcode]);
 
   return (
     <>
@@ -85,7 +71,9 @@ const Sites = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
-            price: `£${info? parseFloat(info.TotalSpend).toLocaleString() : 0}`,
+            price: `£${
+              info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+            }`,
             statusName: "primary",
             width: "184px",
             height: "84px",
@@ -94,7 +82,7 @@ const Sites = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Jobs",
-            price: `${info? info.NumberOfJobs : 0}`,
+            price: `${info ? info.NumberOfJobs : 0}`,
             statusName: "primary",
             width: "115px",
             height: "84px",
@@ -103,7 +91,7 @@ const Sites = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Sites",
-            price: `${siteData? siteData.total : 0}`,
+            price: `${siteData ? siteData.total : 0}`,
             statusName: "primary",
             width: "115px",
             height: "84px",
@@ -148,7 +136,8 @@ const Sites = (props) => {
                           jobStatus={{
                             status: "Sales By Site",
                             price: site
-                              ? "£" + parseFloat(site.sales_by_site).toLocaleString()
+                              ? "£" +
+                                parseFloat(site.sales_by_site).toLocaleString()
                               : "£0",
                             statusName: "primary",
                             width: "194px",
@@ -226,9 +215,9 @@ const mapStateToProps = ({ sites, dashboard }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      getSites: () => dispatch(getSites()),
-      getSitesList: (filters) => dispatch(getSitesList(filters)),
-      getDashboardsData: (year) => dispatch(getDashboardsData(year)),
+    getSites: () => dispatch(getSites()),
+    getSitesList: (filters) => dispatch(getSitesList(filters)),
+    getDashboardsData: (year) => dispatch(getDashboardsData(year)),
   };
 };
 
