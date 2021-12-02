@@ -72,7 +72,7 @@ export default function CreateJob({
     purchaseOrder: "",
     addressData: "",
     quantity: "",
-    week:''
+    week: "",
   });
 
   const [state, setState] = useState({
@@ -104,7 +104,9 @@ export default function CreateJob({
     skip_loc: "0",
     time_slot_loading: false,
     quantity: 5,
-    portableweeks:0
+    portableweeks: 2,
+    isQuantityError: false,
+    isWeekError: false,
   });
 
   const styles = (theme) => ({
@@ -147,7 +149,9 @@ export default function CreateJob({
     skip_loc,
     time_slot_loading,
     quantity,
-    portableweeks
+    portableweeks,
+    isQuantityError,
+    isWeekError,
   } = state;
 
   const handleChange = (event) => {
@@ -188,6 +192,41 @@ export default function CreateJob({
         } else {
           let total5 = totalCost + +permitted_cost;
           setState({ ...state, permitOption: value, totalCost: total5 });
+        }
+        break;
+      case "quantity":
+        if (value < 5) {
+          setState({
+            ...state,
+            isQuantityError: true,
+            [name]: value,
+            totalCost: serviceCost * value,
+          });
+        } else {
+          setState({
+            ...state,
+            [name]: value,
+            isQuantityError: false,
+            totalCost: serviceCost * value,
+          });
+        }
+        break;
+
+      case "portableweeks":
+        if (value < 2) {
+          setState({
+            ...state,
+            isWeekError: true,
+            [name]: value,
+            totalCost: 32 * value + haulageCost + serviceCost,
+          });
+        } else {
+          setState({
+            ...state,
+            [name]: value,
+            isWeekError: false,
+            totalCost: 32 * value + haulageCost + serviceCost,
+          });
         }
         break;
       default:
@@ -249,6 +288,7 @@ export default function CreateJob({
   //dynamic update service cost, haulage cost and totalcost
   useEffect(() => {
     if (subServiceSelect) {
+      console.log("subServiceSelect", serviceSelect);
       if (permitOption == 1) {
         setState({
           ...state,
@@ -272,6 +312,27 @@ export default function CreateJob({
             subServiceSelect.price + subServiceSelect.haulage - discount,
         });
       }
+    }
+
+    if (serviceSelect.service_id === 80) {
+      setState({
+        ...state,
+        serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
+        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
+        totalCost:
+          quantity * subServiceSelect.price +
+          subServiceSelect.haulage -
+          discount,
+      });
+    }
+
+    if (serviceSelect.service_id === 43) {
+      setState({
+        ...state,
+        serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
+        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
+        totalCost: (portableweeks * 32) + subServiceSelect.haulage + subServiceSelect.price 
+      });
     }
   }, [serviceSelect, subServiceSelect]);
 
@@ -336,6 +397,7 @@ export default function CreateJob({
   const scrollToBottom = () => {
     divRef.current.scrollIntoView({ behavior: "smooth" });
   };
+
   const confirmJob = (e) => {
     e.preventDefault();
     if (
@@ -349,6 +411,20 @@ export default function CreateJob({
         checkingError(error, state[error]);
       });
       return;
+    }
+
+    if (service === 3) {
+      if (quantity < 5) {
+        setState({ ...state, isQuantityError: true });
+        return;
+      }
+    }
+
+    if (service === 4) {
+      if (portableweeks < 5) {
+        setState({ ...state, isWeekError: true });
+        return;
+      }
     }
 
     setState({ ...state, isLoading: true });
@@ -411,7 +487,10 @@ export default function CreateJob({
           permit_cost: 0,
           service_cost: subServiceSelect.price,
           service_id: subServiceSelect.sub_service_id,
-          service_name: service === 3 ? `${quantity}M³${subServiceSelect.service_name}`: subServiceSelect.service_name,
+          service_name:
+            service === 3
+              ? `${quantity}M³${subServiceSelect.service_name}`
+              : subServiceSelect.service_name,
           service_type: 2,
           skip_loc_type: "1",
           skip_req_days: 0,
@@ -526,7 +605,6 @@ export default function CreateJob({
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
-  console.log("service", portableweeks);
   return (
     <Dialog
       open={true}
@@ -639,8 +717,7 @@ export default function CreateJob({
                         {data.service_name}
                       </MenuItem>
                     );
-                  }) 
-                  }
+                  })}
                 </Select>
                 <span className="newLoader">
                   {newLoader && <CircularProgress />}
@@ -692,8 +769,11 @@ export default function CreateJob({
                 variant="outlined"
                 margin="dense"
                 fullWidth
-                // error= {errors['quantity'].length > 0 ? true : false}
+                error={isQuantityError ? true : false}
               />
+              {isQuantityError && (
+                <div className="m3-error">must be greater than 5</div>
+              )}
             </div>
           )}
 
@@ -705,13 +785,16 @@ export default function CreateJob({
                 onChange={handleChange}
                 placeholder="£"
                 name="portableweeks"
-                InputProps={{ inputProps: { min: 0 } }}
+                InputProps={{ inputProps: { min: 2 } }}
                 type="number"
                 variant="outlined"
                 margin="dense"
                 fullWidth
-                // error= {errors['portableweeks'].length > 0 ? true : false}
+                error={isWeekError ? true : false}
               />
+              {isWeekError && (
+                <div className="m3-error">must be greater than 2</div>
+              )}
             </div>
           )}
 

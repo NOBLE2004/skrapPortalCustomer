@@ -5,6 +5,7 @@ import ServicesService from '../../services/service.service';
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import moment from "moment";
 
 const JobFilters = ({ handleChangeFilters }) => {
     const [filters, setFilters] = useState({
@@ -54,7 +55,9 @@ const JobFilters = ({ handleChangeFilters }) => {
         setState([item.selection]);
         const start = item.selection.startDate.toLocaleDateString().replace(/\//g, '-');
         const end = item.selection.endDate.toLocaleDateString().replace(/\//g, '-');
-        setFilters({ ...filters, date: `${start},${end}` });
+        const newStartDate = moment(start).format("YYYY-MM-DD")
+        const newEndDate = moment(end).format("YYYY-MM-DD")
+        setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
     };
     const resetFilters = () =>{
         setFilters({
