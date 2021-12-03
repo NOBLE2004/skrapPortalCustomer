@@ -66,13 +66,12 @@ export default function CreateJob({
     subService: "",
     serviceCost: "",
     haulageCost: "",
-    discount: "",
     paymentMethod: "",
     // totalCost: '',
     purchaseOrder: "",
     addressData: "",
     quantity: "",
-    week:''
+    week: "",
   });
 
   const [state, setState] = useState({
@@ -81,7 +80,6 @@ export default function CreateJob({
     subService: "",
     serviceCost: "",
     haulageCost: "",
-    discount: 0,
     paymentMethod: "",
     totalCost: 0,
     purchaseOrder: "",
@@ -104,7 +102,9 @@ export default function CreateJob({
     skip_loc: "0",
     time_slot_loading: false,
     quantity: 5,
-    portableweeks:0
+    portableweeks: 2,
+    isQuantityError: false,
+    isWeekError: false,
   });
 
   const styles = (theme) => ({
@@ -125,7 +125,6 @@ export default function CreateJob({
     subService,
     serviceCost,
     haulageCost,
-    discount,
     paymentMethod,
     totalCost,
     purchaseOrder,
@@ -147,30 +146,28 @@ export default function CreateJob({
     skip_loc,
     time_slot_loading,
     quantity,
-    portableweeks
+    portableweeks,
+    isQuantityError,
+    isWeekError,
   } = state;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
-      case "discount":
-        let total = +serviceCost + +permitted_cost + +haulageCost - +value;
-        setState({ ...state, [name]: value, totalCost: total });
-        break;
       case "haulageCost":
-        let total2 = +serviceCost + +permitted_cost + +value - +discount;
+        let total2 = +serviceCost + +permitted_cost + +value;
         setState({ ...state, [name]: value, totalCost: total2 });
         break;
       case "permitted_cost":
-        let total3 = +serviceCost + +haulageCost + +value - +discount;
+        let total3 = +serviceCost + +haulageCost + +value;
         setState({ ...state, [name]: value, totalCost: total3 });
         break;
       case "serviceCost":
-        let total1 = +value + +permitted_cost + +haulageCost - +discount;
+        let total1 = +value + +permitted_cost + +haulageCost;
         setState({ ...state, [name]: value, totalCost: total1 });
         break;
       case "service":
-        setState({ ...state, [name]: value, subService: "" });
+        setState({ ...state, [name]: value, subService: "" , totalCost:"" });
         setServiceSelect(services[value]);
         setSubServiceSelect({});
         break;
@@ -188,6 +185,41 @@ export default function CreateJob({
         } else {
           let total5 = totalCost + +permitted_cost;
           setState({ ...state, permitOption: value, totalCost: total5 });
+        }
+        break;
+      case "quantity":
+        if (value < 5) {
+          setState({
+            ...state,
+            isQuantityError: true,
+            [name]: value,
+            totalCost: serviceCost * value,
+          });
+        } else {
+          setState({
+            ...state,
+            [name]: value,
+            isQuantityError: false,
+            totalCost: serviceCost * value,
+          });
+        }
+        break;
+
+      case "portableweeks":
+        if (value < 2) {
+          setState({
+            ...state,
+            isWeekError: true,
+            [name]: value,
+            totalCost: 32 * value + haulageCost + serviceCost,
+          });
+        } else {
+          setState({
+            ...state,
+            [name]: value,
+            isWeekError: false,
+            totalCost: 32 * value + haulageCost + serviceCost,
+          });
         }
         break;
       default:
@@ -249,18 +281,17 @@ export default function CreateJob({
   //dynamic update service cost, haulage cost and totalcost
   useEffect(() => {
     if (subServiceSelect) {
+      console.log("subServiceSelect", serviceSelect);
       if (permitOption == 1) {
         setState({
           ...state,
           serviceCost:
             subServiceSelect.price >= 0 ? subServiceSelect.price : "",
           haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
-          // totalCost: subServiceSelect.price + subServiceSelect.haulage - discount,
           totalCost:
             +permitted_cost +
             +subServiceSelect.price +
-            +subServiceSelect.haulage -
-            +discount,
+            +subServiceSelect.haulage,
         });
       } else {
         setState({
@@ -268,10 +299,29 @@ export default function CreateJob({
           serviceCost:
             subServiceSelect.price >= 0 ? subServiceSelect.price : "",
           haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
-          totalCost:
-            subServiceSelect.price + subServiceSelect.haulage - discount,
+          totalCost: subServiceSelect.price,
         });
       }
+    }
+
+    if (serviceSelect.service_id === 80) {
+      setState({
+        ...state,
+        serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
+        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
+        totalCost:
+          quantity * subServiceSelect.price +
+          subServiceSelect.haulage,
+      });
+    }
+
+    if (serviceSelect.service_id === 43) {
+      setState({
+        ...state,
+        serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
+        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
+        totalCost: (portableweeks * 32) + subServiceSelect.haulage + subServiceSelect.price 
+      });
     }
   }, [serviceSelect, subServiceSelect]);
 
@@ -336,6 +386,7 @@ export default function CreateJob({
   const scrollToBottom = () => {
     divRef.current.scrollIntoView({ behavior: "smooth" });
   };
+
   const confirmJob = (e) => {
     e.preventDefault();
     if (
@@ -349,6 +400,20 @@ export default function CreateJob({
         checkingError(error, state[error]);
       });
       return;
+    }
+
+    if (service === 3) {
+      if (quantity < 5) {
+        setState({ ...state, isQuantityError: true });
+        return;
+      }
+    }
+
+    if (service === 4) {
+      if (portableweeks < 5) {
+        setState({ ...state, isWeekError: true });
+        return;
+      }
     }
 
     setState({ ...state, isLoading: true });
@@ -384,7 +449,6 @@ export default function CreateJob({
       comments: note,
       coupon_detail: {
         coupon_id: 0,
-        discount: discount,
         discount_rate: 330.0,
         is_coupon: 0,
         service_rate: serviceCost,
@@ -411,7 +475,10 @@ export default function CreateJob({
           permit_cost: 0,
           service_cost: subServiceSelect.price,
           service_id: subServiceSelect.sub_service_id,
-          service_name: service === 3 ? `${quantity}M³${subServiceSelect.service_name}`: subServiceSelect.service_name,
+          service_name:
+            service === 3
+              ? `${quantity}M³${subServiceSelect.service_name}`
+              : subServiceSelect.service_name,
           service_type: 2,
           skip_loc_type: "1",
           skip_req_days: 0,
@@ -526,7 +593,6 @@ export default function CreateJob({
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
-  console.log("service", portableweeks);
   return (
     <Dialog
       open={true}
@@ -639,8 +705,7 @@ export default function CreateJob({
                         {data.service_name}
                       </MenuItem>
                     );
-                  }) 
-                  }
+                  })}
                 </Select>
                 <span className="newLoader">
                   {newLoader && <CircularProgress />}
@@ -692,8 +757,11 @@ export default function CreateJob({
                 variant="outlined"
                 margin="dense"
                 fullWidth
-                // error= {errors['quantity'].length > 0 ? true : false}
+                error={isQuantityError ? true : false}
               />
+              {isQuantityError && (
+                <div className="m3-error">must be greater than 5</div>
+              )}
             </div>
           )}
 
@@ -705,13 +773,16 @@ export default function CreateJob({
                 onChange={handleChange}
                 placeholder="£"
                 name="portableweeks"
-                InputProps={{ inputProps: { min: 0 } }}
+                InputProps={{ inputProps: { min: 2 } }}
                 type="number"
                 variant="outlined"
                 margin="dense"
                 fullWidth
-                // error= {errors['portableweeks'].length > 0 ? true : false}
+                error={isWeekError ? true : false}
               />
+              {isWeekError && (
+                <div className="m3-error">must be greater than 2</div>
+              )}
             </div>
           )}
 
@@ -783,7 +854,7 @@ export default function CreateJob({
           </div>
 
           <div className="serviceCostWp">
-            <div>
+            <div className="service-cost-width">
               <p>Service Cost</p>
               <TextField
                 value={serviceCost}
@@ -794,10 +865,11 @@ export default function CreateJob({
                 variant="outlined"
                 disabled={(serviceCost !== null) | (serviceCost !== undefined)}
                 margin="dense"
+                fullwidth
                 // error= {errors['serviceCost'].length > 0 ? true : false}
               />
             </div>
-            <div>
+            <div className="haulage-cost-width">
               <p>Haulage Cost</p>
               <TextField
                 value={haulageCost}
@@ -808,19 +880,7 @@ export default function CreateJob({
                 variant="outlined"
                 margin="dense"
                 disabled={(haulageCost !== null) | (haulageCost !== undefined)}
-              />
-            </div>
-            <div>
-              <p>Discount</p>
-              <TextField
-                value={discount}
-                onChange={handleChange}
-                name="discount"
-                placeholder="£"
-                type="number"
-                variant="outlined"
-                margin="dense"
-                disabled={(discount !== null) | (discount !== undefined)}
+                fullWidth
               />
             </div>
           </div>

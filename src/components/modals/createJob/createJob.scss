@@ -205,6 +205,17 @@
 .serviceCostWp {
   display: flex;
   gap: 20px;
+  justify-content: space-between;
+  .service-cost-width{
+    width: 50%;
+
+    .MuiTextField-root{
+      width: 100%;
+    }
+  }
+  .haulage-cost-width{
+    width: 50%;
+  }
 }
 
 .serviceCostWp p,
@@ -510,3 +521,10 @@
   margin-bottom: 18px;
 }
 
+.m3-error {
+  color: red;
+  font-family: "DM Sans";
+  font-style: normal;
+  font-size: 10px;
+  margin-top: 5px;
+}

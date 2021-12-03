@@ -15,14 +15,12 @@ const SitesDetailPage = (props) => {
   const { id } = useParams();
   const location = useLocation();
   const { site_address } = location.state;
-  console.log("site_address", site_address);
   const [filters, setFilters] = useState({
     status: "",
     date: "",
     service: "",
     address: "",
     search: "",
-    page: 1,
   });
 
   const [state, setState] = useState({
@@ -30,40 +28,41 @@ const SitesDetailPage = (props) => {
     managerData: [],
     isCreateManager: false,
   });
-  const [reload, setReload] = useState(false);
 
   const { isLoading, managerData } = state;
-  const handleCreateManager = () => {
-    setState({ ...state, isCreateManager: true });
+
+  
+  const handleChangeFilters = (filtersList) => {
+    setFilters(filtersList);
+  };
+  useEffect(() => {
+    const getData = async () => {
+      
+      try{
+        // setState({ ...state, isLoading: true });
+        const params = Object.entries(filters).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
+        const res = await sitesService.showSitesDetail(id , params)
+        setState({
+          ...state,
+          managerData: res.data,
+          isLoading: false,
+        });
+      }catch(err){
+        setState({ ...state, isLoading: false });
+      }
+    };
+
+    getData()
+  }, [filters]);
+
+  const handlePagination = (page) => {
+    setFilters({ ...filters, page: page });
   };
 
   const handleChangeSearch = (search) => {
     setFilters({ ...filters, search: search });
   };
 
-  const handleChangeFilters = (filtersList) => {
-    setFilters(filtersList);
-  };
-  useEffect(() => {
-    setState({ ...state, isLoading: true });
-    sitesService
-      .showSitesDetail(id)
-      .then((res) => {
-        console.log("res", res.data);
-        setState({
-          ...state,
-          managerData: res.data,
-          isLoading: false,
-        });
-      })
-      .catch((error) => {
-        setState({ ...state, isLoading: false });
-      });
-  }, [reload]);
-
-  const handlePagination = (page) => {
-    setFilters({ ...filters, page: page });
-  };
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
@@ -82,10 +81,7 @@ const SitesDetailPage = (props) => {
               <hr />
             </Grid>
             <Grid item md={12}>
-              <NewManagerDetail
-                managerData={managerData}
-                setReload={() => setReload(!reload)}
-              />
+              <NewManagerDetail managerData={managerData} />
             </Grid>
             <Grid className="po-detail-page">
               <PoDetail managerData={managerData} />
