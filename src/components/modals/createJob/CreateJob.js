@@ -66,7 +66,6 @@ export default function CreateJob({
     subService: "",
     serviceCost: "",
     haulageCost: "",
-    discount: "",
     paymentMethod: "",
     // totalCost: '',
     purchaseOrder: "",
@@ -81,7 +80,6 @@ export default function CreateJob({
     subService: "",
     serviceCost: "",
     haulageCost: "",
-    discount: 0,
     paymentMethod: "",
     totalCost: 0,
     purchaseOrder: "",
@@ -127,7 +125,6 @@ export default function CreateJob({
     subService,
     serviceCost,
     haulageCost,
-    discount,
     paymentMethod,
     totalCost,
     purchaseOrder,
@@ -157,24 +154,20 @@ export default function CreateJob({
   const handleChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
-      case "discount":
-        let total = +serviceCost + +permitted_cost + +haulageCost - +value;
-        setState({ ...state, [name]: value, totalCost: total });
-        break;
       case "haulageCost":
-        let total2 = +serviceCost + +permitted_cost + +value - +discount;
+        let total2 = +serviceCost + +permitted_cost + +value;
         setState({ ...state, [name]: value, totalCost: total2 });
         break;
       case "permitted_cost":
-        let total3 = +serviceCost + +haulageCost + +value - +discount;
+        let total3 = +serviceCost + +haulageCost + +value;
         setState({ ...state, [name]: value, totalCost: total3 });
         break;
       case "serviceCost":
-        let total1 = +value + +permitted_cost + +haulageCost - +discount;
+        let total1 = +value + +permitted_cost + +haulageCost;
         setState({ ...state, [name]: value, totalCost: total1 });
         break;
       case "service":
-        setState({ ...state, [name]: value, subService: "" });
+        setState({ ...state, [name]: value, subService: "" , totalCost:"" });
         setServiceSelect(services[value]);
         setSubServiceSelect({});
         break;
@@ -295,12 +288,10 @@ export default function CreateJob({
           serviceCost:
             subServiceSelect.price >= 0 ? subServiceSelect.price : "",
           haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
-          // totalCost: subServiceSelect.price + subServiceSelect.haulage - discount,
           totalCost:
             +permitted_cost +
             +subServiceSelect.price +
-            +subServiceSelect.haulage -
-            +discount,
+            +subServiceSelect.haulage,
         });
       } else {
         setState({
@@ -308,8 +299,7 @@ export default function CreateJob({
           serviceCost:
             subServiceSelect.price >= 0 ? subServiceSelect.price : "",
           haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
-          totalCost:
-            subServiceSelect.price + subServiceSelect.haulage - discount,
+          totalCost: subServiceSelect.price,
         });
       }
     }
@@ -321,8 +311,7 @@ export default function CreateJob({
         haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
         totalCost:
           quantity * subServiceSelect.price +
-          subServiceSelect.haulage -
-          discount,
+          subServiceSelect.haulage,
       });
     }
 
@@ -460,7 +449,6 @@ export default function CreateJob({
       comments: note,
       coupon_detail: {
         coupon_id: 0,
-        discount: discount,
         discount_rate: 330.0,
         is_coupon: 0,
         service_rate: serviceCost,
@@ -866,7 +854,7 @@ export default function CreateJob({
           </div>
 
           <div className="serviceCostWp">
-            <div>
+            <div className="service-cost-width">
               <p>Service Cost</p>
               <TextField
                 value={serviceCost}
@@ -877,10 +865,11 @@ export default function CreateJob({
                 variant="outlined"
                 disabled={(serviceCost !== null) | (serviceCost !== undefined)}
                 margin="dense"
+                fullwidth
                 // error= {errors['serviceCost'].length > 0 ? true : false}
               />
             </div>
-            <div>
+            <div className="haulage-cost-width">
               <p>Haulage Cost</p>
               <TextField
                 value={haulageCost}
@@ -891,19 +880,7 @@ export default function CreateJob({
                 variant="outlined"
                 margin="dense"
                 disabled={(haulageCost !== null) | (haulageCost !== undefined)}
-              />
-            </div>
-            <div>
-              <p>Discount</p>
-              <TextField
-                value={discount}
-                onChange={handleChange}
-                name="discount"
-                placeholder="£"
-                type="number"
-                variant="outlined"
-                margin="dense"
-                disabled={(discount !== null) | (discount !== undefined)}
+                fullWidth
               />
             </div>
           </div>

@@ -11,8 +11,8 @@ class SiteService extends HttpService {
     
 
   // sites
-  showSitesDetail = (params) =>
-    this.post("sites/details", { id: params });
+  showSitesDetail = (siteId ,params) =>
+    this.post("sites/details", { id: siteId } , params);
   getSitesList = (params) => this.get("sites/list"  , params);
 
   //site assign to manager

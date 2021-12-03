@@ -205,6 +205,17 @@
 .serviceCostWp {
   display: flex;
   gap: 20px;
+  justify-content: space-between;
+  .service-cost-width{
+    width: 50%;
+
+    .MuiTextField-root{
+      width: 100%;
+    }
+  }
+  .haulage-cost-width{
+    width: 50%;
+  }
 }
 
 .serviceCostWp p,
