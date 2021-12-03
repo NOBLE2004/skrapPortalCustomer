@@ -167,7 +167,7 @@ export default function CreateJob({
         setState({ ...state, [name]: value, totalCost: total1 });
         break;
       case "service":
-        setState({ ...state, [name]: value, subService: "" , totalCost:"" });
+        setState({ ...state, [name]: value, subService: "", totalCost: "" });
         setServiceSelect(services[value]);
         setSubServiceSelect({});
         break;
@@ -309,9 +309,7 @@ export default function CreateJob({
         ...state,
         serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
         haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
-        totalCost:
-          quantity * subServiceSelect.price +
-          subServiceSelect.haulage,
+        totalCost: quantity * subServiceSelect.price + subServiceSelect.haulage,
       });
     }
 
@@ -320,7 +318,10 @@ export default function CreateJob({
         ...state,
         serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
         haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
-        totalCost: (portableweeks * 32) + subServiceSelect.haulage + subServiceSelect.price 
+        totalCost:
+          portableweeks * 32 +
+          subServiceSelect.haulage +
+          subServiceSelect.price,
       });
     }
   }, [serviceSelect, subServiceSelect]);
@@ -488,10 +489,11 @@ export default function CreateJob({
           supplier_cost: "0",
         },
       ],
-      wastes: wasteType,
+      wastes: service === 0 ? wasteType : [],
       what3word: "",
       show_on_main_portal: 1,
     };
+    console.log('waste type' , wasteType)
     JobService.createOrder(data)
       .then((response) => {
         if (Object.keys(response.data.result).length === 0) {
@@ -715,31 +717,101 @@ export default function CreateJob({
           </div>
 
           {service === 0 && (
-            <div className="skipType">
-              <p>Skip Type</p>
-              <RadioGroup
-                name="skip_loc"
-                value={skip_loc}
-                onChange={handleChange}
-                row
-              >
-                <FormControlLabel
-                  value="3"
-                  control={<Radio color="primary" />}
-                  label="On Road"
-                />
-                <FormControlLabel
-                  value="1"
-                  control={<Radio color="primary" />}
-                  label="Off Road"
-                />
-                <FormControlLabel
-                  value="2"
-                  control={<Radio color="primary" />}
-                  label="Wait & Load"
-                />
-              </RadioGroup>
-            </div>
+            <>
+              <div className="skipType">
+                <p>Skip Type</p>
+                <RadioGroup
+                  name="skip_loc"
+                  value={skip_loc}
+                  onChange={handleChange}
+                  row
+                >
+                  <FormControlLabel
+                    value="3"
+                    control={<Radio color="primary" />}
+                    label="On Road"
+                  />
+                  <FormControlLabel
+                    value="1"
+                    control={<Radio color="primary" />}
+                    label="Off Road"
+                  />
+                  <FormControlLabel
+                    value="2"
+                    control={<Radio color="primary" />}
+                    label="Wait & Load"
+                  />
+                </RadioGroup>
+              </div>
+              <div className="wasteTypeWp">
+                <div className="wasteType">
+                  <p className="wtype">Waste Type</p>
+                  {/* <p className="load">% of load</p> */}
+                </div>
+                {wasteType.map((data, index) => {
+                  return (
+                    <div className="wasteType1" key={index}>
+                      <FormControl
+                        variant="outlined"
+                        margin="dense"
+                        className="wasteTypeOption"
+                      >
+                        <InputLabel>waste type</InputLabel>
+
+                        <Select
+                          value={data.waste_type_id}
+                          onChange={(e) => handleWastType(e, index)}
+                          label="waste type"
+                          name="waste_type_id"
+                          // error={errors["service"].length > 0 ? true : false}
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          {wasteList
+                            .slice(0, itemPerPage)
+                            .map((data, index) => {
+                              return (
+                                <MenuItem value={data.id} key={index}>
+                                  {data.name}
+                                </MenuItem>
+                              );
+                            })}
+                        </Select>
+                      </FormControl>
+                      {wasteType.length > 1 && (
+                        <p
+                          className="button-text cursor-pointer"
+                          onClick={() => {
+                            removeRow(index);
+                          }}
+                        >
+                          - remove
+                        </p>
+                      )}
+                      {/* <FormControl
+                    variant="outlined"
+                    margin="dense"
+                    className="wasteLoad"
+                  >
+                    <OutlinedInput
+                      type="number"
+                      name="percentage"
+                      value={data.percentage}
+                      onChange={(e) => handleWastType(e, index)}
+                      endAdornment={
+                        <InputAdornment position="end">%</InputAdornment>
+                      }
+                    />
+                  </FormControl> */}
+                    </div>
+                  );
+                })}
+                <Link href="#" onClick={handleAddWastType}>
+                  + Add another Waste Type
+                </Link>
+              </div>
+            </>
           )}
 
           {service === 3 && (
@@ -785,73 +857,6 @@ export default function CreateJob({
               )}
             </div>
           )}
-
-          <div className="wasteTypeWp">
-            <div className="wasteType">
-              <p className="wtype">Waste Type</p>
-              {/* <p className="load">% of load</p> */}
-            </div>
-            {wasteType.map((data, index) => {
-              return (
-                <div className="wasteType1" key={index}>
-                  <FormControl
-                    variant="outlined"
-                    margin="dense"
-                    className="wasteTypeOption"
-                  >
-                    <InputLabel>waste type</InputLabel>
-
-                    <Select
-                      value={data.waste_type_id}
-                      onChange={(e) => handleWastType(e, index)}
-                      label="waste type"
-                      name="waste_type_id"
-                      // error={errors["service"].length > 0 ? true : false}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {wasteList.slice(0, itemPerPage).map((data, index) => {
-                        return (
-                          <MenuItem value={data.id} key={index}>
-                            {data.name}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </FormControl>
-                  {wasteType.length > 1 && (
-                    <p
-                      className="button-text cursor-pointer"
-                      onClick={() => {
-                        removeRow(index);
-                      }}
-                    >
-                      - remove
-                    </p>
-                  )}
-                  {/* <FormControl
-                    variant="outlined"
-                    margin="dense"
-                    className="wasteLoad"
-                  >
-                    <OutlinedInput
-                      type="number"
-                      name="percentage"
-                      value={data.percentage}
-                      onChange={(e) => handleWastType(e, index)}
-                      endAdornment={
-                        <InputAdornment position="end">%</InputAdornment>
-                      }
-                    />
-                  </FormControl> */}
-                </div>
-              );
-            })}
-            <Link href="#" onClick={handleAddWastType}>
-              + Add another Waste Type
-            </Link>
-          </div>
 
           <div className="serviceCostWp">
             <div className="service-cost-width">
