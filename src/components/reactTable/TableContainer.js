@@ -75,8 +75,8 @@ const TableContainer = ({ columns, data, name }) => {
                   style={{
                     width:
                       column.id === "status"
-                        ? "160px"
-                        : column.id === "id-edit"
+                        ? "100px"
+                        : (column.id === "id-edit" | column.id === "select")
                         ? "50px"
                         : cellWidth,
                     padding: cellPadding,
@@ -114,9 +114,9 @@ const TableContainer = ({ columns, data, name }) => {
                       }
                       style={{
                         width:
-                          cell.column.id === "status"
-                            ? "160px"
-                            : cell.column.id === "id-edit"
+                          cell.column.id === "accept-id"
+                            ? "120px"
+                            : (cell.column.id === "id-edit" | cell.column.id === "select" )
                             ? "50px"
                             : cellWidth,
                         padding: cellPadding,

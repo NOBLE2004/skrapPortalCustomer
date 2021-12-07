@@ -6,8 +6,8 @@ class SiteService extends HttpService {
   getAllSites = () => this.get("sites");
   addNewManager = (data) => this.post("siteManager/register", data);
   getPermission = () => this.post('multiuser/permissions')
-  showManagerDetail = (params) =>
-    this.post("siteManager/details", { id: params });
+  showManagerDetail = (ids , params) =>
+    this.post("siteManager/details", { id: ids } , params);
     
 
   // sites

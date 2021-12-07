@@ -14,6 +14,8 @@ import { downloadSite } from "../../assets/images";
 import FadeLoader from "react-spinners/FadeLoader";
 import Swal from "sweetalert2";
 import TrackDriverModal from "../modals/trackDriver/TrackDriverModal";
+import AcceptJobModal from "../modals/acceptJobModal/AcceptJobModal";
+import RejectJobModal from "../modals/rejectJobModal/RejectJobModal";
 
 const JobsTable = ({
   data,
@@ -30,6 +32,9 @@ const JobsTable = ({
   const [jobIds, setJobIds] = useState([]);
   const [exchange, setExchange] = useState(false);
   const [collection, setCollection] = useState(false);
+  const [isJobAccepted, setIsJobAccepted] = useState(false);
+  const [isJobRejected, setIsJobRejected] = useState(false);
+  const [jobData, setJobData] = useState({});
 
   const { openMenu, mouseX, mouseY, contextRow } = state;
   const [row, setRow] = useState({});
@@ -37,8 +42,8 @@ const JobsTable = ({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isLoading, setLoading] = useState(false);
   const [notice, setNotice] = React.useState(null);
-  const [isTrackDriver , setTrackDriver] = useState(false);
-  const [rowData , setRowDate] = useState('')
+  const [isTrackDriver, setTrackDriver] = useState(false);
+  const [rowData, setRowDate] = useState("");
   const handleButtonClick = (e, props) => {
     e.stopPropagation();
     // if (contextRow === null) {
@@ -49,11 +54,10 @@ const JobsTable = ({
       mouseY: e.clientY - 4,
     });
     // }
-    setRowDate(props)
+    setRowDate(props);
     setRow(props);
   };
   const handleClose = () => {
-
     setState({
       ...state,
       openMenu: false,
@@ -64,7 +68,7 @@ const JobsTable = ({
   };
 
   const handleTrackDriver = () => {
-    setTrackDriver(true)
+    setTrackDriver(true);
     handleClose();
   };
   const handleShowExchangeDialog = () => {
@@ -87,6 +91,16 @@ const JobsTable = ({
       .then((blob) => {
         return URL.createObjectURL(blob);
       });
+  };
+  const handleReject = (e, data) => {
+    e.stopPropagation();
+    setJobData(data);
+    setIsJobRejected(true)
+  };
+  const handleAccept = (e, data) => {
+    e.stopPropagation();
+    setJobData(data);
+    setIsJobAccepted(true);
   };
   const handleShowReport = async (e, url) => {
     e.stopPropagation();
@@ -290,6 +304,35 @@ const JobsTable = ({
       },
       {
         Header: "",
+        id: "accept-id",
+        Cell: (cell) => {
+          return (
+            <>
+              {cell.row.original.order_job_status === 1 ? (
+                <div className="accept-reject">
+                  <button
+                    className="sites-header-btn"
+                    onClick={(e) => handleAccept(e, cell?.row?.original)}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className="sites-header-btn-error"
+                    style={{ marginTop: "2px" }}
+                    onClick={(e) => handleReject(e, cell?.row?.original)}
+                  >
+                    Reject
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
+            </>
+          );
+        },
+      },
+      {
+        Header: "",
         id: "id-edit",
         Cell: ({ cell }) => (
           <>
@@ -343,6 +386,7 @@ const JobsTable = ({
     ],
     []
   );
+
   return (
     <div>
       {exchange && (
@@ -372,6 +416,15 @@ const JobsTable = ({
           Please wait while we reordring the data
         </LoadingModal>
       )}
+      {isJobAccepted && (
+        <AcceptJobModal
+          jobdata={jobData}
+          handleClose={() => setIsJobAccepted(false)}
+        />
+      )}
+      {
+        isJobRejected && <RejectJobModal handleClose={() => setIsJobRejected(false)} jobdata={jobData}/>
+      }
       <button
         style={{ float: "right" }}
         className="header-btn"
@@ -439,10 +492,12 @@ const JobsTable = ({
         <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>
         {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
       </Menu>{" "}
-
-      {
-        isTrackDriver && <TrackDriverModal handleClose={() => setTrackDriver(false)} trackData={rowData}/>
-      }
+      {isTrackDriver && (
+        <TrackDriverModal
+          handleClose={() => setTrackDriver(false)}
+          trackData={rowData}
+        />
+      )}
     </div>
   );
 };

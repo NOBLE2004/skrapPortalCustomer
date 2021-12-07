@@ -11,6 +11,7 @@ export const userlogin = (data) => {
           localStorage.setItem("token", response.data.result.token);
           localStorage.setItem("user_id", response.data.result.user_id);
           localStorage.setItem("c_d_storage", JSON.stringify(response.data.result));
+          localStorage.setItem("role_id", response.data.result.role_id);
           dispatch(loginSuccess(response.data.result));
         } else {
           dispatch(loginFailure(response.data.description));

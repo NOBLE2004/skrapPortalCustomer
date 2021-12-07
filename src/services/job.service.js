@@ -6,6 +6,9 @@ class JobService extends HttpService {
 
     createOrder = (data) => this.post(`orderRequest`, data);
 
+    acceptOrderRequest = (data) => this.post('acceptOrderRequest' , data)
+    rejectOrderRequest = (data) => this.post('rejectOrderRequest' , data)
+
     show = (data) => this.post(`customers/getBookingDetail`, data);
 
     invoice = (data) => this.post(`downloadJobInvoice`, data);
@@ -25,6 +28,8 @@ class JobService extends HttpService {
     paymentStatus = (data) => this.post('jobs/payments/status', data);
 
     xeroInvoice = (params) => this.get('uploadInvoice', params);
+
+
 }
 
 export default new JobService();

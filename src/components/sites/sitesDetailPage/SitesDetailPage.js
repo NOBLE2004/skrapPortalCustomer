@@ -9,8 +9,6 @@ import JobFilters from "../../filters/jobFilters";
 import { useParams, useLocation } from "react-router";
 import "./sitesDetailPage.scss";
 import PoDetail from "../../siteManager/poDetail/PoDetail";
-import { connect } from "react-redux";
-import { getSitesDetailList } from "../../../store/actions/sites.action";
 
 const SitesDetailPage = (props) => {
   const { id } = useParams();
@@ -113,14 +111,6 @@ const SitesDetailPage = (props) => {
     </div>
   );
 };
-const mapStateToProps = ({ sites, po , siteDetail }) => {
-  return { sites, po , siteDetail };
-};
 
-const mapDispatchToProps = (dispatch) =>{
-  return {
-    getSiteDetailList : (ids , filter) => dispatch(getSitesDetailList(ids, filter))
-  }
   
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SitesDetailPage);
+export default SitesDetailPage;
