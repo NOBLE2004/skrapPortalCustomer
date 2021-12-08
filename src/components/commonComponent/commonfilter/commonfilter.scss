@@ -44,4 +44,9 @@
   .MuiInput-underline:before{
     border-bottom: none;
   }
+
+  .date-picker-filter{
+    position: absolute !important;
+    top: 100% !important;
+  }
 }

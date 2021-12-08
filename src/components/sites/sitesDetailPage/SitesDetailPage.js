@@ -9,7 +9,6 @@ import JobFilters from "../../filters/jobFilters";
 import { useParams, useLocation } from "react-router";
 import "./sitesDetailPage.scss";
 import PoDetail from "../../siteManager/poDetail/PoDetail";
-import { connect } from "react-redux";
 
 const SitesDetailPage = (props) => {
   const { id } = useParams();
@@ -24,36 +23,37 @@ const SitesDetailPage = (props) => {
   });
 
   const [state, setState] = useState({
-    isLoading: false,
-    managerData: [],
+    isLoadings: false,
+    managerData: {},
     isCreateManager: false,
   });
 
-  const { isLoading, managerData } = state;
+  const { isLoadings, managerData } = state;
 
-  
   const handleChangeFilters = (filtersList) => {
     setFilters(filtersList);
   };
   useEffect(() => {
     const getData = async () => {
-      
       try{
-        // setState({ ...state, isLoading: true });
+        setState({ ...state, isLoadings: true });
         const params = Object.entries(filters).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
+        setState({...state , managerData:{}})
         const res = await sitesService.showSitesDetail(id , params)
         setState({
           ...state,
           managerData: res.data,
-          isLoading: false,
+          isLoadings: false,
         });
       }catch(err){
-        setState({ ...state, isLoading: false });
+        setState({ ...state, isLoadings: false });
       }
     };
 
     getData()
   }, [filters]);
+
+  
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -62,7 +62,7 @@ const SitesDetailPage = (props) => {
   const handleChangeSearch = (search) => {
     setFilters({ ...filters, search: search });
   };
-
+  
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
@@ -72,8 +72,8 @@ const SitesDetailPage = (props) => {
       </div>
 
       <Grid container className="manager-detail-page">
-        {isLoading ? (
-          <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+        {isLoadings ? (
+          <FadeLoader color={"#29a7df"} loading={isLoadings} width={4} />
         ) : (
           <>
             <Grid item md={12}>
@@ -81,7 +81,7 @@ const SitesDetailPage = (props) => {
               <hr />
             </Grid>
             <Grid item md={12}>
-              <NewManagerDetail managerData={managerData} />
+              <NewManagerDetail managerData={ managerData } />
             </Grid>
             <Grid className="po-detail-page">
               <PoDetail managerData={managerData} />
@@ -92,7 +92,7 @@ const SitesDetailPage = (props) => {
                   handleChangeSearch={handleChangeSearch}
                   cname="jobs"
                 />
-                <JobFilters handleChangeFilters={handleChangeFilters} />
+                <JobFilters handleChangeFilters={handleChangeFilters} sites="sites"/>
               </div>
             </Grid>
             {managerData && managerData.jobs?.data?.length ? (
@@ -111,7 +111,6 @@ const SitesDetailPage = (props) => {
     </div>
   );
 };
-const mapStateToProps = ({ sites, po }) => {
-  return { sites, po };
-};
-export default connect(mapStateToProps, "")(SitesDetailPage);
+
+  
+export default SitesDetailPage;

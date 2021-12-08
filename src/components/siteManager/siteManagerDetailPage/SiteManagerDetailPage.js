@@ -24,7 +24,7 @@ const SiteManagerDetailPage = (props) => {
 
   const [state, setState] = useState({
     isLoading: false,
-    managerData: [],
+    managerData: {},
     isCreateManager: false,
   });
   const [reload, setReload] = useState(false);
@@ -43,8 +43,10 @@ const SiteManagerDetailPage = (props) => {
   };
   useEffect(() => {
     setState({ ...state, isLoading: true });
+    const params = Object.entries(filters).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
+    setState({...state , managerData:{}})
     sitesService
-      .showManagerDetail(id)
+      .showManagerDetail(id , params)
       .then((res) => {
         setState({
           ...state,
@@ -55,7 +57,7 @@ const SiteManagerDetailPage = (props) => {
       .catch((error) => {
         setState({ ...state, isLoading: false });
       });
-  }, [reload]);
+  }, [reload , filters]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
