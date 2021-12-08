@@ -10,6 +10,7 @@ import { Button } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Alert } from "@material-ui/lab";
 import "./acceptJob.scss";
+import { MenuItem, FormControl, Select, InputLabel } from "@material-ui/core";
 import moment from "moment";
 import jobService from "../../../services/job.service";
 
@@ -48,17 +49,23 @@ const AcceptJobModal = (props) => {
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
+    paymentMethod: "",
   });
-
-  const { notice, isLoading } = state;
+  
+  const { notice, isLoading, paymentMethod } = state;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
   const handleSubmit = () => {
     const data = {
       card_id: "",
       is_notify: 1,
       job_id: jobdata.job_id,
       user_id: jobdata.customer_user_id,
-      payment_type: jobdata.payment_type,
+      payment_type: paymentMethod,
     };
+
     setState({ ...state, isLoading: true });
     jobService
       .acceptOrderRequest(data)
@@ -116,10 +123,27 @@ const AcceptJobModal = (props) => {
               {jobdata ? moment(jobdata.job_time).format("MM-DD-YYYY") : "n/a"}
             </div>
           </div>
-          <div className="info">
-            <div className="designation">Payment Method</div>
-            <div className="personal-title">
-              {jobdata.payment_type === 7 ? "Manual" : "n/a"}
+          <div className="payment-main">
+            <div className="designations">Payment Method</div>
+              <div className="payment">
+                <FormControl variant="outlined" margin="dense">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Payment method
+                  </InputLabel>
+                  <Select
+                    name="paymentMethod"
+                    value={paymentMethod}
+                    onChange={handleChange}
+                    label="Payment method"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="2">Credit</MenuItem>
+                    <MenuItem value="0">Stripe</MenuItem>
+                  </Select>
+                </FormControl>
+              
             </div>
           </div>
           <div className="info">

@@ -22,4 +22,30 @@
       color: #4b686e;
     }
   }
+  .payment-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    .designations {
+      font-family: DM Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 16px;
+      color: #4b686e;
+      width: 80%;
+    }
+    .payment {
+      width: 35%;
+      .MuiFormControl-root {
+        width: 100% ;
+      }
+      .MuiInputBase-root{
+        height: 35px;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
 }
