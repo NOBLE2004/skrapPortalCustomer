@@ -308,7 +308,7 @@ const JobsTable = ({
         Cell: (cell) => {
           return (
             <>
-              {cell.row.original.order_job_status === 1 ? (
+              {(cell.row.original.order_job_status === 1 && localStorage.getItem('role_id') === 12 )? (
                 <div className="accept-reject">
                   <button
                     className="sites-header-btn"
