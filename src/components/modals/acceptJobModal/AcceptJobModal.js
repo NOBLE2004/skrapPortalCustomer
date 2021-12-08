@@ -91,7 +91,7 @@ const AcceptJobModal = (props) => {
     <div>
       <Dialog open={true} onClose={handleClose} className="booksitemodal">
         <DialogTitle onClose={handleClose}> Job Info </DialogTitle>
-        <DialogContent dividers>
+        <DialogContent dividers className="acceptmodal">
           <div className="info">
             <div className="designation">Request By</div>
             <div className="personal-title">
