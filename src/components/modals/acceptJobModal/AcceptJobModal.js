@@ -13,6 +13,7 @@ import "./acceptJob.scss";
 import { MenuItem, FormControl, Select, InputLabel } from "@material-ui/core";
 import moment from "moment";
 import jobService from "../../../services/job.service";
+import { getUserDataFromLocalStorage } from "../../../services/utils";
 
 const styles = (theme) => ({
   root: {
@@ -46,12 +47,18 @@ const DialogTitle = withStyles(styles)((props) => {
 
 const AcceptJobModal = (props) => {
   const { handleClose, jobdata } = props;
+  const [credit, setCredit] = useState('')
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
     paymentMethod: "",
   });
-  
+
+  useEffect(()=>{
+    const userInfo = getUserDataFromLocalStorage();
+    setCredit(userInfo.credit_balance)
+  },[])
+
   const { notice, isLoading, paymentMethod } = state;
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -125,25 +132,24 @@ const AcceptJobModal = (props) => {
           </div>
           <div className="payment-main">
             <div className="designations">Payment Method</div>
-              <div className="payment">
-                <FormControl variant="outlined" margin="dense">
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    Payment method
-                  </InputLabel>
-                  <Select
-                    name="paymentMethod"
-                    value={paymentMethod}
-                    onChange={handleChange}
-                    label="Payment method"
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="2">Credit</MenuItem>
-                    <MenuItem value="0">Stripe</MenuItem>
-                  </Select>
-                </FormControl>
-              
+            <div className="payment">
+              <FormControl variant="outlined" margin="dense">
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Payment method
+                </InputLabel>
+                <Select
+                  name="paymentMethod"
+                  value={paymentMethod}
+                  onChange={handleChange}
+                  label="Payment method"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
+                  <MenuItem value="0">Stripe</MenuItem>
+                </Select>
+              </FormControl>
             </div>
           </div>
           <div className="info">
