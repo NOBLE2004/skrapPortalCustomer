@@ -47,17 +47,17 @@ const DialogTitle = withStyles(styles)((props) => {
 
 const AcceptJobModal = (props) => {
   const { handleClose, jobdata } = props;
-  const [credit, setCredit] = useState('')
+  const [credit, setCredit] = useState("");
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
     paymentMethod: "",
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     const userInfo = getUserDataFromLocalStorage();
-    setCredit(userInfo.credit_balance)
-  },[])
+    setCredit(userInfo.credit_balance);
+  }, []);
 
   const { notice, isLoading, paymentMethod } = state;
   const handleChange = (e) => {
@@ -146,8 +146,14 @@ const AcceptJobModal = (props) => {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
-                  <MenuItem value="0">Stripe</MenuItem>
+                  {credit > 0 ? (
+                    <>
+                      <MenuItem value="2">Credit</MenuItem>
+                      <MenuItem value="0">Stripe</MenuItem>
+                    </>
+                  ) : (
+                    <MenuItem value="2">Credit</MenuItem>
+                  )}
                 </Select>
               </FormControl>
             </div>
