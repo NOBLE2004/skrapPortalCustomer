@@ -23,6 +23,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import { createTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import { useHistory } from "react-router-dom";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -46,7 +47,9 @@ export default function CreateJob({
   closeModal,
   setJobCreated,
   handleJobCreated,
+  sites
 }) {
+  const history = useHistory();
   const divRef = useRef(null);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
@@ -60,6 +63,7 @@ export default function CreateJob({
   const [wasteList, setWasteList] = useState([]);
   const [newLoader, setNewLoader] = useState(false);
   const [credit, setCredit] = useState(0);
+  const [roleId, setRoleId] = useState(0);
   const [errors, setError] = useState({
     customer: "",
     service: "",
@@ -254,6 +258,7 @@ export default function CreateJob({
     setServices(serviceList);
     //});
     const userCredit = getUserDataFromLocalStorage();
+    setRoleId(userCredit.role_id);
     setCredit(userCredit.credit_balance);
     setState({
       ...state,
@@ -281,7 +286,6 @@ export default function CreateJob({
   //dynamic update service cost, haulage cost and totalcost
   useEffect(() => {
     if (subServiceSelect) {
-      console.log("subServiceSelect", serviceSelect);
       if (permitOption == 1) {
         setState({
           ...state,
@@ -390,12 +394,13 @@ export default function CreateJob({
 
   const confirmJob = (e) => {
     e.preventDefault();
+    history.push("/jobs")
     if (
       Object.keys(addressData).length === 0 ||
-      paymentMethod === "" ||
       // purchaseOrder === "" ||
       service === "" ||
-      subService === ""
+      subService === "" ||
+      (roleId != 12 && paymentMethod === "")
     ) {
       Object.keys(errors).forEach((error, index) => {
         checkingError(error, state[error]);
@@ -446,7 +451,7 @@ export default function CreateJob({
     let data = {
       acm_id: "",
       address_data: addressData,
-      card_id: selectedPaymentMethod,
+      card_id: roleId == 12 ? "" : selectedPaymentMethod,
       comments: note,
       coupon_detail: {
         coupon_id: 0,
@@ -456,7 +461,7 @@ export default function CreateJob({
       },
       customer_user_id: localStorage.getItem("user_id"),
       jobs: 1,
-      payment_type: paymentMethod,
+      payment_type: roleId == 12 ? "0" : paymentMethod,
       purchase_order: purchaseOrder,
       is_permit: permitOption,
       permitted_weeks: noOfDays,
@@ -489,11 +494,12 @@ export default function CreateJob({
           supplier_cost: "0",
         },
       ],
-      wastes: service === 0 ? wasteType : [],
+      wastes:
+        service === 0 ? wasteType : [{ waste_type_id: "", percentage: 0 }],
       what3word: "",
       show_on_main_portal: 1,
     };
-    console.log('waste type' , wasteType)
+
     JobService.createOrder(data)
       .then((response) => {
         if (Object.keys(response.data.result).length === 0) {
@@ -506,10 +512,9 @@ export default function CreateJob({
             },
           });
         } else {
-          handleJobCreated();
-          setTimeout(() => {
-            handleClose();
-          }, 2000);
+          if(!sites){
+            handleJobCreated();
+          } 
           setState({
             ...state,
             isLoading: false,
@@ -519,6 +524,10 @@ export default function CreateJob({
             },
           });
           scrollToBottom();
+          setTimeout(() => {
+            handleClose();
+            history.push('/jobs')
+          }, 2000);
         }
       })
       .catch((err) => {
@@ -545,16 +554,13 @@ export default function CreateJob({
   useEffect(() => {
     let t_date = Date.parse(new Date());
     let d_date = Date.parse(startSelectedDate);
-    console.log(t_date, d_date);
     setState({ ...state, time_slot_loading: true });
     PaymentService.getData({ t_date, d_date })
       .then((res) => {
-        console.log("res", res.data.result.time_slots);
         setTimeSlots(res.data.result.time_slots);
         setState({ ...state, time_slot_loading: false });
       })
       .catch((err) => {
-        console.log("res", err);
         setState({ ...state, time_slot_loading: false });
       });
   }, [startSelectedDate]);
@@ -595,6 +601,7 @@ export default function CreateJob({
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
+
   return (
     <Dialog
       open={true}
@@ -890,44 +897,46 @@ export default function CreateJob({
             </div>
           </div>
 
-          <div className="paymentWp">
-            <div className="payment">
-              <p>Payment Method</p>
-              <FormControl variant="outlined" margin="dense">
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Payment method
-                </InputLabel>
-                <Select
-                  name="paymentMethod"
-                  value={paymentMethod}
-                  onChange={handleChange}
-                  label="Payment method"
-                  error={errors["paymentMethod"].length > 0 ? true : false}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
-                  <MenuItem value="0">Stripe</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+          {roleId != 12 && (
+            <div className="paymentWp">
+              <div className="payment">
+                <p>Payment Method</p>
+                <FormControl variant="outlined" margin="dense">
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Payment method
+                  </InputLabel>
+                  <Select
+                    name="paymentMethod"
+                    value={paymentMethod}
+                    onChange={handleChange}
+                    label="Payment method"
+                    error={errors["paymentMethod"].length > 0 ? true : false}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
+                    <MenuItem value="0">Stripe</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
 
-            <div className="discount">
-              <p>Total Cost</p>
-              <TextField
-                placeholder="£"
-                name="totalCost"
-                value={totalCost}
-                onChange={handleChange}
-                type="number"
-                variant="outlined"
-                margin="dense"
-                disabled={(totalCost !== null) | (totalCost !== undefined)}
-                // error= {errors['totalCost'].length > 0 ? true : false}
-              />
+              <div className="discount">
+                <p>Total Cost</p>
+                <TextField
+                  placeholder="£"
+                  name="totalCost"
+                  value={totalCost}
+                  onChange={handleChange}
+                  type="number"
+                  variant="outlined"
+                  margin="dense"
+                  disabled={(totalCost !== null) | (totalCost !== undefined)}
+                  // error= {errors['totalCost'].length > 0 ? true : false}
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           {paymentMethod === "0" && (
             <>

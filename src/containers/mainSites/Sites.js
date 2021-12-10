@@ -14,10 +14,12 @@ import AssignToManager from "../../components/modals/assignToManager/AssignToMan
 import { getSites, getSitesList } from "../../store/actions/sites.action";
 import "./sites.scss";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
+import CreateJob from "../../components/modals/createJob/CreateJob";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
   const [showInfo, setShowInfo] = useState(false);
+  const [isJobCreated, setIsJobCreated] = useState(false);
   const [isMapView, setIsMapView] = useState(true);
   const [isReload, setIsReload] = useState(false);
   const [postcode, setPostcode] = useState("");
@@ -27,7 +29,7 @@ const Sites = (props) => {
     page: 1,
     search: "",
   });
-
+  const [search, setSearch] = useState("");
   useEffect(() => {
     async function fetchData() {
       !siteData && (await props.getSitesList(filters));
@@ -47,7 +49,7 @@ const Sites = (props) => {
     setFilters({ ...filters, page: page });
   };
   const handleChangeSearch = (postcode) => {
-    setFilters({ ...filters, search: postcode });
+    setSearch(postcode);
   };
 
   const handleShowMap = () => {
@@ -56,6 +58,10 @@ const Sites = (props) => {
 
   const handleMangerModal = () => {
     setIsManagerOpen(true);
+  };
+
+  const handleCreateJob = () => {
+    setIsJobCreated(true);
   };
 
   return (
@@ -67,6 +73,8 @@ const Sites = (props) => {
         handleBookJob={handleMangerModal}
         downloadCSV={false}
         showButton={true}
+        isJob={true}
+        handleCreateJob={handleCreateJob}
       >
         <CommonJobStatus
           jobStatus={{
@@ -111,6 +119,12 @@ const Sites = (props) => {
       {isManagerOpen && (
         <AssignToManager handleClose={() => setIsManagerOpen(false)} />
       )}
+        {isJobCreated && (
+        <CreateJob
+        closeModal={() => setIsJobCreated(false)}
+        sites={true}
+        />
+      )}
       {isMapView ? (
         <>
           <Grid container className="sites-table-loader">
@@ -121,10 +135,11 @@ const Sites = (props) => {
                 <>
                   <Grid item md={10}>
                     <SitesTable
-                      data={siteData ? siteData.data : []}
+                      data={siteData ? siteData?.data : []}
                       pagination={siteData}
                       handlePagination={handlePagination}
                       reload={() => setIsReload(!isReload)}
+                      searchData={search}
                     />
                   </Grid>
                   {/* style={{ marginTop: "47px" }} */}

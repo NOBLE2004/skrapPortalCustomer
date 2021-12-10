@@ -9,7 +9,7 @@ import JobFilters from "../../filters/jobFilters";
 import { useParams, useLocation } from "react-router";
 import "./sitesDetailPage.scss";
 import PoDetail from "../../siteManager/poDetail/PoDetail";
-
+import CreateJob from "../../modals/createJob/CreateJob";
 const SitesDetailPage = (props) => {
   const { id } = useParams();
   const location = useLocation();
@@ -26,34 +26,36 @@ const SitesDetailPage = (props) => {
     isLoadings: false,
     managerData: {},
     isCreateManager: false,
+    isJobCreated: false,
   });
 
-  const { isLoadings, managerData } = state;
+  const { isLoadings, managerData, isJobCreated } = state;
 
   const handleChangeFilters = (filtersList) => {
     setFilters(filtersList);
   };
   useEffect(() => {
     const getData = async () => {
-      try{
+      try {
         setState({ ...state, isLoadings: true });
-        const params = Object.entries(filters).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
-        setState({...state , managerData:{}})
-        const res = await sitesService.showSitesDetail(id , params)
+        const params = Object.entries(filters).reduce(
+          (a, [k, v]) => (v ? ((a[k] = v), a) : a),
+          {}
+        );
+        setState({ ...state, managerData: {} });
+        const res = await sitesService.showSitesDetail(id, params);
         setState({
           ...state,
           managerData: res.data,
           isLoadings: false,
         });
-      }catch(err){
+      } catch (err) {
         setState({ ...state, isLoadings: false });
       }
     };
 
-    getData()
+    getData();
   }, [filters]);
-
-  
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -62,15 +64,30 @@ const SitesDetailPage = (props) => {
   const handleChangeSearch = (search) => {
     setFilters({ ...filters, search: search });
   };
-  
+
+  const handleCreateJob = () => {
+    setState({ ...state, isJobCreated: true });
+  };
+
+
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
         <div className="sites-header-title">
           {site_address ? site_address : "n/a"}{" "}
         </div>
+        <div>
+          <button className="header-btn" onClick={handleCreateJob}>
+            Create Job
+          </button>
+        </div>
       </div>
-
+      {isJobCreated && (
+        <CreateJob
+        closeModal={() => setState({ ...state, isJobCreated: false }) } 
+        sites={true}
+        />
+      )}
       <Grid container className="manager-detail-page">
         {isLoadings ? (
           <FadeLoader color={"#29a7df"} loading={isLoadings} width={4} />
@@ -81,7 +98,7 @@ const SitesDetailPage = (props) => {
               <hr />
             </Grid>
             <Grid item md={12}>
-              <NewManagerDetail managerData={ managerData } />
+              <NewManagerDetail managerData={managerData} />
             </Grid>
             <Grid className="po-detail-page">
               <PoDetail managerData={managerData} />
@@ -92,7 +109,10 @@ const SitesDetailPage = (props) => {
                   handleChangeSearch={handleChangeSearch}
                   cname="jobs"
                 />
-                <JobFilters handleChangeFilters={handleChangeFilters} sites="sites"/>
+                <JobFilters
+                  handleChangeFilters={handleChangeFilters}
+                  sites="sites"
+                />
               </div>
             </Grid>
             {managerData && managerData.jobs?.data?.length ? (
@@ -112,5 +132,4 @@ const SitesDetailPage = (props) => {
   );
 };
 
-  
 export default SitesDetailPage;
