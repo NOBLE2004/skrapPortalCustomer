@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "@material-ui/core/styles";
 import { Drawer, IconButton, List } from "@material-ui/core";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import clsx from "clsx";
-import {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@material-ui/core";
+import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { sidebarTabsList } from "../../environment";
@@ -18,7 +14,9 @@ import "./mySidebar.scss";
 
 const drawerWidth = 240;
 const MySidebar = (props) => {
-  const history = useHistory()
+  
+  const location = useLocation();
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(true);
@@ -27,9 +25,13 @@ const MySidebar = (props) => {
   const [activeTab, setActiveTab] = useState("");
   const _useEffect = () => {
     let userData = getUserDataFromLocalStorage();
+    
+
     if (userData) {
-      let username = userData?.personal_detail.first_name + ' ' + userData?.personal_detail.last_name;
-      console.log(userData);
+      let username =
+        userData?.personal_detail.first_name +
+        " " +
+        userData?.personal_detail.last_name;
       username = username.replace(/\b\w/g, (l) => l.toUpperCase());
       document.title = username;
       setUserData(userData);
@@ -49,14 +51,23 @@ const MySidebar = (props) => {
     //     props.history.push('/dashboard/buybtc')
     // }
   };
-  useEffect(_useEffect, []);
+  useEffect(
+    _useEffect,
+   []);
 
   const _useEffectActiveTab = () => {
     let pathname = props.history.location.pathname.split("/");
     let activeTab = pathname[pathname.length - 1];
-    setActiveTab(activeTab);
+    const param = location.pathname.slice(1 , 6)
+    if(param === 'sites'){
+      setActiveTab('sites')
+    }else if(param === "job-d"){
+      setActiveTab("jobs");
+    }else{
+      setActiveTab(activeTab)
+    }
   };
-  useEffect(_useEffectActiveTab, [activeTab]);
+  useEffect(_useEffectActiveTab, [location.pathname]);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -107,7 +118,8 @@ const MySidebar = (props) => {
     localStorage.clear();
     history.push("/login");
     window.location.reload(false);
-  }
+  };
+
   return (
     <Drawer
       variant="permanent"
@@ -134,6 +146,11 @@ const MySidebar = (props) => {
         style={{ height: "100%", paddingLeft: 10, paddingRight: 10 }}
       >
         {sidebarTabsList.map((obj, index) => {
+           if ((userData.role_id === 12) | (userData.role_id === 13)){
+             if(index === 3){
+              return null;
+             }
+           }
           let [textClass, iconColor] = ["sidebar-tab-text", "black_icon"];
           if (!obj.sub) {
             [textClass, iconColor] =
@@ -195,15 +212,17 @@ const MySidebar = (props) => {
               (userData.hasOwnProperty("personal_detail") &&
                 (userData.personal_detail.hasOwnProperty("first_name") &&
                   userData.personal_detail?.first_name) +
-                " " +
-                (userData.personal_detail.hasOwnProperty("last_name") &&
-                  userData.personal_detail?.last_name)) ||
+                  " " +
+                  (userData.personal_detail.hasOwnProperty("last_name") &&
+                    userData.personal_detail?.last_name)) ||
               "Test"
             }
             className="current-user"
           />
         </ListItem>
-        <button className="sidebar-signout-btn" onClick={handleLogout}>Sign out</button>
+        <button className="sidebar-signout-btn" onClick={handleLogout}>
+          Sign out
+        </button>
       </div>
     </Drawer>
   );

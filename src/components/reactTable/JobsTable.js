@@ -239,14 +239,6 @@ const JobsTable = ({
         },
       },
       {
-        Header: "Booked By",
-        accessor: "booked_by_name",
-        disableFilters: true,
-        Cell: (props) => {
-          return props.value == null ? "Skrap" : props.value;
-        },
-      },
-      {
         Header: "PO",
         accessor: "purchase_order",
         disableFilters: true,
