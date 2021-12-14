@@ -414,7 +414,7 @@ export default function CreateJob({
     }
 
     if (service === 4) {
-      if (portableweeks < 5) {
+      if (portableweeks < 2) {
         setState({ ...state, isWeekError: true });
         return;
       }
@@ -497,7 +497,6 @@ export default function CreateJob({
       what3word: "",
       show_on_main_portal: 1,
     };
-
     JobService.createOrder(data)
       .then((response) => {
         if (Object.keys(response.data.result).length === 0) {
