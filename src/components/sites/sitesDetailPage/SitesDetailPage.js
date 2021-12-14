@@ -10,11 +10,14 @@ import { useParams, useLocation } from "react-router";
 import "./sitesDetailPage.scss";
 import PoDetail from "../../siteManager/poDetail/PoDetail";
 import CreateJob from "../../modals/createJob/CreateJob";
+import { getUserDataFromLocalStorage } from "../../../services/utils";
+
 const SitesDetailPage = (props) => {
   const { id } = useParams();
   const location = useLocation();
   const [isReload, setIsReload] = useState(false);
   const { site_address } = location.state;
+  const [userInfo, setUserInfo] = useState(0);
   const [filters, setFilters] = useState({
     status: "",
     date: "",
@@ -35,6 +38,10 @@ const SitesDetailPage = (props) => {
   const handleChangeFilters = (filtersList) => {
     setFilters(filtersList);
   };
+  useEffect(() => {
+    const userData = getUserDataFromLocalStorage();
+    setUserInfo(userData.role_id);
+  }, []);
   useEffect(() => {
     const getData = async () => {
       try {
@@ -70,7 +77,6 @@ const SitesDetailPage = (props) => {
     setState({ ...state, isJobCreated: true });
   };
 
-
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
@@ -100,7 +106,11 @@ const SitesDetailPage = (props) => {
               <hr />
             </Grid>
             <Grid item md={12}>
-              <NewManagerDetail managerData={managerData} />
+              {userInfo === 12 || userInfo === 13 ? (
+                ""
+              ) : (
+                <NewManagerDetail managerData={managerData} />
+              )}
             </Grid>
             <Grid className="po-detail-page">
               <PoDetail managerData={managerData} />
