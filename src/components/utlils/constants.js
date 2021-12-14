@@ -146,65 +146,74 @@ export const jobHeadCells = [
   { id: "action", numeric: true, disablePadding: false, label: "" },
 ];
 
-export const 
-  serviceList = [
-    {
-      service_id: 2,
+export const paymentTypes = [
+  {
+    value: "2",
+    name: "Credit",
+  },
+  {
+    value: "0",
+    name: "Stripe",
+  },
+];
+export const serviceList = [
+  {
+    service_id: 2,
 
-      service_name: "Skip Hire",
+    service_name: "Skip Hire",
 
-      description:
-        "<p>Ideal for disposing of large amounts of building, construction and garden waste. Skips come&nbsp;in varied sizes and are measured in yards.</p>",
+    description:
+      "<p>Ideal for disposing of large amounts of building, construction and garden waste. Skips come&nbsp;in varied sizes and are measured in yards.</p>",
 
-      full_url:
-        "https://portaltest2.skrap.app/service_images/5fdc817505c54skip-hire.png",
+    full_url:
+      "https://portaltest2.skrap.app/service_images/5fdc817505c54skip-hire.png",
 
-      img_url: "/service_images/5fdc817505c54skip-hire.png",
-    },
+    img_url: "/service_images/5fdc817505c54skip-hire.png",
+  },
 
-    {
-      service_id: 1,
+  {
+    service_id: 1,
 
-      service_name: "Grab Hire",
+    service_name: "Grab Hire",
 
-      description:
-        "<p>Ideal for disposing of&nbsp;large amounts of building, construction and garden waste.&nbsp;&nbsp;A&nbsp;grab lorry uses a grab arm and bucket to collect and clear away large quantities of waste from otherwise inaccessible areas</p>",
+    description:
+      "<p>Ideal for disposing of&nbsp;large amounts of building, construction and garden waste.&nbsp;&nbsp;A&nbsp;grab lorry uses a grab arm and bucket to collect and clear away large quantities of waste from otherwise inaccessible areas</p>",
 
-      full_url:
-        "https://portaltest2.skrap.app/service_images/61546f4cae16c5f9fe0d6d5062Group 48624@3x.png",
+    full_url:
+      "https://portaltest2.skrap.app/service_images/61546f4cae16c5f9fe0d6d5062Group 48624@3x.png",
 
-      img_url: "/service_images/61546f4cae16c5f9fe0d6d5062Group 48624@3x.png",
-    },
+    img_url: "/service_images/61546f4cae16c5f9fe0d6d5062Group 48624@3x.png",
+  },
 
-    {
-      service_id: 3,
+  {
+    service_id: 3,
 
-      service_name: "Cage Hire",
+    service_name: "Cage Hire",
 
-      description:
-        "<p>An alternative removal solution to skip hire, suitable for all types of waste removals and includes a professional and experienced driver who will assist you in loading your waste. Ideal for removal of bulky items or for locations where a skip isn&#39;t practical, such as more congested roads or busy urban areas with parking restrictions.</p>",
+    description:
+      "<p>An alternative removal solution to skip hire, suitable for all types of waste removals and includes a professional and experienced driver who will assist you in loading your waste. Ideal for removal of bulky items or for locations where a skip isn&#39;t practical, such as more congested roads or busy urban areas with parking restrictions.</p>",
 
-      full_url:
-        "https://portaltest2.skrap.app/service_images/5f9fd84dca502Group 49016@3x.png",
+    full_url:
+      "https://portaltest2.skrap.app/service_images/5f9fd84dca502Group 49016@3x.png",
 
-      img_url: "/service_images/5f9fd84dca502Group 49016@3x.png",
-    },
-    {
-      description:
-        "<p>Ready Mix Concrete is a batch of concrete that is pre-mixed before being delivered to the project site. Tell us the volume required, and we have it delivered to site in a volume metric vehicle.&nbsp;</p>",
-      full_url:
-        "https://portaltest2.skrap.app/service_images/5f9fe11ab933aGroup 47848@3x.png",
-      img_url: "/service_images/5f9fe11ab933aGroup 47848@3x.png",
-      service_id: 80,
-      service_name: "Concrete",
-    },
-    {
-      description:
-        "<p>We have portable Toilets available for varied workforce sizes, hired on a weekly basis with an additional haulage charge.</p>",
-      full_url:
-        "https://portaltest2.skrap.app/service_images/5f9fe5eca9899Group 45309@3x.png",
-      img_url: "/service_images/5f9fe5eca9899Group 45309@3x.png",
-      service_id: 43,
-      service_name: "Portable Toilet",
-    },
-  ]
+    img_url: "/service_images/5f9fd84dca502Group 49016@3x.png",
+  },
+  {
+    description:
+      "<p>Ready Mix Concrete is a batch of concrete that is pre-mixed before being delivered to the project site. Tell us the volume required, and we have it delivered to site in a volume metric vehicle.&nbsp;</p>",
+    full_url:
+      "https://portaltest2.skrap.app/service_images/5f9fe11ab933aGroup 47848@3x.png",
+    img_url: "/service_images/5f9fe11ab933aGroup 47848@3x.png",
+    service_id: 80,
+    service_name: "Concrete",
+  },
+  {
+    description:
+      "<p>We have portable Toilets available for varied workforce sizes, hired on a weekly basis with an additional haulage charge.</p>",
+    full_url:
+      "https://portaltest2.skrap.app/service_images/5f9fe5eca9899Group 45309@3x.png",
+    img_url: "/service_images/5f9fe5eca9899Group 45309@3x.png",
+    service_id: 43,
+    service_name: "Portable Toilet",
+  },
+];
