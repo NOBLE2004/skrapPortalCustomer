@@ -122,6 +122,11 @@ $v110: 110px;
   @extend .common-title;
   color: #ffd446;
 }
+.requested-title {
+  @extend .common-title;
+  color: #52a9dd;
+}
+
 .header-btn {
   background: #52a9dd;
   border-radius: 64px;

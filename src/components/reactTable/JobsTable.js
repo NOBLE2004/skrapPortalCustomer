@@ -95,7 +95,7 @@ const JobsTable = ({
   const handleReject = (e, data) => {
     e.stopPropagation();
     setJobData(data);
-    setIsJobRejected(true)
+    setIsJobRejected(true);
   };
   const handleAccept = (e, data) => {
     e.stopPropagation();
@@ -228,7 +228,18 @@ const JobsTable = ({
         accessor: "appointment_status",
         id: "status",
         disableFilters: true,
-        Cell: (props) => <CommonStatus status={status(props.value)} />,
+        Cell: (cell) => {
+          return (
+            <CommonStatus
+              status={status(
+                cell.row.original.order_job_status === 1 &&
+                  localStorage.getItem("role_id") != 12
+                  ? 14
+                  : cell.value
+              )}
+            />
+          );
+        },
       },
       {
         Header: "Payment",
@@ -300,7 +311,8 @@ const JobsTable = ({
         Cell: (cell) => {
           return (
             <>
-              {(cell.row.original.order_job_status === 1 && localStorage.getItem('role_id') != 12 )? (
+              {cell.row.original.order_job_status === 1 &&
+              localStorage.getItem("role_id") != 12 ? (
                 <div className="accept-reject">
                   <button
                     className="sites-header-btn"
@@ -414,9 +426,12 @@ const JobsTable = ({
           handleClose={() => setIsJobAccepted(false)}
         />
       )}
-      {
-        isJobRejected && <RejectJobModal handleClose={() => setIsJobRejected(false)} jobdata={jobData}/>
-      }
+      {isJobRejected && (
+        <RejectJobModal
+          handleClose={() => setIsJobRejected(false)}
+          jobdata={jobData}
+        />
+      )}
       <button
         style={{ float: "right" }}
         className="header-btn"

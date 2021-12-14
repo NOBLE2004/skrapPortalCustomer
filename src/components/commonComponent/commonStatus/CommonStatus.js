@@ -11,25 +11,28 @@ const CommonStatus = ({ status }) => {
         className="circle"
         style={{
           backgroundColor: `${
-              (status.toLowerCase() === "pending" || status.toLowerCase() === "cancelled") 
+            status.toLowerCase() === "pending" ||
+            status.toLowerCase() === "cancelled"
               ? "red"
               : status.toLowerCase() === "completed"
               ? "#00B25D"
               : status.toLowerCase() === "delivered"
               ? "#FF9013"
-                    : status.toLowerCase() === "heading"
+              : status.toLowerCase() === "heading"
               ? "#3ca5e3"
               : status.toLowerCase() === "ongoing"
-              ? "#ecac63" 
-                            : status.toLowerCase() === "pickup-ongoing"
+              ? "#ecac63"
+              : status.toLowerCase() === "pickup-ongoing"
               ? "#6fff22"
+              : status.toLowerCase() === "requested"
+              ? "#52a9dd"
               : "#FF9013"
           }`,
         }}
       ></span>
-        <span className={`${status.toLowerCase().replace(/\s/g, '-')}-title`}>
-          {status ? capitalize(status) : ""}
-        </span>
+      <span className={`${status.toLowerCase().replace(/\s/g, "-")}-title`}>
+        {status ? capitalize(status) : ""}
+      </span>
     </div>
   );
 };
