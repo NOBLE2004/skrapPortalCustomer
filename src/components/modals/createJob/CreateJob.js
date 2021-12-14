@@ -49,6 +49,7 @@ export default function CreateJob({
   setJobCreated,
   handleJobCreated,
   sites,
+  reload,
 }) {
   const history = useHistory();
   const divRef = useRef(null);
@@ -241,9 +242,6 @@ export default function CreateJob({
     });
   };
 
-  const handleClose = () => {
-    closeModal();
-  };
 
   const handleStartDateChange = (date) => {
     setStartSelectedDate(date);
@@ -395,7 +393,6 @@ export default function CreateJob({
 
   const confirmJob = (e) => {
     e.preventDefault();
-    history.push("/jobs");
     if (
       Object.keys(addressData).length === 0 ||
       // purchaseOrder === "" ||
@@ -417,7 +414,7 @@ export default function CreateJob({
     }
 
     if (service === 4) {
-      if (portableweeks < 5) {
+      if (portableweeks < 2) {
         setState({ ...state, isWeekError: true });
         return;
       }
@@ -500,7 +497,6 @@ export default function CreateJob({
       what3word: "",
       show_on_main_portal: 1,
     };
-    
     JobService.createOrder(data)
       .then((response) => {
         if (Object.keys(response.data.result).length === 0) {
@@ -513,9 +509,6 @@ export default function CreateJob({
             },
           });
         } else {
-          if (!sites) {
-            handleJobCreated();
-          }
           setState({
             ...state,
             isLoading: false,
@@ -526,8 +519,12 @@ export default function CreateJob({
           });
           scrollToBottom();
           setTimeout(() => {
-            handleClose();
-            history.push("/jobs");
+            closeModal();
+            if (sites) {
+              reload();
+            }else{
+              handleJobCreated();
+            }
           }, 2000);
         }
       })
@@ -606,11 +603,11 @@ export default function CreateJob({
   return (
     <Dialog
       open={true}
-      onClose={handleClose}
+      onClose={closeModal}
       className="creatJobModal"
       ref={divRef}
     >
-      <DialogTitle onClose={handleClose}> Create Job </DialogTitle>
+      <DialogTitle onClose={closeModal}> Create Job </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
           <div className="addressSec">

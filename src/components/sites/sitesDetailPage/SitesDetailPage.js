@@ -15,6 +15,7 @@ import { getUserDataFromLocalStorage } from "../../../services/utils";
 const SitesDetailPage = (props) => {
   const { id } = useParams();
   const location = useLocation();
+  const [isReload, setIsReload] = useState(false);
   const { site_address } = location.state;
   const [userInfo, setUserInfo] = useState(0);
   const [filters, setFilters] = useState({
@@ -62,7 +63,7 @@ const SitesDetailPage = (props) => {
     };
 
     getData();
-  }, [filters]);
+  }, [filters , isReload]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -90,8 +91,9 @@ const SitesDetailPage = (props) => {
       </div>
       {isJobCreated && (
         <CreateJob
-          closeModal={() => setState({ ...state, isJobCreated: false })}
-          sites={true}
+        closeModal={() => setState({ ...state, isJobCreated: false }) } 
+        sites={true}
+        reload={() => setIsReload(!isReload)}
         />
       )}
       <Grid container className="manager-detail-page">
