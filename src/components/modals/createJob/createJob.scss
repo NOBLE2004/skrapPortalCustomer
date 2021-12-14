@@ -284,12 +284,12 @@
   }
 }
 
-// .wasteType,
-// .wasteType1 {
-//   display: flex;
-//   align-items: center;
-//   gap: 40px;
-// }
+.wasteType,
+.wasteType1 {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
 
 .wasteType1 {
   margin-bottom: 10px;
@@ -527,4 +527,13 @@
   font-style: normal;
   font-size: 10px;
   margin-top: 5px;
+}
+.percentage{
+  .MuiInputBase-root{
+    height: 40px;
+  }
+}
+.remove-btn{
+  width: 81px;
+  cursor: pointer;
 }

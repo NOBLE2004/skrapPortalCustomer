@@ -24,6 +24,7 @@ import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import { createTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { useHistory } from "react-router-dom";
+import { OutlinedInput, InputAdornment } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -47,7 +48,7 @@ export default function CreateJob({
   closeModal,
   setJobCreated,
   handleJobCreated,
-  sites
+  sites,
 }) {
   const history = useHistory();
   const divRef = useRef(null);
@@ -83,7 +84,7 @@ export default function CreateJob({
     service: "",
     subService: "",
     serviceCost: "",
-    haulageCost: "",
+    haulageCost: 0,
     paymentMethod: "",
     totalCost: 0,
     purchaseOrder: "",
@@ -291,7 +292,7 @@ export default function CreateJob({
           ...state,
           serviceCost:
             subServiceSelect.price >= 0 ? subServiceSelect.price : "",
-          haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
+          haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : 0,
           totalCost:
             +permitted_cost +
             +subServiceSelect.price +
@@ -302,7 +303,7 @@ export default function CreateJob({
           ...state,
           serviceCost:
             subServiceSelect.price >= 0 ? subServiceSelect.price : "",
-          haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
+          haulageCost: subServiceSelect.haulage ? +subServiceSelect.haulage : 0,
           totalCost: subServiceSelect.price,
         });
       }
@@ -312,7 +313,7 @@ export default function CreateJob({
       setState({
         ...state,
         serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
-        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
+        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : 0,
         totalCost: quantity * subServiceSelect.price + subServiceSelect.haulage,
       });
     }
@@ -321,7 +322,7 @@ export default function CreateJob({
       setState({
         ...state,
         serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
-        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : "",
+        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : 0,
         totalCost:
           portableweeks * 32 +
           subServiceSelect.haulage +
@@ -394,7 +395,7 @@ export default function CreateJob({
 
   const confirmJob = (e) => {
     e.preventDefault();
-    history.push("/jobs")
+    history.push("/jobs");
     if (
       Object.keys(addressData).length === 0 ||
       // purchaseOrder === "" ||
@@ -499,7 +500,7 @@ export default function CreateJob({
       what3word: "",
       show_on_main_portal: 1,
     };
-
+    
     JobService.createOrder(data)
       .then((response) => {
         if (Object.keys(response.data.result).length === 0) {
@@ -512,9 +513,9 @@ export default function CreateJob({
             },
           });
         } else {
-          if(!sites){
+          if (!sites) {
             handleJobCreated();
-          } 
+          }
           setState({
             ...state,
             isLoading: false,
@@ -526,7 +527,7 @@ export default function CreateJob({
           scrollToBottom();
           setTimeout(() => {
             handleClose();
-            history.push('/jobs')
+            history.push("/jobs");
           }, 2000);
         }
       })
@@ -786,9 +787,24 @@ export default function CreateJob({
                             })}
                         </Select>
                       </FormControl>
+                      <FormControl
+                        variant="outlined"
+                        margin="dense"
+                        className="wasteLoad"
+                      >
+                        <OutlinedInput
+                          type="number"
+                          name="percentage"
+                          value={data.percentage}
+                          onChange={(e) => handleWastType(e, index)}
+                          endAdornment={
+                            <InputAdornment position="end">%</InputAdornment>
+                          }
+                        />
+                      </FormControl>
                       {wasteType.length > 1 && (
                         <p
-                          className="button-text cursor-pointer"
+                          className="button-text cursor-pointer remove-btn"
                           onClick={() => {
                             removeRow(index);
                           }}
@@ -796,21 +812,6 @@ export default function CreateJob({
                           - remove
                         </p>
                       )}
-                      {/* <FormControl
-                    variant="outlined"
-                    margin="dense"
-                    className="wasteLoad"
-                  >
-                    <OutlinedInput
-                      type="number"
-                      name="percentage"
-                      value={data.percentage}
-                      onChange={(e) => handleWastType(e, index)}
-                      endAdornment={
-                        <InputAdornment position="end">%</InputAdornment>
-                      }
-                    />
-                  </FormControl> */}
                     </div>
                   );
                 })}
@@ -881,20 +882,26 @@ export default function CreateJob({
                 // error= {errors['serviceCost'].length > 0 ? true : false}
               />
             </div>
-            <div className="haulage-cost-width">
-              <p>Haulage Cost</p>
-              <TextField
-                value={haulageCost}
-                onChange={handleChange}
-                placeholder="£"
-                name="haulageCost"
-                type="number"
-                variant="outlined"
-                margin="dense"
-                disabled={(haulageCost !== null) | (haulageCost !== undefined)}
-                fullWidth
-              />
-            </div>
+            {subServiceSelect.haulage >= 0 ? (
+              <div className="haulage-cost-width">
+                <p>Haulage Cost</p>
+                <TextField
+                  value={haulageCost}
+                  onChange={handleChange}
+                  placeholder="£"
+                  name="haulageCost"
+                  type="number"
+                  variant="outlined"
+                  margin="dense"
+                  disabled={
+                    (haulageCost !== null) | (haulageCost !== undefined)
+                  }
+                  fullWidth
+                />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           {roleId != 12 && (
