@@ -123,6 +123,7 @@ const Sites = (props) => {
         <CreateJob
         closeModal={() => setIsJobCreated(false)}
         sites={true}
+        reload={() => setIsReload(!isReload)}
         />
       )}
       {isMapView ? (

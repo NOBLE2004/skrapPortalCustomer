@@ -13,6 +13,7 @@ import CreateJob from "../../modals/createJob/CreateJob";
 const SitesDetailPage = (props) => {
   const { id } = useParams();
   const location = useLocation();
+  const [isReload, setIsReload] = useState(false);
   const { site_address } = location.state;
   const [filters, setFilters] = useState({
     status: "",
@@ -55,7 +56,7 @@ const SitesDetailPage = (props) => {
     };
 
     getData();
-  }, [filters]);
+  }, [filters , isReload]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -86,6 +87,7 @@ const SitesDetailPage = (props) => {
         <CreateJob
         closeModal={() => setState({ ...state, isJobCreated: false }) } 
         sites={true}
+        reload={() => setIsReload(!isReload)}
         />
       )}
       <Grid container className="manager-detail-page">
