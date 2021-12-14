@@ -1,15 +1,17 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../reactTable/TableContainer";
 import Pagination from "../../reactTable/pagination";
 import "./sites-table.scss";
 import SiteAssignToManager from "../../modals/siteAssignToManager/SiteAssignToManager";
 import AllocatePoModal from "../../modals/allocatePo/AllocatePoModal";
+import { getUserDataFromLocalStorage } from "../../../services/utils";
 
 const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const [isManagerOpen, setIsManagerOpen] = useState(false);
   const [isAllocate, setIsAllocate] = useState(false);
   const [siteData, setSiteData] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [roleId, setRollId] = useState(0);
 
   const handleButtonClick = (e, props) => {
     e.stopPropagation();
@@ -22,6 +24,12 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
     setUserId(props.site_manager_user_id);
     setIsAllocate(true);
   };
+
+  useEffect(() => {
+    const userData = getUserDataFromLocalStorage();
+    setRollId(userData.role_id);
+  }, []);
+
   const columns = useMemo(
     () => [
       {
@@ -36,7 +44,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
       },
       {
         Header: "Address",
-        accessor: (d) => d.job_address.slice(0 , 40),
+        accessor: (d) => d.job_address.slice(0, 40),
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -83,19 +91,25 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         id: "edit-id",
         Cell: ({ cell }) => (
           <>
-            <button
-              className="sites-header-btn"
-              onClick={(e) => handleButtonClick(e, cell?.row?.original)}
-            >
-              Assign
-            </button>
-            <button
-              className="sites-header-btn"
-              style={{marginLeft:"2px"}}
-              onClick={(e) => handleAllocate(e, cell?.row?.original)}
-            >
-              Allocate Po
-            </button>
+            {( roleId === 13 || roleId === 12) ? (
+              ""
+            ) : (
+              <>
+                <button
+                  className="sites-header-btn"
+                  onClick={(e) => handleButtonClick(e, cell?.row?.original)}
+                >
+                  Assign
+                </button>
+                <button
+                  className="sites-header-btn"
+                  style={{ marginLeft: "2px" }}
+                  onClick={(e) => handleAllocate(e, cell?.row?.original)}
+                >
+                  Allocate Po
+                </button>
+              </>
+            )}
           </>
         ),
       },
