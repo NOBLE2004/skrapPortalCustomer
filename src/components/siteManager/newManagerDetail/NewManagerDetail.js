@@ -7,7 +7,7 @@ import "./newmanagerdetail.scss";
 const NewManagerDetail = ({ managerData, setReload }) => {
   const { data, site } = managerData;
   const [isManagerOpen, setIsManagerOpen] = useState(false);
-
+  
   return (
     <div>
       <Card className="new-manager-detail-main">
@@ -75,7 +75,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
         <AssignToManager
           handleClose={() => setIsManagerOpen(false)}
           setReload={() => setReload()}
-          managerId={data.user_id}
+          managerId={data && data?.user_id}
         />
       )}
     </div>

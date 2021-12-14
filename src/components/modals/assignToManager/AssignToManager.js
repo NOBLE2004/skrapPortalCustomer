@@ -18,7 +18,6 @@ import "./assignToManager.scss";
 
 function AssignToManager(props) {
   const { handleClose, managerId, setReload } = props;
-
   const [state, setState] = useState({
     manager: "",
     site: "",
@@ -80,7 +79,6 @@ function AssignToManager(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     setState({ ...state, isLoading: true });
-
     SiteService.siteAssignToManager({
       manager_id: managerId ? managerId : manager,
       address_id: site,
@@ -94,11 +92,11 @@ function AssignToManager(props) {
             text: response.data.description,
           },
         });
-        if (managerId) {
-          setTimeout(() => {
-            setReload();
-          }, 2000);
-        }
+
+        setTimeout(() => {
+          setReload();
+          handleClose();
+        }, 2000);
       })
       .catch((error) => {
         setState({
@@ -181,9 +179,10 @@ function AssignToManager(props) {
             Submit
             {isLoading && <CircularProgress />}
           </Button>
+          <div className="notice-info">
+            {notice && <Alert severity={notice.type}>{notice.text}</Alert>}
+          </div>
         </form>
-
-        {notice && <Alert severity={notice.type}>{notice.text}</Alert>}
       </DialogContent>
     </Dialog>
   );
