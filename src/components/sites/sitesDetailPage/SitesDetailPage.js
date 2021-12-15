@@ -17,6 +17,7 @@ const SitesDetailPage = (props) => {
   const location = useLocation();
   const [isReload, setIsReload] = useState(false);
   const { site_address } = location.state;
+  const [reload, setReload] = useState(false);
   const [userInfo, setUserInfo] = useState(0);
   const [filters, setFilters] = useState({
     status: "",
@@ -63,7 +64,7 @@ const SitesDetailPage = (props) => {
     };
 
     getData();
-  }, [filters , isReload]);
+  }, [filters , reload , isReload]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -109,7 +110,7 @@ const SitesDetailPage = (props) => {
               {userInfo === 12 || userInfo === 13 ? (
                 ""
               ) : (
-                <NewManagerDetail managerData={managerData} />
+                <NewManagerDetail managerData={managerData} setReload={() => setReload(!reload)}/>
               )}
             </Grid>
             <Grid className="po-detail-page">
