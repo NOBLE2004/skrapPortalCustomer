@@ -55,8 +55,8 @@ const JobFilters = ({ handleChangeFilters , sites }) => {
         setState([item.selection]);
         const start = item.selection.startDate.toLocaleDateString().replace(/\//g, '-');
         const end = item.selection.endDate.toLocaleDateString().replace(/\//g, '-');
-        const newStartDate = moment(start).format("YYYY-MM-DD")
-        const newEndDate = moment(end).format("YYYY-MM-DD")
+        const newStartDate = moment(start).format("DD-MM-YYYY")
+        const newEndDate = moment(end).format("DD-MM-YYYY")
         setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
     };
     const resetFilters = () =>{
