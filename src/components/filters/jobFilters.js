@@ -7,7 +7,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import moment from "moment";
 
-const JobFilters = ({ handleChangeFilters , sites }) => {
+const JobFilters = ({ handleChangeFilters }) => {
     const [filters, setFilters] = useState({
         status: "",
         date: "",
@@ -86,7 +86,6 @@ const JobFilters = ({ handleChangeFilters , sites }) => {
                             moveRangeOnFirstSelection={false}
                             ranges={state}
                             direction="horizontal"
-                            className={ sites ? "date-picker-filter" : ""}
                         />}
                         <select
                             labelId="demo-simple-select-filled-label"

@@ -21,7 +21,7 @@ body{
 }
 .rdrDateRangePickerWrapper{
   position: absolute;
-  top: 25%;
+  top: 100%;
   border: 1px solid gainsboro;
   right: 5%;
 }

@@ -706,7 +706,7 @@ export default function CreateJob({
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  {subServices.map((data, index) => {
+                  {subService && subServices.map((data, index) => {
                     return (
                       <MenuItem key={index} value={index}>
                         {data.service_name}
