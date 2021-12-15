@@ -10,11 +10,15 @@ import { useParams, useLocation } from "react-router";
 import "./sitesDetailPage.scss";
 import PoDetail from "../../siteManager/poDetail/PoDetail";
 import CreateJob from "../../modals/createJob/CreateJob";
+import { getUserDataFromLocalStorage } from "../../../services/utils";
+
 const SitesDetailPage = (props) => {
   const { id } = useParams();
   const location = useLocation();
+  const [isReload, setIsReload] = useState(false);
   const { site_address } = location.state;
   const [reload, setReload] = useState(false);
+  const [userInfo, setUserInfo] = useState(0);
   const [filters, setFilters] = useState({
     status: "",
     date: "",
@@ -36,6 +40,10 @@ const SitesDetailPage = (props) => {
     setFilters(filtersList);
   };
   useEffect(() => {
+    const userData = getUserDataFromLocalStorage();
+    setUserInfo(userData.role_id);
+  }, []);
+  useEffect(() => {
     const getData = async () => {
       try {
         setState({ ...state, isLoadings: true });
@@ -56,7 +64,7 @@ const SitesDetailPage = (props) => {
     };
 
     getData();
-  }, [filters , reload]);
+  }, [filters , reload , isReload]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -69,7 +77,6 @@ const SitesDetailPage = (props) => {
   const handleCreateJob = () => {
     setState({ ...state, isJobCreated: true });
   };
-
 
   return (
     <div className="site-manager-detail-page-main">
@@ -87,6 +94,7 @@ const SitesDetailPage = (props) => {
         <CreateJob
         closeModal={() => setState({ ...state, isJobCreated: false }) } 
         sites={true}
+        reload={() => setIsReload(!isReload)}
         />
       )}
       <Grid container className="manager-detail-page">
@@ -99,7 +107,11 @@ const SitesDetailPage = (props) => {
               <hr />
             </Grid>
             <Grid item md={12}>
-              <NewManagerDetail managerData={managerData}   setReload={() => setReload(!reload)}/>
+              {userInfo === 12 || userInfo === 13 ? (
+                ""
+              ) : (
+                <NewManagerDetail managerData={managerData} setReload={() => setReload(!reload)}/>
+              )}
             </Grid>
             <Grid className="po-detail-page">
               <PoDetail managerData={managerData} />

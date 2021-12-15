@@ -10,11 +10,16 @@ import { Button } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Alert } from "@material-ui/lab";
 import "./acceptJob.scss";
-import { MenuItem, FormControl, Select, InputLabel } from "@material-ui/core";
+import {
+  MenuItem,
+  FormControl,
+  Select,
+  InputLabel,
+} from "@material-ui/core";
 import moment from "moment";
 import jobService from "../../../services/job.service";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
-
+import { paymentTypes } from "../../utlils/constants";
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -48,6 +53,7 @@ const DialogTitle = withStyles(styles)((props) => {
 const AcceptJobModal = (props) => {
   const { handleClose, jobdata } = props;
   const [credit, setCredit] = useState("");
+  const [paymentError, setPaymentError] = useState(false);
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
@@ -63,8 +69,13 @@ const AcceptJobModal = (props) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
+    setPaymentError(false);
   };
   const handleSubmit = () => {
+    if (!paymentMethod) {
+      setPaymentError(true);
+      return;
+    }
     const data = {
       card_id: "",
       is_notify: 1,
@@ -142,15 +153,19 @@ const AcceptJobModal = (props) => {
                   value={paymentMethod}
                   onChange={handleChange}
                   label="Payment method"
+                  error={paymentError ? true : false}
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
                   {credit > 0 ? (
-                    <>
-                      <MenuItem value="2">Credit</MenuItem>
-                      <MenuItem value="0">Stripe</MenuItem>
-                    </>
+                    paymentTypes.map((elem, index) => {
+                      return (
+                        <MenuItem value={elem.value} key={index}>
+                          {elem.name}
+                        </MenuItem>
+                      );
+                    })
                   ) : (
                     <MenuItem value="2">Credit</MenuItem>
                   )}
