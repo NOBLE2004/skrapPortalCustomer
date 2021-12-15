@@ -124,7 +124,6 @@ const SitesDetailPage = (props) => {
                 />
                 <JobFilters
                   handleChangeFilters={handleChangeFilters}
-                  sites="sites"
                 />
               </div>
             </Grid>

@@ -90,7 +90,7 @@ const SiteManagerDetailPage = (props) => {
                   handleChangeSearch={handleChangeSearch}
                   cname="jobs"
                 />
-                <JobFilters handleChangeFilters={handleChangeFilters} />
+                <JobFilters handleChangeFilters={handleChangeFilters}/>
               </div>
             </Grid>
             {managerData && managerData.jobs?.data?.length ? (
