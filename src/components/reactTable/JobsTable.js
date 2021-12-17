@@ -170,6 +170,7 @@ const JobsTable = ({
     }
     setJobIds(ids);
   };
+
   const columns = useMemo(
     () => [
       {
@@ -233,7 +234,9 @@ const JobsTable = ({
             <CommonStatus
               status={status(
                 cell.row.original.order_job_status === 1 &&
-                  localStorage.getItem("role_id") != 12
+                  (localStorage.getItem("role_id") == 12 ||
+                    localStorage.getItem("role_id") == 13 ||
+                    localStorage.getItem("role_id") == 4)
                   ? 14
                   : cell.value
               )}
