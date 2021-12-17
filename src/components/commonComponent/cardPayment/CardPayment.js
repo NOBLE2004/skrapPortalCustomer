@@ -83,7 +83,7 @@ export default function CardPayment({user_id, handleSaveNewCard, setOpen}) {
             })
         }
 
-        // setState({...state, isLoading: true});
+        setState({...state, isLoading: true});
         let expiryDate = cardExpiry.split(" ");
         PaymentService.create({
             "card_holder_name": cardHolderName,

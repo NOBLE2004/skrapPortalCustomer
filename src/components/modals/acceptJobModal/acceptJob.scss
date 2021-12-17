@@ -1,6 +1,7 @@
 .acceptmodal {
   .info {
-    margin-bottom: 14px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
 
@@ -22,6 +23,7 @@
       color: #4b686e;
     }
   }
+
   .payment-main {
     display: flex;
     justify-content: space-between;
@@ -39,9 +41,9 @@
     .payment {
       width: 35%;
       .MuiFormControl-root {
-        width: 100% ;
+        width: 100%;
       }
-      .MuiInputBase-root{
+      .MuiInputBase-root {
         height: 35px;
         margin: 0;
         padding: 0;
