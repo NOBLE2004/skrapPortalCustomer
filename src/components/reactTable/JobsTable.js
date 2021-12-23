@@ -435,13 +435,14 @@ const JobsTable = ({
           jobdata={jobData}
         />
       )}
-      <button
-        style={{ float: "right" }}
-        className="header-btn"
-        onClick={() => handleInvoice()}
-      >
-        Create Xero Invoices
-      </button>
+      <div className="xero-btn">
+        <button
+          className="header-btn"
+          onClick={() => handleInvoice()}
+        >
+          Create Xero Invoices
+        </button>
+      </div>
       {isLoading && (
         <div
           className="loader"

@@ -45,7 +45,7 @@ const SiteManagers = (props) => {
           />
         ) : props.siteManager.sites && props.siteManager.sites.length > 0 ? (
           props.siteManager.sites.map((site, index) => (
-            <Grid item md={6}>
+            <Grid item xm={12} sm={8} md={6} key={index}>
               <ManagerDetail siteData={site} key={index} />
             </Grid>
           ))

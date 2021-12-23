@@ -1,4 +1,7 @@
 .common-jobcard {
+  @media only screen and (max-width: 1024px) {
+    margin-bottom: 10px;
+  }
   .MuiPaper-root {
     box-shadow: none;
   }

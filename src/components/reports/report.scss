@@ -3,7 +3,8 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    width: 70%;
+    width: 100%;
+    flex-wrap: wrap;
     .reports {
       width: 200px;
     }
@@ -42,7 +43,7 @@
   }
   .form-control {
     height: 35px;
-    width: 160px;
+    width: 192px;
     border-radius: 5px;
   }
 }
