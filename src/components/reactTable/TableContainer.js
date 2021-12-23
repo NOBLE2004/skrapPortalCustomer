@@ -58,7 +58,7 @@ const TableContainer = ({ columns, data, name }) => {
   };
 
   return (
-    <Fragment>
+    <div className="table-container-main">
       <div {...getTableProps()} className="table-main">
         <div style={{ display: "table-head" }}>
           {headerGroups.map((headerGroup) => (
@@ -132,7 +132,7 @@ const TableContainer = ({ columns, data, name }) => {
           })}
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 

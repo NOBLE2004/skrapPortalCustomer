@@ -9,4 +9,8 @@
     margin: 0 1%;
     width: 4%;
   }
+
+  @media only screen and (max-width: 960px) {
+    margin-right: 65px;
+ }
 }
