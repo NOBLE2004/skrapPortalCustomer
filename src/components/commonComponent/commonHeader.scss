@@ -4,6 +4,7 @@
   align-items: center;
   margin-bottom: 52px;
   width: 100%;
+  flex-wrap: wrap;
   .view-container {
     display: flex;
     justify-content: center;
@@ -17,10 +18,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media only screen and (max-width: 1170px) {
+      margin-top: 15px;
+    }
   }
   .header-children {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
+    
   }
 }

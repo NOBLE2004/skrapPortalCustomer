@@ -15,11 +15,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 .live-job-title {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 5px;
+  flex-wrap: wrap;
   h1 {
     margin-left: 10px;
     font-family: "BasierCircleBold";

@@ -2,6 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  @media only screen and (max-width: 1170px) {
+    margin-left: 15px;
+  }
+  @media only screen and (max-width: 500px) {
+    flex-direction: column;
+  }
   .filter-title {
     font-family: DM Sans;
     font-style: normal;
@@ -10,6 +16,14 @@
     line-height: 16px;
     color: #0d0d39;
     margin-right: 15px;
+
+    @media only screen and (max-width: 870px) and (min-width: 500px) {
+      width: 100px;
+    }
+    @media only screen and (max-width: 500px) {
+      margin-bottom: 5px;
+      align-self: flex-start;
+    }
   }
   .filter-option {
     padding: 0px 4px;
@@ -28,6 +42,10 @@
     height: 30px;
     margin-right: 10px;
     width: 100%;
+    @media only screen and (max-width: 500px) {
+      margin-bottom: 5px;
+      width: 20%;
+    }
   }
   .filter-buttons {
     margin-right: 10px;
@@ -36,13 +54,18 @@
       justify-content: flex-end;
     }
   }
-  .all-filters{
+  .all-filters {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
+    
+    @media only screen and (max-width: 500px) {
+       flex-wrap: wrap;
+       justify-content: start;
+    }
   }
-  .MuiInput-underline:before{
+  .MuiInput-underline:before {
     border-bottom: none;
   }
 }

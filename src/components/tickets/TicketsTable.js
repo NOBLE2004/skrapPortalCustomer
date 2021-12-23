@@ -86,7 +86,7 @@ const TicketsTable = ({data, pagination, handlePagination}) => {
     []
   );
   return (
-    <div>
+    <>
       <TableContainer
           columns={columns}
           data={data}
@@ -101,7 +101,7 @@ const TicketsTable = ({data, pagination, handlePagination}) => {
           handleNext={(page)=>{handlePagination(page)}}
           handlePrevious={(page)=>{handlePagination(page)}}
       />
-    </div>
+    </>
   );
 };
 
