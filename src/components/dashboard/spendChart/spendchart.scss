@@ -5,6 +5,10 @@
   box-shadow: none !important;
   width: 40%;
   margin: 20px 10px;
+  height: 331px;
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  } 
   .MuiCardContent-root {
     padding: 12px 12px;
   }

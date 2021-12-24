@@ -232,25 +232,27 @@ const SiteManagerTable = ({
   );
 
   return (
-    <div>
+    <>
       <TableContainer
         columns={siteDetail ? sitesDetailColumns : columns}
         data={jobs}
         // name={"jobs"}
       />
-      <Pagination
-        last={pagination?.last_page}
-        current={pagination?.current_page}
-        from={pagination?.from}
-        to={pagination?.to}
-        total={pagination?.total}
-        handleNext={(page) => {
-          handlePagination(page);
-        }}
-        handlePrevious={(page) => {
-          handlePagination(page);
-        }}
-      />
+      <div className="site-pagination">
+        <Pagination
+          last={pagination?.last_page}
+          current={pagination?.current_page}
+          from={pagination?.from}
+          to={pagination?.to}
+          total={pagination?.total}
+          handleNext={(page) => {
+            handlePagination(page);
+          }}
+          handlePrevious={(page) => {
+            handlePagination(page);
+          }}
+        />
+      </div>
       <Menu
         keepMounted
         className="job-table-menu"
@@ -269,7 +271,7 @@ const SiteManagerTable = ({
         <MenuItem onClick={handleClose}>Waste Report</MenuItem>
         <MenuItem onClick={handleClose}>Track Driver</MenuItem>
       </Menu>{" "}
-    </div>
+    </>
   );
 };
 

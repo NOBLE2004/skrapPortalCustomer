@@ -31,3 +31,6 @@ body{
   align-items: center;
   padding: 10%;
 }
+.site-pagination{
+  width: 100%;
+}

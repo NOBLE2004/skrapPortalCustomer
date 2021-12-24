@@ -134,7 +134,7 @@ const Sites = (props) => {
             ) : (
               siteData && (
                 <>
-                  <Grid item md={10}>
+                  <Grid item md={12} sm={12}>
                     <SitesTable
                       data={siteData ? siteData?.data : []}
                       pagination={siteData}
@@ -144,7 +144,7 @@ const Sites = (props) => {
                     />
                   </Grid>
                   {/* style={{ marginTop: "47px" }} */}
-                  <Grid item md={2}>
+                  {/* <Grid item md={2}>
                     {siteData ? (
                       siteData.data.map((site, index) => (
                         <CommonJobStatus
@@ -166,7 +166,7 @@ const Sites = (props) => {
                     ) : (
                       <div className="site-error">{error}</div>
                     )}
-                  </Grid>{" "}
+                  </Grid>{" "} */}
                 </>
               )
             )}

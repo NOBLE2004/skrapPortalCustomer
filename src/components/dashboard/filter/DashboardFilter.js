@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { search } from "../../../assets/images";
 import "./dashboardfilter.scss";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, TextField } from "@material-ui/core";
 const useStyle = makeStyles((theme) => ({
   titleHide: {
     fontFamily: "BasierCircleBold",
@@ -29,19 +29,16 @@ const DashboardFilter = ({ title, handelSearch }) => {
         {title ? `Filter By ${title}` : "Filter By Site"}
       </div>
       <div className="filter-main">
-        <img src={search} alt="search-icon" />
-        <input
-          style={{
-            border: "none",
-            borderBottom: "1px solid grey",
-            marginLeft: "5%",
-            outline: "none",
-          }}
-          value={value || ""}
+        
+        <TextField
           onChange={(e) => {
             setValue(e.target.value);
           }}
           placeholder={`Search ${title}`}
+          InputProps={{
+            startAdornment: <img src={search} alt="search-icon" className="icon-search"/>,
+          }}
+          className="searh-dashboard"
         />
       </div>
     </div>

@@ -1,5 +1,16 @@
 .jobcard {
   width: 190px;
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+  @media only screen and (max-width: 430px) {
+    width: 100%;
+    margin-right: 0px;
+  }
+  @media only screen and (min-width: 960px) and (max-width: 1400px) {
+    margin-right: 5px;
+  }
   .MuiPaper-root {
     box-shadow: none;
   }
