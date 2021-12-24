@@ -1,8 +1,8 @@
 .dashboard-filter-main {
   padding: 5px 0px;
-  max-width: 190px;
+  // max-width: 190px;
   .title {
-    font-family: 'BasierCircleBold';
+    font-family: "BasierCircleBold";
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -14,8 +14,12 @@
   .filter-main {
     display: flex;
     margin-top: 18px;
+    @media only screen and (max-width: 425px) {
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
     .postcode {
-      font-family: 'BasierCircleReg';
+      font-family: "BasierCircleReg";
       font-style: normal;
       font-weight: normal;
       font-size: 13px;
@@ -26,4 +30,17 @@
       margin-left: 8px;
     }
   }
+}
+.searh-dashboard {
+   max-width: 190px;
+  input {
+    width: 100%;
+  }
+  @media only screen and (max-width: 425px) {
+    width: 100%;
+  }
+}
+
+.icon-search{
+  margin-right: 10px;
 }

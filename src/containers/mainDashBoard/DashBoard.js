@@ -62,13 +62,13 @@ const DashBoard = (props) => {
         <Grid item md={4}>
           <TotalSpend totalSpend={info ? parseFloat(info.TotalSpend).toLocaleString() : ""} />
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={6} xs={12}>
           <div className="job-status-outer">
             <JobStatus jobStatus={info ? info : ""} />
           </div>
         </Grid>
-        <Grid item md={2}>
-          <DashboardFilter handelSearch={() => {}} />
+        <Grid item md={2} xs={12}>
+          <DashboardFilter handelSearch={() => {}} title="Jobs"/>
         </Grid>
       </Grid>
       <Grid container spacing={3} className="spend-service-main">
@@ -81,7 +81,7 @@ const DashBoard = (props) => {
       </Grid>
 
       <Grid container spacing={3}>
-        <Grid item md={12}>
+        <Grid item md={12} className="landfill-main">
           <div className="landfill">Landfill Diversion Rate</div>
           <hr />
         </Grid>

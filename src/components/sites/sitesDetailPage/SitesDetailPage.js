@@ -11,8 +11,10 @@ import "./sitesDetailPage.scss";
 import PoDetail from "../../siteManager/poDetail/PoDetail";
 import CreateJob from "../../modals/createJob/CreateJob";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
+import useWindowDimensions from "../../../hooks/useWindowDimension";
 
 const SitesDetailPage = (props) => {
+  const { width } = useWindowDimensions();
   const { id } = useParams();
   const location = useLocation();
   const [isReload, setIsReload] = useState(false);
@@ -64,7 +66,7 @@ const SitesDetailPage = (props) => {
     };
 
     getData();
-  }, [filters , reload , isReload]);
+  }, [filters, reload, isReload]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -82,7 +84,11 @@ const SitesDetailPage = (props) => {
     <div className="site-manager-detail-page-main">
       <div className="header-main">
         <div className="sites-header-title">
-          {site_address ? site_address : "n/a"}{" "}
+          {width < 600
+            ? site_address
+              ? site_address.slice(0, 16)
+              : "n/a"
+            : site_address}
         </div>
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
@@ -92,9 +98,9 @@ const SitesDetailPage = (props) => {
       </div>
       {isJobCreated && (
         <CreateJob
-        closeModal={() => setState({ ...state, isJobCreated: false }) } 
-        sites={true}
-        reload={() => setIsReload(!isReload)}
+          closeModal={() => setState({ ...state, isJobCreated: false })}
+          sites={true}
+          reload={() => setIsReload(!isReload)}
         />
       )}
       <Grid container className="manager-detail-page">
@@ -102,15 +108,18 @@ const SitesDetailPage = (props) => {
           <FadeLoader color={"#29a7df"} loading={isLoadings} width={4} />
         ) : (
           <>
-            <Grid item md={12}>
+            <Grid item md={12} xs={12}>
               <div className="landfill">Landfill Diversion Rate</div>
               <hr />
             </Grid>
-            <Grid item md={12}>
+            <Grid item md={12} xs={12}>
               {userInfo === 12 || userInfo === 13 ? (
                 ""
               ) : (
-                <NewManagerDetail managerData={managerData} setReload={() => setReload(!reload)}/>
+                <NewManagerDetail
+                  managerData={managerData}
+                  setReload={() => setReload(!reload)}
+                />
               )}
             </Grid>
             <Grid className="po-detail-page">
@@ -122,9 +131,7 @@ const SitesDetailPage = (props) => {
                   handleChangeSearch={handleChangeSearch}
                   cname="jobs"
                 />
-                <JobFilters
-                  handleChangeFilters={handleChangeFilters}
-                />
+                <JobFilters handleChangeFilters={handleChangeFilters} />
               </div>
             </Grid>
             {managerData && managerData.jobs?.data?.length ? (

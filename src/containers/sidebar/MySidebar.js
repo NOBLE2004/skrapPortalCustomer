@@ -14,7 +14,6 @@ import "./mySidebar.scss";
 
 const drawerWidth = 240;
 const MySidebar = (props) => {
-  
   const location = useLocation();
   const history = useHistory();
   const classes = useStyles();
@@ -25,7 +24,6 @@ const MySidebar = (props) => {
   const [activeTab, setActiveTab] = useState("");
   const _useEffect = () => {
     let userData = getUserDataFromLocalStorage();
-    
 
     if (userData) {
       let username =
@@ -51,20 +49,22 @@ const MySidebar = (props) => {
     //     props.history.push('/dashboard/buybtc')
     // }
   };
-  useEffect(
-    _useEffect,
-   []);
+  useEffect(_useEffect, []);
 
   const _useEffectActiveTab = () => {
     let pathname = props.history.location.pathname.split("/");
     let activeTab = pathname[pathname.length - 1];
-    const param = location.pathname.slice(1 , 6)
-    if(param === 'sites'){
-      setActiveTab('sites')
-    }else if(param === "job-d"){
+    const param = location.pathname.slice(1, 6);
+    if (!param) {
+      setActiveTab("dashboard");
+    } else if (param === "sites") {
+      setActiveTab("sites");
+    } else if (param === "job-d") {
       setActiveTab("jobs");
-    }else{
-      setActiveTab(activeTab)
+    } else if (param === "site-") {
+      setActiveTab("site-managers");
+    } else {
+      setActiveTab(activeTab);
     }
   };
   useEffect(_useEffectActiveTab, [location.pathname]);
@@ -146,11 +146,11 @@ const MySidebar = (props) => {
         style={{ height: "100%", paddingLeft: 10, paddingRight: 10 }}
       >
         {sidebarTabsList.map((obj, index) => {
-           if ((userData.role_id === 12) | (userData.role_id === 13)){
-             if(index === 3){
+          if ((userData.role_id === 12) | (userData.role_id === 13)) {
+            if (index === 3) {
               return null;
-             }
-           }
+            }
+          }
           let [textClass, iconColor] = ["sidebar-tab-text", "black_icon"];
           if (!obj.sub) {
             [textClass, iconColor] =

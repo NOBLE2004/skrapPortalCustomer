@@ -1,6 +1,14 @@
 .job-status-outer {
   display: flex;
   justify-content: space-between;
+  @media only screen and (max-width: 680px) {
+   flex-wrap: wrap;
+   justify-content: flex-start;
+  }
+  
+}
+.landfill-main{
+  width: 100%;
 }
 .landfill {
   margin: 11px 0px;
@@ -59,6 +67,10 @@ hr {
   justify-content: space-between !important;
   align-items: center;
   flex-wrap: unset !important;
+  @media only screen and (max-width: 768px) {
+    flex-wrap: wrap !important;
+    width: 100%;
+  }
 }
 .main-loading{
  width: 100%;

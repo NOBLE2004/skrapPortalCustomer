@@ -64,8 +64,5 @@ export const useStyles = makeStyles((theme) => ({
     padding: 20,
     overflow: "hidden",
     width: "-moz-available",
-    [theme.breakpoints.down("xs")]: {
-      padding: 10,
-    },
   },
 }));
