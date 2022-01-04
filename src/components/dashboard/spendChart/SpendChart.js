@@ -91,8 +91,6 @@ const SpendChart = ({ chartData , getDashBoardData , latestYear}) => {
           <Bar
             data={spendChartData}
             options={spendChartOptions}
-            height={231}
-            width={448}
           />
         </Box>
       </CardContent>

@@ -72,7 +72,7 @@ const MySidebar = (props) => {
   useEffect(_useEffectActiveTab, [location.pathname]);
 
   const handleDrawer = () => {
-    if (width < 700) {
+    if (width < 768) {
       setOpen(false);
     } else {
       setOpen(!open);
@@ -129,14 +129,22 @@ const MySidebar = (props) => {
   return (
     <Drawer
       variant="permanent"
-      className={clsx(
-        classes.drawer,
-        {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        },
-        open ? "drawerOpen1" : "drawerClose1"
-      )}
+      className={
+        width < 768
+          ? clsx(
+              classes.drawer,
+              { [classes.drawerClose]: true },
+              "drawerClose1"
+            )
+          : clsx(
+              classes.drawer,
+              {
+                [classes.drawerOpen]: open,
+                [classes.drawerClose]: !open,
+              },
+              open ? "drawerOpen1" : "drawerClose1"
+            )
+      }
       classes={{
         paper: clsx({
           [classes.drawerOpen]: open,
