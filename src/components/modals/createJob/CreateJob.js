@@ -599,7 +599,6 @@ export default function CreateJob({
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
-
   return (
     <Dialog
       open={true}
@@ -706,7 +705,7 @@ export default function CreateJob({
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  {subService && subServices.map((data, index) => {
+                  {subServices && subServices.map((data, index) => {
                     return (
                       <MenuItem key={index} value={index}>
                         {data.service_name}
