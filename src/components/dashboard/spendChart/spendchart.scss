@@ -6,7 +6,7 @@
   width: 40%;
   margin: 20px 10px;
   height: 331px;
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 815px) {
     width: 100%;
   } 
   .MuiCardContent-root {
@@ -63,4 +63,8 @@
   .MuiInput-underline:before {
     border-bottom: 1px solid #52a9dd !important;
   }
+ 
 }
+ .spend-bar-chart{
+    height: 242px;
+  }

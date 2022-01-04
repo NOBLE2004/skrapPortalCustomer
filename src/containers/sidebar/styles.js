@@ -65,4 +65,10 @@ export const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     width: "-moz-available",
   },
+  contents: {
+    flexGrow: 1,
+    padding: 10,
+    overflow: "hidden",
+    width: "-moz-available",
+  },
 }));

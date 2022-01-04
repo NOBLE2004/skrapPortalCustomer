@@ -1,6 +1,6 @@
 .job-status-outer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   @media only screen and (max-width: 680px) {
    flex-wrap: wrap;
    justify-content: flex-start;

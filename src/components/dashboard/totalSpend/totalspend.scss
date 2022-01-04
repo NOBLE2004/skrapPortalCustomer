@@ -8,8 +8,12 @@
     padding: 33px 20px 20px;
     border: 2px solid #ececec;
     box-sizing: border-box;
-    @media only screen and (max-width: 1425px) {
+    @media only screen and (max-width: 1200px) and (min-width: 950px) {
       padding: 12px 20px 20px;
+      display: block;
+    }
+    @media only screen and (max-width: 365px) {
+      display: block;
     }
     .chartInfo {
       h1 {

@@ -56,6 +56,24 @@
         }
       }
     }
+    .makeStyles-drawerOpen-7{
+      width: 65px !important;
+      overflow-x: hidden !important;
+      transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms !important;
+    }
+    .makeStyles-drawerClose-8 {
+      width: 65px;
+      overflow-x: hidden;
+      transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+    }
+    .makeStyles-drawerOpen-7{
+      width: 68px;
+      overflow-x: "hidden" !important;
+    }
+    // .makeStyles-drawerOpen-8{
+    //   width: 68px;
+    //   overflow-x: "hidden" !important;
+    // }
 
     .skrapLogin {
       width: 55px;

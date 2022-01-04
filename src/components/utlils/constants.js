@@ -77,6 +77,7 @@ export const spendChartOptions = {
   cornerRadius: 4,
   legend: { display: false },
   responsive: true,
+  maintainAspectRatio: false,
   scales: {
     xAxes: [
       {
