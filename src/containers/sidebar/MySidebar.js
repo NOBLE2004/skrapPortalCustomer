@@ -10,15 +10,17 @@ import { sidebarTabsList } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
 import { skrap_logo, personImage } from "../../assets/images";
+import useWindowDimensions from "../../hooks/useWindowDimension";
 import "./mySidebar.scss";
 
 const drawerWidth = 240;
 const MySidebar = (props) => {
+  const { width } = useWindowDimensions();
   const location = useLocation();
   const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(width < 700 ? false : true);
   const [subMenu, setSubMenu] = useState(0);
   const [userData, setUserData] = useState({});
   const [activeTab, setActiveTab] = useState("");
@@ -70,7 +72,11 @@ const MySidebar = (props) => {
   useEffect(_useEffectActiveTab, [location.pathname]);
 
   const handleDrawer = () => {
-    setOpen(!open);
+    if (width < 700) {
+      setOpen(false);
+    } else {
+      setOpen(!open);
+    }
   };
 
   const onTabHandler = (e, tab) => {

@@ -62,14 +62,14 @@ const DashBoard = (props) => {
         <Grid item md={4}>
           <TotalSpend totalSpend={info ? parseFloat(info.TotalSpend).toLocaleString() : ""} />
         </Grid>
-        <Grid item md={6} xs={12}>
+        <Grid item md={8} xs={12}>
           <div className="job-status-outer">
             <JobStatus jobStatus={info ? info : ""} />
           </div>
         </Grid>
-        <Grid item md={2} xs={12}>
+        {/* <Grid item md={2} xs={12}>
           <DashboardFilter handelSearch={() => {}} title="Jobs"/>
-        </Grid>
+        </Grid> */}
       </Grid>
       <Grid container spacing={3} className="spend-service-main">
         <SpendChart
