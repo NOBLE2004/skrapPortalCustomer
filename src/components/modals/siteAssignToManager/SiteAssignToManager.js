@@ -92,6 +92,7 @@ function SiteAssignToManager(props) {
 
         setTimeout(() => {
           setReload();
+          handleClose();
         }, 2000);
       })
       .catch((error) => {
