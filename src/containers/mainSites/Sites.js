@@ -35,9 +35,8 @@ const Sites = (props) => {
       !siteData && (await props.getSitesList(filters));
       !info && (await props.getDashboardsData(""));
     }
-    if (isReload) {
-      props.getSitesList(filters);
-    }
+
+    props.getSitesList(filters);
     fetchData();
   }, [isReload]);
 
@@ -119,11 +118,11 @@ const Sites = (props) => {
       {isManagerOpen && (
         <AssignToManager handleClose={() => setIsManagerOpen(false)} />
       )}
-        {isJobCreated && (
+      {isJobCreated && (
         <CreateJob
-        closeModal={() => setIsJobCreated(false)}
-        sites={true}
-        reload={() => setIsReload(!isReload)}
+          closeModal={() => setIsJobCreated(false)}
+          sites={true}
+          reload={() => setIsReload(!isReload)}
         />
       )}
       {isMapView ? (
