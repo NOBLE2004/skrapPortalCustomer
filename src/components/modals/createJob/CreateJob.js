@@ -242,7 +242,6 @@ export default function CreateJob({
     });
   };
 
-
   const handleStartDateChange = (date) => {
     setStartSelectedDate(date);
   };
@@ -424,14 +423,14 @@ export default function CreateJob({
 
     let currentDayOfMonth = startSelectedDate.getDate();
     let currentMonth = startSelectedDate.getMonth();
-
+    
     if (currentDayOfMonth < 10) {
       currentDayOfMonth = "0" + currentDayOfMonth;
     }
     let newCurrentMonth = currentMonth + 1;
 
     if (newCurrentMonth < 10) {
-      newCurrentMonth = "0" + currentMonth;
+      newCurrentMonth = "0" + newCurrentMonth;
     }
 
     const time = selectedTime && selectedTime.split("-");
@@ -446,6 +445,7 @@ export default function CreateJob({
       currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
     const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
     const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
+    console.log('startSelectedDate' , Date.parse(startSelectedDate))
     let data = {
       acm_id: "",
       address_data: addressData,
@@ -497,6 +497,7 @@ export default function CreateJob({
       what3word: "",
       show_on_main_portal: 1,
     };
+
     JobService.createOrder(data)
       .then((response) => {
         if (Object.keys(response.data.result).length === 0) {
@@ -529,12 +530,13 @@ export default function CreateJob({
         }
       })
       .catch((err) => {
+        console.log('err' , err)
         setState({
           ...state,
           isLoading: false,
           notice: {
             type: "error",
-            text: "Failed, Something is wrong",
+            text: err.message,
           },
         });
       });
@@ -705,13 +707,14 @@ export default function CreateJob({
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  {subServices && subServices.map((data, index) => {
-                    return (
-                      <MenuItem key={index} value={index}>
-                        {data.service_name}
-                      </MenuItem>
-                    );
-                  })}
+                  {subServices &&
+                    subServices.map((data, index) => {
+                      return (
+                        <MenuItem key={index} value={index}>
+                          {data.service_name}
+                        </MenuItem>
+                      );
+                    })}
                 </Select>
                 <span className="newLoader">
                   {newLoader && <CircularProgress />}
@@ -783,7 +786,7 @@ export default function CreateJob({
                             })}
                         </Select>
                       </FormControl>
-                      <FormControl
+                      {/* <FormControl
                         variant="outlined"
                         margin="dense"
                         className="wasteLoad"
@@ -797,7 +800,7 @@ export default function CreateJob({
                             <InputAdornment position="end">%</InputAdornment>
                           }
                         />
-                      </FormControl>
+                      </FormControl> */}
                       {wasteType.length > 1 && (
                         <p
                           className="button-text cursor-pointer remove-btn"
