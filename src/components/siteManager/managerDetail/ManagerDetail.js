@@ -8,8 +8,7 @@ const ManagerDetail = (props) => {
   const { title, siteData } = props
   const history = useHistory();
   const {
-    manager_name,
-    job_address,
+    address_data,
     mobile_number,
     site_assigned,
     email,
@@ -54,13 +53,13 @@ const ManagerDetail = (props) => {
             <div className="info">
               <div className="designation">Site Assigned</div>
               <div className="personal-title">
-                {manager_name ? manager_name : "n/a"}
+                {site_assigned ? site_assigned : "n/a"}
               </div>
             </div>
             <div className="info">
               <div className="designation">Address</div>
               <div className="personal-title">
-                {job_address ? job_address : "n/a"}
+                {address_data ? address_data : "n/a"}
               </div>
             </div>
             <div className="info">
