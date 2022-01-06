@@ -8,7 +8,7 @@ const JobDetail = ({job}) => {
     <Card className="job-detail-main">
       <CardContent className="personal-info">
         <div className="info">
-          <div className="designation">Manager</div>
+          <div className="designation">Status</div>
           <CommonStatus status={status(job?.appointment_status)} />
         </div>
         <div className="info">

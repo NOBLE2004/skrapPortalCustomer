@@ -72,7 +72,7 @@ function NavBar(props) {
                 aria-haspopup="true"
                 onClick={handleClick}
               >
-                {localStorage.getItem("user") ? localStorage.getItem("user") : "abc"}
+                {localStorage.getItem("user") ? localStorage.getItem("user") : ""}
               </Button>
 
               <Menu
