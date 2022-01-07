@@ -2,7 +2,7 @@ import React from "react";
 import { location } from "../../assets/images";
 import "./commonHeader.scss";
 
-const CommonHeader = ({ downloadCSV, mapView, showButton, bookSite, children , handleShowMap, isMap, handleBookJob , isJob , handleCreateJob }) => {
+const CommonHeader = ({ downloadCSV, mapView, showButton, bookSite, children , handleShowMap, isMap, handleBookJob , isJob , isSite , handleCreateJob }) => {
   return (
     <div className="common-header-main">
       <div className="header-children">{children}</div>
@@ -18,6 +18,9 @@ const CommonHeader = ({ downloadCSV, mapView, showButton, bookSite, children , h
         </button>}
         {isJob && <button className="header-btn" onClick={handleCreateJob}>
           Create Job
+        </button>}
+        {isSite && <button className="header-btn" onClick={handleCreateJob}>
+          Create Site
         </button>}
 
       </div>

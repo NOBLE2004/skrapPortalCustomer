@@ -445,7 +445,7 @@ export default function CreateJob({
       currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
     const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
     const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
-    console.log('startSelectedDate' , Date.parse(startSelectedDate))
+
     let data = {
       acm_id: "",
       address_data: addressData,
@@ -707,7 +707,7 @@ export default function CreateJob({
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  {subServices &&
+                  {subService.length > 0 && subServices &&
                     subServices.map((data, index) => {
                       return (
                         <MenuItem key={index} value={index}>
@@ -993,7 +993,7 @@ export default function CreateJob({
               // error={errors["purchaseOrder"].length > 0 ? true : false}
               name="purchaseOrder"
               onChange={handleChange}
-              fullWidth={true}
+              fullWidth
               variant="outlined"
               placeholder="SN14662"
               size="small"

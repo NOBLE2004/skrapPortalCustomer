@@ -15,6 +15,7 @@ import { getSites, getSitesList } from "../../store/actions/sites.action";
 import "./sites.scss";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
 import CreateJob from "../../components/modals/createJob/CreateJob";
+import CreateSite from "../../components/modals/createSite/CreateSite";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
@@ -49,6 +50,7 @@ const Sites = (props) => {
   };
   const handleChangeSearch = (postcode) => {
     setSearch(postcode);
+    setFilters({ ...filters, search: postcode });
   };
 
   const handleShowMap = () => {
@@ -72,7 +74,7 @@ const Sites = (props) => {
         handleBookJob={handleMangerModal}
         downloadCSV={false}
         showButton={true}
-        isJob={true}
+        isSite={true}
         handleCreateJob={handleCreateJob}
       >
         <CommonJobStatus
@@ -119,7 +121,7 @@ const Sites = (props) => {
         <AssignToManager handleClose={() => setIsManagerOpen(false)} />
       )}
       {isJobCreated && (
-        <CreateJob
+        <CreateSite
           closeModal={() => setIsJobCreated(false)}
           sites={true}
           reload={() => setIsReload(!isReload)}
