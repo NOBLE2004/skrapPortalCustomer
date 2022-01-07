@@ -120,6 +120,7 @@ export const dates = [
   { id: 2019, value: 2019 },
   { id: 2020, value: 2020 },
   { id: 2021, value: 2021 },
+  { id: 2022, value: 2022 },
 ];
 
 export const jobHeadCells = [

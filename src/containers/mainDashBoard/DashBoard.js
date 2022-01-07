@@ -26,7 +26,7 @@ import "./dashboard.scss";
 const DashBoard = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
   const [isNewYear, setNewYear] = useState(false);
-  const [latestYear, setLatestYear] = useState(2021);
+  const [latestYear, setLatestYear] = useState(2022);
 
   const history = useHistory();
   const { info, loading } = props.dashboard; 
@@ -40,9 +40,10 @@ const DashBoard = (props) => {
   };
 
   useEffect(() => {
-    if (!info) {
+    if(!info | isNewYear){
       getData();
     }
+      
   }, [isNewYear]);
 
   const gotoJobDetail = (id) => {
@@ -75,7 +76,7 @@ const DashBoard = (props) => {
         <SpendChart
           chartData={info}
           getDashBoardData={getData}
-          latestYear={latestYear ? latestYear : 2021}
+          latestYear={latestYear ? latestYear : 2022}
         />
         <DashboardServices servicesData={info ? info : ""} />
       </Grid>
