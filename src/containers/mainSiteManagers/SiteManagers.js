@@ -23,6 +23,9 @@ const SiteManagers = (props) => {
       if (!props.siteManager.sites) {
         await props.getSiteManager();
       }
+      if(isSiteBooked | !isSiteBooked){
+        await props.getSiteManager();
+      }
     }
 
     fetchData();
