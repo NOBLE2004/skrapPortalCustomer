@@ -178,8 +178,14 @@ export default function CreateJob({
         setSubServiceSelect({});
         break;
       case "subService":
-        setState({ ...state, [name]: value });
-        setSubServiceSelect(subServices[value]);
+        if (value === "") {
+          setState({ ...state, [name]: value });
+          setSubServiceSelect({});
+        } else {
+          setState({ ...state, [name]: value });
+          setSubServiceSelect(subServices[value]);
+        }
+
         break;
       case "paymentMethod":
         setState({ ...state, [name]: value });
@@ -275,7 +281,12 @@ export default function CreateJob({
         channel: "Booking",
       };
       ServiceService.subServicelist(data).then((response) => {
-        setSubServices(response.data.result);
+        if (Object.keys(response.data.result).length === 0) {
+          setSubServices([]);
+        } else {
+          setSubServices(response.data.result);
+        }
+
         setNewLoader(false);
       });
     }
@@ -283,13 +294,12 @@ export default function CreateJob({
 
   //dynamic update service cost, haulage cost and totalcost
   useEffect(() => {
-    if (subServiceSelect) {
+    if (Object.keys(subServiceSelect).length !== 0) {
       if (permitOption == 1) {
         setState({
           ...state,
-          serviceCost:
-            subServiceSelect.price >= 0 ? subServiceSelect.price : "",
-          haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : 0,
+          serviceCost: subServiceSelect ? subServiceSelect.price : "",
+          haulageCost: subServiceSelect ? subServiceSelect.haulage : 0,
           totalCost:
             +permitted_cost +
             +subServiceSelect.price +
@@ -298,19 +308,25 @@ export default function CreateJob({
       } else {
         setState({
           ...state,
-          serviceCost:
-            subServiceSelect.price >= 0 ? subServiceSelect.price : "",
-          haulageCost: subServiceSelect.haulage ? +subServiceSelect.haulage : 0,
+          serviceCost: subServiceSelect ? subServiceSelect.price : "",
+          haulageCost: subServiceSelect ? +subServiceSelect.haulage : 0,
           totalCost: subServiceSelect.price,
         });
       }
+    } else {
+      setState({
+        ...state,
+        serviceCost: "",
+        haulageCost: 0,
+        totalCost: 0,
+      });
     }
 
     if (serviceSelect.service_id === 80) {
       setState({
         ...state,
-        serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
-        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : 0,
+        serviceCost: subServiceSelect ? subServiceSelect.price : "",
+        haulageCost: subServiceSelect ? subServiceSelect.haulage : 0,
         totalCost: quantity * subServiceSelect.price + subServiceSelect.haulage,
       });
     }
@@ -318,8 +334,8 @@ export default function CreateJob({
     if (serviceSelect.service_id === 43) {
       setState({
         ...state,
-        serviceCost: subServiceSelect.price >= 0 ? subServiceSelect.price : "",
-        haulageCost: subServiceSelect.haulage ? subServiceSelect.haulage : 0,
+        serviceCost: subServiceSelect ? subServiceSelect.price : "",
+        haulageCost: subServiceSelect ? subServiceSelect.haulage : 0,
         totalCost:
           portableweeks * 32 +
           subServiceSelect.haulage +
@@ -423,7 +439,7 @@ export default function CreateJob({
 
     let currentDayOfMonth = startSelectedDate.getDate();
     let currentMonth = startSelectedDate.getMonth();
-    
+
     if (currentDayOfMonth < 10) {
       currentDayOfMonth = "0" + currentDayOfMonth;
     }
@@ -523,14 +539,14 @@ export default function CreateJob({
             closeModal();
             if (sites) {
               reload();
-            }else{
+            } else {
               handleJobCreated();
             }
           }, 2000);
         }
       })
       .catch((err) => {
-        console.log('err' , err)
+        console.log("err", err);
         setState({
           ...state,
           isLoading: false,
@@ -673,7 +689,7 @@ export default function CreateJob({
                   name="service"
                   error={errors["service"].length > 0 ? true : false}
                 >
-                  <MenuItem value="">
+                  <MenuItem value="0">
                     <em>None</em>
                   </MenuItem>
                   {services.map((data, index) => {
@@ -707,7 +723,7 @@ export default function CreateJob({
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  {subService.length > 0 && subServices &&
+                  {subServices &&
                     subServices.map((data, index) => {
                       return (
                         <MenuItem key={index} value={index}>

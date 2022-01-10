@@ -34,7 +34,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
     () => [
       {
         Header: "SiteName",
-        accessor: (d) => d.job_address.slice(0, 22),
+        accessor: (d) => d.job_address ? d.job_address.slice(0, 22) : "",
         id: "site_name",
         disableSortBy: true,
         filter: "equals",
@@ -44,7 +44,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
       },
       {
         Header: "Address",
-        accessor: (d) => d.job_address.slice(0, 40),
+        accessor: (d) => d.job_address,
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
