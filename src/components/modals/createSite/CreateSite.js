@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import AsychronousAddress from "../../commonComponent/asychronousAddress/AsychronousAddress";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import sitesService from "../../../services/sites.service";
 
 export default function CreateSite({
   closeModal,
@@ -79,7 +80,49 @@ export default function CreateSite({
       });
       return;
     }
-    console.log('site address' , addressData)
+
+    setState({ ...state, isLoading: true });
+    const isUprnDeleted = delete addressData.uprn;
+    if (isUprnDeleted) {
+      sitesService
+        .createNewSite(addressData)
+        .then((res) => {
+          if (res.data.data === "Site already exists") {
+            setState({
+              ...state,
+              isLoading: false,
+              notice: {
+                type: "error",
+                text: res.data.data,
+              },
+            });
+          } else {
+            setState({
+              ...state,
+              isLoading: false,
+              notice: {
+                type: "success",
+                text: res.data.data,
+              },
+            });
+            setTimeout(() => {
+              closeModal();
+              reload();
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "error",
+              text: err.message,
+            },
+          });
+        });
+    }
   };
   const DialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;
@@ -99,8 +142,6 @@ export default function CreateSite({
     );
   });
 
-  
-console.log('errors.addressData' , errors.addressData)
   return (
     <Dialog
       open={true}
