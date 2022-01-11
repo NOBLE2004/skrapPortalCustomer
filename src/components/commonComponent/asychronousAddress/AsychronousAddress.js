@@ -56,7 +56,7 @@ export default function AsychronousAddress({
           placeholder="Search for an address"
           variant="outlined"
           name="address"
-          // error={error.length > 0 ? true : false}
+          error={error.length > 0 ? true : false}
           onChange={(ev) => {
             if (ev.target.value !== "" || ev.target.value !== null) {
               onChangeHandle(ev.target.value);

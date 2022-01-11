@@ -14,7 +14,6 @@ import AssignToManager from "../../components/modals/assignToManager/AssignToMan
 import { getSites, getSitesList } from "../../store/actions/sites.action";
 import "./sites.scss";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
-import CreateJob from "../../components/modals/createJob/CreateJob";
 import CreateSite from "../../components/modals/createSite/CreateSite";
 
 const Sites = (props) => {
@@ -39,11 +38,7 @@ const Sites = (props) => {
 
     props.getSitesList(filters);
     fetchData();
-  }, [isReload]);
-
-  useEffect(() => {
-    props.getSitesList(filters);
-  }, [filters]);
+  }, [isReload, filters]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -64,6 +59,7 @@ const Sites = (props) => {
   const handleCreateJob = () => {
     setIsJobCreated(true);
   };
+
 
   return (
     <>
