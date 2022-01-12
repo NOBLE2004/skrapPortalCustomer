@@ -461,7 +461,6 @@ export default function CreateJob({
       currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
     const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
     const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
-
     let data = {
       acm_id: "",
       address_data: addressData,
@@ -493,14 +492,16 @@ export default function CreateJob({
           job_id: "",
           job_start_time: job_start_time,
           permit_cost: 0,
-          service_cost: subServiceSelect.price,
+          service_cost:
+            (service === 3) | (service === 4)
+              ? totalCost
+              : subServiceSelect.price,
           service_id: subServiceSelect.sub_service_id,
           service_name:
             service === 3
               ? `${quantity}M³${subServiceSelect.service_name}`
               : subServiceSelect.service_name,
           service_type: 2,
-          skip_loc_type: "1",
           skip_req_days: 0,
           skrapRev: "0",
           status: 0,
@@ -513,7 +514,6 @@ export default function CreateJob({
       what3word: "",
       show_on_main_portal: 1,
     };
-
     JobService.createOrder(data)
       .then((response) => {
         if (Object.keys(response.data.result).length === 0) {
