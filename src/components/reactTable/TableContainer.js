@@ -98,9 +98,8 @@ const TableContainer = ({ columns, data, name }) => {
                   border: "1px solid #ECECEC",
                   marginBottom: 18,
                   borderRadius: 11,
-                  cursor: "pointer",
                 }}
-                className="table-body-row"
+                className={name === 'tickets' ? "table-body-row1" : "table-body-row"}
                 {...row.getRowProps()}
                 onClick={() => handleRowClick(row.original)}
               >

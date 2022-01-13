@@ -63,7 +63,7 @@ const TicketsTable = ({data, pagination, handlePagination}) => {
         accessor: "ticket_file",
         id: "download_id",
         Cell: (props) => (
-          <span className="normal-dsans-10-primary" onClick={() => download(props.value)}>
+          <span className="normal-dsans-10-primary1" onClick={() => download(props.value)}>
             Download Ticket
             <img
               src={downloadSite}

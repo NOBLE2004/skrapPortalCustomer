@@ -1,19 +1,23 @@
-.filter-outer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 13px;
+.filter-outer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
 }
-.sites-table-loader{
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.site-manager-map-view{
-    margin-top: 20px;
+.sites-table-loader {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.table-body-row{
-    min-height: 58px;
+.site-manager-map-view {
+  margin-top: 20px;
+}
+
+.table-body-row {
+  min-height: 58px;
+  cursor: pointer !important;
+}
+.table-body-row1 {
+  min-height: 58px;
 }

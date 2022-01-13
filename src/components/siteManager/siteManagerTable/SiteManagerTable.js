@@ -13,6 +13,7 @@ const SiteManagerTable = ({
   handlePagination,
   siteDetail,
 }) => {
+  const [row, setRow] = useState({});
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
@@ -33,6 +34,7 @@ const SiteManagerTable = ({
       mouseX: e.clientX - 2,
       mouseY: e.clientY - 4,
     });
+    setRow(props);
   };
   const handleClose = () => {
     setState({
@@ -265,11 +267,18 @@ const SiteManagerTable = ({
             : undefined
         }
       >
-        <MenuItem onClick={handleClose}>Exchange</MenuItem>
-        <MenuItem onClick={handleClose}>Reorder</MenuItem>
-        <MenuItem onClick={handleClose}>Collection</MenuItem>
-        <MenuItem onClick={handleClose}>Waste Report</MenuItem>
-        <MenuItem onClick={handleClose}>Track Driver</MenuItem>
+        {row.parent_id === 2 && row.appointment_status === 4 && (
+          <MenuItem>Exchange</MenuItem>
+        )}
+        <MenuItem>Reorder</MenuItem>
+        {row.parent_id === 2 && row.appointment_status === 4 && (
+          <MenuItem>Collection</MenuItem>
+        )}
+        {/* {row?.waste_transfer_document != "" && (
+          <MenuItem>Waste Report</MenuItem>
+        )} */}
+        <MenuItem>Track Driver</MenuItem>
+        {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
       </Menu>{" "}
     </>
   );
