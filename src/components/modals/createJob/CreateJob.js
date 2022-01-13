@@ -502,6 +502,7 @@ export default function CreateJob({
               ? `${quantity}M³${subServiceSelect.service_name}`
               : subServiceSelect.service_name,
           service_type: 2,
+          skip_loc_type:"0",
           skip_req_days: 0,
           skrapRev: "0",
           status: 0,
