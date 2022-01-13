@@ -83,8 +83,8 @@ const MainTiping = (props) => {
   return (
     <div className="main-tiping">
       <div className={classes.headerTitle}>
-        <div className={classes.siteTitle}>Tiping Sites</div>
-        <DashboardFilter handelSearch={handelSearch} title={"Tiping"} />
+        <div className={classes.siteTitle}>Tipping Sites</div>
+        <DashboardFilter handelSearch={handelSearch} title={"Tipping"} />
       </div>
       <Grid container>
         <Grid item xs={12} className="jobMpWp">
