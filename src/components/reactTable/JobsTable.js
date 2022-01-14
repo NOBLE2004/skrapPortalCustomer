@@ -140,7 +140,7 @@ const JobsTable = ({
       });
   };
   const handleReorderResponse = (id) => {
-    JobService.copy({ job_id: id })
+    JobService.copy({ job_id: id , payment_type : row.payment_type})
       .then((response) => {
         setNotice({
           type: "success",
