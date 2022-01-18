@@ -46,11 +46,10 @@ const PoTable = ({ data }) => {
       },
       {
         Header: "Created At",
-        accessor: d => {
-          return Moment(d.created_at)
-            .local()
-            .format("DD-MM-YYYY")
-        },
+        accessor: (d) =>
+          d.created_at
+            ? Moment(d.created_at).local().format("DD-MM-YYYY")
+            : "n/a",
         disableFilters: true,
       },
     ],

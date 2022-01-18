@@ -5,9 +5,8 @@ import AssignToManager from "../../../components/modals/assignToManager/AssignTo
 import "./newmanagerdetail.scss";
 
 const NewManagerDetail = ({ managerData, setReload }) => {
-  const { data, site } = managerData;
+  const { data, site, address } = managerData;
   const [isManagerOpen, setIsManagerOpen] = useState(false);
-  
   return (
     <div>
       <Card className="new-manager-detail-main">
@@ -43,20 +42,14 @@ const NewManagerDetail = ({ managerData, setReload }) => {
               <div className="info">
                 <div className="designation">Address</div>
                 <div className="personal-title">
-                  {`${
-                    site
-                      ? site.line_1 +
-                        " " +
-                        site.postcode +
-                        " " +
-                        site.postal_county
-                      : "n/a"
-                  }`}
+                  {`${address ? address.job_address : "n/a"}`}
                 </div>
               </div>
               <div className="info">
                 <div className="designation">Email</div>
-                <div className="personal-title">{data ? data.email : "n/a"}</div>
+                <div className="personal-title">
+                  {data ? data.email : "n/a"}
+                </div>
               </div>
             </Grid>
 
