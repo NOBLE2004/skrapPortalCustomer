@@ -101,6 +101,8 @@ const SitesDetailPage = (props) => {
           closeModal={() => setState({ ...state, isJobCreated: false })}
           sites={true}
           reload={() => setIsReload(!isReload)}
+          siteId={id}
+          managerData={managerData}
         />
       )}
       <Grid container className="manager-detail-page">

@@ -50,12 +50,17 @@ export default function CreateJob({
   handleJobCreated,
   sites,
   reload,
+  siteId,
+  managerData
 }) {
+
+  
   const history = useHistory();
   const divRef = useRef(null);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
   const [services, setServices] = useState([]);
+  const [mData , setmData] = useState(null)
   const [subServices, setSubServices] = useState([]);
   const [wasteType, setWastType] = useState([
     { waste_type_id: "", percentage: 0 },
@@ -78,6 +83,7 @@ export default function CreateJob({
     addressData: "",
     quantity: "",
     week: "",
+    timeSlots:''
   });
 
   const [state, setState] = useState({
@@ -112,7 +118,6 @@ export default function CreateJob({
     isQuantityError: false,
     isWeekError: false,
   });
-
   const styles = (theme) => ({
     root: {
       margin: 0,
@@ -258,6 +263,10 @@ export default function CreateJob({
 
   //getservices
   useEffect(() => {
+    if(managerData){
+      const {data} = managerData;
+      setmData(data)
+    }
     //ServiceService.list().then((response) => {
     setServices(serviceList);
     //});
@@ -413,6 +422,7 @@ export default function CreateJob({
       // purchaseOrder === "" ||
       service === "" ||
       subService === "" ||
+      timeSlots.length === 0 ||
       (roleId != 12 && paymentMethod === "")
     ) {
       Object.keys(errors).forEach((error, index) => {
@@ -455,13 +465,16 @@ export default function CreateJob({
 
     const newStartTime = startTime.trim().slice(0, 5);
     const newEndTime = endTime.trim().slice(0, 5);
-
     const currentYear = startSelectedDate.getFullYear();
     const dateString =
       currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
     const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
     const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
-    let data = {
+    if(siteId){
+      addressData.site_id = siteId;
+    }
+    
+    let newdata = {
       acm_id: "",
       address_data: addressData,
       card_id: roleId == 12 ? "" : selectedPaymentMethod,
@@ -472,7 +485,7 @@ export default function CreateJob({
         is_coupon: 0,
         service_rate: serviceCost,
       },
-      customer_user_id: localStorage.getItem("user_id"),
+      customer_user_id: mData ? mData[0]?.user_id : localStorage.getItem("user_id"),
       jobs: 1,
       payment_type: roleId == 12 ? "0" : paymentMethod,
       purchase_order: purchaseOrder,
@@ -515,8 +528,7 @@ export default function CreateJob({
       what3word: "",
       show_on_main_portal: 1,
     };
-    
-    JobService.createOrder(data)
+    JobService.createOrder(newdata)
       .then((response) => {
         if (Object.keys(response.data.result).length === 0) {
           setState({

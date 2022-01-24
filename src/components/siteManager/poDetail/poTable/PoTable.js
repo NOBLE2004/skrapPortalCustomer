@@ -6,7 +6,7 @@ const PoTable = ({ data }) => {
     () => [
       {
         Header: "Service Name",
-        accessor: (d) => d.service.service_name,
+        accessor: 'service_name',
         disableSortBy: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;

@@ -11,6 +11,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const [isAllocate, setIsAllocate] = useState(false);
   const [siteData, setSiteData] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [addressId , setAddressId] = useState('');
   const [roleId, setRollId] = useState(0);
 
   const handleButtonClick = (e, props) => {
@@ -23,6 +24,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
     e.stopPropagation();
     setUserId(props.site_manager_user_id);
     setIsAllocate(true);
+    setAddressId(props.address_id);
   };
 
   useEffect(() => {
@@ -145,6 +147,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         <AllocatePoModal
           handleClose={() => setIsAllocate(false)}
           userId={userId}
+          addressId={addressId}
         />
       )}
     </>
