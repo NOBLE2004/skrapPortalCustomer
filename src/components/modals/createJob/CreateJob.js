@@ -410,7 +410,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
           is_schedule: 0,
           job_address: `${addressData.line_1} ${addressData.line_2} ${addressData.district} ${addressData.county} ${addressData.postcode}`,
           job_area: "",
-          job_dates: [Date.parse(startSelectedDate)],
+          job_dates: [job_start_time],
           job_end_time: job_end_time,
           job_id: "",
           job_start_time: job_start_time,
