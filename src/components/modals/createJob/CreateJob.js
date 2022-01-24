@@ -345,7 +345,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
 
     setState({ ...state, isLoading: true });
 
-    let currentDayOfMonth = startSelectedDate.getDate();
+    /*let currentDayOfMonth = startSelectedDate.getDate();
     let currentMonth = startSelectedDate.getMonth();
     
 
@@ -356,22 +356,33 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
 
     if (newCurrentMonth < 10) {
       newCurrentMonth = "0" + currentMonth;
-    }
+    }*/
    
-    const time =
+    /*const time =
     selectedTime &&
     selectedTime.split("-");
     const startTime = time[0];
-    const endTime = time[1];
+    const endTime = time[1];*/
 
-    const newStartTime = startTime.trim().slice(0, 5);
+    /*const newStartTime = startTime.trim().slice(0, 5);
     const newEndTime = endTime.trim().slice(0, 5);
 
     const currentYear = startSelectedDate.getFullYear();
     const dateString =
       currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
     const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
-    const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
+    const job_end_time = Date.parse(`${dateString}T${newEndTime}`);*/
+
+    const time = selectedTime && selectedTime.split(" - ");
+    const startTime = time[0];
+    const endTime = time[1];
+
+    const string_date = startSelectedDate.toISOString().split('T')[0];
+    const start_time = string_date + 'T' + startTime.split(' ')[0]+':00.000Z';
+    const end_time = string_date + 'T' + endTime.split(' ')[0]+':00.000Z';
+
+    const job_start_time = Date.parse(start_time);
+    const job_end_time = Date.parse(end_time);
     let data = {
       acm_id: "",
       address_data: addressData,
