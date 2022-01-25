@@ -44,7 +44,7 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 const AllocatePoModal = (props) => {
-  const { handleClose, userId } = props;
+  const { handleClose, userId , addressId } = props;
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
@@ -151,6 +151,7 @@ const AllocatePoModal = (props) => {
     const data = {
       services: serviceType,
       purchase_order: po,
+      site_id: addressId
     };
 
     sitesService

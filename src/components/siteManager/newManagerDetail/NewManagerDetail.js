@@ -20,7 +20,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
               <div className="info">
                 <div className="designation">Manager</div>
                 <div className="personal-title">
-                  {data ? data.first_name + " " + data.last_name : "n/a"}
+                  {data ? data[0]?.first_name + " " + data[0]?.last_name : "n/a"}
                 </div>
               </div>
               <div className="change-info">
@@ -42,13 +42,13 @@ const NewManagerDetail = ({ managerData, setReload }) => {
               <div className="info">
                 <div className="designation">Address</div>
                 <div className="personal-title">
-                  {`${address ? address.job_address : "n/a"}`}
+                  {`${address ? address.job_address : site && site.line_1 ? site.line_1 +" "+ site.line_2 : "n/a"}`}
                 </div>
               </div>
               <div className="info">
                 <div className="designation">Email</div>
                 <div className="personal-title">
-                  {data ? data.email : "n/a"}
+                  {data ? data[0]?.email : "n/a"}
                 </div>
               </div>
             </Grid>
@@ -57,7 +57,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
               <div className="info">
                 <div className="designation">Phone</div>
                 <div className="personal-title">
-                  {data ? data.mobile_number : "n/a"}
+                  {data ? data[0]?.mobile_number : "n/a"}
                 </div>
               </div>
             </Grid>
