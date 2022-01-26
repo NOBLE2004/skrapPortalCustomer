@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { Button, MenuItem, FormControl, Select } from "@material-ui/core";
 import sitesService from "../../../services/sites.service";
+import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./allocatepo.scss";
 
 const styles = (theme) => ({
@@ -44,7 +45,7 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 const AllocatePoModal = (props) => {
-  const { handleClose, userId , addressId } = props;
+  const { handleClose, userId, addressId } = props;
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
@@ -66,10 +67,12 @@ const AllocatePoModal = (props) => {
     }
     setError({ ...errors });
   };
+  const userData = getUserDataFromLocalStorage();
   const [serviceType, setServiceType] = useState([
-    { user_id: userId, service_id: "", quantity: 0 },
+    { user_id: userId ? userId : userData.user_id, service_id: "", quantity: 0 },
   ]);
-  const { notice, isLoading, subServices, po, isServiceEmpty } = state;
+  const { notice, isLoading, subServices, po, isServiceEmpty } =
+    state;
 
   useEffect(() => {
     sitesService
@@ -135,25 +138,15 @@ const AllocatePoModal = (props) => {
       setState({ ...state, isServiceEmpty: true });
       return;
     }
-    if (userId === null) {
-      setState({
-        ...state,
-        isLoading: false,
-        notice: {
-          type: "error",
-          text: "Please first assign manager to the site",
-        },
-      });
-
-      return;
-    }
+  
     setState({ ...state, isLoading: true });
     const data = {
       services: serviceType,
       purchase_order: po,
-      site_id: addressId
+      site_id: addressId,
     };
 
+    
     sitesService
       .purchaseOrder(data)
       .then((res) => {
