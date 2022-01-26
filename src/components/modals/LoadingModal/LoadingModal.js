@@ -64,7 +64,7 @@ function LoadingModal({handleClose, children, show, handleRes, noticeData, isLoa
             <DialogTitle onClose={handleClose}>
                 {children}
             </DialogTitle>
-            <DialogContent dividers>Are you Sure for reordering
+            <DialogContent dividers>Are you sure to reorder this service
                 {isLoading && <CircularProgress/>}
                 <div>
                     {noticeData && <Alert severity={noticeData.type}>{noticeData.text}</Alert>}

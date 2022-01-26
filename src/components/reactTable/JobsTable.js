@@ -312,7 +312,6 @@ const JobsTable = ({data, pagination, handleUpdateJobs, handlePagination}) => {
                 noticeData={notice}
                 isLoading={isLoading}
             >
-                Please wait while we reordring the data
             </LoadingModal>
         )}
         {/*<button style={{float: "right"}} className="header-btn" onClick={()=>handleInvoice()}>Create Xero Invoices</button>*/}
