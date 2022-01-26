@@ -420,7 +420,6 @@ const JobsTable = ({
           noticeData={notice}
           isLoading={isLoading}
         >
-          Please wait while we reordring the data
         </LoadingModal>
       )}
       {isJobAccepted && (
