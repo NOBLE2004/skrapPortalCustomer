@@ -381,7 +381,10 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
                 {credit === 0 ? (
                     <MenuItem value="0">Stripe</MenuItem>
                 ) : (
-                    <MenuItem value="2">Credit</MenuItem>
+                    <>
+                      <MenuItem value="0">Stripe</MenuItem>
+                      <MenuItem value="2">Credit</MenuItem>
+                    </>
                 )}
               </Select>
             </FormControl>
