@@ -229,7 +229,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
         post_code: addressData.postcode,
         service_type: serviceSelect.service_id,
         is_app: 0,
-        channel: "Booking",
+        //channel: "Booking",
       };
       ServiceService.subServicelist(data).then((response) => {
         setSubServices(response.data.result);

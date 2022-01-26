@@ -369,24 +369,26 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
           <div className="selectWp">
             <p>Payment</p>
             <FormControl variant="outlined" margin="dense">
+              {credit === 0 ? (
               <Select
                 value={paymentMethod}
                 onChange={handleChange}
                 name="paymentMethod"
                 error={errors["paymentMethod"].length > 0 ? true : false}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {credit === 0 ? (
-                    <MenuItem value="0">Stripe</MenuItem>
-                ) : (
-                    <>
-                    <MenuItem value="0">Stripe</MenuItem>
-                    <MenuItem value="2">Credit</MenuItem>
-                    </>
-                )}
-              </Select>
+                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value="0">Stripe</MenuItem>
+              </Select>) : (<Select
+                  value={paymentMethod}
+                  onChange={handleChange}
+                  name="paymentMethod"
+                  error={errors["paymentMethod"].length > 0 ? true : false}
+              >
+                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value="0">Stripe</MenuItem>
+                <MenuItem value="2">Credit</MenuItem>
+              </Select>)
+              }
             </FormControl>
           </div>
 
