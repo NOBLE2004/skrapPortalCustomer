@@ -678,10 +678,10 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
             </div>
           )}
 
-          <div className="wasteTypeWp">
+          {/*<div className="wasteTypeWp">
             <div className="wasteType">
               <p className="wtype">Waste Type</p>
-              {/* <p className="load">% of load</p> */}
+               <p className="load">% of load</p>
             </div>
             {wasteType.map((data, index) => {
               return (
@@ -722,7 +722,7 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
                       - remove
                     </p>
                   )}
-                  {/* <FormControl
+                   <FormControl
                     variant="outlined"
                     margin="dense"
                     className="wasteLoad"
@@ -736,14 +736,14 @@ export default function CreateJob({ closeModal, setJobCreated , handleJobCreated
                         <InputAdornment position="end">%</InputAdornment>
                       }
                     />
-                  </FormControl> */}
+                  </FormControl>
                 </div>
               );
             })}
             <Link href="#" onClick={handleAddWastType}>
               + Add another Waste Type
             </Link>
-          </div>
+          </div>*/}
 
           <div className="serviceCostWp">
             <div>
