@@ -14,7 +14,8 @@ class SiteService extends HttpService {
     this.post("sites/details", { id: siteId }, params);
   getSitesList = (params) => this.get("sites/list", params);
   createNewSite = (data) => this.post("sites/create", data);
-
+  selectCurrentSite = (data) => this.post("sites/selectCurrentSite" , data);
+  
   //site assign to manager
   siteAssignToManager = (data) => this.post("siteManager/addAddress", data);
 

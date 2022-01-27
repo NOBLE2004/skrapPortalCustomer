@@ -93,6 +93,8 @@ const MySidebar = (props) => {
         props.history.push({ pathname: `/${tabKey}` });
       }
       setActiveTab(tabKey);
+    }else{
+      props.history.push({pathname : `/${tabKey}`})
     }
   };
   const onTabHandlerSub = (e, tab) => {
