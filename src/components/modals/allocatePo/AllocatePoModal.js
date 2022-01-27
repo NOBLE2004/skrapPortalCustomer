@@ -86,9 +86,10 @@ const AllocatePoModal = (props) => {
   }, []);
 
   const handleAddService = () => {
+    const userData = getUserDataFromLocalStorage();
     setServiceType([
       ...serviceType,
-      { user_id: userId, service_id: "", quantity: 0 },
+      { user_id: userId ? userId : userData.user_id, service_id: "", quantity: 0 },
     ]);
   };
 
