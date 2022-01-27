@@ -779,10 +779,10 @@ export default function CreateJob({
                   />
                 </RadioGroup>
               </div>
-              <div className="wasteTypeWp">
+              {/*<div className="wasteTypeWp">
                 <div className="wasteType">
                   <p className="wtype">Waste Type</p>
-                  {/* <p className="load">% of load</p> */}
+                   <p className="load">% of load</p>
                 </div>
                 {wasteType.map((data, index) => {
                   return (
@@ -815,7 +815,7 @@ export default function CreateJob({
                             })}
                         </Select>
                       </FormControl>
-                      {/* <FormControl
+                       <FormControl
                         variant="outlined"
                         margin="dense"
                         className="wasteLoad"
@@ -829,7 +829,7 @@ export default function CreateJob({
                             <InputAdornment position="end">%</InputAdornment>
                           }
                         />
-                      </FormControl> */}
+                      </FormControl>
                       {wasteType.length > 1 && (
                         <p
                           className="button-text cursor-pointer remove-btn"
@@ -846,7 +846,7 @@ export default function CreateJob({
                 <Link href="#" onClick={handleAddWastType}>
                   + Add another Waste Type
                 </Link>
-              </div>
+              </div>*/}
             </>
           )}
 
