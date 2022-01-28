@@ -61,6 +61,7 @@ export default function CreateJob({
   const [timeSlots, setTimeSlots] = useState([]);
   const [services, setServices] = useState([]);
   const [mData, setmData] = useState(null);
+  const [po, setPo] = useState("");
   const [subServices, setSubServices] = useState([]);
   const [wasteType, setWastType] = useState([
     { waste_type_id: "", percentage: 0 },
@@ -264,7 +265,9 @@ export default function CreateJob({
   //getservices
   useEffect(() => {
     if (managerData) {
-      const { data } = managerData;
+      const { data, purchase_orders } = managerData;
+      const lastpo = purchase_orders[purchase_orders.length - 1];
+      setPo(lastpo.purchase_order);
       setmData(data);
     }
     //ServiceService.list().then((response) => {
@@ -610,7 +613,6 @@ export default function CreateJob({
       sitesService
         .selectCurrentSite({ id: siteId })
         .then((res) => {
-          console.log('res.data.Address_data' , res.data.Address_data)
           setState({ ...state, addressData: res.data.Address_data });
         })
         .catch((err) => {
@@ -801,10 +803,10 @@ export default function CreateJob({
                   />
                 </RadioGroup>
               </div>
-              {/*<div className="wasteTypeWp">
+              <div className="wasteTypeWp">
                 <div className="wasteType">
                   <p className="wtype">Waste Type</p>
-                   <p className="load">% of load</p>
+                  {/* <p className="load">% of load</p> */}
                 </div>
                 {wasteType.map((data, index) => {
                   return (
@@ -837,7 +839,7 @@ export default function CreateJob({
                             })}
                         </Select>
                       </FormControl>
-                       <FormControl
+                      {/* <FormControl
                         variant="outlined"
                         margin="dense"
                         className="wasteLoad"
@@ -851,7 +853,7 @@ export default function CreateJob({
                             <InputAdornment position="end">%</InputAdornment>
                           }
                         />
-                      </FormControl>
+                      </FormControl> */}
                       {wasteType.length > 1 && (
                         <p
                           className="button-text cursor-pointer remove-btn"
@@ -868,7 +870,7 @@ export default function CreateJob({
                 <Link href="#" onClick={handleAddWastType}>
                   + Add another Waste Type
                 </Link>
-              </div>*/}
+              </div>
             </>
           )}
 
@@ -1040,7 +1042,7 @@ export default function CreateJob({
           <div>
             <p>Purchase Order</p>
             <TextField
-              value={purchaseOrder}
+              value={siteId ? po : purchaseOrder}
               // error={errors["purchaseOrder"].length > 0 ? true : false}
               name="purchaseOrder"
               onChange={handleChange}
@@ -1048,6 +1050,7 @@ export default function CreateJob({
               variant="outlined"
               placeholder="SN14662"
               size="small"
+              disabled={siteId ? true : false}
             />
           </div>
           <div className="note">
