@@ -7,11 +7,11 @@ export default function AsychronousAddress({
   inputClass,
   error,
   address,
+  sites
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
-
   const onChangeHandle = (search) => {
     if (search) {
       fetch(
@@ -29,7 +29,6 @@ export default function AsychronousAddress({
       setOptions([]);
     }
   }, [open]);
-
   return (
     <Autocomplete
       margin="dense"
@@ -42,7 +41,8 @@ export default function AsychronousAddress({
       onClose={() => {
         setOpen(false);
       }}
-      defaultValue={{ suggestion: address ?address :"" }}
+      disabled={sites}
+      defaultValue={{ suggestion: address ? address : '' }}
       getOptionLabel={(option) => option.suggestion}
       onChange={(event, value) => handleSelectedPostCode(value && value.udprn)}
       options={options}
@@ -53,7 +53,7 @@ export default function AsychronousAddress({
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder="Search for an address"
+          placeholder={sites ? address : "Search for an address"}
           variant="outlined"
           name="address"
           error={error.length > 0 ? true : false}
