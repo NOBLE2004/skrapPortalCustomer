@@ -38,6 +38,7 @@ import { colors } from "@material-ui/core";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./createJob.scss";
 import { serviceList } from "../../utlils/constants";
+import sitesService from "../../../services/sites.service";
 
 const materialTheme = createTheme({
   palette: {
@@ -51,16 +52,15 @@ export default function CreateJob({
   sites,
   reload,
   siteId,
-  managerData
+  managerData,
+  siteAddress,
 }) {
-
-  
   const history = useHistory();
   const divRef = useRef(null);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
   const [services, setServices] = useState([]);
-  const [mData , setmData] = useState(null)
+  const [mData, setmData] = useState(null);
   const [subServices, setSubServices] = useState([]);
   const [wasteType, setWastType] = useState([
     { waste_type_id: "", percentage: 0 },
@@ -83,7 +83,7 @@ export default function CreateJob({
     addressData: "",
     quantity: "",
     week: "",
-    timeSlots:''
+    timeSlots: "",
   });
 
   const [state, setState] = useState({
@@ -263,9 +263,9 @@ export default function CreateJob({
 
   //getservices
   useEffect(() => {
-    if(managerData){
-      const {data} = managerData;
-      setmData(data)
+    if (managerData) {
+      const { data } = managerData;
+      setmData(data);
     }
     //ServiceService.list().then((response) => {
     setServices(serviceList);
@@ -469,10 +469,12 @@ export default function CreateJob({
       currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
     const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
     const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
-    if(siteId){
+    if (siteId) {
       addressData.site_id = siteId;
+      delete addressData.address_id;
+      delete addressData.user_id;
     }
-    
+
     let newdata = {
       acm_id: "",
       address_data: addressData,
@@ -484,7 +486,9 @@ export default function CreateJob({
         is_coupon: 0,
         service_rate: serviceCost,
       },
-      customer_user_id: mData ? mData[0]?.user_id : localStorage.getItem("user_id"),
+      customer_user_id: mData
+        ? mData?.user_id
+        : localStorage.getItem("user_id"),
       jobs: 1,
       payment_type: roleId == 12 ? "0" : paymentMethod,
       purchase_order: purchaseOrder,
@@ -514,7 +518,7 @@ export default function CreateJob({
               ? `${quantity}M³${subServiceSelect.service_name}`
               : subServiceSelect.service_name,
           service_type: 2,
-          skip_loc_type:"0",
+          skip_loc_type: "0",
           skip_req_days: 0,
           skrapRev: "0",
           status: 0,
@@ -601,6 +605,20 @@ export default function CreateJob({
     });
   }, []);
 
+  useEffect(() => {
+    if (siteId) {
+      sitesService
+        .selectCurrentSite({ id: siteId })
+        .then((res) => {
+          console.log('res.data.Address_data' , res.data.Address_data)
+          setState({ ...state, addressData: res.data.Address_data });
+        })
+        .catch((err) => {
+          console.log("err", err.message);
+        });
+    }
+  }, []);
+
   const handleSaveNewCard = (cardData) => {
     setState({ ...state, newCardData: cardData });
   };
@@ -630,6 +648,7 @@ export default function CreateJob({
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
+
   return (
     <Dialog
       open={true}
@@ -645,8 +664,11 @@ export default function CreateJob({
             <AsychronousAddress
               error={errors.addressData}
               handleSelectedPostCode={(value) => handleSelectedPostCode(value)}
+              address={siteAddress ? siteAddress : ""}
+              sites={sites ? sites : false}
             />
           </div>
+
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <div className="dateTimeWp">
               <div className="datewp">

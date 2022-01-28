@@ -6,7 +6,7 @@ import { Grid } from "@material-ui/core";
 import sitesService from "../../../services/sites.service";
 import FadeLoader from "react-spinners/FadeLoader";
 import JobFilters from "../../filters/jobFilters";
-import { useParams, useLocation } from "react-router";
+import { useParams } from "react-router";
 import "./sitesDetailPage.scss";
 import PoDetail from "../../siteManager/poDetail/PoDetail";
 import CreateJob from "../../modals/createJob/CreateJob";
@@ -16,9 +16,7 @@ import useWindowDimensions from "../../../hooks/useWindowDimension";
 const SitesDetailPage = (props) => {
   const { width } = useWindowDimensions();
   const { id } = useParams();
-  const location = useLocation();
   const [isReload, setIsReload] = useState(false);
-  const { site_address } = location.state;
   const [reload, setReload] = useState(false);
   const [userInfo, setUserInfo] = useState(0);
   const [filters, setFilters] = useState({
@@ -34,9 +32,10 @@ const SitesDetailPage = (props) => {
     managerData: {},
     isCreateManager: false,
     isJobCreated: false,
+    addressData: "",
   });
 
-  const { isLoadings, managerData, isJobCreated } = state;
+  const { isLoadings, managerData, isJobCreated, addressData } = state;
 
   const handleChangeFilters = (filtersList) => {
     setFilters(filtersList);
@@ -58,6 +57,7 @@ const SitesDetailPage = (props) => {
         setState({
           ...state,
           managerData: res.data,
+          addressData: res.data?.address[0]?.siteAddress,
           isLoadings: false,
         });
       } catch (err) {
@@ -85,10 +85,12 @@ const SitesDetailPage = (props) => {
       <div className="header-main">
         <div className="sites-header-title">
           {width < 600
-            ? site_address
-              ? site_address.slice(0, 16)
+            ? addressData
+              ? addressData.slice(0, 16)
               : "n/a"
-            : site_address}
+            : addressData
+            ? addressData
+            : ""}
         </div>
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
@@ -103,6 +105,7 @@ const SitesDetailPage = (props) => {
           reload={() => setIsReload(!isReload)}
           siteId={id}
           managerData={managerData}
+          siteAddress={addressData ? addressData : ''}
         />
       )}
       <Grid container className="manager-detail-page">
