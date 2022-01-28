@@ -82,7 +82,7 @@ const SiteManagerDetailPage = (props) => {
               />
             </Grid>
             <Grid className="po-detail-page">
-              <PoDetail managerData={managerData} />
+              <PoDetail managerData={managerData} isManager={true}/>
             </Grid>
             <Grid item md={12} className="site-manager-filter">
               <div className="jobs-search-header">
