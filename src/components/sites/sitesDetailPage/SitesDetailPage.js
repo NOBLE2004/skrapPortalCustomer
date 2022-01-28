@@ -145,6 +145,7 @@ const SitesDetailPage = (props) => {
                 pagination={managerData.jobs}
                 handlePagination={handlePagination}
                 siteDetail={true}
+                reload={() => setIsReload(!isReload)}
               />
             ) : (
               "Jobs Not Found Yet !"
