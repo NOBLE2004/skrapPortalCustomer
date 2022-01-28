@@ -61,7 +61,7 @@ export const sidebarTabsList = [
     sub: false,
     icon: customerBlack,
   },
-  { text: "Tipping", key: "tiping", sub: false, icon: tipingBlack },
+  /*{ text: "Tipping", key: "tiping", sub: false, icon: tipingBlack },*/
   { text: "Tickets", key: "tickets", sub: false, icon: ticketsBlack },
   { text: "Reports", key: "reports", sub: false, icon: statementBlack },
   // { text: "search", key: "search", icon: search },
