@@ -57,7 +57,7 @@ const SitesDetailPage = (props) => {
         setState({
           ...state,
           managerData: res.data,
-          addressData: res.data?.address[0]?.siteAddress,
+          addressData: res.data?.address?.address,
           isLoadings: false,
         });
       } catch (err) {
