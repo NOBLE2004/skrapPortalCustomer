@@ -11,9 +11,10 @@ const PoDetail = ({ managerData, isManager }) => {
         <CardContent>
           <div className="title">Purchase Order Detail</div>
           {isManager ? (
-            data &&
-            data.purchase_orders.length > 0 && (
-              <PoTable data={data.purchase_orders} isManager={isManager}/>
+            data && data.purchase_orders.length > 0 ? (
+              <PoTable data={data.purchase_orders} isManager={isManager} />
+            ) : (
+              "Purchase Order not found!"
             )
           ) : purchase_orders && purchase_orders.length > 0 ? (
             <PoTable data={purchase_orders} />
