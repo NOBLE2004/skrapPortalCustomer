@@ -9,68 +9,74 @@ const NewManagerDetail = ({ managerData, setReload }) => {
   const [isManagerOpen, setIsManagerOpen] = useState(false);
   return (
     <div>
-      <Card className="new-manager-detail-main">
-        <CardContent>
-          <div className="title">Managers Details</div>
-          <Grid container spacing={3} className="manager-sub-detail">
-            <Grid item md={2}>
-              <img src={personImage} alt="person-img" />
-            </Grid>
-            <Grid item md={3} className="new-personal-info">
-              <div className="info">
-                <div className="designation">Manager</div>
-                <div className="personal-title">
-                  {data ? data.first_name + " " + data.last_name : "n/a"}
-                </div>
-              </div>
-              <div className="change-info">
+      {data ? (
+        <Card className="new-manager-detail-main">
+          <CardContent>
+            <div className="title">Managers Details</div>
+            <Grid container spacing={3} className="manager-sub-detail">
+              <Grid item md={2}>
+                <img src={personImage} alt="person-img" />
+              </Grid>
+              <Grid item md={3} className="new-personal-info">
                 <div className="info">
-                  <div className="designation">Site Assigned</div>
-                  <div className="personal-title">{`${
-                    site && site.line_1 ? site.line_1 : "n/a"
-                  }`}</div>
+                  <div className="designation">Manager</div>
+                  <div className="personal-title">
+                    {data ? data.first_name + " " + data.last_name : "n/a"}
+                  </div>
                 </div>
-                <div
-                  className="change-title"
-                  onClick={() => setIsManagerOpen(true)}
-                >
-                  Change
+                <div className="change-info">
+                  <div className="info">
+                    <div className="designation">Site Assigned</div>
+                    <div className="personal-title">{`${
+                      site && site.line_1 ? site.line_1 : "n/a"
+                    }`}</div>
+                  </div>
+                  <div
+                    className="change-title"
+                    onClick={() => setIsManagerOpen(true)}
+                  >
+                    Change
+                  </div>
                 </div>
-              </div>
-            </Grid>
-            <Grid item md={3} className="new-personal-info">
-              <div className="info">
-                <div className="designation">Address</div>
-                <div className="personal-title">
-                  {`${address ? address.job_address : address ? address[0] : "n/a"}`}
+              </Grid>
+              <Grid item md={3} className="new-personal-info">
+                <div className="info">
+                  <div className="designation">Address</div>
+                  <div className="personal-title">
+                    {`${address ? address.address : "n/a"}`}
+                  </div>
                 </div>
-              </div>
-              <div className="info">
-                <div className="designation">Email</div>
-                <div className="personal-title">
-                  {data ? data.email : "n/a"}
+                <div className="info">
+                  <div className="designation">Email</div>
+                  <div className="personal-title">
+                    {data ? data.email : "n/a"}
+                  </div>
                 </div>
-              </div>
-            </Grid>
+              </Grid>
 
-            <Grid item md={2} className="new-personal-info">
-              <div className="info">
-                <div className="designation">Phone</div>
-                <div className="personal-title">
-                  {data ? data.mobile_number : "n/a"}
+              <Grid item md={2} className="new-personal-info">
+                <div className="info">
+                  <div className="designation">Phone</div>
+                  <div className="personal-title">
+                    {data ? data.mobile_number : "n/a"}
+                  </div>
                 </div>
-              </div>
+              </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-      {isManagerOpen && (
-        <AssignToManager
-          handleClose={() => setIsManagerOpen(false)}
-          setReload={() => setReload()}
-          managerId={data && data?.user_id}
-        />
+          </CardContent>
+        </Card>
+      ) : (
+        ""
       )}
+      <>
+        {isManagerOpen && (
+          <AssignToManager
+            handleClose={() => setIsManagerOpen(false)}
+            setReload={() => setReload()}
+            managerId={data && data?.user_id}
+          />
+        )}
+      </>
     </div>
   );
 };
