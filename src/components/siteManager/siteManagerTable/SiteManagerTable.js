@@ -6,14 +6,27 @@ import { Menu, MenuItem } from "@material-ui/core";
 import Pagination from "../../reactTable/pagination";
 import "../../reactTable/jobs-react-table.scss";
 import { payment, status } from "../../../services/utils";
+import TrackDriverModal from "../../modals/trackDriver/TrackDriverModal";
+import JobService from "../../../services/job.service";
+import LoadingModal from "../../modals/LoadingModal/LoadingModal";
+import CreateExchange from "../../modals/createExchange/CreateExchange";
+import RequestCollection from "../../modals/requestCollection/RequestCollection";
 
 const SiteManagerTable = ({
   managerData,
   pagination,
   handlePagination,
   siteDetail,
+  reload,
 }) => {
   const [row, setRow] = useState({});
+  const [reorder, setReorder] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [exchange, setExchange] = useState(false);
+  const [collection, setCollection] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [notice, setNotice] = React.useState(null);
+  const [isTrackDriver, setTrackDriver] = useState(false);
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
@@ -44,6 +57,46 @@ const SiteManagerTable = ({
       mouseY: null,
       contextRow: null,
     });
+  };
+
+  const handleTrackDriver = () => {
+    setTrackDriver(true);
+    handleClose();
+  };
+
+  const handlereorder1 = () => {
+    setReorder(true);
+    setAnchorEl(null);
+  };
+
+  const handleShowExchangeDialog = () => {
+    setExchange(true);
+    handleClose();
+  };
+  const handleShowCollectionDialog = () => {
+    setCollection(true);
+    handleClose();
+  };
+
+  const handleReorderResponse = (id) => {
+    JobService.copy({ job_id: id, payment_type: row.payment_type })
+      .then((response) => {
+        setNotice({
+          type: "success",
+          text: "Job Successfully reorder",
+        });
+        setTimeout(() => {
+          reload();
+          setReorder(false);
+        }, 2000);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setNotice({
+          type: "error",
+          text: "Job Reorder failed",
+        });
+      });
   };
 
   const sitesDetailColumns = useMemo(
@@ -191,7 +244,7 @@ const SiteManagerTable = ({
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
-        Cell: (props) => <CommonStatus status={status(props.value)} />,
+        Cell: (props) => <CommonStatus status={props.value} />,
       },
       {
         Header: "Payment",
@@ -235,6 +288,31 @@ const SiteManagerTable = ({
 
   return (
     <>
+      {exchange && (
+        <CreateExchange
+          closeModal={() => setExchange(!exchange)}
+          updateJobs={reload}
+          row={row}
+          isfromJob={false}
+        />
+      )}
+      {collection && (
+        <RequestCollection
+          closeModal={() => setCollection(!collection)}
+          updateJobs={reload}
+          row={row}
+          isfromJob={false}
+        />
+      )}
+      {reorder && (
+        <LoadingModal
+          handleClose={() => setReorder(false)}
+          show={reorder}
+          handleRes={() => handleReorderResponse(row.job_id)}
+          noticeData={notice}
+          isLoading={isLoading}
+        ></LoadingModal>
+      )}
       <TableContainer
         columns={siteDetail ? sitesDetailColumns : columns}
         data={jobs}
@@ -268,18 +346,24 @@ const SiteManagerTable = ({
         }
       >
         {row.parent_id === 2 && row.appointment_status === 4 && (
-          <MenuItem>Exchange</MenuItem>
+          <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
         )}
-        <MenuItem>Reorder</MenuItem>
+        <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
         {row.parent_id === 2 && row.appointment_status === 4 && (
-          <MenuItem>Collection</MenuItem>
+          <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>
         )}
         {/* {row?.waste_transfer_document != "" && (
           <MenuItem>Waste Report</MenuItem>
         )} */}
-        <MenuItem>Track Driver</MenuItem>
+        <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>
         {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
       </Menu>{" "}
+      {isTrackDriver && (
+        <TrackDriverModal
+          handleClose={() => setTrackDriver(false)}
+          trackData={row}
+        />
+      )}
     </>
   );
 };

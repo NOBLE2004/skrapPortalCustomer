@@ -121,11 +121,13 @@ function RequestCollection({ row, updateJobs, closeModal, isfromJob }) {
     JobService.requestCollection(data)
       .then((response) => {
         setTimeout(() => {
+          handleClose();
           if (isfromJob) {
             updateJobs();
+            history.push("/jobs");
+          }else{
+            updateJobs();
           }
-          handleClose();
-          history.push("/jobs");
         }, 2000);
         setState({
           ...state,

@@ -51,7 +51,6 @@ const DialogContent = withStyles((theme) => ({
 
 function PayNow(props) {
     const {handleClose, cost, jobId, user_id, filters, updateJobs} = props;
-    console.log(filters);
     const [state, setState] = useState({
         job_id: jobId,
         transaction_cost: cost,

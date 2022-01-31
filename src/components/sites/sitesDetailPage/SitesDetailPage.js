@@ -57,7 +57,7 @@ const SitesDetailPage = (props) => {
         setState({
           ...state,
           managerData: res.data,
-          addressData: res.data?.address[0]?.siteAddress,
+          addressData: res.data?.address?.address,
           isLoadings: false,
         });
       } catch (err) {
@@ -145,6 +145,7 @@ const SitesDetailPage = (props) => {
                 pagination={managerData.jobs}
                 handlePagination={handlePagination}
                 siteDetail={true}
+                reload={() => setIsReload(!isReload)}
               />
             ) : (
               "Jobs Not Found Yet !"

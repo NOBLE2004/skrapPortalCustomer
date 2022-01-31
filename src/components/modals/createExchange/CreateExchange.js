@@ -254,9 +254,11 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
         setTimeout(() => {
           handleClose();
           if(isfromJob){
-            updateJobs()
+            updateJobs();
+            history.push("/jobs");
+          }else{
+            updateJobs();
           }
-          history.push("/jobs");
         }, 2000);
         setState({
           ...state,
