@@ -66,9 +66,9 @@ const SiteManagerDetailPage = (props) => {
     <div className="site-manager-detail-page-main">
       <div className="header-main">
         <div className="sites-header-title">Site Managers </div>
-        <button className="header-btn" onClick={handleCreateManager}>
+        {/* <button className="header-btn" onClick={handleCreateManager}>
           Create Manager
-        </button>
+        </button> */}
       </div>
       <Grid container className="manager-detail-page">
         {isLoading ? (
