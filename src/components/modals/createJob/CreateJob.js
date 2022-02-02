@@ -229,14 +229,14 @@ export default function CreateJob({
             ...state,
             isWeekError: true,
             [name]: value,
-            totalCost: 32 * value + haulageCost + serviceCost,
+            totalCost: serviceCost * value + haulageCost,
           });
         } else {
           setState({
             ...state,
             [name]: value,
             isWeekError: false,
-            totalCost: 32 * value + haulageCost + serviceCost,
+            totalCost: serviceCost * value + haulageCost,
           });
         }
         break;
@@ -348,9 +348,7 @@ export default function CreateJob({
         serviceCost: subServiceSelect ? subServiceSelect.price : "",
         haulageCost: subServiceSelect ? subServiceSelect.haulage : 0,
         totalCost:
-          portableweeks * 32 +
-          subServiceSelect.haulage +
-          subServiceSelect.price,
+          portableweeks * subServiceSelect.price + subServiceSelect.haulage,
       });
     }
   }, [serviceSelect, subServiceSelect]);
@@ -494,12 +492,12 @@ export default function CreateJob({
         : localStorage.getItem("user_id"),
       jobs: 1,
       payment_type: roleId == 12 ? "0" : paymentMethod,
-      purchase_order: purchaseOrder,
+      purchase_order: siteId ? po : purchaseOrder,
       is_permit: permitOption,
       permitted_weeks: noOfDays,
       permitted_cost: permitted_cost,
       permitted_reference: permitted_reference,
-      skip_loc_type: skip_loc,
+      skip_loc_type: service === 0 ? skip_loc : "0",
       services: [
         {
           is_permit: 0,
@@ -519,6 +517,8 @@ export default function CreateJob({
           service_name:
             service === 3
               ? `${quantity}M³${subServiceSelect.service_name}`
+              : service === 4
+              ? `Portable Toilet(${portableweeks} ${subServiceSelect.service_name})`
               : subServiceSelect.service_name,
           service_type: 2,
           skip_loc_type: "0",
@@ -803,10 +803,9 @@ export default function CreateJob({
                   />
                 </RadioGroup>
               </div>
-              <div className="wasteTypeWp">
+               {/* <div className="wasteTypeWp">
                 <div className="wasteType">
                   <p className="wtype">Waste Type</p>
-                  {/* <p className="load">% of load</p> */}
                 </div>
                 {wasteType.map((data, index) => {
                   return (
@@ -839,7 +838,7 @@ export default function CreateJob({
                             })}
                         </Select>
                       </FormControl>
-                      {/* <FormControl
+                      <FormControl
                         variant="outlined"
                         margin="dense"
                         className="wasteLoad"
@@ -853,7 +852,7 @@ export default function CreateJob({
                             <InputAdornment position="end">%</InputAdornment>
                           }
                         />
-                      </FormControl> */}
+                      </FormControl>
                       {wasteType.length > 1 && (
                         <p
                           className="button-text cursor-pointer remove-btn"
@@ -870,7 +869,7 @@ export default function CreateJob({
                 <Link href="#" onClick={handleAddWastType}>
                   + Add another Waste Type
                 </Link>
-              </div>
+              </div>  */}
             </>
           )}
 

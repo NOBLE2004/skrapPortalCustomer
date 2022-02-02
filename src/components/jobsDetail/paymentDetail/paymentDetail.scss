@@ -20,8 +20,12 @@
     .header-sub {
       width: 35%;
       display: inline-flex;
-      justify-content: space-between;
+      justify-content: right;
       align-items: center;
+      padding-right: 10px;
+    }
+    .pay-now{
+      margin-right: 20px;
     }
   }
   .card-payment {
