@@ -266,8 +266,12 @@ export default function CreateJob({
   useEffect(() => {
     if (managerData) {
       const { data, purchase_orders } = managerData;
-      const lastpo = purchase_orders[purchase_orders.length - 1];
-      setPo(lastpo.purchase_order);
+      if (purchase_orders.length > 0) {
+        const lastpo = purchase_orders[purchase_orders.length - 1];
+        setPo(lastpo.purchase_order);
+      }else{
+        setPo('')
+      }
       setmData(data);
     }
     //ServiceService.list().then((response) => {
@@ -497,7 +501,7 @@ export default function CreateJob({
       permitted_weeks: noOfDays,
       permitted_cost: permitted_cost,
       permitted_reference: permitted_reference,
-      skip_loc_type: service === 0 ? skip_loc : "0",
+      // skip_loc_type: service === 0 ? skip_loc : "0",
       services: [
         {
           is_permit: 0,
@@ -521,7 +525,7 @@ export default function CreateJob({
               ? `Portable Toilet(${portableweeks} ${subServiceSelect.service_name})`
               : subServiceSelect.service_name,
           service_type: 2,
-          skip_loc_type: "0",
+          skip_loc_type: service === 0 ? skip_loc : "0",
           skip_req_days: 0,
           skrapRev: "0",
           status: 0,
@@ -803,7 +807,7 @@ export default function CreateJob({
                   />
                 </RadioGroup>
               </div>
-               {/* <div className="wasteTypeWp">
+              {/* <div className="wasteTypeWp">
                 <div className="wasteType">
                   <p className="wtype">Waste Type</p>
                 </div>
@@ -1041,7 +1045,7 @@ export default function CreateJob({
           <div>
             <p>Purchase Order</p>
             <TextField
-              value={siteId ? po : purchaseOrder}
+              value={siteId && po ? po : purchaseOrder}
               // error={errors["purchaseOrder"].length > 0 ? true : false}
               name="purchaseOrder"
               onChange={handleChange}
@@ -1049,7 +1053,7 @@ export default function CreateJob({
               variant="outlined"
               placeholder="SN14662"
               size="small"
-              disabled={siteId ? true : false}
+              disabled={siteId && po ? true : false}
             />
           </div>
           <div className="note">
