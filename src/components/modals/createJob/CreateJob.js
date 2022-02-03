@@ -491,17 +491,14 @@ export default function CreateJob({
         is_coupon: 0,
         service_rate: serviceCost,
       },
-      customer_user_id: mData
-        ? mData?.user_id
-        : localStorage.getItem("user_id"),
+      customer_user_id:localStorage.getItem("user_id"),
       jobs: 1,
       payment_type: roleId == 12 ? "0" : paymentMethod,
-      purchase_order: siteId ? po : purchaseOrder,
+      purchase_order: siteId && po ? po : purchaseOrder,
       is_permit: permitOption,
       permitted_weeks: noOfDays,
       permitted_cost: permitted_cost,
       permitted_reference: permitted_reference,
-      // skip_loc_type: service === 0 ? skip_loc : "0",
       services: [
         {
           is_permit: 0,
