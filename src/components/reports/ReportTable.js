@@ -38,7 +38,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
       },
       {
         Header: "EWC Code",
-        accessor: "EWC_Code",
+        accessor: "ewc_code",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -62,7 +62,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
       },
       {
         Header: "WTN Number",
-        accessor: "WTN_Number",
+        accessor: "WTN_number",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -70,7 +70,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
       },
       {
         Header: "Disposal Site",
-        accessor: "Disposal_Site",
+        accessor: "disposal_site",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -78,7 +78,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
       },
       {
         Header: "Tonnage",
-        accessor: "Tonnage",
+        accessor: "tonnage",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -86,7 +86,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
       },
       {
         Header: "Diverted Tonnage",
-        accessor: "Diverted_Tonnage",
+        accessor: "diverted_tonnage",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -147,7 +147,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
       },
       {
         Header: "EWC Code",
-        accessor: "EWC_Code",
+        accessor: "ewc_code",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
