@@ -8,7 +8,7 @@ export const getAllReports = (data) => {
       .getReports(data)
       .then((response) => {
         if (Object.keys(response.data).length !== 0) {
-          const { jobsRepost } = response.data;
+          const { jobsReport } = response.data;
           const newRow = {
             job_id: "",
             job_address: "",
@@ -30,12 +30,12 @@ export const getAllReports = (data) => {
             Volume: "",
             Landfill_Diversion_Rate: "",
           };
-          if (Object.keys(jobsRepost).length !== 0) {
-            const totalReport = jobsRepost;
+          if (Object.keys(jobsReport).length !== 0) {
+            const totalReport = jobsReport;
             const updatedReports = totalReport.concat(newRow);
             dispatch(reportsSuccess(updatedReports));
           } else {
-            dispatch(reportsFailure(jobsRepost));
+            dispatch(reportsFailure(jobsReport));
           }
         } else {
           dispatch(reportsFailure(response.data.description));
