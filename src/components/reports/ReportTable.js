@@ -147,7 +147,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
       },
       {
         Header: "EWC Code",
-        accessor: "EWC_Code",
+        accessor: "ewc_code",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;

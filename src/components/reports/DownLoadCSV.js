@@ -22,7 +22,7 @@ const DownLoadCSV = ({ rdata }) => {
             },
             { value: order.service_name ? order.service_name : "" },
             {
-              value: order.EWC_Code ? order.EWC_Code : "",
+              value: order.ewc_code ? order.ewc_code : "",
             },
             {
               value: order.transaction_cost ? "£" + order.transaction_cost : "",
@@ -46,8 +46,8 @@ const DownLoadCSV = ({ rdata }) => {
             {
               value: order.co2_emissions
                 ? order.co2_emissions + "2"
-                : order.WTN_Number
-                  ? order.WTN_Number + " kg CO2"
+                : order.WTN_number
+                  ? order.WTN_number + " kg CO2"
                   : "",
             },
           ];
@@ -70,8 +70,8 @@ const DownLoadCSV = ({ rdata }) => {
             },
             { value: order.service_name ? order.service_name : "" },
             {
-              value: order.EWC_Code,
-              ...(order.EWC_Code === "Sub Total"
+              value: order.ewc_code,
+              ...(order.ewc_code === "Sub Total"
                 ? {
                   style: {
                     font: { sz: "10", bold: true },
@@ -81,8 +81,8 @@ const DownLoadCSV = ({ rdata }) => {
                     },
                   },
                 }
-                : order.EWC_Code
-                  ? order.EWC_Code
+                : order.ewc_code
+                  ? order.ewc_code
                   : ""),
             },
             {
@@ -92,14 +92,14 @@ const DownLoadCSV = ({ rdata }) => {
               value: String(order.full_name) ? String(order.full_name) : "",
             },
             {
-              value: order.WTN_Number ? "£" + order.WTN_Number : "",
+              value: order.WTN_number ? "£" + order.WTN_number : "",
             },
             {
-              value: order.Disposal_Site ? order.Disposal_Site : "",
+              value: order.disposal_site ? order.disposal_site : "",
             },
-            { value: order.Tonnage ? order.Tonnage : "" },
+            { value: order.tonnage ? order.tonnage : "" },
             {
-              value: order.Diverted_Tonnage ? order.Diverted_Tonnage : "",
+              value: order.diverted_tonnage ? order.diverted_tonnage : "",
             },
             { value: order.Volume ? order.Volume : "" },
             {
