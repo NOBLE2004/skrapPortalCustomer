@@ -42,7 +42,7 @@ const JobDetail = ({ job }) => {
         <div className="info">
           <div className="designation">Service</div>
           <div className="personal-title">
-            {job?.service_name} ({job?.parent_service_name})
+            {job?.service_name}
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ const JobDetail = ({ job }) => {
           <div className="designation">Waste Type</div>
           <div className="personal-title">
             {job?.job_waste?.length === 0 && (
-              <p className="item-value">-------</p>
+              <p className="item-value">n/a</p>
             )}
             {(job?.job_waste || []).map((waste, index) => {
               if (index === 0) {

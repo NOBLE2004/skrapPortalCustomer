@@ -114,11 +114,13 @@
 .xero-btn {
   text-align: end;
 }
-.header-top{
+.header-top {
   position: fixed;
   top: 0;
   background-color: #f6f6f6;
-  width: 100%;
+  z-index: 1;
+  display:inline-block;
+  width:calc(100% - 270px);
   @media only screen and (max-width: 1224px) {
     position: unset;
     top: unset;
