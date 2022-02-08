@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   useTable,
   useSortBy,
@@ -15,7 +15,16 @@ const TableContainer = ({ columns, data, name }) => {
   const history = useHistory();
   const [cellWidth, setCellWidth] = useState(100);
   const [cellPadding, setCellPadding] = useState("10px");
+  const [yPosition, setYposition] = useState(0);
   const scrollPosition = usePagePosition();
+  const inputRef = useRef();
+
+  const scrollHandler = (_) => {
+    if (inputRef.current) {
+      setYposition(inputRef.current.getBoundingClientRect().y);
+    }
+  };
+
   useEffect(() => {
     if (name === "jobs") {
       setCellWidth(100);
@@ -24,6 +33,11 @@ const TableContainer = ({ columns, data, name }) => {
       setCellWidth(172);
       setCellPadding("16px");
     }
+
+    window.addEventListener("scroll", scrollHandler, true);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler, true);
+    };
   }, []);
 
   const {
@@ -57,16 +71,13 @@ const TableContainer = ({ columns, data, name }) => {
       });
     }
   };
-  
-
-  
   return (
-    <div className="table-container-main">
+    <div className="table-container-main" ref={inputRef}>
       <div {...getTableProps()} className="table-main">
-        <div style={{ display: "table-head" }} className={scrollPosition >= 180 ? "header-top" : ""} >
           {headerGroups.map((headerGroup) => (
             <div
               style={{ display: "flex" }}
+              className={yPosition && yPosition < 20 ? "header-top" : ""}
               {...headerGroup.getHeaderGroupProps()}
             >
               {headerGroup.headers.map((column) => (
@@ -79,7 +90,7 @@ const TableContainer = ({ columns, data, name }) => {
                     width:
                       column.id === "status"
                         ? "100px"
-                        : (column.id === "id-edit" | column.id === "select")
+                        : (column.id === "id-edit") | (column.id === "select")
                         ? "50px"
                         : cellWidth,
                     padding: cellPadding,
@@ -90,7 +101,6 @@ const TableContainer = ({ columns, data, name }) => {
               ))}
             </div>
           ))}
-        </div>
         <div style={{ display: "table-body" }} {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
@@ -102,7 +112,9 @@ const TableContainer = ({ columns, data, name }) => {
                   marginBottom: 18,
                   borderRadius: 11,
                 }}
-                className={name === 'tickets' ? "table-body-row1" : "table-body-row"}
+                className={
+                  name === "tickets" ? "table-body-row1" : "table-body-row"
+                }
                 {...row.getRowProps()}
                 onClick={() => handleRowClick(row.original)}
               >
@@ -118,7 +130,8 @@ const TableContainer = ({ columns, data, name }) => {
                         width:
                           cell.column.id === "accept-id"
                             ? "120px"
-                            : (cell.column.id === "id-edit" | cell.column.id === "select" )
+                            : (cell.column.id === "id-edit") |
+                              (cell.column.id === "select")
                             ? "50px"
                             : cellWidth,
                         padding: cellPadding,

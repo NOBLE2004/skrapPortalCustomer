@@ -459,7 +459,7 @@ const JobsTable = ({
           <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
         </div>
       )}
-      <TableContainer columns={columns} data={data} name={"jobs"} />
+      <TableContainer columns={columns} data={data} name={"jobs"} className="-striped -highlight"/>
       <Pagination
         last={pagination?.last_page}
         current={pagination?.current_page}

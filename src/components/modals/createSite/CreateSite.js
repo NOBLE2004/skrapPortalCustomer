@@ -112,7 +112,6 @@ export default function CreateSite({
           }
         })
         .catch((err) => {
-          console.log("err", err);
           setState({
             ...state,
             isLoading: false,
