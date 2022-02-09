@@ -167,6 +167,12 @@ const MySidebar = (props) => {
               return null;
             }
           }
+
+          if (userData.user_count <= 0) {
+            if (index === 3) {
+              return null;
+            }
+          }
           let [textClass, iconColor] = ["sidebar-tab-text", "black_icon"];
           if (!obj.sub) {
             [textClass, iconColor] =
