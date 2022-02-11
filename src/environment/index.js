@@ -101,3 +101,8 @@ export const JOB_STATUS = [
   { id: 4, status: "Delivered" },
   { id: 6, status: "Pickup Ongoing" },
 ];
+export const MARKET_PAY_LIST = [
+  {id : "PAY30 " , title : 'Pay in 30 days'},
+  {id : "PAY60" , title : 'Pay in 60 days'},
+  {id : "PAY3INSTALMENT" , title : 'Pay in 3 instalments'},
+]
