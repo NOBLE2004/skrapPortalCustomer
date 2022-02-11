@@ -39,6 +39,7 @@ import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./createJob.scss";
 import { serviceList } from "../../utlils/constants";
 import sitesService from "../../../services/sites.service";
+import { MARKET_PAY_LIST } from "../../../environment";
 
 const materialTheme = createTheme({
   palette: {
@@ -118,6 +119,9 @@ export default function CreateJob({
     portableweeks: 2,
     isQuantityError: false,
     isWeekError: false,
+    isMarketPay: false,
+    selectedMarketPay: "",
+    markeyPayBalance: "",
   });
   const styles = (theme) => ({
     root: {
@@ -161,6 +165,9 @@ export default function CreateJob({
     portableweeks,
     isQuantityError,
     isWeekError,
+    isMarketPay,
+    selectedMarketPay,
+    markeyPayBalance,
   } = state;
 
   const handleChange = (event) => {
@@ -269,8 +276,8 @@ export default function CreateJob({
       if (purchase_orders.length > 0) {
         const lastpo = purchase_orders[purchase_orders.length - 1];
         setPo(lastpo.purchase_order);
-      }else{
-        setPo('')
+      } else {
+        setPo("");
       }
       setmData(data);
     }
@@ -283,6 +290,8 @@ export default function CreateJob({
     setState({
       ...state,
       customerUserId: localStorage.getItem("user_id"),
+      isMarketPay: userCredit.market_pay,
+      markeyPayBalance: userCredit.market_finance_balance,
     });
   }, []);
 
@@ -418,7 +427,6 @@ export default function CreateJob({
   const scrollToBottom = () => {
     divRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
   const confirmJob = (e) => {
     e.preventDefault();
     if (
@@ -483,15 +491,17 @@ export default function CreateJob({
     let newdata = {
       acm_id: "",
       address_data: addressData,
-      card_id: roleId == 12 ? "" : selectedPaymentMethod,
+      card_id:
+        roleId == 12 ? "" : paymentMethod === "0" ? selectedPaymentMethod : "",
       comments: note,
+      market_pay_type: paymentMethod === "10" ? selectedMarketPay : "",
       coupon_detail: {
         coupon_id: 0,
         discount_rate: 330.0,
         is_coupon: 0,
         service_rate: serviceCost,
       },
-      customer_user_id:localStorage.getItem("user_id"),
+      customer_user_id: localStorage.getItem("user_id"),
       jobs: 1,
       payment_type: roleId == 12 ? "0" : paymentMethod,
       purchase_order: siteId && po ? po : purchaseOrder,
@@ -651,7 +661,6 @@ export default function CreateJob({
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
-
   return (
     <Dialog
       open={true}
@@ -958,28 +967,82 @@ export default function CreateJob({
 
           {roleId != 12 && (
             <div className="paymentWp">
-              <div className="payment">
-                <p>Payment Method</p>
-                <FormControl variant="outlined" margin="dense">
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    Payment method
-                  </InputLabel>
-                  <Select
-                    name="paymentMethod"
-                    value={paymentMethod}
-                    onChange={handleChange}
-                    label="Payment method"
-                    error={errors["paymentMethod"].length > 0 ? true : false}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
-                    <MenuItem value="0">Stripe</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-
+              {isMarketPay ? (
+                <>
+                  {markeyPayBalance ? (
+                    <div className="payment">
+                      <p>Payment Method</p>
+                      <FormControl variant="outlined" margin="dense">
+                        <InputLabel id="demo-simple-select-outlined-label">
+                          Payment method
+                        </InputLabel>
+                        <Select
+                          name="paymentMethod"
+                          value={paymentMethod}
+                          onChange={handleChange}
+                          label="Payment method"
+                          error={
+                            errors["paymentMethod"].length > 0 ? true : false
+                          }
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          <MenuItem value="10">Market Pay</MenuItem>
+                          <MenuItem value="0">Stripe</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                  ) : (
+                    <div className="payment">
+                      <p>Payment Method</p>
+                      <FormControl variant="outlined" margin="dense">
+                        <InputLabel id="demo-simple-select-outlined-label">
+                          Payment method
+                        </InputLabel>
+                        <Select
+                          name="paymentMethod"
+                          value={paymentMethod}
+                          onChange={handleChange}
+                          label="Payment method"
+                          error={
+                            errors["paymentMethod"].length > 0 ? true : false
+                          }
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
+                          <MenuItem value="10">Market Pay</MenuItem>
+                          <MenuItem value="0">Stripe</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="payment">
+                  <p>Payment Method</p>
+                  <FormControl variant="outlined" margin="dense">
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Payment method
+                    </InputLabel>
+                    <Select
+                      name="paymentMethod"
+                      value={paymentMethod}
+                      onChange={handleChange}
+                      label="Payment method"
+                      error={errors["paymentMethod"].length > 0 ? true : false}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
+                      <MenuItem value="0">Stripe</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              )}
               <div className="discount">
                 <p>Total Cost</p>
                 <TextField
@@ -997,48 +1060,75 @@ export default function CreateJob({
             </div>
           )}
 
-          {paymentMethod === "0" && (
-            <>
-              <RadioGroup
-                name="selectedPaymentMethod"
-                value={selectedPaymentMethod}
-                onChange={handleChange}
-              >
-                {paymentMethodList.map((data, index) => {
-                  return (
-                    <FormControlLabel
-                      key={index}
-                      value={data.id}
-                      control={<Radio color="primary" />}
-                      label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
-                    />
-                  );
-                })}
-              </RadioGroup>
-              {paymentMethodList.length > 0 ? (
-                <Button
-                  className="newCard"
-                  onClick={() => handleShowNewCard()}
-                  variant="contained"
+          {paymentMethod === "0" &&
+            paymentMethod !== "10" &&
+            paymentMethod !== "2" && (
+              <>
+                <RadioGroup
+                  name="selectedPaymentMethod"
+                  value={selectedPaymentMethod}
+                  onChange={handleChange}
                 >
-                  Add new card
-                </Button>
-              ) : (
-                <CardPayment
-                  user_id={localStorage.getItem("user_id")}
-                  handleSaveNewCard={(value) => handleSaveNewCard(value)}
-                  setOpen={() => setState({ ...state, addNewCard: false })}
-                />
+                  {paymentMethodList &&
+                    paymentMethodList.map((data, index) => {
+                      return (
+                        <FormControlLabel
+                          key={index}
+                          value={data.id}
+                          control={<Radio color="primary" />}
+                          label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
+                        />
+                      );
+                    })}
+                </RadioGroup>
+                {paymentMethodList && paymentMethodList.length > 0 ? (
+                  <Button
+                    className="newCard"
+                    onClick={() => handleShowNewCard()}
+                    variant="contained"
+                  >
+                    Add new card
+                  </Button>
+                ) : (
+                  <CardPayment
+                    user_id={localStorage.getItem("user_id")}
+                    handleSaveNewCard={(value) => handleSaveNewCard(value)}
+                    setOpen={() => setState({ ...state, addNewCard: false })}
+                  />
+                )}
+                {addNewCard && (
+                  <CardPayment
+                    user_id={localStorage.getItem("user_id")}
+                    handleSaveNewCard={(value) => handleSaveNewCard(value)}
+                    setOpen={() => setState({ ...state, addNewCard: false })}
+                  />
+                )}
+              </>
+            )}
+          <div>
+            {paymentMethod === "10" &&
+              paymentMethod !== "0" &&
+              paymentMethod !== "2" && (
+                <>
+                  <RadioGroup
+                    name="selectedMarketPay"
+                    value={selectedMarketPay}
+                    onChange={handleChange}
+                  >
+                    {MARKET_PAY_LIST.map((data, index) => {
+                      return (
+                        <FormControlLabel
+                          key={data.id}
+                          value={data.id}
+                          control={<Radio color="primary" />}
+                          label={`${data.title}`}
+                        />
+                      );
+                    })}
+                  </RadioGroup>
+                </>
               )}
-              {addNewCard && (
-                <CardPayment
-                  user_id={localStorage.getItem("user_id")}
-                  handleSaveNewCard={(value) => handleSaveNewCard(value)}
-                  setOpen={() => setState({ ...state, addNewCard: false })}
-                />
-              )}
-            </>
-          )}
+          </div>
           <div>
             <p>Purchase Order</p>
             <TextField
