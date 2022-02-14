@@ -104,5 +104,4 @@ export const JOB_STATUS = [
 export const MARKET_PAY_LIST = [
   {id : "PAY30 " , title : 'Pay in 30 days'},
   {id : "PAY60" , title : 'Pay in 60 days'},
-  {id : "PAY3INSTALMENT" , title : 'Pay in 3 instalments'},
 ]

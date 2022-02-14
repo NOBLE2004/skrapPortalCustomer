@@ -69,7 +69,7 @@ const Sites = (props) => {
         isMap={isMapView}
         handleBookJob={handleMangerModal}
         downloadCSV={false}
-        showButton={true}
+        showButton={false}
         isSite={true}
         handleCreateJob={handleCreateJob}
       >

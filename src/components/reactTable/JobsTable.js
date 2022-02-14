@@ -110,21 +110,21 @@ const JobsTable = ({
     element.click();
     handleClose();
   };
-  const handleInvoice = () => {
-    if (jobIds.length > 0) {
-      JobService.xeroInvoice({ jobs: jobIds })
-        .then((response) => {
-          if (response.data.status === 0) {
-            window.open(response.data?.url);
-          } else {
-            Swal.fire("Info!", response.data.message, "info");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
+  // const handleInvoice = () => {
+  //   if (jobIds.length > 0) {
+  //     JobService.xeroInvoice({ jobs: jobIds })
+  //       .then((response) => {
+  //         if (response.data.status === 0) {
+  //           window.open(response.data?.url);
+  //         } else {
+  //           Swal.fire("Info!", response.data.message, "info");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
   const downloadInvoice = (e, job_id) => {
     e.stopPropagation();
     setLoading(true);
@@ -361,35 +361,35 @@ const JobsTable = ({
           </>
         ),
       },
-      {
-        Header: "",
-        id: "select",
-        Cell: ({ cell }) => (
-          <>
-            <span
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                padding: "0px",
-                cursor: "pointer",
-                height: "30px",
-                justifyContent: "center",
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-              }}
-              className="normal-dsans-10-primary"
-            >
-              <input
-                style={{ cursor: "pointer", width: "100%", height: "15px" }}
-                onChange={(e) => selectJob(e, cell?.row?.original.job_id)}
-                type="checkbox"
-                id="job"
-                name="job"
-              />
-            </span>
-          </>
-        ),
-      },
+      // {
+      //   Header: "",
+      //   id: "select",
+      //   Cell: ({ cell }) => (
+      //     <>
+      //       <span
+      //         onClick={(e) => e.stopPropagation()}
+      //         style={{
+      //           padding: "0px",
+      //           cursor: "pointer",
+      //           height: "30px",
+      //           justifyContent: "center",
+      //           display: "flex",
+      //           alignItems: "center",
+      //           width: "100%",
+      //         }}
+      //         className="normal-dsans-10-primary"
+      //       >
+      //         <input
+      //           style={{ cursor: "pointer", width: "100%", height: "15px" }}
+      //           onChange={(e) => selectJob(e, cell?.row?.original.job_id)}
+      //           type="checkbox"
+      //           id="job"
+      //           name="job"
+      //         />
+      //       </span>
+      //     </>
+      //   ),
+      // },
     ],
     []
   );
@@ -434,14 +434,14 @@ const JobsTable = ({
           jobdata={jobData}
         />
       )}
-      <div className="xero-btn">
+      {/* <div className="xero-btn">
         <button
           className="header-btn"
           onClick={() => handleInvoice()}
         >
           Create Xero Invoices
         </button>
-      </div>
+      </div> */}
       {isLoading && (
         <div
           className="loader"

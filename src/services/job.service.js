@@ -29,7 +29,7 @@ class JobService extends HttpService {
 
     xeroInvoice = (params) => this.get('uploadInvoice', params);
 
-
+    createCompany = (data) => this.post('company' , data)
 }
 
 export default new JobService();
