@@ -40,6 +40,7 @@ import "./createJob.scss";
 import { serviceList } from "../../utlils/constants";
 import sitesService from "../../../services/sites.service";
 import { MARKET_PAY_LIST } from "../../../environment";
+import CompanyDetail from "../companyDetail/CompanyDetail";
 
 const materialTheme = createTheme({
   palette: {
@@ -58,10 +59,12 @@ export default function CreateJob({
 }) {
   const history = useHistory();
   const divRef = useRef(null);
+  const [mPay , setMPay] = useState(false)
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
   const [services, setServices] = useState([]);
-  const [mData, setmData] = useState(null);
+  const [mData, setmData] = useState("");
+  const [comp_number, setComp_number] = useState("");
   const [po, setPo] = useState("");
   const [subServices, setSubServices] = useState([]);
   const [wasteType, setWastType] = useState([
@@ -119,9 +122,8 @@ export default function CreateJob({
     portableweeks: 2,
     isQuantityError: false,
     isWeekError: false,
-    isMarketPay: false,
     selectedMarketPay: "",
-    markeyPayBalance: "",
+    isCompanyModal:false,
   });
   const styles = (theme) => ({
     root: {
@@ -165,9 +167,8 @@ export default function CreateJob({
     portableweeks,
     isQuantityError,
     isWeekError,
-    isMarketPay,
     selectedMarketPay,
-    markeyPayBalance,
+    isCompanyModal
   } = state;
 
   const handleChange = (event) => {
@@ -202,6 +203,9 @@ export default function CreateJob({
         break;
       case "paymentMethod":
         setState({ ...state, [name]: value });
+        break;
+      case "selectedMarketPay":
+        setState({...state , isCompanyModal: true , [name]: value });
         break;
       case "permit":
         if (value == 0) {
@@ -279,7 +283,6 @@ export default function CreateJob({
       } else {
         setPo("");
       }
-      setmData(data);
     }
     //ServiceService.list().then((response) => {
     setServices(serviceList);
@@ -287,11 +290,12 @@ export default function CreateJob({
     const userCredit = getUserDataFromLocalStorage();
     setRoleId(userCredit.role_id);
     setCredit(userCredit.credit_balance);
+    setMPay(userCredit.market_pay)
+    setmData(userCredit.market_finance_balance)
+    setComp_number(userCredit.company_reg_number)
     setState({
       ...state,
       customerUserId: localStorage.getItem("user_id"),
-      isMarketPay: userCredit.market_pay,
-      markeyPayBalance: userCredit.market_finance_balance,
     });
   }, []);
 
@@ -967,9 +971,9 @@ export default function CreateJob({
 
           {roleId != 12 && (
             <div className="paymentWp">
-              {isMarketPay ? (
+              {mPay ? (
                 <>
-                  {markeyPayBalance ? (
+                  {mData ? (
                     <div className="payment">
                       <p>Payment Method</p>
                       <FormControl variant="outlined" margin="dense">
@@ -1129,6 +1133,9 @@ export default function CreateJob({
                 </>
               )}
           </div>
+          {
+
+          }
           <div>
             <p>Purchase Order</p>
             <TextField
@@ -1170,6 +1177,9 @@ export default function CreateJob({
             </Alert>
           )}
         </form>
+        {
+          isCompanyModal && comp_number === "" && <CompanyDetail closeModal={() => setState({...state , isCompanyModal : false}) }/>
+        }
       </DialogContent>
     </Dialog>
   );
