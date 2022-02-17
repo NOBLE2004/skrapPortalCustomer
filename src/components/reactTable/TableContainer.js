@@ -74,33 +74,39 @@ const TableContainer = ({ columns, data, name }) => {
   return (
     <div className="table-container-main" ref={inputRef}>
       <div {...getTableProps()} className="table-main">
-          {headerGroups.map((headerGroup) => (
-            <div
-              style={{ display: "flex" }}
-              className={yPosition && yPosition < 20 ? "header-top" : ""}
-              {...headerGroup.getHeaderGroupProps()}
-            >
-              {headerGroup.headers.map((column) => (
-                <div
-                  {...column.getHeaderProps()}
-                  className={
-                    name === "sites" ? "sites-table-headings" : "table-headings"
-                  }
-                  style={{
-                    width:
-                      column.id === "status"
-                        ? "100px"
-                        : (column.id === "id-edit") | (column.id === "select")
-                        ? "50px"
-                        : cellWidth,
-                    padding: cellPadding,
-                  }}
-                >
-                  {column.render("Header")}
-                </div>
-              ))}
-            </div>
-          ))}
+        {headerGroups.map((headerGroup) => (
+          <div
+            style={{ display: "flex" }}
+            className={
+              name === "reports"
+                ? ""
+                : yPosition && yPosition < 20
+                ? "header-top"
+                : ""
+            }
+            {...headerGroup.getHeaderGroupProps()}
+          >
+            {headerGroup.headers.map((column) => (
+              <div
+                {...column.getHeaderProps()}
+                className={
+                  name === "sites" ? "sites-table-headings" : "table-headings"
+                }
+                style={{
+                  width:
+                    column.id === "status"
+                      ? "100px"
+                      : (column.id === "id-edit") | (column.id === "select")
+                      ? "50px"
+                      : cellWidth,
+                  padding: cellPadding,
+                }}
+              >
+                {column.render("Header")}
+              </div>
+            ))}
+          </div>
+        ))}
         <div style={{ display: "table-body" }} {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
