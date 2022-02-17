@@ -28,6 +28,8 @@ export const payment = (type) => {
     return "Credit, Card, Wallet";
   } else if (type === 7) {
     return "Manual";
+  } else if (type === 10) {
+    return "Market Pay";
   } else {
     return "----";
   }
