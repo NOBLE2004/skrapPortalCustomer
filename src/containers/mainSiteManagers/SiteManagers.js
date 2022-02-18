@@ -35,7 +35,7 @@ const SiteManagers = (props) => {
     <div className="site-manager-margin">
       <div className="header-main">
         <div className="sites-header-title">Site Managers </div>
-        {props.siteManager.sites && props.siteManager.sites.length > 0 && (
+        {props.siteManager.sites && props.siteManager.sites.length <= 0 && (
           <button className="header-btn" onClick={handleBookSite}>
             Create Manager
           </button>
