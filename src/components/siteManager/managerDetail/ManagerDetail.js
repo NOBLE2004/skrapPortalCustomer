@@ -5,22 +5,20 @@ import { useHistory } from "react-router";
 import "./managerdetail.scss";
 
 const ManagerDetail = (props) => {
-  const { title, siteData } = props
+  const { title, siteData } = props;
   const history = useHistory();
-  const {
-    address_data,
-    mobile_number,
-    site_assigned,
-    email,
-    user_id,
-    name,
-  } = siteData;
+  const { address_data, mobile_number, site_assigned, email, user_id, name } =
+    siteData;
   const handleManagerDetail = (id, data) => {
     history.push("site-managers/" + id);
   };
 
-  const handleViewJob = () => {
+  const handleViewJob = (e) => {
+    e.stopPropagation();
     // history.push({ pathname: "/jobs" , state:"siteManager" });
+  };
+  const handleEdit = (e) => {
+    e.stopPropagation();
   };
 
   return (
@@ -36,7 +34,9 @@ const ManagerDetail = (props) => {
             <div className="p-title">Action</div>
             <div className="profile-action">
               <img src={editIcon} alt="person-img" />
-              <div className="edit-title">Edit</div>
+              <div className="edit-title" onClick={handleEdit}>
+                Edit
+              </div>
             </div>
             <div className="profile-action">
               <img src={showIcon} alt="person-img" />
@@ -79,9 +79,4 @@ const ManagerDetail = (props) => {
   );
 };
 
-
-
-
-
-
-export default ManagerDetail
+export default ManagerDetail;

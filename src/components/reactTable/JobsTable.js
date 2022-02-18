@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import TrackDriverModal from "../modals/trackDriver/TrackDriverModal";
 import AcceptJobModal from "../modals/acceptJobModal/AcceptJobModal";
 import RejectJobModal from "../modals/rejectJobModal/RejectJobModal";
+import JobReorderModal from "../modals/reorderModal/JobReorderModal";
 
 const JobsTable = ({
   data,
@@ -140,7 +141,7 @@ const JobsTable = ({
       });
   };
   const handleReorderResponse = (id) => {
-    JobService.copy({ job_id: id , payment_type : row.payment_type})
+    JobService.copy({ job_id: id, payment_type: row.payment_type })
       .then((response) => {
         setNotice({
           type: "success",
@@ -393,7 +394,6 @@ const JobsTable = ({
     ],
     []
   );
-
   return (
     <div>
       {exchange && (
@@ -419,8 +419,13 @@ const JobsTable = ({
           handleRes={() => handleReorderResponse(row.job_id)}
           noticeData={notice}
           isLoading={isLoading}
-        >
-        </LoadingModal>
+        ></LoadingModal>
+        // <JobReorderModal
+        //   closeModal={() => setReorder(!reorder)}
+        //   updateJobs={handleUpdateJobs}
+        //   row={row}
+        //   isfromJob={true}
+        // />
       )}
       {isJobAccepted && (
         <AcceptJobModal
@@ -459,7 +464,12 @@ const JobsTable = ({
           <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
         </div>
       )}
-      <TableContainer columns={columns} data={data} name={"jobs"} className="-striped -highlight"/>
+      <TableContainer
+        columns={columns}
+        data={data}
+        name={"jobs"}
+        className="-striped -highlight"
+      />
       <Pagination
         last={pagination?.last_page}
         current={pagination?.current_page}
@@ -485,11 +495,13 @@ const JobsTable = ({
             : undefined
         }
       >
-        {row.parent_id === 2 && row.appointment_status === 4 && (
+        {((row.parent_id === 2 && row.appointment_status === 4) ||
+          (row.parent_id === 43 && row.service_id === 44)) && (
           <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
         )}
         <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-        {row.parent_id === 2 && row.appointment_status === 4 && (
+        {((row.parent_id === 2 && row.appointment_status === 4) ||
+          (row.parent_id === 43 && row.service_id === 44)) && (
           <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>
         )}
         {row?.waste_transfer_document != "" && (
