@@ -26,7 +26,8 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
         Header: "Service Date",
         accessor: "job_date",
         disableFilters: true,
-        Cell: (props) => props.value ? new Date(props.value).toLocaleDateString() : "n/a"
+        Cell: (props) =>
+          props.value ? new Date(props.value).toLocaleDateString() : "n/a",
       },
       {
         Header: "Service Type",
@@ -107,7 +108,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
         },
-      }
+      },
     ],
     []
   );
@@ -135,7 +136,8 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
         Header: "Service Date",
         accessor: "job_date",
         disableFilters: true,
-        Cell: (props) => props.value ? new Date(props.value).toLocaleDateString() : "n/a"
+        Cell: (props) =>
+          props.value ? new Date(props.value).toLocaleDateString() : "n/a",
       },
       {
         Header: "Service Type",
@@ -176,15 +178,31 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
         },
-      }
+      },
     ],
     []
   );
-
+  
   return (
     <div className="reportTableWp">
-      <TableContainer columns={reportType === "Site_movements" ? siteMovementsColumns : carbonFootPrintColumns} data={data} />
-      <p className="subTotal">{reportType === "Site_movements" ? "Sub Total: " + lastCalculatedReport : "Average: " + lastCalculatedReport} </p>
+      <TableContainer
+        columns={
+          reportType === "Site_movements"
+            ? siteMovementsColumns
+            : carbonFootPrintColumns
+        }
+        data={data}
+        name={"reports"}
+      />
+      <p className="subTotal">
+        {reportType === "Site_movements"
+          ? `Sub Total:  ${
+              isNaN(+lastCalculatedReport) ? "n/a" : +lastCalculatedReport
+            }`
+          : `Average: ${
+              isNaN(+lastCalculatedReport) ? "n/a" : +lastCalculatedReport
+            }`}
+      </p>
     </div>
   );
 };
