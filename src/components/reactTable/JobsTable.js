@@ -16,7 +16,6 @@ import Swal from "sweetalert2";
 import TrackDriverModal from "../modals/trackDriver/TrackDriverModal";
 import AcceptJobModal from "../modals/acceptJobModal/AcceptJobModal";
 import RejectJobModal from "../modals/rejectJobModal/RejectJobModal";
-import JobReorderModal from "../modals/reorderModal/JobReorderModal";
 
 const JobsTable = ({
   data,
