@@ -345,18 +345,16 @@ const SiteManagerTable = ({
             : undefined
         }
       >
-        {row.parent_id === 2 && row.appointment_status === 4 && (
+        {((row.parent_id === 2 && row.appointment_status === 4) ||
+          (row.parent_id === 43 && row.service_id === 44)) && (
           <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
         )}
         <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-        {row.parent_id === 2 && row.appointment_status === 4 && (
+        {((row.parent_id === 2 && row.appointment_status === 4) ||
+          (row.parent_id === 43 && row.service_id === 44)) && (
           <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>
         )}
-        {/* {row?.waste_transfer_document != "" && (
-          <MenuItem>Waste Report</MenuItem>
-        )} */}
         <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>
-        {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
       </Menu>{" "}
       {isTrackDriver && (
         <TrackDriverModal
