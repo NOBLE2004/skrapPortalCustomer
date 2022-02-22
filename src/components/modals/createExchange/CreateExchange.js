@@ -29,7 +29,7 @@ import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import JobService from "../../../services/job.service";
 import { useHistory } from "react-router-dom";
 import "./createExchange.scss";
-import {getUserDataFromLocalStorage} from "../../../services/utils";
+import { getUserDataFromLocalStorage } from "../../../services/utils";
 
 const styles = (theme) => ({
   root: {
@@ -68,8 +68,8 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
- const {postcode, customer_user_id, job_id, parent_id} = row;
+function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
+  const { postcode, customer_user_id, job_id, parent_id } = row;
   let history = useHistory();
   const [serviceList, setServiceList] = useState([]);
   const [credit, setCredit] = useState(0);
@@ -136,9 +136,11 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
     let data = {
       user_id: customer_user_id,
     };
-    PaymentService.list({ user_id: localStorage.getItem("userId") }).then((response) => {
-      setState({ ...state, paymentMethodList: response.data.result });
-    });
+    PaymentService.list({ user_id: localStorage.getItem("userId") }).then(
+      (response) => {
+        setState({ ...state, paymentMethodList: response.data.result });
+      }
+    );
   }, [addedNewCard]);
 
   //getservices
@@ -164,8 +166,12 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
     switch (name) {
       case "service":
         if (serviceList[value]) {
-          console.log(serviceList[value]);
-          setState({ ...state, [name]: value, service_id: serviceList[value].sub_service_id, cost: serviceList[value].price });
+          setState({
+            ...state,
+            [name]: value,
+            service_id: serviceList[value].sub_service_id,
+            cost: serviceList[value].price,
+          });
         } else {
           setState({ ...state, [name]: value, cost: "", service_id: "" });
         }
@@ -246,17 +252,17 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
       user_id: customer_user_id,
       purchase_order: purchaseOrder,
       comments: note,
-      show_on_portal: 0
+      show_on_portal: 0,
     };
 
     JobService.createExchange(data)
       .then((response) => {
         setTimeout(() => {
           handleClose();
-          if(isfromJob){
+          if (isfromJob) {
             updateJobs();
             history.push("/jobs");
-          }else{
+          } else {
             updateJobs();
           }
         }, 2000);
@@ -291,9 +297,7 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
       className="createExchangeModal"
       open={true}
     >
-      <DialogTitle onClose={handleClose}>
-        Create Exchange
-      </DialogTitle>
+      <DialogTitle onClose={handleClose}>Create Exchange</DialogTitle>
       <DialogContent dividers>
         <form noValidate>
           <div className="selectWp">
@@ -372,25 +376,31 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
             <p>Payment</p>
             <FormControl variant="outlined" margin="dense">
               {credit === 0 ? (
-              <Select
-                value={paymentMethod}
-                onChange={handleChange}
-                name="paymentMethod"
-                error={errors["paymentMethod"].length > 0 ? true : false}
-              >
-                <MenuItem value=""><em>None</em></MenuItem>
-                <MenuItem value="0">Stripe</MenuItem>
-              </Select>) : (<Select
+                <Select
                   value={paymentMethod}
                   onChange={handleChange}
                   name="paymentMethod"
                   error={errors["paymentMethod"].length > 0 ? true : false}
-              >
-                <MenuItem value=""><em>None</em></MenuItem>
-                <MenuItem value="0">Stripe</MenuItem>
-                <MenuItem value="2">Credit</MenuItem>
-              </Select>)
-              }
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="0">Stripe</MenuItem>
+                </Select>
+              ) : (
+                <Select
+                  value={paymentMethod}
+                  onChange={handleChange}
+                  name="paymentMethod"
+                  error={errors["paymentMethod"].length > 0 ? true : false}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="0">Stripe</MenuItem>
+                  <MenuItem value="2">Credit</MenuItem>
+                </Select>
+              )}
             </FormControl>
           </div>
 
@@ -480,8 +490,7 @@ function CreateExchange({closeModal, row, updateJobs, isfromJob}) {
   );
 }
 
-const mapStateToProps = (state) => {
-};
+const mapStateToProps = (state) => {};
 
 const mapDispatchToProps = (dispatch) => {
   return {};

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import JobsTable from "../../components/reactTable/JobsTable";
@@ -28,7 +28,6 @@ import { useHistory } from "react-router-dom";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
 import { getJobList } from "../../store/actions/jobs.action";
 import FadeLoader from "react-spinners/FadeLoader";
-import Swal from 'sweetalert2'
 
 const MainJobs = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
@@ -37,9 +36,6 @@ const MainJobs = (props) => {
   const [showInfo, setShowInfo] = useState(false);
   const [isJobBooked, setIsJobBooked] = useState(false);
   const [isJobCreated, setIsJobCreated] = useState(false);
-  const [jobs, setJobs] = useState([]);
-  const [pagination, setPagination] = useState({});
-  const [updateJobs, setUpdateJobs] = useState(false);
   const [limit, setLimit] = useState(10);
   const { info, loading } = props.dashboard;
   const history = useHistory();
@@ -50,30 +46,59 @@ const MainJobs = (props) => {
     service: "",
     address: "",
     search: "",
-    page: 1,
   });
-    let userData = getUserDataFromLocalStorage();
-    const handleJobCreated = () => {
-      setIsJobCreated(true)
+  let userData = getUserDataFromLocalStorage();
+
+  const handleJobCreated = useCallback(() => {
+    setIsJobCreated(true);
+  }, [isJobCreated]);
+
+  useEffect(() => {
+    async function fetchData() {
+      !jobData &&
+        (await props.getJobList(
+          { user_id: userData.user_id, limit, orders_type: 4 },
+          filters
+        ));
+      !info && (await props.getDashboardsData(""));
     }
-    useEffect(() => {
-        async function fetchData() {
-            await props.getJobList({user_id: userData.user_id, limit, orders_type: 4}, filters);
-            await props.getDashboardsData('');
-        }
-        fetchData();
-    }, [filters, updateJobs, limit, isJobCreated]);
-  const handleShowMap = () => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const newFilter = {
+      status: "",
+      date: "",
+      service: "",
+      address: "",
+      search: "",
+    };
+
+    console.log("filters", filters);
+    console.log("compare", compare(newFilter, filters));
+    if (isJobCreated || !compare(newFilter, filters))
+      props.getJobList(
+        { user_id: userData.user_id, limit, orders_type: 4 },
+        filters
+      );
+  }, [filters, isJobCreated]);
+
+  const compare = (a, b) => {
+    return JSON.stringify(a) === JSON.stringify(b);
+  };
+  const handleShowMap = useCallback(() => {
     if (isMapView === true) {
       setLimit(10000);
     } else {
       setLimit(10);
     }
     setMapView(!isMapView);
-  };
-  const handleBookJob = () => {
+  }, [isMapView]);
+
+  const handleBookJob = useCallback(() => {
     setIsJobBooked(true);
-  };
+  }, [isJobBooked]);
+
   const handleMarkerClick = () => {
     setShowInfo(true);
   };
@@ -87,9 +112,7 @@ const MainJobs = (props) => {
   const handleChangeSearch = (search) => {
     setFilters({ ...filters, search: search });
   };
-  const handleUpdateJobs = () => {
-    setUpdateJobs(true);
-  };
+
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
   };
@@ -120,7 +143,9 @@ const MainJobs = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Sales",
-            price: `£${info? parseFloat(info.TotalSpend).toLocaleString() : 0}`,
+            price: `£${
+              info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+            }`,
             statusName: "primary",
             width: "184px",
             height: "84px",
@@ -180,7 +205,7 @@ const MainJobs = (props) => {
               <JobsTable
                 data={jobData?.data ? jobData?.data : []}
                 pagination={jobData}
-                handleUpdateJobs={handleUpdateJobs}
+                handleUpdateJobs={handleJobCreated}
                 handlePagination={handlePagination}
               />
             )
@@ -214,7 +239,7 @@ const MainJobs = (props) => {
                           <Marker
                             position={{
                               lat: Number(job.latitude),
-                              lng: Number(job.longitude)
+                              lng: Number(job.longitude),
                             }}
                             icon={
                               status(job.appointment_status) === "Pending"

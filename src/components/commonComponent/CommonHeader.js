@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { location } from "../../assets/images";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import "./commonHeader.scss";
@@ -46,7 +46,7 @@ const CommonHeader = ({
         {isSite && userData > 0 && (
           <>
             <button className="header-btn" onClick={handleBookJob}>
-            Assign to manager
+              Assign to manager
             </button>
             <button className="header-btn" onClick={handleCreateJob}>
               Create Site
@@ -58,4 +58,4 @@ const CommonHeader = ({
   );
 };
 
-export default CommonHeader;
+export default memo(CommonHeader);

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState, memo } from "react";
 import { searchIcon } from "../../../assets/images";
 import "./commonSearch.scss";
 
-const CommonSearch = ({  cname, handleChangeSearch }) => {
-  const [value, setValue] = useState('');
-  useEffect(()=>{
-      handleChangeSearch(value);
+const CommonSearch = ({ cname, handleChangeSearch }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    handleChangeSearch(value);
   }, [value]);
   return (
     <div className="search-bar-container">
@@ -21,4 +21,4 @@ const CommonSearch = ({  cname, handleChangeSearch }) => {
   );
 };
 
-export default CommonSearch;
+export default memo(CommonSearch);

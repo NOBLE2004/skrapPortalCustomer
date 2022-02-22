@@ -70,7 +70,6 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
         accessor: "ticket_file",
         id: "download_id",
         Cell: (props) => {
-          console.log("props.", props.value ? props.value : "n/a");
           return (
             <>
               {props.value ? (
@@ -90,7 +89,8 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
                   <span
                     className="normal-dsans-10-tooltip"
                     style={{ cursor: "not-allowed" }}
-                    data-tip={true} data-for={'ticket_file'}
+                    data-tip={true}
+                    data-for={"ticket_file"}
                   >
                     Download Ticket
                     <img
@@ -99,7 +99,14 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
                       style={{ marginLeft: "5px" }}
                     />
                   </span>
-                  <ReactTooltip type="error" place="top" effect="solid" id={'ticket_file'}>File not attached</ReactTooltip>
+                  <ReactTooltip
+                    type="error"
+                    place="top"
+                    effect="solid"
+                    id={"ticket_file"}
+                  >
+                    File not attached
+                  </ReactTooltip>
                 </>
               )}
             </>
