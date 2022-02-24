@@ -11,6 +11,7 @@ import JobService from "../../../services/job.service";
 import LoadingModal from "../../modals/LoadingModal/LoadingModal";
 import CreateExchange from "../../modals/createExchange/CreateExchange";
 import RequestCollection from "../../modals/requestCollection/RequestCollection";
+import ExtendModal from "../../modals/extendModal/ExtendModal";
 
 const SiteManagerTable = ({
   managerData,
@@ -27,6 +28,7 @@ const SiteManagerTable = ({
   const [isLoading, setLoading] = useState(false);
   const [notice, setNotice] = React.useState(null);
   const [isTrackDriver, setTrackDriver] = useState(false);
+  const [extend, setExtends] = useState(false);
   const [state, setState] = useState({
     openMenu: false,
     mouseX: null,
@@ -285,7 +287,9 @@ const SiteManagerTable = ({
     ],
     []
   );
-
+  const handleExtend = () => {
+    setExtends(true);
+  };
   return (
     <>
       {exchange && (
@@ -312,6 +316,13 @@ const SiteManagerTable = ({
           noticeData={notice}
           isLoading={isLoading}
         ></LoadingModal>
+      )}
+      {extend && (
+        <ExtendModal
+          row={row}
+          closeModal={() => setExtends(false)}
+          updateJobs={reload}
+        />
       )}
       <TableContainer
         columns={siteDetail ? sitesDetailColumns : columns}
@@ -345,13 +356,19 @@ const SiteManagerTable = ({
             : undefined
         }
       >
-        {((row.parent_id === 2 && row.appointment_status === 4) ||
-          (row.parent_id === 43 && row.service_id === 44)) && (
+        {row.parent_id === 2 && row.appointment_status === 4 && (
           <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
         )}
+        {row.parent_id === 43 &&
+          row.service_id === 44 &&
+          row.appointment_status === 4 && (
+            <MenuItem onClick={handleExtend}>Extend</MenuItem>
+          )}
         <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
         {((row.parent_id === 2 && row.appointment_status === 4) ||
-          (row.parent_id === 43 && row.service_id === 44)) && (
+          (row.parent_id === 43 &&
+            row.service_id === 44 &&
+            row.appointment_status === 4)) && (
           <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>
         )}
         <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>

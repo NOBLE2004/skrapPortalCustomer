@@ -119,11 +119,19 @@
   top: 0;
   background-color: #f6f6f6;
   z-index: 1;
-  display:inline-block;
-  width:calc(100% - 270px);
+  display: inline-block;
+  width: calc(100% - 270px);
   @media only screen and (max-width: 1224px) {
     position: unset;
     top: unset;
     background-color: unset;
   }
+}
+.jobs-not-found {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  color: "red";
 }
