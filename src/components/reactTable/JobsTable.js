@@ -172,7 +172,6 @@ const JobsTable = ({
     }
     setJobIds(ids);
   };
-
   const columns = useMemo(
     () => [
       {
@@ -475,63 +474,73 @@ const JobsTable = ({
           <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
         </div>
       )}
-      <TableContainer
-        columns={columns}
-        data={data}
-        name={"jobs"}
-        className="-striped -highlight"
-      />
-      <Pagination
-        last={pagination?.last_page}
-        current={pagination?.current_page}
-        from={pagination?.from}
-        to={pagination?.to}
-        total={pagination?.total}
-        handleNext={(page) => {
-          handlePagination(page);
-        }}
-        handlePrevious={(page) => {
-          handlePagination(page);
-        }}
-      />
-      <Menu
-        keepMounted
-        className="job-table-menu"
-        open={openMenu}
-        onClose={handleClose}
-        anchorReference="anchorPosition"
-        anchorPosition={
-          mouseY !== null && mouseX !== null
-            ? { top: mouseY, left: mouseX }
-            : undefined
-        }
-      >
-        {row.parent_id === 2 && (
-          <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
-        )}
-        {row.parent_id === 43 && row.service_id === 44 && (
-          <MenuItem onClick={handleExtend}>Extend</MenuItem>
-        )}
-        <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-        {(row.parent_id === 2 ||
-          (row.parent_id === 43 && row.service_id === 44)) && (
-          <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>
-        )}
-        {row?.waste_transfer_document != "" && (
-          <MenuItem
-            onClick={(e) => handleShowReport(e, row?.waste_transfer_document)}
+      {data && data.length > 0 ? (
+        <>
+          <TableContainer
+            columns={columns}
+            data={data}
+            name={"jobs"}
+            className="-striped -highlight"
+          />
+          <Pagination
+            last={pagination?.last_page}
+            current={pagination?.current_page}
+            from={pagination?.from}
+            to={pagination?.to}
+            total={pagination?.total}
+            handleNext={(page) => {
+              handlePagination(page);
+            }}
+            handlePrevious={(page) => {
+              handlePagination(page);
+            }}
+          />
+          <Menu
+            keepMounted
+            className="job-table-menu"
+            open={openMenu}
+            onClose={handleClose}
+            anchorReference="anchorPosition"
+            anchorPosition={
+              mouseY !== null && mouseX !== null
+                ? { top: mouseY, left: mouseX }
+                : undefined
+            }
           >
-            Waste Report
-          </MenuItem>
-        )}
-        <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>
-        {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
-      </Menu>{" "}
-      {isTrackDriver && (
-        <TrackDriverModal
-          handleClose={() => setTrackDriver(false)}
-          trackData={rowData}
-        />
+            {row.parent_id === 2 && (
+              <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
+            )}
+            {row.parent_id === 43 && row.service_id === 44 && (
+              <MenuItem onClick={handleExtend}>Extend</MenuItem>
+            )}
+            <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
+            {(row.parent_id === 2 ||
+              (row.parent_id === 43 && row.service_id === 44)) && (
+              <MenuItem onClick={handleShowCollectionDialog}>
+                Collection
+              </MenuItem>
+            )}
+            {row?.waste_transfer_document != "" && (
+              <MenuItem
+                onClick={(e) =>
+                  handleShowReport(e, row?.waste_transfer_document)
+                }
+              >
+                Waste Report
+              </MenuItem>
+            )}
+            <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>
+            {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
+          </Menu>{" "}
+          {isTrackDriver && (
+            <TrackDriverModal
+              handleClose={() => setTrackDriver(false)}
+              trackData={rowData}
+            />
+          )}
+        </>
+      ) : (
+        <div className="jobs-not-found">Jobs Not Found Yet</div>
       )}
     </div>
   );

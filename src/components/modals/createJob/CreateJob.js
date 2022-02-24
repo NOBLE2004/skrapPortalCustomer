@@ -59,7 +59,7 @@ export default function CreateJob({
 }) {
   const history = useHistory();
   const divRef = useRef(null);
-  const [mPay , setMPay] = useState(false)
+  const [mPay, setMPay] = useState(false);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
   const [services, setServices] = useState([]);
@@ -74,6 +74,7 @@ export default function CreateJob({
   const [subServiceSelect, setSubServiceSelect] = useState({});
   const [wasteList, setWasteList] = useState([]);
   const [newLoader, setNewLoader] = useState(false);
+  const [isCardAdded, setIsCardAdded] = useState(false);
   const [credit, setCredit] = useState(0);
   const [roleId, setRoleId] = useState(0);
   const [errors, setError] = useState({
@@ -110,7 +111,6 @@ export default function CreateJob({
     addCustomer: false,
     selectedTime: "12:00 PM - 05:00 PM",
     customerUserId: null,
-    newCardData: null,
     permitOption: "0",
     noOfDays: "",
     itemPerPage: 40,
@@ -123,7 +123,7 @@ export default function CreateJob({
     isQuantityError: false,
     isWeekError: false,
     selectedMarketPay: "",
-    isCompanyModal:false,
+    isCompanyModal: false,
   });
   const styles = (theme) => ({
     root: {
@@ -155,7 +155,6 @@ export default function CreateJob({
     addNewCard,
     selectedTime,
     customerUserId,
-    newCardData,
     permitOption,
     noOfDays,
     itemPerPage,
@@ -168,7 +167,7 @@ export default function CreateJob({
     isQuantityError,
     isWeekError,
     selectedMarketPay,
-    isCompanyModal
+    isCompanyModal,
   } = state;
 
   const handleChange = (event) => {
@@ -205,7 +204,7 @@ export default function CreateJob({
         setState({ ...state, [name]: value });
         break;
       case "selectedMarketPay":
-        setState({...state , isCompanyModal: true , [name]: value });
+        setState({ ...state, isCompanyModal: true, [name]: value });
         break;
       case "permit":
         if (value == 0) {
@@ -290,9 +289,9 @@ export default function CreateJob({
     const userCredit = getUserDataFromLocalStorage();
     setRoleId(userCredit.role_id);
     setCredit(userCredit.credit_balance);
-    setMPay(userCredit.market_pay)
-    setmData(userCredit.market_finance_balance)
-    setComp_number(userCredit.company_reg_number)
+    setMPay(userCredit.market_pay);
+    setmData(userCredit.market_finance_balance);
+    setComp_number(userCredit.company_reg_number);
     setState({
       ...state,
       customerUserId: localStorage.getItem("user_id"),
@@ -549,6 +548,7 @@ export default function CreateJob({
       what3word: "",
       show_on_main_portal: 1,
     };
+
     JobService.createOrder(newdata)
       .then((response) => {
         if (Object.keys(response.data.result).length === 0) {
@@ -600,7 +600,7 @@ export default function CreateJob({
         setState({ ...state, paymentMethodList: response.data.result });
       }
     );
-  }, [paymentMethod, addNewCard]);
+  }, [paymentMethod, addNewCard, isCardAdded]);
 
   useEffect(() => {
     let t_date = Date.parse(new Date());
@@ -636,8 +636,8 @@ export default function CreateJob({
     }
   }, []);
 
-  const handleSaveNewCard = (cardData) => {
-    setState({ ...state, newCardData: cardData });
+  const handleSaveNewCard = () => {
+    setIsCardAdded(!isCardAdded);
   };
 
   const handleShowNewCard = () => {
@@ -665,6 +665,7 @@ export default function CreateJob({
     wasteType.splice(index, 1);
     setState({ ...state, wasteType });
   };
+
   return (
     <Dialog
       open={true}
@@ -1096,14 +1097,14 @@ export default function CreateJob({
                 ) : (
                   <CardPayment
                     user_id={localStorage.getItem("user_id")}
-                    handleSaveNewCard={(value) => handleSaveNewCard(value)}
+                    handleSaveNewCard={() => handleSaveNewCard()}
                     setOpen={() => setState({ ...state, addNewCard: false })}
                   />
                 )}
                 {addNewCard && (
                   <CardPayment
                     user_id={localStorage.getItem("user_id")}
-                    handleSaveNewCard={(value) => handleSaveNewCard(value)}
+                    handleSaveNewCard={() => handleSaveNewCard()}
                     setOpen={() => setState({ ...state, addNewCard: false })}
                   />
                 )}
@@ -1133,9 +1134,7 @@ export default function CreateJob({
                 </>
               )}
           </div>
-          {
-
-          }
+          {}
           <div>
             <p>Purchase Order</p>
             <TextField
@@ -1177,9 +1176,11 @@ export default function CreateJob({
             </Alert>
           )}
         </form>
-        {
-          isCompanyModal && comp_number === "" && <CompanyDetail closeModal={() => setState({...state , isCompanyModal : false}) }/>
-        }
+        {isCompanyModal && comp_number === "" && (
+          <CompanyDetail
+            closeModal={() => setState({ ...state, isCompanyModal: false })}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
