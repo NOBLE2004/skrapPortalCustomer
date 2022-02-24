@@ -507,15 +507,19 @@ const JobsTable = ({
                 : undefined
             }
           >
-            {row.parent_id === 2 && (
+            {row.parent_id === 2 && row.appointment_status === 4 && (
               <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
             )}
-            {row.parent_id === 43 && row.service_id === 44 && (
-              <MenuItem onClick={handleExtend}>Extend</MenuItem>
-            )}
+            {row.parent_id === 43 &&
+              row.service_id === 44 &&
+              row.appointment_status === 4 && (
+                <MenuItem onClick={handleExtend}>Extend</MenuItem>
+              )}
             <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-            {(row.parent_id === 2 ||
-              (row.parent_id === 43 && row.service_id === 44)) && (
+            {((row.parent_id === 2 && row.appointment_status === 4) ||
+              (row.parent_id === 43 &&
+                row.service_id === 44 &&
+                row.appointment_status === 4)) && (
               <MenuItem onClick={handleShowCollectionDialog}>
                 Collection
               </MenuItem>
