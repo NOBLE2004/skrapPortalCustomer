@@ -10,25 +10,22 @@ import "./sitemanager.scss";
 
 const SiteManagers = (props) => {
   const [isSiteBooked, setSiteBooked] = useState(false);
-
+  const { sites } = props.siteManager;
   const handleBookSite = () => {
     setSiteBooked(true);
-  };
-  const handleViewMore = () => {
-    console.log("handle view more ");
   };
 
   useEffect(() => {
     async function fetchData() {
-      if (!props.siteManager.sites) {
-        await props.getSiteManager();
-      }
-      if(isSiteBooked | !isSiteBooked){
-        await props.getSiteManager();
-      }
+      !sites && (await props.getSiteManager());
     }
-
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (isSiteBooked) {
+      props.getSiteManager();
+    }
   }, [isSiteBooked]);
 
   return (
@@ -64,11 +61,7 @@ const SiteManagers = (props) => {
       <Grid container spacing={5}>
         {props.siteManager.sites && props.siteManager.sites.length > 10 && (
           <Grid item md={12} className="view-more-btn">
-            <img
-              src={viewMoreBtn}
-              alt="view-more-btn"
-              onClick={handleViewMore}
-            />
+            <img src={viewMoreBtn} alt="view-more-btn" />
           </Grid>
         )}
       </Grid>

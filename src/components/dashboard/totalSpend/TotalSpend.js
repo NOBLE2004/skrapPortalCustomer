@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Line } from "react-chartjs-2";
 import { chartLineOption, spendData } from "../../utlils/constants";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -20,4 +20,4 @@ const TotalSpend = ({ totalSpend, isLoading }) => {
   );
 };
 
-export default TotalSpend;
+export default memo(TotalSpend);

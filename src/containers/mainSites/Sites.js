@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import SitesTable from "../../components/sites/sitesTable/SitesTable";
@@ -22,7 +22,6 @@ const Sites = (props) => {
   const [isJobCreated, setIsJobCreated] = useState(false);
   const [isMapView, setIsMapView] = useState(true);
   const [isReload, setIsReload] = useState(false);
-  const [postcode, setPostcode] = useState("");
   const [isManagerOpen, setIsManagerOpen] = useState(false);
   const { info, loading } = props.dashboard;
   const [filters, setFilters] = useState({
@@ -36,30 +35,41 @@ const Sites = (props) => {
       !info && (await props.getDashboardsData(""));
     }
 
-    props.getSitesList(filters);
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const newFilter = { page: 1, search: "" };
+    if (isReload || !compare(newFilter, filters)) {
+      props.getSitesList(filters);
+    }
   }, [isReload, filters]);
 
+  const compare = (a, b) => {
+    return JSON.stringify(a) === JSON.stringify(b);
+  };
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
   };
-  const handleChangeSearch = (postcode) => {
-    setSearch(postcode);
-    setFilters({ ...filters, search: postcode });
-  };
+  const handleChangeSearch = useCallback(
+    (postcode) => {
+      setSearch(postcode);
+      setFilters({ ...filters, search: postcode });
+    },
+    [search, filters]
+  );
 
-  const handleShowMap = () => {
+  const handleShowMap = useCallback(() => {
     setIsMapView(!isMapView);
-  };
+  }, [isMapView]);
 
-  const handleMangerModal = () => {
+  const handleMangerModal = useCallback(() => {
     setIsManagerOpen(true);
-  };
+  }, [isManagerOpen]);
 
-  const handleCreateJob = () => {
+  const handleCreateJob = useCallback(() => {
     setIsJobCreated(true);
-  };
-
+  }, [isJobCreated]);
 
   return (
     <>

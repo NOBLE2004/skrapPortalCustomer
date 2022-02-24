@@ -12,10 +12,11 @@ import LoadingModal from "../modals/LoadingModal/LoadingModal";
 import Pagination from "./pagination";
 import { downloadSite } from "../../assets/images";
 import FadeLoader from "react-spinners/FadeLoader";
-import Swal from "sweetalert2";
 import TrackDriverModal from "../modals/trackDriver/TrackDriverModal";
 import AcceptJobModal from "../modals/acceptJobModal/AcceptJobModal";
 import RejectJobModal from "../modals/rejectJobModal/RejectJobModal";
+import JobReorderModal from "../modals/reorderModal/JobReorderModal";
+import ExtendModal from "../modals/extendModal/ExtendModal";
 
 const JobsTable = ({
   data,
@@ -39,6 +40,7 @@ const JobsTable = ({
   const { openMenu, mouseX, mouseY, contextRow } = state;
   const [row, setRow] = useState({});
   const [reorder, setReorder] = useState(false);
+  const [extend, setExtends] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isLoading, setLoading] = useState(false);
   const [notice, setNotice] = React.useState(null);
@@ -393,6 +395,9 @@ const JobsTable = ({
     ],
     []
   );
+  const handleExtend = () => {
+    setExtends(true);
+  };
   return (
     <div>
       {exchange && (
@@ -412,19 +417,19 @@ const JobsTable = ({
         />
       )}
       {reorder && (
-        <LoadingModal
-          handleClose={() => setReorder(false)}
-          show={reorder}
-          handleRes={() => handleReorderResponse(row.job_id)}
-          noticeData={notice}
-          isLoading={isLoading}
-        ></LoadingModal>
-        // <JobReorderModal
-        //   closeModal={() => setReorder(!reorder)}
-        //   updateJobs={handleUpdateJobs}
-        //   row={row}
-        //   isfromJob={true}
-        // />
+        // <LoadingModal
+        //   handleClose={() => setReorder(false)}
+        //   show={reorder}
+        //   handleRes={() => handleReorderResponse(row.job_id)}
+        //   noticeData={notice}
+        //   isLoading={isLoading}
+        // ></LoadingModal>
+        <JobReorderModal
+          closeModal={() => setReorder(!reorder)}
+          updateJobs={handleUpdateJobs}
+          row={row}
+          isfromJob={true}
+        />
       )}
       {isJobAccepted && (
         <AcceptJobModal
@@ -436,6 +441,13 @@ const JobsTable = ({
         <RejectJobModal
           handleClose={() => setIsJobRejected(false)}
           jobdata={jobData}
+        />
+      )}
+      {extend && (
+        <ExtendModal
+          row={row}
+          closeModal={() => setExtends(false)}
+          updateJobs={handleUpdateJobs}
         />
       )}
       {/* <div className="xero-btn">
@@ -494,12 +506,14 @@ const JobsTable = ({
             : undefined
         }
       >
-        {((row.parent_id === 2 && row.appointment_status === 4) ||
-          (row.parent_id === 43 && row.service_id === 44)) && (
+        {row.parent_id === 2 && (
           <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
         )}
+        {row.parent_id === 43 && row.service_id === 44 && (
+          <MenuItem onClick={handleExtend}>Extend</MenuItem>
+        )}
         <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-        {((row.parent_id === 2 && row.appointment_status === 4) ||
+        {(row.parent_id === 2 ||
           (row.parent_id === 43 && row.service_id === 44)) && (
           <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>
         )}

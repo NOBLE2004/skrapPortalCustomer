@@ -206,14 +206,14 @@
   display: flex;
   gap: 20px;
   justify-content: space-between;
-  .service-cost-width{
+  .service-cost-width {
     width: 50%;
 
-    .MuiTextField-root{
+    .MuiTextField-root {
       width: 100%;
     }
   }
-  .haulage-cost-width{
+  .haulage-cost-width {
     width: 50%;
   }
 }
@@ -528,12 +528,19 @@
   font-size: 10px;
   margin-top: 5px;
 }
-.percentage{
-  .MuiInputBase-root{
+.percentage {
+  .MuiInputBase-root {
     height: 40px;
   }
 }
-.remove-btn{
+.remove-btn {
   width: 81px;
   cursor: pointer;
+}
+.error {
+  color: red;
+  font-family: "DM Sans";
+  font-style: normal;
+  font-size: 12px;
+  text-align: right;
 }
