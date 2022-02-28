@@ -71,6 +71,7 @@ export default function CreateJob({
     { waste_type_id: "", percentage: 0 },
   ]);
   const [serviceSelect, setServiceSelect] = useState({});
+  const [newAddressId, setNewAddressId] = useState("");
   const [subServiceSelect, setSubServiceSelect] = useState({});
   const [wasteList, setWasteList] = useState([]);
   const [newLoader, setNewLoader] = useState(false);
@@ -395,6 +396,20 @@ export default function CreateJob({
         .then((response) => response.json())
         .then((response) => {
           setState({ ...state, addressData: response.result });
+          if (response.result) {
+            sitesService
+              .siteByUdprn({ Site_Udprn: response.result.udprn })
+              .then((res) => {
+                if (Object.keys(res.data.result).length === 0) {
+                  setNewAddressId("");
+                } else {
+                  setNewAddressId(res.data?.result?.address_id);
+                }
+              })
+              .catch((err) => {
+                console.log("err");
+              });
+          }
           checkingError("addressData", response.result);
         });
     } else {
@@ -489,6 +504,10 @@ export default function CreateJob({
       addressData.site_id = siteId;
       delete addressData.address_id;
       delete addressData.user_id;
+    } else {
+      if (newAddressId) {
+        addressData.site_id = newAddressId;
+      }
     }
 
     let newdata = {
