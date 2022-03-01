@@ -11,8 +11,9 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const [isAllocate, setIsAllocate] = useState(false);
   const [siteData, setSiteData] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [addressId , setAddressId] = useState('');
+  const [addressId, setAddressId] = useState("");
   const [roleId, setRollId] = useState(0);
+  const [userData, setUserData] = useState({});
 
   const handleButtonClick = (e, props) => {
     e.stopPropagation();
@@ -28,15 +29,21 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   };
 
   useEffect(() => {
-    const userData = getUserDataFromLocalStorage();
-    setRollId(userData.role_id);
+    const data = getUserDataFromLocalStorage();
+    setUserData(data);
+    setRollId(data.role_id);
   }, []);
 
   const columns = useMemo(
     () => [
       {
         Header: "SiteName",
-        accessor: (d) => d.job_address ? d.job_address.slice(0, 22) :  d.address_from_address_data ? d.address_from_address_data.slice(0, 22) : '',
+        accessor: (d) =>
+          d.job_address
+            ? d.job_address.slice(0, 22)
+            : d.address_from_address_data
+            ? d.address_from_address_data.slice(0, 22)
+            : "",
         id: "site_name",
         disableSortBy: true,
         filter: "equals",
@@ -46,7 +53,12 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
       },
       {
         Header: "Address",
-        accessor: (d) => d.job_address ? d.job_address : d.address_from_address_data ? d.address_from_address_data : '',
+        accessor: (d) =>
+          d.job_address
+            ? d.job_address
+            : d.address_from_address_data
+            ? d.address_from_address_data
+            : "",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -75,7 +87,9 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         Cell: (props) => {
           return (
             <span>
-              {props.value ? "£" + parseFloat(props.value).toLocaleString() : "n/a"}
+              {props.value
+                ? "£" + parseFloat(props.value).toLocaleString()
+                : "n/a"}
             </span>
           );
         },
@@ -93,7 +107,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         id: "edit-id",
         Cell: ({ cell }) => (
           <>
-            {( roleId === 13 || roleId === 12) ? (
+            {roleId === 13 || roleId === 12 || userData.user_count <= 0 ? (
               ""
             ) : (
               <>
