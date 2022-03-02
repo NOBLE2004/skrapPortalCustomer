@@ -138,44 +138,20 @@ const Sites = (props) => {
           <Grid container className="sites-table-loader">
             {isLoading ? (
               <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+            ) : siteData && siteData.data.length > 0 ? (
+              <>
+                <Grid item md={12} sm={12}>
+                  <SitesTable
+                    data={siteData ? siteData?.data : []}
+                    pagination={siteData}
+                    handlePagination={handlePagination}
+                    reload={() => setIsReload(!isReload)}
+                    searchData={search}
+                  />
+                </Grid>
+              </>
             ) : (
-              siteData && (
-                <>
-                  <Grid item md={12} sm={12}>
-                    <SitesTable
-                      data={siteData ? siteData?.data : []}
-                      pagination={siteData}
-                      handlePagination={handlePagination}
-                      reload={() => setIsReload(!isReload)}
-                      searchData={search}
-                    />
-                  </Grid>
-                  {/* style={{ marginTop: "47px" }} */}
-                  {/* <Grid item md={2}>
-                    {siteData ? (
-                      siteData.data.map((site, index) => (
-                        <CommonJobStatus
-                          key={index}
-                          jobStatus={{
-                            status: "Sales By Site",
-                            price: site
-                              ? "£" +
-                                parseFloat(site.sales_by_site).toLocaleString()
-                              : "£0",
-                            statusName: "primary",
-                            width: "194px",
-                            height: "62px",
-                            fontSize: "sales",
-                            marginBottom: "16px",
-                          }}
-                        />
-                      ))
-                    ) : (
-                      <div className="site-error">{error}</div>
-                    )}
-                  </Grid>{" "} */}
-                </>
-              )
+              <div className="sitenotfound">Sites not found yet</div>
             )}
           </Grid>
         </>

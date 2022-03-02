@@ -553,7 +553,7 @@ export default function CreateJob({
               : service === 4
               ? `Portable Toilet(${portableweeks} ${subServiceSelect.service_name})`
               : subServiceSelect.service_name,
-          service_type: 2,
+          service_type: serviceSelect.service_id,
           skip_loc_type: service === 0 ? skip_loc : "0",
           skip_req_days: 0,
           skrapRev: "0",
@@ -567,6 +567,9 @@ export default function CreateJob({
       what3word: "",
       show_on_main_portal: 1,
     };
+    if (service === 3 || service === 4) {
+      newdata.services[0].quantity = service === 3 ? quantity : portableweeks;
+    }
 
     JobService.createOrder(newdata)
       .then((response) => {

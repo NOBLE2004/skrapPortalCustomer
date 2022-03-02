@@ -50,7 +50,7 @@ const MainJobs = (props) => {
   let userData = getUserDataFromLocalStorage();
 
   const handleJobCreated = useCallback(() => {
-    setIsJobCreated(true);
+    setIsJobCreated(!isJobCreated);
   }, [isJobCreated]);
 
   useEffect(() => {
@@ -73,9 +73,6 @@ const MainJobs = (props) => {
       address: "",
       search: "",
     };
-
-    console.log("filters", filters);
-    console.log("compare", compare(newFilter, filters));
     if (isJobCreated || !compare(newFilter, filters))
       props.getJobList(
         { user_id: userData.user_id, limit, orders_type: 4 },
