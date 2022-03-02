@@ -17,6 +17,7 @@ import AcceptJobModal from "../modals/acceptJobModal/AcceptJobModal";
 import RejectJobModal from "../modals/rejectJobModal/RejectJobModal";
 import JobReorderModal from "../modals/reorderModal/JobReorderModal";
 import ExtendModal from "../modals/extendModal/ExtendModal";
+import { getUserDataFromLocalStorage } from "../../services/utils";
 
 const JobsTable = ({
   data,
@@ -30,7 +31,9 @@ const JobsTable = ({
     mouseY: null,
     contextRow: null,
   });
+
   const [jobIds, setJobIds] = useState([]);
+  const [user, setUser] = useState({});
   const [exchange, setExchange] = useState(false);
   const [collection, setCollection] = useState(false);
   const [isJobAccepted, setIsJobAccepted] = useState(false);
@@ -112,6 +115,10 @@ const JobsTable = ({
     element.click();
     handleClose();
   };
+  useEffect(() => {
+    const userdata = getUserDataFromLocalStorage();
+    setUser(userdata.personal_detail);
+  }, []);
   // const handleInvoice = () => {
   //   if (jobIds.length > 0) {
   //     JobService.xeroInvoice({ jobs: jobIds })
@@ -544,7 +551,9 @@ const JobsTable = ({
           )}
         </>
       ) : (
-        <div className="jobs-not-found">Jobs Not Found Yet</div>
+        <div className="jobs-not-found">
+          {`Greetings ${user.first_name}! You currently have no active booking.`}
+        </div>
       )}
     </div>
   );
