@@ -13,7 +13,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const [userId, setUserId] = useState(null);
   const [addressId, setAddressId] = useState("");
   const [roleId, setRollId] = useState(0);
-  const [userData, setUserData] = useState({});
+  const [user, setUser] = useState("");
 
   const handleButtonClick = (e, props) => {
     e.stopPropagation();
@@ -30,7 +30,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
 
   useEffect(() => {
     const data = getUserDataFromLocalStorage();
-    setUserData(data);
+    setUser(data.user_count);
     setRollId(data.role_id);
   }, []);
 
@@ -107,16 +107,19 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         id: "edit-id",
         Cell: ({ cell }) => (
           <>
-            {roleId === 13 || roleId === 12 || userData.user_count <= 0 ? (
+            {roleId === 13 || roleId === 12 ? (
               ""
             ) : (
               <>
-                <button
-                  className="sites-header-btn"
-                  onClick={(e) => handleButtonClick(e, cell?.row?.original)}
-                >
-                  Assign
-                </button>
+                {user !== 0 && (
+                  <button
+                    className="sites-header-btn"
+                    onClick={(e) => handleButtonClick(e, cell?.row?.original)}
+                  >
+                    Assign
+                  </button>
+                )}
+
                 <button
                   className="sites-header-btn"
                   style={{ marginLeft: "2px" }}

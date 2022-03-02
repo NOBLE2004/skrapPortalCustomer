@@ -52,7 +52,7 @@ const SiteManagers = (props) => {
             </Grid>
           ))
         ) : (
-          <div className="site-error">{props.siteManager.error}</div>
+          <div className="site-error">Managers not found yet</div>
         )}
       </Grid>
       {isSiteBooked && (
