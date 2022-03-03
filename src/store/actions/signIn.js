@@ -4,14 +4,19 @@ import * as Constants from "../constants/constants";
 export const userlogin = (data) => {
   return (dispatch) => {
     dispatch(loginStart());
-   authService.login(data)
+    authService
+      .login(data)
       .then((response) => {
         if (Object.keys(response.data.result).length !== 0) {
           localStorage.setItem("isAuthenticated", true);
           localStorage.setItem("token", response.data.result.token);
           localStorage.setItem("user_id", response.data.result.user_id);
-          localStorage.setItem("c_d_storage", JSON.stringify(response.data.result));
+          localStorage.setItem(
+            "c_d_storage",
+            JSON.stringify(response.data.result)
+          );
           localStorage.setItem("role_id", response.data.result.role_id);
+          localStorage.setItem("user_count", response.data.result.user_count);
           dispatch(loginSuccess(response.data.result));
         } else {
           dispatch(loginFailure(response.data.description));
@@ -42,4 +47,3 @@ export const loginFailure = (error) => {
     payload: error,
   };
 };
-

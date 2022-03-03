@@ -30,7 +30,7 @@ const MainTickets = (props) => {
         />
       ) : (
         <div className="site-error" style={{ textAlign: "center" }}>
-          Tickets not found yet
+          No tickets are available
         </div>
       )}
     </div>

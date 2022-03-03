@@ -33,9 +33,11 @@ const SitesDetailPage = (props) => {
     isCreateManager: false,
     isJobCreated: false,
     addressData: "",
+    postCode: "",
   });
 
-  const { isLoadings, managerData, isJobCreated, addressData } = state;
+  const { isLoadings, managerData, isJobCreated, addressData, postCode } =
+    state;
 
   const handleChangeFilters = (filtersList) => {
     setFilters(filtersList);
@@ -58,6 +60,7 @@ const SitesDetailPage = (props) => {
           ...state,
           managerData: res.data,
           addressData: res.data?.address?.address,
+          postCode: res.data?.address?.postcode,
           isLoadings: false,
         });
       } catch (err) {
@@ -105,7 +108,8 @@ const SitesDetailPage = (props) => {
           reload={() => setIsReload(!isReload)}
           siteId={id}
           managerData={managerData}
-          siteAddress={addressData ? addressData : ''}
+          siteAddress={addressData ? addressData : ""}
+          postCode={postCode ? postCode : ""}
         />
       )}
       <Grid container className="manager-detail-page">
