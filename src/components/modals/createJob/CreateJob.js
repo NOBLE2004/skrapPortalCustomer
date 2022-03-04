@@ -56,6 +56,7 @@ export default function CreateJob({
   siteId,
   managerData,
   siteAddress,
+  postCode,
 }) {
   const history = useHistory();
   const divRef = useRef(null);
@@ -301,22 +302,41 @@ export default function CreateJob({
 
   //getsubservices
   useEffect(() => {
-    if (Object.keys(serviceSelect).length !== 0 && addressData.postcode) {
-      setNewLoader(true);
-      let data = {
-        post_code: addressData.postcode,
-        service_type: serviceSelect.service_id,
-        is_app: 0,
-      };
-      ServiceService.subServicelist(data).then((response) => {
-        if (Object.keys(response.data.result).length === 0) {
-          setSubServices([]);
-        } else {
-          setSubServices(response.data.result);
-        }
+    if (siteAddress) {
+      if (Object.keys(serviceSelect).length !== 0) {
+        setNewLoader(true);
+        let data = {
+          post_code: postCode,
+          service_type: serviceSelect.service_id,
+          is_app: 0,
+        };
+        ServiceService.subServicelist(data).then((response) => {
+          if (Object.keys(response.data.result).length === 0) {
+            setSubServices([]);
+          } else {
+            setSubServices(response.data.result);
+          }
+          setNewLoader(false);
+        });
+      }
+    } else {
+      if (Object.keys(serviceSelect).length !== 0 && addressData.postcode) {
+        setNewLoader(true);
+        let data = {
+          post_code: addressData.postcode,
+          service_type: serviceSelect.service_id,
+          is_app: 0,
+        };
+        ServiceService.subServicelist(data).then((response) => {
+          if (Object.keys(response.data.result).length === 0) {
+            setSubServices([]);
+          } else {
+            setSubServices(response.data.result);
+          }
 
-        setNewLoader(false);
-      });
+          setNewLoader(false);
+        });
+      }
     }
   }, [serviceSelect, addressData]);
 

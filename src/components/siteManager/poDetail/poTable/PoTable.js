@@ -37,7 +37,7 @@ const PoTable = ({ data, isManager }) => {
         },
       },
       {
-        Header: "Purcahse Order",
+        Header: "Purchase Order",
         accessor: "purchase_order",
         disableFilters: true,
         Cell: (props) => {
@@ -91,7 +91,7 @@ const PoTable = ({ data, isManager }) => {
         },
       },
       {
-        Header: "Purcahse Order",
+        Header: "Purchase Order",
         accessor: "purchase_order",
         disableFilters: true,
         Cell: (props) => {

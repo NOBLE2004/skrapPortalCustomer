@@ -111,7 +111,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
               ""
             ) : (
               <>
-                {user !== 0 && (
+                {localStorage.getItem("user_count") > 0 && (
                   <button
                     className="sites-header-btn"
                     onClick={(e) => handleButtonClick(e, cell?.row?.original)}
