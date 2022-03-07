@@ -24,7 +24,6 @@ import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import { createTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { useHistory } from "react-router-dom";
-import { OutlinedInput, InputAdornment } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -39,14 +38,18 @@ import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./createJob.scss";
 import { serviceList } from "../../utlils/constants";
 import sitesService from "../../../services/sites.service";
-import { MARKET_PAY_LIST } from "../../../environment";
+import { MARKET_PAY_LIST, MARKET_PAY_LIST1 } from "../../../environment";
 import CompanyDetail from "../companyDetail/CompanyDetail";
+import { marketInfoIcon } from "../../../assets/images";
+import jobService from "../../../services/job.service";
+import ToolTipCard from "../../commonComponent/toolTipCard/ToolTipCard";
 
 const materialTheme = createTheme({
   palette: {
     primary: colors.blue,
   },
 });
+
 export default function CreateJob({
   closeModal,
   setJobCreated,
@@ -71,12 +74,18 @@ export default function CreateJob({
   const [wasteType, setWastType] = useState([
     { waste_type_id: "", percentage: 0 },
   ]);
+  const [acountInfo, setAccountInfo] = useState({});
   const [serviceSelect, setServiceSelect] = useState({});
   const [newAddressId, setNewAddressId] = useState("");
   const [subServiceSelect, setSubServiceSelect] = useState({});
   const [wasteList, setWasteList] = useState([]);
   const [newLoader, setNewLoader] = useState(false);
+  const [showToolTip, setShowToolTip] = useState(false);
+  const [showToolTip1, setShowToolTip1] = useState(false);
   const [isCardAdded, setIsCardAdded] = useState(false);
+  const [paymentLoading, setPaymentloader] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentError, setPaymentError] = useState(false);
   const [credit, setCredit] = useState(0);
   const [roleId, setRoleId] = useState(0);
   const [errors, setError] = useState({
@@ -85,7 +94,6 @@ export default function CreateJob({
     subService: "",
     serviceCost: "",
     haulageCost: "",
-    paymentMethod: "",
     // totalCost: '',
     purchaseOrder: "",
     addressData: "",
@@ -100,7 +108,6 @@ export default function CreateJob({
     subService: "",
     serviceCost: "",
     haulageCost: 0,
-    paymentMethod: "",
     totalCost: 0,
     purchaseOrder: "",
     note: "",
@@ -145,7 +152,6 @@ export default function CreateJob({
     subService,
     serviceCost,
     haulageCost,
-    paymentMethod,
     totalCost,
     purchaseOrder,
     note,
@@ -202,9 +208,7 @@ export default function CreateJob({
         }
 
         break;
-      case "paymentMethod":
-        setState({ ...state, [name]: value });
-        break;
+
       case "selectedMarketPay":
         setState({ ...state, isCompanyModal: true, [name]: value });
         break;
@@ -272,6 +276,17 @@ export default function CreateJob({
 
   const handleAddWastType = () => {
     setWastType([...wasteType, { waste_type_id: "", percentage: 0 }]);
+  };
+
+  const handleToolTip = (ab) => {
+    if (ab === 0) {
+      setShowToolTip(!showToolTip);
+      setShowToolTip1(false);
+    }
+    if (ab === 1) {
+      setShowToolTip1(!showToolTip1);
+      setShowToolTip(false);
+    }
   };
 
   //getservices
@@ -447,7 +462,6 @@ export default function CreateJob({
       // case "customer":
       case "service":
       case "subService":
-      case "paymentMethod":
         errors[name] = value.length === 0 ? "Required" : "";
         break;
       // case "totalCost":
@@ -472,8 +486,7 @@ export default function CreateJob({
       // purchaseOrder === "" ||
       service === "" ||
       subService === "" ||
-      timeSlots.length === 0 ||
-      (roleId != 12 && paymentMethod === "")
+      timeSlots.length === 0
     ) {
       Object.keys(errors).forEach((error, index) => {
         checkingError(error, state[error]);
@@ -493,6 +506,11 @@ export default function CreateJob({
         setState({ ...state, isWeekError: true });
         return;
       }
+    }
+
+    if (paymentMethod === "") {
+      setPaymentError(true);
+      return;
     }
 
     setState({ ...state, isLoading: true });
@@ -645,6 +663,22 @@ export default function CreateJob({
   }, [paymentMethod, addNewCard, isCardAdded]);
 
   useEffect(() => {
+    if (paymentMethod === "10") {
+      setPaymentloader(true);
+      jobService
+        .checkBlocked({ user_id: localStorage.getItem("user_id") })
+        .then((res) => {
+          setAccountInfo(res.data.result);
+          setPaymentloader(false);
+        })
+        .catch((err) => {
+          console.log("err", err.message);
+          setPaymentloader(false);
+        });
+    }
+  }, [paymentMethod]);
+
+  useEffect(() => {
     let t_date = Date.parse(new Date());
     let d_date = Date.parse(startSelectedDate);
     setState({ ...state, time_slot_loading: true });
@@ -678,6 +712,10 @@ export default function CreateJob({
     }
   }, []);
 
+  const handlePaymentMethod = (e) => {
+    setPaymentMethod(e.target.value);
+    setPaymentError(false);
+  };
   const handleSaveNewCard = () => {
     setIsCardAdded(!isCardAdded);
   };
@@ -1026,16 +1064,14 @@ export default function CreateJob({
                         <Select
                           name="paymentMethod"
                           value={paymentMethod}
-                          onChange={handleChange}
+                          onChange={handlePaymentMethod}
                           label="Payment method"
-                          error={
-                            errors["paymentMethod"].length > 0 ? true : false
-                          }
+                          error={paymentError ? true : false}
                         >
                           <MenuItem value="">
                             <em>None</em>
                           </MenuItem>
-                          <MenuItem value="10">Market Pay</MenuItem>
+                          <MenuItem value="10">MarketPay</MenuItem>
                           <MenuItem value="0">Stripe</MenuItem>
                         </Select>
                       </FormControl>
@@ -1050,17 +1086,15 @@ export default function CreateJob({
                         <Select
                           name="paymentMethod"
                           value={paymentMethod}
-                          onChange={handleChange}
+                          onChange={handlePaymentMethod}
                           label="Payment method"
-                          error={
-                            errors["paymentMethod"].length > 0 ? true : false
-                          }
+                          error={paymentError ? true : false}
                         >
                           <MenuItem value="">
                             <em>None</em>
                           </MenuItem>
                           {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
-                          <MenuItem value="10">Market Pay</MenuItem>
+                          <MenuItem value="10">MarketPay</MenuItem>
                           <MenuItem value="0">Stripe</MenuItem>
                         </Select>
                       </FormControl>
@@ -1077,9 +1111,9 @@ export default function CreateJob({
                     <Select
                       name="paymentMethod"
                       value={paymentMethod}
-                      onChange={handleChange}
+                      onChange={handlePaymentMethod}
                       label="Payment method"
-                      error={errors["paymentMethod"].length > 0 ? true : false}
+                      error={paymentError ? true : false}
                     >
                       <MenuItem value="">
                         <em>None</em>
@@ -1107,74 +1141,123 @@ export default function CreateJob({
             </div>
           )}
 
-          {paymentMethod === "0" &&
-            paymentMethod !== "10" &&
-            paymentMethod !== "2" && (
-              <>
-                <RadioGroup
-                  name="selectedPaymentMethod"
-                  value={selectedPaymentMethod}
-                  onChange={handleChange}
+          {paymentMethod === "0" && (
+            <>
+              <RadioGroup
+                name="selectedPaymentMethod"
+                value={selectedPaymentMethod}
+                onChange={handleChange}
+              >
+                {paymentMethodList &&
+                  paymentMethodList.map((data, index) => {
+                    return (
+                      <FormControlLabel
+                        key={index}
+                        value={data.id}
+                        control={<Radio color="primary" />}
+                        label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
+                      />
+                    );
+                  })}
+              </RadioGroup>
+              {paymentMethodList && paymentMethodList.length > 0 ? (
+                <Button
+                  className="newCard"
+                  onClick={() => handleShowNewCard()}
+                  variant="contained"
                 >
-                  {paymentMethodList &&
-                    paymentMethodList.map((data, index) => {
-                      return (
-                        <FormControlLabel
-                          key={index}
-                          value={data.id}
-                          control={<Radio color="primary" />}
-                          label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
-                        />
-                      );
-                    })}
-                </RadioGroup>
-                {paymentMethodList && paymentMethodList.length > 0 ? (
-                  <Button
-                    className="newCard"
-                    onClick={() => handleShowNewCard()}
-                    variant="contained"
-                  >
-                    Add new card
-                  </Button>
-                ) : (
-                  <CardPayment
-                    user_id={localStorage.getItem("user_id")}
-                    handleSaveNewCard={() => handleSaveNewCard()}
-                    setOpen={() => setState({ ...state, addNewCard: false })}
-                  />
-                )}
-                {addNewCard && (
-                  <CardPayment
-                    user_id={localStorage.getItem("user_id")}
-                    handleSaveNewCard={() => handleSaveNewCard()}
-                    setOpen={() => setState({ ...state, addNewCard: false })}
-                  />
-                )}
-              </>
-            )}
+                  Add new card
+                </Button>
+              ) : (
+                <CardPayment
+                  user_id={localStorage.getItem("user_id")}
+                  handleSaveNewCard={() => handleSaveNewCard()}
+                  setOpen={() => setState({ ...state, addNewCard: false })}
+                />
+              )}
+              {addNewCard && (
+                <CardPayment
+                  user_id={localStorage.getItem("user_id")}
+                  handleSaveNewCard={() => handleSaveNewCard()}
+                  setOpen={() => setState({ ...state, addNewCard: false })}
+                />
+              )}
+            </>
+          )}
           <div>
-            {paymentMethod === "10" &&
-              paymentMethod !== "0" &&
-              paymentMethod !== "2" && (
-                <>
+            {paymentMethod === "10" && (
+              <>
+                {paymentLoading ? (
+                  <div className="payLoading">
+                    <CircularProgress />
+                  </div>
+                ) : (
                   <RadioGroup
                     name="selectedMarketPay"
                     value={selectedMarketPay}
                     onChange={handleChange}
                   >
-                    {MARKET_PAY_LIST.map((data, index) => {
-                      return (
-                        <FormControlLabel
-                          key={data.id}
-                          value={data.id}
-                          control={<Radio color="primary" />}
-                          label={`${data.title}`}
-                        />
-                      );
-                    })}
+                    {acountInfo && acountInfo.pay30_eofm
+                      ? MARKET_PAY_LIST.map((data, index) => {
+                          return (
+                            <>
+                              <div className="marketMain">
+                                <FormControlLabel
+                                  key={data.id}
+                                  value={data.id}
+                                  control={<Radio color="primary" />}
+                                  label={`${data.title}`}
+                                />
+
+                                <img
+                                  src={marketInfoIcon}
+                                  alt="market"
+                                  className="tool-img"
+                                  onClick={() => handleToolTip(index)}
+                                />
+                                {showToolTip && data.tooltip && (
+                                  <ToolTipCard data={data.tooltip} />
+                                )}
+                                {showToolTip1 && data.tooltip1 && (
+                                  <ToolTipCard data={data.tooltip1} />
+                                )}
+                              </div>
+                              {data.text && (
+                                <div className="remaining-balance">
+                                  {data.text} : $
+                                  {acountInfo.market_finance_balance -
+                                    totalCost}
+                                </div>
+                              )}
+                            </>
+                          );
+                        })
+                      : MARKET_PAY_LIST1.map((data, index) => {
+                          return (
+                            <div className="marketMain">
+                              <FormControlLabel
+                                key={data.id}
+                                value={data.id}
+                                control={<Radio color="primary" />}
+                                label={`${data.title}`}
+                              />
+
+                              <img
+                                src={marketInfoIcon}
+                                alt="market"
+                                className="tool-img"
+                                onClick={() => handleToolTip(index)}
+                              />
+                              {showToolTip && data.tooltip && (
+                                <ToolTipCard data={data.tooltip} />
+                              )}
+                            </div>
+                          );
+                        })}
                   </RadioGroup>
-                </>
-              )}
+                )}
+              </>
+            )}
           </div>
           {}
           <div>
