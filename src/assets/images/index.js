@@ -49,8 +49,8 @@ import envirementIcon from "./envirement.svg";
 import serviceIcon from "./service.svg";
 import supportIcon from "./support.svg";
 import appIcon from "./logo.svg";
-import showPasswordIcon from "./show_password.svg"
-import downloadSite from "./Downlaod.svg"
+import showPasswordIcon from "./show_password.svg";
+import downloadSite from "./Downlaod.svg";
 import craneIcon from "./crane.svg";
 import emailIcon from "./email.svg";
 import refreshIcon from "./refresh.svg";
@@ -60,6 +60,7 @@ import brickIcon from "./brick.svg";
 import bracketIcon from "./bracket.svg";
 import appleIcon from "./apple.svg";
 import chatIcon from "./chat.svg";
+import marketInfoIcon from "./market_info.svg";
 export {
   chatIcon,
   appleIcon,
@@ -123,4 +124,5 @@ export {
   downlaod,
   addCredits,
   deliveredMarker,
+  marketInfoIcon,
 };
