@@ -14,7 +14,7 @@ import { Button, MenuItem, FormControl, Select } from "@material-ui/core";
 import siteService from "../../../services/sites.service";
 import "./createmanager.scss";
 function CreateManager(props) {
-  const { handleClose } = props;
+  const { handleClose, updateManager } = props;
   const [value, setValue] = React.useState(12);
   const [radioPermission, setRadioPermission] = useState([]);
   const [state, setState] = useState({
@@ -173,7 +173,7 @@ function CreateManager(props) {
       last_name: lastname,
       device_type: 1,
       site_id: site,
-      role_id: value, 
+      role_id: value,
     };
     setState({ ...state, isLoading: true });
     siteService
@@ -188,7 +188,8 @@ function CreateManager(props) {
           isLoading: false,
         });
         setTimeout(() => {
-           handleClose();
+          handleClose();
+          updateManager();
         }, 2000);
       })
       .catch((err) => {
