@@ -41,7 +41,6 @@ import sitesService from "../../../services/sites.service";
 import { MARKET_PAY_LIST, MARKET_PAY_LIST1 } from "../../../environment";
 import CompanyDetail from "../companyDetail/CompanyDetail";
 import { marketInfoIcon } from "../../../assets/images";
-import jobService from "../../../services/job.service";
 import ToolTipCard from "../../commonComponent/toolTipCard/ToolTipCard";
 
 const materialTheme = createTheme({
@@ -74,6 +73,7 @@ export default function CreateJob({
   const [wasteType, setWastType] = useState([
     { waste_type_id: "", percentage: 0 },
   ]);
+  const [siteData, setSiteData] = useState({});
   const [acountInfo, setAccountInfo] = useState({});
   const [serviceSelect, setServiceSelect] = useState({});
   const [newAddressId, setNewAddressId] = useState("");
@@ -459,18 +459,11 @@ export default function CreateJob({
         errors[name] =
           Object.keys(value).length === 0 ? "Must have selected address" : "";
         break;
-      // case "customer":
       case "service":
       case "subService":
         errors[name] = value.length === 0 ? "Required" : "";
         break;
-      // case "totalCost":
-      // case "purchaseOrder":
-      //   errors[name] = value.length === 0 ? "Required" : "";
-      //   break;
-      // case "serviceCost":
-      //   console.log("serviceCost: ", value === null)
-      //   errors[name] = value.length === 0 ? "Required" : "";
+
       default:
         break;
     }
@@ -481,17 +474,25 @@ export default function CreateJob({
   };
   const confirmJob = (e) => {
     e.preventDefault();
-    if (
-      Object.keys(addressData).length === 0 ||
-      // purchaseOrder === "" ||
-      service === "" ||
-      subService === "" ||
-      timeSlots.length === 0
-    ) {
-      Object.keys(errors).forEach((error, index) => {
-        checkingError(error, state[error]);
-      });
-      return;
+    if (siteId) {
+      if (service === "" || subService === "" || timeSlots.length === 0) {
+        Object.keys(errors).forEach((error, index) => {
+          checkingError(error, state[error]);
+        });
+        return;
+      }
+    } else {
+      if (
+        Object.keys(addressData).length === 0 ||
+        service === "" ||
+        subService === "" ||
+        timeSlots.length === 0
+      ) {
+        Object.keys(errors).forEach((error, index) => {
+          checkingError(error, state[error]);
+        });
+        return;
+      }
     }
 
     if (service === 3) {
@@ -550,7 +551,7 @@ export default function CreateJob({
 
     let newdata = {
       acm_id: "",
-      address_data: addressData,
+      address_data: siteId ? siteData : addressData,
       card_id:
         roleId == 12 ? "" : paymentMethod === "0" ? selectedPaymentMethod : "",
       comments: note,
@@ -641,7 +642,6 @@ export default function CreateJob({
         }
       })
       .catch((err) => {
-        console.log("err", err);
         setState({
           ...state,
           isLoading: false,
@@ -665,8 +665,7 @@ export default function CreateJob({
   useEffect(() => {
     if (paymentMethod === "10") {
       setPaymentloader(true);
-      jobService
-        .checkBlocked({ user_id: localStorage.getItem("user_id") })
+      JobService.checkBlocked({ user_id: localStorage.getItem("user_id") })
         .then((res) => {
           setAccountInfo(res.data.result);
           setPaymentloader(false);
@@ -697,14 +696,12 @@ export default function CreateJob({
     JobService.getWasteTypes().then((response) => {
       setWasteList(response.data.result);
     });
-  }, []);
-
-  useEffect(() => {
     if (siteId) {
       sitesService
         .selectCurrentSite({ id: siteId })
         .then((res) => {
           setState({ ...state, addressData: res.data.Address_data });
+          setSiteData(res.data.Address_data);
         })
         .catch((err) => {
           console.log("err", err.message);
@@ -1184,7 +1181,7 @@ export default function CreateJob({
               )}
             </>
           )}
-          <div>
+          <div style={{ position: "relative" }}>
             {paymentMethod === "10" && (
               <>
                 {paymentLoading ? (

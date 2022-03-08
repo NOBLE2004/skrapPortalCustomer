@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDetail";
@@ -21,6 +21,10 @@ const SiteManagers = (props) => {
     }
     fetchData();
   }, []);
+
+  const handleManagerCreated = useCallback(() => {
+    setSiteBooked(!isSiteBooked);
+  }, [isSiteBooked]);
 
   useEffect(() => {
     if (isSiteBooked) {
@@ -56,7 +60,10 @@ const SiteManagers = (props) => {
         )}
       </Grid>
       {isSiteBooked && (
-        <CreateManager handleClose={() => setSiteBooked(!isSiteBooked)} />
+        <CreateManager
+          handleClose={() => setSiteBooked(!isSiteBooked)}
+          updateManager={handleManagerCreated}
+        />
       )}
       <Grid container spacing={5}>
         {props.siteManager.sites && props.siteManager.sites.length > 10 && (
