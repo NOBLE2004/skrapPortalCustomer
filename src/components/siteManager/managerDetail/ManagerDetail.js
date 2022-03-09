@@ -33,13 +33,13 @@ const ManagerDetail = (props) => {
             <img src={personImage} alt="person-img" />
             <div className="p-title">Action</div>
             <div className="profile-action">
-              <img src={editIcon} alt="person-img" />
+              <img src={editIcon} alt="person-img" onClick={handleEdit} />
               <div className="edit-title" onClick={handleEdit}>
                 Edit
               </div>
             </div>
             <div className="profile-action">
-              <img src={showIcon} alt="person-img" />
+              <img src={showIcon} alt="person-img" onClick={handleViewJob} />
               <div className="edit-title" onClick={handleViewJob}>
                 View Jobs
               </div>
