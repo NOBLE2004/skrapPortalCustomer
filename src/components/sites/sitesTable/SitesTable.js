@@ -12,7 +12,7 @@ const SitesTable = ({
     () => [
       {
         Header: "SiteName",
-        accessor: (d) => d.job_address.slice(0,22),
+        accessor: (d) => d?.job_address?.slice(0,22),
         id:"site_name",
         disableSortBy: true,
         filter: "equals",
