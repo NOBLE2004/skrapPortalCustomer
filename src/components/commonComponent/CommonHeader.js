@@ -46,7 +46,7 @@ const CommonHeader = ({
         {isSite && userData > 0 && (
           <>
             <button className="header-btn" onClick={handleBookJob}>
-              Assign to manager
+              Assign to Manager
             </button>
             <button className="header-btn" onClick={handleCreateJob}>
               Create Site

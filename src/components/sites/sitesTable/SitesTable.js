@@ -37,7 +37,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const columns = useMemo(
     () => [
       {
-        Header: "SiteName",
+        Header: "Site Name",
         accessor: (d) =>
           d.job_address
             ? d.job_address.slice(0, 22)

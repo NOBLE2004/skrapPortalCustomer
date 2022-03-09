@@ -74,7 +74,7 @@ const Sites = (props) => {
   return (
     <>
       <CommonHeader
-        bookSite={"Assign to manager"}
+        bookSite={"Assign to Manager"}
         handleShowMap={handleShowMap}
         isMap={isMapView}
         handleBookJob={handleMangerModal}

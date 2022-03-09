@@ -112,7 +112,7 @@ function AssignToManager(props) {
 
   return (
     <Dialog open={true} onClose={handleClose} className="booksitemodal">
-      <DialogTitle onClose={handleClose}> Assign to manager </DialogTitle>
+      <DialogTitle onClose={handleClose}> Assign to Manager </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
           <div className="customer-input-field">
