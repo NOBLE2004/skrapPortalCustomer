@@ -540,9 +540,9 @@ export default function CreateJob({
     const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
     const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
     if (siteId) {
-      addressData.site_id = siteId;
-      delete addressData.address_id;
-      delete addressData.user_id;
+      siteData.site_id = siteId;
+      delete siteData.address_id;
+      delete siteData.user_id;
     } else {
       if (newAddressId) {
         addressData.site_id = newAddressId;
