@@ -1221,9 +1221,10 @@ export default function CreateJob({
                               </div>
                               {data.text && (
                                 <div className="remaining-balance">
-                                  {data.text} : $
-                                  {acountInfo.market_finance_balance -
-                                    totalCost}
+                                  {`${data.text} : £ ${
+                                    acountInfo.market_finance_balance -
+                                    totalCost
+                                  }`}
                                 </div>
                               )}
                             </>

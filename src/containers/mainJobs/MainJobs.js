@@ -256,40 +256,40 @@ const MainJobs = (props) => {
                               setShowInfo(true);
                               setShowInfoIndex(index);
                             }}
-                          ></Marker>
+                          >
+                            {showInfo && showInfoIndex === index && (
+                              <InfoWindow
+                                position={{
+                                  lat:
+                                    selectedItem.destination_lat === 0
+                                      ? selectedItem.latitude
+                                      : Number(selectedItem.destination_lat),
+                                  lng:
+                                    selectedItem.destination_lng === 0
+                                      ? selectedItem.longitude
+                                      : Number(selectedItem.destination_lng),
+                                }}
+                              >
+                                <TipingCard
+                                  jobInfo={{
+                                    job_address: selectedItem.job_address,
+                                    jobStatus: status(
+                                      selectedItem.appointment_status
+                                    ),
+                                    site_manager_mobile_number:
+                                      selectedItem.site_contact_number !== null
+                                        ? selectedItem.site_contact_number
+                                        : selectedItem.mobile_number,
+                                  }}
+                                  gotoJobDetail={() =>
+                                    gotoJobDetail(selectedItem.job_id)
+                                  }
+                                />
+                              </InfoWindow>
+                            )}
+                          </Marker>
                         );
                       })}
-
-                      {showInfo && (
-                        <InfoWindow
-                          position={{
-                            lat:
-                              selectedItem.destination_lat === 0
-                                ? selectedItem.latitude
-                                : Number(selectedItem.destination_lat),
-                            lng:
-                              selectedItem.destination_lng === 0
-                                ? selectedItem.longitude
-                                : Number(selectedItem.destination_lng),
-                          }}
-                        >
-                          <TipingCard
-                            jobInfo={{
-                              job_address: selectedItem.job_address,
-                              jobStatus: status(
-                                selectedItem.appointment_status
-                              ),
-                              site_manager_mobile_number:
-                                selectedItem.site_contact_number !== null
-                                  ? selectedItem.site_contact_number
-                                  : selectedItem.mobile_number,
-                            }}
-                            gotoJobDetail={() =>
-                              gotoJobDetail(selectedItem.job_id)
-                            }
-                          />
-                        </InfoWindow>
-                      )}
 
                       {selectedItem &&
                         selectedItem.appointment_status === 2 && (

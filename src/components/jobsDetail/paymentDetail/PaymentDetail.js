@@ -49,7 +49,7 @@ const PaymentDetail = ({ job, updateJobs }) => {
             </span>
           )}
           <span onClick={downloadInvoice} className="bold-dsans-12-primary">
-            Download invoice
+            Download Invoice
           </span>
         </div>
       </div>

@@ -27,7 +27,7 @@ const JobDetail = ({ job }) => {
         <div className="info">
           <div className="designation">Deliver Date</div>
           <div className="personal-title">
-            {new Date(job?.job_start_time).toLocaleString().substring(0, 17)}
+            {new Date(job?.job_start_time).toLocaleString()}
           </div>
         </div>
       </div>
@@ -41,9 +41,7 @@ const JobDetail = ({ job }) => {
         </div>
         <div className="info">
           <div className="designation">Service</div>
-          <div className="personal-title">
-            {job?.service_name}
-          </div>
+          <div className="personal-title">{job?.service_name}</div>
         </div>
       </div>
 
@@ -59,9 +57,7 @@ const JobDetail = ({ job }) => {
         <div className="info">
           <div className="designation">Waste Type</div>
           <div className="personal-title">
-            {job?.job_waste?.length === 0 && (
-              <p className="item-value">n/a</p>
-            )}
+            {job?.job_waste?.length === 0 && <p className="item-value">n/a</p>}
             {(job?.job_waste || []).map((waste, index) => {
               if (index === 0) {
                 return (
@@ -75,13 +71,10 @@ const JobDetail = ({ job }) => {
         </div>
       </div>
       <div className="personal-info">
-      <div className="info">
+        <div className="info">
           <div className="designation">Site Address</div>
-          <div className="personal-title">
-            {job?.job_address}
-          </div>
+          <div className="personal-title">{job?.job_address}</div>
         </div>
-        
       </div>
     </Card>
   );
