@@ -405,7 +405,7 @@ const JobsTable = ({
     setExtends(true);
   };
   return (
-    <div>
+    <div className={data && data.length > 0 ? "" : "main-jobs-table"}>
       {exchange && (
         <CreateExchange
           closeModal={() => setExchange(!exchange)}
