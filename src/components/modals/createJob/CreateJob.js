@@ -88,6 +88,7 @@ export default function CreateJob({
   const [paymentError, setPaymentError] = useState(false);
   const [credit, setCredit] = useState(0);
   const [roleId, setRoleId] = useState(0);
+  const [addNewCard, setAddNewCard] = useState(false);
   const [errors, setError] = useState({
     customer: "",
     service: "",
@@ -116,7 +117,6 @@ export default function CreateJob({
     addressData: {},
     paymentMethodList: [],
     selectedPaymentMethod: "",
-    addNewCard: false,
     addCustomer: false,
     selectedTime: "12:00 PM - 05:00 PM",
     customerUserId: null,
@@ -160,7 +160,6 @@ export default function CreateJob({
     addressData,
     selectedPaymentMethod,
     paymentMethodList,
-    addNewCard,
     selectedTime,
     customerUserId,
     permitOption,
@@ -718,7 +717,7 @@ export default function CreateJob({
   };
 
   const handleShowNewCard = () => {
-    setState({ ...state, addNewCard: true });
+    setAddNewCard(true);
   };
   const DialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;
@@ -1169,14 +1168,14 @@ export default function CreateJob({
                 <CardPayment
                   user_id={localStorage.getItem("user_id")}
                   handleSaveNewCard={() => handleSaveNewCard()}
-                  setOpen={() => setState({ ...state, addNewCard: false })}
+                  setOpen={() => setAddNewCard(false)}
                 />
               )}
               {addNewCard && (
                 <CardPayment
                   user_id={localStorage.getItem("user_id")}
                   handleSaveNewCard={() => handleSaveNewCard()}
-                  setOpen={() => setState({ ...state, addNewCard: false })}
+                  setOpen={() => setAddNewCard(false)}
                 />
               )}
             </>

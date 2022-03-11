@@ -115,7 +115,9 @@ const SiteManagerTable = ({
         Header: "Booked",
         accessor: "job_date",
         disableFilters: true,
-        Cell: (props) => new Date(props.value).toLocaleDateString(),
+        Cell: (props) => {
+          return props.value;
+        },
       },
       {
         Header: "Delivery Date",
@@ -204,7 +206,9 @@ const SiteManagerTable = ({
         Header: "Booked",
         accessor: "job_date",
         disableFilters: true,
-        Cell: (props) => new Date(props.value).toLocaleDateString(),
+        Cell: (props) => {
+          return props.value;
+        },
       },
       {
         Header: "Delivery Date",
