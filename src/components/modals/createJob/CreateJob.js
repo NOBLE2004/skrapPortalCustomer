@@ -1212,10 +1212,16 @@ export default function CreateJob({
                                   onClick={() => handleToolTip(index)}
                                 />
                                 {showToolTip && data.tooltip && (
-                                  <ToolTipCard data={data.tooltip} />
+                                  <ToolTipCard
+                                    data={data.tooltip}
+                                    handleClose={() => setShowToolTip(false)}
+                                  />
                                 )}
                                 {showToolTip1 && data.tooltip1 && (
-                                  <ToolTipCard data={data.tooltip1} />
+                                  <ToolTipCard
+                                    data={data.tooltip1}
+                                    handleClose={() => setShowToolTip1(false)}
+                                  />
                                 )}
                               </div>
                               {data.text && (
