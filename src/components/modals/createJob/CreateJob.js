@@ -262,7 +262,9 @@ export default function CreateJob({
 
     checkingError(name, value);
   };
-
+  useEffect(()=>{
+    console.log(state);
+  }, [state])
   const handleTime = (time) => {
     setState({
       ...state,
@@ -516,7 +518,7 @@ export default function CreateJob({
 
     setState({ ...state, isLoading: true });
 
-    let currentDayOfMonth = startSelectedDate.getDate();
+    /*let currentDayOfMonth = startSelectedDate.getDate();
     let currentMonth = startSelectedDate.getMonth();
 
     if (currentDayOfMonth < 10) {
@@ -530,9 +532,9 @@ export default function CreateJob({
 
     const time = selectedTime && selectedTime.split("-");
     const startTime = time[0];
-    const endTime = time[1];
+    const endTime = time[1];*/
 
-    const newStartTime = startTime.trim().slice(0, 5);
+    /*const newStartTime = startTime.trim().slice(0, 5);
     const newEndTime = endTime.trim().slice(0, 5);
     const currentYear = startSelectedDate.getFullYear();
     const dateString =
@@ -576,7 +578,7 @@ export default function CreateJob({
           is_schedule: 0,
           job_address: `${addressData.line_1} ${addressData.line_2} ${addressData.district} ${addressData.county} ${addressData.postcode}`,
           job_area: "",
-          job_dates: [Date.parse(startSelectedDate)],
+          job_dates: [job_start_time],
           job_end_time: job_end_time,
           job_id: "",
           job_start_time: job_start_time,
@@ -1138,7 +1140,7 @@ export default function CreateJob({
             </div>
           )}
 
-          {paymentMethod === "0" && (
+          {paymentMethod == "0" && (
             <>
               <RadioGroup
                 name="selectedPaymentMethod"
