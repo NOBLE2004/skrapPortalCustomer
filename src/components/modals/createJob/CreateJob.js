@@ -88,6 +88,7 @@ export default function CreateJob({
   const [paymentError, setPaymentError] = useState(false);
   const [credit, setCredit] = useState(0);
   const [roleId, setRoleId] = useState(0);
+  const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [addNewCard, setAddNewCard] = useState(false);
   const [errors, setError] = useState({
     customer: "",
@@ -159,7 +160,6 @@ export default function CreateJob({
     notice,
     addressData,
     selectedPaymentMethod,
-    paymentMethodList,
     selectedTime,
     customerUserId,
     permitOption,
@@ -681,8 +681,6 @@ export default function CreateJob({
       }else{
         setState({
           ...state,
-          isPaymentLoading: false,
-          // @ts-ignore
           notice: {
             type: "error",
             text: ev.data.message,
@@ -695,7 +693,8 @@ export default function CreateJob({
   useEffect(() => {
     PaymentService.list({ user_id: localStorage.getItem("user_id") }).then(
         (response) => {
-          setState({ ...state, paymentMethodList: response.data.result });
+          // setState({ ...state, paymentMethodList: response.data.result });
+          setPaymentMethodList(response.data.result);
         }
     );
   }, [paymentMethod, addNewCard, isCardAdded]);
