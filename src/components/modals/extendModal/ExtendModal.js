@@ -173,6 +173,37 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
     setState({ ...state, addNewCard: true });
   };
 
+  useEffect(() => {
+    window.addEventListener(
+        "message",
+        function (ev) {
+          if (ev.data.code === 0) {
+            setState({
+              ...state,
+              isLoading: false,
+              notice: {
+                type: "success",
+                text: "Successfully Created Job!",
+              },
+            });
+            setTimeout(() => {
+              closeModal();
+              updateJobs();
+            }, 2000);
+          } else {
+            setState({
+              ...state,
+              notice: {
+                type: "error",
+                text: ev.data.message,
+              },
+            });
+          }
+        },
+        false
+    );
+  }, []);
+
   const handleCreate = (e) => {
     e.preventDefault();
     if (portableweeks < 2) {
@@ -198,20 +229,35 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
     setState({ ...state, isLoading: true });
     JobService.addExtention(data)
       .then((res) => {
-        console.log(res.data);
-
-        setState({
-          ...state,
-          isLoading: false,
-          notice: {
-            type: "success",
-            text: res.data.description,
-          },
-        });
-        setTimeout(() => {
-          closeModal();
-          updateJobs();
-        }, 2000);
+        if(res.data.code === 0){
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: res.data.description,
+            },
+          });
+          setTimeout(() => {
+            closeModal();
+            updateJobs();
+          }, 2000);
+        }else if(res.data.code === 11){
+          const iframe = document.createElement("iframe");
+          iframe.src = res.data.result.url;
+          iframe.width = "800";
+          iframe.height = "800";
+          // @ts-ignore
+          window.open(
+              res.data.result.url,
+              "Dynamic Popup",
+              "height=" +
+              iframe.height +
+              ", width=" +
+              iframe.width +
+              "scrollbars=auto, resizable=no, location=no, status=no"
+          );
+        }
       })
       .catch((err) => {
         setState({
