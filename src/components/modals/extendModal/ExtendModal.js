@@ -77,13 +77,13 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
   const [isPaymentError, setPaymentError] = useState(false);
   const [price, setPrice] = useState(0);
   const [userId, setUserId] = useState("");
+  const [paymentMethodList, setPaymentMethodList] = useState([]);
 
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
     portableweeks: service_name[service_name.indexOf("(") + 1],
     isWeekError: false,
-    paymentMethodList: [],
     selectedPaymentMethod: "",
     addNewCard: false,
     newCardData: null,
@@ -94,7 +94,6 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
     notice,
     portableweeks,
     isWeekError,
-    paymentMethodList,
     addNewCard,
     selectedPaymentMethod,
     newCardData,
@@ -136,7 +135,8 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
   useEffect(() => {
     PaymentService.list({ user_id: localStorage.getItem("user_id") }).then(
       (response) => {
-        setState({ ...state, paymentMethodList: response.data.result });
+        // setState({ ...state, paymentMethodList: response.data.result });
+        setPaymentMethodList(response.data.result);
       }
     );
   }, [paymentMethod, addNewCard]);
@@ -173,6 +173,37 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
     setState({ ...state, addNewCard: true });
   };
 
+  useEffect(() => {
+    window.addEventListener(
+        "message",
+        function (ev) {
+          if (ev.data.code === 0) {
+            setState({
+              ...state,
+              isLoading: false,
+              notice: {
+                type: "success",
+                text: "Successfully created extension!",
+              },
+            });
+            setTimeout(() => {
+              closeModal();
+              updateJobs();
+            }, 2000);
+          } else {
+            setState({
+              ...state,
+              notice: {
+                type: "error",
+                text: ev.data.message,
+              },
+            });
+          }
+        },
+        false
+    );
+  }, []);
+
   const handleCreate = (e) => {
     e.preventDefault();
     if (portableweeks < 2) {
@@ -198,20 +229,35 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
     setState({ ...state, isLoading: true });
     JobService.addExtention(data)
       .then((res) => {
-        console.log(res.data);
-
-        setState({
-          ...state,
-          isLoading: false,
-          notice: {
-            type: "success",
-            text: res.data.description,
-          },
-        });
-        setTimeout(() => {
-          closeModal();
-          updateJobs();
-        }, 2000);
+        if(res.data.code === 11){
+          const iframe = document.createElement("iframe");
+          iframe.src = res.data.result.url;
+          iframe.width = "800";
+          iframe.height = "800";
+          // @ts-ignore
+          window.open(
+              res.data.result.url,
+              "Dynamic Popup",
+              "height=" +
+              iframe.height +
+              ", width=" +
+              iframe.width +
+              "scrollbars=auto, resizable=no, location=no, status=no"
+          );
+        }else{
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: res.data.description,
+            },
+          });
+          setTimeout(() => {
+            closeModal();
+            updateJobs();
+          }, 2000);
+        }
       })
       .catch((err) => {
         setState({
