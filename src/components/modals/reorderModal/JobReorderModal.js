@@ -96,6 +96,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
   const [mData, setmData] = useState("");
   const [mPay, setMPay] = useState(false);
   const [comp_number, setComp_number] = useState("");
+  const [paymentMethodList, setPaymentMethodList] = useState([]);
 
   const [state, setState] = useState({
     notice: null,
@@ -104,7 +105,6 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
     selectedTime: "12:00 PM - 05:00 PM",
     addNewCard: "",
     selectedPaymentMethod: "",
-    paymentMethodList: [],
     selectedMarketPay: "",
     isCompanyModal: false,
   });
@@ -116,7 +116,6 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
     time_slot_loading,
     addNewCard,
     selectedPaymentMethod,
-    paymentMethodList,
     selectedMarketPay,
     isCompanyModal,
   } = state;
@@ -178,7 +177,8 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
   useEffect(() => {
     PaymentService.list({ user_id: localStorage.getItem("user_id") }).then(
       (response) => {
-        setState({ ...state, paymentMethodList: response.data.result });
+        // setState({ ...state, paymentMethodList: response.data.result });
+        setPaymentMethodList(response.data.result);
       }
     );
   }, [paymentMethod, addNewCard, isCardAdded]);
@@ -211,6 +211,42 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
         setState({ ...state, time_slot_loading: false });
       });
   }, [startSelectedDate]);
+
+  useEffect(() => {
+    window.addEventListener(
+        "message",
+        function (ev) {
+          if (ev.data.code === 0) {
+            setState({
+              ...state,
+              isLoading: false,
+              notice: {
+                type: "success",
+                text: "Successfully reordered!",
+              },
+            });
+            setTimeout(() => {
+              handleClose();
+              if (isfromJob) {
+                updateJobs();
+                history.push("/jobs");
+              } else {
+                updateJobs();
+              }
+            }, 2000);
+          } else {
+            setState({
+              ...state,
+              notice: {
+                type: "error",
+                text: ev.data.message,
+              },
+            });
+          }
+        },
+        false
+    );
+  }, []);
 
   const handleCreate = (e) => {
     e.preventDefault();
@@ -271,6 +307,21 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
               text: res.data.description,
             },
           });
+        }else if(res.data.code === 11){
+          const iframe = document.createElement("iframe");
+          iframe.src = res.data.result.url;
+          iframe.width = "800";
+          iframe.height = "800";
+          // @ts-ignore
+          window.open(
+              res.data.result.url,
+              "Dynamic Popup",
+              "height=" +
+              iframe.height +
+              ", width=" +
+              iframe.width +
+              "scrollbars=auto, resizable=no, location=no, status=no"
+          );
         } else {
           setState({
             notice: {
