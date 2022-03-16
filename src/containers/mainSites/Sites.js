@@ -39,17 +39,17 @@ const Sites = (props) => {
   }, []);
 
   useEffect(() => {
-    const newFilter = { page: 1, search: "" };
+    const newFilter = { page: null, search: "" };
     if (isReload || !compare(newFilter, filters)) {
       props.getSitesList(filters);
     }
-  }, [isReload, filters]);
+  }, [filters, isReload]);
 
   const compare = (a, b) => {
     return JSON.stringify(a) === JSON.stringify(b);
   };
   const handlePagination = (page) => {
-    setFilters({ ...filters, page: page });
+    setFilters({ ...filters, page });
   };
   const handleChangeSearch = useCallback(
     (postcode) => {

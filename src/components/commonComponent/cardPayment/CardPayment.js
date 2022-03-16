@@ -131,7 +131,7 @@ export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
           },
         });
         setTimeout(() => {
-          setOpen(false);
+          setOpen();
           handleSaveNewCard();
         }, 2000);
       })
