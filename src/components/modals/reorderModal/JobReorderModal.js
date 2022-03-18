@@ -96,13 +96,13 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
   const [mData, setmData] = useState("");
   const [mPay, setMPay] = useState(false);
   const [comp_number, setComp_number] = useState("");
+  const [addNewCard, setAddNewCard] = useState(false);
 
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
     time_slot_loading: false,
     selectedTime: "12:00 PM - 05:00 PM",
-    addNewCard: "",
     selectedPaymentMethod: "",
     paymentMethodList: [],
     selectedMarketPay: "",
@@ -114,7 +114,6 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
     notice,
     selectedTime,
     time_slot_loading,
-    addNewCard,
     selectedPaymentMethod,
     paymentMethodList,
     selectedMarketPay,
@@ -152,7 +151,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
   };
 
   const handleShowNewCard = () => {
-    setState({ ...state, addNewCard: true });
+    setAddNewCard(true);
   };
 
   const handleToolTip = (ab) => {
@@ -471,14 +470,14 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
                   <CardPayment
                     user_id={localStorage.getItem("user_id")}
                     handleSaveNewCard={() => handleSaveNewCard()}
-                    setOpen={() => setState({ ...state, addNewCard: false })}
+                    setOpen={() => setAddNewCard(false)}
                   />
                 )}
                 {addNewCard && (
                   <CardPayment
                     user_id={localStorage.getItem("user_id")}
                     handleSaveNewCard={() => handleSaveNewCard()}
-                    setOpen={() => setState({ ...state, addNewCard: false })}
+                    setOpen={() => setAddNewCard(false)}
                   />
                 )}
               </>
