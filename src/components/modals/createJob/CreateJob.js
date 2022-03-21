@@ -580,10 +580,8 @@ export default function CreateJob({
           job_id: "",
           job_start_time: job_start_time,
           permit_cost: 0,
-          service_cost:
-            (service === 3) | (service === 4)
-              ? totalCost
-              : subServiceSelect.price,
+          service_cost: subServiceSelect.price,
+          haulage: subServiceSelect.haulage,
           service_id: subServiceSelect.sub_service_id,
           service_name:
             service === 3
