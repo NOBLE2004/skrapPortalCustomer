@@ -134,6 +134,7 @@ export default function CreateJob({
     isWeekError: false,
     selectedMarketPay: "",
     isCompanyModal: false,
+    job_documents: []
   });
   const styles = (theme) => ({
     root: {
@@ -177,6 +178,9 @@ export default function CreateJob({
     isCompanyModal,
   } = state;
 
+  const handleFileUpload = (event) => {
+    state.job_documents = Array.from(event.target.files);   
+  }
   const handleChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
@@ -610,23 +614,72 @@ export default function CreateJob({
     JobService.createOrder(newdata)
       .then((response) => {
         if (response.data.code === 0) {
-          setState({
-            ...state,
-            isLoading: false,
-            notice: {
-              type: "success",
-              text: "Successfully Created Job!",
-            },
-          });
-          scrollToBottom();
-          setTimeout(() => {
-            closeModal();
-            if (sites) {
-              reload();
-            } else {
-              handleJobCreated();
-            }
-          }, 2000);
+          if(Object.keys(response.data.result).length != 0 && response.data.result.jobs.length > 0 && response.data.result.jobs[0].job_id != undefined){
+            let fd = new FormData()
+            let files = state.job_documents;
+            files.forEach((image_file) => {
+              fd.append('files[]', image_file);
+            });
+            fd.append("job_id", response.data.result.jobs[0].job_id);
+
+            JobService.updateOrderFiles(fd)
+                .then((response) => {
+                    scrollToBottom();
+                    setState({
+                      ...state,
+                      isLoading: false,
+                      notice: {
+                        type: "success",
+                        text: "Successfully Created Job!",
+                      },
+                    });
+                    setTimeout(() => {
+                    closeModal();
+                    if (sites) {
+                      reload();
+                    } else {
+                      handleJobCreated();
+                    }
+                  }, 2000);
+                })
+                .catch((err) => {
+                  scrollToBottom();
+                   setState({
+                    ...state,
+                    isLoading: false,
+                    notice: {
+                      type: "success",
+                      text: "Successfully Created Job!",
+                    },
+                  });
+                  setTimeout(() => {
+                    closeModal();
+                    if (sites) {
+                      reload();
+                    } else {
+                      handleJobCreated();
+                    }
+                  }, 2000);
+                });
+          }
+
+          // setState({
+          //   ...state,
+          //   isLoading: false,
+          //   notice: {
+          //     type: "success",
+          //     text: "Successfully Created Job!",
+          //   },
+          // });
+          // scrollToBottom();
+          // setTimeout(() => {
+          //   closeModal();
+          //   if (sites) {
+          //     reload();
+          //   } else {
+          //     handleJobCreated();
+          //   }
+          // }, 2000);
         } else if (response.data.code === 11) {
           const iframe = document.createElement("iframe");
           iframe.src = response.data.result.url;
@@ -1324,6 +1377,10 @@ export default function CreateJob({
               size="small"
               disabled={siteId && po ? true : false}
             />
+          </div>
+          <div>
+            <p>Attach documents </p>
+              <input name="job_documents" multiple type="file" onChange={handleFileUpload} />
           </div>
           <div className="note">
             <p>Notes</p>
