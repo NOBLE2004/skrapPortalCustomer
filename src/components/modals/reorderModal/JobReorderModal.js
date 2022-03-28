@@ -134,12 +134,18 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
   const handlePaymentMethod = (e) => {
     setPaymentMethod(e.target.value);
     setPaymentError(false);
+    setState({ ...state, notice: null });
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "selectedMarketPay") {
-      setState({ ...state, [name]: value, isCompanyModal: true });
+      setState({
+        ...state,
+        [name]: value,
+        isCompanyModal: true,
+        notice: false,
+      });
     } else {
       setState({ ...state, [name]: value });
     }
