@@ -33,6 +33,8 @@ class JobService extends HttpService {
   addExtention = (data) => this.post("addExtension", data);
 
   checkBlocked = (data) => this.post("checkIfBlocked", data);
+
+  updateOrderFiles = (data) => this.post(`uploadOrderFiles`, data);
 }
 
 export default new JobService();
