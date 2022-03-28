@@ -69,10 +69,13 @@ const AllocatePoModal = (props) => {
   };
   const userData = getUserDataFromLocalStorage();
   const [serviceType, setServiceType] = useState([
-    { user_id: userId ? userId : userData.user_id, service_id: "", quantity: 0 },
+    {
+      user_id: userId ? userId : userData.user_id,
+      service_id: "",
+      quantity: 0,
+    },
   ]);
-  const { notice, isLoading, subServices, po, isServiceEmpty } =
-    state;
+  const { notice, isLoading, subServices, po, isServiceEmpty } = state;
 
   useEffect(() => {
     sitesService
@@ -89,7 +92,11 @@ const AllocatePoModal = (props) => {
     const userData = getUserDataFromLocalStorage();
     setServiceType([
       ...serviceType,
-      { user_id: userId ? userId : userData.user_id, service_id: "", quantity: 0 },
+      {
+        user_id: userId ? userId : userData.user_id,
+        service_id: "",
+        quantity: 0,
+      },
     ]);
   };
 
@@ -139,7 +146,6 @@ const AllocatePoModal = (props) => {
       setState({ ...state, isServiceEmpty: true });
       return;
     }
-  
     setState({ ...state, isLoading: true });
     const data = {
       services: serviceType,
@@ -147,7 +153,6 @@ const AllocatePoModal = (props) => {
       site_id: addressId,
     };
 
-    
     sitesService
       .purchaseOrder(data)
       .then((res) => {

@@ -82,12 +82,25 @@ const Reports = (props) => {
     });
   };
 
+  const handleReset = () => {
+    setState({
+      ...state,
+      report: "",
+      site: "",
+      show: false,
+      isReportGenerated: false,
+    });
+  };
+
   let lastCalculatedReport = null;
   if (report === "Site_movements") {
-    lastCalculatedReport = reports && reports.length > 0 ? `£${reports.slice(-1)[0].transaction_cost}` : "n/a";
-  }
-  else if (report === "Carbon_footprint") {
-    lastCalculatedReport = reports && reports.length > 0 && reports.slice(-1)[0].WTN_Number;
+    lastCalculatedReport =
+      reports && reports.length > 0
+        ? `£${reports.slice(-1)[0].transaction_cost}`
+        : "n/a";
+  } else if (report === "Carbon_footprint") {
+    lastCalculatedReport =
+      reports && reports.length > 0 && reports.slice(-1)[0].WTN_Number;
   }
 
   return (
@@ -166,21 +179,27 @@ const Reports = (props) => {
       </div>
       <div className="download-reports">
         {reports && reports.length > 0 && !checkVisibility(state) && show ? (
-          <DownLoadCSV rdata={reports} />
+          <div className="actions">
+            <DownLoadCSV rdata={reports} />
+            <button className="reset-btn" onClick={handleReset}>
+              Reset
+            </button>
+          </div>
         ) : (
           show && error && <div>No Match Found!</div>
         )}
       </div>
-      {reports && reports.length > 0 && !checkVisibility(state) && show && <Grid container className="sites-table-loader">
-        <Grid item md={12}>
-          <ReportTable
-            data={reports ? reports.slice(0, -1) : []}
-            lastCalculatedReport={lastCalculatedReport}
-            reportType={report}
-          />
+      {reports && reports.length > 0 && !checkVisibility(state) && show && (
+        <Grid container className="sites-table-loader">
+          <Grid item md={12}>
+            <ReportTable
+              data={reports ? reports.slice(0, -1) : []}
+              lastCalculatedReport={lastCalculatedReport}
+              reportType={report}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-      }
+      )}
     </div>
   );
 };

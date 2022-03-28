@@ -96,6 +96,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
   const [mData, setmData] = useState("");
   const [mPay, setMPay] = useState(false);
   const [comp_number, setComp_number] = useState("");
+  const [addNewCard, setAddNewCard] = useState(false);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
 
   const [state, setState] = useState({
@@ -103,7 +104,6 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
     isLoading: false,
     time_slot_loading: false,
     selectedTime: "12:00 PM - 05:00 PM",
-    addNewCard: "",
     selectedPaymentMethod: "",
     selectedMarketPay: "",
     isCompanyModal: false,
@@ -114,7 +114,6 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
     notice,
     selectedTime,
     time_slot_loading,
-    addNewCard,
     selectedPaymentMethod,
     selectedMarketPay,
     isCompanyModal,
@@ -151,7 +150,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
   };
 
   const handleShowNewCard = () => {
-    setState({ ...state, addNewCard: true });
+    setAddNewCard(true);
   };
 
   const handleToolTip = (ab) => {
@@ -214,37 +213,37 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
 
   useEffect(() => {
     window.addEventListener(
-        "message",
-        function (ev) {
-          if (ev.data.code === 0) {
-            setState({
-              ...state,
-              isLoading: false,
-              notice: {
-                type: "success",
-                text: "Successfully reordered!",
-              },
-            });
-            setTimeout(() => {
-              handleClose();
-              if (isfromJob) {
-                updateJobs();
-                history.push("/jobs");
-              } else {
-                updateJobs();
-              }
-            }, 2000);
-          } else {
-            setState({
-              ...state,
-              notice: {
-                type: "error",
-                text: ev.data.message,
-              },
-            });
-          }
-        },
-        false
+      "message",
+      function (ev) {
+        if (ev.data.code === 0) {
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: "Successfully reordered!",
+            },
+          });
+          setTimeout(() => {
+            handleClose();
+            if (isfromJob) {
+              updateJobs();
+              history.push("/jobs");
+            } else {
+              updateJobs();
+            }
+          }, 2000);
+        } else {
+          setState({
+            ...state,
+            notice: {
+              type: "error",
+              text: ev.data.message,
+            },
+          });
+        }
+      },
+      false
     );
   }, []);
 
@@ -307,16 +306,16 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
               text: res.data.description,
             },
           });
-        }else if(res.data.code === 11){
+        } else if (res.data.code === 11) {
           const iframe = document.createElement("iframe");
           iframe.src = res.data.result.url;
           iframe.width = "800";
           iframe.height = "800";
           // @ts-ignore
           window.open(
-              res.data.result.url,
-              "Dynamic Popup",
-              "height=" +
+            res.data.result.url,
+            "Dynamic Popup",
+            "height=" +
               iframe.height +
               ", width=" +
               iframe.width +
@@ -522,14 +521,14 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
                   <CardPayment
                     user_id={localStorage.getItem("user_id")}
                     handleSaveNewCard={() => handleSaveNewCard()}
-                    setOpen={() => setState({ ...state, addNewCard: false })}
+                    setOpen={() => setAddNewCard(false)}
                   />
                 )}
                 {addNewCard && (
                   <CardPayment
                     user_id={localStorage.getItem("user_id")}
                     handleSaveNewCard={() => handleSaveNewCard()}
-                    setOpen={() => setState({ ...state, addNewCard: false })}
+                    setOpen={() => setAddNewCard(false)}
                   />
                 )}
               </>

@@ -818,7 +818,7 @@ export default function CreateJob({
   };
 
   const handleShowNewCard = () => {
-    setAddNewCard(true);
+    setAddNewCard(!addNewCard);
   };
   const DialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;

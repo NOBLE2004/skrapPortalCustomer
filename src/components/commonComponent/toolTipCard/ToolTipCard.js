@@ -6,10 +6,13 @@ import { IconButton, makeStyles } from "@material-ui/core";
 const styles = makeStyles((theme) => ({
   closeButton: {
     position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
+    right: "12px",
+    top: "5px",
     color: theme.palette.grey[500],
     zIndex: 100,
+    marginRight: "5px",
+    width: "10px",
+    height: "10px",
   },
 }));
 
