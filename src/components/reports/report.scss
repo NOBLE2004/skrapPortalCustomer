@@ -46,4 +46,10 @@
     width: 192px;
     border-radius: 5px;
   }
+  .actions {
+    display: flex;
+    .reset-btn {
+      margin-left: 20px;
+    }
+  }
 }

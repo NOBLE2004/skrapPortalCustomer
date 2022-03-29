@@ -47,6 +47,9 @@
       width: 20%;
     }
   }
+  .filter-option::placeholder {
+    color: #52a9dd;
+  }
   .filter-buttons {
     margin-right: 10px;
     span {
@@ -59,10 +62,10 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
-    
+
     @media only screen and (max-width: 500px) {
-       flex-wrap: wrap;
-       justify-content: start;
+      flex-wrap: wrap;
+      justify-content: start;
     }
   }
   .MuiInput-underline:before {

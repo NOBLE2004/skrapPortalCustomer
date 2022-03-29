@@ -1,11 +1,39 @@
 import React from "react";
 import "./toolTipCard.scss";
+import CloseIcon from "@material-ui/icons/Close";
+import { IconButton, makeStyles } from "@material-ui/core";
 
-const ToolTipCard = ({ data }) => {
+const styles = makeStyles((theme) => ({
+  closeButton: {
+    position: "absolute",
+    right: "12px",
+    top: "5px",
+    color: theme.palette.grey[500],
+    zIndex: 100,
+    marginRight: "5px",
+    width: "10px",
+    height: "10px",
+  },
+}));
+
+const ToolTipCard = ({ data, handleClose }) => {
+  const classes = styles();
   return (
-    <div className="tool-cardMain">
-      {data}{" "}
-      <a href="https://marketfinance.com/skrap-marketpay">MarketFinance</a>
+    <div className="tooltip">
+      <div className="closeIcon">
+        <IconButton
+          aria-label="close"
+          className={classes.closeButton}
+          onClick={handleClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      </div>
+
+      <div className="tool-cardMain">
+        {data}
+        <a href="https://marketfinance.com/skrap-marketpay">MarketFinance</a>
+      </div>
     </div>
   );
 };

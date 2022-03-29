@@ -21,6 +21,19 @@ import { colors } from "@material-ui/core";
 import PaymentService from "../../../services/payment.service";
 import { ThemeProvider } from "@material-ui/styles";
 import { createTheme } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import CardPayment from "../../commonComponent/cardPayment/CardPayment";
+import { MARKET_PAY_LIST, MARKET_PAY_LIST1 } from "../../../environment";
+import ToolTipCard from "../../commonComponent/toolTipCard/ToolTipCard";
+import { marketInfoIcon } from "../../../assets/images";
+import { getUserDataFromLocalStorage } from "../../../services/utils";
+import CompanyDetail from "../companyDetail/CompanyDetail";
 import "../requestCollection/requestCollection.scss";
 
 const styles = (theme) => ({
@@ -65,19 +78,46 @@ const materialTheme = createTheme({
   },
 });
 function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
-  const { job_id, payment_type } = row;
+  const { job_id } = row;
   let history = useHistory();
+
+  const [acountInfo, setAccountInfo] = useState({});
+  const [paymentLoading, setPaymentloader] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentError, setPaymentError] = useState(false);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
+  const [isCardAdded, setIsCardAdded] = useState(false);
   const [isTimeSelected, setIsTimeSelected] = useState(false);
+  const [showToolTip, setShowToolTip] = useState(false);
+  const [showToolTip1, setShowToolTip1] = useState(false);
+  const [credit, setCredit] = useState(0);
+  const [roleId, setRoleId] = useState(0);
+  const [mData, setmData] = useState("");
+  const [mPay, setMPay] = useState(false);
+  const [comp_number, setComp_number] = useState("");
+  const [addNewCard, setAddNewCard] = useState(false);
+  const [paymentMethodList, setPaymentMethodList] = useState([]);
+
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
     time_slot_loading: false,
     selectedTime: "12:00 PM - 05:00 PM",
+    selectedPaymentMethod: "",
+    selectedMarketPay: "",
+    isCompanyModal: false,
   });
 
-  const { isLoading, notice, selectedTime, time_slot_loading } = state;
+  const {
+    isLoading,
+    notice,
+    selectedTime,
+    time_slot_loading,
+    selectedPaymentMethod,
+    selectedMarketPay,
+    isCompanyModal,
+  } = state;
 
   const handleTime = (time) => {
     setState({
@@ -90,6 +130,78 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
   const handleStartDateChange = (date) => {
     setStartSelectedDate(date);
   };
+
+  const handlePaymentMethod = (e) => {
+    setPaymentMethod(e.target.value);
+    setPaymentError(false);
+    setState({ ...state, notice: null });
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    if (name === "selectedMarketPay") {
+      setState({
+        ...state,
+        [name]: value,
+        isCompanyModal: true,
+        notice: false,
+      });
+    } else {
+      setState({ ...state, [name]: value });
+    }
+  };
+
+  const handleSaveNewCard = () => {
+    setIsCardAdded(!isCardAdded);
+  };
+
+  const handleShowNewCard = () => {
+    setAddNewCard(true);
+  };
+
+  const handleToolTip = (ab) => {
+    if (ab === 0) {
+      setShowToolTip(!showToolTip);
+      setShowToolTip1(false);
+    }
+    if (ab === 1) {
+      setShowToolTip1(!showToolTip1);
+      setShowToolTip(false);
+    }
+  };
+
+  useEffect(() => {
+    const userCredit = getUserDataFromLocalStorage();
+    setRoleId(userCredit.role_id);
+    setCredit(userCredit.credit_balance);
+    setMPay(userCredit.market_pay);
+    setmData(userCredit.market_finance_balance);
+    setComp_number(userCredit.company_reg_number);
+  }, []);
+
+  useEffect(() => {
+    PaymentService.list({ user_id: localStorage.getItem("user_id") }).then(
+      (response) => {
+        // setState({ ...state, paymentMethodList: response.data.result });
+        setPaymentMethodList(response.data.result);
+      }
+    );
+  }, [paymentMethod, addNewCard, isCardAdded]);
+
+  useEffect(() => {
+    if (paymentMethod === "10") {
+      setPaymentloader(true);
+      JobService.checkBlocked({ user_id: localStorage.getItem("user_id") })
+        .then((res) => {
+          setAccountInfo(res.data.result);
+          setPaymentloader(false);
+        })
+        .catch((err) => {
+          console.log("err", err.message);
+          setPaymentloader(false);
+        });
+    }
+  }, [paymentMethod]);
 
   useEffect(() => {
     let t_date = Date.parse(new Date());
@@ -105,6 +217,42 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
       });
   }, [startSelectedDate]);
 
+  useEffect(() => {
+    window.addEventListener(
+      "message",
+      function (ev) {
+        if (ev.data.code === 0) {
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: "Successfully reordered!",
+            },
+          });
+          setTimeout(() => {
+            handleClose();
+            if (isfromJob) {
+              updateJobs();
+              history.push("/jobs");
+            } else {
+              updateJobs();
+            }
+          }, 2000);
+        } else {
+          setState({
+            ...state,
+            notice: {
+              type: "error",
+              text: ev.data.message,
+            },
+          });
+        }
+      },
+      false
+    );
+  }, []);
+
   const handleCreate = (e) => {
     e.preventDefault();
 
@@ -113,6 +261,10 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
     }
     if (!selectedTime) {
       setIsTimeSelected(true);
+      return;
+    }
+    if (paymentMethod === "") {
+      setPaymentError(true);
       return;
     }
     setState({ ...state, isLoading: true });
@@ -130,8 +282,6 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
     }
 
     const time = selectedTime && selectedTime.split("-");
-    console.log("selectedTime", selectedTime);
-    console.log("time", time);
     const startTime = time[0];
     const endTime = time[1];
 
@@ -145,10 +295,12 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
 
     const data = {
       job_id: job_id,
-      payment_type: payment_type,
+      payment_type: paymentMethod,
       job_start_time,
       job_end_time,
       job_dates: Date.parse(startSelectedDate),
+      card_id: paymentMethod === "0" ? selectedPaymentMethod : "",
+      market_pay_type: paymentMethod === "10" ? selectedMarketPay : "",
     };
 
     JobService.copy(data)
@@ -160,6 +312,21 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
               text: res.data.description,
             },
           });
+        } else if (res.data.code === 11) {
+          const iframe = document.createElement("iframe");
+          iframe.src = res.data.result.url;
+          iframe.width = "800";
+          iframe.height = "800";
+          // @ts-ignore
+          window.open(
+            res.data.result.url,
+            "Dynamic Popup",
+            "height=" +
+              iframe.height +
+              ", width=" +
+              iframe.width +
+              "scrollbars=auto, resizable=no, location=no, status=no"
+          );
         } else {
           setState({
             notice: {
@@ -249,7 +416,209 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
               <div className="error">Choose Time slot from above</div>
             )}
           </MuiPickersUtilsProvider>
+          <div>
+            {roleId != 12 && (
+              <div className="paymentWp">
+                {mPay ? (
+                  <>
+                    {mData ? (
+                      <div className="payment">
+                        <p>Payment Method</p>
+                        <FormControl variant="outlined" margin="dense">
+                          <InputLabel id="demo-simple-select-outlined-label">
+                            Payment method
+                          </InputLabel>
+                          <Select
+                            name="paymentMethod"
+                            value={paymentMethod}
+                            onChange={handlePaymentMethod}
+                            label="Payment method"
+                            error={paymentError ? true : false}
+                          >
+                            <MenuItem value="">
+                              <em>None</em>
+                            </MenuItem>
+                            <MenuItem value="10">MarketPay</MenuItem>
+                            <MenuItem value="0">Stripe</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div>
+                    ) : (
+                      <div className="payment">
+                        <p>Payment Method</p>
+                        <FormControl variant="outlined" margin="dense">
+                          <InputLabel id="demo-simple-select-outlined-label">
+                            Payment method
+                          </InputLabel>
+                          <Select
+                            name="paymentMethod"
+                            value={paymentMethod}
+                            onChange={handlePaymentMethod}
+                            label="Payment method"
+                            error={paymentError ? true : false}
+                          >
+                            <MenuItem value="">
+                              <em>None</em>
+                            </MenuItem>
+                            {credit > 0 && (
+                              <MenuItem value="2">Credit</MenuItem>
+                            )}
+                            <MenuItem value="10">MarketPay</MenuItem>
+                            <MenuItem value="0">Stripe</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="payment">
+                    <p>Payment Method</p>
+                    <FormControl variant="outlined" margin="dense">
+                      <InputLabel id="demo-simple-select-outlined-label">
+                        Payment method
+                      </InputLabel>
+                      <Select
+                        name="paymentMethod"
+                        value={paymentMethod}
+                        onChange={handlePaymentMethod}
+                        label="Payment method"
+                        error={paymentError ? true : false}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
+                        <MenuItem value="0">Stripe</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {paymentMethod === "0" && (
+              <>
+                <RadioGroup
+                  name="selectedPaymentMethod"
+                  value={selectedPaymentMethod}
+                  onChange={handleChange}
+                >
+                  {paymentMethodList &&
+                    paymentMethodList.map((data, index) => {
+                      return (
+                        <FormControlLabel
+                          key={index}
+                          value={data.id}
+                          control={<Radio color="primary" />}
+                          label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
+                        />
+                      );
+                    })}
+                </RadioGroup>
+                {paymentMethodList && paymentMethodList.length > 0 ? (
+                  <Button
+                    className="newCard"
+                    onClick={() => handleShowNewCard()}
+                    variant="contained"
+                  >
+                    Add new card
+                  </Button>
+                ) : (
+                  <CardPayment
+                    user_id={localStorage.getItem("user_id")}
+                    handleSaveNewCard={() => handleSaveNewCard()}
+                    setOpen={() => setAddNewCard(false)}
+                  />
+                )}
+                {addNewCard && (
+                  <CardPayment
+                    user_id={localStorage.getItem("user_id")}
+                    handleSaveNewCard={() => handleSaveNewCard()}
+                    setOpen={() => setAddNewCard(false)}
+                  />
+                )}
+              </>
+            )}
+            <div style={{ position: "relative" }}>
+              {paymentMethod === "10" && (
+                <>
+                  {paymentLoading ? (
+                    <div className="payLoading">
+                      <CircularProgress />
+                    </div>
+                  ) : (
+                    <RadioGroup
+                      name="selectedMarketPay"
+                      value={selectedMarketPay}
+                      onChange={handleChange}
+                    >
+                      {acountInfo && acountInfo.pay30_eofm
+                        ? MARKET_PAY_LIST.map((data, index) => {
+                            return (
+                              <>
+                                <div className="marketMain">
+                                  <FormControlLabel
+                                    key={data.id}
+                                    value={data.id}
+                                    control={<Radio color="primary" />}
+                                    label={`${data.title}`}
+                                  />
+
+                                  <img
+                                    src={marketInfoIcon}
+                                    alt="market"
+                                    className="tool-img"
+                                    onClick={() => handleToolTip(index)}
+                                  />
+                                  {showToolTip && data.tooltip && (
+                                    <ToolTipCard data={data.tooltip} />
+                                  )}
+                                  {showToolTip1 && data.tooltip1 && (
+                                    <ToolTipCard data={data.tooltip1} />
+                                  )}
+                                </div>
+                                {data.text && (
+                                  <div className="remaining-balance">
+                                    {`${data.text} : £ ${acountInfo.market_finance_balance}`}
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })
+                        : MARKET_PAY_LIST1.map((data, index) => {
+                            return (
+                              <div className="marketMain">
+                                <FormControlLabel
+                                  key={data.id}
+                                  value={data.id}
+                                  control={<Radio color="primary" />}
+                                  label={`${data.title}`}
+                                />
+
+                                <img
+                                  src={marketInfoIcon}
+                                  alt="market"
+                                  className="tool-img"
+                                  onClick={() => handleToolTip(index)}
+                                />
+                                {showToolTip && data.tooltip && (
+                                  <ToolTipCard data={data.tooltip} />
+                                )}
+                              </div>
+                            );
+                          })}
+                    </RadioGroup>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
         </form>
+        {isCompanyModal && comp_number === "" && (
+          <CompanyDetail
+            closeModal={() => setState({ ...state, isCompanyModal: false })}
+          />
+        )}
         <p className="buttonWp">
           <Button
             disabled={isLoading}

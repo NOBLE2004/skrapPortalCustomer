@@ -73,12 +73,12 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
   let history = useHistory();
   const [serviceList, setServiceList] = useState([]);
   const [credit, setCredit] = useState(0);
+  const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [state, setState] = useState({
     startSelectedDate: new Date(),
     cost: "",
     paymentMethod: "",
     selectedPaymentMethod: "",
-    paymentMethodList: [],
     notice: null,
     isLoading: false,
     service: "",
@@ -95,7 +95,6 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     startSelectedDate,
     paymentMethod,
     selectedPaymentMethod,
-    paymentMethodList,
     service,
     service_id,
     cost,
@@ -136,9 +135,10 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     let data = {
       user_id: customer_user_id,
     };
-    PaymentService.list({ user_id: localStorage.getItem("userId") }).then(
+    PaymentService.list({ user_id: localStorage.getItem("user_id") }).then(
       (response) => {
-        setState({ ...state, paymentMethodList: response.data.result });
+        // setState({ ...state, paymentMethodList: response.data.result });
+        setPaymentMethodList(response.data.result);
       }
     );
   }, [addedNewCard]);
@@ -159,6 +159,37 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
       ...state,
       customerUserId: localStorage.getItem("user_id"),
     });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener(
+        "message",
+        function (ev) {
+          if (ev.data.code === 0) {
+            setState({
+              ...state,
+              isLoading: false,
+              notice: {
+                type: "success",
+                text: "Successfully Created Job!",
+              },
+            });
+            setTimeout(() => {
+              closeModal();
+              updateJobs();
+            }, 2000);
+          } else {
+            setState({
+              ...state,
+              notice: {
+                type: "error",
+                text: ev.data.message,
+              },
+            });
+          }
+        },
+        false
+    );
   }, []);
 
   const handleChange = (event) => {
@@ -205,6 +236,42 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
   const handleSaveNewCard = () => {
     setState({ ...state, addedNewCard: !state.addedNewCard });
   };
+
+  useEffect(() => {
+    window.addEventListener(
+        "message",
+        function (ev) {
+          if (ev.data.code === 0) {
+            setState({
+              ...state,
+              isLoading: false,
+              notice: {
+                type: "success",
+                text: "Successfully created exchange!",
+              },
+            });
+            setTimeout(() => {
+              handleClose();
+              if (isfromJob) {
+                updateJobs();
+                history.push("/jobs");
+              } else {
+                updateJobs();
+              }
+            }, 2000);
+          } else {
+            setState({
+              ...state,
+              notice: {
+                type: "error",
+                text: ev.data.message,
+              },
+            });
+          }
+        },
+        false
+    );
+  }, []);
 
   const handleCreate = () => {
     if (
@@ -257,23 +324,40 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
 
     JobService.createExchange(data)
       .then((response) => {
-        setTimeout(() => {
-          handleClose();
-          if (isfromJob) {
-            updateJobs();
-            history.push("/jobs");
-          } else {
-            updateJobs();
-          }
-        }, 2000);
-        setState({
-          ...state,
-          isLoading: false,
-          notice: {
-            type: "success",
-            text: response.data.description,
-          },
-        });
+        if(response.data.code === 11){
+          const iframe = document.createElement("iframe");
+          iframe.src = response.data.result.url;
+          iframe.width = "800";
+          iframe.height = "800";
+          // @ts-ignore
+          window.open(
+              response.data.result.url,
+              "Dynamic Popup",
+              "height=" +
+              iframe.height +
+              ", width=" +
+              iframe.width +
+              "scrollbars=auto, resizable=no, location=no, status=no"
+          );
+        }else{
+          setTimeout(() => {
+            handleClose();
+            if (isfromJob) {
+              updateJobs();
+              history.push("/jobs");
+            } else {
+              updateJobs();
+            }
+          }, 2000);
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: response.data.description,
+            },
+          });
+        }
       })
       .catch((err) => {
         setState({

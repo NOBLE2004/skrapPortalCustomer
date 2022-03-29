@@ -9,7 +9,7 @@ const PoDetail = ({ managerData, isManager }) => {
     <div>
       <Card className="new-manager-detail-main">
         <CardContent>
-          <div className="title">Purchase Order Detail</div>
+          <div className="title">Purchase Order Details</div>
           {isManager ? (
             data && data.purchase_orders.length > 0 ? (
               <PoTable data={data.purchase_orders} isManager={isManager} />
