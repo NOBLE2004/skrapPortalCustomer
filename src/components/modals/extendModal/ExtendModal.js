@@ -175,32 +175,32 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
 
   useEffect(() => {
     window.addEventListener(
-        "message",
-        function (ev) {
-          if (ev.data.code === 0) {
-            setState({
-              ...state,
-              isLoading: false,
-              notice: {
-                type: "success",
-                text: "Successfully created extension!",
-              },
-            });
-            setTimeout(() => {
-              closeModal();
-              updateJobs();
-            }, 2000);
-          } else {
-            setState({
-              ...state,
-              notice: {
-                type: "error",
-                text: ev.data.message,
-              },
-            });
-          }
-        },
-        false
+      "message",
+      function (ev) {
+        if (ev.data.code === 0) {
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: "Successfully created extension!",
+            },
+          });
+          setTimeout(() => {
+            closeModal();
+            updateJobs();
+          }, 2000);
+        } else {
+          setState({
+            ...state,
+            notice: {
+              type: "error",
+              text: ev.data.message,
+            },
+          });
+        }
+      },
+      false
     );
   }, []);
 
@@ -229,22 +229,22 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
     setState({ ...state, isLoading: true });
     JobService.addExtention(data)
       .then((res) => {
-        if(res.data.code === 11){
+        if (res.data.code === 11) {
           const iframe = document.createElement("iframe");
           iframe.src = res.data.result.url;
           iframe.width = "800";
           iframe.height = "800";
           // @ts-ignore
           window.open(
-              res.data.result.url,
-              "Dynamic Popup",
-              "height=" +
+            res.data.result.url,
+            "Dynamic Popup",
+            "height=" +
               iframe.height +
               ", width=" +
               iframe.width +
               "scrollbars=auto, resizable=no, location=no, status=no"
           );
-        }else{
+        } else {
           setState({
             ...state,
             isLoading: false,
@@ -292,7 +292,7 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
             <TextField
               value={portableweeks}
               onChange={handleChange}
-              placeholder="£"
+              placeholder="Enter number of weeks"
               name="portableweeks"
               InputProps={{ inputProps: { min: 2 } }}
               type="number"
