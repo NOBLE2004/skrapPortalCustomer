@@ -124,7 +124,10 @@ const Sites = (props) => {
         </Grid>
       </Grid>
       {isManagerOpen && (
-        <AssignToManager handleClose={() => setIsManagerOpen(false)} />
+        <AssignToManager
+          handleClose={() => setIsManagerOpen(false)}
+          reload={() => setIsReload(!isReload)}
+        />
       )}
       {isJobCreated && (
         <CreateSite
