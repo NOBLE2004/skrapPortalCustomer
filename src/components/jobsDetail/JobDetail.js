@@ -25,7 +25,7 @@ const JobDetail = ({ job }) => {
           <div className="personal-title">SK{job?.job_id}</div>
         </div>
         <div className="info">
-          <div className="designation">Deliver Date</div>
+          <div className="designation">Delivery Date</div>
           <div className="personal-title">
             {new Date(job?.job_start_time).toLocaleString()}
           </div>
