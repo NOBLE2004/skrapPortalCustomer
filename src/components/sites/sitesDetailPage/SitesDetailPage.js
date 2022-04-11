@@ -19,6 +19,8 @@ const SitesDetailPage = (props) => {
   const [isReload, setIsReload] = useState(false);
   const [reload, setReload] = useState(false);
   const [userInfo, setUserInfo] = useState(0);
+  const [jobsData, setJobsData] = useState({});
+  const [isJobLoading, setJobLoading] = useState(false);
   const [filters, setFilters] = useState({
     status: "",
     date: "",
@@ -69,6 +71,25 @@ const SitesDetailPage = (props) => {
     };
 
     getData();
+  }, []);
+
+  useEffect(() => {
+    const getJobData = async () => {
+      try {
+        setJobLoading(true);
+        const params = Object.entries(filters).reduce(
+          (a, [k, v]) => (v ? ((a[k] = v), a) : a),
+          {}
+        );
+        const res = await sitesService.showSitesDetail(id, params);
+        setJobsData(res.data);
+        setJobLoading(false);
+      } catch (err) {
+        setJobLoading(false);
+      }
+    };
+
+    getJobData();
   }, [filters, reload, isReload]);
 
   const handlePagination = (page) => {
@@ -83,6 +104,7 @@ const SitesDetailPage = (props) => {
     setState({ ...state, isJobCreated: true });
   };
 
+  console.log("jobs data", isJobLoading);
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
@@ -143,10 +165,12 @@ const SitesDetailPage = (props) => {
                 <JobFilters handleChangeFilters={handleChangeFilters} />
               </div>
             </Grid>
-            {managerData && managerData.jobs?.data?.length ? (
+            {isJobLoading ? (
+              <FadeLoader color={"#29a7df"} loading={isJobLoading} width={4} />
+            ) : jobsData && jobsData.jobs?.data?.length ? (
               <SiteManagerTable
-                managerData={managerData}
-                pagination={managerData.jobs}
+                managerData={jobsData}
+                pagination={jobsData.jobs}
                 handlePagination={handlePagination}
                 siteDetail={true}
                 reload={() => setIsReload(!isReload)}
