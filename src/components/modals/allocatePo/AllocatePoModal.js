@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { InputLabel, Grid, TextField } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import { Alert, Autocomplete } from "@material-ui/lab";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { withStyles } from "@material-ui/core/styles";
@@ -9,7 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { Button, MenuItem, FormControl, Select } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import sitesService from "../../../services/sites.service";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./allocatepo.scss";
@@ -106,15 +106,15 @@ const AllocatePoModal = (props) => {
     checkingError(name, value);
   };
 
-  const handleServiceType = (event, index) => {
+  const handleServiceType = (event, index, service) => {
     const { name, value } = event.target;
+    if (service) {
+      const data = [...serviceType];
+      data[index].service_id = service.service_id;
+      setServiceType(data);
+      setState({ ...state, isServiceEmpty: false });
+    }
     switch (name) {
-      case "service_id":
-        const data = [...serviceType];
-        data[index].service_id = value;
-        setServiceType(data);
-        setState({ ...state, isServiceEmpty: false });
-        break;
       case "quantity":
         const data1 = [...serviceType];
         data1[index].quantity = value;
@@ -180,6 +180,7 @@ const AllocatePoModal = (props) => {
         });
       });
   };
+
   return (
     <div>
       <Dialog open={true} onClose={handleClose} className="booksitemodal">
@@ -201,29 +202,25 @@ const AllocatePoModal = (props) => {
                 <Grid container className="services-main" key={index}>
                   <Grid item md={7}>
                     <InputLabel>Services List</InputLabel>
-                    <FormControl variant="outlined" margin="dense" fullWidth>
-                      <InputLabel id="demo-simple-select-outlined-label">
-                        Services
-                      </InputLabel>
-                      <Select
-                        value={data.service_id}
-                        label="services"
-                        name="service_id"
-                        fullWidth
-                        onChange={(e) => handleServiceType(e, index)}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        {subServices.map((subSer, index) => {
-                          return (
-                            <MenuItem value={subSer.service_id} key={index}>
-                              {subSer.service_name}
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                    </FormControl>
+                    <Autocomplete
+                      id="virtualize-demo"
+                      sx={{ width: 300 }}
+                      disableListWrap
+                      options={subServices}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="services list"
+                          variant="outlined"
+                          size="small"
+                          margin="dense"
+                        />
+                      )}
+                      onChange={(event, value) =>
+                        handleServiceType(event, index, value)
+                      }
+                      getOptionLabel={(option) => option.service_name}
+                    />
                   </Grid>
                   <Grid item md="2">
                     <InputLabel>Quantity</InputLabel>

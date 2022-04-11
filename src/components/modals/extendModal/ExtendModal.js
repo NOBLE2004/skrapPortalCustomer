@@ -283,7 +283,7 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
       open={true}
     >
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Extends Job
+        Extend Job
       </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
