@@ -18,6 +18,7 @@ import RejectJobModal from "../modals/rejectJobModal/RejectJobModal";
 import JobReorderModal from "../modals/reorderModal/JobReorderModal";
 import ExtendModal from "../modals/extendModal/ExtendModal";
 import { getUserDataFromLocalStorage } from "../../services/utils";
+import ViewJobDocumentsModal from "../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
 
 const JobsTable = ({
   data,
@@ -49,6 +50,8 @@ const JobsTable = ({
   const [notice, setNotice] = React.useState(null);
   const [isTrackDriver, setTrackDriver] = useState(false);
   const [rowData, setRowDate] = useState("");
+  const [isViewDocument, setViewDocument] = useState(false);
+  const [jobId, setJobId] = React.useState(null);
   const handleButtonClick = (e, props) => {
     e.stopPropagation();
     // if (contextRow === null) {
@@ -115,6 +118,12 @@ const JobsTable = ({
     element.click();
     handleClose();
   };
+
+  const handleViewJobDocuments = (event, row) => {
+    setJobId(row.job_id);
+    setViewDocument(true);
+  }
+
   useEffect(() => {
     const userdata = getUserDataFromLocalStorage();
     setUser(userdata.personal_detail);
@@ -542,12 +551,16 @@ const JobsTable = ({
             )}
             <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>
             {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
+            <MenuItem onClick={(e) => handleViewJobDocuments(e, row)}>View Documents</MenuItem>
           </Menu>{" "}
           {isTrackDriver && (
             <TrackDriverModal
               handleClose={() => setTrackDriver(false)}
               trackData={rowData}
             />
+          )}
+           {isViewDocument && (
+            <ViewJobDocumentsModal handleClose={() => setViewDocument(false) }  jobId={jobId} />
           )}
         </>
       ) : (
