@@ -103,7 +103,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
       },
       {
         Header: "Landfill Diversion Rate",
-        accessor: "Landfill_Diversion_Rate",
+        accessor: "landfill_diversion_rate",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -182,7 +182,6 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
     ],
     []
   );
-  
   return (
     <div className="reportTableWp">
       <TableContainer
@@ -196,12 +195,8 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
       />
       <p className="subTotal">
         {reportType === "Site_movements"
-          ? `Sub Total:  ${
-              isNaN(+lastCalculatedReport) ? "n/a" : +lastCalculatedReport
-            }`
-          : `Average: ${
-              isNaN(+lastCalculatedReport) ? "n/a" : +lastCalculatedReport
-            }`}
+          ? `Sub Total:  ${lastCalculatedReport}`
+          : `Average: ${lastCalculatedReport}`}
       </p>
     </div>
   );
