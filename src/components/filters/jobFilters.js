@@ -9,7 +9,7 @@ import moment from "moment";
 
 const JobFilters = ({ handleChangeFilters }) => {
   const [filters, setFilters] = useState({
-    status: "",
+    site_job_status: "",
     date: "",
     service: "",
     address: "",
@@ -23,7 +23,7 @@ const JobFilters = ({ handleChangeFilters }) => {
     },
   ]);
   const [services, setServices] = useState([]);
-  const { status, date, address, service } = filters;
+  const { site_job_status, date, address, service } = filters;
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFilters({ ...filters, [name]: value });
@@ -64,7 +64,7 @@ const JobFilters = ({ handleChangeFilters }) => {
   };
   const resetFilters = () => {
     setFilters({
-      status: "",
+      site_job_status: "",
       date: "",
       service: "",
       address: "",
@@ -121,8 +121,8 @@ const JobFilters = ({ handleChangeFilters }) => {
           <select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
-            name="status"
-            value={status}
+            name="site_job_status"
+            value={site_job_status}
             onChange={handleChange}
             className={"filter-option"}
           >
