@@ -104,7 +104,6 @@ const SitesDetailPage = (props) => {
     setState({ ...state, isJobCreated: true });
   };
 
-  console.log("jobs data", isJobLoading);
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
@@ -114,8 +113,8 @@ const SitesDetailPage = (props) => {
               ? addressData.slice(0, 16)
               : "n/a"
             : addressData
-            ? addressData
-            : ""}
+              ? addressData
+              : ""}
         </div>
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
