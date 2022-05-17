@@ -295,7 +295,7 @@ const SiteManagerTable = ({
     setExtends(true);
   };
   return (
-    <>
+    <div className={"main-jobs-table"}>
       {exchange && (
         <CreateExchange
           closeModal={() => setExchange(!exchange)}
@@ -383,7 +383,7 @@ const SiteManagerTable = ({
           trackData={row}
         />
       )}
-    </>
+    </div>
   );
 };
 

@@ -164,19 +164,25 @@ const SitesDetailPage = (props) => {
                 <JobFilters handleChangeFilters={handleChangeFilters} />
               </div>
             </Grid>
-            {isJobLoading ? (
-              <FadeLoader color={"#29a7df"} loading={isJobLoading} width={4} />
-            ) : jobsData && jobsData.jobs?.data?.length ? (
-              <SiteManagerTable
-                managerData={jobsData}
-                pagination={jobsData.jobs}
-                handlePagination={handlePagination}
-                siteDetail={true}
-                reload={() => setIsReload(!isReload)}
-              />
-            ) : (
-              "Jobs Not Found Yet !"
-            )}
+            <div className="site-tabel-detail">
+              {isJobLoading ? (
+                <FadeLoader
+                  color={"#29a7df"}
+                  loading={isJobLoading}
+                  width={4}
+                />
+              ) : jobsData && jobsData.jobs?.data?.length ? (
+                <SiteManagerTable
+                  managerData={jobsData}
+                  pagination={jobsData.jobs}
+                  handlePagination={handlePagination}
+                  siteDetail={true}
+                  reload={() => setIsReload(!isReload)}
+                />
+              ) : (
+                <div>Jobs Not Found Yet !</div>
+              )}
+            </div>
           </>
         )}
       </Grid>
