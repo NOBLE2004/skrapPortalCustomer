@@ -151,7 +151,7 @@ const Sites = (props) => {
                 </Grid>
               </>
             ) : (
-              <div className="sitenotfound">Sites not found yet</div>
+              <div className="sitenotfound">No active sites found</div>
             )}
           </Grid>
         </>
