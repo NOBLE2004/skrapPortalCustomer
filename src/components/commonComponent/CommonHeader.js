@@ -48,11 +48,11 @@ const CommonHeader = ({
             <button className="header-btn" onClick={handleBookJob}>
               Assign to Manager
             </button>
-            <button className="header-btn" onClick={handleCreateJob}>
-              Create Site
-            </button>
           </>
         )}
+        <button className="header-btn" onClick={handleCreateJob}>
+          Create Site
+        </button>
       </div>
     </div>
   );
