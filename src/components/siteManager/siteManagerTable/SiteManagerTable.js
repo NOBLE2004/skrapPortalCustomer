@@ -294,8 +294,9 @@ const SiteManagerTable = ({
   const handleExtend = () => {
     setExtends(true);
   };
+
   return (
-    <div className={"main-jobs-table"}>
+    <div className={jobs && jobs.length > 0 ? "" : "main-jobs-table"}>
       {exchange && (
         <CreateExchange
           closeModal={() => setExchange(!exchange)}
@@ -363,16 +364,12 @@ const SiteManagerTable = ({
         {row.parent_id === 2 && row.appointment_status === 4 && (
           <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
         )}
-        {row.parent_id === 43 &&
-          row.service_id === 44 &&
-          row.appointment_status === 4 && (
-            <MenuItem onClick={handleExtend}>Extend</MenuItem>
-          )}
+        {row.service_id === 43 && row.appointment_status === 4 && (
+          <MenuItem onClick={handleExtend}>Extend</MenuItem>
+        )}
         <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-        {((row.parent_id === 2 && row.appointment_status === 4) ||
-          (row.parent_id === 43 &&
-            row.service_id === 44 &&
-            row.appointment_status === 4)) && (
+        {(row.appointment_status === 4 ||
+          (row.service_id === 44 && row.appointment_status === 4)) && (
           <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>
         )}
         <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>

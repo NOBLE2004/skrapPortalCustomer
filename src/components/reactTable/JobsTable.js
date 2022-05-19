@@ -122,7 +122,7 @@ const JobsTable = ({
   const handleViewJobDocuments = (event, row) => {
     setJobId(row.job_id);
     setViewDocument(true);
-  }
+  };
 
   useEffect(() => {
     const userdata = getUserDataFromLocalStorage();
@@ -523,19 +523,15 @@ const JobsTable = ({
                 : undefined
             }
           >
-            {row.parent_id === 2 && row.appointment_status === 4 && (
+            {row.appointment_status === 4 && (
               <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
             )}
-            {row.parent_id === 43 &&
-              row.service_id === 44 &&
-              row.appointment_status === 4 && (
-                <MenuItem onClick={handleExtend}>Extend</MenuItem>
-              )}
+            {row.service_id === 43 && row.appointment_status === 4 && (
+              <MenuItem onClick={handleExtend}>Extend</MenuItem>
+            )}
             <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-            {((row.parent_id === 2 && row.appointment_status === 4) ||
-              (row.parent_id === 43 &&
-                row.service_id === 44 &&
-                row.appointment_status === 4)) && (
+            {(row.appointment_status === 4 ||
+              (row.service_id === 44 && row.appointment_status === 4)) && (
               <MenuItem onClick={handleShowCollectionDialog}>
                 Collection
               </MenuItem>
@@ -551,7 +547,9 @@ const JobsTable = ({
             )}
             <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>
             {/*<MenuItem onClick={() => handleInvoice()}> Xero Invoice </MenuItem>*/}
-            <MenuItem onClick={(e) => handleViewJobDocuments(e, row)}>View Documents</MenuItem>
+            <MenuItem onClick={(e) => handleViewJobDocuments(e, row)}>
+              View Documents
+            </MenuItem>
           </Menu>{" "}
           {isTrackDriver && (
             <TrackDriverModal
@@ -559,8 +557,11 @@ const JobsTable = ({
               trackData={rowData}
             />
           )}
-           {isViewDocument && (
-            <ViewJobDocumentsModal handleClose={() => setViewDocument(false) }  jobId={jobId} />
+          {isViewDocument && (
+            <ViewJobDocumentsModal
+              handleClose={() => setViewDocument(false)}
+              jobId={jobId}
+            />
           )}
         </>
       ) : (
