@@ -565,7 +565,7 @@ const JobsTable = ({
         </>
       ) : (
         <div className="jobs-not-found">
-          {`Greetings ${user.first_name}! You currently have no active booking.`}
+          {`You don’t have any active bookings.`}
         </div>
       )}
     </div>
