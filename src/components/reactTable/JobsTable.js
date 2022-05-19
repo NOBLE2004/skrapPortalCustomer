@@ -526,7 +526,7 @@ const JobsTable = ({
             {row.appointment_status === 4 && (
               <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
             )}
-            {row.service_id === 43 && row.appointment_status === 4 && (
+            {row.service_id === 44 && row.appointment_status === 4 && (
               <MenuItem onClick={handleExtend}>Extend</MenuItem>
             )}
             <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
