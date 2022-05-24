@@ -1,28 +1,28 @@
 export const chartLineOption = {
-  legend: {
-    display: false,
+  plugins: {
+    legend: {
+      display: false,
+    }
   },
   scales: {
-    xAxes: [
-      {
-        gridLines: {
+    x:{
+        grid: {
           display: false,
+          drawBorder: false
         },
         ticks: {
           display: false,
         },
       },
-    ],
-    yAxes: [
-      {
-        gridLines: {
+    y: {
+        grid: {
           display: false,
+          drawBorder: false
         },
         ticks: {
           display: false,
         },
       },
-    ],
   },
 };
 
@@ -38,8 +38,8 @@ export const spendData = {
       data: [33, 53, 25, 41, 70, 55, 60, 46, 68],
       fill: false,
       pointRadius: 0,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "#0176FF",
+      backgroundColor: "#52A9DD",
+      borderColor: "#52A9DD",
     },
   ],
 };
@@ -74,41 +74,63 @@ export const spendChartData = {
 };
 
 export const spendChartOptions = {
-  cornerRadius: 4,
-  legend: { display: false },
   responsive: true,
   maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      borderWidth: 1,
+      display: false,
+      position: 'top',
+      horizontalAlign: 'center',
+      verticalAlign: 'left',
+      textAlign: 'center',
+      fullSize: true,
+      labels: {
+        padding: 25,
+        fullWidth: true,
+        font: {
+          size: 12,
+          family: 'DM Sans',
+          weight: 500
+        }
+      }
+    },
+  },
   scales: {
-    xAxes: [
-      {
-        padding: 0,
-        barThickness: 12,
-        maxBarThickness: 10,
-        barPercentage: 0.5,
-        categoryPercentage: 0.5,
-        gridLines: {
-          display: false,
-          drawBorder: false,
-        },
-      },
-    ],
-    yAxes: [
+    x:
       {
         ticks: {
+          padding: 10,
+          font: {
+            size: 12,
+            family: 'DM Sans',
+            weight: 500
+          }
+        },
+        grid: {
+          display: false,
+          drawBorder: false
+        }
+      },
+    y: {
+        ticks: {
+          stepSize: (c) => ((Math.max(...c.chart.data.datasets[0].data) - Math.min(...c.chart.data.datasets[0].data)) / 4),
           callback: function (value) {
             return "£" + parseInt(value.toFixed(0)).toLocaleString();
           },
           beginAtZero: true,
+          padding: 10,
+          font: {
+            size: 12,
+            family: 'DM Sans',
+            weight: 500
+          }
         },
-        gridLines: {
-          borderDash: [2],
-          borderDashOffset: [2],
-          drawBorder: false,
-          zeroLineBorderDash: [2],
-          zeroLineBorderDashOffset: [2],
-        },
+      grid: {
+        display: false,
+        drawBorder: false
+      }
       },
-    ],
   },
 };
 
