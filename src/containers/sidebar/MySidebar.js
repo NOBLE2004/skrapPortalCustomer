@@ -65,6 +65,8 @@ const MySidebar = (props) => {
       setActiveTab("jobs");
     } else if (param === "site-") {
       setActiveTab("site-managers");
+    }else if (param === "new-report") {
+      setActiveTab("new-report");
     } else {
       setActiveTab(activeTab);
     }

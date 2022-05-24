@@ -72,7 +72,11 @@ const TableContainer = ({ columns, data, name }) => {
     }
   };
   return (
-    <div className="table-container-main" ref={inputRef}>
+    <div className="table-container-main" style={{
+      background: 'white',
+      borderRadius: 11.6836,
+      boxShadow: '0px 17px 24px rgba(58, 58, 58, 0.05)'
+    }} ref={inputRef}>
       <div {...getTableProps()} className="table-main">
         {headerGroups.map((headerGroup) => (
           <div
@@ -114,8 +118,7 @@ const TableContainer = ({ columns, data, name }) => {
               <div
                 style={{
                   display: "flex",
-                  border: "1px solid #ECECEC",
-                  marginBottom: 18,
+                  //borderBottom: "1px solid #ECECEC",
                   borderRadius: 11,
                 }}
                 className={
