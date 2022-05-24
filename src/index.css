@@ -34,3 +34,7 @@ body{
 .site-pagination{
   width: 100%;
 }
+.tickets-main-div {
+  text-align: center;
+  height: 100vh;
+}
