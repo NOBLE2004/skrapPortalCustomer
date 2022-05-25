@@ -10710,6 +10710,11 @@ react-google-maps@^9.4.5:
     scriptjs "^2.5.8"
     warning "^3.0.0"
 
+react-gradient-progress@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-gradient-progress/-/react-gradient-progress-1.0.3.tgz#c873589e2fc44b165c3eb94a54e188993d9b4ed0"
+  integrity sha512-aEUQ/BxC7OPIqdmR8gSepdwkCA2sPQTnjRHoYO/PtV5Jac7XBVGXRPkhPQNczczc68OhDhCXLt/YAI/eEXzgrw==
+
 react-highlight.js@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/react-highlight.js/-/react-highlight.js-1.0.5.tgz#c8b319dfeb6f67a83658596948eff7123aeeabdd"

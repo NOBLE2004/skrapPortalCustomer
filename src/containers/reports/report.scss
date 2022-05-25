@@ -46,6 +46,64 @@
         align-items: center;
         justify-content: center;
         margin-bottom: 15px;
+        .salesWp-inner-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          width: 100%;
+          .salesWp-sub {
+            .guage-with-text {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              .text{
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                flex-direction: column;
+                h1{
+                  font-family: 'DM Sans';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 14px;
+                  line-height: 20px;
+                  display: flex;
+                  align-items: center;
+                  text-align: center;
+                  color: #0F2851;
+                  padding: 0;
+                  margin: 0;
+                }
+                p{
+                  font-family: 'DM Sans';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 12px;
+                  line-height: 16px;
+                  color: #677790;
+                  padding: 0;
+                  margin: 0;
+                }
+                label{
+                  font-family: 'DM Sans';
+                  font-style: normal;
+                  font-weight: 400;
+                  font-size: 12px;
+                  line-height: 16px;
+                  color: #677790;
+                  padding: 0;
+                  margin: 0;
+                }
+              }
+            }
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+        }
 
         h1 {
           font-family: 'DM Sans';

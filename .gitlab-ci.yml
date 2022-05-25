@@ -8,6 +8,7 @@ docker-build:
   tags: [develop]
   only:
     - release/develop
+    - za-develop
     - release/staging
     - release/production
   services:
@@ -24,6 +25,7 @@ deploy:
   tags: [develop]
   only:
     - release/develop
+    - za-develop
     - release/staging
     - release/production
   before_script:

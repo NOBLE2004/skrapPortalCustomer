@@ -54,8 +54,8 @@ export const DonutChartDefaultOptions = {
     }
 };
 export const BarChartOptions = {
-    categoryPercentage: 0.8,
-    barPercentage: 0.8,
+    categoryPercentage: 0.6,
+    fillColor: 'grey',
     plugins: {
         legend: {
             borderWidth: 1,
