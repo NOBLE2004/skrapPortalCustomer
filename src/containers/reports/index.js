@@ -72,6 +72,28 @@ const  series = {
     };
     return (
         <div className="main-report">
+            <div className="report-header">
+                <div className="report-grid-header">
+
+                </div>
+                <div className="report-grid-header">
+                    <div className="report-header-card">
+                        <div className="text">
+                            6 Sites
+                        </div>
+                    </div>
+                    <div className="report-header-card">
+                        <div className="text">
+                            64 Bookings complete
+                        </div>
+                    </div>
+                    <div className="report-header-card">
+                        <div className="text">
+                            5 Hire Types
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div className="report-grid">
                     <Masonry container columns={2} spacing={4}>
                     <div className="report-chart-card-outer">
