@@ -15,7 +15,6 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "apexcharts": "^3.35.2",
     "axios": "^0.21.1",
     "bootstrap-daterangepicker": "^3.1.0",
     "chart.js": "^3.7.1",
@@ -25,7 +24,6 @@
     "moment": "^2.29.1",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
-    "react-apexcharts": "^1.4.0",
     "react-bootstrap-daterangepicker": "^7.0.0",
     "react-chartjs-2": "^4.1.0",
     "react-chat-window": "^1.2.1",
@@ -50,7 +48,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts --max_old_space_size=4096 build",
+    "build": "react-scripts --max_old_space_size=1029 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

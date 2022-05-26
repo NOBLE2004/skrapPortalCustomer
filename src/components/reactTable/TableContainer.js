@@ -72,11 +72,7 @@ const TableContainer = ({ columns, data, name }) => {
     }
   };
   return (
-    <div className="table-container-main" style={{
-      background: 'white',
-      borderRadius: 11.6836,
-      boxShadow: '0px 17px 24px rgba(58, 58, 58, 0.05)'
-    }} ref={inputRef}>
+    <div className="table-container-main" ref={inputRef}>
 
       <table {...getTableProps()}>
         <thead>
@@ -94,7 +90,7 @@ const TableContainer = ({ columns, data, name }) => {
           return (
               <tr {...row.getRowProps()} className={
                 `${name === "tickets" ? "table-body-row1" : "table-body-row"} ${i % 2 === 0 ? 'even' : 'odd'}`
-              }>
+              } onClick={() => handleRowClick(row.original)}>
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
