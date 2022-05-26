@@ -1,6 +1,28 @@
 .table-container-main {
+  padding: 1%;
   @media only screen and (max-width: 1224px) {
     overflow: auto;
+  }
+  table{
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #677790;
+    text-align: left;
+    width: 100%;
+    tr{
+      height: 40px;
+      td{
+        padding: 0% 0%;
+      }
+    }
+    tbody{
+      .even{
+        background: #F6F6F6;
+      }
+    }
   }
 }
 .table-main {
@@ -10,6 +32,12 @@
   overflow-x: auto;
   @media only screen and (max-width: 1224px) {
     width: unset;
+  }
+  .table-headings{
+    padding: 0% 0% !important;
+  }
+  .even{
+    background: #F6F6F6;
   }
 
   .MuiTableCell-root {
