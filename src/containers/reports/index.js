@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Card, CardContent, Grid} from "@material-ui/core";
+import {Card, CardContent, Grid, Select, OutlinedInput} from "@mui/material";
 import { Masonry } from "@mui/lab";
 import 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
@@ -7,15 +7,56 @@ import {CircleProgress} from 'react-gradient-progress'
 import './report.scss'
 import { PieChartDefaultOptions, DonutChartDefaultOptions, BarChartOptions } from '../../components/utlils/chart';
 import Utils from "moment";
+import MenuItem from "@material-ui/core/MenuItem";
+import {makeStyles} from "@material-ui/core/styles";
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 5.5 + ITEM_PADDING_TOP,
+            padding: '0%',
+            borderRadius: '16px'
+        },
+    },
+};
+const useStyles = makeStyles((theme) => ({
+    selected: {
+    },
+    rootMenuItem: {
+        margin: '2% 3%',
+        padding: '2% 2%',
+        "&$selected": {
+            background: `linear-gradient(135deg, #76CCF8 27.99%, #518EF8 68.87%, #4981F8 77.07%)`,
+            borderRadius: '8px',
+            color: 'white'
+        }
+    }
+}));
 const NewReports = () => {
     const chartEl = useRef(null);
     const [gradientBg, setGradientBg] = useState();
+    const [gradientBg2, setGradientBg2] = useState();
+    const [selected, setSelected] = useState([]);
+    const classes = useStyles();
+
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setSelected(value);
+    }
     useEffect(()=>{
         const ctx = document.getElementById('myChart').getContext('2d');
+        const ctx2 = document.getElementById('myChart2').getContext('2d');
         const gradientBg = ctx.createLinearGradient(0,0,0, 350);
+        const gradientBg2 = ctx2.createLinearGradient(0,0,0, 350);
         gradientBg.addColorStop(0.1, '#73C6F9');
         gradientBg.addColorStop(1, '#5391F9');
+
+        gradientBg2.addColorStop(0.1, '#7bc761');
+        gradientBg2.addColorStop(1, '#5BA842');
         setGradientBg(gradientBg);
+        setGradientBg2(gradientBg2);
     },[]);
 const  series = {
         labels: ['      Exchange 75% ', '      Wait & Load 17% ', '      Collect 4% ', '      Delivery 4% '],
@@ -59,7 +100,7 @@ const  series = {
             {
                 type: 'line',
                 label: '2021 Emissions',
-                data: [100, 70, 75, 70, 60, 90, 70, 80, 90, 80, 70, 100],
+                data: [100, 70, 75, 70, 60, 90, 70, 0, 90, 80, 70, 100],
                 backgroundColor: '#677790',
                 borderColor: '#677790',
                 borderDash: [8, 5],
@@ -70,90 +111,177 @@ const  series = {
             }
         ]
     };
+    const data2 = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+            {
+                type: 'bar',
+                label: 'Emissions produced',
+                data: [90, 60, 30, 50, 30, 80, 50],
+                backgroundColor: gradientBg2,
+                borderColor: '#5391F9',
+                borderSkipped: false,
+                borderRadius: 20,
+                pointRadius: 15,
+                pointStyle: 'rectRounded',
+                boxWidth: 100,
+                barPercentage: 0.5
+            }
+        ]
+    };
+    const names = [
+        'Oliver Hansen',
+        'Van Henry',
+        'April Tucker',
+        'Ralph Hubbard',
+        'Omar Alexander',
+        'Carlos Abbott',
+        'Miriam Wagner',
+        'Bradley Wilkerson',
+        'Virginia Andrews',
+        'Kelly Snyder',
+    ];
     return (
         <div className="main-report">
             <div className="report-header">
                 <div className="report-grid-header">
+                    {/*<div className="report-header-card first">*/}
+                    {/*    <div className="text">*/}
+                    {/*        */}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    <div className="report-header-card first">
+                        <div className="text">
+                            <span>Management Reporting</span>
+                        </div>
+                        <Select
+                            labelId="demo-multiple-name-label"
+                            id="demo-multiple-name"
+                            multiple={true}
+                            value={selected}
+                            displayEmpty
+                            onChange={handleChange}
+                            input={<OutlinedInput notched={false} notchedOutline={false} label="Name" />}
+                            MenuProps={MenuProps}
+                            renderValue={(selected) => {
+                                if (selected.length === 0) {
+                                    return <em>Sites</em>;
+                                }
 
+                                return selected.length > 1 ? <div className="text-sec">Viewing: Multiple sites <span>{selected.length} of {names.length} sites</span></div> : selected.join(',');
+                            }}
+                        >
+                            {names.map((name) => (
+                                <MenuItem
+                                    classes={{ selected: classes.selected, root: classes.rootMenuItem }}
+                                    key={name}
+                                    value={name}
+                                    //style={getStyles(name, personName, theme)}
+                                >
+                                    {name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </div>
                 </div>
                 <div className="report-grid-header">
                     <div className="report-header-card">
                         <div className="text">
-                            6 Sites
+                            <span>6</span> Sites
                         </div>
                     </div>
                     <div className="report-header-card">
                         <div className="text">
-                            64 Bookings complete
+                            <span>64</span> Bookings complete
                         </div>
                     </div>
                     <div className="report-header-card">
                         <div className="text">
-                            5 Hire Types
+                            <span>5</span> Hire Types
+                        </div>
+                    </div>
+                    <div className="report-header-card">
+                        <div className="text">
+                            <span>3</span> Suppliers
                         </div>
                     </div>
                 </div>
             </div>
                 <div className="report-grid">
                     <Masonry container columns={2} spacing={4}>
-                    <div className="report-chart-card-outer">
-                        <div className="report-card-title">
-                            Finance report
+                        <div className="report-chart-card-outer">
+                            <div className="report-card-title">
+                                Finance report
+                            </div>
+                                <Card className="report-chart-card">
+                                    <CardContent>
+                                        <div className="salesWp">
+                                            <h1>£10,270.00 <span>Total spent</span></h1>
+                                            <Chart
+                                                type="pie"
+                                                options={PieChartDefaultOptions}
+                                                data={series}
+                                                height="300"
+                                                width="500"
+                                            />
+                                        </div>
+                                    </CardContent>
+                                </Card>
                         </div>
+                        <div className="report-chart-card-outer">
+                            <div className="report-card-title">
+                                Emissions
+                            </div>
                             <Card className="report-chart-card">
                                 <CardContent>
                                     <div className="salesWp">
-                                        <h1>£10,270.00 <span>Total spent</span></h1>
+                                        <h1>12.567 <span>kg of CO2e Cumulative Emissions</span></h1>
+                                        <div className="sub-heading">
+                                            Monthly breakdown
+                                        </div>
+                                        <div className="filters">
+                                            <div className="year">
+                                                {`${'<'}`} 2022 >
+                                            </div>
+                                            <div className="total">
+                                                Total payment: <span>£313.13</span>
+                                            </div>
+                                        </div>
                                         <Chart
-                                            type="pie"
-                                            options={PieChartDefaultOptions}
-                                            data={series}
-                                            height="300"
-                                            width="500"
+                                            type="bar"
+                                            ref={chartEl}
+                                            id="myChart"
+                                            options={BarChartOptions}
+                                            data={data}
+                                        />
+                                    </div>
+                                </CardContent>
+                                <CardContent>
+                                    <div className="salesWp">
+                                        <h2>Did you know?</h2>
+                                        <p>By upgrading your <span>8-yard skips</span> to a <span>12 yard skips</span> you would reduce your site movements by 15% which could reduce your carbon emissions</p>
+                                        <div className="sub-heading">
+                                            Offset payments
+                                        </div>
+                                        <div className="filters">
+                                            <div className="year">
+                                                {`${'<'}`} 2022 >
+                                            </div>
+                                            <div className="total">
+                                                Total payment: <span>£313.13</span>
+                                            </div>
+                                        </div>
+                                        <Chart
+                                            type="bar"
+                                            ref={chartEl}
+                                            id="myChart2"
+                                            options={BarChartOptions}
+                                            data={data2}
                                         />
                                     </div>
                                 </CardContent>
                             </Card>
-                    </div>
-                    <div className="report-chart-card-outer">
-                        <div className="report-card-title">
-                            Site Movements
                         </div>
-                        <Card className="report-chart-card">
-                            <CardContent>
-                                <div className="salesWp">
-                                    <h1>537 <span>Total bookings</span></h1>
-                                    <Chart
-                                        type="doughnut"
-                                        options={DonutChartDefaultOptions}
-                                        data={series}
-                                        height="200"
-                                        width="400"
-                                        plugins={[
-                                            {
-                                                beforeDraw(chart) {
-                                                    const { width } = chart;
-                                                    const { height } = chart;
-                                                    const { ctx } = chart;
-                                                    ctx.restore();
-                                                    const fontSize = (height / 80).toFixed(2);
-                                                    ctx.font = `${fontSize}em DM Sans`;
-                                                    ctx.textBaseline = 'top';
-                                                    const max_val = Math.max.apply(Math, chart.data.datasets[0].data);
-                                                    console.log(chart.getDatasetMeta(0).data[0]);
-                                                    const text = `${max_val}%`;
-                                                    const textX = Math.round((width - ctx.measureText(text).width) / 4);
-                                                    const textY = height / 2.5;
-                                                    ctx.fillText(text, textX, textY);
-                                                    ctx.save();
-                                                },
-                                            },
-                                        ]}
-                                    />
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
                         <div className="report-chart-card-outer">
                             <div className="report-card-title">
                                 Waste statistics
@@ -220,24 +348,45 @@ const  series = {
                                 </CardContent>
                             </Card>
                         </div>
-                    <div className="report-chart-card-outer">
-                        <div className="report-card-title">
-                            Emissions
+                        <div className="report-chart-card-outer">
+                            <div className="report-card-title">
+                                Site Movements
+                            </div>
+                            <Card className="report-chart-card">
+                                <CardContent>
+                                    <div className="salesWp">
+                                        <h1>537 <span>Total bookings</span></h1>
+                                        <Chart
+                                            type="doughnut"
+                                            options={DonutChartDefaultOptions}
+                                            data={series}
+                                            height="200"
+                                            width="400"
+                                            plugins={[
+                                                {
+                                                    beforeDraw(chart) {
+                                                        const { width } = chart;
+                                                        const { height } = chart;
+                                                        const { ctx } = chart;
+                                                        ctx.restore();
+                                                        const fontSize = (height / 80).toFixed(2);
+                                                        ctx.font = `${fontSize}em DM Sans`;
+                                                        ctx.textBaseline = 'top';
+                                                        const max_val = Math.max.apply(Math, chart.data.datasets[0].data);
+                                                        console.log(chart.getDatasetMeta(0).data[0]);
+                                                        const text = `${max_val}%`;
+                                                        const textX = Math.round((width - ctx.measureText(text).width) / 4);
+                                                        const textY = height / 2.5;
+                                                        ctx.fillText(text, textX, textY);
+                                                        ctx.save();
+                                                    },
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </CardContent>
+                            </Card>
                         </div>
-                        <Card className="report-chart-card">
-                            <CardContent>
-                                <div className="salesWp">
-                                    <h1>12.567 <span>kg of CO2e</span></h1>
-                                    <Chart
-                                        ref={chartEl}
-                                        id="myChart"
-                                        options={BarChartOptions}
-                                        data={data}
-                                    />
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
                     </Masonry>
                 </div>
         </div>

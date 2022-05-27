@@ -1,34 +1,88 @@
 .main-report {
-  .report-header{
+  .report-header {
+    .makeStyles-rootMenuItem-16{
+      background: linear-gradient(135deg, #76CCF8 27.99%, #518EF8 68.87%, #4981F8 77.07%);
+    }
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-    margin: 16px;
-    .report-grid-header{
+    margin: 0.5% 1%;
+
+    .report-grid-header {
       width: 50%;
       display: flex;
       justify-content: flex-end;
       align-items: center;
       flex-direction: row;
       flex-wrap: wrap;
-      .report-header-card{
+
+      .report-header-card {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        padding: 2% 2%;
+        padding: 1.5% 2%;
         background: #fff;
         margin-left: 5%;
         border-radius: 16px;
         box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
-        .text{
+        .text {
           font-family: 'DM Sans';
           font-style: normal;
           font-weight: 700;
           font-size: 14px;
           line-height: 20px;
           color: #677790;
+          span {
+            color: #0F2851;
+          }
+        }
+      }
+      .first {
+        width: 100%;
+        margin-left: 0%;
+        padding: 1% 0%;
+        background: none;
+        justify-content: flex-start;
+        border-radius: 0;
+        box-shadow: none;
+        padding-right: 3%;
+        .text {
+          width: 50%;
+          font-size: 16px;
+        }
+        .MuiInputBase-root {
+          width: 100%;
+          border: none;
+          border-radius: 16px;
+          box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
+          background: white;
+          .MuiOutlinedInput-input {
+            font-family: 'DM Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 30px;
+            color: #677790;
+            width: 400px;
+            padding: 1.5% 5%;
+            .text-sec{
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              span{
+                float: right;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 12px;
+                line-height: 16px;
+                color: #A4ADBC;
+                padding: 0% 3%;
+                margin-top: 2%;
+              }
+            }
+          }
         }
       }
     }
@@ -79,7 +133,51 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
+        padding: 2%;
+        .sub-heading{
+          width: 100%;
+          font-family: 'DM Sans';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 18px;
+          text-align: left;
+          color: #A4ADBC;
+          margin-top: 5%;
+        }
+        .filters{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-direction: row;
+          width: 100%;
+          margin: 3% 0%;
+          .year{
+            ont-family: 'DM Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 20px;
+            color: #0F2851;
+          }
+          .total{
+            font-family: 'DM Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            color: #677790;
+            span{
+              font-family: 'DM Sans';
+              font-style: normal;
+              font-weight: 700;
+              font-size: 14px;
+              line-height: 20px;
+              color: #0F2851;
+            }
+          }
+        }
         .salesWp-inner-wrap {
           display: flex;
           align-items: center;
@@ -153,6 +251,26 @@
             font-size: 14px;
             line-height: 20px;
             font-style: normal;
+          }
+        }
+        h2 {
+          font-family: 'DM Sans';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 22px;
+          width: 100%;
+          color: #60A0F8;
+        }
+        p{
+          font-family: 'DM Sans';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 20px;
+          color: #0F2851;
+          span{
+            color: #60A0F8;
           }
         }
       }
