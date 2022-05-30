@@ -6,7 +6,6 @@ import { Chart } from 'react-chartjs-2';
 import {CircleProgress} from 'react-gradient-progress'
 import './report.scss'
 import { PieChartDefaultOptions, DonutChartDefaultOptions, BarChartOptions } from '../../components/utlils/chart';
-import Utils from "moment";
 import MenuItem from "@mui/material/MenuItem";
 import {makeStyles} from "@mui/styles";
 const ITEM_HEIGHT = 48;
@@ -24,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
     selected: {
     },
     rootMenuItem: {
-        margin: '2% 3%',
-        padding: '2% 2%',
+        margin: '2% !important',
+        padding: '2% !important',
         "&$selected": {
             background: `linear-gradient(135deg, #76CCF8 27.99%, #518EF8 68.87%, #4981F8 77.07%)`,
             borderRadius: '8px',
