@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { InputLabel, TextField } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { withStyles } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import { Button, MenuItem, FormControl, Select } from "@material-ui/core";
+import { InputLabel, TextField } from "@mui/material";
+import { Alert } from "@mui/lab";
+import CircularProgress from "@mui/material/CircularProgress";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import { withStyles } from "@mui/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import InputAdornment from "@mui/material/InputAdornment";
+import { Button, MenuItem, FormControl, Select } from "@mui/material";
 import siteService from "../../../services/sites.service";
 import "./createmanager.scss";
 function CreateManager(props) {

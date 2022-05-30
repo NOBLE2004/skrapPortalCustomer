@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import { Bar } from "react-chartjs-2";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import {
   spendChartOptions,
   dates,

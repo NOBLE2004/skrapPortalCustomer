@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDetail";
 import { viewMoreBtn } from "../../assets/images";
 import FadeLoader from "react-spinners/FadeLoader";

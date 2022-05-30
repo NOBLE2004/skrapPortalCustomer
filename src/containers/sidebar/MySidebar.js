@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "@material-ui/core/styles";
-import { Drawer, IconButton, List } from "@material-ui/core";
+import { useTheme } from "@mui/styles";
+import { Drawer, IconButton, List } from "@mui/material";
 import { useHistory, useLocation } from "react-router";
 import clsx from "clsx";
-import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { sidebarTabsList } from "../../environment";

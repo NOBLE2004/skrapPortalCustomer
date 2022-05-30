@@ -1,39 +1,39 @@
 import "date-fns";
 import React, { useState, useEffect, useRef } from "react";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import { withStyles } from "@material-ui/core/styles";
-import DialogContent from "@material-ui/core/DialogContent";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import { withStyles } from "@mui/styles";
+import DialogContent from "@mui/material/DialogContent";
 import DateFnsUtils from "@date-io/date-fns";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Alert from "@material-ui/lab/Alert";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import CloseIcon from "@material-ui/icons/Close";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import Alert from "@mui/lab/Alert";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import CloseIcon from "@mui/icons-material/Close";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
 import CardPayment from "../../commonComponent/cardPayment/CardPayment";
-import { createTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/styles";
 import { useHistory } from "react-router-dom";
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+  LocalizationProvider,
+  DatePicker,
+} from "@mui/lab";
 import AsychronousAddress from "../../commonComponent/asychronousAddress/AsychronousAddress";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 import ServiceService from "../../../services/service.service";
 import JobService from "../../../services/job.service";
 import PaymentService from "../../../services/payment.service";
-import { colors } from "@material-ui/core";
+import { colors } from "@mui/material";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./createJob.scss";
 import { serviceList } from "../../utlils/constants";
@@ -863,12 +863,12 @@ export default function CreateJob({
             />
           </div>
 
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider utils={DateFnsUtils}>
             <div className="dateTimeWp">
               <div className="datewp">
                 <p>Delivery Date Time</p>
                 <ThemeProvider theme={materialTheme}>
-                  <KeyboardDatePicker
+                  <DatePicker
                     margin="normal"
                     format="MM/dd/yyyy"
                     disablePast
@@ -904,7 +904,7 @@ export default function CreateJob({
                 )}
               </div>
             </div>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
 
           <div className="serviceWp">
             <div className="service">

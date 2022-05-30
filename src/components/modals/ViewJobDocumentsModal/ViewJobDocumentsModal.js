@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import { withStyles } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import { Card, CardContent, CardMedia, CardActions } from "@material-ui/core";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import { withStyles } from "@mui/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Card, CardContent, CardMedia, CardActions } from "@mui/material";
 import JobService from "../../../services/job.service";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Grid from "@material-ui/core/Grid";
+import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
 import { downloadSite } from "../../../assets/images";
-import Button from "@material-ui/core/Button";
-import Alert from "@material-ui/lab/Alert";
+import Button from "@mui/material/Button";
+import Alert from "@mui/lab/Alert";
 
 const styles = (theme) => ({
   root: {

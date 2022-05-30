@@ -7,8 +7,8 @@ import {CircleProgress} from 'react-gradient-progress'
 import './report.scss'
 import { PieChartDefaultOptions, DonutChartDefaultOptions, BarChartOptions } from '../../components/utlils/chart';
 import Utils from "moment";
-import MenuItem from "@material-ui/core/MenuItem";
-import {makeStyles} from "@material-ui/core/styles";
+import MenuItem from "@mui/material/MenuItem";
+import {makeStyles} from "@mui/styles";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {

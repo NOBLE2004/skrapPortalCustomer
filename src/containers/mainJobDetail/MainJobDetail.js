@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import JobDetail from "../../components/jobsDetail/JobDetail";
 import JobDetailHeader from "../../components/jobsDetail/jobHeader/JobDetailHeader";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import DriverDetail from "../../components/driver/DriverDetail";
 import FindPostCode from "../../components/jobsDetail/findPostCode/FindPostCode";
 import PaymentDetail from "../../components/jobsDetail/paymentDetail/PaymentDetail";

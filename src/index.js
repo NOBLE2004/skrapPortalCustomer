@@ -7,9 +7,14 @@ import reportWebVitals from "./reportWebVitals";
 import "../src/assets/styles/index.scss";
 import "./index.css";
 import "react-circular-progressbar/dist/styles.css";
+import {createTheme} from '@mui/material';
+import {ThemeProvider} from '@mui/styles';
+const theme = createTheme()
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+      <ThemeProvider theme={theme}>
+            <App />
+      </ThemeProvider>
   </Provider>,
   document.getElementById("root")
 );
