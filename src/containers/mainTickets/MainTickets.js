@@ -3,6 +3,7 @@ import TicketsTable from "../../components/tickets/TicketsTable";
 import { connect } from "react-redux";
 import { getTicketList } from "../../store/actions/ticket.action";
 import FadeLoader from "react-spinners/FadeLoader";
+import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
 
 const MainTickets = (props) => {
   const [filters, setFilters] = useState({ page: 1 });
@@ -28,10 +29,14 @@ const MainTickets = (props) => {
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
   };
+  const handelSearch = (search) => {
+    setFilters({ ...filters, search: search });
+  };
   return (
     <div>
       <div className="header-main">
         <div className="sites-header-title">Tickets </div>
+        <DashboardFilter handelSearch={handelSearch} title={"Tickets"} />
       </div>
       {isLoading ? (
             <div className="tickets-main-div">
