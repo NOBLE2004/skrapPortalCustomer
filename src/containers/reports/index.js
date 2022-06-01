@@ -3,11 +3,15 @@ import {Card, CardContent, Grid, Select, OutlinedInput} from "@mui/material";
 import { Masonry } from "@mui/lab";
 import 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
-import {CircleProgress} from 'react-gradient-progress'
-import './report.scss'
+import {CircleProgress} from 'react-gradient-progress';
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+//import { LineProgressBar } from '@frogress/line';
+import './report.scss';
 import { PieChartDefaultOptions, DonutChartDefaultOptions, BarChartOptions } from '../../components/utlils/chart';
 import MenuItem from "@mui/material/MenuItem";
+import { styled } from '@mui/material/styles';
 import {makeStyles} from "@mui/styles";
+import { servicesReport, wasteReport, sitesReport } from "../../components/utlils/constants";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -31,6 +35,38 @@ const useStyles = makeStyles((theme) => ({
             color: 'white'
         }
     }
+}));
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 10,
+    width:'100%',
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+        // backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+        backgroundColor: '#A4ADBC',
+        height:'25px',
+        borderRadius:40
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+        borderRadius: 40,
+        height:'25px',
+        backgroundImage: 'linear-gradient(135deg, #76CCF8 27.99%, #518EF8 68.87%, #4981F8 77.07%)',
+    },
+}));
+const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
+    height: 5,
+    width:'100%',
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+        // backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+        backgroundColor: '#A4ADBC',
+        height:'5px',
+        borderRadius:20
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+        borderRadius: 20,
+        height:'5px',
+        backgroundColor: theme.palette.mode === 'light' ? '#f7f7f7' : '#f7f7f7',
+    },
 }));
 const NewReports = () => {
     const chartEl = useRef(null);
@@ -216,6 +252,9 @@ const  series = {
                                     <CardContent>
                                         <div className="salesWp">
                                             <h1>£10,270.00 <span>Total spent</span></h1>
+                                            <div className="sub-heading">
+                                                Site breakdown
+                                            </div>
                                             <Chart
                                                 type="pie"
                                                 options={PieChartDefaultOptions}
@@ -223,6 +262,29 @@ const  series = {
                                                 height="300"
                                                 width="500"
                                             />
+                                        </div>
+                                        <div className="border-drop"></div>
+                                        <div className="more-drop">
+                                            <div className="sub-heading">
+                                                Hire breakdown
+                                            </div>
+                                            <div className="services">
+                                                {`<`}
+                                                {
+                                                    servicesReport.map((service)=>{
+                                                        return (
+                                                            <div className="service-box p-2">
+                                                                <img src={service.full_url}/>
+                                                                <div className="service-detail">
+                                                                    <div className="name">{service.service_name}</div>
+                                                                    <div className="percentage">{service.percentage}%</div>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                                {`>`}
+                                            </div>
                                         </div>
                                     </CardContent>
                                 </Card>
@@ -278,12 +340,89 @@ const  series = {
                                             data={data2}
                                         />
                                     </div>
+                                    <div className="border-drop"></div>
+                                    <div className="more-drop">
+                                        <div className="sub-heading">
+                                            Site breakdown
+                                        </div>
+                                        <div className="head-text">
+                                            <p><span>86</span> site journeys</p>
+                                            <p><span>525.5 miles</span> equivalent to driving from <b>London</b> to <b>Berlin</b></p>
+                                        </div>
+                                        <div className="services">
+                                            {
+                                                sitesReport.map((service)=>{
+                                                    return (
+                                                        <div className="service-box">
+                                                            <div className="circle-wrap">
+                                                                <div className="circle" style={
+                                                                    {width: `${service.percentage > 5 ? service.percentage*4 : service.percentage*8}px`,
+                                                                        height: `${service.percentage > 5 ? service.percentage*4 : service.percentage*8}px`,
+                                                                    background: service.color}
+                                                                }/>
+                                                            </div>
+                                                            <div className="service-detail start">
+                                                                <div className="name circle-name">{service.name}</div>
+                                                                <div className="percentage percentage-circle">{service.percentage} CO2e</div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                        <div className="sub-heading">
+                                            CO2e breakdown
+                                        </div>
+                                        <div className="sub-heading progress-label">
+                                            <p>Van</p>
+                                            <p>Truck</p>
+                                        </div>
+                                        <div className="services">
+                                            <div className="progress-div">
+                                                <div className="progress-bar" style={{width: '40%'}}>
+                                                    <label>25%</label>
+                                                    <BorderLinearProgress
+                                                        value={100}
+                                                        variant="determinate"
+                                                    />
+                                                </div>
+                                                <div className="progress-bar" style={{width: '60%',position:'relative'}}>
+                                                    <BorderLinearProgress
+                                                        value={0}
+                                                        variant="determinate"
+                                                    />
+                                                    <label style={{
+                                                        right:0
+,paddingRight:'2.5%'                                                    }}>60%</label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <Grid container marginTop={5}>
+                                            <BorderLinearProgress2
+                                                value={60}
+                                                variant="determinate"
+                                            />
+                                        </Grid>
+                                        <Grid container justifyContent='space-between'>
+                                            <div className="sub-heading progress-label">
+                                                <p className="text left">
+                                                    Tank-to-well <br />
+                                                    <span> 7.44 miles</span>
+                                                </p>
+                                                <p className="text right">
+                                                    Well-to-tank  <br />
+                                                    <span> 7.44 miles</span>
+                                                </p>
+                                            </div>
+                                        </Grid>
+                                    </div>
                                 </CardContent>
                             </Card>
                         </div>
                         <div className="report-chart-card-outer">
                             <div className="report-card-title">
-                                Waste statistics
+                                C02e Breakdown
                             </div>
                             <Card className="report-chart-card">
                                 <CardContent>
@@ -291,18 +430,19 @@ const  series = {
                                         <h1>44.57 <span>Tonnes total weight</span></h1>
                                         <div className="salesWp-inner-wrap">
                                             <div className="salesWp-sub">
-                                                <CircleProgress
-                                                    width={280}
-                                                    strokeWidth={25}
-                                                    fontFamily={'DM Sans'}
-                                                    text={'Diverted from <br /> landfill'}
-                                                    fontSize={'26px'}
-                                                    fontColor={'#0F285'}
-                                                    fontWeight={'700'}
-                                                    secondaryColor={'#F7F7F7'}
-                                                    percentage={85}
-                                                    primaryColor={['#73C6F9', '#5391F9']}
-                                                />
+                                                <div>
+                                                    <CircleProgress
+                                                        width={280}
+                                                        strokeWidth={25}
+                                                        fontFamily={'DM Sans'}
+                                                        fontSize={'26px'}
+                                                        fontColor={'#0F285'}
+                                                        fontWeight={'700'}
+                                                        secondaryColor={'#F7F7F7'}
+                                                        percentage={85}
+                                                        primaryColor={['#73C6F9', '#5391F9']}
+                                                    />
+                                                </div>
                                             </div>
                                             <div className="salesWp-sub">
                                                 <div className="guage-with-text">
@@ -341,6 +481,49 @@ const  series = {
                                                         <label>Equivalent to 5000 <br />smartphone charges</label>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div className="border-drop"></div>
+                                        <div className="more-drop">
+                                            <div className="sub-heading">
+                                                Waste breakdown
+                                            </div>
+                                            <div className="services wrap row">
+                                                {
+                                                    wasteReport.map((waste)=>{
+                                                        return (
+                                                            <div className="waste-box">
+                                                                <div className={`waste-detail ${waste.color}`}>
+                                                                    <div className="name">{waste.name}</div>
+                                                                    <div className="percentage">{waste.percentage}%</div>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                            <div className="sub-heading">
+                                                Site breakdown
+                                            </div>
+                                            <div className="services">
+                                                {
+                                                    sitesReport.map((service)=>{
+                                                        return (
+                                                            <div className="service-box">
+                                                                <div className="circle-wrap">
+                                                                    <div className="circle" style={
+                                                                        {width: `${service.percentage > 5 ? service.percentage*4 : service.percentage*8}px`,
+                                                                            height: `${service.percentage > 5 ? service.percentage*4 : service.percentage*8}px`}
+                                                                    }/>
+                                                                </div>
+                                                                <div className="service-detail start">
+                                                                    <div className="name circle-name">{service.name}</div>
+                                                                    <div className="percentage percentage-circle">{service.percentage} T</div>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
                                             </div>
                                         </div>
                                     </div>

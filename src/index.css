@@ -39,3 +39,19 @@ body {
   text-align: center;
   height: 100vh;
 }
+.row {
+  flex-direction: row !important;
+}
+.column {
+  flex-direction: column !important;
+}
+.wrap{
+  flex-wrap: wrap !important;
+}
+.p-2{
+  padding: 2% !important;
+}
+.start{
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
