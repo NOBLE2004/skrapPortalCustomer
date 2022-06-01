@@ -78,12 +78,23 @@ const NewReports = () => {
     const [gradientBg, setGradientBg] = useState();
     const [gradientBg2, setGradientBg2] = useState();
     const [selected, setSelected] = useState([]);
+    const [show, setShow] = useState({show: false, show2: false, show3: false, show4: false});
     const classes = useStyles();
 
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setSelected(value);
+    }
+    const handleShow = (index) => {
+        let showN = show;
+        if(showN[index] == true){
+            showN[index] = false;
+        }else{
+            showN[index] = true;
+        }
+        console.log(showN);
+        setShow({ ...show, [index]: showN[index] });
     }
     useEffect(()=>{
         const ctx = document.getElementById('myChart').getContext('2d');
@@ -277,29 +288,32 @@ const  series = {
                                                 height="300"
                                                 width="500"
                                             />
-                                        </div>
-                                        <div className="border-drop"></div>
-                                        <div className="more-drop">
-                                            <div className="sub-heading">
-                                                Hire breakdown
-                                            </div>
-                                            <div className="services">
-                                                {`<`}
-                                                {
-                                                    servicesReport.map((service)=>{
-                                                        return (
-                                                            <div className="service-box p-2">
-                                                                <img src={service.full_url}/>
-                                                                <div className="service-detail">
-                                                                    <div className="name">{service.service_name}</div>
-                                                                    <div className="percentage">{service.percentage}%</div>
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
-                                                {`>`}
-                                            </div>
+                                            <div className="see-more" onClick={()=> {handleShow('show')}}>See more</div>
+                                            { show.show && (<div className="see-more-wrap">
+                                                <div className="border-drop"></div>
+                                                <div className="more-drop">
+                                                    <div className="sub-heading">
+                                                        Hire breakdown
+                                                    </div>
+                                                    <div className="services">
+                                                        {`<`}
+                                                        {
+                                                            servicesReport.map((service)=>{
+                                                                return (
+                                                                    <div className="service-box p-2">
+                                                                        <img src={service.full_url}/>
+                                                                        <div className="service-detail">
+                                                                            <div className="name">{service.service_name}</div>
+                                                                            <div className="percentage">{service.percentage}%</div>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+                                                        {`>`}
+                                                    </div>
+                                                </div>
+                                            </div>)}
                                         </div>
                                     </CardContent>
                                 </Card>
@@ -354,83 +368,86 @@ const  series = {
                                             options={BarChartOptions}
                                             data={data2}
                                         />
-                                    </div>
-                                    <div className="border-drop"></div>
-                                    <div className="more-drop">
-                                        <div className="sub-heading">
-                                            Site breakdown
-                                        </div>
-                                        <div className="head-text">
-                                            <p><span>86</span> site journeys</p>
-                                            <p><span>525.5 miles</span> equivalent to driving from <b>London</b> to <b>Berlin</b></p>
-                                        </div>
-                                        <div className="services">
-                                            {
-                                                sitesReport.map((service)=>{
-                                                    return (
-                                                        <div className="service-box">
-                                                            <div className="circle-wrap">
-                                                                <div className="circle" style={
-                                                                    {width: `${service.percentage > 5 ? service.percentage*4 : service.percentage*8}px`,
-                                                                        height: `${service.percentage > 5 ? service.percentage*4 : service.percentage*8}px`,
-                                                                    background: service.color}
-                                                                }/>
-                                                            </div>
-                                                            <div className="service-detail start">
-                                                                <div className="name circle-name">{service.name}</div>
-                                                                <div className="percentage percentage-circle">{service.percentage} CO2e</div>
-                                                            </div>
+                                        <div className="see-more" onClick={()=> {handleShow('show2')}}>See more</div>
+                                        {show.show2 && (<div className="see-more-wrap">
+                                            <div className="border-drop"></div>
+                                            <div className="more-drop">
+                                                <div className="sub-heading">
+                                                    Site breakdown
+                                                </div>
+                                                <div className="head-text">
+                                                    <p><span>86</span> site journeys</p>
+                                                    <p><span>525.5 miles</span> equivalent to driving from <b>London</b> to <b>Berlin</b></p>
+                                                </div>
+                                                <div className="services">
+                                                    {
+                                                        sitesReport.map((service)=>{
+                                                            return (
+                                                                <div className="service-box">
+                                                                    <div className="circle-wrap">
+                                                                        <div className="circle" style={
+                                                                            {width: `${service.percentage > 5 ? service.percentage*4 : service.percentage*8}px`,
+                                                                                height: `${service.percentage > 5 ? service.percentage*4 : service.percentage*8}px`,
+                                                                                background: service.color}
+                                                                        }/>
+                                                                    </div>
+                                                                    <div className="service-detail start">
+                                                                        <div className="name circle-name">{service.name}</div>
+                                                                        <div className="percentage percentage-circle">{service.percentage} CO2e</div>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                                <div className="sub-heading">
+                                                    CO2e breakdown
+                                                </div>
+                                                <div className="sub-heading progress-label">
+                                                    <p>Van</p>
+                                                    <p>Truck</p>
+                                                </div>
+                                                <div className="services">
+                                                    <div className="progress-div">
+                                                        <div className="progress-bar" style={{width: '40%'}}>
+                                                            <label>25%</label>
+                                                            <BorderLinearProgress
+                                                                value={100}
+                                                                variant="determinate"
+                                                            />
                                                         </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                        <div className="sub-heading">
-                                            CO2e breakdown
-                                        </div>
-                                        <div className="sub-heading progress-label">
-                                            <p>Van</p>
-                                            <p>Truck</p>
-                                        </div>
-                                        <div className="services">
-                                            <div className="progress-div">
-                                                <div className="progress-bar" style={{width: '40%'}}>
-                                                    <label>25%</label>
-                                                    <BorderLinearProgress
-                                                        value={100}
-                                                        variant="determinate"
-                                                    />
-                                                </div>
-                                                <div className="progress-bar" style={{width: '60%',position:'relative'}}>
-                                                    <BorderLinearProgress
-                                                        value={0}
-                                                        variant="determinate"
-                                                    />
-                                                    <label style={{
-                                                        right:0
-,paddingRight:'2.5%'                                                    }}>60%</label>
+                                                        <div className="progress-bar" style={{width: '60%',position:'relative'}}>
+                                                            <BorderLinearProgress
+                                                                value={0}
+                                                                variant="determinate"
+                                                            />
+                                                            <label style={{
+                                                                right:0
+                                                                ,paddingRight:'2.5%'                                                    }}>60%</label>
 
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <Grid container marginTop={5}>
+                                                    <BorderLinearProgress2
+                                                        value={60}
+                                                        variant="determinate"
+                                                    />
+                                                </Grid>
+                                                <Grid container justifyContent='space-between'>
+                                                    <div className="sub-heading progress-label">
+                                                        <p className="text left">
+                                                            Tank-to-well <br />
+                                                            <span> 7.44 miles</span>
+                                                        </p>
+                                                        <p className="text right">
+                                                            Well-to-tank  <br />
+                                                            <span> 7.44 miles</span>
+                                                        </p>
+                                                    </div>
+                                                </Grid>
                                             </div>
-                                        </div>
-                                        <Grid container marginTop={5}>
-                                            <BorderLinearProgress2
-                                                value={60}
-                                                variant="determinate"
-                                            />
-                                        </Grid>
-                                        <Grid container justifyContent='space-between'>
-                                            <div className="sub-heading progress-label">
-                                                <p className="text left">
-                                                    Tank-to-well <br />
-                                                    <span> 7.44 miles</span>
-                                                </p>
-                                                <p className="text right">
-                                                    Well-to-tank  <br />
-                                                    <span> 7.44 miles</span>
-                                                </p>
-                                            </div>
-                                        </Grid>
+                                        </div>)}
                                     </div>
                                 </CardContent>
                             </Card>
@@ -498,6 +515,8 @@ const  series = {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className="see-more" onClick={()=> {handleShow('show3')}}>See more</div>
+                                        { show.show3 && (<div className="see-more-wrap">
                                         <div className="border-drop"></div>
                                         <div className="more-drop">
                                             <div className="sub-heading">
@@ -541,6 +560,7 @@ const  series = {
                                                 }
                                             </div>
                                         </div>
+                                        </div>)}
                                     </div>
                                 </CardContent>
                             </Card>

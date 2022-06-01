@@ -143,8 +143,24 @@
         color: #A4ADBC;
         margin-top: 2%;
       }
+      .see-more{
+        width: 100%;
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 20px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        text-align: right;
+        color: #60A0F8;
+        cursor: pointer;
+      }
+      .see-more-wrap{
+        width: 100%;
+      }
       .more-drop{
-        padding: 2%;
         display: flex;
         justify-content: center;
         align-items: center;
