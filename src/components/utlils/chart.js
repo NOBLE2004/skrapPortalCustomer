@@ -43,10 +43,43 @@ export const DonutChartDefaultOptions = {
             }
         }
     },
-    width: 200,
+    cutout: 90,
     maintainAspectRatio: true,
     responsive: false,
-    cutout: 70,
+    elements: {
+        arc: {
+            borderWidth: 0
+        }
+    }
+};
+export const DonutChartSmallDefaultOptions = {
+    plugins: {
+        legend: {
+            display: true,
+            fullWidth: true,
+            position: "right",
+            align: 'center',
+            text: 'grab hire',
+            maxWidth: 500,
+            title:{
+                padding: 20
+            },
+            labels: {
+                display: false,
+                usePointStyle: true,
+                fullWidth: true,
+                padding: 20,
+                font: {
+                    size: 10,
+                    family: 'DM Sans',
+                    weight: 700
+                }
+            }
+        }
+    },
+    cutout: 55,
+    maintainAspectRatio: true,
+    responsive: false,
     elements: {
         arc: {
             borderWidth: 0
@@ -67,13 +100,12 @@ export const BarChartOptions = {
             fullSize: true,
             labels: {
                 usePointStyle: true,
-                boxWidth: 40,
-                padding: 25,
                 fullWidth: true,
                 font: {
                     size: 12,
                     family: 'DM Sans',
-                    weight: 500
+                    weight: 500,
+                    textAlign: 'right'
                 }
             }
         },

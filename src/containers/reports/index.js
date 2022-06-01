@@ -7,7 +7,12 @@ import {CircleProgress} from 'react-gradient-progress';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 //import { LineProgressBar } from '@frogress/line';
 import './report.scss';
-import { PieChartDefaultOptions, DonutChartDefaultOptions, BarChartOptions } from '../../components/utlils/chart';
+import {
+    PieChartDefaultOptions,
+    DonutChartDefaultOptions,
+    BarChartOptions,
+    DonutChartSmallDefaultOptions
+} from '../../components/utlils/chart';
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from '@mui/material/styles';
 import {makeStyles} from "@mui/styles";
@@ -94,6 +99,16 @@ const NewReports = () => {
         setGradientBg2(gradientBg2);
     },[]);
 const  series = {
+        labels: ['      Exchange 75% ', '      Wait & Load 17% ', '      Collect 4% ', '      Delivery 4% '],
+        datasets: [
+            {
+                data: [90, 20, 10, 30],
+                backgroundColor: ['#0F2851', '#DFECFE', '#60A0F8', '#4981F8', '#A4ADBC'],
+                hoverBackgroundColor: ['#0F2851', '#DFECFE', '#60A0F8', '#4981F8', '#A4ADBC']
+            }
+        ]
+    };
+    const  series3 = {
         labels: ['      Exchange 75% ', '      Wait & Load 17% ', '      Collect 4% ', '      Delivery 4% '],
         datasets: [
             {
@@ -432,8 +447,8 @@ const  series = {
                                             <div className="salesWp-sub">
                                                 <div>
                                                     <CircleProgress
-                                                        width={280}
-                                                        strokeWidth={25}
+                                                        width={250}
+                                                        strokeWidth={20}
                                                         fontFamily={'DM Sans'}
                                                         fontSize={'26px'}
                                                         fontColor={'#0F285'}
@@ -447,8 +462,8 @@ const  series = {
                                             <div className="salesWp-sub">
                                                 <div className="guage-with-text">
                                                     <CircleProgress
-                                                        width={120}
-                                                        strokeWidth={12}
+                                                        width={100}
+                                                        strokeWidth={10}
                                                         fontFamily={'DM Sans'}
                                                         fontSize={'14px'}
                                                         fontColor={'#0F285'}
@@ -465,8 +480,8 @@ const  series = {
                                                 </div>
                                                 <div className="guage-with-text">
                                                     <CircleProgress
-                                                        width={120}
-                                                        strokeWidth={12}
+                                                        width={100}
+                                                        strokeWidth={10}
                                                         fontFamily={'DM Sans'}
                                                         fontSize={'14px'}
                                                         fontColor={'#0F285'}
@@ -542,8 +557,8 @@ const  series = {
                                             type="doughnut"
                                             options={DonutChartDefaultOptions}
                                             data={series}
-                                            height="200"
-                                            width="400"
+                                            height="250"
+                                            width="450"
                                             plugins={[
                                                 {
                                                     beforeDraw(chart) {
@@ -566,6 +581,23 @@ const  series = {
                                             ]}
                                         />
                                     </div>
+                                    <div className="border-drop"></div>
+                                    {/*<div className="more-drop">*/}
+                                    {/*    {*/}
+                                    {/*        servicesReport.map((service)=>{*/}
+                                    {/*            return(*/}
+                                    {/*                <div className="small-chart">*/}
+                                    {/*                    <Chart*/}
+                                    {/*                        className="chart"*/}
+                                    {/*                        type="doughnut"*/}
+                                    {/*                        options={DonutChartSmallDefaultOptions}*/}
+                                    {/*                        data={series3}*/}
+                                    {/*                    />*/}
+                                    {/*                </div>*/}
+                                    {/*            );*/}
+                                    {/*        })*/}
+                                    {/*    }*/}
+                                    {/*</div>*/}
                                 </CardContent>
                             </Card>
                         </div>

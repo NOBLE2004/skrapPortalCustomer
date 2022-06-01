@@ -149,6 +149,20 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        .small-chart{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 5%;
+          //.chart{
+          //  display: flex !important;
+          //  width: 100% !important;
+          //  height: auto !important;
+          //  justify-content: space-between;
+          //  align-items: center;
+          //  flex-direction: column;
+          //}
+        }
         .head-text{
           display: flex;
           justify-content: space-between;
