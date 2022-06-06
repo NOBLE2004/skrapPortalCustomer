@@ -199,6 +199,24 @@ $v110: 110px;
   font-weight: bolder;
   color: #29aae2;
 }
+
+// style for flex
+.d-flex {
+  display: flex;
+}
+.align-center {
+  align-items: center;
+}
+.flex-1{
+  flex: 1;
+}
+.flex-3{
+  flex: 3;
+}
+
+.w-100{
+  width: 100%;
+}
 // info window of google map
 
 .gm-style .gm-style-iw-c {
