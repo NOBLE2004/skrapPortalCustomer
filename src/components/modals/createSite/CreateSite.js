@@ -1,16 +1,16 @@
 import "date-fns";
 import React, { useState, useRef } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import { withStyles } from "@material-ui/core/styles";
-import DialogContent from "@material-ui/core/DialogContent";
-import Alert from "@material-ui/lab/Alert";
-import CloseIcon from "@material-ui/icons/Close";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import { withStyles } from "@mui/styles";
+import DialogContent from "@mui/material/DialogContent";
+import Alert from "@mui/lab/Alert";
+import CloseIcon from "@mui/icons-material/Close";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
 import AsychronousAddress from "../../commonComponent/asychronousAddress/AsychronousAddress";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 import sitesService from "../../../services/sites.service";
 
 export default function CreateSite({

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
+import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/lab/Alert";
 import FadeLoader from "react-spinners/FadeLoader";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import InputAdornment from "@mui/material/InputAdornment";
 import NavBar from "../../../components/Navbar/NavBar";
 import Footer from "../../../components/Footer/FooterItem";
 import { loginHeader } from "../../../environment";

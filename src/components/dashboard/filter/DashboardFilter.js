@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { search } from "../../../assets/images";
 import "./dashboardfilter.scss";
-import { makeStyles, TextField } from "@material-ui/core";
+import { makeStyles } from "@mui/styles";
+import { TextField } from "@mui/material";
 const useStyle = makeStyles((theme) => ({
   titleHide: {
     fontFamily: "BasierCircleBold",

@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { withStyles } from "@mui/styles";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import MuiDialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Alert from "@mui/lab/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 import ServiceService from "../../../services/service.service";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+  LocalizationProvider,
+  DatePicker,
+} from "@mui/lab";
 import DateFnsUtils from "@date-io/date-fns";
 import PaymentService from "../../../services/payment.service";
 import CardPayment from "../../commonComponent/cardPayment/CardPayment";
@@ -418,11 +418,11 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
               error={errors["cost"].length > 0 ? true : false}
             />
           </div>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider utils={DateFnsUtils}>
             <div className="dateTimeWp">
               <div>
                 <p>Delivery Date Time</p>
-                <KeyboardDatePicker
+                <DatePicker
                   margin="normal"
                   format="MM/dd/yyyy"
                   value={startSelectedDate}
@@ -455,7 +455,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
                 </label>
               </div>
             </div>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
           <div className="selectWp">
             <p>Payment</p>
             <FormControl variant="outlined" margin="dense">

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
-import { Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem } from "@mui/material";
 import "./jobs-react-table.scss";
 import { payment, status } from "../../services/utils";
 import CreateExchange from "../modals/createExchange/CreateExchange";

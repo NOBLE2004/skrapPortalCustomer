@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import SitesTable from "../../components/sites/sitesTable/SitesTable";
-import { Grid, Card, CardContent } from "@material-ui/core";
+import { Grid, Card, CardContent } from "@mui/material";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import MainMap from "../../components/map/MainMap";
 import TipingCard from "../../components/tiping/TipingCard";

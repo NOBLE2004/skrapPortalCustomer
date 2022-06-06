@@ -1,141 +1,44 @@
 .table-container-main {
+  padding: 1%;
+  background: white;
+  border-radius: 11px;
+  box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
   @media only screen and (max-width: 1224px) {
     overflow: auto;
   }
-}
-.table-main {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  overflow-x: auto;
-  @media only screen and (max-width: 1224px) {
-    width: unset;
-  }
-
-  .MuiTableCell-root {
-    border-bottom: none;
-  }
-  .MuiTableRow-root {
-    vertical-align: unset;
-  }
-
-  .sites-table-headings {
-    font-family: "DM Sans";
+  table{
+    font-family: 'DM Sans';
     font-style: normal;
-    font-weight: bold;
+    font-weight: 400;
     font-size: 12px;
-    line-height: 16px;
-    color: #0d0d39;
-    padding: 10px;
-    padding-top: 0px;
-    padding-bottom: 10px;
+    line-height: 20px;
+    color: #677790;
+    text-align: left;
+    width: 100%;
+    border-collapse: collapse;
+    tr{
+      border: none !important;
+      td:first-child {
+        font-weight: bolder;
+        color: black;
+        font-size: 14px;
+      }
+      th{
+        padding: 0.5% 0.5%;
+        min-width: 30px;
+        color: #677790;
+        font-size: 12px;
+      }
+      td{
+        font-size: 12px;
+        padding: 0.5% 0.2%;
+        min-width: 30px;
+      }
+    }
+    tbody{
+      .even{
+        background: #F6F6F6;
+      }
+    }
   }
-  .sites-table-headings:last-child {
-    width: 260px !important;
-  }
-  .sites-table-body-cell {
-    font-family: "DM Sans";
-    font-style: normal;
-    font-weight: normal;
-    font-size: 10px;
-    line-height: 13px;
-    color: #4b686e;
-    word-break: break-all;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  .sites-table-body-cell:last-child {
-    width: 260px !important;
-  }
-
-  .table-headings {
-    font-family: "DM Sans";
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 16px;
-    color: #0d0d39;
-    padding: 10px;
-    padding-top: 0px;
-    padding-bottom: 10px;
-  }
-
-  .table-body-cell {
-    font-family: "DM Sans";
-    font-style: normal;
-    font-weight: normal;
-    font-size: 10px;
-    line-height: 13px;
-    color: #4b686e;
-    word-break: break-all;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  .custom-filter {
-    padding: 0px 4px;
-    cursor: pointer;
-    outline: none;
-    min-width: 50px;
-    text-transform: capitalize;
-    background: #fbfbfc;
-    border-radius: 3px;
-    border: none;
-    font-family: DM Sans;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 16px;
-    color: #52a9dd;
-    height: 30px;
-    margin-right: 10px;
-  }
-}
-.common-search-for-tables {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.job-table-menu {
-  .MuiPaper-root {
-    border-radius: 11px;
-  }
-}
-.accept-reject {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.xero-btn {
-  text-align: end;
-}
-.header-top {
-  position: fixed;
-  top: 0;
-  background-color: #f6f6f6;
-  z-index: 1;
-  display: inline-block;
-  width: calc(100% - 270px);
-  @media only screen and (max-width: 1224px) {
-    position: unset;
-    top: unset;
-    background-color: unset;
-  }
-}
-.jobs-not-found {
-  font-family: DM Sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 16px;
-  color: "red";
-}
-.main-jobs-table {
-  width: 100%;
-  height: 100vh;
 }

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { withStyles } from "@mui/styles";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import MuiDialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
+import Alert from "@mui/lab/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+  LocalizationProvider,
+  DatePicker,
+} from "@mui/lab";
 import DateFnsUtils from "@date-io/date-fns";
 import JobService from "../../../services/job.service";
 import { useHistory } from "react-router-dom";
@@ -165,11 +165,11 @@ function RequestCollection({ row, updateJobs, closeModal, isfromJob }) {
       </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider utils={DateFnsUtils}>
             <div className="dateTimeWp">
               <div>
                 <p>Delivery Date Time</p>
-                <KeyboardDatePicker
+                <DatePicker
                   margin="normal"
                   format="MM/dd/yyyy"
                   value={startSelectedDate}
@@ -202,7 +202,7 @@ function RequestCollection({ row, updateJobs, closeModal, isfromJob }) {
                 </label>
               </div>
             </div>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
 
           {/* <div className="selectWp">
             <p>Driver</p>

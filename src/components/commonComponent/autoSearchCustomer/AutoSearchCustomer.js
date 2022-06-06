@@ -1,7 +1,7 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/lab/Autocomplete";
+import CircularProgress from "@mui/material/CircularProgress";
 // import CustomerService from "../../services/customer.service";
 import axios from "axios";
 

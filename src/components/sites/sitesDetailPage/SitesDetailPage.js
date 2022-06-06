@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NewManagerDetail from "../../siteManager/newManagerDetail/NewManagerDetail";
 import SiteManagerTable from "../../siteManager/siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import sitesService from "../../../services/sites.service";
 import FadeLoader from "react-spinners/FadeLoader";
 import JobFilters from "../../filters/jobFilters";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Card, CardContent } from "@material-ui/core";
+import { Grid, Card, CardContent } from "@mui/material";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
 import AssignToManager from "../../../components/modals/assignToManager/AssignToManager";
 import "./newmanagerdetail.scss";

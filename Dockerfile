@@ -9,6 +9,8 @@ COPY . /app/
 
 RUN apk add g++ gcc libgcc libstdc++ linux-headers make python3 --quiet
 
+RUN node -e 'console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))'
+
 # Prepare the container for building React
 # RUN npm install
 RUN yarn && yarn build

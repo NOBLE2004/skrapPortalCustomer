@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Card, CardContent } from "@material-ui/core";
+import { Grid, Card, CardContent } from "@mui/material";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
 import { useHistory } from "react-router";
 import "./managerdetail.scss";
