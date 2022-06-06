@@ -318,11 +318,11 @@ const  series = {
                             <span>5</span> Hire Types
                         </div>
                     </div>
-                    <div className="report-header-card">
+                    {/*<div className="report-header-card">
                         <div className="text">
                             <span>3</span> Suppliers
                         </div>
-                    </div>
+                    </div>*/}
                 </div>
                 <div className="report-filters">
                     <div className="filter-item">
