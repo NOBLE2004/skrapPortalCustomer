@@ -1,4 +1,65 @@
+.report-footer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #FFFFFF;
+  flex-wrap: wrap;
+  box-shadow: 0px -6px 8px rgba(174, 174, 174, 0.1);
+  padding: 1% 2%;
+  .label{
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #677790;
+  }
+  @media only screen and (max-width: 1200px) {
+    padding-left: 20%;
+  }
+  .content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2%;
+    flex-wrap: wrap;
+    margin-left: 2%;
+    .content-item{
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      label{
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #677790;
+      }
+    }
+  }
+  .MuiButton-root{
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    text-transform: none;
+    padding: 0.8% 3%;
+    border-radius: 25px;
+    background: linear-gradient(180deg, #73C6F9 0%, #5391F9 100%);
+  }
+}
 .main-report {
+  margin-bottom: 5%;
   .report-header {
     .makeStyles-rootMenuItem-16{
       background: linear-gradient(135deg, #76CCF8 27.99%, #518EF8 68.87%, #4981F8 77.07%);
@@ -17,6 +78,10 @@
       align-items: center;
       flex-direction: row;
       flex-wrap: wrap;
+      @media only screen and (max-width: 425px) {
+        flex-direction: column;
+        width: 100%;
+      }
 
       .report-header-card {
         display: flex;
@@ -27,6 +92,7 @@
         margin-left: 5%;
         border-radius: 16px;
         box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
+        margin: 2%;
         .text {
           font-family: 'DM Sans';
           font-style: normal;
@@ -48,9 +114,18 @@
         border-radius: 0;
         box-shadow: none;
         padding-right: 3%;
+        @media only screen and (max-width: 1024px) {
+          flex-direction: column;
+          width: 100%;
+        }
         .text {
-          width: 50%;
           font-size: 16px;
+          text-align: left;
+          width: 45%;
+          @media only screen and (max-width: 1024px) {
+            margin: 2% 0%;
+            width: 100%;
+          }
         }
         .MuiInputBase-root {
           width: 100%;

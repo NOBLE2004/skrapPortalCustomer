@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Card, CardContent, Grid, Select, OutlinedInput} from "@mui/material";
+import {Card, CardContent, Grid, Select, OutlinedInput, Checkbox, Button} from "@mui/material";
 import { Masonry } from "@mui/lab";
 import 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
@@ -78,6 +78,7 @@ const NewReports = () => {
     const [gradientBg, setGradientBg] = useState();
     const [gradientBg2, setGradientBg2] = useState();
     const [selected, setSelected] = useState([]);
+    const [reports, setReports] = useState({finance: false, site_movements: false, emissions: false, waste_statistics: false});
     const [show, setShow] = useState({show: false, show2: false, show3: false, show4: false});
     const classes = useStyles();
 
@@ -85,6 +86,10 @@ const NewReports = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setSelected(value);
+    }
+    const handleChangeReportType = (event) => {
+        const { name, value } = event.target;
+        setReports({...reports, [name]: value});
     }
     const handleShow = (index) => {
         let showN = show;
@@ -203,6 +208,7 @@ const  series = {
         'Kelly Snyder',
     ];
     return (
+        <>
         <div className="main-report">
             <div className="report-header">
                 <div className="report-grid-header">
@@ -624,6 +630,49 @@ const  series = {
                     </Masonry>
                 </div>
         </div>
+            <div className="report-footer">
+                <div className="label">
+                    Select reports to download
+                </div>
+                <div className="content">
+                    <div className="content-item">
+                        <label htmlFor="finance">Finance</label>
+                        <Checkbox
+                            name="finance"
+                            id="finance"
+                            onChange={handleChangeReportType}
+                        />
+                    </div>
+                    <div className="content-item">
+                        <label htmlFor="site_movements">Site movements</label>
+                        <Checkbox
+                            name="site_movements"
+                            id="site_movements"
+                            onChange={handleChangeReportType}
+                        />
+                    </div>
+                    <div className="content-item">
+                        <label htmlFor="emissions">Emissions</label>
+                        <Checkbox
+                            name="emissions"
+                            id="emissions"
+                            onChange={handleChangeReportType}
+                        />
+                    </div>
+                    <div className="content-item">
+                        <label htmlFor="waste_statistics">Waste Statistics</label>
+                        <Checkbox
+                            name="waste_statistics"
+                            id="waste_statistics"
+                            onChange={handleChangeReportType}
+                        />
+                    </div>
+                </div>
+                <Button classes="footer-btn">
+                    Download CSV
+                </Button>
+            </div>
+            </>
     )
 }
 
