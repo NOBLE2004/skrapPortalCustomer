@@ -247,7 +247,8 @@ export const servicesReport = [
     service_name: "Skip Hire",
     full_url: "https://portaltest2.skrap.app/service_images/5fdc817505c54skip-hire.png",
     img_url: "/service_images/5fdc817505c54skip-hire.png",
-    percentage: 20
+    percentage: 20,
+    title:'Exchange'
   },
 
   {
@@ -255,7 +256,8 @@ export const servicesReport = [
     service_name: "Grab Hire",
     full_url: "https://portal.skrap.app/storage/service_images/61542e3a5509egroup_48818.png",
     img_url: "/service_images/61546f4cae16c5f9fe0d6d5062Group 48624@3x.png",
-    percentage: 100
+    percentage: 100,
+    title:'Wait & load'
   },
 
   {
@@ -263,14 +265,16 @@ export const servicesReport = [
     service_name: "Tipper Hire",
     full_url: "https://portal.skrap.app/storage/service_images/61d849c9c7969Asset 5@4x.png",
     img_url: "/service_images/5f9fd84dca502Group 49016@3x.png",
-    percentage: 60
+    percentage: 60,
+    title:'Collect'
   },
   {
     service_id: 80,
     service_name: "Plant Hire",
     full_url: "https://portal.skrap.app/storage/service_images/5f9fe0d6d5062Group 48624@3x.png",
     img_url: "/service_images/5f9fe11ab933aGroup 47848@3x.png",
-    percentage: 50
+    percentage: 50,
+    title:'Delivery'
   },
   // {
   //   service_id: 43,
