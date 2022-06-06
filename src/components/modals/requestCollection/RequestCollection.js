@@ -18,6 +18,8 @@ import DateFnsUtils from "@date-io/date-fns";
 import JobService from "../../../services/job.service";
 import { useHistory } from "react-router-dom";
 import "../createJob/createJob.scss";
+import TextField from "@mui/material/TextField";
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 const styles = (theme) => ({
   root: {
@@ -165,18 +167,19 @@ function RequestCollection({ row, updateJobs, closeModal, isfromJob }) {
       </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
-          <LocalizationProvider utils={DateFnsUtils}>
+          <LocalizationProvider utils={DateFnsUtils} dateAdapter={AdapterDateFns}>
             <div className="dateTimeWp">
               <div>
                 <p>Delivery Date Time</p>
                 <DatePicker
-                  margin="normal"
-                  format="MM/dd/yyyy"
-                  value={startSelectedDate}
-                  onChange={handleStartDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
+                    renderInput={(props) => <TextField {...props} />}
+                    margin="normal"
+                    format="MM/dd/yyyy"
+                    value={startSelectedDate}
+                    onChange={handleStartDateChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
                 />
               </div>
               <div className="timeWp">

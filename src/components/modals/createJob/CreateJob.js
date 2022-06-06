@@ -24,6 +24,7 @@ import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/styles";
 import { useHistory } from "react-router-dom";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import {
   LocalizationProvider,
   DatePicker,
@@ -863,7 +864,7 @@ export default function CreateJob({
             />
           </div>
 
-          <LocalizationProvider utils={DateFnsUtils}>
+          <LocalizationProvider utils={DateFnsUtils} dateAdapter={AdapterDateFns}>
             <div className="dateTimeWp">
               <div className="datewp">
                 <p>Delivery Date Time</p>
@@ -872,6 +873,7 @@ export default function CreateJob({
                     margin="normal"
                     format="MM/dd/yyyy"
                     disablePast
+                    renderInput={(props) => <TextField {...props} />}
                     value={startSelectedDate}
                     onChange={handleStartDateChange}
                     KeyboardButtonProps={{

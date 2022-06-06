@@ -30,6 +30,7 @@ import JobService from "../../../services/job.service";
 import { useHistory } from "react-router-dom";
 import "./createExchange.scss";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 const styles = (theme) => ({
   root: {
@@ -418,7 +419,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
               error={errors["cost"].length > 0 ? true : false}
             />
           </div>
-          <LocalizationProvider utils={DateFnsUtils}>
+          <LocalizationProvider utils={DateFnsUtils} dateAdapter={AdapterDateFns}>
             <div className="dateTimeWp">
               <div>
                 <p>Delivery Date Time</p>
@@ -427,6 +428,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
                   format="MM/dd/yyyy"
                   value={startSelectedDate}
                   onChange={handleStartDateChange}
+                  renderInput={(props) => <TextField {...props} />}
                   KeyboardButtonProps={{
                     "aria-label": "change date",
                   }}

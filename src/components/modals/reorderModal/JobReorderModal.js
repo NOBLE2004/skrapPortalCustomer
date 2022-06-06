@@ -35,6 +35,8 @@ import { marketInfoIcon } from "../../../assets/images";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import CompanyDetail from "../companyDetail/CompanyDetail";
 import "../requestCollection/requestCollection.scss";
+import TextField from "@mui/material/TextField";
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 const styles = (theme) => ({
   root: {
@@ -371,7 +373,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
       </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
-          <LocalizationProvider utils={DateFnsUtils}>
+          <LocalizationProvider utils={DateFnsUtils} dateAdapter={AdapterDateFns}>
             <div className="dateTimeWp">
               <div className="datewp">
                 <p>Delivery Date Time</p>
@@ -382,6 +384,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
                     disablePast
                     value={startSelectedDate}
                     onChange={handleStartDateChange}
+                    renderInput={(props) => <TextField {...props} />}
                     KeyboardButtonProps={{
                       "aria-label": "change date",
                     }}
