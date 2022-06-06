@@ -161,7 +161,7 @@ const SignIn = (props) => {
             ""
           )}
           <div className="login-next-btn">
-            <Button onClick={handleSubmit}>Sign In</Button>
+            <Button sx={{color:'#ffffff'}} onClick={handleSubmit}>Sign In</Button>
           </div>
           <div className="another-account">
             Don’t have an account? <NavLink to={`phone`}><span>Sign Up</span></NavLink>{" "}
