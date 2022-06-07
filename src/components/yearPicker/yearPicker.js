@@ -6,15 +6,28 @@ import "react-datepicker/dist/react-datepicker.css";
 const Example = () => {
   const [startDate, setStartDate] = useState(new Date());
   const handleDateNext = () => {
-    if (startDate != new Date()) {
+    if (startDate.getFullYear() != new Date().getFullYear()) {
       const aYearFromNow = startDate;
-      aYearFromNow.setFullYear(aYearFromNow.getFullYear() + 1);
-      setStartDate(aYearFromNow);
+      let newDate = aYearFromNow?.setFullYear(aYearFromNow?.getFullYear() + 1);
+      setStartDate(new Date(newDate));
     }
   };
+  const handlePrevDate = () => {
+    if (startDate != new Date()) {
+      const aYearFromNow = startDate;
+      let newDate = aYearFromNow?.setFullYear(aYearFromNow?.getFullYear() - 1);
+      setStartDate(new Date(newDate));
+    }
+  };
+
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <>
-      <span>{`${"<"}`}</span>
+      <span
+        onClick={() => {
+          handlePrevDate();
+        }}
+        style={{ padding: "0px 6px" }}
+      >{`${"<"}`}</span>
       <span className="example-custom-input" onClick={onClick} ref={ref}>
         &nbsp; {value}
       </span>
@@ -23,6 +36,7 @@ const Example = () => {
         onClick={() => {
           handleDateNext();
         }}
+        style={{ padding: "0px 6px" }}
       >{`${">"}`}</span>
     </>
   ));
