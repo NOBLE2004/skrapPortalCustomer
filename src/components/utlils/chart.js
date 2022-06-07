@@ -1,7 +1,7 @@
 export const PieChartDefaultOptions = {
   plugins: {
     legend: {
-      display: true,
+      display: false,
       position: "right",
       horizontalAlign: "center",
       verticalAlign: "left",
@@ -27,7 +27,7 @@ export const PieChartDefaultOptions = {
 export const DonutChartDefaultOptions = {
   plugins: {
     legend: {
-      display: true,
+      display: false,
       position: "right",
       horizontalAlign: "center",
       verticalAlign: "left",
@@ -94,6 +94,7 @@ export const DonutChartSmallDefaultOptions = {
 export const BarChartOptions = {
   categoryPercentage: 0.6,
   fillColor: "grey",
+  
   plugins: {
     legend: {
       borderWidth: 1,

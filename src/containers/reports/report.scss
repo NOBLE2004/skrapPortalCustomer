@@ -1,4 +1,4 @@
-.report-footer{
+.report-footer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -6,12 +6,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #FFFFFF;
+  background: #ffffff;
   flex-wrap: wrap;
   box-shadow: 0px -6px 8px rgba(174, 174, 174, 0.1);
   padding: 1% 2%;
-  .label{
-    font-family: 'DM Sans';
+  .label {
+    font-family: "DM Sans";
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -21,19 +21,19 @@
   @media only screen and (max-width: 1200px) {
     padding-left: 20%;
   }
-  .content{
+  .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 2%;
     flex-wrap: wrap;
     margin-left: 2%;
-    .content-item{
+    .content-item {
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-      label{
-        font-family: 'DM Sans';
+      label {
+        font-family: "DM Sans";
         font-style: normal;
         font-weight: 500;
         font-size: 14px;
@@ -42,8 +42,8 @@
       }
     }
   }
-  .MuiButton-root{
-    font-family: 'DM Sans';
+  .MuiButton-root {
+    font-family: "DM Sans";
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -51,11 +51,11 @@
     display: flex;
     align-items: center;
     text-align: center;
-    color: #FFFFFF;
+    color: #ffffff;
     text-transform: none;
     padding: 0.8% 3%;
     border-radius: 25px;
-    background: linear-gradient(180deg, #73C6F9 0%, #5391F9 100%);
+    background: linear-gradient(180deg, #73c6f9 0%, #5391f9 100%);
   }
 }
 .main-report {
@@ -75,30 +75,30 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin: 0.5% 1%;
-    .report-filters{
+    .report-filters {
       width: 100%;
       display: flex;
       justify-content: flex-end;
       align-items: center;
       flex-direction: row;
       flex-wrap: wrap;
-      .filter-item{
+      .filter-item {
         display: flex;
         justify-content: flex-end;
         align-items: center;
         margin: 0 2%;
-        label{
-          font-family: 'DM Sans';
+        label {
+          font-family: "DM Sans";
           font-style: normal;
           font-weight: 400;
           font-size: 14px;
           line-height: 20px;
           text-align: left;
-          color: #A4ADBC;
+          color: #a4adbc;
           margin: 0 15%;
           width: 100%;
         }
-        .dark{
+        .dark {
           color: #677790;
         }
       }
@@ -126,6 +126,9 @@
         border-radius: 16px;
         box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
         margin: 2%;
+        .MuiOutlinedInput-notchedOutline {
+          border: none;
+        }
         .text {
           font-family: "DM Sans";
           font-style: normal;
@@ -279,7 +282,7 @@
             align-items: center;
             .title-right {
               margin-left: -30px;
-              font-family: 'DM Sans';
+              font-family: "DM Sans";
               font-style: normal;
               font-weight: 700;
               font-size: 12px;
@@ -308,7 +311,7 @@
                     justify-content: center;
                     align-items: center;
                     border-radius: 50%;
-                    font-family: 'DM Sans';
+                    font-family: "DM Sans";
                     font-style: normal;
                     font-weight: 700;
                     font-size: 12px;
@@ -318,13 +321,13 @@
                 }
                 .text-small {
                   padding-left: 10px;
-                  h1{
-                    font-family: 'DM Sans';
+                  h1 {
+                    font-family: "DM Sans";
                     font-style: normal;
                     font-weight: 700;
                     font-size: 12px;
                     line-height: 16px;
-                    color: #0F2851;
+                    color: #0f2851;
                   }
                 }
               }
@@ -523,7 +526,7 @@
             width: 100%;
             margin: 3% 0%;
             .year {
-              ont-family: "DM Sans";
+              font-family: "DM Sans";
               font-style: normal;
               font-weight: 700;
               font-size: 14px;
@@ -656,5 +659,86 @@
   }
   .MuiTimelineItem-missingOppositeContent::before {
     display: none;
+  }
+
+  // pir chart custom styling
+  .small-chart-large {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .title-right {
+      margin-left: -30px;
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 16px;
+      color: #677790;
+      h1 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 16px;
+        color: #677790;
+      }
+    }
+    .right-legends-small-chart {
+      width: 100%;
+      padding-left: 5px;
+      .legend-one {
+        display: flex;
+        align-items: center;
+
+        .icon {
+          span {
+            height: 20px;
+            width: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-family: "DM Sans";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 16px;
+            color: #ffffff;
+          }
+        }
+        .text-small {
+          padding-left: 10px;
+          h1 {
+            font-family: "DM Sans";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 16px;
+            color: #0f2851;
+          }
+        }
+      }
+    }
+  }
+  .button-with-icon-bar-chart {
+    margin: 10px 0px ;
+    display: flex;
+    justify-content: space-between;
+    button {
+      display: flex;
+      border: none;
+      outline: none;
+      color: #fff;
+      border-radius: 24px;
+      padding: 20px 30px;
+      background: linear-gradient(150.81deg, #5ba842 8.77%, #0f5121 91.68%);
+      span {
+        padding-left: 10px;
+        font-family: "DM Sans";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
   }
 }
