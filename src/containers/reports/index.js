@@ -1,20 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Card, CardContent, Grid, Select, OutlinedInput, Checkbox, Button, Switch } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Grid,
+  Select,
+  OutlinedInput,
+  Button,
+  Switch,
+} from "@mui/material";
 import { Masonry } from "@mui/lab";
+import Checkbox from "@mui/material/Checkbox";
 import "chart.js/auto";
 import { Chart } from "react-chartjs-2";
 import { CircleProgress } from "react-gradient-progress";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
+import DatePicker from "../../components/yearPicker/yearPicker";
 //import { LineProgressBar } from '@frogress/line';
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
-import KeyboardTabIcon from "@mui/icons-material/KeyboardTab";
-
+import KeyboardTabIcon from "../../assets/images/arrow.svg";
+import Vector from "../../assets/images/vector.svg";
 import "./report.scss";
 import {
   PieChartDefaultOptions,
@@ -23,9 +33,9 @@ import {
   DonutChartSmallDefaultOptions,
 } from "../../components/utlils/chart";
 import MenuItem from "@mui/material/MenuItem";
-import { styled } from '@mui/material/styles';
-import {makeStyles} from "@mui/styles";
-import { filterIcon } from '../../assets/images';
+import { styled } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
+import { filterIcon } from "../../assets/images";
 import {
   servicesReport,
   wasteReport,
@@ -89,22 +99,32 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 const NewReports = () => {
-    const chartEl = useRef(null);
-    const [gradientBg, setGradientBg] = useState();
-    const [gradientBg2, setGradientBg2] = useState();
-    const [selected, setSelected] = useState([]);
-    const [reports, setReports] = useState({finance: false, site_movements: false, emissions: false, waste_statistics: false});
-    const [show, setShow] = useState({show: false, show2: false, show3: false, show4: false});
-    const classes = useStyles();
+  const chartEl = useRef(null);
+  const [gradientBg, setGradientBg] = useState();
+  const [gradientBg2, setGradientBg2] = useState();
+  const [selected, setSelected] = useState([]);
+  const [reports, setReports] = useState({
+    finance: false,
+    site_movements: false,
+    emissions: false,
+    waste_statistics: false,
+  });
+  const [show, setShow] = useState({
+    show: false,
+    show2: false,
+    show3: false,
+    show4: false,
+  });
+  const classes = useStyles();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setSelected(value);
   };
-    const handleChangeReportType = (event) => {
-        const { name, value } = event.target;
-        setReports({...reports, [name]: value});
-    };
+  const handleChangeReportType = (event) => {
+    const { name, value } = event.target;
+    setReports({ ...reports, [name]: value });
+  };
   const handleShow = (index) => {
     let showN = show;
     if (showN[index] == true) {
@@ -281,513 +301,685 @@ const NewReports = () => {
     "Virginia Andrews",
     "Kelly Snyder",
   ];
-    const IOSSwitch = styled((props) => (
-        <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-    ))(({ theme }) => ({
-        width: 42,
-        height: 26,
-        padding: 0,
-        '& .MuiSwitch-switchBase': {
-            padding: 0,
-            margin: 2,
-            transitionDuration: '300ms',
-            '&.Mui-checked': {
-                transform: 'translateX(16px)',
-                color: '#fff',
-                '& + .MuiSwitch-track': {
-                    backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
-                    opacity: 1,
-                    border: 0,
-                },
-                '&.Mui-disabled + .MuiSwitch-track': {
-                    opacity: 0.5,
-                },
-            },
-            '&.Mui-focusVisible .MuiSwitch-thumb': {
-                color: '#33cf4d',
-                border: '6px solid #fff',
-            },
-            '&.Mui-disabled .MuiSwitch-thumb': {
-                color:
-                    theme.palette.mode === 'light'
-                        ? theme.palette.grey[100]
-                        : theme.palette.grey[600],
-            },
-            '&.Mui-disabled + .MuiSwitch-track': {
-                opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
-            },
+  const IOSSwitch = styled((props) => (
+    <Switch
+      focusVisibleClassName=".Mui-focusVisible"
+      disableRipple
+      {...props}
+    />
+  ))(({ theme }) => ({
+    width: 42,
+    height: 26,
+    padding: 0,
+    "& .MuiSwitch-switchBase": {
+      padding: 0,
+      margin: 2,
+      transitionDuration: "300ms",
+      "&.Mui-checked": {
+        transform: "translateX(16px)",
+        color: "#fff",
+        "& + .MuiSwitch-track": {
+          backgroundColor:
+            theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
+          opacity: 1,
+          border: 0,
         },
-        '& .MuiSwitch-thumb': {
-            boxSizing: 'border-box',
-            width: 22,
-            height: 22,
+        "&.Mui-disabled + .MuiSwitch-track": {
+          opacity: 0.5,
         },
-        '& .MuiSwitch-track': {
-            borderRadius: 26 / 2,
-            backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
-            opacity: 1,
-            transition: theme.transitions.create(['background-color'], {
-                duration: 500,
-            }),
-        },
-    }));
+      },
+      "&.Mui-focusVisible .MuiSwitch-thumb": {
+        color: "#33cf4d",
+        border: "6px solid #fff",
+      },
+      "&.Mui-disabled .MuiSwitch-thumb": {
+        color:
+          theme.palette.mode === "light"
+            ? theme.palette.grey[100]
+            : theme.palette.grey[600],
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+      },
+    },
+    "& .MuiSwitch-thumb": {
+      boxSizing: "border-box",
+      width: 22,
+      height: 22,
+    },
+    "& .MuiSwitch-track": {
+      borderRadius: 26 / 2,
+      backgroundColor: theme.palette.mode === "light" ? "#677790" : "#39393D",
+      opacity: 1,
+      transition: theme.transitions.create(["background-color"], {
+        duration: 500,
+      }),
+    },
+  }));
   return (
-      <>
-    <div className="main-report">
-      <div className="report-header">
-        <div className="report-grid-header">
-          {/*<div className="report-header-card first">*/}
-          {/*    <div className="text">*/}
-          {/*        */}
-          {/*    </div>*/}
-          {/*</div>*/}
-          <div className="report-header-card first">
-            <div className="text">
-              <span>Management Reporting</span>
-            </div>
-            <Select
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              multiple={true}
-              value={selected}
-              displayEmpty
-              onChange={handleChange}
-              input={
-                <OutlinedInput
-                  notched={false}
-                  notchedOutline={false}
-                  label="Name"
-                />
-              }
-              MenuProps={MenuProps}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <em>Sites</em>;
+    <>
+      <div className="main-report">
+        <div className="report-header">
+          <div className="report-grid-header">
+            {/*<div className="report-header-card first">*/}
+            {/*    <div className="text">*/}
+            {/*        */}
+            {/*    </div>*/}
+            {/*</div>*/}
+            <div className="report-header-card first">
+              <div className="text">
+                <span>Management Reporting</span>
+              </div>
+              <Select
+                labelId="demo-multiple-name-label"
+                id="demo-multiple-name"
+                multiple={true}
+                value={selected}
+                displayEmpty
+                onChange={handleChange}
+                input={
+                  <OutlinedInput
+                    notched={false}
+                    notchedOutline={false}
+                    label="Name"
+                  />
                 }
-                return selected.length > 1 ? (
-                  <div className="text-sec">
-                    Viewing: Multiple sites{" "}
-                    <span>
-                      {selected.length} of {names.length} sites
-                    </span>
-                  </div>
-                ) : (
-                  selected.join(",")
-                );
-              }}
-            >
-              {names.map((name) => (
-                <MenuItem
-                  classes={{
-                    selected: classes.selected,
-                    root: classes.rootMenuItem,
-                  }}
-                  key={name}
-                  value={name}
-                  //style={getStyles(name, personName, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </div>
-        </div>
-        <div className="report-grid-header">
-          <div className="report-header-card">
-            <div className="text">
-              <span>6</span> Sites
+                MenuProps={MenuProps}
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return <em>Sites</em>;
+                  }
+                  return selected.length > 1 ? (
+                    <div className="text-sec">
+                      Viewing: Multiple sites{" "}
+                      <span>
+                        {selected.length} of {names.length} sites
+                      </span>
+                    </div>
+                  ) : (
+                    selected.join(",")
+                  );
+                }}
+              >
+                {names.map((name) => (
+                  <MenuItem
+                    classes={{
+                      selected: classes.selected,
+                      root: classes.rootMenuItem,
+                    }}
+                    key={name}
+                    value={name}
+                    //style={getStyles(name, personName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
             </div>
           </div>
-          <div className="report-header-card">
-            <div className="text">
-              <span>64</span> Bookings complete
+          <div className="report-grid-header">
+            <div className="report-header-card">
+              <div className="text">
+                <span>6</span> Sites
+              </div>
             </div>
-          </div>
-          <div className="report-header-card">
-            <div className="text">
-              <span>5</span> Hire Types
+            <div className="report-header-card">
+              <div className="text">
+                <span>64</span> Bookings complete
+              </div>
             </div>
+            <div className="report-header-card">
+              <div className="text">
+                <span>5</span> Hire Types
+              </div>
+            </div>
+            {/*<div className="report-header-card">*/}
+            {/*  <div className="text">*/}
+            {/*    <span>3</span> Suppliers*/}
+            {/*  </div>*/}
+            {/*</div>*/}
           </div>
-          {/*<div className="report-header-card">*/}
-          {/*  <div className="text">*/}
-          {/*    <span>3</span> Suppliers*/}
-          {/*  </div>*/}
-          {/*</div>*/}
-        </div>
           <div className="report-filters">
-              <div className="filter-item">
-                  <label>Value/percent</label>
-                  <IOSSwitch value={true}/>
-              </div>
-              <div className="filter-item">
-                  <img src={filterIcon}/>
-                  <label className="dark">Filter</label>
-              </div>
+            <div className="filter-item">
+              <label>Value/percent</label>
+              <IOSSwitch value={true} />
+            </div>
+            <div className="filter-item">
+              <img src={filterIcon} />
+              <label className="dark">Filter</label>
+            </div>
           </div>
-      </div>
-      <div className="report-grid">
-        <Masonry container columns={2} spacing={4}>
-          <div className="report-chart-card-outer">
-            <div className="report-card-title">Finance report</div>
-            <Card className="report-chart-card">
-              <CardContent>
-                <div className="salesWp">
-                  <h1>
-                    £10,270.00 <span>Total spent</span>
-                  </h1>
-                  <div className="sub-heading">Site breakdown</div>
-                  <Chart
-                    type="pie"
-                    options={PieChartDefaultOptions}
-                    data={series}
-                    height="300"
-                    width="500"
-                  />
-                  <div
-                    className="see-more"
-                    onClick={() => {
-                      handleShow("show");
-                    }}
-                  >
-                    See more
-                  </div>
-                  {show.show && (
-                    <div className="see-more-wrap">
-                      <div className="border-drop"></div>
-                      <div className="more-drop">
-                        <div className="sub-heading">Hire breakdown</div>
-                        <div className="services">
-                          {`<`}
-                          {servicesReport.map((service) => {
-                            return (
-                              <div className="service-box p-2">
-                                <img src={service.full_url} />
-                                <div className="service-detail">
-                                  <div className="name">
-                                    {service.service_name}
-                                  </div>
-                                  <div className="percentage">
-                                    {service.percentage}%
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                          {`>`}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="report-chart-card-outer">
-            <div className="report-card-title">Emissions</div>
-            <Card className="report-chart-card">
-              <CardContent>
-                <div className="salesWp">
-                  <h1>
-                    12.567 <span>kg of CO2e Cumulative Emissions</span>
-                  </h1>
-                  <div className="sub-heading">Monthly breakdown</div>
-                  <div className="filters">
-                    <div className="year">{`${"<"}`} 2022 ></div>
-                    <div className="total">
-                      Total payment: <span>£313.13</span>
-                    </div>
-                  </div>
-                  <Chart
-                    type="bar"
-                    ref={chartEl}
-                    id="myChart"
-                    options={BarChartOptions}
-                    data={data}
-                  />
-                </div>
-              </CardContent>
-              <CardContent>
-                <div className="salesWp">
-                  <h2>Did you know?</h2>
-                  <p>
-                    By upgrading your <span>8-yard skips</span> to a{" "}
-                    <span>12 yard skips</span> you would reduce your site
-                    movements by 15% which could reduce your carbon emissions
-                  </p>
-                  <div className="sub-heading">Offset payments</div>
-                  <div className="filters">
-                    <div className="year">{`${"<"}`} 2022 ></div>
-                    <div className="total">
-                      Total payment: <span>£313.13</span>
-                    </div>
-                  </div>
-                  <Chart
-                    type="bar"
-                    ref={chartEl}
-                    id="myChart2"
-                    options={BarChartOptions}
-                    data={data2}
-                  />
-                  <div
-                    className="see-more"
-                    onClick={() => {
-                      handleShow("show2");
-                    }}
-                  >
-                    See more
-                  </div>
-                  {show.show2 && (
-                    <div className="see-more-wrap">
-                      <div className="border-drop"></div>
-                      <div className="more-drop">
-                        <div className="sub-heading">Site breakdown</div>
-                        <div className="head-text">
-                          <p>
-                            <span>86</span> site journeys
-                          </p>
-                          <p>
-                            <span>525.5 miles</span> equivalent to driving from{" "}
-                            <b>London</b> to <b>Berlin</b>
-                          </p>
-                        </div>
-                        <div className="services">
-                          {sitesReport.map((service) => {
-                            return (
-                              <div className="service-box">
-                                <div className="circle-wrap">
-                                  <div
-                                    className="circle"
-                                    style={{
-                                      width: `${
-                                        service.percentage > 5
-                                          ? service.percentage * 4
-                                          : service.percentage * 8
-                                      }px`,
-                                      height: `${
-                                        service.percentage > 5
-                                          ? service.percentage * 4
-                                          : service.percentage * 8
-                                      }px`,
-                                      background: service.color,
-                                    }}
-                                  />
-                                </div>
-                                <div className="service-detail start">
-                                  <div className="name circle-name">
-                                    {service.name}
-                                  </div>
-                                  <div className="percentage percentage-circle">
-                                    {service.percentage} CO2e
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                        <div className="sub-heading">CO2e breakdown</div>
-                        <div className="sub-heading progress-label">
-                          <p>Van</p>
-                          <p>Truck</p>
-                        </div>
-                        <div className="services">
-                          <div className="progress-div">
-                            <div
-                              className="progress-bar"
-                              style={{ width: "40%" }}
-                            >
-                              <label>25%</label>
-                              <BorderLinearProgress
-                                value={100}
-                                variant="determinate"
-                              />
-                            </div>
-                            <div
-                              className="progress-bar"
-                              style={{ width: "60%", position: "relative" }}
-                            >
-                              <BorderLinearProgress
-                                value={0}
-                                variant="determinate"
-                              />
-                              <label
-                                style={{
-                                  right: 0,
-                                  paddingRight: "2.5%",
-                                }}
-                              >
-                                60%
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <Grid container marginTop={5}>
-                          <BorderLinearProgress2
-                            value={60}
-                            variant="determinate"
+        </div>
+        <div className="report-grid">
+          <Masonry container columns={2} spacing={4}>
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">Finance report</div>
+              <Card className="report-chart-card">
+                <CardContent>
+                  <div className="salesWp">
+                    <h1>
+                      £10,270.00 <span>Total spent</span>
+                    </h1>
+                    <div className="sub-heading">Site breakdown</div>
+
+                    <Grid container className="small-chart-large">
+                      <Grid item xs={8} className="d-flex align-center">
+                        <div className="flex-3">
+                          <Chart
+                            type="pie"
+                            options={PieChartDefaultOptions}
+                            data={series}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                            }}
                           />
-                        </Grid>
-                        <Grid container justifyContent="space-between">
-                          <div className="sub-heading progress-label">
-                            <p className="text left">
-                              Tank-to-well <br />
-                              <span> 7.44 miles</span>
+                        </div>
+                      </Grid>
+
+                      <Grid item xs={4} className="right-legends-small-chart">
+                        <div className="legend-one">
+                          <div className="icon">
+                            <span
+                              style={{
+                                backgroundColor: "#102751",
+                              }}
+                            ></span>
+                          </div>
+                          <div className="text-small">
+                            <h1>Exchange 75%</h1>
+                          </div>
+                        </div>
+                        <div className="legend-one">
+                          <div className="icon">
+                            <span
+                              style={{
+                                backgroundColor: "#60a0f8",
+                              }}
+                            />
+                          </div>
+                          <div className="text-small">
+                            <h1>Wait & load 17%</h1>
+                          </div>
+                        </div>
+                        <div className="legend-one">
+                          <div className="icon">
+                            <span
+                              style={{
+                                backgroundColor: "#dfecfe",
+                              }}
+                            ></span>
+                          </div>
+                          <div className="text-small">
+                            <h1>Collect 4%</h1>
+                          </div>
+                        </div>
+                        <div className="legend-one">
+                          <div className="icon">
+                            <span
+                              style={{
+                                backgroundColor: "#A4ADBC",
+                              }}
+                            ></span>
+                          </div>
+                          <div className="text-small">
+                            <h1>Delivery 4%</h1>
+                          </div>
+                        </div>
+                      </Grid>
+                    </Grid>
+
+                    <div
+                      className="see-more"
+                      onClick={() => {
+                        handleShow("show");
+                      }}
+                    >
+                      See more
+                    </div>
+                    {show.show && (
+                      <div className="see-more-wrap">
+                        <div className="border-drop"></div>
+                        <div className="more-drop">
+                          <div className="sub-heading">Hire breakdown</div>
+                          <div className="services">
+                            {`<`}
+                            {servicesReport.map((service) => {
+                              return (
+                                <div className="service-box p-2">
+                                  <img src={service.full_url} />
+                                  <div className="service-detail">
+                                    <div className="name">
+                                      {service.service_name}
+                                    </div>
+                                    <div className="percentage">
+                                      {service.percentage}%
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                            {`>`}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">Emissions</div>
+              <Card className="report-chart-card">
+                <CardContent>
+                  <div className="salesWp">
+                    <h1>
+                      12.567 <span>kg of CO2e Cumulative Emissions</span>
+                    </h1>
+                    <div className="sub-heading">Monthly breakdown</div>
+                    <div className="filters">
+                      <div className="year ">
+                        <DatePicker />
+                      </div>
+                      <div className="total">
+                        Total payment: <span>£313.13</span>
+                      </div>
+                    </div>
+                    <Chart
+                      type="bar"
+                      ref={chartEl}
+                      id="myChart"
+                      options={BarChartOptions}
+                      data={data}
+                    />
+                  </div>
+                </CardContent>
+                <CardContent>
+                  <div className="salesWp">
+                    <h2>Did you know?</h2>
+                    <p>
+                      By upgrading your <span>8-yard skips</span> to a{" "}
+                      <span>12 yard skips</span> you would reduce your site
+                      movements by 15% which could reduce your carbon emissions
+                    </p>
+                    <div className="sub-heading">Offset payments</div>
+                    <div className="filters">
+                      <div className="year">
+                        <DatePicker />
+                      </div>
+                      <div className="total">
+                        Total payment: <span>£313.13</span>
+                      </div>
+                    </div>
+                    <Chart
+                      type="bar"
+                      ref={chartEl}
+                      id="myChart2"
+                      options={BarChartOptions}
+                      data={data2}
+                    />
+                    <div className="w-100 button-with-icon-bar-chart">
+                      <div className="w-100">
+                        <button>
+                          <img src={Vector} alt="" />
+                          <span>Pay CO2e offset</span>
+                        </button>
+                      </div>
+                      <div
+                        className="see-more"
+                        onClick={() => {
+                          handleShow("show2");
+                        }}
+                      >
+                        See more
+                      </div>
+                    </div>
+                    {show.show2 && (
+                      <div className="see-more-wrap">
+                        <div className="border-drop"></div>
+                        <div className="more-drop">
+                          <div className="sub-heading">Site breakdown</div>
+                          <div className="head-text">
+                            <p>
+                              <span>86</span> site journeys
                             </p>
-                            <p className="text right">
-                              Well-to-tank <br />
-                              <span> 7.44 miles</span>
+                            <p>
+                              <span>525.5 miles</span> equivalent to driving
+                              from <b>London</b> to <b>Berlin</b>
                             </p>
                           </div>
-                        </Grid>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="report-chart-card-outer">
-            <div className="report-card-title">C02e Breakdown</div>
-            <Card className="report-chart-card">
-              <CardContent>
-                <div className="salesWp">
-                  <h1>
-                    44.57 <span>Tonnes total weight</span>
-                  </h1>
-                  <div className="salesWp-inner-wrap">
-                    <div className="salesWp-sub">
-                      <div>
-                        <CircleProgress
-                          width={250}
-                          strokeWidth={20}
-                          fontFamily={"DM Sans"}
-                          fontSize={"26px"}
-                          fontColor={"#0F285"}
-                          fontWeight={"700"}
-                          secondaryColor={"#F7F7F7"}
-                          percentage={85}
-                          primaryColor={["#73C6F9", "#5391F9"]}
-                        />
-                      </div>
-                    </div>
-                    <div className="salesWp-sub">
-                      <div className="guage-with-text">
-                        <CircleProgress
-                          width={100}
-                          strokeWidth={10}
-                          fontFamily={"DM Sans"}
-                          fontSize={"14px"}
-                          fontColor={"#0F285"}
-                          fontWeight={700}
-                          secondaryColor={"#F7F7F7"}
-                          percentage={54}
-                          primaryColor={["#50D226", "#50D226"]}
-                        />
-                        <div className="text">
-                          <h1>Recycled</h1>
-                          <p>48.7 tonns CO2</p>
-                          <label>Equivalent to 200 trees</label>
-                        </div>
-                      </div>
-                      <div className="guage-with-text">
-                        <CircleProgress
-                          width={100}
-                          strokeWidth={10}
-                          fontFamily={"DM Sans"}
-                          fontSize={"14px"}
-                          fontColor={"#0F285"}
-                          fontWeight={700}
-                          secondaryColor={"#F7F7F7"}
-                          percentage={36}
-                          primaryColor={["#0F2851", "#0F2851"]}
-                        />
-                        <div className="text">
-                          <h1>Waste of energy</h1>
-                          <p>34.7 KWhr of energy</p>
-                          <label>
-                            Equivalent to 5000 <br />
-                            smartphone charges
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="see-more"
-                    onClick={() => {
-                      handleShow("show3");
-                    }}
-                  >
-                    See more
-                  </div>
-                  {show.show3 && (
-                    <div className="see-more-wrap">
-                      <div className="border-drop"></div>
-                      <div className="more-drop">
-                        <div className="sub-heading">Waste breakdown</div>
-                        <div className="services wrap row">
-                          {wasteReport.map((waste) => {
-                            return (
-                              <div className="waste-box">
-                                <div className={`waste-detail ${waste.color}`}>
-                                  <div className="name">{waste.name}</div>
-                                  <div className="percentage">
-                                    {waste.percentage}%
+                          <div className="services">
+                            {sitesReport.map((service) => {
+                              return (
+                                <div className="service-box">
+                                  <div className="circle-wrap">
+                                    <div
+                                      className="circle"
+                                      style={{
+                                        width: `${
+                                          service.percentage > 5
+                                            ? service.percentage * 4
+                                            : service.percentage * 8
+                                        }px`,
+                                        height: `${
+                                          service.percentage > 5
+                                            ? service.percentage * 4
+                                            : service.percentage * 8
+                                        }px`,
+                                        background: service.color,
+                                      }}
+                                    />
+                                  </div>
+                                  <div className="service-detail start">
+                                    <div className="name circle-name">
+                                      {service.name}
+                                    </div>
+                                    <div className="percentage percentage-circle">
+                                      {service.percentage} CO2e
+                                    </div>
                                   </div>
                                 </div>
+                              );
+                            })}
+                          </div>
+                          <div className="sub-heading">CO2e breakdown</div>
+                          <div className="sub-heading progress-label">
+                            <p>Van</p>
+                            <p>Truck</p>
+                          </div>
+                          <div className="services">
+                            <div className="progress-div">
+                              <div
+                                className="progress-bar"
+                                style={{ width: "40%" }}
+                              >
+                                <label>25%</label>
+                                <BorderLinearProgress
+                                  value={100}
+                                  variant="determinate"
+                                />
                               </div>
-                            );
-                          })}
+                              <div
+                                className="progress-bar"
+                                style={{ width: "60%", position: "relative" }}
+                              >
+                                <BorderLinearProgress
+                                  value={0}
+                                  variant="determinate"
+                                />
+                                <label
+                                  style={{
+                                    right: 0,
+                                    paddingRight: "2.5%",
+                                  }}
+                                >
+                                  60%
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <Grid container marginTop={5}>
+                            <BorderLinearProgress2
+                              value={60}
+                              variant="determinate"
+                            />
+                          </Grid>
+                          <Grid container justifyContent="space-between">
+                            <div className="sub-heading progress-label">
+                              <p className="text left">
+                                Tank-to-well <br />
+                                <span> 7.44 miles</span>
+                              </p>
+                              <p className="text right">
+                                Well-to-tank <br />
+                                <span> 7.44 miles</span>
+                              </p>
+                            </div>
+                          </Grid>
                         </div>
-                        <div className="sub-heading">Site breakdown</div>
-                        <div className="services">
-                          {sitesReport.map((service) => {
-                            return (
-                              <div className="service-box">
-                                <div className="circle-wrap">
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">C02e Breakdown</div>
+              <Card className="report-chart-card">
+                <CardContent>
+                  <div className="salesWp">
+                    <h1>
+                      44.57 <span>Tonnes total weight</span>
+                    </h1>
+                    <div className="salesWp-inner-wrap">
+                      <div className="salesWp-sub">
+                        <div>
+                          <CircleProgress
+                            width={250}
+                            strokeWidth={20}
+                            fontFamily={"DM Sans"}
+                            fontSize={"26px"}
+                            fontColor={"#0F285"}
+                            fontWeight={"700"}
+                            secondaryColor={"#F7F7F7"}
+                            percentage={85}
+                            primaryColor={["#73C6F9", "#5391F9"]}
+                          />
+                        </div>
+                      </div>
+                      <div className="salesWp-sub">
+                        <div className="guage-with-text">
+                          <CircleProgress
+                            width={100}
+                            strokeWidth={10}
+                            fontFamily={"DM Sans"}
+                            fontSize={"14px"}
+                            fontColor={"#0F285"}
+                            fontWeight={700}
+                            secondaryColor={"#F7F7F7"}
+                            percentage={54}
+                            primaryColor={["#50D226", "#50D226"]}
+                          />
+                          <div className="text">
+                            <h1>Recycled</h1>
+                            <p>48.7 tonns CO2</p>
+                            <label>Equivalent to 200 trees</label>
+                          </div>
+                        </div>
+                        <div className="guage-with-text">
+                          <CircleProgress
+                            width={100}
+                            strokeWidth={10}
+                            fontFamily={"DM Sans"}
+                            fontSize={"14px"}
+                            fontColor={"#0F285"}
+                            fontWeight={700}
+                            secondaryColor={"#F7F7F7"}
+                            percentage={36}
+                            primaryColor={["#0F2851", "#0F2851"]}
+                          />
+                          <div className="text">
+                            <h1>Waste of energy</h1>
+                            <p>34.7 KWhr of energy</p>
+                            <label>
+                              Equivalent to 5000 <br />
+                              smartphone charges
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="see-more"
+                      onClick={() => {
+                        handleShow("show3");
+                      }}
+                    >
+                      See more
+                    </div>
+                    {show.show3 && (
+                      <div className="see-more-wrap">
+                        <div className="border-drop"></div>
+                        <div className="more-drop">
+                          <div className="sub-heading">Waste breakdown</div>
+                          <div className="services wrap row">
+                            {wasteReport.map((waste) => {
+                              return (
+                                <div className="waste-box">
                                   <div
-                                    className="circle"
-                                    style={{
-                                      width: `${
-                                        service.percentage > 5
-                                          ? service.percentage * 4
-                                          : service.percentage * 8
-                                      }px`,
-                                      height: `${
-                                        service.percentage > 5
-                                          ? service.percentage * 4
-                                          : service.percentage * 8
-                                      }px`,
-                                    }}
-                                  />
-                                </div>
-                                <div className="service-detail start">
-                                  <div className="name circle-name">
-                                    {service.name}
-                                  </div>
-                                  <div className="percentage percentage-circle">
-                                    {service.percentage} T
+                                    className={`waste-detail ${waste.color}`}
+                                  >
+                                    <div className="name">{waste.name}</div>
+                                    <div className="percentage">
+                                      {waste.percentage}%
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            );
-                          })}
+                              );
+                            })}
+                          </div>
+                          <div className="sub-heading">Site breakdown</div>
+                          <div className="services">
+                            {sitesReport.map((service) => {
+                              return (
+                                <div className="service-box">
+                                  <div className="circle-wrap">
+                                    <div
+                                      className="circle"
+                                      style={{
+                                        width: `${
+                                          service.percentage > 5
+                                            ? service.percentage * 4
+                                            : service.percentage * 8
+                                        }px`,
+                                        height: `${
+                                          service.percentage > 5
+                                            ? service.percentage * 4
+                                            : service.percentage * 8
+                                        }px`,
+                                      }}
+                                    />
+                                  </div>
+                                  <div className="service-detail start">
+                                    <div className="name circle-name">
+                                      {service.name}
+                                    </div>
+                                    <div className="percentage percentage-circle">
+                                      {service.percentage} T
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="report-chart-card-outer">
-            <div className="report-card-title">Site Movements</div>
-            <Card className="report-chart-card">
-              <CardContent>
-                <div className="salesWp">
-                  <h1>
-                    537 <span>Total bookings</span>
-                  </h1>
-                  <Chart
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">Site Movements</div>
+              <Card className="report-chart-card ">
+                <CardContent>
+                  <div className="salesWp">
+                    <h1>
+                      537 <span>Total bookings</span>
+                    </h1>
+                    <Grid container className="small-chart-large">
+                      <Grid item xs={8} className="d-flex align-center">
+                        <div className="flex-3">
+                          <Chart
+                            className="chart"
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                            }}
+                            type="doughnut"
+                            options={DonutChartSmallDefaultOptions}
+                            plugins={[
+                              {
+                                beforeDraw(chart) {
+                                  const { width } = chart;
+                                  const { height } = chart;
+                                  const { ctx } = chart;
+                                  ctx.restore();
+                                  const fontSize = (height / 80).toFixed(2);
+                                  ctx.font = `${fontSize}em DM Sans`;
+                                  ctx.textBaseline = "top";
+                                  const max_val = Math.max.apply(
+                                    Math,
+                                    chart.data.datasets[0].data
+                                  );
+                                  console.log(chart.getDatasetMeta(0).data[0]);
+                                  const text = `${max_val}%`;
+                                  const textX = Math.round(
+                                    (width - ctx.measureText(text).width) / 2
+                                  );
+                                  const textY = height / 2.5;
+                                  ctx.fillText(text, textX, textY);
+                                  ctx.save();
+                                },
+                              },
+                            ]}
+                            data={series3}
+                          />
+                        </div>
+                      </Grid>
+
+                      <Grid item xs={4} className="right-legends-small-chart">
+                        <div className="legend-one">
+                          <div className="icon">
+                            <span
+                              style={{
+                                backgroundColor: "#102751",
+                              }}
+                            ></span>
+                          </div>
+                          <div className="text-small">
+                            <h1>Exchange 75%</h1>
+                          </div>
+                        </div>
+                        <div className="legend-one">
+                          <div className="icon">
+                            <span
+                              style={{
+                                backgroundColor: "#60a0f8",
+                              }}
+                            />
+                          </div>
+                          <div className="text-small">
+                            <h1>Wait & load 17%</h1>
+                          </div>
+                        </div>
+                        <div className="legend-one">
+                          <div className="icon">
+                            <span
+                              style={{
+                                backgroundColor: "#dfecfe",
+                              }}
+                            ></span>
+                          </div>
+                          <div className="text-small">
+                            <h1>Collect 4%</h1>
+                          </div>
+                        </div>
+                        <div className="legend-one">
+                          <div className="icon">
+                            <span
+                              style={{
+                                backgroundColor: "#A4ADBC",
+                              }}
+                            ></span>
+                          </div>
+                          <div className="text-small">
+                            <h1>Delivery 4%</h1>
+                          </div>
+                        </div>
+                      </Grid>
+                    </Grid>
+                    {/* <Chart
                     type="doughnut"
                     options={DonutChartDefaultOptions}
                     data={series}
@@ -818,16 +1010,16 @@ const NewReports = () => {
                         },
                       },
                     ]}
-                  />
-                <div
-                    className="see-more"
-                    onClick={() => {
-                      handleShow("show4");
-                    }}
-                >
-                  See more
-                </div>
-                  {show.show4 && (
+                  /> */}
+                    <div
+                      className="see-more"
+                      onClick={() => {
+                        handleShow("show4");
+                      }}
+                    >
+                      See more
+                    </div>
+                    {show.show4 && (
                       <div className="see-more-wrap">
                         <div className="border-drop"></div>
                         <Timeline className="more-drop">
@@ -850,16 +1042,15 @@ const NewReports = () => {
                                       sx={{
                                         width: "8px",
                                         backgroundColor: "#d6eafd",
-                                        borderTopLeftRadius: index === 0 ? "8px" : "0x",
+                                        borderTopLeftRadius:
+                                          index === 0 ? "8px" : "0x",
                                         borderTopRightRadius:
                                           index === 0 ? "8px" : "0x",
                                       }}
                                     />
-                                    {/* <div
-                                     className="d-flex align-center"
-                                    >
-                                      <KeyboardTabIcon />
-                                    </div> */}
+                                    <div className="d-flex align-center">
+                                      <img src={KeyboardTabIcon} alt="" />
+                                    </div>
                                   </div>
                                 </TimelineSeparator>
 
@@ -869,7 +1060,11 @@ const NewReports = () => {
                                   }}
                                 >
                                   <Grid container className="small-chart">
-                                    <Grid item xs={6} className="d-flex align-center">
+                                    <Grid
+                                      item
+                                      xs={6}
+                                      className="d-flex align-center"
+                                    >
                                       <div className="flex-3">
                                         <Chart
                                           className="chart"
@@ -878,7 +1073,9 @@ const NewReports = () => {
                                             height: "100%",
                                           }}
                                           type="doughnut"
-                                          options={DonutChartSmallDefaultOptions}
+                                          options={
+                                            DonutChartSmallDefaultOptions
+                                          }
                                           plugins={[
                                             {
                                               beforeDraw(chart) {
@@ -886,9 +1083,9 @@ const NewReports = () => {
                                                 const { height } = chart;
                                                 const { ctx } = chart;
                                                 ctx.restore();
-                                                const fontSize = (height / 80).toFixed(
-                                                  2
-                                                );
+                                                const fontSize = (
+                                                  height / 80
+                                                ).toFixed(2);
                                                 ctx.font = `${fontSize}em DM Sans`;
                                                 ctx.textBaseline = "top";
                                                 const max_val = Math.max.apply(
@@ -896,16 +1093,22 @@ const NewReports = () => {
                                                   chart.data.datasets[0].data
                                                 );
                                                 console.log(
-                                                  chart.getDatasetMeta(0).data[0]
+                                                  chart.getDatasetMeta(0)
+                                                    .data[0]
                                                 );
                                                 const text = `${max_val}%`;
                                                 const textX = Math.round(
                                                   (width -
-                                                    ctx.measureText(text).width) /
+                                                    ctx.measureText(text)
+                                                      .width) /
                                                     2
                                                 );
                                                 const textY = height / 2.5;
-                                                ctx.fillText(text, textX, textY);
+                                                ctx.fillText(
+                                                  text,
+                                                  textX,
+                                                  textY
+                                                );
                                                 ctx.save();
                                               },
                                             },
@@ -972,57 +1175,54 @@ const NewReports = () => {
                             );
                           })}
                         </Timeline>
-                      </div>)}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </Masonry>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </Masonry>
+        </div>
       </div>
-    </div>
-    <div className="report-footer">
-        <div className="label">
-            Select reports to download
-        </div>
+      <div className="report-footer">
+        <div className="label">Select reports to download</div>
         <div className="content">
-            <div className="content-item">
-                <label htmlFor="finance">Finance</label>
-                <Checkbox
-                    name="finance"
-                    id="finance"
-                    onChange={handleChangeReportType}
-                />
-            </div>
-            <div className="content-item">
-                <label htmlFor="site_movements">Site movements</label>
-                <Checkbox
-                    name="site_movements"
-                    id="site_movements"
-                    onChange={handleChangeReportType}
-                />
-            </div>
-            <div className="content-item">
-                <label htmlFor="emissions">Emissions</label>
-                <Checkbox
-                    name="emissions"
-                    id="emissions"
-                    onChange={handleChangeReportType}
-                />
-            </div>
-            <div className="content-item">
-                <label htmlFor="waste_statistics">Waste Statistics</label>
-                <Checkbox
-                    name="waste_statistics"
-                    id="waste_statistics"
-                    onChange={handleChangeReportType}
-                />
-            </div>
+          <div className="content-item">
+            <label htmlFor="finance">Finance</label>
+            <Checkbox
+              name="finance"
+              id="finance"
+              onChange={handleChangeReportType}
+            />
+          </div>
+          <div className="content-item">
+            <label htmlFor="site_movements">Site movements</label>
+            <Checkbox
+              name="site_movements"
+              id="site_movements"
+              onChange={handleChangeReportType}
+            />
+          </div>
+          <div className="content-item">
+            <label htmlFor="emissions">Emissions</label>
+            <Checkbox
+              name="emissions"
+              id="emissions"
+              onChange={handleChangeReportType}
+            />
+          </div>
+          <div className="content-item">
+            <label htmlFor="waste_statistics">Waste Statistics</label>
+            <Checkbox
+              name="waste_statistics"
+              id="waste_statistics"
+              onChange={handleChangeReportType}
+            />
+          </div>
         </div>
-        <Button classes="footer-btn">
-            Download CSV
-        </Button>
-    </div>
-</>
+        <Button classes="footer-btn">Download CSV</Button>
+      </div>
+    </>
   );
 };
 
