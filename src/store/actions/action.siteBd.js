@@ -1,11 +1,11 @@
 import * as Constants from "../constants/constants";
-import reportService from "../../services/report.service";
+import ReportsService from "../../services/reports.service";
 
 export const getSiteBreakdown = (data) => {
     return (dispatch) => {
         dispatch(siteBreakdownStart());
-        reportService
-            .getReports(data)
+        ReportsService
+            .getSitesBreakdown(data)
             .then((response) => {
                 if (Object.keys(response.data).length !== 0) {
                     const siteBreakdown = response.data;
