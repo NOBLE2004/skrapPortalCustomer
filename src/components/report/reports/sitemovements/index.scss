@@ -1,0 +1,146 @@
+.report-chart-card {
+  .salesWp {
+    .more-drop {
+      .small-chart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .title-right {
+          margin-left: -30px;
+          font-family: "DM Sans";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 16px;
+          color: #677790;
+
+          h1 {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 16px;
+            color: #677790;
+          }
+        }
+
+        .right-legends-small-chart {
+          width: 100%;
+          padding-left: 30px;
+
+          .legend-one {
+            display: flex;
+            align-items: center;
+
+            .icon {
+              h1 {
+                height: 25px;
+                width: 25px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                font-family: "DM Sans";
+                font-style: normal;
+                font-weight: 700;
+                font-size: 12px;
+                line-height: 16px;
+                color: #ffffff;
+              }
+            }
+
+            .text-small {
+              padding-left: 10px;
+
+              h1 {
+                font-family: "DM Sans";
+                font-style: normal;
+                font-weight: 700;
+                font-size: 12px;
+                line-height: 16px;
+                color: #0f2851;
+              }
+            }
+          }
+        }
+
+        //.chart{
+        //  display: flex !important;
+        //  width: 100% !important;
+        //  height: auto !important;
+        //  justify-content: space-between;
+        //  align-items: center;
+        //  flex-direction: column;
+        //}
+      }
+    }
+
+    // pir chart custom styling
+    .small-chart-large {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .title-right {
+        margin-left: -30px;
+        font-family: "DM Sans";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 16px;
+        color: #677790;
+
+        h1 {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 16px;
+          color: #677790;
+        }
+      }
+
+      .right-legends-small-chart {
+        width: 100%;
+        padding-left: 5px;
+
+        .legend-one {
+          display: flex;
+          align-items: center;
+
+          .icon {
+            span {
+              height: 20px;
+              width: 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+              font-family: "DM Sans";
+              font-style: normal;
+              font-weight: 700;
+              font-size: 12px;
+              line-height: 16px;
+              color: #ffffff;
+            }
+          }
+
+          .text-small {
+            padding-left: 10px;
+
+            h1 {
+              font-family: "DM Sans";
+              font-style: normal;
+              font-weight: 700;
+              font-size: 12px;
+              line-height: 16px;
+              color: #0f2851;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.MuiTimelineItem-missingOppositeContent::before {
+  display: none;
+}
