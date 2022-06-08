@@ -57,14 +57,5 @@ const NewReports = (props) => {
     </>
   );
 };
-const mapStateToProps = ({ }) => {
-  return { };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    //getSites: () => dispatch(getSites()),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(NewReports);
+export default NewReports;
 
