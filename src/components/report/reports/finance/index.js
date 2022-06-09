@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getHireBreakdown } from "../../../../store/actions/action.hireBd";
 import { getSiteBreakdown } from "../../../../store/actions/action.siteBd";
 import React, { useEffect, useState, createRef } from "react";
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -37,67 +39,17 @@ const FinanceReport = (props) => {
   const stateSites = useSelector((state) => state?.siteBreakdown);
   const { sites } = props;
   const [show, setShow] = useState(false);
-
-  const series = {
-    labels: [
-      "      Exchange 75% ",
-      "      Wait & Load 17% ",
-      "      Collect 4% ",
-      "      Delivery 4% ",
-    ],
-    datasets: [
-      {
-        data: [90, 20, 10, 30],
-        backgroundColor: [
-          "#0F2851",
-          "#DFECFE",
-          "#60A0F8",
-          "#4981F8",
-          "#A4ADBC",
-        ],
-        hoverBackgroundColor: [
-          "#0F2851",
-          "#DFECFE",
-          "#60A0F8",
-          "#4981F8",
-          "#A4ADBC",
-        ],
-      },
-    ],
-  };
-  var data = [];
   useEffect(() => {
-    stateSites?.site_breakdown?.result?.data?.map((single) => {
-      return data.push(parseFloat(single?.jobs));
-    });
     setChartData({
-      labels: [
-        "      Exchange 75% ",
-        "      Wait & Load 17% ",
-        "      Collect 4% ",
-        "      Delivery 4% ",
-      ],
-      datasets: [
+      series: [
         {
-          data: data,
-          backgroundColor: [
-            "#0F2851",
-            "#DFECFE",
-            "#60A0F8",
-            "#4981F8",
-            "#A4ADBC",
-          ],
-          hoverBackgroundColor: [
-            "#0F2851",
-            "#DFECFE",
-            "#60A0F8",
-            "#4981F8",
-            "#A4ADBC",
-          ],
+          title: '',
+          type: 'pie',
+          data: stateSites?.site_breakdown?.result?.data,
         },
       ],
     });
-  }, []);
+  }, [stateSites?.site_breakdown]);
 
   useEffect(() => {
     async function fetchData() {
@@ -108,7 +60,6 @@ const FinanceReport = (props) => {
         await dispatch(getSiteBreakdown());
       }
     }
-
     fetchData();
   }, []);
 
@@ -121,47 +72,50 @@ const FinanceReport = (props) => {
           </h1>
           <div className="sub-heading">Site breakdown</div>
 
-          <Grid container className="small-chart-large" paddingBottom={2}>
-            <Grid item xs={8} className="d-flex align-center">
-              <div className="flex-3">
-                <Chart
-                  type="pie"
-                  options={PieChartDefaultOptions}
-                  data={chartData ? chartData : series}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                  }}
-                />
+          {/*<Grid container className="small-chart-large" paddingBottom={2}>*/}
+          {/*  <Grid item xs={8} className="d-flex align-center">*/}
+              <div>
+                {(stateSites?.site_breakdown &&
+                    stateSites?.site_breakdown?.result?.data) &&
+                //     (<Chart
+                //   type="pie"
+                //   data={chartData}
+                //   options={PieChartDefaultOptions}
+                // />
+                    (<HighchartsReact
+                        highcharts={Highcharts}
+                        options={chartData}
+                    />
+                  )}
               </div>
-            </Grid>
-            <Grid
-              item
-              xs={4}
-              className="right-legends-small-chart"
-              style={{
-                height: "220px",
-                overflow: "auto",
-              }}
-            >
-              {stateSites?.site_breakdown?.result?.data?.map((single) => (
-                <div className="legend-one" key={single?.value}>
-                  <div className="icon">
-                    <span
-                      style={{
-                        backgroundColor: "#102751",
-                      }}
-                    ></span>
-                  </div>
-                  <div className="text-small">
-                    <h1>
-                      {single?.job_address} {single?.jobs}
-                    </h1>
-                  </div>
-                </div>
-              ))}
-            </Grid>
-          </Grid>
+            {/*</Grid>*/}
+            {/*<Grid*/}
+            {/*  item*/}
+            {/*  xs={4}*/}
+            {/*  className="right-legends-small-chart"*/}
+            {/*  style={{*/}
+            {/*    height: "220px",*/}
+            {/*    overflow: "auto",*/}
+            {/*  }}*/}
+            {/*>*/}
+              {/*{stateSites?.site_breakdown?.result?.data?.map((single) => (*/}
+              {/*  <div className="legend-one" key={single?.value}>*/}
+              {/*    <div className="icon">*/}
+              {/*      <span*/}
+              {/*        style={{*/}
+              {/*          backgroundColor: "#102751",*/}
+              {/*        }}*/}
+              {/*      ></span>*/}
+              {/*    </div>*/}
+              {/*    <div className="text-small">*/}
+              {/*      <h1>*/}
+              {/*        {single?.job_address} {single?.jobs}*/}
+              {/*      </h1>*/}
+              {/*    </div>*/}
+              {/*  </div>*/}
+              {/*))}*/}
+          {/*  </Grid>*/}
+          {/*</Grid>*/}
 
           <div
             className="see-more"

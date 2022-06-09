@@ -73,7 +73,6 @@ const SiteMovementsReport = () => {
                                                     Math,
                                                     chart.data.datasets[0].data
                                                 );
-                                                console.log(chart.getDatasetMeta(0).data[0]);
                                                 const text = `${max_val}%`;
                                                 const textX = Math.round(
                                                     (width - ctx.measureText(text).width) / 2
@@ -252,10 +251,6 @@ const SiteMovementsReport = () => {
                                                                             const max_val = Math.max.apply(
                                                                                 Math,
                                                                                 chart.data.datasets[0].data
-                                                                            );
-                                                                            console.log(
-                                                                                chart.getDatasetMeta(0)
-                                                                                    .data[0]
                                                                             );
                                                                             const text = `${max_val}%`;
                                                                             const textX = Math.round(

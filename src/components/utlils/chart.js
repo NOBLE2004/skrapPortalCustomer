@@ -1,15 +1,18 @@
 export const PieChartDefaultOptions = {
   plugins: {
     legend: {
-      display: false,
+      display: true,
+      fullWidth: false,
       position: "right",
-      horizontalAlign: "center",
-      verticalAlign: "left",
+      align: "center",
+      maxWidth: 500,
       labels: {
+        display: true,
         usePointStyle: true,
-        padding: 25,
+        fullWidth: true,
+        padding: 10,
         font: {
-          size: 12,
+          size: 10,
           family: "DM Sans",
           weight: 700,
         },
@@ -17,7 +20,7 @@ export const PieChartDefaultOptions = {
     },
   },
   maintainAspectRatio: true,
-  responsive: false,
+  responsive: true,
   elements: {
     arc: {
       borderWidth: 0,
