@@ -1,50 +1,74 @@
-import { Card, CardContent, Grid } from "@mui/material";
-import { Chart } from "react-chartjs-2";
-import { PieChartDefaultOptions } from "../../../utlils/chart";
-import { servicesReport } from "../../../utlils/constants";
+import { Card, CardContent } from "@mui/material";
 import "./style.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { getHireBreakdown } from "../../../../store/actions/action.hireBd";
 import { getSiteBreakdown } from "../../../../store/actions/action.siteBd";
-import React, { useEffect, useState, createRef } from "react";
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+import React, { useEffect, useState } from "react";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import HireBreakDown from "./hireBreakDown/hireBreakDown";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const FinanceReport = (props) => {
   const [chartData, setChartData] = useState();
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 4,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 4,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 2,
-    },
-  };
   const dispatch = useDispatch();
-  const ref = createRef();
-  const state = useSelector((state) => state?.hireBreakdown);
   const stateSites = useSelector((state) => state?.siteBreakdown);
-  const { sites } = props;
   const [show, setShow] = useState(false);
+
   useEffect(() => {
     setChartData({
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: "pie",
+      },
+      title: {
+        text: null,
+      },
+      tooltip: {
+        pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+      },
+      accessibility: {
+        point: {
+          valueSuffix: "%",
+        },
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          size: "80%",
+          cursor: "pointer",
+          dataLabels: {
+            enabled: false,
+          },
+          showInLegend: true,
+          alignTo: "left",
+          floating: true,
+          align: "left",
+          verticalAlign: "top",
+          left: 0,
+        },
+      },
+      legend: {
+        layout: "vertical",
+        size: "45%",
+        title: {
+          text: null,
+        },
+        floating: true,
+        align: "right",
+        verticalAlign: "top",
+        right: 0,
+        // width: 80,
+        labelFormatter: function () {
+          return this.y + "% " + this.name + "<br>";
+        },
+        padding: 10,
+      },
       series: [
         {
-          title: '',
-          type: 'pie',
+          title: "",
+          type: "pie",
           data: stateSites?.site_breakdown?.result?.data,
         },
       ],
@@ -53,9 +77,6 @@ const FinanceReport = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      if (!state?.hire_breakdown?.result) {
-        await dispatch(getHireBreakdown());
-      }
       if (!stateSites?.site_breakdown?.result?.data) {
         await dispatch(getSiteBreakdown());
       }
@@ -74,46 +95,56 @@ const FinanceReport = (props) => {
 
           {/*<Grid container className="small-chart-large" paddingBottom={2}>*/}
           {/*  <Grid item xs={8} className="d-flex align-center">*/}
-              <div>
-                {(stateSites?.site_breakdown &&
-                    stateSites?.site_breakdown?.result?.data) &&
-                //     (<Chart
-                //   type="pie"
-                //   data={chartData}
-                //   options={PieChartDefaultOptions}
-                // />
-                    (<HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartData}
-                    />
-                  )}
-              </div>
-            {/*</Grid>*/}
-            {/*<Grid*/}
-            {/*  item*/}
-            {/*  xs={4}*/}
-            {/*  className="right-legends-small-chart"*/}
-            {/*  style={{*/}
-            {/*    height: "220px",*/}
-            {/*    overflow: "auto",*/}
-            {/*  }}*/}
-            {/*>*/}
-              {/*{stateSites?.site_breakdown?.result?.data?.map((single) => (*/}
-              {/*  <div className="legend-one" key={single?.value}>*/}
-              {/*    <div className="icon">*/}
-              {/*      <span*/}
-              {/*        style={{*/}
-              {/*          backgroundColor: "#102751",*/}
-              {/*        }}*/}
-              {/*      ></span>*/}
-              {/*    </div>*/}
-              {/*    <div className="text-small">*/}
-              {/*      <h1>*/}
-              {/*        {single?.job_address} {single?.jobs}*/}
-              {/*      </h1>*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-              {/*))}*/}
+          {stateSites?.isLoading ? (
+            <div className="d-flex justify-center align-center">
+              <FadeLoader
+                color={"#29a7df"}
+                loading={stateSites?.isLoading}
+                width={4}
+              />
+            </div>
+          ) : (
+            <div>
+              {stateSites?.site_breakdown &&
+                stateSites?.site_breakdown?.result?.data && (
+                  //     (<Chart
+                  //   type="pie"
+                  //   data={chartData}
+                  //   options={PieChartDefaultOptions}
+                  // />
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={chartData}
+                  />
+                )}
+            </div>
+          )}
+          {/*</Grid>*/}
+          {/*<Grid*/}
+          {/*  item*/}
+          {/*  xs={4}*/}
+          {/*  className="right-legends-small-chart"*/}
+          {/*  style={{*/}
+          {/*    height: "220px",*/}
+          {/*    overflow: "auto",*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*{stateSites?.site_breakdown?.result?.data?.map((single) => (*/}
+          {/*  <div className="legend-one" key={single?.value}>*/}
+          {/*    <div className="icon">*/}
+          {/*      <span*/}
+          {/*        style={{*/}
+          {/*          backgroundColor: "#102751",*/}
+          {/*        }}*/}
+          {/*      ></span>*/}
+          {/*    </div>*/}
+          {/*    <div className="text-small">*/}
+          {/*      <h1>*/}
+          {/*        {single?.job_address} {single?.jobs}*/}
+          {/*      </h1>*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*))}*/}
           {/*  </Grid>*/}
           {/*</Grid>*/}
 
@@ -135,63 +166,7 @@ const FinanceReport = (props) => {
 
                 <div className="services"></div>
               </div>
-              <Grid container spacing={1} marginTop={1} alignItems="center">
-                <Grid
-                  item
-                  lg={0.5}
-                  md={0.5}
-                  sm={0.5}
-                  xs={0.5}
-                  onClick={() => {
-                    ref?.current?.previous();
-                  }}
-                >
-                  <span className="span-arrows-for-carusal"> {`<`}</span>
-                </Grid>
-                <Grid item lg={11} md={11} sm={11} xs={11}>
-                  {state?.hire_breakdown?.result?.length > 0 ? (
-                    <Carousel
-                      responsive={responsive}
-                      ref={ref}
-                      arrows={false}
-                      autoPlay={false}
-                      className="main-for-carusal"
-                    >
-                      {state?.hire_breakdown?.result?.map((service) => {
-                        return (
-                          <div className="service-box p-2" key={service?.id}>
-                            <img
-                              src={service?.url}
-                              alt=""
-                              style={{ height: "30px" }}
-                            />
-                            <div className="service-detail">
-                              <div className="name">
-                                {service?.service_name}
-                              </div>
-                              <div className="percentage">{service?.jobs}</div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </Carousel>
-                  ) : (
-                    ""
-                  )}
-                </Grid>
-                <Grid
-                  item
-                  lg={0.5}
-                  md={0.5}
-                  xs={0.5}
-                  sm={0.5}
-                  onClick={() => {
-                    ref?.current?.next();
-                  }}
-                >
-                  <span className="span-arrows-for-carusal"> {`>`}</span>
-                </Grid>
-              </Grid>
+              <HireBreakDown />
             </div>
           )}
         </div>
