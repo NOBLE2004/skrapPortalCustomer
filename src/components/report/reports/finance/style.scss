@@ -1,0 +1,24 @@
+.main-for-carusal {
+  margin-top: 15px;
+  .name {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    color: #677790;
+    padding: 5% 0;
+  }
+  .percentage {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #677790;
+  }
+  .service-box {
+    text-align: center;
+  }
+}
+.span-arrows-for-carusal {
+  cursor: pointer;
+  font-size: 25px;
+  color: #a4adbc;
+}
