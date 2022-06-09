@@ -1,154 +1,248 @@
-import {Card, CardContent, Grid} from "@mui/material";
-import {Chart} from "react-chartjs-2";
-import {PieChartDefaultOptions} from "../../../utlils/chart";
-import {servicesReport} from "../../../utlils/constants";
-import React, {useState} from "react";
+import { Card, CardContent, Grid } from "@mui/material";
+import { Chart } from "react-chartjs-2";
+import { PieChartDefaultOptions } from "../../../utlils/chart";
+import { servicesReport } from "../../../utlils/constants";
+import "./style.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { getHireBreakdown } from "../../../../store/actions/action.hireBd";
+import { getSiteBreakdown } from "../../../../store/actions/action.siteBd";
+import React, { useEffect, useState, createRef } from "react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const FinanceReport = (props) => {
-    const { sites } = props;
-    const [show,setShow] = useState(false);
+  const [chartData, setChartData] = useState();
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 4,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 4,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 2,
+    },
+  };
+  const dispatch = useDispatch();
+  const ref = createRef();
+  const state = useSelector((state) => state?.hireBreakdown);
+  const stateSites = useSelector((state) => state?.siteBreakdown);
+  const { sites } = props;
+  const [show, setShow] = useState(false);
 
-    const series = {
-        labels: [
-            "      Exchange 75% ",
-            "      Wait & Load 17% ",
-            "      Collect 4% ",
-            "      Delivery 4% ",
+  const series = {
+    labels: [
+      "      Exchange 75% ",
+      "      Wait & Load 17% ",
+      "      Collect 4% ",
+      "      Delivery 4% ",
+    ],
+    datasets: [
+      {
+        data: [90, 20, 10, 30],
+        backgroundColor: [
+          "#0F2851",
+          "#DFECFE",
+          "#60A0F8",
+          "#4981F8",
+          "#A4ADBC",
         ],
-        datasets: [
-            {
-                data: [90, 20, 10, 30],
-                backgroundColor: [
-                    "#0F2851",
-                    "#DFECFE",
-                    "#60A0F8",
-                    "#4981F8",
-                    "#A4ADBC",
-                ],
-                hoverBackgroundColor: [
-                    "#0F2851",
-                    "#DFECFE",
-                    "#60A0F8",
-                    "#4981F8",
-                    "#A4ADBC",
-                ],
-            },
+        hoverBackgroundColor: [
+          "#0F2851",
+          "#DFECFE",
+          "#60A0F8",
+          "#4981F8",
+          "#A4ADBC",
         ],
-    };
-    return (
-        <Card className="report-chart-card">
-            <CardContent>
-                <div className="salesWp">
+      },
+    ],
+  };
+  var data = [];
+  useEffect(() => {
+    stateSites?.site_breakdown?.result?.data?.map((single) => {
+      return data.push(parseFloat(single?.jobs));
+    });
+    setChartData({
+      labels: [
+        "      Exchange 75% ",
+        "      Wait & Load 17% ",
+        "      Collect 4% ",
+        "      Delivery 4% ",
+      ],
+      datasets: [
+        {
+          data: data,
+          backgroundColor: [
+            "#0F2851",
+            "#DFECFE",
+            "#60A0F8",
+            "#4981F8",
+            "#A4ADBC",
+          ],
+          hoverBackgroundColor: [
+            "#0F2851",
+            "#DFECFE",
+            "#60A0F8",
+            "#4981F8",
+            "#A4ADBC",
+          ],
+        },
+      ],
+    });
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!state?.hire_breakdown?.result) {
+        await dispatch(getHireBreakdown());
+      }
+      if (!stateSites?.site_breakdown?.result?.data) {
+        await dispatch(getSiteBreakdown());
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  return (
+    <Card className="report-chart-card main-for-carusal">
+      <CardContent>
+        <div className="salesWp">
+          <h1>
+            £10,270.00 <span>Total spent</span>
+          </h1>
+          <div className="sub-heading">Site breakdown</div>
+
+          <Grid container className="small-chart-large" paddingBottom={2}>
+            <Grid item xs={8} className="d-flex align-center">
+              <div className="flex-3">
+                <Chart
+                  type="pie"
+                  options={PieChartDefaultOptions}
+                  data={chartData ? chartData : series}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              </div>
+            </Grid>
+            <Grid
+              item
+              xs={4}
+              className="right-legends-small-chart"
+              style={{
+                height: "220px",
+                overflow: "auto",
+              }}
+            >
+              {stateSites?.site_breakdown?.result?.data?.map((single) => (
+                <div className="legend-one" key={single?.value}>
+                  <div className="icon">
+                    <span
+                      style={{
+                        backgroundColor: "#102751",
+                      }}
+                    ></span>
+                  </div>
+                  <div className="text-small">
                     <h1>
-                        £10,270.00 <span>Total spent</span>
+                      {single?.job_address} {single?.jobs}
                     </h1>
-                    <div className="sub-heading">Site breakdown</div>
-
-                    <Grid container className="small-chart-large">
-                        <Grid item xs={8} className="d-flex align-center">
-                            <div className="flex-3">
-                                <Chart
-                                    type="pie"
-                                    options={PieChartDefaultOptions}
-                                    data={series}
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                    }}
-                                />
-                            </div>
-                        </Grid>
-
-                        <Grid item xs={4} className="right-legends-small-chart">
-                            <div className="legend-one">
-                                <div className="icon">
-                            <span
-                                style={{
-                                    backgroundColor: "#102751",
-                                }}
-                            ></span>
-                                </div>
-                                <div className="text-small">
-                                    <h1>Exchange 75%</h1>
-                                </div>
-                            </div>
-                            <div className="legend-one">
-                                <div className="icon">
-                            <span
-                                style={{
-                                    backgroundColor: "#60a0f8",
-                                }}
-                            />
-                                </div>
-                                <div className="text-small">
-                                    <h1>Wait & load 17%</h1>
-                                </div>
-                            </div>
-                            <div className="legend-one">
-                                <div className="icon">
-                            <span
-                                style={{
-                                    backgroundColor: "#dfecfe",
-                                }}
-                            ></span>
-                                </div>
-                                <div className="text-small">
-                                    <h1>Collect 4%</h1>
-                                </div>
-                            </div>
-                            <div className="legend-one">
-                                <div className="icon">
-                            <span
-                                style={{
-                                    backgroundColor: "#A4ADBC",
-                                }}
-                            ></span>
-                                </div>
-                                <div className="text-small">
-                                    <h1>Delivery 4%</h1>
-                                </div>
-                            </div>
-                        </Grid>
-                    </Grid>
-
-                    <div
-                        className="see-more"
-                        onClick={() => {
-                            setShow(!show);
-                        }}
-                    >
-                        See more
-                    </div>
-                    {show && (
-                        <div className="see-more-wrap">
-                            <div className="border-drop"></div>
-                            <div className="more-drop">
-                                <div className="sub-heading">Hire breakdown</div>
-                                <div className="services">
-                                    {`<`}
-                                    {servicesReport.map((service) => {
-                                        return (
-                                            <div className="service-box p-2">
-                                                <img src={service.full_url} />
-                                                <div className="service-detail">
-                                                    <div className="name">
-                                                        {service.service_name}
-                                                    </div>
-                                                    <div className="percentage">
-                                                        {service.percentage}%
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                    {`>`}
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                  </div>
                 </div>
-            </CardContent>
-        </Card>
-    );
+              ))}
+            </Grid>
+          </Grid>
+
+          <div
+            className="see-more"
+            onClick={() => {
+              setShow(!show);
+            }}
+          >
+            See more
+          </div>
+
+          {show && (
+            <div className="see-more-wrap">
+              <div className="border-drop"></div>
+
+              <div className="more-drop">
+                <div className="sub-heading">Hire breakdown</div>
+
+                <div className="services"></div>
+              </div>
+              <Grid container spacing={1} marginTop={1} alignItems="center">
+                <Grid
+                  item
+                  lg={0.5}
+                  md={0.5}
+                  sm={0.5}
+                  xs={0.5}
+                  onClick={() => {
+                    ref?.current?.previous();
+                  }}
+                >
+                  <span className="span-arrows-for-carusal"> {`<`}</span>
+                </Grid>
+                <Grid item lg={11} md={11} sm={11} xs={11}>
+                  {state?.hire_breakdown?.result?.length > 0 ? (
+                    <Carousel
+                      responsive={responsive}
+                      ref={ref}
+                      arrows={false}
+                      autoPlay={false}
+                      className="main-for-carusal"
+                    >
+                      {state?.hire_breakdown?.result?.map((service) => {
+                        return (
+                          <div className="service-box p-2" key={service?.id}>
+                            <img
+                              src={service?.url}
+                              alt=""
+                              style={{ height: "30px" }}
+                            />
+                            <div className="service-detail">
+                              <div className="name">
+                                {service?.service_name}
+                              </div>
+                              <div className="percentage">{service?.jobs}</div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </Carousel>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+                <Grid
+                  item
+                  lg={0.5}
+                  md={0.5}
+                  xs={0.5}
+                  sm={0.5}
+                  onClick={() => {
+                    ref?.current?.next();
+                  }}
+                >
+                  <span className="span-arrows-for-carusal"> {`>`}</span>
+                </Grid>
+              </Grid>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
 };
 export default FinanceReport;
