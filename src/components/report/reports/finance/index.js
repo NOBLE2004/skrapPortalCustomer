@@ -35,6 +35,7 @@ const FinanceReport = (props) => {
       },
       plotOptions: {
         pie: {
+          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
           allowPointSelect: true,
           size: "80%",
           cursor: "pointer",
@@ -88,9 +89,12 @@ const FinanceReport = (props) => {
     <Card className="report-chart-card main-for-carusal">
       <CardContent>
         <div className="salesWp">
-          <h1>
-            £10,270.00 <span>Total spent</span>
-          </h1>
+          {stateSites?.site_breakdown?.result?.total && (
+            <h1>
+              £{stateSites?.site_breakdown?.result?.total }
+                 <span> Total spent</span>
+            </h1>
+          )}
           <div className="sub-heading">Site breakdown</div>
 
           {/*<Grid container className="small-chart-large" paddingBottom={2}>*/}
