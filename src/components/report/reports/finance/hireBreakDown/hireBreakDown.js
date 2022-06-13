@@ -38,7 +38,7 @@ const HireBreakDown = () => {
     }
     fetchData();
   }, []);
-  return (
+   return (
     <>
       {state?.isLoading ? (
         <div className="d-flex justify-center align-center">
