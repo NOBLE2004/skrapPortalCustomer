@@ -12,6 +12,7 @@ import { reportReducer } from "./reportReducer";
 import { hireBreakdownReducer } from "./hireBreakdownReducer";
 import { siteBreakdownReducer } from "./siteBreakdownReducer";
 import { siteMovementReducer } from "./siteMovementReducer";
+import { totalSites } from "./jobsMetaReduces";
 import { siteMovementBreakdownReducer } from "./siteMovementBreakdownReducer";
 export default combineReducers({
   auth: authReducer,
@@ -28,5 +29,6 @@ export default combineReducers({
   hireBreakdown: hireBreakdownReducer,
   siteBreakdown: siteBreakdownReducer,
   siteMovement: siteMovementReducer,
-  siteMovementBreakdown: siteMovementBreakdownReducer
+  siteMovementBreakdown: siteMovementBreakdownReducer,
+  totalSites:totalSites
 });

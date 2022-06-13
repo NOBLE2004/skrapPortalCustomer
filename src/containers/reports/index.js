@@ -30,7 +30,7 @@ const NewReports = (props) => {
   return (
     <>
       <div className="main-report">
-        <ReportHeader handleChange={handleChange} selected={selected}/>
+        <ReportHeader sites={selected} handleChange={handleChange} selected={selected}/>
         <ReportFilters />
         <div className="report-grid">
           <Masonry container columns={2} spacing={4}>
