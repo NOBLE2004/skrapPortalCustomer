@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import "react-multi-carousel/lib/styles.css";
 import FadeLoader from "react-spinners/FadeLoader";
 import "../style.scss";
-const HireBreakDown = () => {
+const HireBreakDown = (props) => {
+  const {sites} = props;
   const state = useSelector((state) => state?.hireBreakdown);
   const dispatch = useDispatch();
   const ref = createRef();
@@ -38,6 +39,14 @@ const HireBreakDown = () => {
     }
     fetchData();
   }, []);
+  useEffect(() => {
+    async function fetchData() {
+      //if (!state?.hire_breakdown?.result) {
+        await dispatch(getHireBreakdown({sites}));
+      //}
+    }
+    fetchData();
+  }, [sites]);
    return (
     <>
       {state?.isLoading ? (

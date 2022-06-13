@@ -9,6 +9,7 @@ import HireBreakDown from "./hireBreakDown/hireBreakDown";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const FinanceReport = (props) => {
+  const {sites} = props;
   const [chartData, setChartData] = useState();
   const dispatch = useDispatch();
   const stateSites = useSelector((state) => state?.siteBreakdown);
@@ -85,13 +86,22 @@ const FinanceReport = (props) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    async function fetchData() {
+      //if (!stateSites?.site_breakdown?.result?.data) {
+        await dispatch(getSiteBreakdown({sites: sites}));
+      //}
+    }
+    fetchData();
+  }, [sites]);
+
   return (
     <Card className="report-chart-card main-for-carusal">
       <CardContent>
         <div className="salesWp">
           {stateSites?.site_breakdown?.result?.total && (
             <h1>
-              £{stateSites?.site_breakdown?.result?.total }
+              £{stateSites?.site_breakdown?.result?.total.toLocaleString()}
                  <span> Total spent</span>
             </h1>
           )}
@@ -170,7 +180,7 @@ const FinanceReport = (props) => {
 
                 <div className="services"></div>
               </div>
-              <HireBreakDown />
+              <HireBreakDown sites={sites} />
             </div>
           )}
         </div>
