@@ -9,7 +9,7 @@ import HireBreakDown from "./hireBreakDown/hireBreakDown";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const FinanceReport = (props) => {
-  const {sites} = props;
+  const { sites } = props;
   const [chartData, setChartData] = useState();
   const dispatch = useDispatch();
   const stateSites = useSelector((state) => state?.siteBreakdown);
@@ -34,38 +34,28 @@ const FinanceReport = (props) => {
           valueSuffix: "%",
         },
       },
+      legend: {
+        align: "right",
+        size: "40%",
+        verticalAlign: "middle",
+        layout: "vertical",
+        itemStyle: {
+          width: 250,
+          textOverflow: "ellipsis",
+        },
+        margin: 0,
+      },
       plotOptions: {
         pie: {
-          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+          size: "100%",
           allowPointSelect: true,
-          size: "80%",
           cursor: "pointer",
+          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
           dataLabels: {
             enabled: false,
           },
           showInLegend: true,
-          alignTo: "left",
-          floating: true,
-          align: "left",
-          verticalAlign: "top",
-          left: 0,
         },
-      },
-      legend: {
-        layout: "vertical",
-        size: "45%",
-        title: {
-          text: null,
-        },
-        floating: true,
-        align: "right",
-        verticalAlign: "top",
-        right: 0,
-        // width: 80,
-        labelFormatter: function () {
-          return this.y + "% " + this.name + "<br>";
-        },
-        padding: 10,
       },
       series: [
         {
@@ -76,7 +66,6 @@ const FinanceReport = (props) => {
       ],
     });
   }, [stateSites?.site_breakdown]);
-
   useEffect(() => {
     async function fetchData() {
       if (!stateSites?.site_breakdown?.result?.data) {
@@ -89,7 +78,7 @@ const FinanceReport = (props) => {
   useEffect(() => {
     async function fetchData() {
       //if (!stateSites?.site_breakdown?.result?.data) {
-        await dispatch(getSiteBreakdown({sites: sites}));
+      await dispatch(getSiteBreakdown({ sites: sites }));
       //}
     }
     fetchData();
@@ -102,7 +91,7 @@ const FinanceReport = (props) => {
           {stateSites?.site_breakdown?.result?.total && (
             <h1>
               £{stateSites?.site_breakdown?.result?.total.toLocaleString()}
-                 <span> Total spent</span>
+              <span> Total spent</span>
             </h1>
           )}
           <div className="sub-heading">Site breakdown</div>
