@@ -1,6 +1,4 @@
 import { Card, CardContent, Grid } from "@mui/material";
-import { Chart } from "react-chartjs-2";
-import { DonutChartSmallDefaultOptions } from "../../../utlils/chart";
 import Timeline from "@mui/lab/Timeline";
 import { servicesReport } from "../../../utlils/constants";
 import TimelineItem from "@mui/lab/TimelineItem";
@@ -8,7 +6,7 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import KeyboardTabIcon from "../../../../assets/images/arrow.svg";
 import TimelineContent from "@mui/lab/TimelineContent";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import "./index.scss";
@@ -18,7 +16,7 @@ const SiteMovementsReport = () => {
   const [chartData, setChartData] = useState({
     chart: {
       reflow: false,
-      height: 300,
+      height: 250,
       type: "pie",
       events: {
         render: function () {
@@ -76,7 +74,8 @@ const SiteMovementsReport = () => {
     },
     plotOptions: {
       pie: {
-        size: ["100%", "100%"],
+        center: ['50%', '50%'],
+        size: [210, 100],
         allowPointSelect: true,
         cursor: "pointer",
         colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
@@ -103,23 +102,23 @@ const SiteMovementsReport = () => {
         name: "countries",
         data: [
           {
-            name: "Exchange 75%",
-            y: 50,
+            name: "Exchange 0%",
+            y: 0,
             z: 100,
           },
           {
-            name: "Wait & load 17%",
-            y: 20,
+            name: "Wait & load 0%",
+            y: 0,
             z: 100,
           },
           {
-            name: "Collect 4%",
-            y: 20,
+            name: "Collect 0%",
+            y: 0,
             z: 100,
           },
           {
-            name: "Delivery 4%",
-            y: 10,
+            name: "Delivery 100%",
+            y: 100,
             z: 100,
           },
         ],
@@ -168,8 +167,14 @@ const SiteMovementsReport = () => {
     },
     subtitle: {
       text: `${data?.title}`,
-      y: 100,
+      y: 80,
       x: 10,
+      style: {
+        color: '#677790',
+        fontFamily: 'DM Sans',
+        fontWeight: 700,
+        fontSize: "12px"
+      }
     },
     tooltip: {
       pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
@@ -194,7 +199,7 @@ const SiteMovementsReport = () => {
     },
     plotOptions: {
       pie: {
-        center: ["30%"],
+        center: ["30%", "30%"],
         size: [150, 100],
         allowPointSelect: true,
         cursor: "pointer",
@@ -242,7 +247,7 @@ const SiteMovementsReport = () => {
       <CardContent>
         <div className="salesWp">
           <h1>
-            537 <span>Total bookings</span>
+            1 <span>Total bookings</span>
           </h1>
           <Grid container className="small-chart-large">
             <Grid container className="d-flex align-center">
