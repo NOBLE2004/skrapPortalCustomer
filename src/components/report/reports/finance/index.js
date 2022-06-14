@@ -107,7 +107,7 @@ const FinanceReport = (props) => {
               />
             </div>
           ) : (
-            <div>
+            <div className="highchart-sites">
               {stateSites?.site_breakdown &&
                 stateSites?.site_breakdown?.result?.data && (
                   //     (<Chart

@@ -1,341 +1,329 @@
-import {Card, CardContent, Grid} from "@mui/material";
-import {Chart} from "react-chartjs-2";
-import {DonutChartSmallDefaultOptions} from "../../../utlils/chart";
+import { Card, CardContent, Grid } from "@mui/material";
+import { Chart } from "react-chartjs-2";
+import { DonutChartSmallDefaultOptions } from "../../../utlils/chart";
 import Timeline from "@mui/lab/Timeline";
-import {servicesReport} from "../../../utlils/constants";
+import { servicesReport } from "../../../utlils/constants";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import KeyboardTabIcon from "../../../../assets/images/arrow.svg";
 import TimelineContent from "@mui/lab/TimelineContent";
-import React, {useEffect, useState} from "react";
-import './index.scss';
+import React, { useEffect, useState } from "react";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import "./index.scss";
 
 const SiteMovementsReport = () => {
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
+  const [chartData, setChartData] = useState({
+    chart: {
+      reflow: false,
+      height: 300,
+      type: "pie",
+      events: {
+        render: function () {
+          var series = this.series[0],
+            seriesCenter = series.center,
+            x = seriesCenter[0] + this.plotLeft,
+            y = seriesCenter[1] + this.plotTop,
+            text = series.total + "%",
+            fontMetrics = this.renderer.fontMetrics(16);
 
-    const series3 = {
-        labels: [
-            "      Exchange 75% ",
-            "      Wait & Load 17% ",
-            "      Collect 4% ",
-            "      Delivery 4% ",
-        ],
-        datasets: [
-            {
-                data: [90, 20, 10, 30],
-                backgroundColor: [
-                    "#0F2851",
-                    "#DFECFE",
-                    "#60A0F8",
-                    "#4981F8",
-                    "#A4ADBC",
-                ],
-                hoverBackgroundColor: [
-                    "#0F2851",
-                    "#DFECFE",
-                    "#60A0F8",
-                    "#4981F8",
-                    "#A4ADBC",
-                ],
-            },
-        ],
-    };
-    return (
-        <Card className="report-chart-card ">
-            <CardContent>
-                <div className="salesWp">
-                    <h1>
-                        537 <span>Total bookings</span>
-                    </h1>
-                    <Grid container className="small-chart-large">
-                        <Grid item xs={8} className="d-flex align-center">
-                            <div className="flex-3">
-                                <Chart
-                                    className="chart"
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                    }}
-                                    type="doughnut"
-                                    options={DonutChartSmallDefaultOptions}
-                                    plugins={[
-                                        {
-                                            beforeDraw(chart) {
-                                                const { width } = chart;
-                                                const { height } = chart;
-                                                const { ctx } = chart;
-                                                ctx.restore();
-                                                const fontSize = (height / 80).toFixed(2);
-                                                ctx.font = `${fontSize}em DM Sans`;
-                                                ctx.textBaseline = "top";
-                                                const max_val = Math.max.apply(
-                                                    Math,
-                                                    chart.data.datasets[0].data
-                                                );
-                                                const text = `${max_val}%`;
-                                                const textX = Math.round(
-                                                    (width - ctx.measureText(text).width) / 2
-                                                );
-                                                const textY = height / 2.5;
-                                                ctx.fillText(text, textX, textY);
-                                                ctx.save();
-                                            },
-                                        },
-                                    ]}
-                                    data={series3}
-                                />
-                            </div>
-                        </Grid>
+          if (!this.customTitle) {
+            console.log("er", series);
+            this.customTitle = this.renderer
+              .text(text, null, null, true)
+              .css({
+                transform: "translate(-50%)",
+                fontSize: "30px",
+                color: "#0F2851",
+                fontFamily: "DM Sans",
+                fontWeight: 700,
+              })
+              .add();
+          }
 
-                        <Grid item xs={4} className="right-legends-small-chart">
-                            <div className="legend-one">
-                                <div className="icon">
-                            <span
-                                style={{
-                                    backgroundColor: "#102751",
-                                }}
-                            ></span>
-                                </div>
-                                <div className="text-small">
-                                    <h1>Exchange 75%</h1>
-                                </div>
-                            </div>
-                            <div className="legend-one">
-                                <div className="icon">
-                            <span
-                                style={{
-                                    backgroundColor: "#60a0f8",
-                                }}
-                            />
-                                </div>
-                                <div className="text-small">
-                                    <h1>Wait & load 17%</h1>
-                                </div>
-                            </div>
-                            <div className="legend-one">
-                                <div className="icon">
-                            <span
-                                style={{
-                                    backgroundColor: "#dfecfe",
-                                }}
-                            ></span>
-                                </div>
-                                <div className="text-small">
-                                    <h1>Collect 4%</h1>
-                                </div>
-                            </div>
-                            <div className="legend-one">
-                                <div className="icon">
-                            <span
-                                style={{
-                                    backgroundColor: "#A4ADBC",
-                                }}
-                            ></span>
-                                </div>
-                                <div className="text-small">
-                                    <h1>Delivery 4%</h1>
-                                </div>
-                            </div>
-                        </Grid>
-                    </Grid>
-                    {/* <Chart
-                    type="doughnut"
-                    options={DonutChartDefaultOptions}
-                    data={series}
-                    height="250"
-                    width="450"
-                    plugins={[
-                      {
-                        beforeDraw(chart) {
-                          const { width } = chart;
-                          const { height } = chart;
-                          const { ctx } = chart;
-                          ctx.restore();
-                          const fontSize = (height / 80).toFixed(2);
-                          ctx.font = `${fontSize}em DM Sans`;
-                          ctx.textBaseline = "top";
-                          const max_val = Math.max.apply(
-                            Math,
-                            chart.data.datasets[0].data
-                          );
-                          console.log(chart.getDatasetMeta(0).data[0]);
-                          const text = `${max_val}%`;
-                          const textX = Math.round(
-                            (width - ctx.measureText(text).width) / 4
-                          );
-                          const textY = height / 2.5;
-                          ctx.fillText(text, textX, textY);
-                          ctx.save();
-                        },
-                      },
-                    ]}
-                  /> */}
-                    <div
-                        className="see-more"
-                        onClick={() => {
-                            setShow(!show);
-                        }}
+          this.customTitle.attr({
+            x,
+            y: y + fontMetrics.f / 2,
+          });
+        },
+      },
+    },
+    title: {
+      text: null,
+    },
+    tooltip: {
+      pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+    },
+    accessibility: {
+      point: {
+        valueSuffix: "%",
+      },
+    },
+    legend: {
+      align: "right",
+      layout: "vertical",
+      verticalAlign: "middle",
+      x: -100,
+      y: 0,
+      padding: 3,
+      itemMarginTop: 5,
+      itemMarginBottom: 5,
+      itemStyle: {
+        lineHeight: "14px",
+      },
+    },
+    plotOptions: {
+      pie: {
+        size: ["100%", "100%"],
+        allowPointSelect: true,
+        cursor: "pointer",
+        colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+        dataLabels: {
+          enabled: false,
+        },
+        showInLegend: true,
+      },
+    },
+    responsive: {
+      rules: [
+        {
+          condition: {
+            minWidth: 300,
+          },
+        },
+      ],
+    },
+    series: [
+      {
+        minPointSize: 10,
+        innerSize: "75%",
+        zMin: 0,
+        name: "countries",
+        data: [
+          {
+            name: "Exchange 75%",
+            y: 50,
+            z: 100,
+          },
+          {
+            name: "Wait & load 17%",
+            y: 20,
+            z: 100,
+          },
+          {
+            name: "Collect 4%",
+            y: 20,
+            z: 100,
+          },
+          {
+            name: "Delivery 4%",
+            y: 10,
+            z: 100,
+          },
+        ],
+      },
+    ],
+  });
+
+  const chartDataSmall = (data) => ({
+    chart: {
+      reflow: false,
+      height: 300,
+      type: "pie",
+      events: {
+        render: function () {
+          var series = this.series[0],
+            seriesCenter = series.center,
+            x = seriesCenter[0] + this.plotLeft,
+            y = seriesCenter[1] + this.plotTop,
+            text = series.total + "%",
+            fontMetrics = this.renderer.fontMetrics(16);
+
+          if (!this.customTitle) {
+            console.log("er", data);
+            this.customTitle = this.renderer
+              .text(text, null, null, true)
+              .css({
+                transform: "translate(-50%)",
+                fontSize: "30px",
+                color: "#0F2851",
+                fontFamily: "DM Sans",
+                fontWeight: 700,
+              })
+              .add();
+          }
+
+          this.customTitle.attr({
+            x,
+            y: y + fontMetrics.f / 2,
+          });
+        },
+      },
+    },
+    title: {
+      text: `${data}`,
+      y: 160,
+      x: 0,
+    },
+    tooltip: {
+      pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+    },
+    accessibility: {
+      point: {
+        valueSuffix: "%",
+      },
+    },
+    legend: {
+      align: "right",
+      layout: "vertical",
+      verticalAlign: "middle",
+      x: 0,
+      y: 0,
+      padding: 3,
+      itemMarginTop: 5,
+      itemMarginBottom: 5,
+      itemStyle: {
+        lineHeight: "14px",
+      },
+    },
+    plotOptions: {
+      pie: {
+        size: ["80%", "80%"],
+        center: ["20%"],
+        allowPointSelect: true,
+        cursor: "pointer",
+        colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+        dataLabels: {
+          enabled: false,
+        },
+        showInLegend: true,
+      },
+    },
+    responsive: {
+      rules: [
+        {
+          condition: {
+            minWidth: 700,
+          },
+        },
+      ],
+    },
+    series: [
+      {
+        minPointSize: 10,
+        innerSize: "75%",
+        zMin: 0,
+        name: "countries",
+        data: [
+          {
+            name: "Exchange 75%",
+            y: 50,
+            z: 100,
+          },
+          {
+            name: "Wait & load 17%",
+            y: 20,
+            z: 100,
+          },
+          {
+            name: "Collect 4%",
+            y: 20,
+            z: 100,
+          },
+          {
+            name: "Delivery 4%",
+            y: 10,
+            z: 100,
+          },
+        ],
+      },
+    ],
+  });
+
+  return (
+    <Card className="report-chart-card ">
+      <CardContent>
+        <div className="salesWp">
+          <h1>
+            537 <span>Total bookings</span>
+          </h1>
+          <Grid container className="small-chart-large">
+            <Grid container className="d-flex align-center">
+              <div className="flex-3 high-chart-site-movement">
+                <HighchartsReact highcharts={Highcharts} options={chartData} />
+              </div>
+            </Grid>
+          </Grid>
+          <div
+            className="see-more"
+            onClick={() => {
+              setShow(!show);
+            }}
+          >
+            See more
+          </div>
+          {show && (
+            <div className="see-more-wrap">
+              <div className="border-drop"></div>
+              <Timeline className="more-drop">
+                {servicesReport.map((service, index) => {
+                  return (
+                    <TimelineItem
+                      key={index}
+                      sx={{
+                        width: "100%",
+                      }}
                     >
-                        See more
-                    </div>
-                    {show && (
-                        <div className="see-more-wrap">
-                            <div className="border-drop"></div>
-                            <Timeline className="more-drop">
-                                {servicesReport.map((service, index) => {
-                                    return (
-                                        <TimelineItem
-                                            key={index}
-                                            sx={{
-                                                width: "100%",
-                                            }}
-                                        >
-                                            <TimelineSeparator>
-                                                <div
-                                                    style={{
-                                                        display: "flex",
-                                                        height: "100%",
-                                                    }}
-                                                >
-                                                    <TimelineConnector
-                                                        sx={{
-                                                            width: "8px",
-                                                            backgroundColor: "#d6eafd",
-                                                            borderTopLeftRadius:
-                                                                index === 0 ? "8px" : "0x",
-                                                            borderTopRightRadius:
-                                                                index === 0 ? "8px" : "0x",
-                                                        }}
-                                                    />
-                                                    <div className="d-flex align-center">
-                                                        <img src={KeyboardTabIcon} alt="" />
-                                                    </div>
-                                                </div>
-                                            </TimelineSeparator>
-
-                                            <TimelineContent
-                                                sx={{
-                                                    padding: "12px 0px",
-                                                }}
-                                            >
-                                                <Grid container className="small-chart">
-                                                    <Grid
-                                                        item
-                                                        xs={6}
-                                                        className="d-flex align-center"
-                                                    >
-                                                        <div className="flex-3">
-                                                            <Chart
-                                                                className="chart"
-                                                                style={{
-                                                                    width: "100%",
-                                                                    height: "100%",
-                                                                }}
-                                                                type="doughnut"
-                                                                options={
-                                                                    DonutChartSmallDefaultOptions
-                                                                }
-                                                                plugins={[
-                                                                    {
-                                                                        beforeDraw(chart) {
-                                                                            const { width } = chart;
-                                                                            const { height } = chart;
-                                                                            const { ctx } = chart;
-                                                                            ctx.restore();
-                                                                            const fontSize = (
-                                                                                height / 80
-                                                                            ).toFixed(2);
-                                                                            ctx.font = `${fontSize}em DM Sans`;
-                                                                            ctx.textBaseline = "top";
-                                                                            const max_val = Math.max.apply(
-                                                                                Math,
-                                                                                chart.data.datasets[0].data
-                                                                            );
-                                                                            const text = `${max_val}%`;
-                                                                            const textX = Math.round(
-                                                                                (width -
-                                                                                    ctx.measureText(text)
-                                                                                        .width) /
-                                                                                2
-                                                                            );
-                                                                            const textY = height / 2.5;
-                                                                            ctx.fillText(
-                                                                                text,
-                                                                                textX,
-                                                                                textY
-                                                                            );
-                                                                            ctx.save();
-                                                                        },
-                                                                    },
-                                                                ]}
-                                                                data={series3}
-                                                            />
-                                                        </div>
-                                                        <div className="title-right w-100 flex-1">
-                                                            <h1>{service?.title}</h1>
-                                                        </div>
-                                                    </Grid>
-
-                                                    <Grid
-                                                        item
-                                                        xs={6}
-                                                        className="right-legends-small-chart"
-                                                    >
-                                                        <div className="legend-one">
-                                                            <div className="icon">
-                                                                <h1
-                                                                    style={{
-                                                                        backgroundColor: "#102751",
-                                                                    }}
-                                                                >
-                                                                    1
-                                                                </h1>
-                                                            </div>
-                                                            <div className="text-small">
-                                                                <h1>Century House 75%</h1>
-                                                            </div>
-                                                        </div>
-                                                        <div className="legend-one">
-                                                            <div className="icon">
-                                                                <h1
-                                                                    style={{
-                                                                        backgroundColor: "#60a0f8",
-                                                                    }}
-                                                                >
-                                                                    2
-                                                                </h1>
-                                                            </div>
-                                                            <div className="text-small">
-                                                                <h1>Richmond Green 68%</h1>
-                                                            </div>
-                                                        </div>
-                                                        <div className="legend-one">
-                                                            <div className="icon">
-                                                                <h1
-                                                                    style={{
-                                                                        backgroundColor: "#dfecfe",
-                                                                    }}
-                                                                >
-                                                                    3
-                                                                </h1>
-                                                            </div>
-                                                            <div className="text-small">
-                                                                <h1>Ludlow Lodge 66%</h1>
-                                                            </div>
-                                                        </div>
-                                                    </Grid>
-                                                </Grid>
-                                            </TimelineContent>
-                                        </TimelineItem>
-                                    );
-                                })}
-                            </Timeline>
+                      <TimelineSeparator>
+                        <div
+                          style={{
+                            display: "flex",
+                            height: "100%",
+                          }}
+                        >
+                          <TimelineConnector
+                            sx={{
+                              width: "8px",
+                              backgroundColor: "#d6eafd",
+                              borderTopLeftRadius: index === 0 ? "8px" : "0x",
+                              borderTopRightRadius: index === 0 ? "8px" : "0x",
+                            }}
+                          />
+                          <div className="d-flex align-center">
+                            <img src={KeyboardTabIcon} alt="" />
+                          </div>
                         </div>
-                    )}
-                </div>
-            </CardContent>
-        </Card>
-    );
+                      </TimelineSeparator>
+
+                      <TimelineContent
+                        sx={{
+                          padding: "12px 0px",
+                        }}
+                      >
+                        <Grid container className="small-chart">
+                          <Grid container className="d-flex align-center">
+                            <div className="flex-3">
+                              <div className="flex-3 high-chart-site-movement">
+                                <HighchartsReact
+                                  highcharts={Highcharts}
+                                  options={chartDataSmall(service.title)}
+                                />
+                              </div>
+                            </div>
+                          </Grid>
+                        </Grid>
+                      </TimelineContent>
+                    </TimelineItem>
+                  );
+                })}
+              </Timeline>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
 };
 export default SiteMovementsReport;
