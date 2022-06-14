@@ -63,7 +63,7 @@ const EmissionReport = (props) => {
               <DatePicker />
             </div>
             <div className="total">
-              Total payment: <span>£313.13</span>
+              Total payment: <span>£0.00</span>
             </div>
           </div>
           <HighchartsReact highcharts={Highcharts} options={data} />
@@ -83,7 +83,7 @@ const EmissionReport = (props) => {
               <DatePicker />
             </div>
             <div className="total">
-              Total payment: <span>£313.13</span>
+              Total payment: <span>£0.00</span>
             </div>
           </div>
           <HighchartsReact highcharts={Highcharts} options={data2} />
@@ -110,7 +110,7 @@ const EmissionReport = (props) => {
                 <div className="sub-heading">Site breakdown</div>
                 <div className="head-text">
                   <p>
-                    <span>86</span> site journeys
+                    <span>1</span> site journeys
                   </p>
                   <p>
                     <span>525.5 miles</span> equivalent to driving from{" "}

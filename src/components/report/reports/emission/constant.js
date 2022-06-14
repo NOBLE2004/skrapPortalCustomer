@@ -77,7 +77,7 @@ export const data = {
     {
       type: "column",
       name: "Emissions produced",
-      data: [140, 130, 60, 100, 60, 80, 50, 60, 80, 50, 60, 80],
+      data: [0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0],
       color: "#63acf9",
       borderSkipped: false,
       borderRadius: 10,
@@ -88,7 +88,7 @@ export const data = {
     {
       type: "column",
       name: "Predicted emissions(based on bookings)",
-      data: [140, 130, 60, 100, 60, 80, 50, 60, 80, 50, 60, 80],
+      data: [0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0],
       color: "#a4adbc",
       borderSkipped: false,
       borderRadius: 10,
@@ -100,7 +100,7 @@ export const data = {
       type: "line",
       dashStyle: "Dash",
       name: "2021 Emissions",
-      data: [125, 70, 75, 70, 60, 90, 70, 0, 90, 80, 70, 100],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       color: "#677790",
       borderSkipped: false,
       borderRadius: 10,
@@ -192,7 +192,7 @@ export const data2 = {
     {
       type: "column",
       name: "Emissions produced",
-      data: [90, 60, 30, 50, 30, 80, 50, 0, 0, 0, 0, 0],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       color: "#6bb751",
       borderSkipped: false,
       borderRadius: 10,

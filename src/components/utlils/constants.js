@@ -332,25 +332,25 @@ export const sitesReport = [
     name: 'Century House',
     percentage: 10.7,
     color: '#4981F8'
-  },
-  {
-    name: 'Richmond Green',
-    percentage: 2.1,
-    color: '#60A0F8'
-  },
-  {
-    name: 'Ludlow Lodge',
-    percentage: 15.3,
-    color: '#0F2851'
-  },
-  {
-    name: 'Skinners School',
-    percentage: 2.1,
-    color: '#60A0F8'
-  },
-  {
-    name: 'Swandon Way',
-    percentage: 1.44,
-    color: '#60A0F8'
   }
+  // {
+  //   name: 'Richmond Green',
+  //   percentage: 2.1,
+  //   color: '#60A0F8'
+  // },
+  // {
+  //   name: 'Ludlow Lodge',
+  //   percentage: 15.3,
+  //   color: '#0F2851'
+  // },
+  // {
+  //   name: 'Skinners School',
+  //   percentage: 2.1,
+  //   color: '#60A0F8'
+  // },
+  // {
+  //   name: 'Swandon Way',
+  //   percentage: 1.44,
+  //   color: '#60A0F8'
+  // }
 ];
