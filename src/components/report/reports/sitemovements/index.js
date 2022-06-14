@@ -127,11 +127,13 @@ const SiteMovementsReport = () => {
     ],
   });
 
-  const chartDataSmall = (data) => ({
+  const smallPieData = (data) => ({
     chart: {
-      reflow: false,
-      height: 300,
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
       type: "pie",
+      height: 180,
       events: {
         render: function () {
           var series = this.series[0],
@@ -142,12 +144,11 @@ const SiteMovementsReport = () => {
             fontMetrics = this.renderer.fontMetrics(16);
 
           if (!this.customTitle) {
-            console.log("er", data);
             this.customTitle = this.renderer
               .text(text, null, null, true)
               .css({
                 transform: "translate(-50%)",
-                fontSize: "30px",
+                fontSize: "26px",
                 color: "#0F2851",
                 fontFamily: "DM Sans",
                 fontWeight: 700,
@@ -163,9 +164,12 @@ const SiteMovementsReport = () => {
       },
     },
     title: {
-      text: `${data}`,
-      y: 160,
-      x: 0,
+      text: null,
+    },
+    subtitle: {
+      text: `${data?.title}`,
+      y: 100,
+      x: 10,
     },
     tooltip: {
       pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
@@ -182,16 +186,16 @@ const SiteMovementsReport = () => {
       x: 0,
       y: 0,
       padding: 3,
-      itemMarginTop: 5,
-      itemMarginBottom: 5,
+      itemMarginTop: 2,
+      itemMarginBottom: 2,
       itemStyle: {
         lineHeight: "14px",
       },
     },
     plotOptions: {
       pie: {
-        size: ["80%", "80%"],
-        center: ["20%"],
+        center: ["30%"],
+        size: [150, 100],
         allowPointSelect: true,
         cursor: "pointer",
         colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
@@ -200,15 +204,6 @@ const SiteMovementsReport = () => {
         },
         showInLegend: true,
       },
-    },
-    responsive: {
-      rules: [
-        {
-          condition: {
-            minWidth: 700,
-          },
-        },
-      ],
     },
     series: [
       {
@@ -308,7 +303,7 @@ const SiteMovementsReport = () => {
                               <div className="flex-3 high-chart-site-movement">
                                 <HighchartsReact
                                   highcharts={Highcharts}
-                                  options={chartDataSmall(service.title)}
+                                  options={smallPieData(service)}
                                 />
                               </div>
                             </div>
