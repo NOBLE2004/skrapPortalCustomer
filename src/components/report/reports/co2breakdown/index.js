@@ -1,7 +1,7 @@
-import {Card, CardContent} from "@mui/material";
-import {CircleProgress} from "react-gradient-progress";
-import {sitesReport, wasteReport} from "../../../utlils/constants";
-import React, {useEffect, useState} from "react";
+import { Card, CardContent } from "@mui/material";
+import { CircleProgress } from "react-gradient-progress";
+import { sitesReport, wasteReport } from "../../../utlils/constants";
+import React, { useEffect, useState } from "react";
 import './index.scss';
 
 const Co2breakdownReport = (props) => {
@@ -15,7 +15,7 @@ const Co2breakdownReport = (props) => {
                         44.57 <span>Tonnes total weight</span>
                     </h1>
                     <div className="salesWp-inner-wrap">
-                        <div className="salesWp-sub">
+                        <div className="salesWp-sub" style={{position:'relative'}}>
                             <div>
                                 <CircleProgress
                                     width={250}
@@ -27,6 +27,20 @@ const Co2breakdownReport = (props) => {
                                     secondaryColor={"#F7F7F7"}
                                     percentage={85}
                                     primaryColor={["#73C6F9", "#5391F9"]}
+                                />
+                            </div>
+                            <div style={{position:'absolute'}}>
+                                <CircleProgress
+                                    width={145}
+                                    strokeWidth={4}
+                                    fontFamily={"DM Sans"}
+                                    fontSize={"26px"}
+                                    fontColor={"#0F285"}
+                                    fontWeight={"700"}
+                                    secondaryColor={"#fff"}
+                                    fill="#ffffff"
+                                    percentage={85}
+                                    primaryColor={["#50D226","#50D226"]}
                                 />
                             </div>
                         </div>
@@ -110,16 +124,14 @@ const Co2breakdownReport = (props) => {
                                                     <div
                                                         className="circle"
                                                         style={{
-                                                            width: `${
-                                                                service.percentage > 5
+                                                            width: `${service.percentage > 5
                                                                     ? service.percentage * 4
                                                                     : service.percentage * 8
-                                                            }px`,
-                                                            height: `${
-                                                                service.percentage > 5
+                                                                }px`,
+                                                            height: `${service.percentage > 5
                                                                     ? service.percentage * 4
                                                                     : service.percentage * 8
-                                                            }px`,
+                                                                }px`,
                                                         }}
                                                     />
                                                 </div>

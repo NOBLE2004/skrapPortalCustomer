@@ -53,7 +53,7 @@ const EmissionReport = (props) => {
   return (
     <Card className="report-chart-card">
       <CardContent>
-        <div className="salesWp">
+        <div className="salesWp column-charts-highcharts-">
           <h1>
             12.567 <span>kg of CO2e Cumulative Emissions</span>
           </h1>
@@ -70,7 +70,7 @@ const EmissionReport = (props) => {
         </div>
       </CardContent>
       <CardContent>
-        <div className="salesWp">
+        <div className="salesWp column-charts-highcharts-">
           <h2>Did you know?</h2>
           <p>
             By upgrading your <span>8-yard skips</span> to a{" "}
