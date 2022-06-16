@@ -77,9 +77,9 @@ const HireBreakDown = (props) => {
                   autoPlay={false}
                   className="main-for-carusal"
                 >
-                  {state?.hire_breakdown?.result?.map((service) => {
+                  {state?.hire_breakdown?.result?.map((service,index) => {
                     return (
-                      <div className="service-box p-2" key={service?.id}>
+                      <div className="service-box p-2" key={index}>
                         <img
                           src={service?.url}
                           alt=""

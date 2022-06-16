@@ -15,7 +15,7 @@ const Co2breakdownReport = (props) => {
                         44.57 <span>Tonnes total weight</span>
                     </h1>
                     <div className="salesWp-inner-wrap">
-                        <div className="salesWp-sub" style={{position:'relative'}}>
+                        <div className="salesWp-sub main-progress-bar-large" style={{ position: 'relative' }}>
                             <div>
                                 <CircleProgress
                                     width={250}
@@ -29,7 +29,7 @@ const Co2breakdownReport = (props) => {
                                     primaryColor={["#73C6F9", "#5391F9"]}
                                 />
                             </div>
-                            <div style={{position:'absolute'}}>
+                            <div style={{ position: 'absolute' }}>
                                 <CircleProgress
                                     width={145}
                                     strokeWidth={4}
@@ -40,8 +40,12 @@ const Co2breakdownReport = (props) => {
                                     secondaryColor={"#fff"}
                                     fill="#ffffff"
                                     percentage={85}
-                                    primaryColor={["#50D226","#50D226"]}
+                                    primaryColor={["#50D226", "#000000"]}
                                 />
+                            </div>
+                            <div className="text-in-progressbar">
+                                <span> Diverted from landfill</span>
+                               
                             </div>
                         </div>
                         <div className="salesWp-sub">
@@ -125,12 +129,12 @@ const Co2breakdownReport = (props) => {
                                                         className="circle"
                                                         style={{
                                                             width: `${service.percentage > 5
-                                                                    ? service.percentage * 4
-                                                                    : service.percentage * 8
+                                                                ? service.percentage * 4
+                                                                : service.percentage * 8
                                                                 }px`,
                                                             height: `${service.percentage > 5
-                                                                    ? service.percentage * 4
-                                                                    : service.percentage * 8
+                                                                ? service.percentage * 4
+                                                                : service.percentage * 8
                                                                 }px`,
                                                         }}
                                                     />
