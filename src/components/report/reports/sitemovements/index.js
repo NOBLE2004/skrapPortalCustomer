@@ -1,6 +1,5 @@
 import { Card, CardContent, Grid } from "@mui/material";
 import Timeline from "@mui/lab/Timeline";
-import { servicesReport } from "../../../utlils/constants";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
@@ -11,13 +10,15 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useDispatch, useSelector } from "react-redux";
 import { getSitesMovement } from "../../../../store/actions/action.siteMovements";
+import { getSiteMovementDetails } from "../../../../store/actions/action.siteMovementDetails";
 import FadeLoader from "react-spinners/FadeLoader";
+import { smallPieData, siteMovementData } from "./constant";
 import "./index.scss";
 
 const SiteMovementsReport = () => {
   const [show, setShow] = useState(false);
-  const [chartData, setChartData] = useState();
   const state = useSelector(state => state?.siteMovements)
+  const siteDetail = useSelector(state => state?.siteMovementDetail)
   const dispatch = useDispatch();
   useEffect(() => {
     async function fetchData() {
@@ -29,208 +30,8 @@ const SiteMovementsReport = () => {
   }, []);
 
   useEffect(() => {
-    setChartData({
-      chart: {
-        reflow: false,
-        height: 250,
-        type: "pie",
-        events: {
-          render: function () {
-            var series = this.series[0],
-              seriesCenter = series?.center,
-              x = seriesCenter[0] + this.plotLeft,
-              y = seriesCenter[1] + this.plotTop,
-              text = 100 + "%",
-              fontMetrics = this.renderer.fontMetrics(16);
-            if (!this.customTitle) {
-              this.customTitle = this.renderer
-                .text(text, null, null, true)
-                .css({
-                  transform: "translate(-50%)",
-                  fontSize: "30px",
-                  color: "#0F2851",
-                  fontFamily: "DM Sans",
-                  fontWeight: 700,
-                })
-                .add();
-            }
-
-            this.customTitle.attr({
-              x,
-              y: y + fontMetrics.f / 2,
-            });
-          },
-        },
-      },
-      title: {
-        text: null,
-      },
-      tooltip: {
-        pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-      },
-      accessibility: {
-        point: {
-          valueSuffix: "%",
-        },
-      },
-      legend: {
-        align: "right",
-        layout: "vertical",
-        verticalAlign: "middle",
-        x: -100,
-        y: 0,
-        padding: 3,
-        itemMarginTop: 5,
-        itemMarginBottom: 5,
-        itemStyle: {
-          lineHeight: "14px",
-        },
-      },
-      plotOptions: {
-        pie: {
-          center: ['50%', '50%'],
-          size: [210, 100],
-          allowPointSelect: true,
-          cursor: "pointer",
-          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
-          dataLabels: {
-            enabled: false,
-          },
-          showInLegend: true,
-        },
-      },
-      responsive: {
-        rules: [
-          {
-            condition: {
-              minWidth: 300,
-            },
-          },
-        ],
-      },
-      series: [
-        {
-          minPointSize: 10,
-          innerSize: "75%",
-          zMin: 0,
-          data: state?.data?.result?.data,
-        },
-      ],
-    })
-
-  }, [state?.data])
-
-  const smallPieData = (data) => ({
-    chart: {
-      plotBackgroundColor: null,
-      plotBorderWidth: null,
-      plotShadow: false,
-      type: "pie",
-      height: 180,
-      events: {
-        render: function () {
-          var series = this.series[0],
-            seriesCenter = series.center,
-            x = seriesCenter[0] + this.plotLeft,
-            y = seriesCenter[1] + this.plotTop,
-            text = series.total + "%",
-            fontMetrics = this.renderer.fontMetrics(16);
-
-          if (!this.customTitle) {
-            this.customTitle = this.renderer
-              .text(text, null, null, true)
-              .css({
-                transform: "translate(-50%)",
-                fontSize: "26px",
-                color: "#0F2851",
-                fontFamily: "DM Sans",
-                fontWeight: 700,
-              })
-              .add();
-          }
-
-          this.customTitle.attr({
-            x,
-            y: y + fontMetrics.f / 2,
-          });
-        },
-      },
-    },
-    title: {
-      text: null,
-    },
-    subtitle: {
-      text: `${data?.title}`,
-      y: 80,
-      x: 10,
-      style: {
-        color: '#677790',
-        fontFamily: 'DM Sans',
-        fontWeight: 700,
-        fontSize: "12px"
-      }
-    },
-    tooltip: {
-      pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-    },
-    accessibility: {
-      point: {
-        valueSuffix: "%",
-      },
-    },
-    legend: {
-      align: "right",
-      layout: "vertical",
-      verticalAlign: "middle",
-      x: 0,
-      y: 0,
-      padding: 3,
-      itemMarginTop: 2,
-      itemMarginBottom: 2,
-      itemStyle: {
-        lineHeight: "14px",
-      },
-    },
-    plotOptions: {
-      pie: {
-        center: ["30%", "30%"],
-        size: [150, 100],
-        allowPointSelect: true,
-        cursor: "pointer",
-        colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
-        dataLabels: {
-          enabled: false,
-        },
-        showInLegend: true,
-      },
-    },
-    series: [
-      {
-        minPointSize: 10,
-        innerSize: "75%",
-        zMin: 0,
-        name: "countries",
-        data: [
-          {
-            name: "Exchange 0%",
-            y: 0,
-          },
-          {
-            name: "Wait & load 0%",
-            y: 0,
-          },
-          {
-            name: "Collect 0%",
-            y: 0,
-          },
-          {
-            name: "Delivery 100%",
-            y: 100,
-          },
-        ],
-      },
-    ],
-  });
+    dispatch(getSiteMovementDetails())
+  }, [])
 
   return (
     <Card className="report-chart-card ">
@@ -253,7 +54,7 @@ const SiteMovementsReport = () => {
             <Grid container className="small-chart-large">
               <Grid container className="d-flex align-center">
                 <div className="flex-3 high-chart-site-movement">
-                  <HighchartsReact highcharts={Highcharts} options={chartData} />
+                  <HighchartsReact highcharts={Highcharts} options={siteMovementData(state?.data?.result?.data, state?.data?.result?.full_total_percentage)} />
                 </div>
               </Grid>
             </Grid>
@@ -270,56 +71,182 @@ const SiteMovementsReport = () => {
             <div className="see-more-wrap">
               <div className="border-drop"></div>
               <Timeline className="more-drop">
-                {servicesReport.map((service, index) => {
-                  return (
-                    <TimelineItem
-                      key={index}
-                      sx={{
-                        width: "100%",
+
+                <TimelineItem
+
+                  sx={{
+                    width: "100%",
+                  }}
+                >
+                  <TimelineSeparator>
+                    <div
+                      style={{
+                        display: "flex",
+                        height: "100%",
                       }}
                     >
-                      <TimelineSeparator>
-                        <div
-                          style={{
-                            display: "flex",
-                            height: "100%",
-                          }}
-                        >
-                          <TimelineConnector
-                            sx={{
-                              width: "8px",
-                              backgroundColor: "#d6eafd",
-                              borderTopLeftRadius: index === 0 ? "8px" : "0x",
-                              borderTopRightRadius: index === 0 ? "8px" : "0x",
-                            }}
-                          />
-                          <div className="d-flex align-center">
-                            <img src={KeyboardTabIcon} alt="" />
+                      <TimelineConnector
+                        sx={{
+                          width: "8px",
+                          backgroundColor: "#d6eafd",
+                          borderTopLeftRadius: "8px",
+                          borderTopRightRadius: "8px",
+                        }}
+                      />
+                      <div className="d-flex align-center">
+                        <img src={KeyboardTabIcon} alt="" />
+                      </div>
+                    </div>
+                  </TimelineSeparator>
+
+                  <TimelineContent
+                    sx={{
+                      padding: "12px 0px",
+                    }}
+                  >
+                    <Grid container className="small-chart">
+                      <Grid container className="d-flex align-center">
+                        <div className="flex-3">
+                          <div className="flex-3 high-chart-site-movement">
+                            <HighchartsReact
+                              highcharts={Highcharts}
+                              options={smallPieData('Exchange', siteDetail?.data?.result?.exchange)}
+                            />
                           </div>
                         </div>
-                      </TimelineSeparator>
+                      </Grid>
+                    </Grid>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem
 
-                      <TimelineContent
+                  sx={{
+                    width: "100%",
+                  }}
+                >
+                  <TimelineSeparator>
+                    <div
+                      style={{
+                        display: "flex",
+                        height: "100%",
+                      }}
+                    >
+                      <TimelineConnector
                         sx={{
-                          padding: "12px 0px",
+                          width: "8px",
+                          backgroundColor: "#d6eafd",
                         }}
-                      >
-                        <Grid container className="small-chart">
-                          <Grid container className="d-flex align-center">
-                            <div className="flex-3">
-                              <div className="flex-3 high-chart-site-movement">
-                                <HighchartsReact
-                                  highcharts={Highcharts}
-                                  options={smallPieData(service)}
-                                />
-                              </div>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </TimelineContent>
-                    </TimelineItem>
-                  );
-                })}
+                      />
+                      <div className="d-flex align-center">
+                        <img src={KeyboardTabIcon} alt="" />
+                      </div>
+                    </div>
+                  </TimelineSeparator>
+
+                  <TimelineContent
+                    sx={{
+                      padding: "12px 0px",
+                    }}
+                  >
+                    <Grid container className="small-chart">
+                      <Grid container className="d-flex align-center">
+                        <div className="flex-3">
+                          <div className="flex-3 high-chart-site-movement">
+                            <HighchartsReact
+                              highcharts={Highcharts}
+                              options={smallPieData('Wait & load', siteDetail?.data?.result?.wait_and_load)}
+                            />
+                          </div>
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem
+
+                  sx={{
+                    width: "100%",
+                  }}
+                >
+                  <TimelineSeparator>
+                    <div
+                      style={{
+                        display: "flex",
+                        height: "100%",
+                      }}
+                    >
+                      <TimelineConnector
+                        sx={{
+                          width: "8px",
+                          backgroundColor: "#d6eafd",
+                        }}
+                      />
+                      <div className="d-flex align-center">
+                        <img src={KeyboardTabIcon} alt="" />
+                      </div>
+                    </div>
+                  </TimelineSeparator>
+
+                  <TimelineContent
+                    sx={{
+                      padding: "12px 0px",
+                    }}
+                  >
+                    <Grid container className="small-chart">
+                      <Grid container className="d-flex align-center">
+                        <div className="flex-3">
+                          <div className="flex-3 high-chart-site-movement">
+                            <HighchartsReact
+                              highcharts={Highcharts}
+                              options={smallPieData('Collect', siteDetail?.data?.result?.collect)}
+                            />
+                          </div>
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem
+                  sx={{ width: "100%", }}>
+                  <TimelineSeparator>
+                    <div
+                      style={{
+                        display: "flex",
+                        height: "100%",
+                      }} >
+                      <TimelineConnector
+                        sx={{
+                          width: "8px",
+                          backgroundColor: "#d6eafd",
+                          borderBottomLeftRadius: "8px",
+                          borderBottomRightRadius: "8px",
+                        }}
+                      />
+
+                      <div className="d-flex align-center">
+                        <img src={KeyboardTabIcon} alt="" />
+                      </div>
+                    </div>
+                  </TimelineSeparator>
+                  <TimelineContent
+                    sx={{
+                      padding: "12px 0px",
+                    }}
+                  >
+                    <Grid container className="small-chart">
+                      <Grid container className="d-flex align-center">
+                        <div className="flex-3">
+                          <div className="flex-3 high-chart-site-movement">
+                            <HighchartsReact
+                              highcharts={Highcharts}
+                              options={smallPieData('Delivery', siteDetail?.data?.result?.delivery)}
+                            />
+                          </div>
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </TimelineContent>
+                </TimelineItem>
               </Timeline>
             </div>
           )}

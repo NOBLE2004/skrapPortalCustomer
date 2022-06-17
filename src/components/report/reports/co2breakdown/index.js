@@ -24,6 +24,7 @@ const Co2breakdownReport = (props) => {
                                     fontSize={"26px"}
                                     fontColor={"#0F285"}
                                     fontWeight={"700"}
+                                    hidePercentageText
                                     secondaryColor={"#F7F7F7"}
                                     percentage={85}
                                     primaryColor={["#73C6F9", "#5391F9"]}
@@ -45,7 +46,7 @@ const Co2breakdownReport = (props) => {
                             </div>
                             <div className="text-in-progressbar">
                                 <span> Diverted from landfill</span>
-                               
+
                             </div>
                         </div>
                         <div className="salesWp-sub">

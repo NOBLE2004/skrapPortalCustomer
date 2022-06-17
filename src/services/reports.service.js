@@ -5,6 +5,7 @@ class ReportsService extends HttpService {
     getSitesBreakdown = (data) => this.get("customers/report/sitesBreakDown", data);
     getJobsMeta = (data) => this.get("customers/report/jobsMeta", data);
     getSitesMovement = (data) => this.get("customers/report/siteMovements", data)
+    getSiteMovementDetails = (data) => this.get("customers/report/siteMovementsDetails", data)
 }
 
 export default new ReportsService();
