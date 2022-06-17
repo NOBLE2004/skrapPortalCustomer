@@ -76,7 +76,7 @@ export const smallPieData = (data) => ({
             size: [150, 100],
             allowPointSelect: true,
             cursor: "pointer",
-            colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+            colors: data?.data?.length > 0 ? ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"] : ['#fff'],
             dataLabels: {
                 enabled: false,
             },
@@ -89,7 +89,7 @@ export const smallPieData = (data) => ({
             innerSize: "75%",
             zMin: 0,
             name: "countries",
-            data: data?.data
+            data: data?.data?.length > 0 ? data?.data : [{ y: 0, name: '' }]
         },
     ],
 });

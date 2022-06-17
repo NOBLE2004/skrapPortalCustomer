@@ -15,23 +15,25 @@ import FadeLoader from "react-spinners/FadeLoader";
 import { smallPieData, siteMovementData } from "./constant";
 import "./index.scss";
 
-const SiteMovementsReport = () => {
+const SiteMovementsReport = (props) => {
+  const { sites } = props
   const [show, setShow] = useState(false);
   const state = useSelector(state => state?.siteMovements)
   const siteDetail = useSelector(state => state?.siteMovementDetail)
   const dispatch = useDispatch();
   useEffect(() => {
     async function fetchData() {
-      if (!state?.data) {
-        await dispatch(getSitesMovement());
-      }
+      // if (!state?.data) {
+      await dispatch(getSitesMovement({ sites: sites }));
+      // }
     }
     fetchData();
-  }, []);
+  }, [sites]);
 
   useEffect(() => {
-    dispatch(getSiteMovementDetails())
-  }, [])
+    dispatch(getSiteMovementDetails({ sites: sites }))
+  }, [sites])
+
 
   return (
     <Card className="report-chart-card ">
@@ -70,57 +72,67 @@ const SiteMovementsReport = () => {
           {show && (
             <div className="see-more-wrap">
               <div className="border-drop"></div>
+              {siteDetail?.isLoading ?
+                <div className="d-flex justify-center align-center">
 
-              <Timeline className="more-drop">
-                {siteDetail?.data?.result?.map((single, index) =>
-                  <TimelineItem
-                    key={index}
-                    sx={{
-                      width: "100%",
-                    }}
-                  >
-                    <TimelineSeparator>
-                      <div
-                        style={{
-                          display: "flex",
-                          height: "100%",
-                        }}
-                      >
-                        <TimelineConnector
-                          sx={{
-                            width: "8px",
-                            backgroundColor: "#d6eafd",
-                            borderTopLeftRadius: index === 0 ? "8px" : "0px",
-                            borderTopRightRadius: index === 0 ? "8px" : "0px",
-                          }}
-                        />
-                        <div className="d-flex align-center">
-                          <img src={KeyboardTabIcon} alt="" />
-                        </div>
-                      </div>
-                    </TimelineSeparator>
-
-                    <TimelineContent
+                  <FadeLoader
+                    color={"#29a7df"}
+                    loading={state?.isLoading}
+                    width={4}
+                  />
+                </div>
+                :
+                <Timeline className="more-drop">
+                  {siteDetail?.data?.result?.map((single, index) =>
+                    <TimelineItem
+                      key={index}
                       sx={{
-                        padding: "12px 0px",
+                        width: "100%",
                       }}
                     >
-                      <Grid container className="small-chart">
-                        <Grid container className="d-flex align-center">
-                          <div className="flex-3">
-                            <div className="flex-3 high-chart-site-movement">
-                              <HighchartsReact
-                                highcharts={Highcharts}
-                                options={smallPieData(single)}
-                              />
-                            </div>
+                      <TimelineSeparator>
+                        <div
+                          style={{
+                            display: "flex",
+                            height: "100%",
+                          }}
+                        >
+                          <TimelineConnector
+                            sx={{
+                              width: "8px",
+                              backgroundColor: "#d6eafd",
+                              borderTopLeftRadius: index === 0 ? "8px" : "0px",
+                              borderTopRightRadius: index === 0 ? "8px" : "0px",
+                            }}
+                          />
+                          <div className="d-flex align-center">
+                            <img src={KeyboardTabIcon} alt="" />
                           </div>
+                        </div>
+                      </TimelineSeparator>
+
+                      <TimelineContent
+                        sx={{
+                          padding: "12px 0px",
+                        }}
+                      >
+                        <Grid container className="small-chart">
+                          <Grid container className="d-flex align-center">
+                            <div className="flex-3">
+                              <div className="flex-3 high-chart-site-movement">
+                                <HighchartsReact
+                                  highcharts={Highcharts}
+                                  options={smallPieData(single)}
+                                />
+                              </div>
+                            </div>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    </TimelineContent>
-                  </TimelineItem>
-                )}
-              </Timeline>
+                      </TimelineContent>
+                    </TimelineItem>
+                  )}
+                </Timeline>
+              }
             </div>
           )}
         </div>
