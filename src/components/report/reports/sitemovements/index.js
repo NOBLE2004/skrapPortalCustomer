@@ -70,183 +70,56 @@ const SiteMovementsReport = () => {
           {show && (
             <div className="see-more-wrap">
               <div className="border-drop"></div>
+
               <Timeline className="more-drop">
+                {Object?.keys(siteDetail?.data?.result)?.map((single, index) =>
+                  <TimelineItem
+                    key={index}
+                    sx={{
+                      width: "100%",
+                    }}
+                  >
+                    <TimelineSeparator>
+                      <div
+                        style={{
+                          display: "flex",
+                          height: "100%",
+                        }}
+                      >
+                        <TimelineConnector
+                          sx={{
+                            width: "8px",
+                            backgroundColor: "#d6eafd",
+                            borderTopLeftRadius: index === 0 ? "8px" : "0px",
+                            borderTopRightRadius: index === 0 ? "8px" : "0px",
+                          }}
+                        />
+                        <div className="d-flex align-center">
+                          <img src={KeyboardTabIcon} alt="" />
+                        </div>
+                      </div>
+                    </TimelineSeparator>
 
-                <TimelineItem
-
-                  sx={{
-                    width: "100%",
-                  }}
-                >
-                  <TimelineSeparator>
-                    <div
-                      style={{
-                        display: "flex",
-                        height: "100%",
+                    <TimelineContent
+                      sx={{
+                        padding: "12px 0px",
                       }}
                     >
-                      <TimelineConnector
-                        sx={{
-                          width: "8px",
-                          backgroundColor: "#d6eafd",
-                          borderTopLeftRadius: "8px",
-                          borderTopRightRadius: "8px",
-                        }}
-                      />
-                      <div className="d-flex align-center">
-                        <img src={KeyboardTabIcon} alt="" />
-                      </div>
-                    </div>
-                  </TimelineSeparator>
-
-                  <TimelineContent
-                    sx={{
-                      padding: "12px 0px",
-                    }}
-                  >
-                    <Grid container className="small-chart">
-                      <Grid container className="d-flex align-center">
-                        <div className="flex-3">
-                          <div className="flex-3 high-chart-site-movement">
-                            <HighchartsReact
-                              highcharts={Highcharts}
-                              options={smallPieData('Exchange', siteDetail?.data?.result?.exchange)}
-                            />
+                      <Grid container className="small-chart">
+                        <Grid container className="d-flex align-center">
+                          <div className="flex-3">
+                            <div className="flex-3 high-chart-site-movement">
+                              <HighchartsReact
+                                highcharts={Highcharts}
+                                options={smallPieData(single, siteDetail?.data?.result[single])}
+                              />
+                            </div>
                           </div>
-                        </div>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem
-
-                  sx={{
-                    width: "100%",
-                  }}
-                >
-                  <TimelineSeparator>
-                    <div
-                      style={{
-                        display: "flex",
-                        height: "100%",
-                      }}
-                    >
-                      <TimelineConnector
-                        sx={{
-                          width: "8px",
-                          backgroundColor: "#d6eafd",
-                        }}
-                      />
-                      <div className="d-flex align-center">
-                        <img src={KeyboardTabIcon} alt="" />
-                      </div>
-                    </div>
-                  </TimelineSeparator>
-
-                  <TimelineContent
-                    sx={{
-                      padding: "12px 0px",
-                    }}
-                  >
-                    <Grid container className="small-chart">
-                      <Grid container className="d-flex align-center">
-                        <div className="flex-3">
-                          <div className="flex-3 high-chart-site-movement">
-                            <HighchartsReact
-                              highcharts={Highcharts}
-                              options={smallPieData('Wait & load', siteDetail?.data?.result?.wait_and_load)}
-                            />
-                          </div>
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem
-
-                  sx={{
-                    width: "100%",
-                  }}
-                >
-                  <TimelineSeparator>
-                    <div
-                      style={{
-                        display: "flex",
-                        height: "100%",
-                      }}
-                    >
-                      <TimelineConnector
-                        sx={{
-                          width: "8px",
-                          backgroundColor: "#d6eafd",
-                        }}
-                      />
-                      <div className="d-flex align-center">
-                        <img src={KeyboardTabIcon} alt="" />
-                      </div>
-                    </div>
-                  </TimelineSeparator>
-
-                  <TimelineContent
-                    sx={{
-                      padding: "12px 0px",
-                    }}
-                  >
-                    <Grid container className="small-chart">
-                      <Grid container className="d-flex align-center">
-                        <div className="flex-3">
-                          <div className="flex-3 high-chart-site-movement">
-                            <HighchartsReact
-                              highcharts={Highcharts}
-                              options={smallPieData('Collect', siteDetail?.data?.result?.collect)}
-                            />
-                          </div>
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem
-                  sx={{ width: "100%", }}>
-                  <TimelineSeparator>
-                    <div
-                      style={{
-                        display: "flex",
-                        height: "100%",
-                      }} >
-                      <TimelineConnector
-                        sx={{
-                          width: "8px",
-                          backgroundColor: "#d6eafd",
-                          borderBottomLeftRadius: "8px",
-                          borderBottomRightRadius: "8px",
-                        }}
-                      />
-
-                      <div className="d-flex align-center">
-                        <img src={KeyboardTabIcon} alt="" />
-                      </div>
-                    </div>
-                  </TimelineSeparator>
-                  <TimelineContent
-                    sx={{
-                      padding: "12px 0px",
-                    }}
-                  >
-                    <Grid container className="small-chart">
-                      <Grid container className="d-flex align-center">
-                        <div className="flex-3">
-                          <div className="flex-3 high-chart-site-movement">
-                            <HighchartsReact
-                              highcharts={Highcharts}
-                              options={smallPieData('Delivery', siteDetail?.data?.result?.delivery)}
-                            />
-                          </div>
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </TimelineContent>
-                </TimelineItem>
+                    </TimelineContent>
+                  </TimelineItem>
+                )}
               </Timeline>
             </div>
           )}
