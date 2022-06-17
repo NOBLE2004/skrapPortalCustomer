@@ -1,4 +1,4 @@
-export const smallPieData = (name, data) => ({
+export const smallPieData = (data) => ({
     chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -37,7 +37,7 @@ export const smallPieData = (name, data) => ({
         text: null,
     },
     subtitle: {
-        text: `${name?.charAt(0)?.toUpperCase() + name?.slice(1)?.toLowerCase()?.replace(/_/g, " ")}`,
+        text: `${data?.name?.charAt(0)?.toUpperCase() + data?.name?.slice(1)?.toLowerCase()?.replace(/_/g, " ")}`,
         y: 80,
         x: 0,
         style: {

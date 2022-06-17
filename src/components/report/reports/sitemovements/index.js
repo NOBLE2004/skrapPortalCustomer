@@ -72,7 +72,7 @@ const SiteMovementsReport = () => {
               <div className="border-drop"></div>
 
               <Timeline className="more-drop">
-                {Object?.keys(siteDetail?.data?.result)?.map((single, index) =>
+                {siteDetail?.data?.result?.map((single, index) =>
                   <TimelineItem
                     key={index}
                     sx={{
@@ -111,7 +111,7 @@ const SiteMovementsReport = () => {
                             <div className="flex-3 high-chart-site-movement">
                               <HighchartsReact
                                 highcharts={Highcharts}
-                                options={smallPieData(single, siteDetail?.data?.result[single])}
+                                options={smallPieData(single)}
                               />
                             </div>
                           </div>
