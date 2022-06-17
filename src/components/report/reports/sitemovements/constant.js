@@ -13,9 +13,7 @@ export const smallPieData = (name, data) => ({
                     y = seriesCenter[1] + this.plotTop,
                     text = data?.percentage + "%",
                     fontMetrics = this.renderer.fontMetrics(16);
-
                 if (!this.customTitle) {
-                    console.log('data',data)
                     this.customTitle = this.renderer
                         .text(text, null, null, true)
                         .css({
@@ -39,7 +37,7 @@ export const smallPieData = (name, data) => ({
         text: null,
     },
     subtitle: {
-        text: `${name}`,
+        text: `${name?.charAt(0)?.toUpperCase() + name?.slice(1)?.toLowerCase()?.replace(/_/g, " ")}`,
         y: 80,
         x: 0,
         style: {
@@ -60,7 +58,7 @@ export const smallPieData = (name, data) => ({
     legend: {
         align: "right",
         layout: "vertical",
-        size:'20%',
+        size: '20%',
         width: 150,
         verticalAlign: "middle",
         x: 0,
@@ -69,8 +67,8 @@ export const smallPieData = (name, data) => ({
         itemMarginTop: 2,
         itemMarginBottom: 2,
         itemStyle: {
-             textOverflow: "ellipsis",
-          },
+            textOverflow: "ellipsis",
+        },
     },
     plotOptions: {
         pie: {
@@ -96,7 +94,7 @@ export const smallPieData = (name, data) => ({
     ],
 });
 
-export const siteMovementData = (data,total) => ({
+export const siteMovementData = (data, total) => ({
     chart: {
         reflow: false,
         height: 250,
@@ -110,7 +108,7 @@ export const siteMovementData = (data,total) => ({
                     text = total + "%",
                     fontMetrics = this.renderer.fontMetrics(16);
                 if (!this.customTitle) {
-                     this.customTitle = this.renderer
+                    this.customTitle = this.renderer
                         .text(text, null, null, true)
                         .css({
                             transform: "translate(-50%)",
