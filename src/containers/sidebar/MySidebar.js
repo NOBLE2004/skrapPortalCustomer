@@ -246,7 +246,7 @@ const MySidebar = (props) => {
               primary={
                       (userData.hasOwnProperty("company") &&
                           userData?.company) ||
-                  "Test"
+                  ""
               }
               className="current-user"
           />
