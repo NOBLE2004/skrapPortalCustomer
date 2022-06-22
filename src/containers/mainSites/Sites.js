@@ -85,7 +85,7 @@ const Sites = (props) => {
       >
         <CommonJobStatus
           jobStatus={{
-            status: "Sales",
+            status: "Spend",
             price: `£${
               info ? parseFloat(info.TotalSpend).toLocaleString() : 0
             }`,
@@ -154,7 +154,7 @@ const Sites = (props) => {
                 </Grid>
               </>
             ) : (
-              <div className="sitenotfound">Sites not found yet</div>
+              <div className="sitenotfound">No active sites found</div>
             )}
           </Grid>
         </>

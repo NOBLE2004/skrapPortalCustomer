@@ -24,12 +24,7 @@ const SiteManagers = (props) => {
 
   const handleManagerCreated = useCallback(() => {
     setSiteBooked(!isSiteBooked);
-  }, [isSiteBooked]);
-
-  useEffect(() => {
-    if (isSiteBooked) {
-      props.getSiteManager();
-    }
+    props.getSiteManager();
   }, [isSiteBooked]);
 
   return (

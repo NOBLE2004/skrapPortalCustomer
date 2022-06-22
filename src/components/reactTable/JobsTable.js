@@ -281,19 +281,20 @@ const JobsTable = ({
         Header: "",
         accessor: "job_id",
         id: "invoice",
-        Cell: (props) => (
-          <span
-            className="normal-dsans-10-primary"
-            onClick={(e) => downloadInvoice(e, props.value)}
+        Cell: (props) => {
+          console.log(props)
+          return (props.row.original.appointment_status === 4 || props.row.original.appointment_status == 3) ? (<span
+              className="normal-dsans-10-primary"
+              onClick={(e) => downloadInvoice(e, props.value)}
           >
             Invoice
             <img
-              src={downloadSite}
-              alt="download-icon"
-              style={{ marginLeft: "5px" }}
+                src={downloadSite}
+                alt="download-icon"
+                style={{marginLeft: "5px"}}
             />
-          </span>
-        ),
+          </span>) : ('')
+        },
       },
       {
         Header: "",

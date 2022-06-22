@@ -219,7 +219,7 @@ const AllocatePoModal = (props) => {
                       onChange={(event, value) =>
                         handleServiceType(event, index, value)
                       }
-                      getOptionLabel={(option) => option.service_name}
+                      getOptionLabel={(option) => `${option.service_name} (${option.parent_name})`}
                     />
                   </Grid>
                   <Grid item md="2">

@@ -58,9 +58,9 @@ const DashBoard = (props) => {
   }
   return (
     <>
-      {!info ? (
+      {/*!info ? (
         <div className="jobs-not-found">Network error !</div>
-      ) : (
+      ) :*/ info && (
         <>
           <Grid container spacing={3}>
             <Grid item md={4}>

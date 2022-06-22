@@ -139,7 +139,7 @@ const MainJobs = (props) => {
       >
         <CommonJobStatus
           jobStatus={{
-            status: "Sales",
+            status: "Spend",
             price: `£${
               info ? parseFloat(info.TotalSpend).toLocaleString() : 0
             }`,
