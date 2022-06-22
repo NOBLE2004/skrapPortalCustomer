@@ -193,7 +193,7 @@ const MainJobs = (props) => {
         <>
           {isLoading ? (
             <div className="loader">
-              <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+              <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
             </div>
           ) : props.jobs.error ? (
             <div className="jobs-not-found">{props.jobs.error}</div>
@@ -223,7 +223,7 @@ const MainJobs = (props) => {
                 {isLoading ? (
                   <div className="loader">
                     <FadeLoader
-                      color={"#29a7df"}
+                      color={"#518ef8"}
                       loading={isLoading}
                       width={4}
                     />

@@ -149,7 +149,7 @@ const SignIn = (props) => {
           </div>
           {props.auth.loading ? (
             <FadeLoader
-              color={"#29a7df"}
+              color={"#518ef8"}
               loading={props.auth.loading}
               width={4}
             />

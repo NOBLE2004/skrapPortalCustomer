@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { sidebarTabsList } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
-import { skrap_logo, personImage } from "../../assets/images";
+import { appIcon, personImage } from "../../assets/images";
 import useWindowDimensions from "../../hooks/useWindowDimension";
 import "./mySidebar.scss";
 
@@ -157,7 +157,7 @@ const MySidebar = (props) => {
       }}
     >
       <IconButton onClick={handleDrawer} className="sidebar-handler-arrow">
-        <img className="skrapLogin" src={skrap_logo} alt="Skrap-Logo" />
+        <img className="skrapLogin" src={appIcon} alt="Skrap-Logo" />
       </IconButton>
       <List
         className="menuList"

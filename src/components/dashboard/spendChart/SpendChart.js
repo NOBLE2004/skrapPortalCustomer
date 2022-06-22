@@ -20,7 +20,7 @@ const SpendChart = ({ chartData , getDashBoardData , latestYear}) => {
   const spendChartData = {
     datasets: [
       {
-        backgroundColor: "#52A9DD",
+        backgroundColor: "rgb(81, 142, 248)",
         data: [
           chartData?.salesTotal?.Months[1].total,
           chartData?.salesTotal?.Months[2].total,

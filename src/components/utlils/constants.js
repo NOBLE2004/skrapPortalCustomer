@@ -38,8 +38,8 @@ export const spendData = {
       data: [33, 53, 25, 41, 70, 55, 60, 46, 68],
       fill: false,
       pointRadius: 0,
-      backgroundColor: "#52A9DD",
-      borderColor: "#52A9DD",
+      backgroundColor: "rgb(81, 142, 248)",
+      borderColor: "rgb(81, 142, 248)",
     },
   ],
 };
@@ -47,12 +47,12 @@ export const spendData = {
 export const spendChartData = {
   datasets: [
     {
-      backgroundColor: "#52A9DD",
+      backgroundColor: "rgb(81, 142, 248)",
       data: [7.5, 5, 7, 3.3, 5, 9, 3.3, 0, 0, 0, 0, 0],
       label: "This year",
       borderWidth: 2,
       borderRadius: 5,
-      borderColor: "#52A9DD",
+      borderColor: "rgb(81, 142, 248)",
       borderSkipped: false,
       cornerRadius: 4,
     },

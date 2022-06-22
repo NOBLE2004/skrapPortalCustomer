@@ -51,7 +51,7 @@ const HireBreakDown = (props) => {
     <>
       {state?.isLoading ? (
         <div className="d-flex justify-center align-center">
-          <FadeLoader color={"#29a7df"} loading={state?.isLoading} width={4} />
+          <FadeLoader color={"#518ef8"} loading={state?.isLoading} width={4} />
         </div>
       ) : (
         <>

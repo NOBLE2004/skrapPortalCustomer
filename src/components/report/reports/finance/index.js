@@ -101,7 +101,7 @@ const FinanceReport = (props) => {
           {stateSites?.isLoading ? (
             <div className="d-flex justify-center align-center">
               <FadeLoader
-                color={"#29a7df"}
+                color={"#518ef8"}
                 loading={stateSites?.isLoading}
                 width={4}
               />

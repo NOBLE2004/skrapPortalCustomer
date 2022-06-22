@@ -320,7 +320,7 @@ const AddPhone = (props) => {
             </div>
             {isLoading ? (
               <div className="notice-alert">
-                <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+                <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
               </div>
             ) : (
               <div className="new-notice-alert">
@@ -335,7 +335,7 @@ const AddPhone = (props) => {
               {props.auth.loading ? (
                 <div className="notice-alert">
                   <FadeLoader
-                    color={"#29a7df"}
+                    color={"#518ef8"}
                     loading={props.auth.loading}
                     width={4}
                   />

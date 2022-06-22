@@ -13,7 +13,7 @@
     padding: 12px 12px;
   }
   .MuiInput-underline:hover:not(.Mui-disabled):before {
-    border-bottom: 1px solid #52a9dd;
+    border-bottom: 1px solid rgb(81, 142, 248);
   }
   .salesWp {
     display: flex;
@@ -43,7 +43,7 @@
       }
       .dropdown {
         border-radius: 3px;
-        border: 1px solid #52a9dd;
+        border: 1px solid rgb(81, 142, 248);
         font-weight: bold;
         padding-left: 10px;
         text-decoration: none;
@@ -61,7 +61,7 @@
     padding-bottom: 10px !important;
   }
   .MuiInput-underline:before {
-    border-bottom: 1px solid #52a9dd !important;
+    border-bottom: 1px solid rgb(81, 142, 248) !important;
   }
  
 }

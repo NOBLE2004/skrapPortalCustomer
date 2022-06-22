@@ -140,7 +140,7 @@ const Sites = (props) => {
         <>
           <Grid container className="sites-table-loader">
             {isLoading ? (
-              <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+              <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
             ) : siteData && siteData.data.length > 0 ? (
               <>
                 <Grid item md={12} sm={12}>

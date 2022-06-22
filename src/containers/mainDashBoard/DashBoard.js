@@ -72,7 +72,7 @@ const DashBoard = (props) => {
   if (loading) {
     return (
       <div className="dashboard-menu">
-        <FadeLoader color={"#29a7df"} loading={loading} width={4} />
+        <FadeLoader color={"#518ef8"} loading={loading} width={4} />
       </div>
     );
   }
