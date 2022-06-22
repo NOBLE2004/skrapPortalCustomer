@@ -96,7 +96,7 @@ const SiteManagerDetailPage = (props) => {
       </div>
       <Grid container className="manager-detail-page">
         {isLoading ? (
-          <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+          <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
         ) : (
           <>
             <Grid item md={12}>
@@ -118,7 +118,7 @@ const SiteManagerDetailPage = (props) => {
               </div>
             </Grid>
             {isJobLoading ? (
-              <FadeLoader color={"#29a7df"} loading={isJobLoading} width={4} />
+              <FadeLoader color={"#518ef8"} loading={isJobLoading} width={4} />
             ) : jobsData && jobsData.jobs?.data?.length ? (
               <SiteManagerTable
                 managerData={jobsData}

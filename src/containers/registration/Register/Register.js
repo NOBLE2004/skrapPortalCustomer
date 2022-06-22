@@ -219,7 +219,7 @@ const Register = (props) => {
             <div className="register-loader">
               {props.signup.loading ? (
                   <FadeLoader
-                      color={"#29a7df"}
+                      color={"#518ef8"}
                       loading={props.signup.loading}
                       width={4}
                   />

@@ -47,7 +47,7 @@ const SiteMovementsReport = (props) => {
           {state?.isLoading ?
             <div className="d-flex justify-center align-center">
               <FadeLoader
-                color={"#29a7df"}
+                color={"#518ef8"}
                 loading={state?.isLoading}
                 width={4}
               />
@@ -76,7 +76,7 @@ const SiteMovementsReport = (props) => {
                 <div className="d-flex justify-center align-center">
 
                   <FadeLoader
-                    color={"#29a7df"}
+                    color={"#518ef8"}
                     loading={state?.isLoading}
                     width={4}
                   />

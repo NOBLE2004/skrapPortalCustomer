@@ -24,7 +24,7 @@ $error: #f30c0c;
 $errorBorder: #f3051f;
 $primaryBlack: #0d0d39;
 $primaryRed: #ff0476;
-$primaryBlue: #52a9dd;
+$primaryBlue: rgb(81, 142, 248);
 $lightBlue: #dee7f1;
 $primaryDarkBlue: #227dc7;
 $primaryGreen: #00ca72;
@@ -68,7 +68,7 @@ $v110: 110px;
 }
 .primary-title {
   @extend .common-title;
-  color: #52a9dd;
+  color: rgb(81, 142, 248);
 }
 .pending-title {
   @extend .common-title;
@@ -124,11 +124,11 @@ $v110: 110px;
 }
 .requested-title {
   @extend .common-title;
-  color: #52a9dd;
+  color: rgb(81, 142, 248);
 }
 
 .header-btn {
-  background: #52a9dd;
+  background: rgb(81, 142, 248);
   border-radius: 64px;
   border: none;
   color: #fff;
@@ -147,7 +147,7 @@ $v110: 110px;
   font-weight: bold;
   font-size: 12px;
   line-height: 16px;
-  color: #52a9dd;
+  color: rgb(81, 142, 248);
   cursor: pointer;
 }
 .normal-dsans-10-dark {
@@ -165,7 +165,7 @@ $v110: 110px;
   font-weight: bold;
   font-size: 12px;
   line-height: 16px;
-  color: #52a9dd;
+  color: rgb(81, 142, 248);
   cursor: pointer;
 }
 
@@ -177,7 +177,7 @@ $v110: 110px;
   line-height: 13px;
   display: contents;
   font-weight: bolder;
-  color: #29aae2;
+  color: rgb(81, 142, 248);
 }
 .normal-dsans-10-primary1 {
   font-family: DM Sans;
@@ -187,7 +187,7 @@ $v110: 110px;
   line-height: 13px;
   display: contents;
   font-weight: bolder;
-  color: #29aae2;
+  color: rgb(81, 142, 248);
   cursor: pointer;
 }
 .normal-dsans-10-tooltip {
@@ -197,7 +197,7 @@ $v110: 110px;
   font-size: 10px;
   line-height: 13px;
   font-weight: bolder;
-  color: #29aae2;
+  color: rgb(81, 142, 248);
 }
 
 // style for flex

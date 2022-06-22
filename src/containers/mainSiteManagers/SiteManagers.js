@@ -40,7 +40,7 @@ const SiteManagers = (props) => {
       <Grid container className="main-site-manager" spacing={5}>
         {props.siteManager.loading ? (
           <FadeLoader
-            color={"#29a7df"}
+            color={"#518ef8"}
             loading={props.siteManager.loading}
             width={4}
           />

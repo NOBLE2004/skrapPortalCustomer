@@ -488,7 +488,7 @@ const JobsTable = ({
             height: "100%",
           }}
         >
-          <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+          <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
         </div>
       )}
       {data && data.length > 0 ? (

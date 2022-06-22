@@ -155,7 +155,7 @@ const SitesDetailPage = (props) => {
       )}
       <Grid container className="manager-detail-page">
         {isLoadings ? (
-          <FadeLoader color={"#29a7df"} loading={isLoadings} width={4} />
+          <FadeLoader color={"#518ef8"} loading={isLoadings} width={4} />
         ) : (
           <>
             <Grid item md={12} xs={12}>
@@ -188,7 +188,7 @@ const SitesDetailPage = (props) => {
             <div className="site-tabel-detail">
               {isJobLoading ? (
                 <FadeLoader
-                  color={"#29a7df"}
+                  color={"#518ef8"}
                   loading={isJobLoading}
                   width={4}
                 />
