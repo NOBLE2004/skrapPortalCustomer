@@ -22,6 +22,26 @@ import {
   mapMarker,
 } from "../../assets/images";
 import "./dashboard.scss";
+import {styled} from "@mui/material/styles";
+import LinearProgress, {linearProgressClasses} from "@mui/material/LinearProgress";
+
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 10,
+  width: "100%",
+  borderRadius: 5,
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    // backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+    backgroundColor: "#A4ADBC",
+    height: "15px",
+    borderRadius: 40,
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 40,
+    height: "15px",
+    backgroundImage:
+        "linear-gradient(135deg, #518EF8 27.99%, #76CCF8 68.87%, #4981F8 77.07%)",
+  },
+}));
 
 const DashBoard = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
@@ -90,7 +110,8 @@ const DashBoard = (props) => {
           <Grid container spacing={3}>
             <Grid item md={12} className="landfill-main">
               <div className="landfill">Landfill Diversion Rate</div>
-              <hr />
+              {/*<hr />*/}
+              <BorderLinearProgress value={90} variant="determinate" />
             </Grid>
           </Grid>
           <Grid container>
