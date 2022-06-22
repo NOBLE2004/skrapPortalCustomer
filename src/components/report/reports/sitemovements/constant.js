@@ -48,7 +48,7 @@ export const smallPieData = (data) => ({
         }
     },
     tooltip: {
-        pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+        pointFormat: "<b>{point.percentage:.1f}%</b>",
     },
     accessibility: {
         point: {
@@ -105,7 +105,7 @@ export const siteMovementData = (data, total) => ({
                     seriesCenter = series?.center,
                     x = seriesCenter[0] + this.plotLeft,
                     y = seriesCenter[1] + this.plotTop,
-                    text = total + "%",
+                    text = (total == undefined ? 0 : total) + "%",
                     fontMetrics = this.renderer.fontMetrics(16);
                 if (!this.customTitle) {
                     this.customTitle = this.renderer
@@ -132,7 +132,7 @@ export const siteMovementData = (data, total) => ({
         text: null,
     },
     tooltip: {
-        pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+        pointFormat: "<b>{point.percentage:.1f}%</b>",
     },
     accessibility: {
         point: {

@@ -12,8 +12,10 @@
 
     .MuiListItem-gutters {
       justify-content: flex-start;
+      align-items: center;
       margin-bottom: 33px;
-      padding: 0px 26px;
+      flex-direction: column;
+      //padding: 0px 26px;
       .current-user {
         flex: 0 1 auto;
       }

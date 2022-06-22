@@ -215,9 +215,7 @@ const MySidebar = (props) => {
             className="display-flex align-items-center driver-icon-section"
             style={{
               color: "#86869C",
-              width: 34,
-              height: 34,
-              marginRight: 18,
+              marginRight: 5,
               borderRadius: "50%",
             }}
           >
@@ -242,6 +240,15 @@ const MySidebar = (props) => {
               "Test"
             }
             className="current-user"
+          />
+          <br />
+          <ListItemText
+              primary={
+                      (userData.hasOwnProperty("company") &&
+                          userData?.company) ||
+                  "Test"
+              }
+              className="current-user"
           />
         </ListItem>
         <button className="sidebar-signout-btn" onClick={handleLogout}>

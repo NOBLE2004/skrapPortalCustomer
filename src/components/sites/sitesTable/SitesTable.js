@@ -81,7 +81,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         },
       },
       {
-        Header: "Sales By Site",
+        Header: "Spend By Site",
         accessor: "sales_by_site",
         disableFilters: true,
         Cell: (props) => {
@@ -125,7 +125,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
                   style={{ marginLeft: "2px" }}
                   onClick={(e) => handleAllocate(e, cell?.row?.original)}
                 >
-                  Allocate Po
+                  Allocate PO
                 </button>
               </>
             )}

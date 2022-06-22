@@ -27,7 +27,7 @@ const ManagerDetail = (props) => {
       onClick={() => handleManagerDetail(user_id, siteData)}
     >
       <CardContent>
-        <div className="title">{title ? title : "Managers Details"}</div>
+        <div className="title">{title ? title : "Manager's Details"}</div>
         <Grid container spacing={3} className="manager-sub-detail">
           <Grid item md={4} className="profile-info">
             <img src={personImage} alt="person-img" />

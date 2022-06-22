@@ -27,7 +27,7 @@ const FinanceReport = (props) => {
         text: null,
       },
       tooltip: {
-        pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+        pointFormat: "<b>{point.percentage:.1f}%</b>",
       },
       accessibility: {
         point: {

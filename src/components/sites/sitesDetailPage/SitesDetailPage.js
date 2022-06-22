@@ -71,7 +71,7 @@ const SitesDetailPage = (props) => {
     };
 
     getData();
-  }, []);
+  }, [reload, isReload]);
 
   useEffect(() => {
     const getJobData = async () => {
@@ -180,7 +180,7 @@ const SitesDetailPage = (props) => {
                   reload={() => setIsReload(!isReload)}
                 />
               ) : (
-                <div>Jobs Not Found Yet !</div>
+                <div>No active jobs found</div>
               )}
             </div>
           </>

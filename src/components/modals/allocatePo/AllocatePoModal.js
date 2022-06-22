@@ -184,7 +184,7 @@ const AllocatePoModal = (props) => {
   return (
     <div>
       <Dialog open={true} onClose={handleClose} className="booksitemodal">
-        <DialogTitle onClose={handleClose}> Allocate to Po </DialogTitle>
+        <DialogTitle onClose={handleClose}> Allocate to PO </DialogTitle>
         <DialogContent dividers>
           <form noValidate>
             <TextField

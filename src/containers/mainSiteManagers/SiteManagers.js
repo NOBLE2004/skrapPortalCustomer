@@ -30,7 +30,7 @@ const SiteManagers = (props) => {
   return (
     <div className="site-manager-margin">
       <div className="header-main">
-        <div className="sites-header-title">Site Managers </div>
+        <div className="sites-header-title">Site Manager's </div>
         {props.siteManager.sites && (
           <button className="header-btn" onClick={handleBookSite}>
             Create Manager
@@ -51,7 +51,7 @@ const SiteManagers = (props) => {
             </Grid>
           ))
         ) : (
-          <div className="site-error">No managers are available</div>
+          <div className="site-error">No manager's are available</div>
         )}
       </Grid>
       {isSiteBooked && (
