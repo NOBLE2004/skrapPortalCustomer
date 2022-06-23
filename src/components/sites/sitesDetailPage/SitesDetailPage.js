@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NewManagerDetail from "../../siteManager/newManagerDetail/NewManagerDetail";
 import SiteManagerTable from "../../siteManager/siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
-import { Grid } from "@mui/material";
+import { Grid } from "@material-ui/core";
 import sitesService from "../../../services/sites.service";
 import FadeLoader from "react-spinners/FadeLoader";
 import JobFilters from "../../filters/jobFilters";
@@ -12,26 +12,6 @@ import PoDetail from "../../siteManager/poDetail/PoDetail";
 import CreateJob from "../../modals/createJob/CreateJob";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import useWindowDimensions from "../../../hooks/useWindowDimension";
-import {styled} from "@mui/material/styles";
-import LinearProgress, {linearProgressClasses} from "@mui/material/LinearProgress";
-
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  width: "100%",
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    // backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-    backgroundColor: "#A4ADBC",
-    height: "20px",
-    borderRadius: 40,
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 40,
-    height: "20px",
-    backgroundImage:
-        "linear-gradient(135deg, #518EF8 27.99%, #76CCF8 68.87%, #4981F8 77.07%)",
-  },
-}));
 
 const SitesDetailPage = (props) => {
   const { width } = useWindowDimensions();
@@ -91,7 +71,7 @@ const SitesDetailPage = (props) => {
     };
 
     getData();
-  }, [reload, isReload]);
+  }, []);
 
   useEffect(() => {
     const getJobData = async () => {
@@ -155,15 +135,12 @@ const SitesDetailPage = (props) => {
       )}
       <Grid container className="manager-detail-page">
         {isLoadings ? (
-          <FadeLoader color={"#518ef8"} loading={isLoadings} width={4} />
+          <FadeLoader color={"#29a7df"} loading={isLoadings} width={4} />
         ) : (
           <>
             <Grid item md={12} xs={12}>
               <div className="landfill">Landfill Diversion Rate</div>
-              <div className="progress-bar">
-                <label>90%</label>
-                <BorderLinearProgress value={90} variant="determinate" />
-              </div>
+              <hr />
             </Grid>
             <Grid item md={12} xs={12}>
               {userInfo === 12 || userInfo === 13 ? (
@@ -190,7 +167,7 @@ const SitesDetailPage = (props) => {
             <div className="site-tabel-detail">
               {isJobLoading ? (
                 <FadeLoader
-                  color={"#518ef8"}
+                  color={"#29a7df"}
                   loading={isJobLoading}
                   width={4}
                 />
@@ -203,7 +180,7 @@ const SitesDetailPage = (props) => {
                   reload={() => setIsReload(!isReload)}
                 />
               ) : (
-                <div>No active jobs found</div>
+                <div>Jobs Not Found Yet !</div>
               )}
             </div>
           </>

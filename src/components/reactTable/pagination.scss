@@ -1,24 +1,13 @@
 .pagination {
   display: flex;
   justify-content: flex-end;
-  font-family: 'DM Sans';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: #677790;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   align-items: center;
-  margin-top: 1%;
+  margin-right: 2.5%;
   .MuiTablePagination-actions{
     display: flex;
     margin: 0 1%;
     width: 4%;
-    .previous-btn{
-      border: none;
-    }
-    .next-btn{
-      border: none;
-    }
   }
 
   @media only screen and (max-width: 1130px) {

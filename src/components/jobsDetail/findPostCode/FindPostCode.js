@@ -1,8 +1,8 @@
 import React from "react";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
 import { postCodeIcon, searchIcon, locationOval, mapMarker } from "../../../assets/images";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent } from "@material-ui/core";
 import MainMap from "../../map/MainMap";
 import { Marker } from "react-google-maps";
 import "./findpostcode.scss";

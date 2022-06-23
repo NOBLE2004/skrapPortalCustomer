@@ -1,8 +1,7 @@
 import React from "react";
 import "./toolTipCard.scss";
-import CloseIcon from "@mui/icons-material/Close";
-import { makeStyles } from "@mui/styles";
-import { IconButton } from "@mui/material";
+import CloseIcon from "@material-ui/icons/Close";
+import { IconButton, makeStyles } from "@material-ui/core";
 
 const styles = makeStyles((theme) => ({
   closeButton: {

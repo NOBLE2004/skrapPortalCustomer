@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
-import { Grid, Card, CardContent } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Grid, Card, CardContent, makeStyles } from "@material-ui/core";
 import { mapMarker } from "../../assets/images";
 import TipingCard from "../../components/tiping/TipingCard";
 import MainMap from "../../components/map/MainMap";

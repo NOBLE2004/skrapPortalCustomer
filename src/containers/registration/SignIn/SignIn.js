@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { Button } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import Alert from "@mui/lab/Alert";
+import Alert from "@material-ui/lab/Alert";
 import FadeLoader from "react-spinners/FadeLoader";
-import InputAdornment from "@mui/material/InputAdornment";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import NavBar from "../../../components/Navbar/NavBar";
 import Footer from "../../../components/Footer/FooterItem";
 import { loginHeader } from "../../../environment";
@@ -149,7 +149,7 @@ const SignIn = (props) => {
           </div>
           {props.auth.loading ? (
             <FadeLoader
-              color={"#518ef8"}
+              color={"#29a7df"}
               loading={props.auth.loading}
               width={4}
             />
@@ -161,7 +161,7 @@ const SignIn = (props) => {
             ""
           )}
           <div className="login-next-btn">
-            <Button sx={{color:'#ffffff'}} onClick={handleSubmit}>Sign In</Button>
+            <Button onClick={handleSubmit}>Sign In</Button>
           </div>
           <div className="another-account">
             Don’t have an account? <NavLink to={`phone`}><span>Sign Up</span></NavLink>{" "}

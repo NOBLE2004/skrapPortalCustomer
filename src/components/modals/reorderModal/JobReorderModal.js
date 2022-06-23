@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { withStyles } from "@mui/styles";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import MuiDialogTitle from "@mui/material/DialogTitle";
-import MuiDialogContent from "@mui/material/DialogContent";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
-import Alert from "@mui/lab/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import MuiDialogContent from "@material-ui/core/DialogContent";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import Typography from "@material-ui/core/Typography";
+import Alert from "@material-ui/lab/Alert";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import {
-  LocalizationProvider,
-  DatePicker,
-} from "@mui/lab";
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import JobService from "../../../services/job.service";
 import { useHistory } from "react-router-dom";
 import "../createJob/createJob.scss";
-import { colors } from "@mui/material";
+import { colors } from "@material-ui/core";
 import PaymentService from "../../../services/payment.service";
-import { ThemeProvider } from "@mui/styles";
-import { createTheme } from "@mui/material/styles";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import { ThemeProvider } from "@material-ui/styles";
+import { createTheme } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import { MARKET_PAY_LIST, MARKET_PAY_LIST1 } from "../../../environment";
 import ToolTipCard from "../../commonComponent/toolTipCard/ToolTipCard";
@@ -35,8 +35,6 @@ import { marketInfoIcon } from "../../../assets/images";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import CompanyDetail from "../companyDetail/CompanyDetail";
 import "../requestCollection/requestCollection.scss";
-import TextField from "@mui/material/TextField";
-import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 const styles = (theme) => ({
   root: {
@@ -373,18 +371,17 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
       </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
-          <LocalizationProvider utils={DateFnsUtils} dateAdapter={AdapterDateFns}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <div className="dateTimeWp">
               <div className="datewp">
                 <p>Delivery Date Time</p>
                 <ThemeProvider theme={materialTheme}>
-                  <DatePicker
+                  <KeyboardDatePicker
                     margin="normal"
                     format="MM/dd/yyyy"
                     disablePast
                     value={startSelectedDate}
                     onChange={handleStartDateChange}
-                    renderInput={(props) => <TextField {...props} />}
                     KeyboardButtonProps={{
                       "aria-label": "change date",
                     }}
@@ -418,7 +415,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
             {isTimeSelected && (
               <div className="error">Choose Time slot from above</div>
             )}
-          </LocalizationProvider>
+          </MuiPickersUtilsProvider>
           <div>
             {roleId != 12 && (
               <div className="paymentWp">

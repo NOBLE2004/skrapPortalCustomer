@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent } from "@material-ui/core";
 import React from "react";
 import { brickIcon, bracketIcon, appleIcon } from "../../../assets/images";
 import "./smallCard.scss";

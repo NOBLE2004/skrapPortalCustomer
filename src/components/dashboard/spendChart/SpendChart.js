@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import { Bar } from "react-chartjs-2";
-import { Box } from "@mui/material";
+import { Box } from "@material-ui/core";
 import {
   spendChartOptions,
+  spendChartData,
   dates,
 } from "../../utlils/constants";
 import "./spendchart.scss";
@@ -20,7 +21,7 @@ const SpendChart = ({ chartData , getDashBoardData , latestYear}) => {
   const spendChartData = {
     datasets: [
       {
-        backgroundColor: "rgb(81, 142, 248)",
+        backgroundColor: "#52A9DD",
         data: [
           chartData?.salesTotal?.Months[1].total,
           chartData?.salesTotal?.Months[2].total,
@@ -36,10 +37,11 @@ const SpendChart = ({ chartData , getDashBoardData , latestYear}) => {
           chartData?.salesTotal?.Months[12].total,
         ],
         label: 'This Year £',
-        borderWidth: 0,
-        borderRadius: 15,
-        barThickness: 12,
-        borderSkipped: false
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: "#52A9DD",
+        borderSkipped: false,
+        cornerRadius: 4,
       },
     ],
     labels: [

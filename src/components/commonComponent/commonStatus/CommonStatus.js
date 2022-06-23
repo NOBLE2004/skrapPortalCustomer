@@ -25,7 +25,7 @@ const CommonStatus = ({ status }) => {
               : status.toLowerCase() === "pickup-ongoing"
               ? "#6fff22"
               : status.toLowerCase() === "requested"
-              ? "rgb(81, 142, 248)"
+              ? "#52a9dd"
               : "#FF9013"
           }`,
         }}

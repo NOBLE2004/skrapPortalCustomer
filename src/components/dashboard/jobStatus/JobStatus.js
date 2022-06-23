@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper } from "@mui/material";
+import { Paper } from "@material-ui/core";
 import "./jobStatus.scss";
 
 const JobStatus = ({ jobStatus }) => {

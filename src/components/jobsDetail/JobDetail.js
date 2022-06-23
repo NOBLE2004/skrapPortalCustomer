@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "@mui/material";
+import { Card } from "@material-ui/core";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import "./jobDetail.scss";
 import { status } from "../../services/utils";

@@ -18,11 +18,11 @@
   .download-reports {
     margin-top: 10px;
     a {
-      color: rgb(81, 142, 248) !important;
+      color: #52a9dd !important;
     }
   }
   .generate-report {
-    background: rgb(81, 142, 248);
+    background: #52a9dd;
     color: white;
     .MuiCircularProgress-root {
       position: absolute;
@@ -30,10 +30,10 @@
     }
   }
   .MuiButton-contained:hover {
-    background: rgb(81, 142, 248);
+    background: #52a9dd;
   }
   .generate-report-disable {
-    background: rgb(81, 142, 248);
+    background: #52a9dd;
     color: white;
     opacity: 0.8;
     .MuiCircularProgress-root {

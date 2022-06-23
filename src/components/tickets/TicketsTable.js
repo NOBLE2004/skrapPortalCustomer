@@ -31,7 +31,7 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
       },
       {
         Header: "Booked",
-        accessor: "job_date",
+        accessor: "save_date",
         Cell: (props) => new Date(props.value).toLocaleDateString(),
         disableFilters: true,
       },

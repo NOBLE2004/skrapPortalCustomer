@@ -1,6 +1,6 @@
 import React from "react";
-import Rating from "@mui/lab/Rating";
-import { Grid, Card, CardContent } from "@mui/material";
+import Rating from "@material-ui/lab/Rating";
+import { Grid, Card, CardContent } from "@material-ui/core";
 import MainMap from "../map/MainMap";
 import { Marker } from "react-google-maps";
 import {

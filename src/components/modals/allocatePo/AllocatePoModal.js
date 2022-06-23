@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { InputLabel, Grid, TextField } from "@mui/material";
-import { Alert, Autocomplete } from "@mui/lab";
-import CircularProgress from "@mui/material/CircularProgress";
-import MuiDialogTitle from "@mui/material/DialogTitle";
-import { withStyles } from "@mui/styles";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import { Button } from "@mui/material";
+import { InputLabel, Grid, TextField } from "@material-ui/core";
+import { Alert, Autocomplete } from "@material-ui/lab";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import { withStyles } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import { Button } from "@material-ui/core";
 import sitesService from "../../../services/sites.service";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./allocatepo.scss";
@@ -184,7 +184,7 @@ const AllocatePoModal = (props) => {
   return (
     <div>
       <Dialog open={true} onClose={handleClose} className="booksitemodal">
-        <DialogTitle onClose={handleClose}> Allocate to PO </DialogTitle>
+        <DialogTitle onClose={handleClose}> Allocate to Po </DialogTitle>
         <DialogContent dividers>
           <form noValidate>
             <TextField
@@ -219,7 +219,7 @@ const AllocatePoModal = (props) => {
                       onChange={(event, value) =>
                         handleServiceType(event, index, value)
                       }
-                      getOptionLabel={(option) => `${option.service_name} (${option.parent_name})`}
+                      getOptionLabel={(option) => option.service_name}
                     />
                   </Grid>
                   <Grid item md="2">

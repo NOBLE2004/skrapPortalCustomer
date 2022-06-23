@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import JobsTable from "../../components/reactTable/JobsTable";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent } from "@material-ui/core";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
@@ -139,7 +139,7 @@ const MainJobs = (props) => {
       >
         <CommonJobStatus
           jobStatus={{
-            status: "Spend",
+            status: "Sales",
             price: `£${
               info ? parseFloat(info.TotalSpend).toLocaleString() : 0
             }`,
@@ -193,7 +193,7 @@ const MainJobs = (props) => {
         <>
           {isLoading ? (
             <div className="loader">
-              <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
+              <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
             </div>
           ) : props.jobs.error ? (
             <div className="jobs-not-found">{props.jobs.error}</div>
@@ -223,7 +223,7 @@ const MainJobs = (props) => {
                 {isLoading ? (
                   <div className="loader">
                     <FadeLoader
-                      color={"#518ef8"}
+                      color={"#29a7df"}
                       loading={isLoading}
                       width={4}
                     />

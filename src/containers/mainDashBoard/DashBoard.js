@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import TotalSpend from "../../components/dashboard/totalSpend/TotalSpend";
 import JobStatus from "../../components/dashboard/jobStatus/JobStatus";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
-import { Grid } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import { Grid } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import SpendChart from "../../components/dashboard/spendChart/SpendChart";
 import DashboardServices from "../../components/dashboard/dashboardServices/DashboardServices";
 import MainMap from "../../components/map/MainMap";
@@ -22,26 +22,6 @@ import {
   mapMarker,
 } from "../../assets/images";
 import "./dashboard.scss";
-import {styled} from "@mui/material/styles";
-import LinearProgress, {linearProgressClasses} from "@mui/material/LinearProgress";
-
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  width: "100%",
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    // backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-    backgroundColor: "#A4ADBC",
-    height: "20px",
-    borderRadius: 40,
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 40,
-    height: "20px",
-    backgroundImage:
-        "linear-gradient(135deg, #518EF8 27.99%, #76CCF8 68.87%, #4981F8 77.07%)",
-  },
-}));
 
 const DashBoard = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
@@ -72,15 +52,15 @@ const DashBoard = (props) => {
   if (loading) {
     return (
       <div className="dashboard-menu">
-        <FadeLoader color={"#518ef8"} loading={loading} width={4} />
+        <FadeLoader color={"#29a7df"} loading={loading} width={4} />
       </div>
     );
   }
   return (
     <>
-      {/*!info ? (
+      {!info ? (
         <div className="jobs-not-found">Network error !</div>
-      ) :*/ info && (
+      ) : (
         <>
           <Grid container spacing={3}>
             <Grid item md={4}>
@@ -110,11 +90,7 @@ const DashBoard = (props) => {
           <Grid container spacing={3}>
             <Grid item md={12} className="landfill-main">
               <div className="landfill">Landfill Diversion Rate</div>
-              {/*<hr />*/}
-              <div className="progress-bar">
-                <label>90%</label>
-                <BorderLinearProgress value={90} variant="determinate" />
-              </div>
+              <hr />
             </Grid>
           </Grid>
           <Grid container>

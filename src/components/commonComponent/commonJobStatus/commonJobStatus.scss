@@ -10,8 +10,7 @@
 .common-box {
   text-align: center;
   background-color: #fff;
-  //border: 1px solid #ececec;
-  box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05) !important;
+  border: 1px solid #ececec;
   box-sizing: border-box;
   border-radius: 11.6836px !important;
   display: flex;
@@ -48,6 +47,6 @@
     line-height: 16px;
     display: flex;
     align-items: center;
-    color: rgb(81, 142, 248);
+    color: #52a9dd;
   }
 }

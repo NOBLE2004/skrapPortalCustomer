@@ -40,7 +40,7 @@ const MainTickets = (props) => {
 
       {isLoading ? (
         <div className="tickets-main-div">
-          <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
+          <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
         </div>
       ) : ticketList && ticketList.data.length > 0 ? (
         <TicketsTable

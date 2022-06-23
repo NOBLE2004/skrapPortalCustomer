@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "@mui/styles";
-import { Drawer, IconButton, List } from "@mui/material";
+import { useTheme } from "@material-ui/core/styles";
+import { Drawer, IconButton, List } from "@material-ui/core";
 import { useHistory, useLocation } from "react-router";
 import clsx from "clsx";
-import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { sidebarTabsList } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
-import { appIcon, personImage } from "../../assets/images";
+import { skrap_logo, personImage } from "../../assets/images";
 import useWindowDimensions from "../../hooks/useWindowDimension";
 import "./mySidebar.scss";
 
@@ -65,8 +65,6 @@ const MySidebar = (props) => {
       setActiveTab("jobs");
     } else if (param === "site-") {
       setActiveTab("site-managers");
-    }else if (param === "new-report") {
-      setActiveTab("new-report");
     } else {
       setActiveTab(activeTab);
     }
@@ -157,7 +155,7 @@ const MySidebar = (props) => {
       }}
     >
       <IconButton onClick={handleDrawer} className="sidebar-handler-arrow">
-        <img className="skrapLogin" src={appIcon} alt="Skrap-Logo" />
+        <img className="skrapLogin" src={skrap_logo} alt="Skrap-Logo" />
       </IconButton>
       <List
         className="menuList"
@@ -215,7 +213,9 @@ const MySidebar = (props) => {
             className="display-flex align-items-center driver-icon-section"
             style={{
               color: "#86869C",
-              marginRight: 5,
+              width: 34,
+              height: 34,
+              marginRight: 18,
               borderRadius: "50%",
             }}
           >
@@ -240,15 +240,6 @@ const MySidebar = (props) => {
               "Test"
             }
             className="current-user"
-          />
-          <br />
-          <ListItemText
-              primary={
-                      (userData.hasOwnProperty("company") &&
-                          userData?.company) ||
-                  ""
-              }
-              className="current-user"
           />
         </ListItem>
         <button className="sidebar-signout-btn" onClick={handleLogout}>

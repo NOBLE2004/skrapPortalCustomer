@@ -1,12 +1,12 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import {makeStyles, withStyles} from '@mui/styles';
-import Typography from '@mui/material/Typography';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepConnector from '@mui/material/StepConnector';
-import {Paper} from '@mui/material';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepConnector from '@material-ui/core/StepConnector';
+import {Paper} from '@material-ui/core';
 import clsx from 'clsx';
 import "./smartJosStatus.scss"
 

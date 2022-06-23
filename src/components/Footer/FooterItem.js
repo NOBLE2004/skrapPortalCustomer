@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button } from "@material-ui/core";
 import { footerData } from "./staticdata";
-import Container from "@mui/material/Container";
+import Container from "@material-ui/core/Container";
 import "./footer.scss";
 
 function Footer() {

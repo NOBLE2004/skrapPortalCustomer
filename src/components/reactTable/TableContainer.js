@@ -73,112 +73,86 @@ const TableContainer = ({ columns, data, name }) => {
   };
   return (
     <div className="table-container-main" ref={inputRef}>
-
-      <table {...getTableProps()}>
-        <thead>
-        {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-              ))}
-            </tr>
+      <div {...getTableProps()} className="table-main">
+        {headerGroups.map((headerGroup) => (
+          <div
+            style={{ display: "flex" }}
+            className={
+              name === "reports"
+                ? ""
+                : yPosition && yPosition < 20
+                ? "header-top"
+                : ""
+            }
+            {...headerGroup.getHeaderGroupProps()}
+          >
+            {headerGroup.headers.map((column) => (
+              <div
+                {...column.getHeaderProps()}
+                className={
+                  name === "sites" ? "sites-table-headings" : "table-headings"
+                }
+                style={{
+                  width:
+                    column.id === "status"
+                      ? "100px"
+                      : (column.id === "id-edit") | (column.id === "select")
+                      ? "50px"
+                      : cellWidth,
+                  padding: cellPadding,
+                }}
+              >
+                {column.render("Header")}
+              </div>
+            ))}
+          </div>
         ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row)
-          return (
-              <tr {...row.getRowProps()} className={
-                `${name === "tickets" ? "table-body-row1" : "table-body-row"} ${i % 2 === 0 ? 'even' : 'odd'}`
-              } onClick={() => handleRowClick(row.original)}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+        <div style={{ display: "table-body" }} {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  border: "1px solid #ECECEC",
+                  marginBottom: 18,
+                  borderRadius: 11,
+                }}
+                className={
+                  name === "tickets" ? "table-body-row1" : "table-body-row"
+                }
+                {...row.getRowProps()}
+                onClick={() => handleRowClick(row.original)}
+              >
+                {row.cells.map((cell) => {
+                  return (
+                    <div
+                      className={
+                        name === "sites"
+                          ? "sites-table-body-cell"
+                          : "table-body-cell"
+                      }
+                      style={{
+                        width:
+                          cell.column.id === "accept-id"
+                            ? "120px"
+                            : (cell.column.id === "id-edit") |
+                              (cell.column.id === "select")
+                            ? "50px"
+                            : cellWidth,
+                        padding: cellPadding,
+                      }}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </div>
+                  );
                 })}
-              </tr>
-          )
-        })}
-        </tbody>
-      </table>
-
-      {/*<div {...getTableProps()} className="table-main">*/}
-      {/*  {headerGroups.map((headerGroup) => (*/}
-      {/*    <div*/}
-      {/*      style={{ display: "flex" }}*/}
-      {/*      className={*/}
-      {/*        name === "reports"*/}
-      {/*          ? ""*/}
-      {/*          : yPosition && yPosition < 20*/}
-      {/*          ? "header-top"*/}
-      {/*          : ""*/}
-      {/*      }*/}
-      {/*      {...headerGroup.getHeaderGroupProps()}*/}
-      {/*    >*/}
-      {/*      {headerGroup.headers.map((column) => (*/}
-      {/*        <div*/}
-      {/*          {...column.getHeaderProps()}*/}
-      {/*          className={*/}
-      {/*            name === "sites" ? "sites-table-headings" : "table-headings"*/}
-      {/*          }*/}
-      {/*          // style={{*/}
-      {/*          //   width:*/}
-      {/*          //     column.id === "status"*/}
-      {/*          //       ? "100px"*/}
-      {/*          //       : (column.id === "id-edit") | (column.id === "select")*/}
-      {/*          //       ? "50px"*/}
-      {/*          //         : (column.id === "address")*/}
-      {/*          //                 ? '15px'*/}
-      {/*          //       : cellWidth,*/}
-      {/*          // }}*/}
-      {/*        >*/}
-      {/*          {column.render("Header")}*/}
-      {/*        </div>*/}
-      {/*      ))}*/}
-      {/*    </div>*/}
-      {/*  ))}*/}
-      {/*  <div style={{ display: "table-body" }} {...getTableBodyProps()}>*/}
-      {/*    {rows.map((row, i) => {*/}
-      {/*      prepareRow(row);*/}
-      {/*      return (*/}
-      {/*        <div*/}
-      {/*          style={{*/}
-      {/*            display: "flex",*/}
-      {/*            //borderBottom: "1px solid #ECECEC",*/}
-      {/*          }}*/}
-      {/*          className={*/}
-      {/*            `${name === "tickets" ? "table-body-row1" : "table-body-row"} ${i % 2 === 0 ? 'even' : 'odd'}`*/}
-      {/*          }*/}
-      {/*          {...row.getRowProps()}*/}
-      {/*          onClick={() => handleRowClick(row.original)}*/}
-      {/*        >*/}
-      {/*          {row.cells.map((cell) => {*/}
-      {/*            return (*/}
-      {/*              <div*/}
-      {/*                className={*/}
-      {/*                  name === "sites"*/}
-      {/*                    ? "sites-table-body-cell"*/}
-      {/*                    : "table-body-cell"*/}
-      {/*                }*/}
-      {/*                // style={{*/}
-      {/*                //   width:*/}
-      {/*                //     cell.column.id === "accept-id"*/}
-      {/*                //       ? "120px"*/}
-      {/*                //       : (cell.column.id === "id-edit") |*/}
-      {/*                //         (cell.column.id === "select")*/}
-      {/*                //       ? "50px"*/}
-      {/*                //       : cellWidth,*/}
-      {/*                //   padding: '0px',*/}
-      {/*                // }}*/}
-      {/*                {...cell.getCellProps()}*/}
-      {/*              >*/}
-      {/*                {cell.render("Cell")}*/}
-      {/*              </div>*/}
-      {/*            );*/}
-      {/*          })}*/}
-      {/*        </div>*/}
-      {/*      );*/}
-      {/*    })}*/}
-      {/*  </div>*/}
-      {/*</div>*/}
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
