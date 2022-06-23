@@ -67,7 +67,7 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
     },
     yAxis: {
       min: 0,
-      max: max == 0 ? 100 : max,
+      max: 135604,
       title: {
         text: null,
       },
@@ -123,7 +123,7 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
         borderSkipped: false,
         borderRadius: 6,
         pointStyle: "rectRounded",
-        pointWidth: 14,
+        pointWidth: 15,
         boxWidth: "100%",
         color: "#F7F7F7"
       },
@@ -160,7 +160,7 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
         borderSkipped: false,
         borderRadius: 6,
         pointStyle: "rectRounded",
-        pointWidth: 14,
+        pointWidth: 15,
         boxWidth: "100%",
       },
     ],
@@ -224,31 +224,12 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
                     maxDate={new Date()}
                   />
                 </div>
-                {/* <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  className="dropdown"
-                  value={selectedDate}
-                  onChange={handleYearChange}
-                >
-                  {dates.map((date) => {
-                    return (
-                      <MenuItem key={date.id} value={date.value} name={date.value}>
-                        {date.value}
-                      </MenuItem>
-                    );
-                  })}
-                </Select> */}
               </div>
             </div>
           </div>
         </div>
         <Box className="spend-bar-chart">
           <HighchartsReact highcharts={Highcharts} options={spendChartData} />
-          {/* <Bar
-            data={spendChartData}
-            options={spendChartOptions}
-          /> */}
         </Box>
       </CardContent>
     </Card>

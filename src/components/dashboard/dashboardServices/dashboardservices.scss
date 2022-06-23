@@ -6,8 +6,8 @@
   box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05) !important;
   border-radius: 11.6836px;
   padding: 0px 12px;
-  max-height: 400px;
-  height: 100%;
+  height: 400px;
+  max-height: 100%;
   margin-right: 10px;
   width: 60%;
 
@@ -49,11 +49,10 @@
     justify-content: flex-start;
     // padding-top: 60px;
     flex-wrap: wrap;
-    overflow: auto;
-
+ 
     .circular-progress {
-      width: 180px;
-      height: 180px;
+      // width: 180px;
+      // height: 180px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -88,7 +87,7 @@
     .progress-sub {
       display: flex;
       align-items: center;
-      padding: 10px;
+      padding: 5px;
 
       .order-percentage {
 
@@ -127,11 +126,14 @@
 
   .circle-text {
     position: absolute;
-    top: 72px;
+    top: 60px;
     width: 180px;
     text-align: center;
-    font-size: 26px;
+    font-size: 20px;
     color: #518ef8;
     font-family: "DM Sans";
+  }
+  .circle_reactGradientProgressPercentageSpan__1HdhL{
+    bottom: 16px;
   }
 }
