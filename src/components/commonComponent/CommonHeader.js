@@ -2,6 +2,7 @@ import React, { useState, useEffect, memo } from "react";
 import { location } from "../../assets/images";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import "./commonHeader.scss";
+import {connect} from "react-redux";
 
 const CommonHeader = ({
   downloadCSV,
@@ -14,7 +15,7 @@ const CommonHeader = ({
   handleBookJob,
   isJob,
   isSite,
-  handleCreateJob,
+  handleCreateJob, siteManager
 }) => {
   const [userData, setUserData] = useState(0);
   useEffect(() => {
@@ -43,19 +44,22 @@ const CommonHeader = ({
             Create Job
           </button>
         )}
-        {isSite && userData > 0 && (
-          <>
-            <button className="header-btn" onClick={handleBookJob}>
-              Assign to Manager
-            </button>
-            <button className="header-btn" onClick={handleCreateJob}>
-              Create Site
-            </button>
-          </>
+        {isSite && (userData > 0 || (siteManager.sites && siteManager.sites.length > 0)) && (
+            <>
+              <button className="header-btn" onClick={handleBookJob}>
+                Assign to Manager
+              </button>
+            </>
         )}
+        <button className="header-btn" onClick={handleCreateJob}>
+          Create Site
+        </button>
+
       </div>
     </div>
   );
 };
-
-export default memo(CommonHeader);
+const mapStateToProps = ({ siteManager }) => {
+  return { siteManager };
+};
+export default connect(mapStateToProps)(CommonHeader);

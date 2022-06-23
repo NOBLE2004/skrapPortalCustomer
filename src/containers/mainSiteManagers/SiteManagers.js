@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDetail";
 import { viewMoreBtn } from "../../assets/images";
 import FadeLoader from "react-spinners/FadeLoader";
@@ -24,18 +24,13 @@ const SiteManagers = (props) => {
 
   const handleManagerCreated = useCallback(() => {
     setSiteBooked(!isSiteBooked);
-  }, [isSiteBooked]);
-
-  useEffect(() => {
-    if (isSiteBooked) {
-      props.getSiteManager();
-    }
+    props.getSiteManager();
   }, [isSiteBooked]);
 
   return (
     <div className="site-manager-margin">
       <div className="header-main">
-        <div className="sites-header-title">Site Managers </div>
+        <div className="sites-header-title">Site Manager's </div>
         {props.siteManager.sites && (
           <button className="header-btn" onClick={handleBookSite}>
             Create Manager
@@ -45,7 +40,7 @@ const SiteManagers = (props) => {
       <Grid container className="main-site-manager" spacing={5}>
         {props.siteManager.loading ? (
           <FadeLoader
-            color={"#29a7df"}
+            color={"#518ef8"}
             loading={props.siteManager.loading}
             width={4}
           />
@@ -56,7 +51,7 @@ const SiteManagers = (props) => {
             </Grid>
           ))
         ) : (
-          <div className="site-error">No managers are available</div>
+          <div className="site-error">No manager's are available</div>
         )}
       </Grid>
       {isSiteBooked && (

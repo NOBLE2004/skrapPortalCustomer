@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../reactTable/TableContainer";
 import { SelectColumnFilter } from "../../reactTable/filters";
 import CommonStatus from "../../commonComponent/commonStatus/CommonStatus";
-import { Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem } from "@mui/material";
 import Pagination from "../../reactTable/pagination";
 import "../../reactTable/jobs-react-table.scss";
 import { payment, status } from "../../../services/utils";

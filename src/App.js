@@ -16,6 +16,7 @@ import SiteManagerDetailPage from "./components/siteManager/siteManagerDetailPag
 import Register from "./containers/registration/Register/Register";
 import AddPhone from "./containers/registration/addPhone/AddPhone";
 import MainReports from "./containers/mainReports/MainReports";
+import NewReports from "./containers/reports";
 import SitesDetailPage from "./components/sites/sitesDetailPage/SitesDetailPage";
 
 const history = createBrowserHistory();
@@ -41,6 +42,7 @@ function App() {
           <PrivateRoute path="/reports" component={() => <MainReports />} /> 
           <PrivateRoute path="/job-detail/:id" component={() => <MainJobDetail />} />
           <PrivateRoute path="/site-managers/job-detail/:id" component={() => <MainJobDetail />} />
+          <PrivateRoute path="/new-reports" component={() => <NewReports />} />
         </Layout>
       </Switch>
     </Router>

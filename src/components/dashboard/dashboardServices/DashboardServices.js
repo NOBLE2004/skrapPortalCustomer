@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
-import { Switch } from "@material-ui/core";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Switch } from "@mui/material";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { dashboardServiceStyle } from "../../../assets/styles/muiStyles/MuiStyles";
 import "./dashboardservices.scss";
 

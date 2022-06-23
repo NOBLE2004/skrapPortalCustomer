@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import { Button } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import Alert from "@material-ui/lab/Alert";
+import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Alert from "@mui/lab/Alert";
 import "./register.scss";
 import Header from "../../../components/header/Header";
 import { registerHeaderData } from "../../../environment";
@@ -12,7 +12,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import NavBar from "../../../components/Navbar/NavBar";
 import Footer from "../../../components/Footer/FooterItem";
 import {userSignUp} from "../../../store/actions/signup";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import InputAdornment from "@mui/material/InputAdornment";
 import {textFieldStyles} from "../../../assets/styles/muiStyles/MuiStyles";
 const Register = (props) => {
   const classes = textFieldStyles();
@@ -219,7 +219,7 @@ const Register = (props) => {
             <div className="register-loader">
               {props.signup.loading ? (
                   <FadeLoader
-                      color={"#29a7df"}
+                      color={"#518ef8"}
                       loading={props.signup.loading}
                       width={4}
                   />

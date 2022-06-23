@@ -1,7 +1,8 @@
 .dashboard-services-main {
   background: #ffffff;
-  border: 2px solid #ececec;
+  // border: 2px solid #ececec;
   box-sizing: border-box;
+  box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05) !important;
   border-radius: 11.6836px;
   padding: 0px 12px;
   height: 331px;
@@ -24,7 +25,7 @@
       line-height: 18px;
       display: flex;
       align-items: center;
-      color: #52a9dd;
+      color: rgb(81, 142, 248);
     }
   }
   .CircularProgressbar-text {
@@ -51,6 +52,12 @@
       align-items: center;
       .CircularProgressbar {
         width: fit-content;
+        .CircularProgressbar-path{
+          stroke: #518ef8 ;
+        }
+        .CircularProgressbar-text{
+          fill: #518ef8 ;
+        }
       }
       p {
         font-family: "BasierCircleReg";
@@ -80,7 +87,7 @@
           display: flex;
           align-items: center;
           text-align: center;
-          color: #52a9dd;
+          color: rgb(81, 142, 248);
           width: max-content;
         }
         .orders {

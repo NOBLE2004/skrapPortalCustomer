@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
-import { Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem } from "@mui/material";
 import "./jobs-react-table.scss";
 import { payment, status } from "../../services/utils";
 import CreateExchange from "../modals/createExchange/CreateExchange";
@@ -281,19 +281,19 @@ const JobsTable = ({
         Header: "",
         accessor: "job_id",
         id: "invoice",
-        Cell: (props) => (
-          <span
-            className="normal-dsans-10-primary"
-            onClick={(e) => downloadInvoice(e, props.value)}
+        Cell: (props) => {
+          return (props.row.original.appointment_status === 4 || props.row.original.appointment_status == 3) ? (<span
+              className="normal-dsans-10-primary"
+              onClick={(e) => downloadInvoice(e, props.value)}
           >
             Invoice
             <img
-              src={downloadSite}
-              alt="download-icon"
-              style={{ marginLeft: "5px" }}
+                src={downloadSite}
+                alt="download-icon"
+                style={{marginLeft: "5px"}}
             />
-          </span>
-        ),
+          </span>) : ('')
+        },
       },
       {
         Header: "",
@@ -487,7 +487,7 @@ const JobsTable = ({
             height: "100%",
           }}
         >
-          <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+          <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
         </div>
       )}
       {data && data.length > 0 ? (

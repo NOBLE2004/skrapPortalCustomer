@@ -9,7 +9,7 @@ import moment from "moment";
 
 const JobFilters = ({ handleChangeFilters }) => {
   const [filters, setFilters] = useState({
-    site_job_status: "",
+    status: "",
     date: "",
     service: "",
     address: "",
@@ -23,7 +23,7 @@ const JobFilters = ({ handleChangeFilters }) => {
     },
   ]);
   const [services, setServices] = useState([]);
-  const { site_job_status, date, address, service } = filters;
+  const { status, date, address, service } = filters;
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFilters({ ...filters, [name]: value });
@@ -53,18 +53,17 @@ const JobFilters = ({ handleChangeFilters }) => {
       .toLocaleDateString()
       .replace(/\//g, "-");
     const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
-    const newStartDate = moment(start).format("DD-MM-YYYY");
-    const newEndDate = moment(end).format("DD-MM-YYYY");
+    console.log(start,end)
     if (start === end) {
-      setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
+      setFilters({ ...filters, date: `${start},${end}` });
     } else {
-      setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
+      setFilters({ ...filters, date: `${start},${end}` });
       setTogle(false);
     }
   };
   const resetFilters = () => {
     setFilters({
-      site_job_status: "",
+      status: "",
       date: "",
       service: "",
       address: "",
@@ -121,8 +120,8 @@ const JobFilters = ({ handleChangeFilters }) => {
           <select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
-            name="site_job_status"
-            value={site_job_status}
+            name="status"
+            value={status}
             onChange={handleChange}
             className={"filter-option"}
           >

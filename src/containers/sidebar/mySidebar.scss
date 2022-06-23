@@ -1,6 +1,6 @@
 .sidebar-container {
   .sidebar-handler-arrow {
-    margin-top: 19px;
+    margin-top: 19px !important;
   }
 
   .toolbar {
@@ -12,8 +12,10 @@
 
     .MuiListItem-gutters {
       justify-content: flex-start;
+      align-items: center;
       margin-bottom: 33px;
-      padding: 0px 26px;
+      flex-direction: column;
+      //padding: 0px 26px;
       .current-user {
         flex: 0 1 auto;
       }
