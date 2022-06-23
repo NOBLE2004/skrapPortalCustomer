@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "./yearPicker.scss";
 
 import "react-datepicker/dist/react-datepicker.css";
-const Example = () => {
+const Example = (props) => {
   const [startDate, setStartDate] = useState(new Date());
   const handleDateNext = () => {
     if (startDate.getFullYear() != new Date().getFullYear()) {

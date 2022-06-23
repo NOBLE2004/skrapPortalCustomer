@@ -22,8 +22,8 @@ import {
   mapMarker,
 } from "../../assets/images";
 import "./dashboard.scss";
-import {styled} from "@mui/material/styles";
-import LinearProgress, {linearProgressClasses} from "@mui/material/LinearProgress";
+import { styled } from "@mui/material/styles";
+import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -39,7 +39,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     borderRadius: 40,
     height: "15px",
     backgroundImage:
-        "linear-gradient(135deg, #518EF8 27.99%, #76CCF8 68.87%, #4981F8 77.07%)",
+      "linear-gradient(135deg, #518EF8 27.99%, #76CCF8 68.87%, #4981F8 77.07%)",
   },
 }));
 
@@ -47,7 +47,7 @@ const DashBoard = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
   const [isNewYear, setNewYear] = useState(false);
   const [latestYear, setLatestYear] = useState(2022);
-
+  const [startDate, setStartDate] = useState(new Date())
   const history = useHistory();
   const { info, loading } = props.dashboard;
 
@@ -81,57 +81,58 @@ const DashBoard = (props) => {
       {/*!info ? (
         <div className="jobs-not-found">Network error !</div>
       ) :*/ info && (
-        <>
-          <Grid container spacing={3}>
-            <Grid item md={4}>
-              <TotalSpend
-                totalSpend={
-                  info ? parseFloat(info.TotalSpend).toLocaleString() : ""
-                }
-              />
-            </Grid>
-            <Grid item md={8} xs={12}>
-              <div className="job-status-outer">
-                <JobStatus jobStatus={info ? info : ""} />
-              </div>
-            </Grid>
-            {/* <Grid item md={2} xs={12}>
+          <>
+            <Grid container spacing={3}>
+              <Grid item md={4}>
+                <TotalSpend
+                  totalSpend={
+                    info ? parseFloat(info.TotalSpend).toLocaleString() : ""
+                  }
+                />
+              </Grid>
+              <Grid item md={8} xs={12}>
+                <div className="job-status-outer">
+                  <JobStatus jobStatus={info ? info : ""} />
+                </div>
+              </Grid>
+              {/* <Grid item md={2} xs={12}>
           <DashboardFilter handelSearch={() => {}} title="Jobs"/>
         </Grid> */}
-          </Grid>
-          <Grid container spacing={3} className="spend-service-main">
-            <SpendChart
-              chartData={info}
-              getDashBoardData={getData}
-              latestYear={latestYear ? latestYear : 2022}
-            />
-            <DashboardServices servicesData={info ? info : ""} />
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item md={12} className="landfill-main">
-              <div className="landfill">Landfill Diversion Rate</div>
-              {/*<hr />*/}
-              <BorderLinearProgress value={90} variant="determinate" />
             </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs={12} className="jobMpWp">
-              <div className="live-job-title">
-                <img src={mapMarker} alt="map-marker" />
-                <h1>Orders On Map</h1>
-              </div>
-              <Card className="mapCard">
-                <CardContent>
-                  <MainMap
-                    googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `100%` }} />}
-                    mapElement={
-                      <div style={{ height: `100%`, borderRadius: "12px" }} />
-                    }
-                  >
-                    {info
-                      ? info?.Map?.data.length > 0 &&
+            <Grid container spacing={3} className="spend-service-main">
+              <SpendChart
+                chartData={info}
+                getDashBoardData={getData}
+                startDate={startDate} setStartDate={setStartDate}
+                latestYear={latestYear ? latestYear : 2022}
+              />
+              <DashboardServices servicesData={info ? info : ""} />
+            </Grid>
+            <Grid container spacing={3}>
+              <Grid item md={12} className="landfill-main">
+                <div className="landfill">Landfill Diversion Rate</div>
+                {/*<hr />*/}
+                <BorderLinearProgress value={90} variant="determinate" />
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={12} className="jobMpWp">
+                <div className="live-job-title">
+                  <img src={mapMarker} alt="map-marker" />
+                  <h1>Orders On Map</h1>
+                </div>
+                <Card className="mapCard">
+                  <CardContent>
+                    <MainMap
+                      googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
+                      loadingElement={<div style={{ height: `100%` }} />}
+                      containerElement={<div style={{ height: `100%` }} />}
+                      mapElement={
+                        <div style={{ height: `100%`, borderRadius: "12px" }} />
+                      }
+                    >
+                      {info
+                        ? info?.Map?.data.length > 0 &&
                         info?.Map?.data.map((data, index) => (
                           <Marker
                             key={index}
@@ -148,10 +149,10 @@ const DashBoard = (props) => {
                                 data.jobStatus === "Pending"
                                   ? pendingMarker
                                   : data.jobStatus === "Delivered"
-                                  ? deliveredMarker
-                                  : data.jobStatus === "Completed"
-                                  ? completeMarker
-                                  : assignMarker,
+                                    ? deliveredMarker
+                                    : data.jobStatus === "Completed"
+                                      ? completeMarker
+                                      : assignMarker,
                             }}
                             onClick={() => {
                               setShowInfoIndex(index);
@@ -169,14 +170,14 @@ const DashBoard = (props) => {
                             )}
                           </Marker>
                         ))
-                      : ""}
-                  </MainMap>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>{" "}
-        </>
-      )}
+                        : ""}
+                    </MainMap>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>{" "}
+          </>
+        )}
     </>
   );
 };
