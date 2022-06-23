@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/lab/Autocomplete";
+import JobService from "../../../services/job.service";
 
 export default function AsychronousAddress({
   handleSelectedPostCode,
@@ -11,6 +12,7 @@ export default function AsychronousAddress({
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
+  const [recentAddresses, setRecentAddresses] = React.useState([]);
   const loading = open && options.length === 0;
   const onChangeHandle = (search) => {
     if (search) {
@@ -19,16 +21,29 @@ export default function AsychronousAddress({
       )
         .then((response) => response.json())
         .then((data) => {
-          setOptions(data.result.hits.map((data) => data));
+          setOptions(data.result.hits);
         });
     }
   };
-
+    useEffect(()=>{
+        JobService.getRecentAddresses({user_id: localStorage.getItem("user_id"), limit: 0})
+            .then((response) => {
+                if(response.data.code === 0){
+                    const addresses = response.data.result.map((data) => {
+                        data.suggestion = `${data.line_1}, ${data.post_town}, ${data.postcode_outward}, ${data.postcode}`;
+                        return data;
+                    });
+                    setRecentAddresses(addresses);
+                }
+            }).catch(error => {
+            console.log(error);
+        })
+    }, []);
   React.useEffect(() => {
     if (!open) {
-      setOptions([]);
+      setOptions(recentAddresses);
     }
-  }, [open]);
+  }, [open, recentAddresses]);
   return (
     <Autocomplete
       margin="dense"

@@ -273,7 +273,6 @@ export default function CreateJob({
       selectedTime: time.time_slot,
     });
   };
-
   const handleStartDateChange = (date) => {
     setStartSelectedDate(date);
   };
