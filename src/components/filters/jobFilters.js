@@ -53,12 +53,11 @@ const JobFilters = ({ handleChangeFilters }) => {
       .toLocaleDateString()
       .replace(/\//g, "-");
     const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
-    const newStartDate = moment(start).format("DD-MM-YYYY");
-    const newEndDate = moment(end).format("DD-MM-YYYY");
+    console.log(start,end)
     if (start === end) {
-      setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
+      setFilters({ ...filters, date: `${start},${end}` });
     } else {
-      setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
+      setFilters({ ...filters, date: `${start},${end}` });
       setTogle(false);
     }
   };

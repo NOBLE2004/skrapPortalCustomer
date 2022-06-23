@@ -22,12 +22,12 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   [`&.${linearProgressClasses.colorPrimary}`]: {
     // backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
     backgroundColor: "#A4ADBC",
-    height: "15px",
+    height: "20px",
     borderRadius: 40,
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 40,
-    height: "15px",
+    height: "20px",
     backgroundImage:
         "linear-gradient(135deg, #518EF8 27.99%, #76CCF8 68.87%, #4981F8 77.07%)",
   },
@@ -160,8 +160,10 @@ const SitesDetailPage = (props) => {
           <>
             <Grid item md={12} xs={12}>
               <div className="landfill">Landfill Diversion Rate</div>
-              {/*<hr />*/}
-              <BorderLinearProgress value={90} variant="determinate" />
+              <div className="progress-bar">
+                <label>90%</label>
+                <BorderLinearProgress value={90} variant="determinate" />
+              </div>
             </Grid>
             <Grid item md={12} xs={12}>
               {userInfo === 12 || userInfo === 13 ? (

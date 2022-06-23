@@ -282,7 +282,6 @@ const JobsTable = ({
         accessor: "job_id",
         id: "invoice",
         Cell: (props) => {
-          console.log(props)
           return (props.row.original.appointment_status === 4 || props.row.original.appointment_status == 3) ? (<span
               className="normal-dsans-10-primary"
               onClick={(e) => downloadInvoice(e, props.value)}
