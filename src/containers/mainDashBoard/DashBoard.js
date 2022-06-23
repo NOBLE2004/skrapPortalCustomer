@@ -99,7 +99,7 @@ const DashBoard = (props) => {
           <DashboardFilter handelSearch={() => {}} title="Jobs"/>
         </Grid> */}
             </Grid>
-            <Grid container spacing={3} className="spend-service-main">
+            <Grid container   className="spend-service-main">
               <SpendChart
                 chartData={info}
                 getDashBoardData={getData}

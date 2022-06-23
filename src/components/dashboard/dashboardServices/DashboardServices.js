@@ -34,13 +34,13 @@ const DashboardServices = ({ servicesData }) => {
       <div className="progress-main">
         <div className="progress-sub">
           <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', top: '50px' }}>Skips</p>
+            <p style={{ position: 'absolute', bottom: '60px' }}>Skips</p>
             <div>
               <CircleProgress
                 width={180}
-                strokeWidth={12}
+                strokeWidth={15}
                 fontFamily={"DM Sans"}
-                fontSize={"26px"}
+                fontSize={"20px"}
                 fontColor={"#5a9df9"}
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
@@ -67,13 +67,14 @@ const DashboardServices = ({ servicesData }) => {
 
         <div className="progress-sub">
           <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', top: '50px' }}>Grab</p>
+            <p style={{ position: 'absolute', bottom: '60px' }}>Grab</p>
             <div>
               <CircleProgress
                 width={180}
-                strokeWidth={12}
+                strokeWidth={15}
                 fontFamily={"DM Sans"}
-                fontSize={"26px"}
+                bottom={20}
+                fontSize={"20px"}
                 fontColor={"#5a9df9"}
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
@@ -99,13 +100,13 @@ const DashboardServices = ({ servicesData }) => {
 
         <div className="progress-sub">
           <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', top: '50px' }}>Cage</p>
+            <p style={{ position: 'absolute', bottom: '60px' }}>Cage</p>
             <div>
               <CircleProgress
                 width={180}
-                strokeWidth={12}
+                strokeWidth={15}
                 fontFamily={"DM Sans"}
-                fontSize={"26px"}
+                fontSize={"20px"}
                 fontColor={"#5a9df9"}
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
@@ -130,13 +131,13 @@ const DashboardServices = ({ servicesData }) => {
 
         <div className="progress-sub">
           <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', top: '50px' }}>Aggregate</p>
+            <p style={{ position: 'absolute', bottom: '60px' }}>Aggregate</p>
             <div>
               <CircleProgress
                 width={180}
-                strokeWidth={12}
+                strokeWidth={15}
                 fontFamily={"DM Sans"}
-                fontSize={"26px"}
+                fontSize={"20px"}
                 fontColor={"#5a9df9"}
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
@@ -161,13 +162,13 @@ const DashboardServices = ({ servicesData }) => {
 
         <div className="progress-sub">
           <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', top: '50px' }}>PortableToilet</p>
+            <p style={{ position: 'absolute', bottom: '60px' }}>PortableToilet</p>
             <div>
               <CircleProgress
                 width={180}
-                strokeWidth={12}
+                strokeWidth={15}
                 fontFamily={"DM Sans"}
-                fontSize={"26px"}
+                fontSize={"20px"}
                 fontColor={"#5a9df9"}
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
