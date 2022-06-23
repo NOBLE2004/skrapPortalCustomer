@@ -122,7 +122,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
 
                 <button
                   className="sites-header-btn"
-                  style={{ marginLeft: "2px" }}
+                  style={{ marginLeft: "8px" }}
                   onClick={(e) => handleAllocate(e, cell?.row?.original)}
                 >
                   Allocate PO

@@ -5,6 +5,7 @@ import Autocomplete from "@mui/lab/Autocomplete";
 export default function AsychronousAddress({
   handleSelectedPostCode,
   inputClass,
+    recent,
   error,
   address,
   sites
@@ -19,16 +20,16 @@ export default function AsychronousAddress({
       )
         .then((response) => response.json())
         .then((data) => {
-          setOptions(data.result.hits.map((data) => data));
+          setOptions(data.result.hits);
         });
     }
   };
 
   React.useEffect(() => {
     if (!open) {
-      setOptions([]);
+      setOptions(recent);
     }
-  }, [open]);
+  }, [open, recent]);
   return (
     <Autocomplete
       margin="dense"

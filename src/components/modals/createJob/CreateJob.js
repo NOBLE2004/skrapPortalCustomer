@@ -91,6 +91,7 @@ export default function CreateJob({
   const [roleId, setRoleId] = useState(0);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [addNewCard, setAddNewCard] = useState(false);
+  const [recentAddresses, setRecentAddresses] = useState([]);
   const [errors, setError] = useState({
     customer: "",
     service: "",
@@ -273,7 +274,20 @@ export default function CreateJob({
       selectedTime: time.time_slot,
     });
   };
-
+  useEffect(()=>{
+    JobService.getRecentAddresses({user_id: localStorage.getItem("user_id"), limit: 0})
+        .then((response) => {
+      if(response.data.code === 0){
+        const addresses = response.data.result.map((data) => {
+          data.suggestion = `${data.line_1}, ${data.post_town}, ${data.postcode_outward}, ${data.postcode}`;
+          return data;
+        });
+        setRecentAddresses(addresses);
+      }
+    }).catch(error => {
+      console.log(error);
+    })
+  }, []);
   const handleStartDateChange = (date) => {
     setStartSelectedDate(date);
   };
@@ -858,6 +872,7 @@ export default function CreateJob({
             <p>Site Address</p>
             <AsychronousAddress
               error={errors.addressData}
+              recent={recentAddresses}
               handleSelectedPostCode={(value) => handleSelectedPostCode(value)}
               address={siteAddress ? siteAddress : ""}
               sites={sites ? sites : false}

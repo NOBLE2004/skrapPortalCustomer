@@ -15,6 +15,7 @@ import { getSites, getSitesList } from "../../store/actions/sites.action";
 import "./sites.scss";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
 import CreateSite from "../../components/modals/createSite/CreateSite";
+import SiteFilters from "../../components/filters/SiteFilters";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
@@ -27,6 +28,8 @@ const Sites = (props) => {
   const [filters, setFilters] = useState({
     page: 1,
     search: "",
+      date: "",
+      address: ""
   });
   const [search, setSearch] = useState("");
   useEffect(() => {
@@ -70,6 +73,10 @@ const Sites = (props) => {
   const handleCreateJob = useCallback(() => {
     setIsJobCreated(true);
   }, [isJobCreated]);
+
+    const handleChangeFilters = (filtersList) => {
+        setFilters(filtersList);
+    };
 
   return (
     <>
@@ -120,6 +127,7 @@ const Sites = (props) => {
               cname="postcode"
               handleChangeSearch={handleChangeSearch}
             />
+              <SiteFilters handleChangeFilters={handleChangeFilters} />
           </div>
         </Grid>
       </Grid>
