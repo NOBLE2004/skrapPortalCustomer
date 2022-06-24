@@ -91,7 +91,7 @@ export const data = {
       borderSkipped: false,
       borderRadius: 6,
       pointStyle: "rectRounded",
-      pointWidth: 10,
+      pointWidth: 15,
       boxWidth: "100%",
       color: "#F7F7F7"
     },
@@ -103,7 +103,7 @@ export const data = {
       borderSkipped: false,
       borderRadius: 6,
       pointStyle: "rectRounded",
-      pointWidth: 10,
+      pointWidth: 15,
       boxWidth: "100%",
     },
     {
@@ -114,7 +114,7 @@ export const data = {
       borderSkipped: false,
       borderRadius: 6,
       pointStyle: "rectRounded",
-      pointWidth: 10,
+      pointWidth: 15,
       boxWidth: "100%",
     },
     {
