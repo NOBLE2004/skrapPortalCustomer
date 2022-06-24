@@ -47,7 +47,7 @@ const DashBoard = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
   const [isNewYear, setNewYear] = useState(false);
   const [latestYear, setLatestYear] = useState(2022);
-  const [startDate, setStartDate] = useState(new Date())
+  const [startDate, setStartDate] = useState()
   const history = useHistory();
   const { info, loading } = props.dashboard;
 
@@ -58,6 +58,13 @@ const DashBoard = (props) => {
     }
     setNewYear(true);
   };
+
+  useEffect(()=>{
+    if(!startDate){
+      setStartDate(new Date())
+      getData()
+    }
+  },[])
 
   useEffect(() => {
     if (!info | isNewYear) {

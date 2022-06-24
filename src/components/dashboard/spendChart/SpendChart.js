@@ -67,7 +67,7 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
     },
     yAxis: {
       min: 0,
-      max: 135604,
+      max: max ? max :100,
       title: {
         text: null,
       },
