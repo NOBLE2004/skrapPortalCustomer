@@ -27,7 +27,7 @@
 .progress-bar {
   display: flex;
   align-items: center;
-
+  position: relative;
   label {
     position: absolute;
     font-family: "DM Sans";

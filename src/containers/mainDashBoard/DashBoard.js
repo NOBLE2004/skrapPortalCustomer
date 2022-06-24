@@ -48,6 +48,7 @@ const DashBoard = (props) => {
   const [isNewYear, setNewYear] = useState(false);
   const [latestYear, setLatestYear] = useState(2022);
   const [startDate, setStartDate] = useState()
+  const [progress, setProgress] = useState(90)
   const history = useHistory();
   const { info, loading } = props.dashboard;
 
@@ -59,12 +60,12 @@ const DashBoard = (props) => {
     setNewYear(true);
   };
 
-  useEffect(()=>{
-    if(!startDate){
+  useEffect(() => {
+    if (!startDate) {
       setStartDate(new Date())
       getData()
     }
-  },[])
+  }, [])
 
   useEffect(() => {
     if (!info | isNewYear) {
@@ -106,7 +107,7 @@ const DashBoard = (props) => {
           <DashboardFilter handelSearch={() => {}} title="Jobs"/>
         </Grid> */}
             </Grid>
-            <Grid container   className="spend-service-main">
+            <Grid container className="spend-service-main">
               <SpendChart
                 chartData={info}
                 getDashBoardData={getData}
@@ -119,9 +120,12 @@ const DashBoard = (props) => {
               <Grid item md={12} className="landfill-main">
                 <div className="landfill">Landfill Diversion Rate</div>
                 <div className="progress-bar">
-                <label>90%</label>
-                <BorderLinearProgress value={90} variant="determinate" />
-              </div>
+                  <label style={{
+                    right: `${102 - progress}%`
+
+                  }}>90%</label>
+                  <BorderLinearProgress value={progress} variant="determinate" />
+                </div>
               </Grid>
             </Grid>
             <Grid container>
