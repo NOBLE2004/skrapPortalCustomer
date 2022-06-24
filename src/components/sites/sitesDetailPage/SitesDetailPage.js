@@ -39,6 +39,7 @@ const SitesDetailPage = (props) => {
   const [isReload, setIsReload] = useState(false);
   const [reload, setReload] = useState(false);
   const [userInfo, setUserInfo] = useState(0);
+  const [progress,setProgress]=useState(90)
   const [jobsData, setJobsData] = useState({});
   const [isJobLoading, setJobLoading] = useState(false);
   const [filters, setFilters] = useState({
@@ -161,8 +162,10 @@ const SitesDetailPage = (props) => {
             <Grid item md={12} xs={12}>
               <div className="landfill">Landfill Diversion Rate</div>
               <div className="progress-bar">
-                <label>90%</label>
-                <BorderLinearProgress value={90} variant="determinate" />
+                <label style={{
+                  right:`${102-progress}%`
+                }}>90%</label>
+                <BorderLinearProgress value={progress} variant="determinate" />
               </div>
             </Grid>
             <Grid item md={12} xs={12}>

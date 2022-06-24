@@ -87,7 +87,7 @@ hr {
 .progress-bar {
   display: flex;
   align-items: center;
-
+  position: relative;
   label {
     position: absolute;
     font-family: "DM Sans";
@@ -97,6 +97,6 @@ hr {
     line-height: 20px;
     color: #ffffff;
     z-index: 1;
-    padding-left: 0.5%;
+    // padding-left: 0.5%;
   }
 }
