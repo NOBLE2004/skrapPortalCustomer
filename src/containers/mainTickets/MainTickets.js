@@ -6,6 +6,8 @@ import FadeLoader from "react-spinners/FadeLoader";
 import {Grid} from "@mui/material";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import SiteFilters from "../../components/filters/SiteFilters";
+import CommonHeader from "../../components/commonComponent/CommonHeader";
+import ticketService from "../../services/ticket.service";
 
 const MainTickets = (props) => {
   const [filters, setFilters] = useState({ page: 1, search: '', date: '' });
@@ -45,11 +47,45 @@ const MainTickets = (props) => {
       },
       [search, filters]
   );
+  const toDataURL = (url) => {
+    return fetch(url)
+        .then((response) => {
+          return response.blob();
+        })
+        .then((blob) => {
+          return URL.createObjectURL(blob);
+        });
+  };
+  const download = async (url) => {
+    var element = document.createElement("a");
+    element.href = await toDataURL(url);
+    element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
+    element.click();
+  };
+  const downloadZip = () => {
+    const params = filters;
+    params.user_id = localStorage.getItem("user_id");
+    ticketService.download(params)
+        .then((response)=>{
+          if(response.data.code === 0){
+            download(response.data.result.url);
+          }else{
+            console.log(response)
+          }
+        }).catch(error => {
+          console.log(error);
+        });
+  }
 
   return (
     <div>
       <div className="header-main">
         <div className="sites-header-title">Tickets </div>
+          {filters.date && (
+              <button className="header-btn" onClick={downloadZip}>
+                Download Tickets
+              </button>
+          )}
       </div>
       <Grid container>
         <Grid item md={12}>
