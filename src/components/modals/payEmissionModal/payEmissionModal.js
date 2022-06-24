@@ -10,13 +10,48 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Checkbox from '@mui/material/Checkbox';
+import Radio from '@mui/material/Radio';
+
 
 import "./style.scss";
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
 function PayEmissionModal(props) {
+
+    const [data, setData] = useState([{
+        id: 1,
+        name: 'Name',
+        price: 20,
+        selected: 'a'
+    },
+    {
+        id: 2,
+        name: 'Name',
+        price: 60,
+        selected: 'b'
+    },
+    {
+        id: 3,
+        name: 'Name',
+        price: 50,
+        selected: 'c'
+    }
+    ])
     const { showModal, setShowModal } = props;
+    const [selectedValue, setSelectedValue] = React.useState('a');
+    const [state, setState] = useState({
+        price: data && data[0] && data[0].price
+    })
+
+
+    const handleChange = (event, price) => {
+        setState(st => ({
+            ...st,
+            price: price
+        }))
+        setSelectedValue(event.target.value);
+    };
 
     const styles = (theme) => ({
         root: {
@@ -49,86 +84,34 @@ function PayEmissionModal(props) {
         );
     });
 
-
-    const [data, setData] = useState([{
-        id: 1,
-        name: 'Name',
-        price: 20,
-        checked: false
-    },
-    {
-        id: 2,
-        name: 'Name',
-        price: 60,
-        checked: false
-    },
-    {
-        id: 3,
-        name: 'Name',
-        price: 50,
-        checked: false
-    }
-    ])
-
-    const [state, setState] = useState({
-        price: 0
-    })
-    const updateState = (e) => {
-        setData(prevState => {
-            const newState = prevState.map(obj => {
-                if (obj.id == Number(e.target.name)) {
-                    if (obj.checked == false) {
-                        obj.checked = true
-                        setState(st => ({
-                            ...st,
-                            price: state.price + obj.price
-                        }))
-                    }
-
-                    else {
-                        obj.checked = false
-                        setState(st => ({
-                            ...st,
-                            price: state.price - obj.price
-                        }))
-                    }
-                    return { ...obj };
-                }
-
-                return obj;
-            });
-
-            return newState;
-        });
-    };
-
     return (
         <Dialog open={showModal} onClose={() => setShowModal(!showModal)} className="booksitemodal">
             <DialogTitle onClose={() => setShowModal(!showModal)}> Pay Co2e</DialogTitle>
             <DialogContent dividers>
                 <form noValidate>
-                    {data.map(single =>
-                        <div className="main-modal-content-emision" key={single.id}>
-                            <div>
-                                <p>
-                                    {single.name}
-                                </p>
-                            </div>
-                            <div>
-                                <p>
-                                    £{single.price}
-                                </p>
-                            </div>
-                            <div>
-                                <Checkbox {...label} name={single.id} defaultChecked={single.checked}
-                                    onChange={(e) => {
-                                        updateState(e)
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    )}
-
+                    <Grid container justifyContent='center'>
+                        {data.map(single =>
+                            <Grid item md={8} xs={12}>
+                                <div className="main-modal-content-emision" key={single.id}>
+                                    <div>
+                                        <p>
+                                            {single.name}
+                                            <span>&nbsp;(£{single.price})</span>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <Radio
+                                            checked={single.selected === selectedValue}
+                                            onChange={(e) => handleChange(e, single.price)}
+                                            value={single.selected}
+                                            name="radio-buttons"
+                                            inputProps={{ 'aria-label': 'A' }}
+                                        />
+                                    </div>
+                                </div>
+                            </Grid>
+                        )}
+                    </Grid>
                     <Grid container justifyContent='flex-end' marginTop={2}>
                         <Button
                             className=""
