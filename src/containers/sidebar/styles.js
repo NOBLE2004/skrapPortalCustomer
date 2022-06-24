@@ -62,13 +62,13 @@ export const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: 20,
-    overflow: "hidden",
+    //overflow: "hidden",
     width: "-moz-available",
   },
   contents: {
     flexGrow: 1,
     padding: 10,
-    overflow: "hidden",
+    //overflow: "hidden",
     width: "-moz-available",
   },
 }));
