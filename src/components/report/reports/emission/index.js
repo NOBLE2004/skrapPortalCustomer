@@ -2,7 +2,7 @@ import { Card, CardContent, Grid } from "@mui/material";
 import DatePicker from "../../../yearPicker/yearPicker";
 import Vector from "../../../../assets/images/vector.svg";
 import { sitesReport } from "../../../utlils/constants";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -10,6 +10,8 @@ import { data, data2 } from "./constant";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
+import { useDispatch, useSelector } from "react-redux";
+import { getReportEmissions } from "../../../../store/actions/action.reportEmission";
 import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
 
@@ -48,9 +50,17 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const EmissionReport = (props) => {
+  const state = useSelector(state => state?.reportEmission)
+  const dispatch = useDispatch()
   const { sites } = props;
   const [showModal, setShowModal] = useState(false)
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    dispatch(getReportEmissions())
+  }, [])
+
+  console.log('state',state)
 
   return (
     <>
