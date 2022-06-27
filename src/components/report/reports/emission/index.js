@@ -1,17 +1,17 @@
 import { Card, CardContent, Grid } from "@mui/material";
 import DatePicker from "../../../yearPicker/yearPicker";
 import Vector from "../../../../assets/images/vector.svg";
-import { sitesReport } from "../../../utlils/constants";
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { data, data2 } from "./constant";
+import { chartOptions, data2 } from "./constant";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { getReportEmissions } from "../../../../store/actions/action.reportEmission";
+import { getReportSiteBreakDownEmissions } from "../../../../store/actions/action.reportEmissionSiteBreakdown";
 import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
 
@@ -51,16 +51,111 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 
 const EmissionReport = (props) => {
   const state = useSelector(state => state?.reportEmission)
+  const stateSiteBreakDown = useSelector(state => state?.reportEmissionSiteBreakDown)
   const dispatch = useDispatch()
+  const [chartData, setChartData] = useState(chartOptions)
   const { sites } = props;
   const [showModal, setShowModal] = useState(false)
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    dispatch(getReportEmissions())
+    async function fetchData() {
+      // if (!state?.data) {
+      await dispatch(getReportEmissions({ address_id: 3509 }));
+      // }
+    }
+    fetchData();
+    dispatch(getReportSiteBreakDownEmissions())
   }, [])
 
-  console.log('state',state)
+  let data = [null, null, null, null, null, null, null, null, null, null, null, null]
+  const getMonthData = (month, value) => {
+    switch (month) {
+      case 'january':
+        data[0] = value;
+        break;
+      case 'february':
+        data[1] = value;
+        break;
+      case 'march':
+        data[2] = value;
+        break;
+      case 'april':
+        data[3] = value;
+        break;
+      case 'may':
+        data[4] = value;
+        break;
+      case 'june':
+        data[5] = value;
+        break;
+      case 'july':
+        data[6] = value;
+        break;
+      case 'august':
+        data[7] = value;
+        break;
+      case 'september':
+        data[8] = value;
+        break;
+      case 'october':
+        data[9] = value;
+        break;
+      case 'november':
+        data[10] = value;
+        break;
+      case 'december':
+        data[11] = value;
+        break;
+      default:
+        return data
+    }
+    return data
+  }
+
+  let value = [
+    {
+      name: 'null',
+      data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+      borderWidth: 0,
+      stack: 1,
+      borderSkipped: false,
+      borderRadius: 6,
+      pointStyle: "rectRounded",
+      pointWidth: 15,
+      boxWidth: "100%",
+      color: "#F7F7F7"
+    },
+  ]
+  const filterSeries = () => {
+    state?.data?.data?.map(single => {
+      return (
+        value.push(
+          {
+            type: "column",
+            name: "Emissions produced",
+            data: getMonthData(single?.month?.toLowerCase(), single?.Sum_Co2e),
+            color: { linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 }, stops: [[0, '#73C6F9'], [1, '#5391F9']] },
+            borderSkipped: false,
+            borderRadius: 6,
+            pointStyle: "rectRounded",
+            pointWidth: 15,
+            boxWidth: "100%",
+          },
+        )
+      )
+    })
+    return value
+  }
+
+  useEffect(() => {
+    setChartData(st => ({
+      ...st,
+      series: filterSeries()
+    }))
+
+  }, [state?.data?.data])
+  console.log('filterSeries', chartData)
 
   return (
     <>
@@ -80,7 +175,7 @@ const EmissionReport = (props) => {
                 Total payment: <span>£0.00</span>
               </div>
             </div>
-            <HighchartsReact highcharts={Highcharts} options={data} />
+            <HighchartsReact highcharts={Highcharts} options={chartData} />
           </div>
         </CardContent>
         <CardContent>
@@ -126,37 +221,35 @@ const EmissionReport = (props) => {
                   <div className="sub-heading">Site breakdown</div>
                   <div className="head-text">
                     <p>
-                      <span>1</span> site journeys
+                      <span>{stateSiteBreakDown?.data?.graph_data?.length}</span> site journeys
                     </p>
                     <p>
                       <span>525.5 miles</span> equivalent to driving from{" "}
                       <b>London</b> to <b>Berlin</b>
                     </p>
                   </div>
-                  <div className="services">
-                    {sitesReport.map((service) => {
+                  <div className="main-emission-break-down"
+                  >
+                    {stateSiteBreakDown?.data?.graph_data?.map((service, index) => {
                       return (
-                        <div className="service-box">
-                          <div className="circle-wrap">
+                        <div className="inner-break-down" key={index}  >
+                          <div className="circle-main">
                             <div
                               className="circle"
                               style={{
-                                width: `${service.percentage > 5
-                                  ? service.percentage * 4
-                                  : service.percentage * 8
+                                width: `${service.Sum_Co2e.toFixed(1) > 100 ? 100 : service.Sum_Co2e.toFixed(1)
                                   }px`,
-                                height: `${service.percentage > 5
-                                  ? service.percentage * 4
-                                  : service.percentage * 8
+                                height: `${service.Sum_Co2e.toFixed(1) > 100 ? 100 : service.Sum_Co2e.toFixed(1)
                                   }px`,
-                                background: service.color,
+                                background: index % 3 === 0 ? "#0F2851" : index % 3 === 1 ? '#4981F8' : '#60A0F8',
+                                borderRadius: '50%',
                               }}
                             />
                           </div>
-                          <div className="service-detail start">
-                            <div className="name circle-name">{service.name}</div>
-                            <div className="percentage percentage-circle">
-                              {service.percentage} CO2e
+                          <div className="site-name">
+                            <div className="site">{service.SiteName}</div>
+                            <div className="percentage">
+                              {service.Sum_Co2e.toFixed(1)} CO2e
                             </div>
                           </div>
                         </div>
@@ -194,16 +287,18 @@ const EmissionReport = (props) => {
                     <BorderLinearProgress2 value={60} variant="determinate" />
                   </Grid>
                   <Grid container justifyContent="space-between">
-                    <div className="sub-heading progress-label">
-                      <p className="text left">
-                        Tank-to-well <br />
-                        <span> 7.44 miles</span>
-                      </p>
-                      <p className="text right">
-                        Well-to-tank <br />
-                        <span> 7.44 miles</span>
-                      </p>
-                    </div>
+                    {state?.data?.year?.map(value =>
+                      <div className="sub-heading progress-label">
+                        <p className="text left">
+                          Tank-to-well <br />
+                          <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>
+                        </p>
+                        <p className="text right">
+                          Well-to-tank <br />
+                          <span> {value?.WTTCo2e.toFixed(2)} Co2e</span>
+                        </p>
+                      </div>
+                    )}
                   </Grid>
                 </div>
               </div>
