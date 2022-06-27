@@ -57,6 +57,7 @@ const EmissionReport = (props) => {
   const { sites } = props;
   const [showModal, setShowModal] = useState(false)
   const [show, setShow] = useState(false);
+  const [emission, setEmission] = useState([null, null, null, null, null, null, null, null, null, null, null, null]);
 
   useEffect(() => {
     async function fetchData() {
@@ -67,50 +68,49 @@ const EmissionReport = (props) => {
     fetchData();
     dispatch(getReportSiteBreakDownEmissions())
   }, [])
-
-  let data = [null, null, null, null, null, null, null, null, null, null, null, null]
   const getMonthData = (month, value) => {
     switch (month) {
       case 'january':
-        data[0] = value;
+        emission[0] = value;
         break;
       case 'february':
-        data[1] = value;
+        emission[1] = value;
         break;
       case 'march':
-        data[2] = value;
+        emission[2] = value;
         break;
       case 'april':
-        data[3] = value;
+        emission[3] = value;
         break;
-      case 'may':
-        data[4] = value;
+      case 'May':
+        emission[4] = value;
         break;
-      case 'june':
-        data[5] = value;
+      case 'June':
+        emission[5] = value;
         break;
       case 'july':
-        data[6] = value;
+        emission[6] = value;
         break;
       case 'august':
-        data[7] = value;
+        emission[7] = value;
         break;
       case 'september':
-        data[8] = value;
+        emission[8] = value;
         break;
       case 'october':
-        data[9] = value;
+        emission[9] = value;
         break;
       case 'november':
-        data[10] = value;
+        emission[10] = value;
         break;
       case 'december':
-        data[11] = value;
+        emission[11] = value;
         break;
       default:
-        return data
+        return emission
     }
-    return data
+    setEmission(emission);
+    return emission
   }
 
   let value = [
@@ -126,34 +126,32 @@ const EmissionReport = (props) => {
       boxWidth: "100%",
       color: "#F7F7F7"
     },
+    {
+      type: "column",
+      name: "Emissions produced",
+      data: emission,
+      color: { linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 }, stops: [[0, '#73C6F9'], [1, '#5391F9']] },
+      borderSkipped: false,
+      borderRadius: 6,
+      pointStyle: "rectRounded",
+      pointWidth: 15,
+      boxWidth: "100%",
+    },
   ]
   const filterSeries = () => {
     state?.data?.data?.map(single => {
-      return (
-        value.push(
-          {
-            type: "column",
-            name: "Emissions produced",
-            data: getMonthData(single?.month?.toLowerCase(), single?.Sum_Co2e),
-            color: { linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 }, stops: [[0, '#73C6F9'], [1, '#5391F9']] },
-            borderSkipped: false,
-            borderRadius: 6,
-            pointStyle: "rectRounded",
-            pointWidth: 15,
-            boxWidth: "100%",
-          },
-        )
-      )
+      getMonthData(single.month, parseFloat(single.Sum_Co2e.toFixed(2)));
     })
-    return value
   }
 
   useEffect(() => {
     setChartData(st => ({
       ...st,
-      series: filterSeries()
+      series: value
     }))
-
+  }, [emission, state?.data?.data])
+  useEffect(() => {
+    filterSeries();
   }, [state?.data?.data])
   console.log('filterSeries', chartData)
 
@@ -175,7 +173,7 @@ const EmissionReport = (props) => {
                 Total payment: <span>£0.00</span>
               </div>
             </div>
-            <HighchartsReact highcharts={Highcharts} options={chartData} />
+            {chartData && chartData?.series !== undefined && (<HighchartsReact highcharts={Highcharts} options={chartData} /> )}
           </div>
         </CardContent>
         <CardContent>
