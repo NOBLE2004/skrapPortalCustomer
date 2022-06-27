@@ -8,6 +8,7 @@ import CommonSearch from "../../components/commonComponent/commonSearch/CommonSe
 import SiteFilters from "../../components/filters/SiteFilters";
 import ticketService from "../../services/ticket.service";
 import CircularProgress from "@mui/material/CircularProgress";
+import {PORTAL_URL} from "../../environment";
 
 const MainTickets = (props) => {
   const [filters, setFilters] = useState({ page: 1, search: '', date: '' });
@@ -68,18 +69,36 @@ const MainTickets = (props) => {
     setLoading(true);
     const params = filters;
     params.user_id = localStorage.getItem("user_id");
-    ticketService.download(params)
-        .then((response)=>{
-          if(response.data.code === 0){
-            download(response.data.result.url);
+    return fetch(PORTAL_URL + '/tickets/download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if(responseJson.code === 0){
+            download(responseJson.result.url);
           }else{
-            console.log(response)
-              setLoading(false);
+            console.log(responseJson)
+            setLoading(false);
           }
-        }).catch(error => {
-        setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
           console.log(error);
         });
+    // ticketService.download(params)
+    //     .then((response)=>{
+    //       if(response.data.code === 0){
+    //         download(response.data.result.url);
+    //       }else{
+    //         console.log(response)
+    //           setLoading(false);
+    //       }
+    //     }).catch(error => {
+    //     setLoading(false);
+    //       console.log(error);
+    //     });
   }
 
   return (

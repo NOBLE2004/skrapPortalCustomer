@@ -13,6 +13,7 @@ import {
 } from "../assets/images/index";
 export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
 // export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
+export const PORTAL_URL = `https://portaltest2.skrap.app/api`;
 export const API_URL = `${APP_URL}`;
 export const FILE_DIR = "/storage";
 export const LABELS = {
