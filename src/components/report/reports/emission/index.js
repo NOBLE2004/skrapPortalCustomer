@@ -64,7 +64,7 @@ const EmissionReport = (props) => {
   const { sites, startDate, setStartDate } = props;
   const [showModal, setShowModal] = useState(false)
   const [show, setShow] = useState(false);
-  const [max, setMax] = useState(500)
+  const [max, setMax] = useState(100)
   const [emission, setEmission] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   const getData = (year) => {
@@ -165,7 +165,7 @@ const EmissionReport = (props) => {
       ...st,
       series: value
     }))
-  }, [emission, state?.data?.data, startDate])
+  }, [emission, state?.data?.data, startDate,max])
 
   useEffect(() => {
     if (state?.data?.data?.length > 0) {
