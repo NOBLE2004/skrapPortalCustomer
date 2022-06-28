@@ -105,12 +105,13 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
       {
         Header: "",
         id: "edit-id",
+        
         Cell: ({ cell }) => (
           <>
             {roleId === 13 || roleId === 12 ? (
               ""
             ) : (
-              <>
+              <div className="action-for-site">
                 {localStorage.getItem("user_count") > 0 && (
                   <button
                     className="sites-header-btn"
@@ -127,7 +128,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
                 >
                   Allocate PO
                 </button>
-              </>
+              </div>
             )}
           </>
         ),
