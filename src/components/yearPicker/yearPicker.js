@@ -4,12 +4,13 @@ import "./yearPicker.scss";
 
 import "react-datepicker/dist/react-datepicker.css";
 const Example = (props) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const { startDate, setStartDate, getData } = props
   const handleDateNext = () => {
     if (startDate.getFullYear() != new Date().getFullYear()) {
       const aYearFromNow = startDate;
       let newDate = aYearFromNow?.setFullYear(aYearFromNow?.getFullYear() + 1);
       setStartDate(new Date(newDate));
+      getData(startDate.getFullYear())
     }
   };
   const handlePrevDate = () => {
@@ -17,7 +18,12 @@ const Example = (props) => {
       const aYearFromNow = startDate;
       let newDate = aYearFromNow?.setFullYear(aYearFromNow?.getFullYear() - 1);
       setStartDate(new Date(newDate));
+      getData(startDate.getFullYear())
     }
+  };
+  const handleYearChange = (event) => {
+    setStartDate(event)
+    getData(event.getFullYear())
   };
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
@@ -44,7 +50,7 @@ const Example = (props) => {
     <div className="date-picker-main">
       <DatePicker
         selected={startDate}
-        onChange={(date) => setStartDate(date)}
+        onChange={(date) => handleYearChange(date)}
         showYearPicker
         dateFormat="yyyy"
         yearItemNumber={15}

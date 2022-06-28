@@ -16,6 +16,8 @@ import { totalSites } from "./jobsMetaReduces";
 import { siteMovementBreakdownReducer } from "./siteMovementBreakdownReducer";
 import { siteMovements } from "./siteMovementsReducer";
 import { siteMovementDetail } from "./siteMovementDetailReducer";
+import { reportEmission } from "./emissonReducer";
+import { reportEmissionSiteBreakDown } from "./emissionSiteBreakDownReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -34,5 +36,7 @@ export default combineReducers({
   siteMovementBreakdown: siteMovementBreakdownReducer,
   totalSites: totalSites,
   siteMovements: siteMovements,
-  siteMovementDetail: siteMovementDetail
+  siteMovementDetail: siteMovementDetail,
+  reportEmission:reportEmission,
+  reportEmissionSiteBreakDown:reportEmissionSiteBreakDown
 });

@@ -1,35 +1,23 @@
-import React, { createRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
-import Carousel from "react-multi-carousel";
 import { getHireBreakdown } from "../../../../../store/actions/action.hireBd";
 import { useSelector, useDispatch } from "react-redux";
-import "react-multi-carousel/lib/styles.css";
 import FadeLoader from "react-spinners/FadeLoader";
 import "../style.scss";
+import Carousel, { consts } from 'react-elastic-carousel'
+
+const breakPoints = [
+  { width: 1, itemsToShow: 3, pagination: false },
+  { width: 550, itemsToShow: 4, itemsToScroll: 2, pagination: false },
+  { width: 850, itemsToShow: 3, pagination: false },
+  { width: 1150, itemsToShow: 4, itemsToScroll: 2, pagination: false },
+  { width: 1450, itemsToShow: 4, pagination: false },
+  { width: 1750, itemsToShow: 4, pagination: false },
+]
 const HireBreakDown = (props) => {
-  const {sites} = props;
+  const { sites } = props;
   const state = useSelector((state) => state?.hireBreakdown);
   const dispatch = useDispatch();
-  const ref = createRef();
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 4,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 4,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 2,
-    },
-  };
 
   useEffect(() => {
     async function fetchData() {
@@ -42,12 +30,21 @@ const HireBreakDown = (props) => {
   useEffect(() => {
     async function fetchData() {
       //if (!state?.hire_breakdown?.result) {
-        await dispatch(getHireBreakdown({sites}));
+      await dispatch(getHireBreakdown({ sites }));
       //}
     }
     fetchData();
   }, [sites]);
-   return (
+
+  const myArrow = ({ type, onClick, isEdge }) => {
+    const pointer = type === consts.PREV ? '<' : '>'
+    return (
+      <span className="span-for-arrows" onClick={onClick} disabled={isEdge}>
+        {pointer}
+      </span>
+    )
+  }
+  return (
     <>
       {state?.isLoading ? (
         <div className="d-flex justify-center align-center">
@@ -57,27 +54,14 @@ const HireBreakDown = (props) => {
         <>
           {state?.hire_breakdown?.result?.length > 0 ? (
             <Grid container spacing={1} marginTop={1} alignItems="center">
-              <Grid
-                item
-                lg={0.5}
-                md={0.5}
-                sm={0.5}
-                xs={0.5}
-                onClick={() => {
-                  ref?.current?.previous();
-                }}
-              >
-                <span className="span-arrows-for-carusal"> {`<`}</span>
-              </Grid>
-              <Grid item lg={11} md={11} sm={11} xs={11}>
+              <Grid item lg={12} md={12} sm={12} xs={12} className="main-for-carusal">
                 <Carousel
-                  responsive={responsive}
-                  ref={ref}
-                  arrows={false}
-                  autoPlay={false}
-                  className="main-for-carusal"
+                  itemsToShow={4}
+                  renderPagination={false}
+                  renderArrow={myArrow}
+                  breakPoints={breakPoints}
                 >
-                  {state?.hire_breakdown?.result?.map((service,index) => {
+                  {state?.hire_breakdown?.result?.map((service, index) => {
                     return (
                       <div className="service-box p-2" key={index}>
                         <img
@@ -94,24 +78,13 @@ const HireBreakDown = (props) => {
                   })}
                 </Carousel>
               </Grid>
-              <Grid
-                item
-                lg={0.5}
-                md={0.5}
-                xs={0.5}
-                sm={0.5}
-                onClick={() => {
-                  ref?.current?.next();
-                }}
-              >
-                <span className="span-arrows-for-carusal"> {`>`}</span>
-              </Grid>
             </Grid>
           ) : (
             ""
           )}
         </>
-      )}
+      )
+      }
     </>
   );
 };

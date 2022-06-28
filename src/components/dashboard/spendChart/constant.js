@@ -1,6 +1,5 @@
 export const lineChartData = (data) => (
-  console.log("daaa", data),
-  {
+   {
     chart: {
       type: "column",
       height: 300,
