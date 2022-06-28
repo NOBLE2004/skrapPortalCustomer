@@ -15,7 +15,7 @@ import { getReportEmissions } from "../../../../store/actions/action.reportEmiss
 import { getReportSiteBreakDownEmissions } from "../../../../store/actions/action.reportEmissionSiteBreakdown";
 import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
- 
+
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   width: "100%",
@@ -165,7 +165,7 @@ const EmissionReport = (props) => {
       ...st,
       series: value
     }))
-  }, [emission, state?.data?.data, startDate,max])
+  }, [emission, state?.data?.data, startDate, max])
 
   useEffect(() => {
     if (state?.data?.data?.length > 0) {
@@ -184,9 +184,11 @@ const EmissionReport = (props) => {
       <Card className="report-chart-card">
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            <h1>
-              12.567 <span>kg of CO2e Cumulative Emissions</span>
-            </h1>
+            {state?.data?.year?.length > 0 &&
+              <h1>
+                {state?.data?.year[0]?.Sum_Co2e?.toFixed(2)} <span>kg of CO2e Cumulative Emissions</span>
+              </h1>
+            }
             <div className="sub-heading">Monthly breakdown</div>
             {state?.isLoading ?
               <div className="d-flex justify-center align-center">
