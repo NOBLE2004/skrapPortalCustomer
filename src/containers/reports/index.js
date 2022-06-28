@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Masonry } from "@mui/lab";
 import "chart.js/auto";
 import "./report.scss";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import ReportHeader from "../../components/report/header";
 import ReportFooter from "../../components/report/footer";
 import FinanceReport from "../../components/report/reports/finance";
@@ -13,6 +13,7 @@ import ReportFilters from "../../components/report/filters";
 
 const NewReports = (props) => {
   const [selected, setSelected] = useState([]);
+  const [startDate, setStartDate] = useState(new Date())
   const [reports, setReports] = useState({
     finance: false,
     site_movements: false,
@@ -30,7 +31,7 @@ const NewReports = (props) => {
   return (
     <>
       <div className="main-report">
-        <ReportHeader sites={selected} handleChange={handleChange} selected={selected}/>
+        <ReportHeader sites={selected} handleChange={handleChange} selected={selected} />
         <ReportFilters />
         <div className="report-grid">
           <Masonry container columns={2} spacing={4}>
@@ -40,7 +41,10 @@ const NewReports = (props) => {
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Emissions</div>
-              <EmissionReport sites={selected} />
+              <EmissionReport sites={selected}
+                startDate={startDate}
+                setStartDate={setStartDate}
+              />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">C02e Breakdown</div>
@@ -53,7 +57,7 @@ const NewReports = (props) => {
           </Masonry>
         </div>
       </div>
-      <ReportFooter handleChangeReportType={handleChangeReportType}/>
+      <ReportFooter handleChangeReportType={handleChangeReportType} />
     </>
   );
 };

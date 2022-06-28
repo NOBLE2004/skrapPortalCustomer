@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { chartOptions, data2 } from "./constant";
+import FadeLoader from "react-spinners/FadeLoader";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
@@ -14,7 +15,7 @@ import { getReportEmissions } from "../../../../store/actions/action.reportEmiss
 import { getReportSiteBreakDownEmissions } from "../../../../store/actions/action.reportEmissionSiteBreakdown";
 import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
-
+ 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   width: "100%",
@@ -54,18 +55,32 @@ const EmissionReport = (props) => {
   const stateSiteBreakDown = useSelector(state => state?.reportEmissionSiteBreakDown)
   const dispatch = useDispatch()
   const [chartData, setChartData] = useState(chartOptions)
-  const { sites } = props;
+  const [isNewYear, setNewYear] = useState(false);
+  //dummy states for secend graph date picker
+  const [date, setDate] = useState(new Date())
+  const handleDate = () => {
+    console.log('date')
+  }
+  const { sites, startDate, setStartDate } = props;
   const [showModal, setShowModal] = useState(false)
   const [show, setShow] = useState(false);
-  const [emission, setEmission] = useState([null, null, null, null, null, null, null, null, null, null, null, null]);
+  const [max, setMax] = useState(500)
+  const [emission, setEmission] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
+  const getData = (year) => {
+    if (startDate) {
+      dispatch(getReportEmissions({ year: year }));
+    }
+  };
 
   useEffect(() => {
-    async function fetchData() {
-      // if (!state?.data) {
-      await dispatch(getReportEmissions({ address_id: 3509 }));
-      // }
+    if (isNewYear) {
+      getData()
     }
-    fetchData();
+  }, [startDate, isNewYear])
+
+  useEffect(() => {
+    getData()
     dispatch(getReportSiteBreakDownEmissions())
   }, [])
   const getMonthData = (month, value) => {
@@ -116,7 +131,7 @@ const EmissionReport = (props) => {
   let value = [
     {
       name: 'null',
-      data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+      data: max ? [max, max, max, max, max, max, max, max, max, max, max, max] : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
       borderWidth: 0,
       stack: 1,
       borderSkipped: false,
@@ -138,6 +153,7 @@ const EmissionReport = (props) => {
       boxWidth: "100%",
     },
   ]
+
   const filterSeries = () => {
     state?.data?.data?.map(single => {
       getMonthData(single.month, parseFloat(single.Sum_Co2e.toFixed(2)));
@@ -149,11 +165,18 @@ const EmissionReport = (props) => {
       ...st,
       series: value
     }))
-  }, [emission, state?.data?.data])
+  }, [emission, state?.data?.data, startDate])
+
   useEffect(() => {
-    filterSeries();
-  }, [state?.data?.data])
-  console.log('filterSeries', chartData)
+    if (state?.data?.data?.length > 0) {
+      filterSeries();
+      setMax(Math?.max(...emission))
+    }
+    else {
+      setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+      setMax(0)
+    }
+  }, [state?.data?.data, startDate])
 
   return (
     <>
@@ -165,15 +188,31 @@ const EmissionReport = (props) => {
               12.567 <span>kg of CO2e Cumulative Emissions</span>
             </h1>
             <div className="sub-heading">Monthly breakdown</div>
-            <div className="filters">
-              <div className="year ">
-                <DatePicker />
+            {state?.isLoading ?
+              <div className="d-flex justify-center align-center">
+                <FadeLoader
+                  color={"#518ef8"}
+                  loading={state?.isLoading}
+                  width={4}
+                />
               </div>
-              <div className="total">
-                Total payment: <span>£0.00</span>
-              </div>
-            </div>
-            {chartData && chartData?.series !== undefined && (<HighchartsReact highcharts={Highcharts} options={chartData} /> )}
+              :
+              <>
+                <div className="filters">
+                  <div className="year ">
+                    <DatePicker
+                      startDate={startDate}
+                      setStartDate={setStartDate}
+                      getData={getData}
+                    />
+                  </div>
+                  <div className="total">
+                    Total payment: <span>£0.00</span>
+                  </div>
+                </div>
+                {chartData && chartData?.series !== undefined && (<HighchartsReact highcharts={Highcharts} options={chartData} />)}
+              </>
+            }
           </div>
         </CardContent>
         <CardContent>
@@ -187,7 +226,11 @@ const EmissionReport = (props) => {
             <div className="sub-heading">Offset payments</div>
             <div className="filters">
               <div className="year">
-                <DatePicker />
+                <DatePicker
+                  startDate={date}
+                  setStartDate={setDate}
+                  getData={handleDate}
+                />
               </div>
               <div className="total">
                 Total payment: <span>£0.00</span>
@@ -226,34 +269,44 @@ const EmissionReport = (props) => {
                       <b>London</b> to <b>Berlin</b>
                     </p>
                   </div>
-                  <div className="main-emission-break-down"
-                  >
-                    {stateSiteBreakDown?.data?.graph_data?.map((service, index) => {
-                      return (
-                        <div className="inner-break-down" key={index}  >
-                          <div className="circle-main">
-                            <div
-                              className="circle"
-                              style={{
-                                width: `${service.Sum_Co2e.toFixed(1) > 100 ? 100 : service.Sum_Co2e.toFixed(1)
-                                  }px`,
-                                height: `${service.Sum_Co2e.toFixed(1) > 100 ? 100 : service.Sum_Co2e.toFixed(1)
-                                  }px`,
-                                background: index % 3 === 0 ? "#0F2851" : index % 3 === 1 ? '#4981F8' : '#60A0F8',
-                                borderRadius: '50%',
-                              }}
-                            />
-                          </div>
-                          <div className="site-name">
-                            <div className="site">{service.SiteName}</div>
-                            <div className="percentage">
-                              {service.Sum_Co2e.toFixed(1)} CO2e
+                  {stateSiteBreakDown?.isLoading ?
+                    <div className="d-flex justify-center align-center">
+                      <FadeLoader
+                        color={"#518ef8"}
+                        loading={stateSiteBreakDown?.isLoading}
+                        width={4}
+                      />
+                    </div>
+                    :
+                    <div className="main-emission-break-down"
+                    >
+                      {stateSiteBreakDown?.data?.graph_data?.map((service, index) => {
+                        return (
+                          <div className="inner-break-down" key={index}  >
+                            <div className="circle-main">
+                              <div
+                                className="circle"
+                                style={{
+                                  width: `${service.Sum_Co2e.toFixed(1) > 100 ? 100 : service.Sum_Co2e.toFixed(1)
+                                    }px`,
+                                  height: `${service.Sum_Co2e.toFixed(1) > 100 ? 100 : service.Sum_Co2e.toFixed(1)
+                                    }px`,
+                                  background: index % 3 === 0 ? "#0F2851" : index % 3 === 1 ? '#4981F8' : '#60A0F8',
+                                  borderRadius: '50%',
+                                }}
+                              />
+                            </div>
+                            <div className="site-name">
+                              <div className="site">{service.SiteName}</div>
+                              <div className="percentage">
+                                {service.Sum_Co2e.toFixed(1)} CO2e
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                  }
                   <div className="sub-heading">CO2e breakdown</div>
                   <div className="sub-heading progress-label">
                     <p>Van</p>
