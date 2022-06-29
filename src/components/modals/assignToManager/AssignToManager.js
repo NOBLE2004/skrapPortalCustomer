@@ -17,7 +17,7 @@ import SiteService from "../../../services/sites.service";
 import "./assignToManager.scss";
 
 function AssignToManager(props) {
-  const { handleClose, managerId, reload } = props;
+  const { handleClose, managerId, setReload } = props;
   const [state, setState] = useState({
     manager: "",
     site: "",
@@ -94,9 +94,9 @@ function AssignToManager(props) {
         });
 
         setTimeout(() => {
-          reload();
+          setReload();
           handleClose();
-        }, 2000);
+        }, 1000);
       })
       .catch((error) => {
         setState({

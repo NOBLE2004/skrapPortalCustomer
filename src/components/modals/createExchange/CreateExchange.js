@@ -150,6 +150,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
       post_code: postcode,
       service_type: parent_id,
       is_app: 0,
+      user_id: localStorage.getItem('user_id')
     };
     ServiceService.subServicelist(data).then((response) => {
       setServiceList(response.data.result);

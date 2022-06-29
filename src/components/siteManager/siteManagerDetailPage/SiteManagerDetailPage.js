@@ -62,7 +62,7 @@ const SiteManagerDetailPage = (props) => {
       .catch((error) => {
         setState({ ...state, isLoading: false });
       });
-  }, []);
+  }, [reload]);
 
   useEffect(() => {
     const getJobData = async () => {

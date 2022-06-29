@@ -327,6 +327,7 @@ export default function CreateJob({
           post_code: postCode,
           service_type: serviceSelect.service_id,
           is_app: 0,
+          user_id: localStorage.getItem('user_id')
         };
         ServiceService.subServicelist(data).then((response) => {
           if (Object.keys(response.data.result).length === 0) {
@@ -344,6 +345,7 @@ export default function CreateJob({
           post_code: addressData.postcode,
           service_type: serviceSelect.service_id,
           is_app: 0,
+          user_id: localStorage.getItem('user_id')
         };
         ServiceService.subServicelist(data).then((response) => {
           if (Object.keys(response.data.result).length === 0) {

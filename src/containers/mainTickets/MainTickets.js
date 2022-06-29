@@ -6,13 +6,14 @@ import FadeLoader from "react-spinners/FadeLoader";
 import {Grid} from "@mui/material";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import SiteFilters from "../../components/filters/SiteFilters";
-import CommonHeader from "../../components/commonComponent/CommonHeader";
 import ticketService from "../../services/ticket.service";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const MainTickets = (props) => {
   const [filters, setFilters] = useState({ page: 1, search: '', date: '' });
   const { ticketList, isLoading, error } = props.tickets;
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -61,8 +62,10 @@ const MainTickets = (props) => {
     element.href = await toDataURL(url);
     element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
     element.click();
+      setLoading(false);
   };
   const downloadZip = () => {
+    setLoading(true);
     const params = filters;
     params.user_id = localStorage.getItem("user_id");
     ticketService.download(params)
@@ -71,8 +74,10 @@ const MainTickets = (props) => {
             download(response.data.result.url);
           }else{
             console.log(response)
+              setLoading(false);
           }
         }).catch(error => {
+        setLoading(false);
           console.log(error);
         });
   }
@@ -81,10 +86,16 @@ const MainTickets = (props) => {
     <div>
       <div className="header-main">
         <div className="sites-header-title">Tickets </div>
-          {filters.date && (
-              <button className="header-btn" onClick={downloadZip}>
-                Download Tickets
-              </button>
+          {filters.date &&(
+              <>
+                  {loading ? (
+                      <CircularProgress />
+                  ) : (
+                  <button className="header-btn" onClick={downloadZip}>
+                    Download Tickets
+                  </button>
+                )}
+              </>
           )}
       </div>
       <Grid container>
