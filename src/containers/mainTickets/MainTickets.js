@@ -102,7 +102,7 @@ const MainTickets = (props) => {
         <div className="tickets-main-div">
           <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
         </div>
-      ) : ticketList && ticketList.data.length > 0 ? (
+      ) : ticketList && ticketList?.data?.length > 0 ? (
         <TicketsTable
           data={ticketList ? ticketList.data : []}
           pagination={ticketList}
