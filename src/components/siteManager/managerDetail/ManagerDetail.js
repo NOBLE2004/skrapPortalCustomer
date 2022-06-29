@@ -53,7 +53,7 @@ const ManagerDetail = (props) => {
             <div className="info">
               <div className="designation">Site Assigned</div>
               <div className="personal-title">
-                {siteData && siteData.line_1 ? siteData.line_1 : "n/a"}
+                {site_assigned ? site_assigned : "n/a"}
               </div>
             </div>
             <div className="info">
