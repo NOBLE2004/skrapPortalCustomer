@@ -18,6 +18,7 @@ import { siteMovements } from "./siteMovementsReducer";
 import { siteMovementDetail } from "./siteMovementDetailReducer";
 import { reportEmission } from "./emissonReducer";
 import { reportEmissionSiteBreakDown } from "./emissionSiteBreakDownReducer";
+import { reportEmissionVehicle } from "./emissionVehicleReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -37,6 +38,7 @@ export default combineReducers({
   totalSites: totalSites,
   siteMovements: siteMovements,
   siteMovementDetail: siteMovementDetail,
-  reportEmission:reportEmission,
-  reportEmissionSiteBreakDown:reportEmissionSiteBreakDown
+  reportEmission: reportEmission,
+  reportEmissionSiteBreakDown: reportEmissionSiteBreakDown,
+  reportEmissionVehicle: reportEmissionVehicle
 });

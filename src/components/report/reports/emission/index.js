@@ -13,6 +13,7 @@ import LinearProgress, {
 import { useDispatch, useSelector } from "react-redux";
 import { getReportEmissions } from "../../../../store/actions/action.reportEmission";
 import { getReportSiteBreakDownEmissions } from "../../../../store/actions/action.reportEmissionSiteBreakdown";
+import { getReportEmissionVehicles } from "../../../../store/actions/action.reportEmisionVehicle";
 import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
 
@@ -53,6 +54,7 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 const EmissionReport = (props) => {
   const state = useSelector(state => state?.reportEmission)
   const stateSiteBreakDown = useSelector(state => state?.reportEmissionSiteBreakDown)
+  const stateEmissionVehicle=useSelector(state=>state?.reportEmissionVehicle)
   const dispatch = useDispatch()
   const [chartData, setChartData] = useState(chartOptions)
   const [isNewYear, setNewYear] = useState(false);
@@ -82,6 +84,7 @@ const EmissionReport = (props) => {
   useEffect(() => {
     getData()
     dispatch(getReportSiteBreakDownEmissions())
+    dispatch(getReportEmissionVehicles())
   }, [])
   const getMonthData = (month, value) => {
     switch (month) {
