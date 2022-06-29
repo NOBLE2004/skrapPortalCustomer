@@ -21,19 +21,19 @@ function PayEmissionModal(props) {
 
     const [data, setData] = useState([{
         id: 1,
-        name: 'Name',
+        name: 'Krissana Wind Power',
         price: 20,
         selected: 'a'
     },
     {
         id: 2,
-        name: 'Name',
+        name: 'CarbonCure',
         price: 60,
         selected: 'b'
     },
     {
         id: 3,
-        name: 'Name',
+        name: 'Fazenda Nascente Do Luar',
         price: 50,
         selected: 'c'
     }

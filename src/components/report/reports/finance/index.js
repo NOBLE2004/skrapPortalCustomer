@@ -91,7 +91,7 @@ const FinanceReport = (props) => {
           {stateSites?.site_breakdown?.result?.total && (
             <h1>
               £{stateSites?.site_breakdown?.result?.total.toLocaleString()}
-              <span> Total spent</span>
+              <span> Total spend</span>
             </h1>
           )}
           <div className="sub-heading">Site breakdown</div>
