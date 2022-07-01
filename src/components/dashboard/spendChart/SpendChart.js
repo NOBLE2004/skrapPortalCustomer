@@ -9,26 +9,27 @@ import { Box } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { lineChartData, data2 } from "./constant";
-import {
-  spendChartOptions,
-  dates,
-} from "../../utlils/constants";
+import { spendChartOptions, dates } from "../../utlils/constants";
 import "./spendchart.scss";
 
-const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) => {
-  const [max, setMax] = useState()
+const SpendChart = ({
+  chartData,
+  getDashBoardData,
+  startDate,
+  setStartDate,
+}) => {
+  const [max, setMax] = useState();
   const handleYearChange = (event) => {
-    setStartDate(event)
-    getDashBoardData(event.getFullYear())
+    setStartDate(event);
+    getDashBoardData(event.getFullYear());
   };
   let arr = [];
   useEffect(() => {
     Object.keys(chartData?.salesTotal?.Months).map(function (key, index) {
-      arr.push(chartData?.salesTotal?.Months[key].total)
+      arr.push(chartData?.salesTotal?.Months[key].total);
     });
-    setMax(Math.max(...arr))
-
-  }, [])
+    setMax(Math.max(...arr));
+  }, []);
   const spendChartData = {
     chart: {
       type: "column",
@@ -67,7 +68,7 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
     },
     yAxis: {
       min: 0,
-      max: max ? max :100,
+      max: max ? max : 100,
       title: {
         text: null,
       },
@@ -93,17 +94,15 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
     },
     plotOptions: {
       column: {
-        grouping: false
-        // pointPadding: 0.2,
-        // groupPadding: 0.9,
+        grouping: false,
       },
       series: {
         states: {
           hover: {
-            enabled: false
-          }
-        }
-      }
+            enabled: false,
+          },
+        },
+      },
     },
     legend: {
       symbolRadius: 2,
@@ -112,12 +111,15 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
         color: "#677790",
         fontWeight: 700,
       },
-      enabled: false
+      enabled: false,
     },
     series: [
       {
-        name: 'null',
-        data: max == 0 ? [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100] : [max, max, max, max, max, max, max, max, max, max, max, max],
+        name: "null",
+        data:
+          max == 0
+            ? [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
+            : [max, max, max, max, max, max, max, max, max, max, max, max],
         borderWidth: 0,
         stack: 1,
         borderSkipped: false,
@@ -125,7 +127,11 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
         pointStyle: "rectRounded",
         pointWidth: 15,
         boxWidth: "100%",
-        color: "#F7F7F7"
+        color: "#F7F7F7",
+        visible: true,
+        tooltip: {
+          pointFormat: "",
+        },
       },
       {
         type: "column",
@@ -145,18 +151,12 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
           Number(chartData?.salesTotal?.Months[12].total),
         ],
         color: {
-          linearGradient: {
-            x1: 0,
-            x2: 0,
-            y1: 0,
-            y2: 1
-          },
+          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
-            [0, '#73C6F9'],
-            [1, '#5391F9']
-          ]
+            [0, "#73C6F9"],
+            [1, "#5391F9"],
+          ],
         },
-        // color: "#63acf9",
         borderSkipped: false,
         borderRadius: 6,
         pointStyle: "rectRounded",
@@ -164,7 +164,6 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
         boxWidth: "100%",
       },
     ],
-
   };
 
   const handleDateNext = () => {
@@ -172,7 +171,7 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
       const aYearFromNow = startDate;
       let newDate = aYearFromNow?.setFullYear(aYearFromNow?.getFullYear() + 1);
       setStartDate(new Date(newDate));
-      getDashBoardData(startDate.getFullYear())
+      getDashBoardData(startDate.getFullYear());
     }
   };
   const handlePrevDate = () => {
@@ -180,7 +179,7 @@ const SpendChart = ({ chartData, getDashBoardData, startDate, setStartDate }) =>
       const aYearFromNow = startDate;
       let newDate = aYearFromNow?.setFullYear(aYearFromNow?.getFullYear() - 1);
       setStartDate(new Date(newDate));
-      getDashBoardData(startDate.getFullYear())
+      getDashBoardData(startDate.getFullYear());
     }
   };
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
