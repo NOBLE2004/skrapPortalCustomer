@@ -21,14 +21,6 @@ const HireBreakDown = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      if (!state?.hire_breakdown?.result) {
-        await dispatch(getHireBreakdown());
-      }
-    }
-    fetchData();
-  }, []);
-  useEffect(() => {
-    async function fetchData() {
       //if (!state?.hire_breakdown?.result) {
       await dispatch(getHireBreakdown({ sites }));
       //}

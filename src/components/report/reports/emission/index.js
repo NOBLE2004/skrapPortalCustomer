@@ -54,7 +54,7 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 const EmissionReport = (props) => {
   const state = useSelector(state => state?.reportEmission)
   const stateSiteBreakDown = useSelector(state => state?.reportEmissionSiteBreakDown)
-  const stateEmissionVehicle=useSelector(state=>state?.reportEmissionVehicle)
+  // const stateEmissionVehicle = useSelector(state => state?.reportEmissionVehicle)
   const dispatch = useDispatch()
   const [chartData, setChartData] = useState(chartOptions)
   const [isNewYear, setNewYear] = useState(false);
@@ -84,7 +84,7 @@ const EmissionReport = (props) => {
   useEffect(() => {
     getData()
     dispatch(getReportSiteBreakDownEmissions())
-    dispatch(getReportEmissionVehicles())
+    // dispatch(getReportEmissionVehicles())
   }, [])
   const getMonthData = (month, value) => {
     switch (month) {
@@ -142,7 +142,11 @@ const EmissionReport = (props) => {
       pointStyle: "rectRounded",
       pointWidth: 15,
       boxWidth: "100%",
-      color: "#F7F7F7"
+      color: "#F7F7F7",
+      visible: true,
+      tooltip: {
+        pointFormat: ''
+      }
     },
     {
       type: "column",
@@ -343,8 +347,8 @@ const EmissionReport = (props) => {
                     <BorderLinearProgress2 value={60} variant="determinate" />
                   </Grid>
                   <Grid container justifyContent="space-between">
-                    {state?.data?.year?.map(value =>
-                      <div className="sub-heading progress-label">
+                    {state?.data?.year?.map((value,index) =>
+                      <div className="sub-heading progress-label" key={index}>
                         <p className="text left">
                           Tank-to-well <br />
                           <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>
