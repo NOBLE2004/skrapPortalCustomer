@@ -71,7 +71,7 @@ const EmissionReport = (props) => {
 
   const getData = (year) => {
     if (startDate) {
-      dispatch(getReportEmissions({ year: year }));
+      dispatch(getReportEmissions({ year: year, address_id: sites.toString() }));
     }
   };
 
@@ -83,9 +83,9 @@ const EmissionReport = (props) => {
 
   useEffect(() => {
     getData()
-    dispatch(getReportSiteBreakDownEmissions())
+    dispatch(getReportSiteBreakDownEmissions({address_id: sites.toString()}))
     // dispatch(getReportEmissionVehicles())
-  }, [])
+  }, [sites])
   const getMonthData = (month, value) => {
     switch (month) {
       case 'january':
@@ -191,11 +191,9 @@ const EmissionReport = (props) => {
       <Card className="report-chart-card">
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            {state?.data?.year?.length > 0 &&
               <h1>
-                {state?.data?.year[0]?.Sum_Co2e?.toFixed(2)} <span>kg of CO2e Cumulative Emissions</span>
+                { state?.data?.year?.length > 0 ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2) : `0.00`} <span>kg of CO2e Cumulative Emissions</span>
               </h1>
-            }
             <div className="sub-heading">Monthly breakdown</div>
             {state?.isLoading ?
               <div className="d-flex justify-center align-center">
@@ -216,7 +214,7 @@ const EmissionReport = (props) => {
                     />
                   </div>
                   <div className="total">
-                    Total payment: <span>£0.00</span>
+                    Total payment: <span>£{state?.data?.year?.length > 0 ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2) : `0.00`}</span>
                   </div>
                 </div>
                 {chartData && chartData?.series !== undefined && (<HighchartsReact highcharts={Highcharts} options={chartData} />)}
