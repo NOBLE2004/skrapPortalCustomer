@@ -12,7 +12,7 @@ const Co2breakdownReport = (props) => {
   const state = useSelector((state) => state?.landfillDiversion);
   const { sites } = props;
   const [show, setShow] = useState(false);
-   useEffect(() => {
+  useEffect(() => {
     dispatch(getLandfillDiversion({ sites }));
   }, [sites]);
   return (
@@ -45,7 +45,11 @@ const Co2breakdownReport = (props) => {
                     fontColor={"#0F285"}
                     fontWeight={"700"}
                     secondaryColor={"#F7F7F7"}
-                    percentage={state?.data?.result?.land_fill}
+                    percentage={
+                      state?.data?.result?.land_fill
+                        ? state?.data?.result?.land_fill
+                        : 0
+                    }
                     primaryColor={["#73C6F9", "#5391F9"]}
                   />
                 </div>
@@ -59,12 +63,16 @@ const Co2breakdownReport = (props) => {
                     fontWeight={"700"}
                     secondaryColor={"#fff"}
                     hidePercentageText
-                     percentage={state?.data?.result?.land_fill}
+                    percentage={state?.data?.result?.land_fill}
                     primaryColor={["#50D226", "#000000"]}
                   />
                 </div>
                 <div className="text-in-progressbar">
-                  <span>{state?.data?.result?.title}</span>
+                  <span>
+                    {state?.data?.result?.title
+                      ? state?.data?.result?.title
+                      : "Diverted from landfill"}
+                  </span>
                 </div>
               </div>
               <div className="salesWp-sub">
