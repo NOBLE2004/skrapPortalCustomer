@@ -9,6 +9,7 @@ class ReportsService extends HttpService {
     getEmissions = (data) => this.get("emissions", data)
     getEmissionsSiteBreakDown = (data) => this.get("getEmissions", data)
     getReportEmissionVehicle = (data) => this.get("getVehicle", data)
+    getLandFillDiversion = (data) => this.get("customers/report/landFillDiversion", data)
 
 }
 
