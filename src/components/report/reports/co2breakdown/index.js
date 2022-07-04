@@ -194,14 +194,14 @@ const Co2breakdownReport = (props) => {
                               style={{
                                 width: `${
                                   service.tonnage === 0
-                                    ? 20
+                                    ? 10
                                     : service?.tonnage > 100
                                     ? 100
                                     : service?.tonnage + 20
                                 }px`,
                                 height: `${
                                   service.tonnage === 0
-                                    ? 20
+                                    ? 10
                                     : service?.tonnage > 100
                                     ? 100
                                     : service?.tonnage + 20
