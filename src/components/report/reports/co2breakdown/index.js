@@ -16,10 +16,10 @@ const Co2breakdownReport = (props) => {
   const { sites } = props;
   const [show, setShow] = useState(false);
   useEffect(() => {
-    dispatch(getLandfillDiversion());
-    dispatch(getTonnage());
-    dispatch(getWaste());
-  }, []);
+    dispatch(getLandfillDiversion({ sites }));
+    dispatch(getTonnage({ sites }));
+    dispatch(getWaste({ sites }));
+  }, [sites]);
   return (
     <Card className="report-chart-card">
       <CardContent>
@@ -156,7 +156,9 @@ const Co2breakdownReport = (props) => {
                     container
                     spacing={2}
                     marginTop={1}
-                    alignItems="center"
+                    style={{
+                      height: wasteData?.data?.result?.length > 10 ? "300px" : "unset",
+                    }}
                     className="waste-main"
                   >
                     {wasteData?.data?.result?.map((single, index) => {
