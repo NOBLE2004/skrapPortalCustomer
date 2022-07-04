@@ -20,6 +20,9 @@ import { reportEmission } from "./emissonReducer";
 import { reportEmissionSiteBreakDown } from "./emissionSiteBreakDownReducer";
 import { reportEmissionVehicle } from "./emissionVehicleReducer";
 import { landfillDiversion } from "./landfillDiversionReducer";
+import { portfolio } from "./portfolioReducer";
+import { getTonnageReducer } from "./tonnageReducer";
+import { getWasteReducer } from "./wasteReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -42,5 +45,8 @@ export default combineReducers({
   reportEmission: reportEmission,
   reportEmissionSiteBreakDown: reportEmissionSiteBreakDown,
   reportEmissionVehicle: reportEmissionVehicle,
-  landfillDiversion:landfillDiversion
+  landfillDiversion: landfillDiversion,
+  portfolio: portfolio,
+  tonnage: getTonnageReducer,
+  waste: getWasteReducer,
 });

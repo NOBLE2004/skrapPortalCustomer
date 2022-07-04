@@ -1,8 +1,9 @@
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Grid } from "@mui/material";
 import { CircleProgress } from "react-gradient-progress";
-import { sitesReport, wasteReport } from "../../../utlils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { getLandfillDiversion } from "../../../../store/actions/action.landfillDiversion";
+import { getTonnage } from "../../../../store/actions/action.tonnage";
+import { getWaste } from "../../../../store/actions/action.waste";
 import FadeLoader from "react-spinners/FadeLoader";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
@@ -10,17 +11,28 @@ import "./index.scss";
 const Co2breakdownReport = (props) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state?.landfillDiversion);
+  const tonnageData = useSelector((state) => state?.tonnage);
+  const wasteData = useSelector((state) => state?.waste);
   const { sites } = props;
   const [show, setShow] = useState(false);
   useEffect(() => {
-    dispatch(getLandfillDiversion({ sites }));
-  }, [sites]);
+    dispatch(getLandfillDiversion());
+    dispatch(getTonnage());
+    dispatch(getWaste());
+  }, []);
   return (
     <Card className="report-chart-card">
       <CardContent>
         <div className="salesWp">
           <h1>
-            44.57 <span>Tonnes total weight</span>
+            {tonnageData?.data?.result?.total
+              ? tonnageData?.data?.result?.total
+              : "0.00"}{" "}
+            <span>
+              {tonnageData?.data?.result?.title
+                ? tonnageData?.data?.result?.title
+                : "Tonnes total weight"}
+            </span>
           </h1>
           {state?.isLoading ? (
             <div className="d-flex justify-center align-center">
@@ -129,53 +141,94 @@ const Co2breakdownReport = (props) => {
           {show && (
             <div className="see-more-wrap">
               <div className="border-drop"></div>
-              <div className="more-drop">
-                <div className="sub-heading">Waste breakdown</div>
-                <div className="services wrap row">
-                  {wasteReport.map((waste) => {
-                    return (
-                      <div className="waste-box">
-                        <div className={`waste-detail ${waste.color}`}>
-                          <div className="name">{waste.name}</div>
-                          <div className="percentage">{waste.percentage}%</div>
-                        </div>
-                      </div>
-                    );
-                  })}
+              {tonnageData?.isLoading && wasteData?.isLoading ? (
+                <div className="d-flex justify-center align-center">
+                  <FadeLoader
+                    color={"#518ef8"}
+                    loading={tonnageData?.isLoading && wasteData?.isLoading}
+                    width={4}
+                  />
                 </div>
-                <div className="sub-heading">Site breakdown</div>
-                <div className="services">
-                  {sitesReport.map((service) => {
-                    return (
-                      <div className="service-box">
-                        <div className="circle-wrap">
+              ) : (
+                <div className="more-drop">
+                  <div className="sub-heading">Waste breakdown</div>
+                  <Grid
+                    container
+                    spacing={2}
+                    marginTop={1}
+                    alignItems="center"
+                    className="waste-main"
+                  >
+                    {wasteData?.data?.result?.map((single, index) => {
+                      return (
+                        <Grid
+                          item
+                          md={3}
+                          lg={3}
+                          sm={3}
+                          xs={2}
+                          className="waste-box"
+                        >
                           <div
-                            className="circle"
+                            className="waste-detail "
                             style={{
-                              width: `${
-                                service.percentage > 5
-                                  ? service.percentage * 4
-                                  : service.percentage * 8
-                              }px`,
-                              height: `${
-                                service.percentage > 5
-                                  ? service.percentage * 4
-                                  : service.percentage * 8
-                              }px`,
+                              color: single.waste > 50 ? "#50D226" : "grey",
                             }}
-                          />
-                        </div>
-                        <div className="service-detail start">
-                          <div className="name circle-name">{service.name}</div>
-                          <div className="percentage percentage-circle">
-                            {service.percentage} T
+                          >
+                            <div className="name">{single.name}</div>
+                            <div className="percentage">{single.waste}%</div>
+                          </div>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                  <div className="sub-heading">Site breakdown</div>
+
+                  <div className="main-emission-break-down-2">
+                    {tonnageData?.data?.result?.data?.map((service, index) => {
+                      return (
+                        <div className="inner-break-down" key={index}>
+                          <div className="circle-main">
+                            <div
+                              className="circle"
+                              style={{
+                                width: `${
+                                  service.tonnage === 0
+                                    ? 20
+                                    : service?.tonnage > 100
+                                    ? 100
+                                    : service?.tonnage + 20
+                                }px`,
+                                height: `${
+                                  service.tonnage === 0
+                                    ? 20
+                                    : service?.tonnage > 100
+                                    ? 100
+                                    : service?.tonnage + 20
+                                }px`,
+                                background:
+                                  index % 3 === 0
+                                    ? "#0F2851"
+                                    : index % 3 === 1
+                                    ? "#4981F8"
+                                    : "#60A0F8",
+                                borderRadius: "50%",
+                                margin: "auto",
+                              }}
+                            />
+                          </div>
+                          <div className="site-name">
+                            <div className="site">{service.address}</div>
+                            <div className="percentage">
+                              {service.tonnage} T
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
         </div>
