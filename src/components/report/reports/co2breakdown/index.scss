@@ -63,13 +63,74 @@
       top: 50%;
       text-align: center;
       width: 140px;
-      font-family: 'DM Sans';
+      font-family: "DM Sans";
       font-style: normal;
       font-weight: 700;
       font-size: 14px;
       line-height: 20px;
-      color: #0F2851;
+      color: #0f2851;
     }
   }
+  .waste-main {
+    height: 300px;
+    overflow-y: auto;
+    .waste-detail {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 16px;
+      justify-content: space-between;
+    }
+    .percentage {
+      padding: 0px 5px;
+    }
+  }
+  .main-emission-break-down-2 {
+    display: flex;
+    overflow-x: auto;
+    margin: 20px 0px;
+    width: 100%;
+    .span-for-arrows {
+      display: flex;
+      align-items: center;
+      font-size: 26px;
+      cursor: pointer;
+      color: #a4adbc;
+    }
 
+    .inner-break-down {
+      margin: 10px;
+      max-width: 100%;
+      width: 100%;
+
+      .circle-main {
+        height: 100px;
+        display: flex;
+        align-items: center;
+      }
+
+      .site-name {
+        margin: 40px 0px 20px 0px;
+
+        .site {
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 20px;
+          color: #677790;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+          white-space: pre;
+        }
+
+        .percentage {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 16px;
+          color: #677790;
+        }
+      }
+    }
+  }
 }
