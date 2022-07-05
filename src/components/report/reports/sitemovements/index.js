@@ -39,10 +39,11 @@ const SiteMovementsReport = (props) => {
     <Card className="report-chart-card ">
       <CardContent>
         <div className="salesWp">
-          {state?.data?.result?.total &&
+          {state?.data?.result?.total ?
             <h1>
               {state?.data?.result?.total} <span>Total bookings</span>
             </h1>
+            :<h1>0.00</h1>
           }
           {state?.isLoading ?
             <div className="d-flex justify-center align-center">
