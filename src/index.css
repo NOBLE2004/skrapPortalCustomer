@@ -17,9 +17,7 @@ body {
   src: local("BasierCircleReg"),
     url("./assets/fonts/BasierCircle-Regular.woff") format("woff");
 }
-.makeStyles-content-11{
-  width: 80%;
-}
+
 .rdrDateRangeWrapper {
   border-left: 1px solid gainsboro;
 }

@@ -85,11 +85,13 @@
     }
   }
   .main-emission-break-down-2 {
+    width: 550px;
+    max-width: 100%;
+    min-width: 100%;
     display: flex;
     overflow-x: auto;
     margin: 10px 0px;
-    width: 100%;
-    .span-for-arrows {
+     .span-for-arrows {
       display: flex;
       align-items: center;
       font-size: 26px;

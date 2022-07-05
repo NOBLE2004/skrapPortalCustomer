@@ -165,10 +165,10 @@ const Co2breakdownReport = (props) => {
                       return (
                         <Grid
                           item
-                          md={3}
+                          md={4}
                           lg={3}
-                          sm={3}
-                          xs={2}
+                          sm={4}
+                          xs={4}
                           className="waste-box"
                         >
                           <div
