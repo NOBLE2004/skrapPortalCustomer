@@ -10,7 +10,8 @@ import "./dashboardservices.scss";
 const DashboardServices = ({ servicesData }) => {
   const classes = dashboardServiceStyle();
   const [showValue, setShowValue] = useState(false);
-  const { Cage, Skip, Grab, NumberOfJobs, Aggregate, PortableToilet } = servicesData;
+  const { Cage, Skip, Grab, NumberOfJobs, Aggregate, PortableToilet } =
+    servicesData;
   return (
     <div className="dashboard-services-main">
       <div className="services-main">
@@ -33,8 +34,8 @@ const DashboardServices = ({ servicesData }) => {
       </div>
       <div className="progress-main">
         <div className="progress-sub">
-          <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', bottom: '60px' }}>Skips</p>
+          <div className="circular-progress" style={{ position: "relative" }}>
+            <p style={{ position: "absolute", bottom: "60px" }}>Skips</p>
             <div>
               <CircleProgress
                 width={180}
@@ -45,29 +46,38 @@ const DashboardServices = ({ servicesData }) => {
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
                 hidePercentageText={showValue ? true : false}
-                percentage={Skip ? ((Skip.count / NumberOfJobs) * 100).toFixed(0) : "50"}
+                percentage={
+                  Skip
+                    ? Skip?.count
+                      ? ((Skip.count / NumberOfJobs) * 100).toFixed(0)
+                      : 0
+                    : 0
+                }
                 primaryColor={["#73C6F9", "#5391F9"]}
               />
-              {showValue ? <div className="circle-text" style={{
-
-
-              }}>{"£" + (parseInt(Skip.total).toLocaleString())}</div>
-                : ''}
+              {showValue ? (
+                <div className="circle-text" style={{}}>
+                  {Skip?.total
+                    ? "£" + parseInt(Skip.total).toLocaleString()
+                    : "£" + 0}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="order-percentage">
             <span className="order-title">
               {" "}
-              {Skip ? Skip.count : 0} / {NumberOfJobs}{" "}
+              {Skip?.count ? Skip.count : 0} / {NumberOfJobs}{" "}
             </span>
             <span className="orders">orders</span>
           </div>
-
         </div>
 
         <div className="progress-sub">
-          <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', bottom: '60px' }}>Grab</p>
+          <div className="circular-progress" style={{ position: "relative" }}>
+            <p style={{ position: "absolute", bottom: "60px" }}>Grab</p>
             <div>
               <CircleProgress
                 width={180}
@@ -79,28 +89,37 @@ const DashboardServices = ({ servicesData }) => {
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
                 hidePercentageText={showValue ? true : false}
-                percentage={Grab ? ((Grab.count / NumberOfJobs) * 100).toFixed(0) : "50"}
+                percentage={
+                  Grab
+                    ? Grab?.count
+                      ? ((Grab.count / NumberOfJobs) * 100).toFixed(0)
+                      : 0
+                    : 0
+                }
                 primaryColor={["#73C6F9", "#5391F9"]}
               />
-              {showValue ? <div className="circle-text" style={{
-
-
-              }}>{"£" + (parseInt(Grab.total).toLocaleString())}</div>
-                : ''}
+              {showValue ? (
+                <div className="circle-text" style={{}}>
+                  {Grab?.total
+                    ? "£" + parseInt(Grab.total).toLocaleString()
+                    : "£" + 0}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="order-percentage">
             <span className="order-title">
-              {Grab ? Grab.count : 0} / {NumberOfJobs}
+              {Grab?.count ? Grab.count : 0} / {NumberOfJobs}
             </span>
             <span className="orders">orders</span>
           </div>
-
         </div>
 
         <div className="progress-sub">
-          <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', bottom: '60px' }}>Cage</p>
+          <div className="circular-progress" style={{ position: "relative" }}>
+            <p style={{ position: "absolute", bottom: "60px" }}>Cage</p>
             <div>
               <CircleProgress
                 width={180}
@@ -111,27 +130,37 @@ const DashboardServices = ({ servicesData }) => {
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
                 hidePercentageText={showValue ? true : false}
-                percentage={Cage ? ((Cage.count / NumberOfJobs) * 100).toFixed(0) : "50"}
+                percentage={
+                  Cage
+                    ? Cage?.count
+                      ? ((Cage.count / NumberOfJobs) * 100).toFixed(0)
+                      : 0
+                    : 0
+                }
                 primaryColor={["#73C6F9", "#5391F9"]}
               />
-              {showValue ? <div className="circle-text" style={{
-
-
-              }}>{"£" + (parseInt(Cage.total).toLocaleString())}</div>
-                : ''}
+              {showValue ? (
+                <div className="circle-text" style={{}}>
+                  {Cage?.total
+                    ? "£" + parseInt(Cage.total).toLocaleString()
+                    : "£" + 0}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="order-percentage">
             <span className="order-title">
-              {Cage ? Cage.count : 0} / {NumberOfJobs}
+              {Cage?.count ? Cage.count : 0} / {NumberOfJobs}
             </span>
             <span className="orders">orders</span>
           </div>
         </div>
 
         <div className="progress-sub">
-          <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', bottom: '60px' }}>Aggregate</p>
+          <div className="circular-progress" style={{ position: "relative" }}>
+            <p style={{ position: "absolute", bottom: "60px" }}>Aggregate</p>
             <div>
               <CircleProgress
                 width={180}
@@ -142,27 +171,39 @@ const DashboardServices = ({ servicesData }) => {
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
                 hidePercentageText={showValue ? true : false}
-                percentage={Aggregate ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0) : "50"}
+                percentage={
+                  Aggregate
+                    ? Aggregate?.count
+                      ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0)
+                      : 0
+                    : 0
+                }
                 primaryColor={["#73C6F9", "#5391F9"]}
               />
-              {showValue ? <div className="circle-text" style={{
-
-
-              }}>{"£" + (parseInt(Aggregate.total).toLocaleString())}</div>
-                : ''}
+              {showValue ? (
+                <div className="circle-text" style={{}}>
+                  {Aggregate?.count
+                    ? "£" + parseInt(Aggregate.total).toLocaleString()
+                    : "£" + 0}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="order-percentage">
             <span className="order-title">
-              {Aggregate ? Aggregate.count : 0} / {NumberOfJobs}
+              {Aggregate?.count ? Aggregate.count : 0} / {NumberOfJobs}
             </span>
             <span className="orders">orders</span>
           </div>
         </div>
 
         <div className="progress-sub">
-          <div className="circular-progress" style={{ position: 'relative' }}>
-            <p style={{ position: 'absolute', bottom: '60px' }}>PortableToilet</p>
+          <div className="circular-progress" style={{ position: "relative" }}>
+            <p style={{ position: "absolute", bottom: "60px" }}>
+              PortableToilet
+            </p>
             <div>
               <CircleProgress
                 width={180}
@@ -173,19 +214,30 @@ const DashboardServices = ({ servicesData }) => {
                 fontWeight={"700"}
                 secondaryColor={"#F7F7F7"}
                 hidePercentageText={showValue ? true : false}
-                percentage={PortableToilet ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0) : "50"}
+                percentage={
+                  PortableToilet
+                    ? PortableToilet?.count
+                      ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0)
+                      : 0
+                    : 0
+                }
                 primaryColor={["#73C6F9", "#5391F9"]}
               />
-              {showValue ? <div className="circle-text" style={{
-
-
-              }}>{"£" + (parseInt(PortableToilet.total).toLocaleString())}</div>
-                : ''}
+              {showValue ? (
+                <div className="circle-text" style={{}}>
+                  {PortableToilet?.total
+                    ? "£" + parseInt(PortableToilet.total).toLocaleString()
+                    : "£" + 0}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="order-percentage">
             <span className="order-title">
-            {PortableToilet ? PortableToilet.count : 0} / {NumberOfJobs}
+              {PortableToilet?.count ? PortableToilet.count : 0} /{" "}
+              {NumberOfJobs}
             </span>
             <span className="orders">orders</span>
           </div>

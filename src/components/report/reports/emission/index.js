@@ -52,89 +52,100 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const EmissionReport = (props) => {
-  const state = useSelector(state => state?.reportEmission)
-  const stateSiteBreakDown = useSelector(state => state?.reportEmissionSiteBreakDown)
+  const state = useSelector((state) => state?.reportEmission);
+  const stateSiteBreakDown = useSelector(
+    (state) => state?.reportEmissionSiteBreakDown
+  );
   // const stateEmissionVehicle = useSelector(state => state?.reportEmissionVehicle)
-  const dispatch = useDispatch()
-  const [chartData, setChartData] = useState(chartOptions)
+  const dispatch = useDispatch();
+  const [chartData, setChartData] = useState(chartOptions);
   const [isNewYear, setNewYear] = useState(false);
   //dummy states for secend graph date picker
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(new Date());
   const handleDate = () => {
-    console.log('date')
-  }
+    console.log("date");
+  };
   const { sites, startDate, setStartDate } = props;
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
-  const [max, setMax] = useState(100)
-  const [emission, setEmission] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [max, setMax] = useState(100);
+  const [emission, setEmission] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
 
   const getData = (year) => {
     if (startDate) {
-      dispatch(getReportEmissions({ year: year?year:startDate.getFullYear(), address_id: sites.toString() }));
+      dispatch(
+        getReportEmissions({
+          year: year ? year : startDate.getFullYear(),
+          address_id: sites.toString(),
+        })
+      );
     }
   };
 
   useEffect(() => {
     if (isNewYear) {
-      getData()
+      getData();
     }
-  }, [startDate, isNewYear])
+  }, [startDate, isNewYear]);
 
   useEffect(() => {
-    getData()
-    dispatch(getReportSiteBreakDownEmissions({address_id: sites.toString()}))
-      dispatch(getReportEmissionVehicles())
-  }, [sites])
+    getData();
+    dispatch(getReportSiteBreakDownEmissions({ address_id: sites.toString() }));
+    dispatch(getReportEmissionVehicles());
+  }, [sites]);
   const getMonthData = (month, value) => {
     switch (month) {
-      case 'january':
+      case "january":
         emission[0] = value;
         break;
-      case 'february':
+      case "february":
         emission[1] = value;
         break;
-      case 'march':
+      case "march":
         emission[2] = value;
         break;
-      case 'april':
+      case "april":
         emission[3] = value;
         break;
-      case 'May':
+      case "May":
         emission[4] = value;
         break;
-      case 'June':
+      case "June":
         emission[5] = value;
         break;
-      case 'july':
+      case "july":
         emission[6] = value;
         break;
-      case 'august':
+      case "august":
         emission[7] = value;
         break;
-      case 'september':
+      case "september":
         emission[8] = value;
         break;
-      case 'october':
+      case "october":
         emission[9] = value;
         break;
-      case 'november':
+      case "november":
         emission[10] = value;
         break;
-      case 'december':
+      case "december":
         emission[11] = value;
         break;
       default:
-        return emission
+        return emission;
     }
     setEmission(emission);
-    return emission
-  }
+    return emission;
+  };
 
   let value = [
     {
-      name: 'null',
-      data: max ? [max, max, max, max, max, max, max, max, max, max, max, max] : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+      name: "null",
+      data: max
+        ? [max, max, max, max, max, max, max, max, max, max, max, max]
+        : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
       borderWidth: 0,
       stack: 1,
       borderSkipped: false,
@@ -145,45 +156,53 @@ const EmissionReport = (props) => {
       color: "#F7F7F7",
       visible: true,
       tooltip: {
-        pointFormat: ''
-      }
+        pointFormat: "",
+      },
     },
     {
       type: "column",
       name: "Emissions produced",
       data: emission,
-      color: { linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 }, stops: [[0, '#73C6F9'], [1, '#5391F9']] },
+      color: {
+        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+        stops: [
+          [0, "#73C6F9"],
+          [1, "#5391F9"],
+        ],
+      },
       borderSkipped: false,
       borderRadius: 6,
       pointStyle: "rectRounded",
       pointWidth: 15,
       boxWidth: "100%",
     },
-  ]
+  ];
 
   const filterSeries = () => {
-    state?.data?.data?.map(single => {
-      getMonthData(single.month, parseFloat(single.Sum_Co2e.toFixed(2)));
-    })
-  }
+    state?.data?.data?.map((single) => {
+      getMonthData(
+        single.month?.toLowerCase(),
+        parseFloat(single.Sum_Co2e.toFixed(2))
+      );
+    });
+  };
 
   useEffect(() => {
-    setChartData(st => ({
+    setChartData((st) => ({
       ...st,
-      series: value
-    }))
-  }, [emission, state?.data?.data, startDate, max])
+      series: value,
+    }));
+  }, [emission, state?.data?.data, startDate, max]);
 
   useEffect(() => {
     if (state?.data?.data?.length > 0) {
       filterSeries();
-      setMax(Math?.max(...emission))
+      setMax(Math?.max(...emission));
+    } else {
+      setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      setMax(0);
     }
-    else {
-      setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-      setMax(0)
-    }
-  }, [state?.data?.data, startDate])
+  }, [state?.data?.data, startDate]);
 
   return (
     <>
@@ -191,11 +210,14 @@ const EmissionReport = (props) => {
       <Card className="report-chart-card">
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-              <h1>
-                { state?.data?.year?.length > 0 ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2) : `0.00`} <span>kg of CO2e Cumulative Emissions</span>
-              </h1>
+            <h1>
+              {state?.data?.year?.length > 0
+                ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
+                : `0.00`}{" "}
+              <span>kg of CO2e Cumulative Emissions</span>
+            </h1>
             <div className="sub-heading">Monthly breakdown</div>
-            {state?.isLoading ?
+            {state?.isLoading ? (
               <div className="d-flex justify-center align-center">
                 <FadeLoader
                   color={"#518ef8"}
@@ -203,7 +225,7 @@ const EmissionReport = (props) => {
                   width={4}
                 />
               </div>
-              :
+            ) : (
               <>
                 <div className="filters">
                   <div className="year ">
@@ -214,12 +236,23 @@ const EmissionReport = (props) => {
                     />
                   </div>
                   <div className="total">
-                    Total payment: <span>£{state?.data?.year?.length > 0 ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2) : `0.00`}</span>
+                    Total payment:{" "}
+                    <span>
+                      £
+                      {state?.data?.year?.length > 0
+                        ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
+                        : `0.00`}
+                    </span>
                   </div>
                 </div>
-                {chartData && chartData?.series !== undefined && (<HighchartsReact highcharts={Highcharts} options={chartData} />)}
+                {chartData && chartData?.series !== undefined && (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={chartData}
+                  />
+                )}
               </>
-            }
+            )}
           </div>
         </CardContent>
         <CardContent>
@@ -246,9 +279,11 @@ const EmissionReport = (props) => {
             <HighchartsReact highcharts={Highcharts} options={data2} />
             <div className="w-100 button-with-icon-bar-chart">
               <div className="w-100">
-                <button onClick={() => {
-                  setShowModal(true)
-                }}>
+                <button
+                  onClick={() => {
+                    setShowModal(true);
+                  }}
+                >
                   <img src={Vector} alt="" />
                   <span>Pay CO2e offset</span>
                 </button>
@@ -269,14 +304,17 @@ const EmissionReport = (props) => {
                   <div className="sub-heading">Site breakdown</div>
                   <div className="head-text">
                     <p>
-                      <span>{stateSiteBreakDown?.data?.graph_data?.length}</span> site journeys
+                      <span>
+                        {stateSiteBreakDown?.data?.graph_data?.length}
+                      </span>{" "}
+                      site journeys
                     </p>
                     <p>
                       <span>525.5 miles</span> equivalent to driving from{" "}
                       <b>London</b> to <b>Berlin</b>
                     </p>
                   </div>
-                  {stateSiteBreakDown?.isLoading ?
+                  {stateSiteBreakDown?.isLoading ? (
                     <div className="d-flex justify-center align-center">
                       <FadeLoader
                         color={"#518ef8"}
@@ -284,36 +322,48 @@ const EmissionReport = (props) => {
                         width={4}
                       />
                     </div>
-                    :
-                    <div className="main-emission-break-down"
-                    >
-                      {stateSiteBreakDown?.data?.graph_data?.map((service, index) => {
-                        return (
-                          <div className="inner-break-down" key={index}  >
-                            <div className="circle-main">
-                              <div
-                                className="circle"
-                                style={{
-                                  width: `${service.Sum_Co2e.toFixed(1) > 100 ? 100 : service.Sum_Co2e.toFixed(1)
+                  ) : (
+                    <div className="main-emission-break-down">
+                      {stateSiteBreakDown?.data?.graph_data?.map(
+                        (service, index) => {
+                          return (
+                            <div className="inner-break-down" key={index}>
+                              <div className="circle-main">
+                                <div
+                                  className="circle"
+                                  style={{
+                                    width: `${
+                                      service.Sum_Co2e.toFixed(1) > 100
+                                        ? 100
+                                        : service.Sum_Co2e.toFixed(1)
                                     }px`,
-                                  height: `${service.Sum_Co2e.toFixed(1) > 100 ? 100 : service.Sum_Co2e.toFixed(1)
+                                    height: `${
+                                      service.Sum_Co2e.toFixed(1) > 100
+                                        ? 100
+                                        : service.Sum_Co2e.toFixed(1)
                                     }px`,
-                                  background: index % 3 === 0 ? "#0F2851" : index % 3 === 1 ? '#4981F8' : '#60A0F8',
-                                  borderRadius: '50%',
-                                }}
-                              />
-                            </div>
-                            <div className="site-name">
-                              <div className="site">{service.SiteName}</div>
-                              <div className="percentage">
-                                {service.Sum_Co2e.toFixed(1)} CO2e
+                                    background:
+                                      index % 3 === 0
+                                        ? "#0F2851"
+                                        : index % 3 === 1
+                                        ? "#4981F8"
+                                        : "#60A0F8",
+                                    borderRadius: "50%",
+                                  }}
+                                />
+                              </div>
+                              <div className="site-name">
+                                <div className="site">{service.SiteName}</div>
+                                <div className="percentage">
+                                  {service.Sum_Co2e.toFixed(1)} CO2e
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        }
+                      )}
                     </div>
-                  }
+                  )}
                   <div className="sub-heading">CO2e breakdown</div>
                   <div className="sub-heading progress-label">
                     <p>Van</p>
@@ -323,7 +373,10 @@ const EmissionReport = (props) => {
                     <div className="progress-div">
                       <div className="progress-bar" style={{ width: "40%" }}>
                         <label>25%</label>
-                        <BorderLinearProgress value={100} variant="determinate" />
+                        <BorderLinearProgress
+                          value={100}
+                          variant="determinate"
+                        />
                       </div>
                       <div
                         className="progress-bar"
@@ -345,7 +398,7 @@ const EmissionReport = (props) => {
                     <BorderLinearProgress2 value={60} variant="determinate" />
                   </Grid>
                   <Grid container justifyContent="space-between">
-                    {state?.data?.year?.map((value,index) =>
+                    {state?.data?.year?.map((value, index) => (
                       <div className="sub-heading progress-label" key={index}>
                         <p className="text left">
                           Tank-to-well <br />
@@ -356,7 +409,7 @@ const EmissionReport = (props) => {
                           <span> {value?.WTTCo2e.toFixed(2)} Co2e</span>
                         </p>
                       </div>
-                    )}
+                    ))}
                   </Grid>
                 </div>
               </div>
