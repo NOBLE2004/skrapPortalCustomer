@@ -23,6 +23,7 @@ const Co2breakdownReport = (props) => {
     dispatch(getWaste({ sites }));
     dispatch(getWasteOfEnergy({ sites }));
   }, [sites]);
+
   return (
     <Card className="report-chart-card">
       <CardContent>
@@ -31,6 +32,7 @@ const Co2breakdownReport = (props) => {
             {tonnageData?.data?.result?.total
               ? tonnageData?.data?.result?.total
               : "0.00"}
+            &nbsp;
             <span>
               {tonnageData?.data?.result?.title
                 ? tonnageData?.data?.result?.title
@@ -127,7 +129,14 @@ const Co2breakdownReport = (props) => {
                         ? wasteOfEnergyData?.data?.result?.title
                         : "Waste of energy"}
                     </h1>
-                    <p>34.7 KWhr of energy</p>
+                    <p>
+                      {wasteOfEnergyData?.data?.result?.kwh
+                        ? wasteOfEnergyData?.data?.result?.kwh
+                        : 0}{" "}
+                      {wasteOfEnergyData?.data?.result?.kwh_title
+                        ? wasteOfEnergyData?.data?.result?.kwh_title
+                        : "KWhr of energy"}
+                    </p>
                     <label>
                       Equivalent to 5000 <br />
                       smartphone charges
