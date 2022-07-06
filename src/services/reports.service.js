@@ -15,6 +15,7 @@ class ReportsService extends HttpService {
     this.get("customers/report/landFillDiversion", data);
   getTonnage = (data) => this.get("customers/report/tonnage", data);
   getWaste = (data) => this.get("customers/report/wastes", data);
+  getWasteOfEnergy = (data) => this.get("customers/report/wasteOfEnergy", data);
   getPortfolio = (data) => this.get("portfolios", data);
 }
 

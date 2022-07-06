@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLandfillDiversion } from "../../../../store/actions/action.landfillDiversion";
 import { getTonnage } from "../../../../store/actions/action.tonnage";
 import { getWaste } from "../../../../store/actions/action.waste";
+import { getWasteOfEnergy } from "../../../../store/actions/action.wasteOfEnergy";
 import FadeLoader from "react-spinners/FadeLoader";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
@@ -13,12 +14,14 @@ const Co2breakdownReport = (props) => {
   const state = useSelector((state) => state?.landfillDiversion);
   const tonnageData = useSelector((state) => state?.tonnage);
   const wasteData = useSelector((state) => state?.waste);
+  const wasteOfEnergyData = useSelector((state) => state?.energy);
   const { sites } = props;
   const [show, setShow] = useState(false);
   useEffect(() => {
     dispatch(getLandfillDiversion({ sites }));
     dispatch(getTonnage({ sites }));
     dispatch(getWaste({ sites }));
+    dispatch(getWasteOfEnergy({ sites }));
   }, [sites]);
   return (
     <Card className="report-chart-card">
@@ -27,14 +30,14 @@ const Co2breakdownReport = (props) => {
           <h1>
             {tonnageData?.data?.result?.total
               ? tonnageData?.data?.result?.total
-              : "0.00"}{" "}
+              : "0.00"}
             <span>
               {tonnageData?.data?.result?.title
                 ? tonnageData?.data?.result?.title
                 : "Tonnes total weight"}
             </span>
           </h1>
-          {state?.isLoading ? (
+          {state?.isLoading || wasteOfEnergyData?.isLoading ? (
             <div className="d-flex justify-center align-center">
               <FadeLoader
                 color={"#518ef8"}
@@ -115,11 +118,15 @@ const Co2breakdownReport = (props) => {
                     fontColor={"#0F285"}
                     fontWeight={700}
                     secondaryColor={"#F7F7F7"}
-                    percentage={36}
+                    percentage={wasteOfEnergyData?.data?.result?.land_fill}
                     primaryColor={["#0F2851", "#0F2851"]}
                   />
                   <div className="text">
-                    <h1>Waste of energy</h1>
+                    <h1>
+                      {wasteOfEnergyData?.data?.result?.title
+                        ? wasteOfEnergyData?.data?.result?.title
+                        : "Waste of energy"}
+                    </h1>
                     <p>34.7 KWhr of energy</p>
                     <label>
                       Equivalent to 5000 <br />
@@ -157,7 +164,10 @@ const Co2breakdownReport = (props) => {
                     spacing={2}
                     marginTop={1}
                     style={{
-                      height: wasteData?.data?.result?.length > 10 ? "300px" : "unset",
+                      height:
+                        wasteData?.data?.result?.length > 10
+                          ? "300px"
+                          : "unset",
                     }}
                     className="waste-main"
                   >
@@ -170,6 +180,7 @@ const Co2breakdownReport = (props) => {
                           sm={4}
                           xs={4}
                           className="waste-box"
+                          key={index}
                         >
                           <div
                             className="waste-detail "
