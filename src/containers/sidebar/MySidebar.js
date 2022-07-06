@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { sidebarTabsList } from "../../environment";
+import { sidebarTabsList, ENV } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
 import { appIcon, personImage } from "../../assets/images";
@@ -65,7 +65,7 @@ const MySidebar = (props) => {
       setActiveTab("jobs");
     } else if (param === "site-") {
       setActiveTab("site-managers");
-    }else if (param === "new-report") {
+    } else if (param === "new-report") {
       setActiveTab("new-report");
     } else {
       setActiveTab(activeTab);
@@ -95,8 +95,8 @@ const MySidebar = (props) => {
         props.history.push({ pathname: `/${tabKey}` });
       }
       setActiveTab(tabKey);
-    }else{
-      props.history.push({pathname : `/${tabKey}`})
+    } else {
+      props.history.push({ pathname: `/${tabKey}` });
     }
   };
   const onTabHandlerSub = (e, tab) => {
@@ -166,6 +166,11 @@ const MySidebar = (props) => {
         {sidebarTabsList.map((obj, index) => {
           if ((userData.role_id === 12) | (userData.role_id === 13)) {
             if (index === 3) {
+              return null;
+            }
+          }
+          if (userData?.user_id !== 1170 && ENV !== "dev") {
+            if (index === 5) {
               return null;
             }
           }
@@ -243,12 +248,10 @@ const MySidebar = (props) => {
           />
           <br />
           <ListItemText
-              primary={
-                      (userData.hasOwnProperty("company") &&
-                          userData?.company) ||
-                  ""
-              }
-              className="current-user"
+            primary={
+              (userData.hasOwnProperty("company") && userData?.company) || ""
+            }
+            className="current-user"
           />
         </ListItem>
         <button className="sidebar-signout-btn" onClick={handleLogout}>
