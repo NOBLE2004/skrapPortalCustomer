@@ -92,7 +92,7 @@ function PayEmissionModal(props) {
         <form noValidate>
           <Grid container justifyContent="center">
             {portfolio?.data?.data?.map((single) => (
-              <Grid item md={8} xs={12}>
+              <Grid item md={8} xs={12} key={single?.id}>
                 <div className="main-modal-content-emision" key={single.id}>
                   <div>
                     <p>
