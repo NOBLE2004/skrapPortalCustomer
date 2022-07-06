@@ -109,10 +109,10 @@ const EmissionReport = (props) => {
       case "april":
         emission[3] = value;
         break;
-      case "May":
+      case "may":
         emission[4] = value;
         break;
-      case "June":
+      case "june":
         emission[5] = value;
         break;
       case "july":
