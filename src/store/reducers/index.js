@@ -19,6 +19,11 @@ import { siteMovementDetail } from "./siteMovementDetailReducer";
 import { reportEmission } from "./emissonReducer";
 import { reportEmissionSiteBreakDown } from "./emissionSiteBreakDownReducer";
 import { reportEmissionVehicle } from "./emissionVehicleReducer";
+import { landfillDiversion } from "./landfillDiversionReducer";
+import { portfolio } from "./portfolioReducer";
+import { getTonnageReducer } from "./tonnageReducer";
+import { getWasteReducer } from "./wasteReducer";
+import { getWasteOfEnergyReducer } from "./wasteOfEnergyReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -40,5 +45,10 @@ export default combineReducers({
   siteMovementDetail: siteMovementDetail,
   reportEmission: reportEmission,
   reportEmissionSiteBreakDown: reportEmissionSiteBreakDown,
-  reportEmissionVehicle: reportEmissionVehicle
+  reportEmissionVehicle: reportEmissionVehicle,
+  landfillDiversion: landfillDiversion,
+  portfolio: portfolio,
+  tonnage: getTonnageReducer,
+  waste: getWasteReducer,
+  energy:getWasteOfEnergyReducer
 });
