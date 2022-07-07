@@ -5,6 +5,7 @@ import { getLandfillDiversion } from "../../../../store/actions/action.landfillD
 import { getTonnage } from "../../../../store/actions/action.tonnage";
 import { getWaste } from "../../../../store/actions/action.waste";
 import { getWasteOfEnergy } from "../../../../store/actions/action.wasteOfEnergy";
+import { getRecycled } from "../../../../store/actions/action.recycled";
 import FadeLoader from "react-spinners/FadeLoader";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
@@ -15,6 +16,7 @@ const Co2breakdownReport = (props) => {
   const tonnageData = useSelector((state) => state?.tonnage);
   const wasteData = useSelector((state) => state?.waste);
   const wasteOfEnergyData = useSelector((state) => state?.energy);
+  const recycledData = useSelector((state) => state?.recycled);
   const { sites } = props;
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -22,6 +24,7 @@ const Co2breakdownReport = (props) => {
     dispatch(getTonnage({ sites }));
     dispatch(getWaste({ sites }));
     dispatch(getWasteOfEnergy({ sites }));
+    dispatch(getRecycled({ sites }));
   }, [sites]);
 
   return (
@@ -39,7 +42,7 @@ const Co2breakdownReport = (props) => {
                 : "Tonnes total weight"}
             </span>
           </h1>
-          {state?.isLoading || wasteOfEnergyData?.isLoading ? (
+          {state?.isLoading || wasteOfEnergyData?.isLoading || recycledData?.isLoading ? (
             <div className="d-flex justify-center align-center">
               <FadeLoader
                 color={"#518ef8"}
@@ -102,12 +105,27 @@ const Co2breakdownReport = (props) => {
                     fontColor={"#0F285"}
                     fontWeight={700}
                     secondaryColor={"#F7F7F7"}
-                    percentage={54}
+                    percentage={
+                      recycledData?.data?.result?.land_fill
+                        ? recycledData?.data?.result?.land_fill
+                        : 0
+                    }
                     primaryColor={["#50D226", "#50D226"]}
                   />
                   <div className="text">
-                    <h1>Recycled</h1>
-                    <p>48.7 tonns CO2</p>
+                    <h1>
+                      {recycledData?.data?.result?.title
+                        ? recycledData?.data?.result?.title
+                        : "Recycled"}
+                    </h1>
+                    <p>
+                      {recycledData?.data?.result?.emco2
+                        ? recycledData?.data?.result?.emco2
+                        : 0}{" "}
+                      {recycledData?.data?.result?.emco2_title
+                        ? recycledData?.data?.result?.emco2_title
+                        : "tonns CO2"}
+                    </p>
                     <label>Equivalent to 200 trees</label>
                   </div>
                 </div>
@@ -198,7 +216,9 @@ const Co2breakdownReport = (props) => {
                             }}
                           >
                             <div className="name">{single.name}</div>
-                            <div className="percentage">{single.waste}%</div>
+                            <div className="percentage">
+                              {single.waste === null ? 0 : single.waste}%
+                            </div>
                           </div>
                         </Grid>
                       );
