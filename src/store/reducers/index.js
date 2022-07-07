@@ -24,6 +24,7 @@ import { portfolio } from "./portfolioReducer";
 import { getTonnageReducer } from "./tonnageReducer";
 import { getWasteReducer } from "./wasteReducer";
 import { getWasteOfEnergyReducer } from "./wasteOfEnergyReducer";
+import { getRecycledReducer } from "./recycledReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -50,5 +51,6 @@ export default combineReducers({
   portfolio: portfolio,
   tonnage: getTonnageReducer,
   waste: getWasteReducer,
-  energy:getWasteOfEnergyReducer
+  energy: getWasteOfEnergyReducer,
+  recycled: getRecycledReducer,
 });
