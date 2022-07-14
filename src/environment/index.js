@@ -11,10 +11,11 @@ import {
   tipingBlack,
   statementBlack,
 } from "../assets/images/index";
-export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
-// export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
+//export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
+export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
 export const API_URL = `${APP_URL}`;
-export const ENV = `dev`;
+export const ENV = `prod`;
+export const USER = 236;
 export const FILE_DIR = "/storage";
 export const LABELS = {
   GO_BACK: "← Back",

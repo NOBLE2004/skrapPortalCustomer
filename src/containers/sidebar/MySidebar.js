@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { sidebarTabsList, ENV } from "../../environment";
+import { sidebarTabsList, ENV, USER } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
 import { appIcon, personImage } from "../../assets/images";
@@ -169,7 +169,7 @@ const MySidebar = (props) => {
               return null;
             }
           }
-          if (userData?.user_id !== 1170 && ENV !== "dev") {
+          if (userData?.user_id !== USER && ENV !== "dev") {
             if (index === 5) {
               return null;
             }
