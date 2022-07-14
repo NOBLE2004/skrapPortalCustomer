@@ -249,6 +249,7 @@ const EmissionReport = (props) => {
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={chartData}
+                    ref={props.ref2}
                   />
                 )}
               </>
