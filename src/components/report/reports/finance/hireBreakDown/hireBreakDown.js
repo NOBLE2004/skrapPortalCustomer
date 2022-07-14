@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid } from "@mui/material";
-import { getHireBreakdown } from "../../../../../store/actions/action.hireBd";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import FadeLoader from "react-spinners/FadeLoader";
 import "../style.scss";
-import Carousel, { consts } from 'react-elastic-carousel'
+import Carousel, { consts } from "react-elastic-carousel";
 
 const breakPoints = [
   { width: 1, itemsToShow: 3, pagination: false },
@@ -13,29 +12,17 @@ const breakPoints = [
   { width: 1150, itemsToShow: 4, itemsToScroll: 2, pagination: false },
   { width: 1450, itemsToShow: 4, pagination: false },
   { width: 1750, itemsToShow: 4, pagination: false },
-]
-const HireBreakDown = (props) => {
-  const { sites } = props;
+];
+const HireBreakDown = () => {
   const state = useSelector((state) => state?.hireBreakdown);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function fetchData() {
-      //if (!state?.hire_breakdown?.result) {
-      await dispatch(getHireBreakdown({ sites }));
-      //}
-    }
-    fetchData();
-  }, [sites]);
-
   const myArrow = ({ type, onClick, isEdge }) => {
-    const pointer = type === consts.PREV ? '<' : '>'
+    const pointer = type === consts.PREV ? "<" : ">";
     return (
       <span className="span-for-arrows" onClick={onClick} disabled={isEdge}>
         {pointer}
       </span>
-    )
-  }
+    );
+  };
   return (
     <>
       {state?.isLoading ? (
@@ -46,10 +33,17 @@ const HireBreakDown = (props) => {
         <>
           {state?.hire_breakdown?.result?.length > 0 ? (
             <Grid container spacing={1} marginTop={1} alignItems="center">
-              <Grid item lg={12} md={12} sm={12} xs={12} className="main-for-carusal">
+              <Grid
+                item
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+                className="main-for-carusal"
+              >
                 <Carousel
                   itemsToShow={4}
-                   renderArrow={myArrow}
+                  renderArrow={myArrow}
                   breakPoints={breakPoints}
                 >
                   {state?.hire_breakdown?.result?.map((service, index) => {
@@ -74,8 +68,7 @@ const HireBreakDown = (props) => {
             ""
           )}
         </>
-      )
-      }
+      )}
     </>
   );
 };

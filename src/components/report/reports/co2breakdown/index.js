@@ -33,7 +33,7 @@ const Co2breakdownReport = (props) => {
         <div className="salesWp">
           <h1>
             {tonnageData?.data?.result?.total
-              ? tonnageData?.data?.result?.total
+              ? tonnageData?.data?.result?.total?.toFixed(2)
               : "0.00"}
             &nbsp;
             <span>
@@ -46,7 +46,7 @@ const Co2breakdownReport = (props) => {
             <div className="d-flex justify-center align-center">
               <FadeLoader
                 color={"#518ef8"}
-                loading={state?.isLoading}
+                loading={true}
                 width={4}
               />
             </div>

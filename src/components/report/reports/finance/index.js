@@ -2,6 +2,7 @@ import { Card, CardContent } from "@mui/material";
 import "./style.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { getSiteBreakdown } from "../../../../store/actions/action.siteBd";
+import { getHireBreakdown } from "../../../../store/actions/action.hireBd";
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -64,21 +65,17 @@ const FinanceReport = (props) => {
           data: stateSites?.site_breakdown?.result?.data,
         },
       ],
+      exporting: {
+        filename: `chart-${new Date()?.toLocaleDateString()}`,
+      },
     });
   }, [stateSites?.site_breakdown]);
-  useEffect(() => {
-    async function fetchData() {
-      if (!stateSites?.site_breakdown?.result?.data) {
-        await dispatch(getSiteBreakdown());
-      }
-    }
-    fetchData();
-  }, []);
 
   useEffect(() => {
     async function fetchData() {
       //if (!stateSites?.site_breakdown?.result?.data) {
       await dispatch(getSiteBreakdown({ sites: sites }));
+      await dispatch(getHireBreakdown({ sites }));
       //}
     }
     fetchData();
@@ -94,6 +91,7 @@ const FinanceReport = (props) => {
               <span> Total spend</span>
             </h1>
           )}
+
           <div className="sub-heading">Site breakdown</div>
 
           {/*<Grid container className="small-chart-large" paddingBottom={2}>*/}
@@ -118,6 +116,7 @@ const FinanceReport = (props) => {
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={chartData}
+                    ref={props.refFinance}
                   />
                 )}
             </div>
