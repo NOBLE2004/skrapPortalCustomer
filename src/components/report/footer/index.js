@@ -10,6 +10,7 @@ const ReportFooter = (props) => {
     { label: "Name", key: "name" },
     { label: "percent", key: "y" },
     { label: "Values", key: "value" },
+    { label: "image", key: "image" },
   ];
   return (
     <div className="report-footer">

@@ -10,6 +10,9 @@ import Co2breakdownReport from "../../components/report/reports/co2breakdown";
 import SiteMovementsReport from "../../components/report/reports/sitemovements";
 import ReportFilters from "../../components/report/filters";
 import { useSelector } from "react-redux";
+import * as htmlToImage from "html-to-image";
+import * as Excel from "exceljs";
+import { saveAs } from "file-saver";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -31,7 +34,7 @@ const NewReports = () => {
     const { name, value } = event.target;
     setSelected(value);
   };
-  const handleChangeReportType = (event) => {
+  const handleChangeReportType = async (event) => {
     const { name, value } = event.target;
     switch (name) {
       case "finance":
@@ -57,6 +60,35 @@ const NewReports = () => {
             dataOne: arr,
           }));
         });
+        var node = document.getElementById("my-node");
+        await htmlToImage
+          .toPng(node)
+          .then(function (dataUrl) {
+            var img = new Image();
+            img.src = dataUrl;
+            document.body.appendChild(img);
+            const blob = new Blob([img], {
+              type: "application/vnd.ms-excel;charset=utf-8",
+            });
+            setCsvData((st) => ({
+              ...st,
+              dataThree: [
+                {
+                  name: "abc",
+                  image: {
+                    id: "company_logo",
+                    base64: img.src,
+                    extension: "png",
+                    fitCell: true,
+                  },
+                },
+              ],
+            }));
+          })
+          .catch(function (error) {
+            console.error("oops, something went wrong!", error);
+          });
+
         setCsvData((st) => ({
           ...st,
           data: [
@@ -65,6 +97,8 @@ const NewReports = () => {
             {},
             { name: "Hire Breakdown", y: "Report" },
             ...st.dataOne,
+            { name: "aaa", y: "Report" },
+            ...st.dataThree,
           ],
         }));
         break;
@@ -185,6 +219,43 @@ const NewReports = () => {
     }
   };
 
+  async function exTest() {
+    var workbook = new Excel.Workbook();
+    var worksheet = workbook.addWorksheet("Main sheet");
+    var logo = "";
+    var node = document.getElementById("my-node");
+    await htmlToImage
+      .toPng(node)
+      .then(function (dataUrl) {
+        var img = new Image();
+        img.src = dataUrl;
+        document.body.appendChild(img);
+        const blob = new Blob([img], {
+          type: "application/vnd.ms-excel;charset=utf-8",
+        });
+        logo = workbook.addImage({
+          base64: img.src,
+          extension: "png",
+        });
+      })
+      .catch(function (error) {
+        console.error("oops, something went wrong!", error);
+      });
+    worksheet.columns = [
+      { header: "Id", key: "id", width: 10 },
+      { header: "Name", key: "name", width: 32 },
+      { header: "D.O.B.", key: "DOB", width: 10, outlineLevel: 1 },
+    ];
+    worksheet.addRow({ id: 1, name: "John Doe", dob: new Date(1970, 1, 1) });
+    worksheet.addRow({ id: 2, name: "Jane Doe", dob: new Date(1965, 1, 7) });
+    worksheet.addImage(logo, "B6:K25");
+    workbook.xlsx.writeBuffer().then(function (buffer) {
+      saveAs(
+        new Blob([buffer], { type: "application/octet-stream" }),
+        "DataGrid.xlsx"
+      );
+    });
+  }
   return (
     <>
       <div className="main-report">

@@ -16,10 +16,10 @@ import { smallPieData, siteMovementData } from "./constant";
 import "./index.scss";
 
 const SiteMovementsReport = (props) => {
-  const { sites } = props
+  const { sites } = props;
   const [show, setShow] = useState(false);
-  const state = useSelector(state => state?.siteMovements)
-  const siteDetail = useSelector(state => state?.siteMovementDetail)
+  const state = useSelector((state) => state?.siteMovements);
+  const siteDetail = useSelector((state) => state?.siteMovementDetail);
   const dispatch = useDispatch();
   useEffect(() => {
     async function fetchData() {
@@ -31,21 +31,21 @@ const SiteMovementsReport = (props) => {
   }, [sites]);
 
   useEffect(() => {
-    dispatch(getSiteMovementDetails({ sites: sites }))
-  }, [sites])
-
+    dispatch(getSiteMovementDetails({ sites: sites }));
+  }, [sites]);
 
   return (
     <Card className="report-chart-card ">
       <CardContent>
         <div className="salesWp">
-          {state?.data?.result?.total ?
+          {state?.data?.result?.total ? (
             <h1>
               {state?.data?.result?.total} <span>Total bookings</span>
             </h1>
-            :<h1>0.00</h1>
-          }
-          {state?.isLoading ?
+          ) : (
+            <h1>0.00</h1>
+          )}
+          {state?.isLoading || siteDetail?.isLoading  ? (
             <div className="d-flex justify-center align-center">
               <FadeLoader
                 color={"#518ef8"}
@@ -53,15 +53,23 @@ const SiteMovementsReport = (props) => {
                 width={4}
               />
             </div>
-            :
+          ) : (
             <Grid container className="small-chart-large">
               <Grid container className="d-flex align-center">
                 <div className="flex-3 high-chart-site-movement">
-                  <HighchartsReact highcharts={Highcharts} options={siteMovementData(state?.data?.result?.data, state?.data?.result?.full_total_percentage)} />
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={siteMovementData(
+                      state?.data?.result?.data,
+                      siteDetail?.data?.result.reduce((accumulator, object) => {
+                        return accumulator + object.percentage;
+                      }, 0)
+                    )}
+                  />
                 </div>
               </Grid>
             </Grid>
-          }
+          )}
           <div
             className="see-more"
             onClick={() => {
@@ -73,18 +81,17 @@ const SiteMovementsReport = (props) => {
           {show && (
             <div className="see-more-wrap">
               <div className="border-drop"></div>
-              {siteDetail?.isLoading ?
+              {siteDetail?.isLoading ? (
                 <div className="d-flex justify-center align-center">
-
                   <FadeLoader
                     color={"#518ef8"}
                     loading={state?.isLoading}
                     width={4}
                   />
                 </div>
-                :
+              ) : (
                 <Timeline className="more-drop">
-                  {siteDetail?.data?.result?.map((single, index) =>
+                  {siteDetail?.data?.result?.map((single, index) => (
                     <TimelineItem
                       key={index}
                       sx={{
@@ -131,9 +138,9 @@ const SiteMovementsReport = (props) => {
                         </Grid>
                       </TimelineContent>
                     </TimelineItem>
-                  )}
+                  ))}
                 </Timeline>
-              }
+              )}
             </div>
           )}
         </div>
