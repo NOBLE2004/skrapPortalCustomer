@@ -18,17 +18,12 @@ const NewReports = () => {
   const state = useSelector((state) => state);
   const [selected, setSelected] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
-  const [csvData, setCsvData] = useState({
-    dataOne: [],
-    dataTwo: [],
-    dataThree: [],
-    data: [],
-  });
   const [reports, setReports] = useState({
     finance: false,
     site_movements: false,
     emissions: false,
     waste_statistics: false,
+    ids: "",
   });
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,69 +33,14 @@ const NewReports = () => {
     const { name, value } = event.target;
     switch (name) {
       case "finance":
-        setCsvData((st) => ({
-          ...st,
-          data: [],
-          dataOne: [],
-          dataTwo: [],
-          dataThree: [],
-        }));
         setReports({
           ...reports,
           finance: true,
           site_movements: false,
           emissions: false,
           waste_statistics: false,
+          ids: "finance",
         });
-        let arr = [];
-        state?.hireBreakdown?.hire_breakdown?.result?.map((single) => {
-          arr.push({ name: single.service_name, y: single.jobs });
-          setCsvData((st) => ({
-            ...st,
-            dataOne: arr,
-          }));
-        });
-        var node = document.getElementById("my-node");
-        await htmlToImage
-          .toPng(node)
-          .then(function (dataUrl) {
-            var img = new Image();
-            img.src = dataUrl;
-            document.body.appendChild(img);
-            const blob = new Blob([img], {
-              type: "application/vnd.ms-excel;charset=utf-8",
-            });
-            setCsvData((st) => ({
-              ...st,
-              dataThree: [
-                {
-                  name: "abc",
-                  image: {
-                    id: "company_logo",
-                    base64: img.src,
-                    extension: "png",
-                    fitCell: true,
-                  },
-                },
-              ],
-            }));
-          })
-          .catch(function (error) {
-            console.error("oops, something went wrong!", error);
-          });
-
-        setCsvData((st) => ({
-          ...st,
-          data: [
-            { name: "Finance", y: "Report" },
-            ...state?.siteBreakdown?.site_breakdown?.result?.data,
-            {},
-            { name: "Hire Breakdown", y: "Report" },
-            ...st.dataOne,
-            { name: "aaa", y: "Report" },
-            ...st.dataThree,
-          ],
-        }));
         break;
       case "site_movements":
         setReports({
@@ -109,34 +49,8 @@ const NewReports = () => {
           site_movements: true,
           emissions: false,
           waste_statistics: false,
+          ids: "site_movements",
         });
-        setCsvData((st) => ({
-          ...st,
-          data: [],
-          dataOne: [],
-          dataTwo: [],
-          dataThree: [],
-        }));
-        setCsvData((st) => ({
-          ...st,
-          dataOne: state?.siteMovements?.data?.result?.data,
-        }));
-        state?.siteMovementDetail?.data?.result?.map((single) => {
-          setCsvData((st) => ({
-            ...st,
-            dataTwo: single?.data,
-          }));
-        });
-        setCsvData((st) => ({
-          ...st,
-          data: [
-            { name: "Site", y: "Report" },
-            ...st.dataOne,
-            {},
-            { name: "Site Detail", y: "Report" },
-            ...st.dataTwo,
-          ],
-        }));
         break;
       case "emissions":
         setReports({
@@ -145,11 +59,8 @@ const NewReports = () => {
           site_movements: false,
           emissions: true,
           waste_statistics: false,
+          ids: "emissions",
         });
-        // setCsvData((st) => ({
-        //   ...st,
-        //   site: state?.siteMovements?.data?.result?.data,
-        // }));
         break;
       case "waste_statistics":
         setReports({
@@ -158,63 +69,8 @@ const NewReports = () => {
           site_movements: false,
           emissions: false,
           waste_statistics: true,
+          ids: "waste_statistics",
         });
-        let tonnage = [];
-        let waste = [];
-        setCsvData((st) => ({
-          ...st,
-          dataOne: [
-            {
-              y: state?.landfillDiversion?.data?.result?.land_fill,
-              name: state?.landfillDiversion?.data?.result?.title,
-            },
-          ],
-          dataTwo: [
-            {
-              y: state?.energy?.data?.result?.land_fill,
-              name: state?.energy?.data?.result?.title,
-              value: state?.energy?.data?.result?.kwh,
-            },
-          ],
-          dataThree: [
-            {
-              y: state?.recycled?.data?.result?.land_fill,
-              name: state?.recycled?.data?.result?.title,
-              value: state?.recycled?.data?.result?.emco2,
-            },
-          ],
-        }));
-        state?.waste?.data?.result?.map((single) => {
-          waste.push({
-            name: single.name,
-            y: single.waste === null ? 0 : single.waste,
-          });
-        });
-        state?.tonnage?.data?.result?.data?.map((single) => {
-          tonnage.push({
-            name: single.address,
-            y: single.tonnage === null ? 0 : single.tonnage,
-          });
-        });
-        setCsvData((st) => ({
-          ...st,
-          data: [
-            { name: "Landfill", y: "Report" },
-            ...st.dataOne,
-            {},
-            { name: "Energy", y: "Report" },
-            ...st.dataTwo,
-            {},
-            { name: "Recycled", y: "Report" },
-            ...st.dataTwo,
-            {},
-            { name: "Waste", y: "Report" },
-            ...waste,
-            {},
-            { name: "Tonnage", y: "Report" },
-            ...tonnage,
-          ],
-        }));
         break;
     }
   };
@@ -223,16 +79,12 @@ const NewReports = () => {
     var workbook = new Excel.Workbook();
     var worksheet = workbook.addWorksheet("Main sheet");
     var logo = "";
-    var node = document.getElementById("my-node");
+    var node = document.getElementById(reports.ids);
     await htmlToImage
       .toPng(node)
       .then(function (dataUrl) {
         var img = new Image();
         img.src = dataUrl;
-        document.body.appendChild(img);
-        const blob = new Blob([img], {
-          type: "application/vnd.ms-excel;charset=utf-8",
-        });
         logo = workbook.addImage({
           base64: img.src,
           extension: "png",
@@ -244,11 +96,32 @@ const NewReports = () => {
     worksheet.columns = [
       { header: "Id", key: "id", width: 10 },
       { header: "Name", key: "name", width: 32 },
-      { header: "D.O.B.", key: "DOB", width: 10, outlineLevel: 1 },
+      { header: "D.O.B.", key: "dob", width: 10, outlineLevel: 1 },
     ];
     worksheet.addRow({ id: 1, name: "John Doe", dob: new Date(1970, 1, 1) });
-    worksheet.addRow({ id: 2, name: "Jane Doe", dob: new Date(1965, 1, 7) });
-    worksheet.addImage(logo, "B6:K25");
+    worksheet.addRow({ id: 2, name: "Jane Doe", dob: new Date() });
+    //   worksheet.getRow(1).border = {
+    //     top: {style:'thin', color: {argb:'FF00FF00'}},
+    //     left: {style:'thin', color: {argb:'FF00FF00'}},
+    //     bottom: {style:'thin', color: {argb:'FF00FF00'}},
+    //     right: {style:'thin', color: {argb:'FF00FF00'}}
+    // };
+    // worksheet.getRow(1).fill = {
+    //   type: "pattern",
+    //   pattern: "darkTrellis",
+    //   fgColor: { argb: "FFFFFF00" },
+    //   bgColor: { argb: "FF0000FF" },
+    // };
+
+    // worksheet.getRow(2).font = {
+    //   name: "Comic Sans MS",
+    //   family: 4,
+    //   size: 16,
+    //   underline: "double",
+    //   bold: true,
+    // };
+
+    worksheet.addImage(logo, `B6:G25`);
     workbook.xlsx.writeBuffer().then(function (buffer) {
       saveAs(
         new Blob([buffer], { type: "application/octet-stream" }),
@@ -256,6 +129,7 @@ const NewReports = () => {
       );
     });
   }
+
   return (
     <>
       <div className="main-report">
@@ -292,8 +166,9 @@ const NewReports = () => {
       </div>
       <ReportFooter
         handleChangeReportType={handleChangeReportType}
-        csvData={csvData}
         reports={reports}
+        sites={selected}
+        exTest={exTest}
       />
     </>
   );

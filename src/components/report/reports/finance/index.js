@@ -82,7 +82,7 @@ const FinanceReport = (props) => {
   }, [sites]);
 
   return (
-    <Card className="report-chart-card" id="my-node">
+    <Card className="report-chart-card" id={'finance'}>
       <CardContent>
         <div className="salesWp">
           {stateSites?.site_breakdown?.result?.total && (

@@ -207,7 +207,7 @@ const EmissionReport = (props) => {
   return (
     <>
       <PayEmissionModal showModal={showModal} setShowModal={setShowModal} />
-      <Card className="report-chart-card">
+      <Card className="report-chart-card" id={'emissions'}>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
             <h1>
