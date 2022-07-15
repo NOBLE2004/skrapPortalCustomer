@@ -5,7 +5,7 @@ import "./index.scss";
 import { CSVLink } from "react-csv";
 
 const ReportFooter = (props) => {
-  const { handleChangeReportType, reports, csvData } = props;
+  const { handleChangeReportType, reports, exTest,sites } = props;
   const headers = [
     { label: "Name", key: "name" },
     { label: "percent", key: "y" },
@@ -58,18 +58,14 @@ const ReportFooter = (props) => {
         </div>
       </div>
 
-      <Button classes="footer-btn" disabled={csvData?.data?.length === 0}>
-        <CSVLink
-          style={{
-            textDecoration: "none ",
-            color: "#fff",
-          }}
-          data={csvData?.data}
-          headers={headers}
-          filename={`report_${new Date().toLocaleDateString()}`}
-        >
-          Download CSV
-        </CSVLink>
+      <Button
+        classes="footer-btn"
+        disabled={sites?.length > 1}
+        onClick={() => {
+          exTest();
+        }}
+      >
+        Download CSV
       </Button>
     </div>
   );
