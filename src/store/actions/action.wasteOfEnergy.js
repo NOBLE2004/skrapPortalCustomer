@@ -39,39 +39,3 @@ export const getWasteOfEnergyFailure = (error) => {
   };
 };
 
-export const getWasteOfEnergyList = (data) => {
-  return (dispatch) => {
-    dispatch(getWasteOfEnergyListStart());
-    ReportsService.getWasteOfEnergyList(data)
-      .then((response) => {
-        if (Object.keys(response.data).length !== 0) {
-          const siteBreakdown = response.data;
-          dispatch(getWasteOfEnergyListSuccess(siteBreakdown));
-        } else {
-          dispatch(getWasteOfEnergyListFailure(response.data.description));
-        }
-      })
-      .catch((err) => {
-        dispatch(getWasteOfEnergyListFailure(err.message));
-      });
-  };
-};
-export const getWasteOfEnergyListStart = () => {
-  return {
-    type: Constants.GET_WASTE_OF_ENERGY_LIST_START,
-  };
-};
-
-export const getWasteOfEnergyListSuccess = (data) => {
-  return {
-    type: Constants.GET_WASTE_OF_ENERGY_LIST_SUCCESS,
-    payload: data,
-  };
-};
-
-export const getWasteOfEnergyListFailure = (error) => {
-  return {
-    type: Constants.GET_WASTE_OF_ENERGY_LIST_FAILURE,
-    payload: error,
-  };
-};

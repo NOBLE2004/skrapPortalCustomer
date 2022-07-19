@@ -24,9 +24,11 @@ import { portfolio } from "./portfolioReducer";
 import { getTonnageReducer } from "./tonnageReducer";
 import { getWasteReducer } from "./wasteReducer";
 import { getWasteOfEnergyReducer } from "./wasteOfEnergyReducer";
-import { getWasteOfEnergyListReducer } from "./wasteOfEnergyReducer";
+// import { getWasteOfEnergyListReducer } from "./wasteOfEnergyReducer";
 import { siteBreakdownListReducer } from "./siteBreakdownReducer";
 import { getRecycledReducer } from "./recycledReducer";
+import { siteMovementsList } from "./siteMovementsReducer";
+import { landfillDiversionList } from "./landfillDiversionReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -54,7 +56,8 @@ export default combineReducers({
   tonnage: getTonnageReducer,
   waste: getWasteReducer,
   energy: getWasteOfEnergyReducer,
-  energyList:getWasteOfEnergyListReducer,
-  siteBreakdownList:siteBreakdownListReducer,
+  landfillList: landfillDiversionList,
+  siteBreakdownList: siteBreakdownListReducer,
+  siteMovementsList: siteMovementsList,
   recycled: getRecycledReducer,
 });
