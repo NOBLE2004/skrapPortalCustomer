@@ -8,8 +8,9 @@ import FinanceReport from "../../components/report/reports/finance";
 import EmissionReport from "../../components/report/reports/emission";
 import Co2breakdownReport from "../../components/report/reports/co2breakdown";
 import SiteMovementsReport from "../../components/report/reports/sitemovements";
-import { getWasteOfEnergyList } from "../../store/actions/action.wasteOfEnergy";
-import { getSiteBreakdownlist } from "../../store/actions/action.siteBd";
+ import { getSiteBreakdownlist } from "../../store/actions/action.siteBd";
+import { getSitesMovementList } from "../../store/actions/action.siteMovements";
+import { getLandfillDiversionList } from "../../store/actions/action.landfillDiversion";
 import ReportFilters from "../../components/report/filters";
 import { useSelector, useDispatch } from "react-redux";
 import * as htmlToImage from "html-to-image";
@@ -77,8 +78,6 @@ const NewReports = () => {
           waste_statistics: true,
           ids: "waste_statistics",
         });
-        //  await dispatch(getWasteOfEnergyList());
-        //  await setCsvData(state?.energyList?.data?.result)
         break;
     }
   };
@@ -102,24 +101,24 @@ const NewReports = () => {
         console.error("oops, something went wrong!", error);
       });
     worksheet.columns = [
-      { header: "container", key: "container", width: 20 },
-      { header: "customer_cost", key: "customer_cost", width: 20 },
-      { header: "delivered", key: "delivered", width: 20 },
-      { header: "em_co2e_value", key: "em_co2e_value", width: 20 },
-      { header: "full_name", key: "full_name", width: 20 },
-      { header: "job_address", key: "job_address", width: 20 },
-      { header: "job_date", key: "job_date", width: 20 },
-      { header: "job_number", key: "job_number", width: 20 },
+      { header: "Job Number", key: "job_number", width: 20 },
+      { header: "Job Date", key: "job_date", width: 20 },
+      { header: "Address", key: "job_address", width: 20 },
+      { header: "Postcode", key: "postcode", width: 20 },
+      { header: "Customer", key: "full_name", width: 20 },
+      { header: "Movement", key: "movement", width: 20 },
+      { header: "Container", key: "container", width: 20 },
+      { header: "Customer Cost", key: "customer_cost", width: 20 },
+      { header: "% Recycled", key: "recycled", width: 20 },
+      { header: "Diverted T", key: "diverted", width: 20 },
       {
-        header: "landfill_diversion_rate",
+        header: "% Landfill",
         key: "landfill_diversion_rate",
         width: 20,
       },
-      { header: "movement", key: "movement", width: 20 },
-      { header: "postcode", key: "postcode", width: 20 },
-      { header: "recycled", key: "recycled", width: 20 },
-      { header: "supplier", key: "supplier", width: 20 },
-      { header: "supplier_postcode", key: "supplier_postcode", width: 20 },
+      { header: "Supplier", key: "supplier", width: 20 },
+      { header: "Supplier Postcode", key: "supplier_postcode", width: 20 },
+      { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 20 },
     ];
     // worksheet.addRow({ id: 2, name: "Jane Doe", dob: new Date() });
     const newRows = worksheet.addRows(csvData);
@@ -146,7 +145,7 @@ const NewReports = () => {
 
     worksheet.addImage(
       logo,
-      `B${csvData?.length + 5}:G${csvData?.length + 25}`
+      `B${csvData?.length + 5}:E${csvData?.length + 22}`
     );
     workbook.xlsx.writeBuffer().then(function (buffer) {
       saveAs(
@@ -158,16 +157,20 @@ const NewReports = () => {
 
   useEffect(() => {
     if (reports.ids === "waste_statistics") {
-      setCsvData(state?.energyList?.data?.result);
+      setCsvData(state?.landfillList?.data?.result);
     }
     if (reports.ids === "finance") {
       setCsvData(state?.siteBreakdownList?.site_breakdown?.result);
     }
+    if (reports.ids === "site_movements") {
+      setCsvData(state?.siteMovementsList?.data?.result);
+    }
   }, [state, reports]);
 
   useEffect(() => {
-    dispatch(getWasteOfEnergyList());
+    dispatch(getLandfillDiversionList());
     dispatch(getSiteBreakdownlist());
+    dispatch(getSitesMovementList());
   }, []);
 
   return (
@@ -209,6 +212,7 @@ const NewReports = () => {
         reports={reports}
         sites={selected}
         exTest={exTest}
+        csvData={csvData}
       />
     </>
   );

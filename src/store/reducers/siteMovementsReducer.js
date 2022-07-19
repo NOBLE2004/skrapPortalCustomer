@@ -27,3 +27,27 @@ export const siteMovements = (state = initialState, action) => {
             return { ...state };
     }
 };
+
+export const siteMovementsList = (state = initialState, action) => {
+    switch (action.type) {
+        case constants.SITE_MOVEMENTS_LIST:
+            return { ...state, isLoading: true, error: null, reports: null };
+        case constants.SITE_MOVEMENT_LIST_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                error: null,
+                data: action.payload,
+            };
+        case constants.SITE_MOVEMENT_LIST_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+                data: null,
+            };
+        default:
+            return { ...state };
+    }
+};
+
