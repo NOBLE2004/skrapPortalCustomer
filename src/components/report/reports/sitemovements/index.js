@@ -35,7 +35,7 @@ const SiteMovementsReport = (props) => {
   }, [sites]);
 
   return (
-    <Card className="report-chart-card ">
+    <Card className="report-chart-card " id='site_movements'>
       <CardContent>
         <div className="salesWp">
           {state?.data?.result?.total ? (

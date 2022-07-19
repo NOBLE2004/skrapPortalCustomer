@@ -4,6 +4,8 @@ class ReportsService extends HttpService {
   getHireBreakdown = (data) => this.get("customers/report/hireBreakDown", data);
   getSitesBreakdown = (data) =>
     this.get("customers/report/sitesBreakDown", data);
+    getSitesBreakdownList = (data) =>
+    this.get("customers/report/sitesBreakDown/list", data);
   getJobsMeta = (data) => this.get("customers/report/jobsMeta", data);
   getSitesMovement = (data) => this.get("customers/report/siteMovements", data);
   getSiteMovementDetails = (data) =>
@@ -16,6 +18,7 @@ class ReportsService extends HttpService {
   getTonnage = (data) => this.get("customers/report/tonnage", data);
   getWaste = (data) => this.get("customers/report/wastes", data);
   getWasteOfEnergy = (data) => this.get("customers/report/wasteOfEnergy", data);
+  getWasteOfEnergyList = (data) => this.get("customers/report/wasteOfEnergy/list", data);
   getRecycled = (data) => this.get("customers/report/recycled", data);
   getPortfolio = (data) => this.get("portfolios", data);
 }
