@@ -16,7 +16,7 @@ import { smallPieData, siteMovementData } from "./constant";
 import "./index.scss";
 
 const SiteMovementsReport = (props) => {
-  const { sites } = props;
+  const { sites, showMore } = props;
   const [show, setShow] = useState(false);
   const state = useSelector((state) => state?.siteMovements);
   const siteDetail = useSelector((state) => state?.siteMovementDetail);
@@ -35,7 +35,7 @@ const SiteMovementsReport = (props) => {
   }, [sites]);
 
   return (
-    <Card className="report-chart-card " id='site_movements'>
+    <Card className="report-chart-card " id="site_movements">
       <CardContent>
         <div className="salesWp">
           {state?.data?.result?.total ? (
@@ -45,7 +45,7 @@ const SiteMovementsReport = (props) => {
           ) : (
             <h1>0.00</h1>
           )}
-          {state?.isLoading || siteDetail?.isLoading  ? (
+          {state?.isLoading || siteDetail?.isLoading ? (
             <div className="d-flex justify-center align-center">
               <FadeLoader
                 color={"#518ef8"}
@@ -72,6 +72,7 @@ const SiteMovementsReport = (props) => {
           )}
           <div
             className="see-more"
+            style={showMore ? { opacity: 0 } : { opacity: 1 }}
             onClick={() => {
               setShow(!show);
             }}

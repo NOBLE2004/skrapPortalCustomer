@@ -4,7 +4,7 @@ import React from "react";
 import "./index.scss";
 
 const ReportFooter = (props) => {
-  const { handleChangeReportType, reports, exTest,sites ,csvData} = props;
+  const { handleChangeReportType, reports, exTest, sites, csvData } = props;
   return (
     <div className="report-footer">
       <div className="label">Select reports to download</div>
@@ -53,7 +53,9 @@ const ReportFooter = (props) => {
 
       <Button
         classes="footer-btn"
-        disabled={sites?.length > 1 || csvData?.length===0}
+        disabled={
+          sites?.length > 1 || sites?.length === 0 || csvData?.length === 0
+        }
         onClick={() => {
           exTest();
         }}

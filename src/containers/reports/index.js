@@ -8,7 +8,7 @@ import FinanceReport from "../../components/report/reports/finance";
 import EmissionReport from "../../components/report/reports/emission";
 import Co2breakdownReport from "../../components/report/reports/co2breakdown";
 import SiteMovementsReport from "../../components/report/reports/sitemovements";
- import { getSiteBreakdownlist } from "../../store/actions/action.siteBd";
+import { getSiteBreakdownlist } from "../../store/actions/action.siteBd";
 import { getSitesMovementList } from "../../store/actions/action.siteMovements";
 import { getLandfillDiversionList } from "../../store/actions/action.landfillDiversion";
 import ReportFilters from "../../components/report/filters";
@@ -23,6 +23,7 @@ const NewReports = () => {
   const [selected, setSelected] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [csvData, setCsvData] = useState([]);
+  const [showMore, setShowMore] = useState(false);
   const [reports, setReports] = useState({
     finance: false,
     site_movements: false,
@@ -46,8 +47,6 @@ const NewReports = () => {
           waste_statistics: false,
           ids: "finance",
         });
-        await dispatch(getSiteBreakdownlist());
-        await setCsvData(state?.siteBreakdownList?.site_breakdown?.result);
         break;
       case "site_movements":
         setReports({
@@ -83,6 +82,7 @@ const NewReports = () => {
   };
 
   async function exTest() {
+    setShowMore(true);
     var workbook = new Excel.Workbook();
     var worksheet = workbook.addWorksheet("Main sheet");
     var logo = "";
@@ -128,30 +128,29 @@ const NewReports = () => {
     //     bottom: {style:'thin', color: {argb:'FF00FF00'}},
     //     right: {style:'thin', color: {argb:'FF00FF00'}}
     // };
+
     // worksheet.getRow(1).fill = {
-    //   type: "pattern",
-    //   pattern: "darkTrellis",
-    //   fgColor: { argb: "FFFFFF00" },
-    //   bgColor: { argb: "FF0000FF" },
+    //   type: 'pattern',
+    //   pattern:'solid',
+    //   fgColor:{argb:'F08080'},
     // };
-
-    // worksheet.getRow(2).font = {
-    //   name: "Comic Sans MS",
-    //   family: 4,
-    //   size: 16,
-    //   underline: "double",
-    //   bold: true,
-    // };
-
-    worksheet.addImage(
-      logo,
-      `B${csvData?.length + 5}:E${csvData?.length + 22}`
-    );
+    worksheet.addImage(logo, {
+      tl: { col: 2, row: csvData?.length + 4 },
+      ext:
+        reports?.ids === "finance"
+          ? { width: 400, height: 300 }
+          : { width: 400, height: 250 },
+    });
+    // worksheet.addImage(
+    //   logo,
+    //   `B${csvData?.length + 5}:D${csvData?.length + 22}`
+    // );
     workbook.xlsx.writeBuffer().then(function (buffer) {
       saveAs(
         new Blob([buffer], { type: "application/octet-stream" }),
         `${reports?.ids}-${new Date().toLocaleDateString()}.xlsx`
       );
+      setShowMore(false);
     });
   }
 
@@ -168,10 +167,10 @@ const NewReports = () => {
   }, [state, reports]);
 
   useEffect(() => {
-    dispatch(getLandfillDiversionList());
-    dispatch(getSiteBreakdownlist());
-    dispatch(getSitesMovementList());
-  }, []);
+    dispatch(getLandfillDiversionList({ sites: selected }));
+    dispatch(getSiteBreakdownlist({ sites: selected }));
+    dispatch(getSitesMovementList({ sites: selected }));
+  }, [selected]);
 
   return (
     <>
@@ -186,7 +185,7 @@ const NewReports = () => {
           <Masonry container columns={2} spacing={4}>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Finance report</div>
-              <FinanceReport sites={selected} />
+              <FinanceReport sites={selected} showMore={showMore} />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Emissions</div>
@@ -194,15 +193,16 @@ const NewReports = () => {
                 sites={selected}
                 startDate={startDate}
                 setStartDate={setStartDate}
+                showMore={showMore}
               />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">C02e Breakdown</div>
-              <Co2breakdownReport sites={selected} />
+              <Co2breakdownReport sites={selected} showMore={showMore}/>
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Site Movements</div>
-              <SiteMovementsReport sites={selected} />
+              <SiteMovementsReport sites={selected} showMore={showMore}/>
             </div>
           </Masonry>
         </div>
