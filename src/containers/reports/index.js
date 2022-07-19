@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Masonry } from "@mui/lab";
 import "chart.js/auto";
 import "./report.scss";
@@ -8,16 +8,20 @@ import FinanceReport from "../../components/report/reports/finance";
 import EmissionReport from "../../components/report/reports/emission";
 import Co2breakdownReport from "../../components/report/reports/co2breakdown";
 import SiteMovementsReport from "../../components/report/reports/sitemovements";
+import { getWasteOfEnergyList } from "../../store/actions/action.wasteOfEnergy";
+import { getSiteBreakdownlist } from "../../store/actions/action.siteBd";
 import ReportFilters from "../../components/report/filters";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import * as htmlToImage from "html-to-image";
 import * as Excel from "exceljs";
 import { saveAs } from "file-saver";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [selected, setSelected] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
+  const [csvData, setCsvData] = useState([]);
   const [reports, setReports] = useState({
     finance: false,
     site_movements: false,
@@ -41,6 +45,8 @@ const NewReports = () => {
           waste_statistics: false,
           ids: "finance",
         });
+        await dispatch(getSiteBreakdownlist());
+        await setCsvData(state?.siteBreakdownList?.site_breakdown?.result);
         break;
       case "site_movements":
         setReports({
@@ -71,6 +77,8 @@ const NewReports = () => {
           waste_statistics: true,
           ids: "waste_statistics",
         });
+        //  await dispatch(getWasteOfEnergyList());
+        //  await setCsvData(state?.energyList?.data?.result)
         break;
     }
   };
@@ -94,12 +102,27 @@ const NewReports = () => {
         console.error("oops, something went wrong!", error);
       });
     worksheet.columns = [
-      { header: "Id", key: "id", width: 10 },
-      { header: "Name", key: "name", width: 32 },
-      { header: "D.O.B.", key: "dob", width: 10, outlineLevel: 1 },
+      { header: "container", key: "container", width: 20 },
+      { header: "customer_cost", key: "customer_cost", width: 20 },
+      { header: "delivered", key: "delivered", width: 20 },
+      { header: "em_co2e_value", key: "em_co2e_value", width: 20 },
+      { header: "full_name", key: "full_name", width: 20 },
+      { header: "job_address", key: "job_address", width: 20 },
+      { header: "job_date", key: "job_date", width: 20 },
+      { header: "job_number", key: "job_number", width: 20 },
+      {
+        header: "landfill_diversion_rate",
+        key: "landfill_diversion_rate",
+        width: 20,
+      },
+      { header: "movement", key: "movement", width: 20 },
+      { header: "postcode", key: "postcode", width: 20 },
+      { header: "recycled", key: "recycled", width: 20 },
+      { header: "supplier", key: "supplier", width: 20 },
+      { header: "supplier_postcode", key: "supplier_postcode", width: 20 },
     ];
-    worksheet.addRow({ id: 1, name: "John Doe", dob: new Date(1970, 1, 1) });
-    worksheet.addRow({ id: 2, name: "Jane Doe", dob: new Date() });
+    // worksheet.addRow({ id: 2, name: "Jane Doe", dob: new Date() });
+    const newRows = worksheet.addRows(csvData);
     //   worksheet.getRow(1).border = {
     //     top: {style:'thin', color: {argb:'FF00FF00'}},
     //     left: {style:'thin', color: {argb:'FF00FF00'}},
@@ -121,14 +144,31 @@ const NewReports = () => {
     //   bold: true,
     // };
 
-    worksheet.addImage(logo, `B6:G25`);
+    worksheet.addImage(
+      logo,
+      `B${csvData?.length + 5}:G${csvData?.length + 25}`
+    );
     workbook.xlsx.writeBuffer().then(function (buffer) {
       saveAs(
         new Blob([buffer], { type: "application/octet-stream" }),
-        "DataGrid.xlsx"
+        `${reports?.ids}-${new Date().toLocaleDateString()}.xlsx`
       );
     });
   }
+
+  useEffect(() => {
+    if (reports.ids === "waste_statistics") {
+      setCsvData(state?.energyList?.data?.result);
+    }
+    if (reports.ids === "finance") {
+      setCsvData(state?.siteBreakdownList?.site_breakdown?.result);
+    }
+  }, [state, reports]);
+
+  useEffect(() => {
+    dispatch(getWasteOfEnergyList());
+    dispatch(getSiteBreakdownlist());
+  }, []);
 
   return (
     <>

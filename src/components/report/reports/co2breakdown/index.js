@@ -28,7 +28,7 @@ const Co2breakdownReport = (props) => {
   }, [sites]);
 
   return (
-    <Card className="report-chart-card">
+    <Card className="report-chart-card" id='waste_statistics'>
       <CardContent>
         <div className="salesWp">
           <h1>
