@@ -10,7 +10,7 @@ import HireBreakDown from "./hireBreakDown/hireBreakDown";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const FinanceReport = (props) => {
-  const { sites } = props;
+  const { sites, showMore } = props;
   const [chartData, setChartData] = useState();
   const dispatch = useDispatch();
   const stateSites = useSelector((state) => state?.siteBreakdown);
@@ -82,7 +82,7 @@ const FinanceReport = (props) => {
   }, [sites]);
 
   return (
-    <Card className="report-chart-card" id={'finance'}>
+    <Card className="report-chart-card" id={"finance"}>
       <CardContent>
         <div className="salesWp">
           {stateSites?.site_breakdown?.result?.total && (
@@ -155,6 +155,7 @@ const FinanceReport = (props) => {
             onClick={() => {
               setShow(!show);
             }}
+            style={showMore ? { opacity: 0 } : { opacity: 1 }}
           >
             See more
           </div>
