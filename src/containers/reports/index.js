@@ -144,9 +144,9 @@ const NewReports = () => {
     if (reports.ids === "finance") {
       setCsvData(state?.siteBreakdownList?.site_breakdown?.result);
     }
-    // if (reports.ids === "emissions") {
-    //   setCsvData([]);
-    // }
+    if (reports.ids === "emissions") {
+      setCsvData(state?.landfillList?.data?.result);
+    }
     if (reports.ids === "site_movements") {
       setCsvData(state?.siteMovementsList?.data?.result);
     }

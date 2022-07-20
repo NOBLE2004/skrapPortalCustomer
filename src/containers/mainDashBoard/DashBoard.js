@@ -86,7 +86,6 @@ const DashBoard = (props) => {
     history.push({ pathname: `job-detail/${id}` });
   };
 
-  console.log("state", state);
   if (loading) {
     return (
       <div className="dashboard-menu">
