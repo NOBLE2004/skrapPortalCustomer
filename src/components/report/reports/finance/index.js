@@ -10,7 +10,7 @@ import HireBreakDown from "./hireBreakDown/hireBreakDown";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const FinanceReport = (props) => {
-  const { sites } = props;
+  const { sites, showMore } = props;
   const [chartData, setChartData] = useState();
   const dispatch = useDispatch();
   const stateSites = useSelector((state) => state?.siteBreakdown);
@@ -82,7 +82,7 @@ const FinanceReport = (props) => {
   }, [sites]);
 
   return (
-    <Card className="report-chart-card" id="my-node">
+    <Card className="report-chart-card" id={"finance"}>
       <CardContent>
         <div className="salesWp">
           {stateSites?.site_breakdown?.result?.total && (
@@ -93,9 +93,6 @@ const FinanceReport = (props) => {
           )}
 
           <div className="sub-heading">Site breakdown</div>
-
-          {/*<Grid container className="small-chart-large" paddingBottom={2}>*/}
-          {/*  <Grid item xs={8} className="d-flex align-center">*/}
           {stateSites?.isLoading ? (
             <div className="d-flex justify-center align-center">
               <FadeLoader
@@ -108,11 +105,6 @@ const FinanceReport = (props) => {
             <div className="highchart-sites">
               {stateSites?.site_breakdown &&
                 stateSites?.site_breakdown?.result?.data && (
-                  //     (<Chart
-                  //   type="pie"
-                  //   data={chartData}
-                  //   options={PieChartDefaultOptions}
-                  // />
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={chartData}
@@ -121,40 +113,12 @@ const FinanceReport = (props) => {
                 )}
             </div>
           )}
-          {/*</Grid>*/}
-          {/*<Grid*/}
-          {/*  item*/}
-          {/*  xs={4}*/}
-          {/*  className="right-legends-small-chart"*/}
-          {/*  style={{*/}
-          {/*    height: "220px",*/}
-          {/*    overflow: "auto",*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*{stateSites?.site_breakdown?.result?.data?.map((single) => (*/}
-          {/*  <div className="legend-one" key={single?.value}>*/}
-          {/*    <div className="icon">*/}
-          {/*      <span*/}
-          {/*        style={{*/}
-          {/*          backgroundColor: "#102751",*/}
-          {/*        }}*/}
-          {/*      ></span>*/}
-          {/*    </div>*/}
-          {/*    <div className="text-small">*/}
-          {/*      <h1>*/}
-          {/*        {single?.job_address} {single?.jobs}*/}
-          {/*      </h1>*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*))}*/}
-          {/*  </Grid>*/}
-          {/*</Grid>*/}
-
           <div
             className="see-more"
             onClick={() => {
               setShow(!show);
             }}
+            style={showMore ? { opacity: 0 } : { opacity: 1 }}
           >
             See more
           </div>

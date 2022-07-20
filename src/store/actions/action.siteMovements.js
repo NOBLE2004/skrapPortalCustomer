@@ -37,3 +37,41 @@ export const siteMovementFailure = (error) => {
     payload: error,
   };
 };
+
+export const getSitesMovementList = (data) => {
+  return (dispatch) => {
+    dispatch(siteMovementListStart());
+    ReportsService.getSitesMovementList(data)
+      .then((response) => {
+        if (Object.keys(response.data).length !== 0) {
+          const siteBreakdown = response.data;
+          dispatch(siteMovementListSuccess(siteBreakdown));
+        } else {
+          dispatch(siteMovementListFailure(response.data.description));
+        }
+      })
+      .catch((err) => {
+        dispatch(siteMovementListFailure(err.message));
+      });
+  };
+};
+export const siteMovementListStart = () => {
+  return {
+    type: Constants.SITE_MOVEMENTS_LIST,
+  };
+};
+
+export const siteMovementListSuccess = (data) => {
+  return {
+    type: Constants.SITE_MOVEMENT_LIST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const siteMovementListFailure = (error) => {
+  return {
+    type: Constants.SITE_MOVEMENT_LIST_FAILURE,
+    payload: error,
+  };
+};
+

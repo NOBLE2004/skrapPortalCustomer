@@ -38,3 +38,42 @@ export const siteBreakdownFailure = (error) => {
         payload: error,
     };
 };
+
+
+export const getSiteBreakdownlist = (data) => {
+    return (dispatch) => {
+        dispatch(siteBreakdownListStart());
+        ReportsService
+            .getSitesBreakdownList(data)
+            .then((response) => {
+                if (Object.keys(response.data).length !== 0) {
+                    const siteBreakdown = response.data;
+                        dispatch(siteBreakdownListSuccess(siteBreakdown));
+                } else {
+                    dispatch(siteBreakdownListFailure(response.data.description));
+                }
+            })
+            .catch((err) => {
+                dispatch(siteBreakdownListFailure(err.message));
+            });
+    };
+};
+export const siteBreakdownListStart = () => {
+    return {
+        type: Constants.REPORTS_SITE_BREAKDOWN_LIST_START,
+    };
+};
+
+export const siteBreakdownListSuccess = (data) => {
+    return {
+        type: Constants.REPORTS_SITE_BREAKDOWN_LIST_SUCCESS,
+        payload: data,
+    };
+};
+
+export const siteBreakdownListFailure = (error) => {
+    return {
+        type: Constants.REPORTS_SITE_BREAKDOWN_LIST_FAILURE,
+        payload: error,
+    };
+};

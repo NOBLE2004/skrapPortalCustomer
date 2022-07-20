@@ -11,9 +11,13 @@ import "./sitesDetailPage.scss";
 import PoDetail from "../../siteManager/poDetail/PoDetail";
 import CreateJob from "../../modals/createJob/CreateJob";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
+import { getLandfillDiversion } from "../../../store/actions/action.landfillDiversion";
+import { useDispatch, useSelector } from "react-redux";
 import useWindowDimensions from "../../../hooks/useWindowDimension";
-import {styled} from "@mui/material/styles";
-import LinearProgress, {linearProgressClasses} from "@mui/material/LinearProgress";
+import { styled } from "@mui/material/styles";
+import LinearProgress, {
+  linearProgressClasses,
+} from "@mui/material/LinearProgress";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -28,18 +32,19 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 40,
     height: "15px",
-    backgroundImage:
-        "linear-gradient(90deg,red 4.25%,#fa8c14 48.87%,#00b25d 93.5%)",
+    backgroundImage:"linear-gradient(to right,#fa8c14 80%,#00b25d )"
+      // "linear-gradient(90deg,red 50%,#fa8c14 25%,#00b25d 25%)",
   },
 }));
 
 const SitesDetailPage = (props) => {
   const { width } = useWindowDimensions();
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const stateLandFill=useSelector(state=>state?.landfillDiversion)
   const [isReload, setIsReload] = useState(false);
   const [reload, setReload] = useState(false);
   const [userInfo, setUserInfo] = useState(0);
-  const [progress,setProgress]=useState(90)
   const [jobsData, setJobsData] = useState({});
   const [isJobLoading, setJobLoading] = useState(false);
   const [filters, setFilters] = useState({
@@ -90,7 +95,7 @@ const SitesDetailPage = (props) => {
         setState({ ...state, isLoadings: false });
       }
     };
-
+    dispatch(getLandfillDiversion({ sites: [id] }));
     getData();
   }, [reload, isReload]);
 
@@ -134,8 +139,8 @@ const SitesDetailPage = (props) => {
               ? addressData.slice(0, 16)
               : "n/a"
             : addressData
-              ? addressData
-              : ""}
+            ? addressData
+            : ""}
         </div>
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
@@ -155,17 +160,21 @@ const SitesDetailPage = (props) => {
         />
       )}
       <Grid container className="manager-detail-page">
-        {isLoadings ? (
-          <FadeLoader color={"#518ef8"} loading={isLoadings} width={4} />
+        {isLoadings || stateLandFill?.isLoading ? (
+          <FadeLoader color={"#518ef8"} loading={isLoadings || stateLandFill?.isLoading} width={4} />
         ) : (
           <>
             <Grid item md={12} xs={12}>
               <div className="landfill">Landfill Diversion Rate</div>
               <div className="progress-bar">
-                <label style={{
-                  right:`${102-progress}%`
-                }}>90%</label>
-                <BorderLinearProgress value={progress} variant="determinate" />
+                <label
+                  style={{
+                    right: `${102 - stateLandFill?.data?.result?.land_fill}%`,
+                  }}
+                >
+                  {stateLandFill?.data?.result?.land_fill}
+                </label>
+                <BorderLinearProgress value={stateLandFill?.data?.result?.land_fill} variant="determinate" />
               </div>
             </Grid>
             <Grid item md={12} xs={12}>

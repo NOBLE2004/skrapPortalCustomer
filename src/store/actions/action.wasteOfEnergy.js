@@ -18,6 +18,7 @@ export const getWasteOfEnergy = (data) => {
       });
   };
 };
+
 export const getWasteOfEnergyStart = () => {
   return {
     type: Constants.GET_WASTE_OF_ENERGY_START,
@@ -37,3 +38,4 @@ export const getWasteOfEnergyFailure = (error) => {
     payload: error,
   };
 };
+

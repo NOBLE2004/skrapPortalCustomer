@@ -17,7 +17,7 @@ const Co2breakdownReport = (props) => {
   const wasteData = useSelector((state) => state?.waste);
   const wasteOfEnergyData = useSelector((state) => state?.energy);
   const recycledData = useSelector((state) => state?.recycled);
-  const { sites } = props;
+  const { sites, showMore } = props;
   const [show, setShow] = useState(false);
   useEffect(() => {
     dispatch(getLandfillDiversion({ sites }));
@@ -28,7 +28,7 @@ const Co2breakdownReport = (props) => {
   }, [sites]);
 
   return (
-    <Card className="report-chart-card">
+    <Card className="report-chart-card" id="waste_statistics">
       <CardContent>
         <div className="salesWp">
           <h1>
@@ -42,13 +42,11 @@ const Co2breakdownReport = (props) => {
                 : "Tonnes total weight"}
             </span>
           </h1>
-          {state?.isLoading || wasteOfEnergyData?.isLoading || recycledData?.isLoading ? (
+          {state?.isLoading ||
+          wasteOfEnergyData?.isLoading ||
+          recycledData?.isLoading ? (
             <div className="d-flex justify-center align-center">
-              <FadeLoader
-                color={"#518ef8"}
-                loading={true}
-                width={4}
-              />
+              <FadeLoader color={"#518ef8"} loading={true} width={4} />
             </div>
           ) : (
             <div className="salesWp-inner-wrap">
@@ -174,6 +172,7 @@ const Co2breakdownReport = (props) => {
           )}
           <div
             className="see-more"
+            style={showMore ? { opacity: 0 } : { opacity: 1 }}
             onClick={() => {
               setShow(!show);
             }}

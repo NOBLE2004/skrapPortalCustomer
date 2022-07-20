@@ -2,16 +2,9 @@ import Checkbox from "@mui/material/Checkbox";
 import { Button } from "@mui/material";
 import React from "react";
 import "./index.scss";
-import { CSVLink } from "react-csv";
 
 const ReportFooter = (props) => {
-  const { handleChangeReportType, reports, csvData } = props;
-  const headers = [
-    { label: "Name", key: "name" },
-    { label: "percent", key: "y" },
-    { label: "Values", key: "value" },
-    { label: "image", key: "image" },
-  ];
+  const { handleChangeReportType, reports, exTest, sites, csvData } = props;
   return (
     <div className="report-footer">
       <div className="label">Select reports to download</div>
@@ -58,18 +51,16 @@ const ReportFooter = (props) => {
         </div>
       </div>
 
-      <Button classes="footer-btn" disabled={csvData?.data?.length === 0}>
-        <CSVLink
-          style={{
-            textDecoration: "none ",
-            color: "#fff",
-          }}
-          data={csvData?.data}
-          headers={headers}
-          filename={`report_${new Date().toLocaleDateString()}`}
-        >
-          Download CSV
-        </CSVLink>
+      <Button
+        classes="footer-btn"
+        disabled={
+          sites?.length > 1 || sites?.length === 0 || csvData?.length === 0
+        }
+        onClick={() => {
+          exTest();
+        }}
+      >
+        Download CSV
       </Button>
     </div>
   );

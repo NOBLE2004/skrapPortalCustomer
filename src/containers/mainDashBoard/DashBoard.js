@@ -12,6 +12,8 @@ import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
 import { connect } from "react-redux";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
+import { getLandfillDiversion } from "../../store/actions/action.landfillDiversion";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import FadeLoader from "react-spinners/FadeLoader";
 import {
@@ -23,7 +25,9 @@ import {
 } from "../../assets/images";
 import "./dashboard.scss";
 import { styled } from "@mui/material/styles";
-import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
+import LinearProgress, {
+  linearProgressClasses,
+} from "@mui/material/LinearProgress";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -47,9 +51,10 @@ const DashBoard = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
   const [isNewYear, setNewYear] = useState(false);
   const [latestYear, setLatestYear] = useState(2022);
-  const [startDate, setStartDate] = useState()
-  const [progress, setProgress] = useState(90)
+  const [startDate, setStartDate] = useState();
+  const state = useSelector((state) => state?.landfillDiversion);
   const history = useHistory();
+  const dispatch = useDispatch();
   const { info, loading } = props.dashboard;
 
   const getData = async (year) => {
@@ -62,10 +67,14 @@ const DashBoard = (props) => {
 
   useEffect(() => {
     if (!startDate) {
-      setStartDate(new Date())
-      getData()
+      setStartDate(new Date());
+      getData();
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    dispatch(getLandfillDiversion())
+  }, []);
 
   useEffect(() => {
     if (!info | isNewYear) {
@@ -86,7 +95,8 @@ const DashBoard = (props) => {
   }
   return (
     <>
-      {/*!info ? (
+      {
+        /*!info ? (
         <div className="jobs-not-found">Network error !</div>
       ) :*/ info && (
           <>
@@ -111,7 +121,8 @@ const DashBoard = (props) => {
               <SpendChart
                 chartData={info}
                 getDashBoardData={getData}
-                startDate={startDate} setStartDate={setStartDate}
+                startDate={startDate}
+                setStartDate={setStartDate}
                 latestYear={latestYear ? latestYear : 2022}
               />
               <DashboardServices servicesData={info ? info : ""} />
@@ -120,11 +131,17 @@ const DashBoard = (props) => {
               <Grid item md={12} className="landfill-main">
                 <div className="landfill">Landfill Diversion Rate</div>
                 <div className="progress-bar">
-                  <label style={{
-                    right: `${102 - progress}%`
-
-                  }}>90%</label>
-                  <BorderLinearProgress value={progress} variant="determinate" />
+                  <label
+                    style={{
+                      right: `${102 - state?.data?.result?.land_fill}%`,
+                    }}
+                  >
+                    {state?.data?.result?.land_fill}
+                  </label>
+                  <BorderLinearProgress
+                    value={state?.data?.result?.land_fill}
+                    variant="determinate"
+                  />
                 </div>
               </Grid>
             </Grid>
@@ -146,43 +163,43 @@ const DashBoard = (props) => {
                     >
                       {info
                         ? info?.Map?.data.length > 0 &&
-                        info?.Map?.data.map((data, index) => (
-                          <Marker
-                            key={index}
-                            position={{
-                              lat: data.job_location_lat
-                                ? data.job_location_lat
-                                : "51.5506351",
-                              lng: data.job_location_lng
-                                ? data.job_location_lng
-                                : "-0.0460716",
-                            }}
-                            icon={{
-                              url:
-                                data.jobStatus === "Pending"
-                                  ? pendingMarker
-                                  : data.jobStatus === "Delivered"
+                          info?.Map?.data.map((data, index) => (
+                            <Marker
+                              key={index}
+                              position={{
+                                lat: data.job_location_lat
+                                  ? data.job_location_lat
+                                  : "51.5506351",
+                                lng: data.job_location_lng
+                                  ? data.job_location_lng
+                                  : "-0.0460716",
+                              }}
+                              icon={{
+                                url:
+                                  data.jobStatus === "Pending"
+                                    ? pendingMarker
+                                    : data.jobStatus === "Delivered"
                                     ? deliveredMarker
                                     : data.jobStatus === "Completed"
-                                      ? completeMarker
-                                      : assignMarker,
-                            }}
-                            onClick={() => {
-                              setShowInfoIndex(index);
-                            }}
-                          >
-                            {showInfoIndex === index && (
-                              <InfoWindow>
-                                <TipingCard
-                                  jobInfo={data}
-                                  gotoJobDetail={() =>
-                                    gotoJobDetail(data.job_id)
-                                  }
-                                />
-                              </InfoWindow>
-                            )}
-                          </Marker>
-                        ))
+                                    ? completeMarker
+                                    : assignMarker,
+                              }}
+                              onClick={() => {
+                                setShowInfoIndex(index);
+                              }}
+                            >
+                              {showInfoIndex === index && (
+                                <InfoWindow>
+                                  <TipingCard
+                                    jobInfo={data}
+                                    gotoJobDetail={() =>
+                                      gotoJobDetail(data.job_id)
+                                    }
+                                  />
+                                </InfoWindow>
+                              )}
+                            </Marker>
+                          ))
                         : ""}
                     </MainMap>
                   </CardContent>
@@ -190,7 +207,8 @@ const DashBoard = (props) => {
               </Grid>
             </Grid>{" "}
           </>
-        )}
+        )
+      }
     </>
   );
 };
