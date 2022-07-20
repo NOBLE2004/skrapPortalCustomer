@@ -250,7 +250,20 @@ const SiteManagerTable = ({
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
-        Cell: (props) => <CommonStatus status={props.value} />,
+          Cell: (cell) => {
+              return (
+                  <CommonStatus
+                      status={status(
+                          cell.row.original.order_job_status === 1 &&
+                          (localStorage.getItem("role_id") == 12 ||
+                              localStorage.getItem("role_id") == 13 ||
+                              localStorage.getItem("role_id") == 4)
+                              ? 14
+                              : cell.value
+                      )}
+                  />
+              );
+          },
       },
       {
         Header: "Payment",
