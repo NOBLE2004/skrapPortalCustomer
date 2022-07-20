@@ -32,8 +32,8 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 40,
     height: "15px",
-    backgroundImage:
-      "linear-gradient(90deg,red 4.25%,#fa8c14 48.87%,#00b25d 93.5%)",
+    backgroundImage:"linear-gradient(to right,#fa8c14 80%,#00b25d )"
+      // "linear-gradient(90deg,red 50%,#fa8c14 25%,#00b25d 25%)",
   },
 }));
 
