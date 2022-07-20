@@ -138,20 +138,27 @@ const NewReports = () => {
       tl: { col: 2, row: csvData?.length + 4 },
       ext:
         reports?.ids === "finance"
-          ? { width: 400, height: 300 }
+          ? { width: 400, height: 350 }
+          : reports?.ids === "emissions"
+          ? {width: 400, height: 600}
           : { width: 400, height: 250 },
     });
     // worksheet.addImage(
     //   logo,
     //   `B${csvData?.length + 5}:D${csvData?.length + 22}`
     // );
-    workbook.xlsx.writeBuffer().then(function (buffer) {
-      saveAs(
-        new Blob([buffer], { type: "application/octet-stream" }),
-        `${reports?.ids}-${new Date().toLocaleDateString()}.xlsx`
-      );
-      setShowMore(false);
-    });
+    workbook.xlsx
+      .writeBuffer()
+      .then(function (buffer) {
+        saveAs(
+          new Blob([buffer], { type: "application/octet-stream" }),
+          `${reports?.ids}-${new Date().toLocaleDateString()}.xlsx`
+        );
+        setShowMore(false);
+      })
+      .catch(() => {
+        setShowMore(false);
+      });
   }
 
   useEffect(() => {
@@ -160,6 +167,9 @@ const NewReports = () => {
     }
     if (reports.ids === "finance") {
       setCsvData(state?.siteBreakdownList?.site_breakdown?.result);
+    }
+    if (reports.ids === "emissions") {
+      setCsvData([]);
     }
     if (reports.ids === "site_movements") {
       setCsvData(state?.siteMovementsList?.data?.result);
@@ -198,11 +208,11 @@ const NewReports = () => {
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">C02e Breakdown</div>
-              <Co2breakdownReport sites={selected} showMore={showMore}/>
+              <Co2breakdownReport sites={selected} showMore={showMore} />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Site Movements</div>
-              <SiteMovementsReport sites={selected} showMore={showMore}/>
+              <SiteMovementsReport sites={selected} showMore={showMore} />
             </div>
           </Masonry>
         </div>
