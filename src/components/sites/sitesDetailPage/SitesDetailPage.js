@@ -130,8 +130,6 @@ const SitesDetailPage = (props) => {
     setState({ ...state, isJobCreated: true });
   };
 
-  console.log("id", id);
-
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
@@ -162,8 +160,8 @@ const SitesDetailPage = (props) => {
         />
       )}
       <Grid container className="manager-detail-page">
-        {isLoadings ? (
-          <FadeLoader color={"#518ef8"} loading={isLoadings} width={4} />
+        {isLoadings || stateLandFill?.isLoading ? (
+          <FadeLoader color={"#518ef8"} loading={isLoadings || stateLandFill?.isLoading} width={4} />
         ) : (
           <>
             <Grid item md={12} xs={12}>
