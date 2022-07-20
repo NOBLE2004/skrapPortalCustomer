@@ -93,9 +93,6 @@ const FinanceReport = (props) => {
           )}
 
           <div className="sub-heading">Site breakdown</div>
-
-          {/*<Grid container className="small-chart-large" paddingBottom={2}>*/}
-          {/*  <Grid item xs={8} className="d-flex align-center">*/}
           {stateSites?.isLoading ? (
             <div className="d-flex justify-center align-center">
               <FadeLoader
@@ -108,11 +105,6 @@ const FinanceReport = (props) => {
             <div className="highchart-sites">
               {stateSites?.site_breakdown &&
                 stateSites?.site_breakdown?.result?.data && (
-                  //     (<Chart
-                  //   type="pie"
-                  //   data={chartData}
-                  //   options={PieChartDefaultOptions}
-                  // />
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={chartData}
@@ -121,35 +113,6 @@ const FinanceReport = (props) => {
                 )}
             </div>
           )}
-          {/*</Grid>*/}
-          {/*<Grid*/}
-          {/*  item*/}
-          {/*  xs={4}*/}
-          {/*  className="right-legends-small-chart"*/}
-          {/*  style={{*/}
-          {/*    height: "220px",*/}
-          {/*    overflow: "auto",*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*{stateSites?.site_breakdown?.result?.data?.map((single) => (*/}
-          {/*  <div className="legend-one" key={single?.value}>*/}
-          {/*    <div className="icon">*/}
-          {/*      <span*/}
-          {/*        style={{*/}
-          {/*          backgroundColor: "#102751",*/}
-          {/*        }}*/}
-          {/*      ></span>*/}
-          {/*    </div>*/}
-          {/*    <div className="text-small">*/}
-          {/*      <h1>*/}
-          {/*        {single?.job_address} {single?.jobs}*/}
-          {/*      </h1>*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*))}*/}
-          {/*  </Grid>*/}
-          {/*</Grid>*/}
-
           <div
             className="see-more"
             onClick={() => {

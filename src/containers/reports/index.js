@@ -87,6 +87,8 @@ const NewReports = () => {
     var worksheet = workbook.addWorksheet("Main sheet");
     var logo = "";
     var node = document.getElementById(reports.ids);
+    var width = node.clientWidth;
+    var height = node.clientHeight;
     await htmlToImage
       .toPng(node)
       .then(function (dataUrl) {
@@ -111,42 +113,16 @@ const NewReports = () => {
       { header: "Customer Cost", key: "customer_cost", width: 20 },
       { header: "% Recycled", key: "recycled", width: 20 },
       { header: "Diverted T", key: "diverted", width: 20 },
-      {
-        header: "% Landfill",
-        key: "landfill_diversion_rate",
-        width: 20,
-      },
+      { header: "% Landfill", key: "landfill_diversion_rate", width: 20 },
       { header: "Supplier", key: "supplier", width: 20 },
       { header: "Supplier Postcode", key: "supplier_postcode", width: 20 },
       { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 20 },
     ];
-    // worksheet.addRow({ id: 2, name: "Jane Doe", dob: new Date() });
-    const newRows = worksheet.addRows(csvData);
-    //   worksheet.getRow(1).border = {
-    //     top: {style:'thin', color: {argb:'FF00FF00'}},
-    //     left: {style:'thin', color: {argb:'FF00FF00'}},
-    //     bottom: {style:'thin', color: {argb:'FF00FF00'}},
-    //     right: {style:'thin', color: {argb:'FF00FF00'}}
-    // };
-
-    // worksheet.getRow(1).fill = {
-    //   type: 'pattern',
-    //   pattern:'solid',
-    //   fgColor:{argb:'F08080'},
-    // };
+    worksheet.addRows(csvData);
     worksheet.addImage(logo, {
       tl: { col: 2, row: csvData?.length + 4 },
-      ext:
-        reports?.ids === "finance"
-          ? { width: 400, height: 350 }
-          : reports?.ids === "emissions"
-          ? {width: 400, height: 600}
-          : { width: 400, height: 250 },
+      ext: { width: width, height: height },
     });
-    // worksheet.addImage(
-    //   logo,
-    //   `B${csvData?.length + 5}:D${csvData?.length + 22}`
-    // );
     workbook.xlsx
       .writeBuffer()
       .then(function (buffer) {
@@ -168,9 +144,9 @@ const NewReports = () => {
     if (reports.ids === "finance") {
       setCsvData(state?.siteBreakdownList?.site_breakdown?.result);
     }
-    if (reports.ids === "emissions") {
-      setCsvData([]);
-    }
+    // if (reports.ids === "emissions") {
+    //   setCsvData([]);
+    // }
     if (reports.ids === "site_movements") {
       setCsvData(state?.siteMovementsList?.data?.result);
     }
