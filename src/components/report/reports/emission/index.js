@@ -65,7 +65,7 @@ const EmissionReport = (props) => {
   const handleDate = () => {
     console.log("date");
   };
-  const { sites, startDate, setStartDate } = props;
+  const { sites, startDate, setStartDate, showMore } = props;
   const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
   const [max, setMax] = useState(100);
@@ -207,7 +207,7 @@ const EmissionReport = (props) => {
   return (
     <>
       <PayEmissionModal showModal={showModal} setShowModal={setShowModal} />
-      <Card className="report-chart-card" id={'emissions'}>
+      <Card className="report-chart-card" id={"emissions"}>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
             <h1>
@@ -278,7 +278,10 @@ const EmissionReport = (props) => {
               </div>
             </div>
             <HighchartsReact highcharts={Highcharts} options={data2} />
-            <div className="w-100 button-with-icon-bar-chart">
+            <div
+              className="w-100 button-with-icon-bar-chart"
+              style={showMore ? { opacity: 0 } : { opacity: 1 }}
+            >
               <div className="w-100">
                 <button
                   onClick={() => {
