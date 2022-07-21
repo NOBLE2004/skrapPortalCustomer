@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { sidebarTabsList, ENV } from "../../environment";
+import { sidebarTabsList, ENV, USER } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
 import { appIcon, personImage } from "../../assets/images";

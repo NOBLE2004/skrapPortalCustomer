@@ -27,14 +27,19 @@ const SiteFilters = ({ handleChangeFilters }) => {
     };
     const handleDate = (item) => {
         setState([item.selection]);
-        const start = item.selection.startDate
-            .toLocaleDateString()
-            .replace(/\//g, "-");
-        const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
+        // const start = item.selection.startDate
+        //     .toLocaleDateString()
+        //     .replace(/\//g, "-");
+        // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
+        const start = new Date(item.selection.startDate.toDateString() + ' UTC').toISOString().split('T')[0].split('-').reverse().join('-');
+        // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, '-');
+        const end = new Date(item.selection.endDate.toDateString() + ' UTC').toISOString().split('T')[0].split('-').reverse().join('-');
+        const newStartDate = moment(item.selection.startDate).format("DD-MM-YYYY");
+        const newEndDate = moment(item.selection.endDate).format("DD-MM-YYYY");
         if (start === end) {
-            setFilters({ ...filters, date: `${start},${end}` });
+            setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
         } else {
-            setFilters({ ...filters, date: `${start},${end}` });
+            setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
             setTogle(false);
         }
     };
@@ -77,3 +82,4 @@ const SiteFilters = ({ handleChangeFilters }) => {
 };
 
 export default SiteFilters;
+
