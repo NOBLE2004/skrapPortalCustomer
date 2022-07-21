@@ -42,8 +42,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 40,
     height: "15px",
-    backgroundImage:
-      "linear-gradient(90deg,red 4.25%,#fa8c14 48.87%,#00b25d 93.5%)",
+    backgroundImage:"linear-gradient(to right,#fa8c14 80%,#00b25d )"
   },
 }));
 
@@ -132,11 +131,21 @@ const DashBoard = (props) => {
                 <div className="landfill">Landfill Diversion Rate</div>
                 <div className="progress-bar">
                   <label
-                    style={{
-                      right: `${102 - state?.data?.result?.land_fill}%`,
-                    }}
+                       style={
+                        state?.data?.result?.land_fill < 6
+                          ? {
+                              left: `${1}%`,
+                            }
+                          : {
+                              left: `${
+                                state?.data?.result?.land_fill > 95
+                                  ? 95
+                                  : state?.data?.result?.land_fill-5
+                              }%`,
+                            }
+                      }
                   >
-                    {state?.data?.result?.land_fill}
+                    {state?.data?.result?.land_fill}%
                   </label>
                   <BorderLinearProgress
                     value={state?.data?.result?.land_fill}

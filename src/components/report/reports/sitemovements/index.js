@@ -49,7 +49,7 @@ const SiteMovementsReport = (props) => {
             <div className="d-flex justify-center align-center">
               <FadeLoader
                 color={"#518ef8"}
-                loading={state?.isLoading}
+                loading={true}
                 width={4}
               />
             </div>
@@ -62,7 +62,7 @@ const SiteMovementsReport = (props) => {
                     options={siteMovementData(
                       state?.data?.result?.data,
                       siteDetail?.data?.result.reduce((accumulator, object) => {
-                        return accumulator + object.percentage;
+                        return  accumulator + object.percentage;
                       }, 0)
                     )}
                   />
