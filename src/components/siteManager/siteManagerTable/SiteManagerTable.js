@@ -309,7 +309,7 @@ const SiteManagerTable = ({
   };
 
   return (
-    <div className={jobs && jobs.length > 0 ? "" : "main-jobs-table"}>
+    <div className={jobs && jobs.length > 0 ? "w-100" : "main-jobs-table"}>
       {exchange && (
         <CreateExchange
           closeModal={() => setExchange(!exchange)}

@@ -72,7 +72,7 @@ const SiteManagerDetailPage = (props) => {
           (a, [k, v]) => (v ? ((a[k] = v), a) : a),
           {}
         );
-        const res = await sitesService.showSitesDetail(id, params);
+        const res = await sitesService.showManagerDetail(id, params);
         setJobsData(res.data);
         setJobLoading(false);
       } catch (err) {
