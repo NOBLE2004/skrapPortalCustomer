@@ -169,12 +169,6 @@ const MySidebar = (props) => {
               return null;
             }
           }
-          if (userData?.user_id !== USER && ENV !== "dev") {
-            if (index === 5) {
-              return null;
-            }
-          }
-
           // if (userData.user_count <= 0) {
           //   if (index === 3) {
           //     return null;

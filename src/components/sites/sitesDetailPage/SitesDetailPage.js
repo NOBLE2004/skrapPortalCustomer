@@ -32,8 +32,8 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 40,
     height: "15px",
-    backgroundImage:"linear-gradient(to right,#fa8c14 80%,#00b25d )"
-      // "linear-gradient(90deg,red 50%,#fa8c14 25%,#00b25d 25%)",
+    backgroundImage: "linear-gradient(to right,#fa8c14 80%,#00b25d )",
+    // "linear-gradient(90deg,red 50%,#fa8c14 25%,#00b25d 25%)",
   },
 }));
 
@@ -41,7 +41,7 @@ const SitesDetailPage = (props) => {
   const { width } = useWindowDimensions();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const stateLandFill=useSelector(state=>state?.landfillDiversion)
+  const stateLandFill = useSelector((state) => state?.landfillDiversion);
   const [isReload, setIsReload] = useState(false);
   const [reload, setReload] = useState(false);
   const [userInfo, setUserInfo] = useState(0);
@@ -161,20 +161,37 @@ const SitesDetailPage = (props) => {
       )}
       <Grid container className="manager-detail-page">
         {isLoadings || stateLandFill?.isLoading ? (
-          <FadeLoader color={"#518ef8"} loading={isLoadings || stateLandFill?.isLoading} width={4} />
+          <FadeLoader
+            color={"#518ef8"}
+            loading={isLoadings || stateLandFill?.isLoading}
+            width={4}
+          />
         ) : (
           <>
             <Grid item md={12} xs={12}>
               <div className="landfill">Landfill Diversion Rate</div>
               <div className="progress-bar">
                 <label
-                  style={{
-                    right: `${102 - stateLandFill?.data?.result?.land_fill}%`,
-                  }}
+                  style={
+                    stateLandFill?.data?.result?.land_fill < 6
+                      ? {
+                          left: `${1}%`,
+                        }
+                      : {
+                          left: `${
+                            stateLandFill?.data?.result?.land_fill > 95
+                              ? 95
+                              : stateLandFill?.data?.result?.land_fill-5
+                          }%`,
+                        }
+                  }
                 >
-                  {stateLandFill?.data?.result?.land_fill}
+                  {stateLandFill?.data?.result?.land_fill}%
                 </label>
-                <BorderLinearProgress value={stateLandFill?.data?.result?.land_fill} variant="determinate" />
+                <BorderLinearProgress
+                  value={stateLandFill?.data?.result?.land_fill}
+                  variant="determinate"
+                />
               </div>
             </Grid>
             <Grid item md={12} xs={12}>
