@@ -17,7 +17,7 @@
       color: #0f2851;
       padding-bottom: 98px;
 
-      span{
+      span {
         text-decoration: underline;
       }
     }
@@ -31,6 +31,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      width: 100%;
       .MuiInputBase-input {
         background-color: transparent;
       }
@@ -38,7 +39,7 @@
         padding-left: 0px;
       }
       .MuiInputBase-root {
-        width: 400px;
+        // width: 400px;
         border-radius: 45px;
         margin-bottom: 16px;
         .MuiTypography-root {
@@ -51,6 +52,7 @@
       }
       .MuiFormControl-root {
         margin: 0px;
+        width: 100%;
       }
     }
     .register-next-btn {
@@ -73,11 +75,11 @@
       }
     }
   }
-  .signin{
+  .signin {
     text-align: center;
     padding-top: 15px;
   }
-  .sign-in-link{
+  .sign-in-link {
     font-family: DM Sans;
     font-style: normal;
     font-weight: 500;
@@ -87,11 +89,33 @@
     text-decoration: underline;
     cursor: pointer;
   }
-  .register-loader{
+  .register-loader {
     display: flex;
   }
+  .radio-button-in-signup {
+    width: 100%;
+    margin-bottom: 10px;
+    .MuiFormControlLabel-label {
+      font-family: DM Sans;
+      font-weight: bold;
+      font-size: 16px;
+      color: #0f2851;
+    }
+  }
+  .company-fields-sign-up {
+    margin-bottom: 16px;
+    .MuiInputBase-root {
+      margin: 0px!important;
+    }
+    .MuiOutlinedInput-input{
+      padding: 0px!important;
+    }
+    .MuiInputLabel-root {
+      top: -4px;
+    }
+  }
 }
-@media (max-width: 500px) and (min-width: 1px){
+@media (max-width: 500px) and (min-width: 1px) {
   .register-main {
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
@@ -99,7 +123,7 @@
       width: 100%;
       .search-input {
         width: 90%;
-        .MuiFormControl-root{
+        .MuiFormControl-root {
           width: 100%;
           .MuiInputBase-root {
             width: 100%;
@@ -107,9 +131,9 @@
         }
       }
     }
-    .register-next-btn{
+    .register-next-btn {
       width: 90%;
-      .MuiButton-root{
+      .MuiButton-root {
         width: 100% !important;
       }
     }
