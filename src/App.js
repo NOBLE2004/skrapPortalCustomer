@@ -27,8 +27,8 @@ function App() {
       <Switch>
         {/* <Route path="/login" component={() => <SignIn />} exact /> */}
         <PublicRoute path="/login" component={() => <SignIn />} exact restricted={true}/>
-        <PublicRoute path="/signup" component={() => <Register />} exact restricted={true}/>
-        <PublicRoute path="/phone" component={() => <AddPhone />} exact restricted={true}/>
+        <PublicRoute path="/signup-info" component={() => <Register />} exact restricted={true}/>
+        <PublicRoute path="/signup" component={() => <AddPhone />} exact restricted={true}/>
         <Layout>
           <PrivateRoute path="/" component={() => <DashBoard />} exact />
           <PrivateRoute path="/dashboard" component={() => <DashBoard />} />

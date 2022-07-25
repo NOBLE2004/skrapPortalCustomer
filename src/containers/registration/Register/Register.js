@@ -136,9 +136,9 @@ const Register = (props) => {
       (firstname === "") |
       (lastname === "") |
       (email === "") |
-      (companyemail === "") |
-      (vat === "") |
-      (jobtitle === "") |
+      (companyemail === "" && radioButton === 'business') |
+      (vat === "" && radioButton === 'business') |
+      (jobtitle === "" && radioButton === 'business') |
       (password === "") |
       (confirmpassword === "")
     ) {
@@ -157,7 +157,7 @@ const Register = (props) => {
     }
     if (!props.phone.phone) {
       alert("phone no is required");
-      history.push("/phone");
+      history.push("/signup");
       return;
     }
     let newData = {
@@ -211,17 +211,17 @@ const Register = (props) => {
                     sx={{ display: "flex", justifyContent: "space-evenly" }}
                   >
                     <FormControlLabel
+                        value="one-off"
+                        control={<Radio checked={radioButton === "one-off"} />}
+                        label="One-off"
+                        onChange={(e) => {
+                          setRadioButton(e.target.value);
+                        }}
+                    />
+                    <FormControlLabel
                       value="business"
                       control={<Radio checked={radioButton === "business"} />}
                       label="Business"
-                      onChange={(e) => {
-                        setRadioButton(e.target.value);
-                      }}
-                    />
-                    <FormControlLabel
-                      value="one-off"
-                      control={<Radio checked={radioButton === "one-off"} />}
-                      label="One-off"
                       onChange={(e) => {
                         setRadioButton(e.target.value);
                       }}
