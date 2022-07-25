@@ -17,7 +17,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import NavBar from "../../../components/Navbar/NavBar";
 import Footer from "../../../components/Footer/FooterItem";
 import { userSignUp } from "../../../store/actions/signup";
-import InputAdornment from "@mui/material/InputAdornment";
+import { APP_URL } from "../../../environment";
 import { textFieldStyles } from "../../../assets/styles/muiStyles/MuiStyles";
 import axios from "axios";
 const Register = (props) => {
@@ -162,7 +162,7 @@ const Register = (props) => {
 
   const getCompanyDetail = (e) => {
     axios
-      .get("https://skrapapis.skrap.app/live/public/scrapapi/findCompany/" + e)
+      .get(`${APP_URL}/findCompany/${e}`)
       .then((response) => {
         setDetails(response?.data?.result?.items);
       });
@@ -185,7 +185,7 @@ const Register = (props) => {
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
-                    sx={{ display: "flex", justifyContent: "space-between" }}
+                    sx={{ display: "flex", justifyContent: "space-evenly" }}
                   >
                     <FormControlLabel
                       value="business"
