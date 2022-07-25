@@ -63,7 +63,7 @@
         background: #36b8fc;
         width: 400px;
         height: 48px;
-        color: #fff!important;
+        color: #fff !important;
       }
       .MuiButton-label {
         font-family: "DM Sans";
@@ -106,13 +106,23 @@
   .company-fields-sign-up {
     margin-bottom: 16px;
     .MuiInputBase-root {
-      margin: 0px!important;
+      margin: 0px !important;
     }
-    .MuiOutlinedInput-input{
-      padding: 0px!important;
+    .MuiOutlinedInput-input {
+      padding: 0px !important;
     }
     .MuiInputLabel-root {
       top: -4px;
+    }
+  }
+  .a-tag-main {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    .a-tag-sign-up {
+      color: #29a7df;
     }
   }
 }

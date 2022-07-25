@@ -19,6 +19,8 @@ import Footer from "../../../components/Footer/FooterItem";
 import { userSignUp } from "../../../store/actions/signup";
 import { APP_URL } from "../../../environment";
 import { textFieldStyles } from "../../../assets/styles/muiStyles/MuiStyles";
+import FormGroup from "@mui/material/FormGroup";
+import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 const Register = (props) => {
   const classes = textFieldStyles();
@@ -26,6 +28,7 @@ const Register = (props) => {
   const [radioButton, setRadioButton] = useState("one-off");
   const [value, setValue] = useState({});
   const [details, setDetails] = useState([]);
+  const [checkedBox, setCheckedBox] = useState(false);
   const [state, setState] = useState({
     firstname: "",
     lastname: "",
@@ -411,6 +414,48 @@ const Register = (props) => {
                 }
                 error={errors["confirmpassword"].length > 0 ? true : false}
               />
+              {radioButton === "business" && (
+                <Grid container marginTop={1}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={checkedBox}
+                        onChange={() => {
+                          setCheckedBox(!checkedBox);
+                        }}
+                      />
+                    }
+                    label={
+                      <div className="a-tag-main">
+                        Do you want to sign up to market finance{" "}
+                        <a
+                          className="a-tag-sign-up"
+                          target='_blank'
+                          href="https://marketfinance.com/"
+                        >
+                          Learn More
+                        </a>
+                      </div>
+                    }
+                  />
+                  {checkedBox && (
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label={
+                        <div className="a-tag-main">
+                          <a
+                            className="a-tag-sign-up"
+                            target='_blank'
+                            href="https://marketfinance.com/skrap-marketpay"
+                          >
+                            I have read and understood how MarketPay works
+                          </a>
+                        </div>
+                      }
+                    />
+                  )}
+                </Grid>
+              )}
             </form>
           </div>
           <div className="register-loader">
