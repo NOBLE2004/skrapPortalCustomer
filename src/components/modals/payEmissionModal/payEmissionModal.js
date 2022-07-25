@@ -10,8 +10,10 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Radio from "@mui/material/Radio";
 import { getPortfolio } from "../../../store/actions/action.portfolio";
-
+import TextField from "@mui/material/TextField";
 import "./style.scss";
+import axios from "axios";
+import reportsService from "../../../services/reports.service";
 
 function PayEmissionModal(props) {
   const dispatch = useDispatch();
@@ -25,26 +27,50 @@ function PayEmissionModal(props) {
     fetchData();
   }, []);
 
+  const { showModal, setShowModal } = props;
+  const [selectedValue, setSelectedValue] = useState("");
+  const [show, setShow] = useState(false);
+  const [state, setState] = useState({
+    price: 0,
+    totalPrice: 0,
+    value: 1,
+  });
+
   useEffect(() => {
     setState((st) => ({
       ...st,
-      price: portfolio?.data?.data[0]?.price_per_kg,
+      price: 0,
+      totalPrice: 0,
+      value: 1,
     }));
-    setSelectedValue(portfolio?.data?.data[0]?.id);
-  }, [portfolio?.data?.data]);
-
-  const { showModal, setShowModal } = props;
-  const [selectedValue, setSelectedValue] = useState("");
-  const [state, setState] = useState({
-    price: 0,
-  });
+  }, [showModal]);
 
   const handleChange = (event, price) => {
+    setShow(true);
     setState((st) => ({
       ...st,
       price: price,
+      totalPrice: price * state.value,
     }));
     setSelectedValue(event);
+  };
+
+  const handleInputChange = (e) => {
+    if (e.target.value != 0) {
+      let price = 0;
+      price = price * e.target.value;
+      setState((st) => ({
+        ...st,
+        totalPrice: state.price * e.target.value,
+        value: e.target.value,
+      }));
+    } else {
+      setState((st) => ({
+        ...st,
+        totalPrice: state.price,
+        value: e.target.value,
+      }));
+    }
   };
 
   const styles = (theme) => ({
@@ -64,7 +90,9 @@ function PayEmissionModal(props) {
     const { children, classes, onClose, ...other } = props;
     return (
       <MuiDialogTitle className={classes.root} {...other}>
-        <Typography variant="h6">{children}</Typography>
+        <div>
+          <Typography variant="h6">{children}</Typography>
+        </div>
         {onClose ? (
           <IconButton
             aria-label="close"
@@ -77,6 +105,21 @@ function PayEmissionModal(props) {
       </MuiDialogTitle>
     );
   });
+
+  const handleSubmit = () => {
+    const params = new URLSearchParams({
+      id: selectedValue,
+      amount: state.totalPrice,
+    }).toString();
+    reportsService
+      .payOffSet(params)
+      .then((res) => {
+        setShowModal(!showModal);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Dialog
@@ -97,14 +140,17 @@ function PayEmissionModal(props) {
                   <div>
                     <p>
                       {single.name}
-                      <span>&nbsp;(£{single.price_per_kg})</span>
+                      <span>&nbsp;(£{single?.price_per_kg?.toFixed(2)})</span>
                     </p>
                   </div>
                   <div>
                     <Radio
                       checked={single.id === selectedValue}
                       onChange={(e) =>
-                        handleChange(single.id, single.price_per_kg)
+                        handleChange(
+                          single.id,
+                          single?.price_per_kg?.toFixed(2)
+                        )
                       }
                       value={single.selected}
                       name="radio-buttons"
@@ -114,6 +160,30 @@ function PayEmissionModal(props) {
                 </div>
               </Grid>
             ))}
+            {show && (
+              <Grid item md={8} xs={12} marginTop={1}>
+                <label
+                  className="label-for-checkbox-emission-modal"
+                  style={{ marginBottom: "4px" }}
+                >
+                  How many KG's you need to offset.?
+                </label>
+                <TextField
+                  label="Amount"
+                  variant="outlined"
+                  type="number"
+                  margin="normal"
+                  size="small"
+                  value={state?.value}
+                  inputProps={{ min: 1 }}
+                  name="amount"
+                  onChange={(e) => {
+                    handleInputChange(e);
+                  }}
+                  sx={{ width: "100%" }}
+                />
+              </Grid>
+            )}
           </Grid>
           <Grid container justifyContent="flex-end" marginTop={2}>
             <Button
@@ -132,8 +202,11 @@ function PayEmissionModal(props) {
                 padding: "10px 20px",
                 background: "linear-gradient(180deg, #73c6f9 0%, #5391f9 100%)",
               }}
+              onClick={() => {
+                handleSubmit();
+              }}
             >
-              Pay Now : £{state.price}
+              Pay Now : £{state.totalPrice}
             </Button>
           </Grid>
         </form>

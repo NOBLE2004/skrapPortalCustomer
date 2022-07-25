@@ -264,7 +264,7 @@ const EmissionReport = (props) => {
               <span>12 yard skips</span> you would reduce your site movements by
               15% which could reduce your carbon emissions
             </p>
-            {/* <div className="sub-heading">Offset payments</div>
+            <div className="sub-heading">Offset payments</div>
             <div className="filters">
               <div className="year">
                 <DatePicker
@@ -417,7 +417,7 @@ const EmissionReport = (props) => {
                   </Grid>
                 </div>
               </div>
-            )} */}
+            )}
           </div>
         </CardContent>
       </Card>
