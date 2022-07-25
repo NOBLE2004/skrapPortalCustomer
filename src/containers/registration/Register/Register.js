@@ -23,12 +23,8 @@ import axios from "axios";
 const Register = (props) => {
   const classes = textFieldStyles();
   const history = useHistory();
-  const [radioButton, setRadioButton] = useState();
-  const [value, setValue] = React.useState({});
-  const [companyFormData, setCompanyFormData] = React.useState({
-    email: "",
-    jobTitle: "",
-  });
+  const [radioButton, setRadioButton] = useState("one-off");
+  const [value, setValue] = useState({});
   const [details, setDetails] = useState([]);
   const [state, setState] = useState({
     firstname: "",
@@ -36,6 +32,9 @@ const Register = (props) => {
     email: "",
     password: "",
     confirmpassword: "",
+    companyemail: "",
+    vat: "",
+    jobtitle: "",
     isLoading: false,
     notice: null,
     isRegistered: false,
@@ -47,6 +46,9 @@ const Register = (props) => {
     email: "",
     password: "",
     confirmpassword: "",
+    companyemail: "",
+    vat: "",
+    jobtitle: "",
   });
 
   const checkingError = (name, value) => {
@@ -57,6 +59,9 @@ const Register = (props) => {
       case "mobile_number":
       case "password":
       case "confirmpassword":
+      case "companyemail":
+      case "vat":
+      case "jobtitle":
         errors[name] = value.length === 0 ? "Required" : "";
         break;
       default:
@@ -72,6 +77,9 @@ const Register = (props) => {
     email,
     password,
     confirmpassword,
+    companyemail,
+    vat,
+    jobtitle,
     isLoading,
     notice,
     isRegistered,
@@ -103,6 +111,15 @@ const Register = (props) => {
       case "confirmpassword":
         setState({ ...state, confirmpassword: value });
         break;
+      case "companyemail":
+        setState({ ...state, companyemail: value });
+        break;
+      case "vat":
+        setState({ ...state, vat: value });
+        break;
+      case "jobtitle":
+        setState({ ...state, jobtitle: value });
+        break;
       default:
         setState({ ...state });
         break;
@@ -116,6 +133,9 @@ const Register = (props) => {
       (firstname === "") |
       (lastname === "") |
       (email === "") |
+      (companyemail === "") |
+      (vat === "") |
+      (jobtitle === "") |
       (password === "") |
       (confirmpassword === "")
     ) {
@@ -149,23 +169,23 @@ const Register = (props) => {
       referal: "",
       user_name: firstname + lastname,
       user_type: 1,
-      vat_number: "",
+      vat_number: vat,
       title: value?.title,
       company_registration_number: value?.company_registration_number,
       company_address: value?.address_snippet,
-      company_email: companyFormData?.email,
+      company_email: companyemail,
+      company_position_title: jobtitle,
       company_registration_date: value?.date_of_creation,
     };
     setState({ ...state, isLoading: true });
+
     await props.userSignUp(newData);
   };
 
   const getCompanyDetail = (e) => {
-    axios
-      .get(`${APP_URL}/findCompany/${e}`)
-      .then((response) => {
-        setDetails(response?.data?.result?.items);
-      });
+    axios.get(`${APP_URL}/findCompany/${e}`).then((response) => {
+      setDetails(response?.data?.result?.items);
+    });
   };
 
   return (
@@ -189,7 +209,7 @@ const Register = (props) => {
                   >
                     <FormControlLabel
                       value="business"
-                      control={<Radio />}
+                      control={<Radio checked={radioButton === "business"} />}
                       label="Business"
                       onChange={(e) => {
                         setRadioButton(e.target.value);
@@ -197,7 +217,7 @@ const Register = (props) => {
                     />
                     <FormControlLabel
                       value="one-off"
-                      control={<Radio />}
+                      control={<Radio checked={radioButton === "one-off"} />}
                       label="One-off"
                       onChange={(e) => {
                         setRadioButton(e.target.value);
@@ -238,23 +258,7 @@ const Register = (props) => {
                   </Grid>
                   {value?.address && (
                     <>
-                      <Grid item xs={5.8}>
-                        <TextField
-                          label="Company registration number"
-                          margin="normal"
-                          variant="outlined"
-                          size="small"
-                          value={
-                            value?.company_number ? value?.company_number : ""
-                          }
-                          InputProps={{
-                            readOnly: true,
-                            disableUnderline: true,
-                          }}
-                          className={classes.root}
-                        />
-                      </Grid>
-                      <Grid item xs={5.8}>
+                      <Grid item xs={12}>
                         <TextField
                           label="Company Address"
                           margin="normal"
@@ -271,20 +275,52 @@ const Register = (props) => {
                       </Grid>
                       <Grid item xs={5.8}>
                         <TextField
+                          label="Company registration number"
+                          margin="normal"
+                          variant="outlined"
+                          size="small"
+                          value={
+                            value?.company_number ? value?.company_number : ""
+                          }
+                          InputProps={{
+                            readOnly: true,
+                            disableUnderline: true,
+                          }}
+                          className={classes.root}
+                        />
+                      </Grid>
+
+                      <Grid item xs={5.8}>
+                        <TextField
                           label="Company Email"
                           margin="normal"
                           variant="outlined"
                           type="email"
                           size="small"
-                          name="Company Email"
-                          value={companyFormData?.email}
-                          onChange={(e) => {
-                            setCompanyFormData((st) => ({
-                              ...st,
-                              email: e.target.value,
-                            }));
-                          }}
-                          className={classes.root}
+                          name="companyemail"
+                          value={companyemail}
+                          onChange={handleChange}
+                          className={
+                            errors["companyemail"].length > 0
+                              ? classes.error
+                              : classes.root
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={5.8}>
+                        <TextField
+                          label="VAT number"
+                          margin="normal"
+                          variant="outlined"
+                          size="small"
+                          name="vat"
+                          value={vat}
+                          onChange={handleChange}
+                          className={
+                            errors["vat"].length > 0
+                              ? classes.error
+                              : classes.root
+                          }
                         />
                       </Grid>
                       <Grid item xs={5.8}>
@@ -293,15 +329,14 @@ const Register = (props) => {
                           margin="normal"
                           variant="outlined"
                           size="small"
-                          name="Your job title in the company"
-                          value={companyFormData?.jobTitle}
-                          onChange={(e) => {
-                            setCompanyFormData((st) => ({
-                              ...st,
-                              jobTitle: e.target.value,
-                            }));
-                          }}
-                          className={classes.root}
+                          name="jobtitle"
+                          value={jobtitle}
+                          onChange={handleChange}
+                          className={
+                            errors["jobtitle"].length > 0
+                              ? classes.error
+                              : classes.root
+                          }
                         />
                       </Grid>
                     </>
