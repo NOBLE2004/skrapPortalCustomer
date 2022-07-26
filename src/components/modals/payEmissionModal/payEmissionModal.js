@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@mui/material";
+import { Button, FormControlLabel, Grid, RadioGroup } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import MuiDialogTitle from "@mui/material/DialogTitle";
 import { withStyles } from "@mui/styles";
@@ -14,6 +14,7 @@ import TextField from "@mui/material/TextField";
 import "./style.scss";
 import axios from "axios";
 import reportsService from "../../../services/reports.service";
+import paymentService from "../../../services/payment.service";
 
 function PayEmissionModal(props) {
   const dispatch = useDispatch();
@@ -106,6 +107,8 @@ function PayEmissionModal(props) {
     );
   });
 
+  const [paymentMethodList, setPaymentMethodList] = useState([]);
+
   const handleSubmit = () => {
     const params = new URLSearchParams({
       id: selectedValue,
@@ -114,7 +117,14 @@ function PayEmissionModal(props) {
     reportsService
       .payOffSet(params)
       .then((res) => {
-        setShowModal(!showModal);
+        paymentService
+          .list({ user_id: localStorage.getItem("user_id") })
+          .then((response) => {
+            console.log("res", response);
+            // setState({ ...state, paymentMethodList: response.data.result });
+            setPaymentMethodList(response.data.result);
+          });
+         setShowModal(!showModal);
       })
       .catch((err) => {
         console.log(err);
@@ -129,7 +139,7 @@ function PayEmissionModal(props) {
     >
       <DialogTitle onClose={() => setShowModal(!showModal)}>
         {" "}
-        Pay Co2e
+        Pay  Co2e
       </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
@@ -184,6 +194,23 @@ function PayEmissionModal(props) {
                 />
               </Grid>
             )}
+            <RadioGroup
+              name="selectedPaymentMethod"
+              // value={selectedPaymentMethod}
+              // onChange={handleChange}
+            >
+              {paymentMethodList &&
+                paymentMethodList.map((data, index) => {
+                  return (
+                    <FormControlLabel
+                      key={index}
+                      value={data.id}
+                      control={<Radio color="primary" />}
+                      label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
+                    />
+                  );
+                })}
+            </RadioGroup>
           </Grid>
           <Grid container justifyContent="flex-end" marginTop={2}>
             <Button
