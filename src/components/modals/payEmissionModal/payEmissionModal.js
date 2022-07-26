@@ -12,7 +12,7 @@ import Radio from "@mui/material/Radio";
 import { getPortfolio } from "../../../store/actions/action.portfolio";
 import TextField from "@mui/material/TextField";
 import "./style.scss";
-import axios from "axios";
+import FadeLoader from "react-spinners/FadeLoader";
 import reportsService from "../../../services/reports.service";
 import paymentService from "../../../services/payment.service";
 
@@ -31,6 +31,12 @@ function PayEmissionModal(props) {
   const { showModal, setShowModal } = props;
   const [selectedValue, setSelectedValue] = useState("");
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [paymentMethodList, setPaymentMethodList] = useState([]);
+  const [card, setCard] = useState({
+    id: "",
+    orderId: "",
+  });
   const [state, setState] = useState({
     price: 0,
     totalPrice: 0,
@@ -44,6 +50,8 @@ function PayEmissionModal(props) {
       totalPrice: 0,
       value: 1,
     }));
+    setPaymentMethodList([]);
+    setSelectedValue();
   }, [showModal]);
 
   const handleChange = (event, price) => {
@@ -107,28 +115,41 @@ function PayEmissionModal(props) {
     );
   });
 
-  const [paymentMethodList, setPaymentMethodList] = useState([]);
-
   const handleSubmit = () => {
-    const params = new URLSearchParams({
-      id: selectedValue,
-      amount: state.totalPrice,
-    }).toString();
-    reportsService
-      .payOffSet(params)
-      .then((res) => {
-        paymentService
-          .list({ user_id: localStorage.getItem("user_id") })
-          .then((response) => {
-            console.log("res", response);
-            // setState({ ...state, paymentMethodList: response.data.result });
-            setPaymentMethodList(response.data.result);
-          });
-         setShowModal(!showModal);
-      })
-      .catch((err) => {
-        console.log(err);
+    let data = {
+      amount: state?.totalPrice?.toString(),
+      card_id: card.id,
+      order_id: card.orderId,
+    };
+    if (paymentMethodList?.length > 0) {
+      reportsService.offSetCharge(data).then((res) => {
+        setShowModal(!showModal);
       });
+    } else {
+      setLoading(true);
+      const params = new URLSearchParams({
+        id: selectedValue,
+        amount: state.totalPrice,
+      }).toString();
+      reportsService
+        .payOffSet(params)
+        .then((res) => {
+          setCard((st) => ({
+            ...st,
+            orderId: res?.data?.order_ID,
+          }));
+          paymentService
+            .list({ user_id: localStorage.getItem("user_id") })
+            .then((response) => {
+              setLoading(false);
+              setPaymentMethodList(response.data.result);
+            });
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -139,7 +160,7 @@ function PayEmissionModal(props) {
     >
       <DialogTitle onClose={() => setShowModal(!showModal)}>
         {" "}
-        Pay  Co2e
+        Pay Co2e
       </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
@@ -194,23 +215,40 @@ function PayEmissionModal(props) {
                 />
               </Grid>
             )}
-            <RadioGroup
-              name="selectedPaymentMethod"
-              // value={selectedPaymentMethod}
-              // onChange={handleChange}
-            >
-              {paymentMethodList &&
-                paymentMethodList.map((data, index) => {
-                  return (
-                    <FormControlLabel
-                      key={index}
-                      value={data.id}
-                      control={<Radio color="primary" />}
-                      label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
-                    />
-                  );
-                })}
-            </RadioGroup>
+            {loading ? (
+              <Grid
+                item
+                md={8}
+                xs={12}
+                marginTop={1}
+                className="d-flex justify-center align-center"
+              >
+                <FadeLoader color={"#518ef8"} loading={loading} width={4} />
+              </Grid>
+            ) : (
+              <RadioGroup
+                name="selectedPaymentMethod"
+                // value={selectedPaymentMethod}
+                onChange={(e) => {
+                  setCard((st) => ({
+                    ...st,
+                    id: e.target.value,
+                  }));
+                }}
+              >
+                {paymentMethodList &&
+                  paymentMethodList.map((data, index) => {
+                    return (
+                      <FormControlLabel
+                        key={index}
+                        value={data.id}
+                        control={<Radio color="primary" />}
+                        label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
+                      />
+                    );
+                  })}
+              </RadioGroup>
+            )}
           </Grid>
           <Grid container justifyContent="flex-end" marginTop={2}>
             <Button
