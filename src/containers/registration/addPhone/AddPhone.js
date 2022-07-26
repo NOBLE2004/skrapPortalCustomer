@@ -205,7 +205,7 @@ const AddPhone = (props) => {
           });
 
           setTimeout(() => {
-            history.push("/signup");
+            history.push("/signup-info");
           }, 2000);
         } else {
           setState({

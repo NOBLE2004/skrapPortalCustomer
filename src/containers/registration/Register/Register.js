@@ -136,9 +136,9 @@ const Register = (props) => {
       (firstname === "") |
       (lastname === "") |
       (email === "") |
-      (companyemail === "") |
-      (vat === "") |
-      (jobtitle === "") |
+      (companyemail === "" && radioButton === "business") |
+      (vat === "" && radioButton === "business") |
+      (jobtitle === "" && radioButton === "business") |
       (password === "") |
       (confirmpassword === "")
     ) {
@@ -157,7 +157,7 @@ const Register = (props) => {
     }
     if (!props.phone.phone) {
       alert("phone no is required");
-      history.push("/phone");
+      history.push("/signup");
       return;
     }
     let newData = {
