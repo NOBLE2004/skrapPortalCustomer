@@ -21,7 +21,7 @@
         text-decoration: underline;
       }
     }
-    width: 508px;
+    // width: 508px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -32,31 +32,31 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      .MuiInputBase-input {
-        background-color: transparent;
-      }
-      .MuiOutlinedInput-adornedStart {
-        padding-left: 0px;
-      }
-      .MuiInputBase-root {
-        // width: 400px;
-        border-radius: 45px;
-        margin-bottom: 16px;
-        .MuiTypography-root {
-          background-color: #29a7df;
-          color: #fff;
-          padding: 8px;
-          border-bottom-left-radius: 20px;
-          border-top-left-radius: 20px;
-        }
-      }
-      .MuiFormControl-root {
-        margin: 0px;
-        width: 100%;
+    }
+    .MuiInputBase-input {
+      background-color: transparent;
+    }
+    .MuiOutlinedInput-adornedStart {
+      padding-left: 0px;
+    }
+    .MuiInputBase-root {
+      // width: 400px;
+      border-radius: 45px;
+      margin-bottom: 16px;
+      .MuiTypography-root {
+        background-color: #29a7df;
+        color: #fff;
+        padding: 8px;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
       }
     }
+    .MuiFormControl-root {
+      margin: 0px;
+      width: 100%;
+    }
     .register-next-btn {
-      padding-top: 53px;
+      padding-top: 40px;
       padding-bottom: 40px;
       .MuiButton-root {
         border-radius: 64px;
@@ -98,10 +98,17 @@
     margin-bottom: 10px;
     .MuiFormControlLabel-label {
       font-family: DM Sans;
-      font-weight: bold;
-      font-size: 16px;
+      // font-weight: bold;
+      font-size: 14px;
       color: #0f2851;
     }
+  }
+  .agree-term-condition {
+    font-family: DM Sans;
+    // font-weight: bold;
+    font-size: 14px;
+    color: #0f2851;
+    margin-top: 20px;
   }
   .company-fields-sign-up {
     margin-bottom: 16px;
@@ -119,9 +126,11 @@
     font-family: DM Sans;
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
+    color: #0f2851;
     .a-tag-sign-up {
+      text-decoration: underline;
       color: #29a7df;
     }
   }
@@ -133,7 +142,7 @@
     .register-section {
       width: 100%;
       .search-input {
-        width: 90%;
+        // width: 90%;
         .MuiFormControl-root {
           width: 100%;
           .MuiInputBase-root {

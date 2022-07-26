@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/lab/Alert";
 import Radio from "@mui/material/Radio";
@@ -136,9 +136,9 @@ const Register = (props) => {
       (firstname === "") |
       (lastname === "") |
       (email === "") |
-      (companyemail === "" && radioButton === 'business') |
-      (vat === "" && radioButton === 'business') |
-      (jobtitle === "" && radioButton === 'business') |
+      (companyemail === "" && radioButton === "business") |
+      (vat === "" && radioButton === "business") |
+      (jobtitle === "" && radioButton === "business") |
       (password === "") |
       (confirmpassword === "")
     ) {
@@ -199,83 +199,179 @@ const Register = (props) => {
           title={registerHeaderData.title}
           description={registerHeaderData.description}
         />
-        <div className="register-section">
-          <div className="search-input">
-            <form noValidate className="search-input">
+        <Container maxWidth="md" className="register-section">
+          <Grid container justifyContent="center">
+            <Grid item xs={12} sm={10} md={8} lg={6} className="search-input">
+              <form noValidate className="search-input">
+                <TextField
+                  label="First name"
+                  margin="normal"
+                  variant="outlined"
+                  size="small"
+                  name="firstname"
+                  value={firstname}
+                  onChange={handleChange}
+                  error={errors["firstname"].length > 0 ? true : false}
+                  className={
+                    errors["firstname"].length > 0
+                      ? classes.error
+                      : classes.root
+                  }
+                />
+
+                <TextField
+                  label="Last name"
+                  margin="normal"
+                  variant="outlined"
+                  size="small"
+                  value={lastname}
+                  onChange={handleChange}
+                  name="lastname"
+                  className={
+                    errors["lastname"].length > 0 ? classes.error : classes.root
+                  }
+                  error={errors["lastname"].length > 0 ? true : false}
+                />
+                <TextField
+                  label="email"
+                  margin="normal"
+                  variant="outlined"
+                  size="small"
+                  value={email}
+                  onChange={handleChange}
+                  name="email"
+                  className={
+                    errors["email"].length > 0 ? classes.error : classes.root
+                  }
+                  error={errors["email"].length > 0 ? true : false}
+                />
+                <TextField
+                  label="Password"
+                  margin="normal"
+                  variant="outlined"
+                  size="small"
+                  type="password"
+                  value={password}
+                  onChange={handleChange}
+                  name="password"
+                  className={
+                    errors["password"].length > 0 ? classes.error : classes.root
+                  }
+                  error={errors["password"].length > 0 ? true : false}
+                />
+                <TextField
+                  label="Confirm Password"
+                  margin="normal"
+                  variant="outlined"
+                  type="password"
+                  size="small"
+                  value={confirmpassword}
+                  onChange={handleChange}
+                  name="confirmpassword"
+                  className={
+                    errors["password"].length > 0 ? classes.error : classes.root
+                  }
+                  error={errors["confirmpassword"].length > 0 ? true : false}
+                />
+              </form>
+            </Grid>
+          </Grid>
+          <Grid container justifyContent="center">
+            <Grid item xs={12} sm={11} md={10} lg={8}>
+              <div>
+                <h1 className="a-tag-main">
+                  For our business customer, we also offer payment with credit,
+                  provided by our partner,{" "}
+                  <a
+                    className="a-tag-sign-up"
+                    href="https://marketfinance.com/"
+                    target="_blank"
+                  >
+                    Market Finance.
+                  </a>{" "}
+                  To sign up, please fill the form and submit. OtherWise please
+                  continue.
+                </h1>
+              </div>
               <div className="radio-button-in-signup">
                 <FormControl sx={{ width: "100%" }}>
                   <RadioGroup
-                    row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
-                    sx={{ display: "flex", justifyContent: "space-evenly" }}
+                    sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <FormControlLabel
-                        value="one-off"
-                        control={<Radio checked={radioButton === "one-off"} />}
-                        label="One-off"
-                        onChange={(e) => {
-                          setRadioButton(e.target.value);
-                        }}
-                    />
                     <FormControlLabel
                       value="business"
                       control={<Radio checked={radioButton === "business"} />}
-                      label="Business"
+                      label="Yes, I am a limited company and will like to sign up payment with credit"
                       onChange={(e) => {
                         setRadioButton(e.target.value);
                       }}
+                      sx={{ display: "flex", justifyContent: "center" }}
+                    />
+                    <FormControlLabel
+                      value="one-off"
+                      control={<Radio checked={radioButton === "one-off"} />}
+                      label="No, I am not a limited company or I prefer paying now"
+                      onChange={(e) => {
+                        setRadioButton(e.target.value);
+                      }}
+                      sx={{ display: "flex", justifyContent: "center" }}
                     />
                   </RadioGroup>
                 </FormControl>
               </div>
-              {radioButton === "business" && (
-                <Grid container justifyContent="space-between">
-                  <Grid item xs={12} className="company-fields-sign-up">
-                    <Autocomplete
-                      value={value}
-                      disablePortal
-                      onChange={(event, newValue) => {
-                        setValue(newValue);
-                      }}
-                      id="controllable-states-demo"
-                      freeSolo
-                      disableClearable
-                      options={details}
-                      getOptionLabel={(option) =>
-                        option.title ? option.title : ""
-                      }
-                      sx={{ width: "100%" }}
-                      renderInput={(params) => (
-                        <TextField
-                          value={value ? value : ""}
-                          {...params}
-                          label="Company name"
-                          className={classes.root}
-                          onChange={(e) => {
-                            getCompanyDetail(e.target.value);
-                          }}
-                        />
-                      )}
-                    />
-                  </Grid>
-                  {value?.address && (
-                    <>
-                      <Grid item xs={12}>
-                        <TextField
-                          label="Company Address"
-                          margin="normal"
-                          variant="outlined"
-                          size="small"
-                          name="Company Address"
-                          value={value?.address_snippet}
-                          InputProps={{
-                            readOnly: true,
-                            disableUnderline: true,
-                          }}
-                          className={classes.root}
-                        />
-                      </Grid>
+            </Grid>
+          </Grid>
+          {radioButton === "business" && (
+            <Grid container justifyContent="center" marginTop={2}>
+              <Grid item xs={12} sm={10} md={8} lg={6}>
+                <Grid container className="company-fields-sign-up">
+                  <Autocomplete
+                    value={value}
+                    disablePortal
+                    onChange={(event, newValue) => {
+                      setValue(newValue);
+                    }}
+                    id="controllable-states-demo"
+                    freeSolo
+                    disableClearable
+                    options={details}
+                    getOptionLabel={(option) =>
+                      option.title ? option.title : ""
+                    }
+                    sx={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField
+                        value={value ? value : ""}
+                        {...params}
+                        label="Company name"
+                        className={classes.root}
+                        onChange={(e) => {
+                          getCompanyDetail(e.target.value);
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+                {value?.address && (
+                  <>
+                    <Grid container>
+                      <TextField
+                        label="Company Address"
+                        margin="normal"
+                        variant="outlined"
+                        size="small"
+                        name="Company Address"
+                        value={value?.address_snippet}
+                        InputProps={{
+                          readOnly: true,
+                          disableUnderline: true,
+                        }}
+                        className={classes.root}
+                      />
+                    </Grid>
+                    <Grid container justifyContent="space-between">
                       <Grid item xs={5.8}>
                         <TextField
                           label="Company registration number"
@@ -342,121 +438,14 @@ const Register = (props) => {
                           }
                         />
                       </Grid>
-                    </>
-                  )}
-                </Grid>
-              )}
-              <TextField
-                label="First name"
-                margin="normal"
-                variant="outlined"
-                size="small"
-                name="firstname"
-                value={firstname}
-                onChange={handleChange}
-                error={errors["firstname"].length > 0 ? true : false}
-                className={
-                  errors["firstname"].length > 0 ? classes.error : classes.root
-                }
-              />
-
-              <TextField
-                label="Last name"
-                margin="normal"
-                variant="outlined"
-                size="small"
-                value={lastname}
-                onChange={handleChange}
-                name="lastname"
-                className={
-                  errors["lastname"].length > 0 ? classes.error : classes.root
-                }
-                error={errors["lastname"].length > 0 ? true : false}
-              />
-              <TextField
-                label="email"
-                margin="normal"
-                variant="outlined"
-                size="small"
-                value={email}
-                onChange={handleChange}
-                name="email"
-                className={
-                  errors["email"].length > 0 ? classes.error : classes.root
-                }
-                error={errors["email"].length > 0 ? true : false}
-              />
-              <TextField
-                label="Password"
-                margin="normal"
-                variant="outlined"
-                size="small"
-                type="password"
-                value={password}
-                onChange={handleChange}
-                name="password"
-                className={
-                  errors["password"].length > 0 ? classes.error : classes.root
-                }
-                error={errors["password"].length > 0 ? true : false}
-              />
-              <TextField
-                label="Confirm Password"
-                margin="normal"
-                variant="outlined"
-                type="password"
-                size="small"
-                value={confirmpassword}
-                onChange={handleChange}
-                name="confirmpassword"
-                className={
-                  errors["password"].length > 0 ? classes.error : classes.root
-                }
-                error={errors["confirmpassword"].length > 0 ? true : false}
-              />
-              {radioButton === "business" && (
-                <Grid container marginTop={1}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={checkedBox}
-                        onChange={() => {
-                          setCheckedBox(!checkedBox);
-                        }}
-                      />
-                    }
-                    label={
-                      <div className="a-tag-main">
-                        Do you want to sign up to market finance{" "}
-                        <a
-                          className="a-tag-sign-up"
-                          target='_blank'
-                          href="https://marketfinance.com/"
-                        >
-                          Learn More
-                        </a>
-                      </div>
-                    }
-                  />
-                  {checkedBox && (
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label={
-                        <div className="a-tag-main">
-                          <a
-                            className="a-tag-sign-up"
-                            target='_blank'
-                            href="https://marketfinance.com/skrap-marketpay"
-                          >
-                            I have read and understood how MarketPay works
-                          </a>
-                        </div>
-                      }
-                    />
-                  )}
-                </Grid>
-              )}
-            </form>
+                    </Grid>
+                  </>
+                )}
+              </Grid>
+            </Grid>
+          )}
+          <div className="agree-term-condition">
+            I agree with the term and conditions
           </div>
           <div className="register-loader">
             {props.signup.loading ? (
@@ -489,7 +478,7 @@ const Register = (props) => {
               <span>Sign In</span>
             </NavLink>{" "}
           </div>
-        </div>
+        </Container>
       </div>
       <Footer />
     </div>
