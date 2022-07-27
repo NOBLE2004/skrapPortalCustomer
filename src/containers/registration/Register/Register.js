@@ -289,17 +289,17 @@ const Register = (props) => {
             <Grid item xs={12} sm={11} md={10} lg={8}>
               <div>
                 <h1 className="a-tag-main">
-                  For our business customer, we also offer payment with credit,
-                  provided by our partner,{" "}
+                  Our business customers can take advantage of our new flexible
+                  credit option, powered by our partner,
                   <a
                     className="a-tag-sign-up"
                     href="https://marketfinance.com/skrap-marketpay"
                     target="_blank"
                   >
-                    Market Finance.
+                    MarketFinance.
                   </a>{" "}
-                  To sign up, please fill the form and submit. OtherWise please
-                  continue.
+                  To sign up to credit, please fill in the form and submit for
+                  review. If you wish to pay upfront, please continue
                 </h1>
               </div>
               <div className="radio-button-in-signup">
@@ -478,13 +478,13 @@ const Register = (props) => {
                 }
                 label={
                   <div>
-                    I agree with the{" "}
+                    I have read and understood
                     <a
                       href="https://marketfinance.com/skrap-marketpay"
                       target="_blank"
                       className="a-tag-sign-up"
                     >
-                      term and conditions
+                      how MarketPay works
                     </a>
                   </div>
                 }
