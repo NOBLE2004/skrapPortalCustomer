@@ -104,11 +104,15 @@
     }
   }
   .agree-term-condition {
-    font-family: DM Sans;
-    // font-weight: bold;
-    font-size: 14px;
-    color: #0f2851;
-    margin-top: 20px;
+    .MuiFormControlLabel-label {
+      font-family: DM Sans;
+      font-size: 14px;
+      color: #0f2851;
+    }
+    .a-tag-sign-up {
+      text-decoration: underline;
+      color: #29a7df;
+    }
   }
   .company-fields-sign-up {
     margin-bottom: 16px;
