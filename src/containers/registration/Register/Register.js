@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Grid } from "@mui/material";
+import { Button, Container, FormHelperText, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/lab/Alert";
 import Radio from "@mui/material/Radio";
@@ -28,7 +28,10 @@ const Register = (props) => {
   const [radioButton, setRadioButton] = useState("one-off");
   const [value, setValue] = useState({});
   const [details, setDetails] = useState([]);
-  const [checkedBox, setCheckedBox] = useState(false);
+  const [checkedBox, setCheckedBox] = useState({
+    value: false,
+    error: false,
+  });
   const [state, setState] = useState({
     firstname: "",
     lastname: "",
@@ -63,6 +66,7 @@ const Register = (props) => {
       case "password":
       case "confirmpassword":
       case "companyemail":
+      case "termandcondition":
       case "vat":
       case "jobtitle":
         errors[name] = value.length === 0 ? "Required" : "";
@@ -131,12 +135,17 @@ const Register = (props) => {
     checkingError(name, value);
   };
   const handleSubmit = async (e) => {
+    setCheckedBox((st) => ({
+      ...st,
+      error: !st.value,
+    }));
     e.preventDefault();
     if (
       (firstname === "") |
       (lastname === "") |
       (email === "") |
       (companyemail === "" && radioButton === "business") |
+      (checkedBox.value === false && radioButton === "business") |
       (vat === "" && radioButton === "business") |
       (jobtitle === "" && radioButton === "business") |
       (password === "") |
@@ -284,7 +293,7 @@ const Register = (props) => {
                   provided by our partner,{" "}
                   <a
                     className="a-tag-sign-up"
-                    href="https://marketfinance.com/"
+                    href="https://marketfinance.com/skrap-marketpay"
                     target="_blank"
                   >
                     Market Finance.
@@ -444,9 +453,48 @@ const Register = (props) => {
               </Grid>
             </Grid>
           )}
-          <div className="agree-term-condition">
-            I agree with the term and conditions
-          </div>
+          {radioButton === "business" && (
+            <div className="agree-term-condition">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={checkedBox.value}
+                    checked={checkedBox.value}
+                    onChange={(e) => {
+                      setCheckedBox((st) => ({
+                        ...st,
+                        value: e.target.checked,
+                        error: !e.target.checked,
+                      }));
+                    }}
+                    sx={
+                      checkedBox.error === true
+                        ? {
+                            color: "red",
+                          }
+                        : {}
+                    }
+                  />
+                }
+                label={
+                  <div>
+                    I agree with the{" "}
+                    <a
+                      href="https://marketfinance.com/skrap-marketpay"
+                      target="_blank"
+                      className="a-tag-sign-up"
+                    >
+                      term and conditions
+                    </a>
+                  </div>
+                }
+                value={checkedBox}
+                style={{
+                  color: "#00e676",
+                }}
+              />
+            </div>
+          )}
           <div className="register-loader">
             {props.signup.loading ? (
               <FadeLoader
