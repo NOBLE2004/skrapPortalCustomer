@@ -480,7 +480,7 @@ const Register = (props) => {
                   <div>
                     I have read and understood
                     <a
-                      href="https://marketfinance.com/skrap-marketpay"
+                      href="https://marketfinance.com"
                       target="_blank"
                       className="a-tag-sign-up"
                     >
