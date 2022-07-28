@@ -290,10 +290,10 @@ const Register = (props) => {
               <div>
                 <h1 className="a-tag-main">
                   Our business customers can take advantage of our new flexible
-                  credit option, powered by our partner,
+                  credit option, powered by our partner,{" "}
                   <a
                     className="a-tag-sign-up"
-                    href="https://marketfinance.com/skrap-marketpay"
+                    href="https://marketfinance.com/"
                     target="_blank"
                   >
                     MarketFinance.
@@ -478,7 +478,7 @@ const Register = (props) => {
                 }
                 label={
                   <div>
-                    I have read and understood
+                    I have read and understood{" "}
                     <a
                       href="https://marketfinance.com"
                       target="_blank"
