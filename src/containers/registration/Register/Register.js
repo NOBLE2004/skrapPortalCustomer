@@ -480,9 +480,9 @@ const Register = (props) => {
                   <div>
                     I have read and understood{" "}
                     <a
-                      href="https://marketfinance.com"
+                      href="https://marketfinance.com/skrap-marketpay"
                       target="_blank"
-                      className="a-tag-sign-up"
+                      className="a-tag-sign-up" rel="noreferrer"
                     >
                       how MarketPay works
                     </a>
