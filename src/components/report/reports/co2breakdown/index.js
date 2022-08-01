@@ -162,7 +162,7 @@ const Co2breakdownReport = (props) => {
                         : "KWhr of energy"}
                     </p>
                     <label>
-                      Equivalent to 5000 <br />
+                      Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? wasteOfEnergyData?.data?.result?.kwh / 0.2 : 0 } <br />
                       smartphone charges
                     </label>
                   </div>
@@ -269,7 +269,7 @@ const Co2breakdownReport = (props) => {
                           <div className="site-name">
                             <div className="site">{service.address}</div>
                             <div className="percentage">
-                              {service.tonnage} T
+                              {service?.tonnage?.toFixed(2)} T
                             </div>
                           </div>
                         </div>
