@@ -15,7 +15,7 @@ const CommonHeader = ({
   handleBookJob,
   isJob,
   isSite,
-  handleCreateJob, siteManager
+  handleCreateJob,handleCreateSite, siteManager
 }) => {
   const [userData, setUserData] = useState(0);
   useEffect(() => {
@@ -51,7 +51,7 @@ const CommonHeader = ({
               </button>
             </>
         )}
-        <button className="header-btn" onClick={handleCreateJob}>
+        <button className="header-btn" onClick={handleCreateSite}>
           Create Site
         </button>
 

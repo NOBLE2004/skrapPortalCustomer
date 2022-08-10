@@ -17,6 +17,7 @@ import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRende
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import JobFilters from "../../components/filters/jobFilters";
 import CreateJob from "../../components/modals/createJob/CreateJob";
+import CreateSite from "../../components/modals/createSite/CreateSite";
 import "./mainjobs.scss";
 import {
   getUserDataFromLocalStorage,
@@ -35,6 +36,7 @@ const MainJobs = (props) => {
   const [isMapView, setMapView] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
   const [isJobBooked, setIsJobBooked] = useState(false);
+  const [createSite, setCreateSite] = useState(false);
   const [isJobCreated, setIsJobCreated] = useState(false);
   const [limit, setLimit] = useState(10);
   const { info, loading } = props.dashboard;
@@ -52,6 +54,10 @@ const MainJobs = (props) => {
   const handleJobCreated = useCallback(() => {
     setIsJobCreated(!isJobCreated);
   }, [isJobCreated]);
+
+    const handleCreateSite = useCallback(() => {
+        setCreateSite(true);
+    }, [createSite]);
 
   useEffect(() => {
     async function fetchData() {
@@ -134,6 +140,7 @@ const MainJobs = (props) => {
         handleShowMap={handleShowMap}
         isMap={isMapView}
         handleBookJob={handleBookJob}
+        handleCreateSite={handleCreateSite}
         downloadCSV={false}
         showButton={true}
       >
@@ -314,6 +321,12 @@ const MainJobs = (props) => {
           handleJobCreated={handleJobCreated}
         />
       )}
+        {createSite && (
+            <CreateSite
+                closeModal={() => setCreateSite(!createSite)}
+                sites={true}
+            />
+        )}
     </div>
   );
 };
