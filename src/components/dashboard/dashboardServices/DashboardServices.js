@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { CircleProgress } from "react-gradient-progress";
 
@@ -12,6 +12,21 @@ const DashboardServices = ({ servicesData }) => {
   const [showValue, setShowValue] = useState(false);
   const { Cage, Skip, Grab, NumberOfJobs, Aggregate, PortableToilet } =
     servicesData;
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    Cage.name = 'Cage';
+    Skip.name = 'Skip';
+    Grab.name = 'Grab';
+    Aggregate.name = 'Aggregate';
+    PortableToilet.name = 'PortableToilet';
+    let list = [Cage,Skip,Grab,Aggregate,PortableToilet].sort(function(a, b) {
+      console.log(a);
+      var x = a['count']; var y = b['count'];
+      return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    });
+   setServices(list);
+  }, [servicesData]);
   return (
     <div className="dashboard-services-main">
       <div className="services-main">
@@ -33,215 +48,221 @@ const DashboardServices = ({ servicesData }) => {
         </div>
       </div>
       <div className="progress-main">
-        <div className="progress-sub">
-          <div className="circular-progress" style={{ position: "relative" }}>
-            <p style={{ position: "absolute", bottom: "60px" }}>Skips</p>
-            <div>
-              <CircleProgress
-                width={180}
-                strokeWidth={15}
-                fontFamily={"DM Sans"}
-                fontSize={"20px"}
-                fontColor={"#5a9df9"}
-                fontWeight={"700"}
-                secondaryColor={"#F7F7F7"}
-                hidePercentageText={showValue ? true : false}
-                percentage={
-                  Skip
-                    ? Skip?.count
-                      ? ((Skip.count / NumberOfJobs) * 100).toFixed(0)
-                      : 0
-                    : 0
-                }
-                primaryColor={["#73C6F9", "#5391F9"]}
-              />
-              {showValue ? (
-                <div className="circle-text" style={{}}>
-                  {Skip?.total
-                    ? "£" + parseInt(Skip.total).toLocaleString()
-                    : "£" + 0}
-                </div>
-              ) : (
-                ""
-              )}
+
+        {services.map((service)=> {
+          return(<div className="progress-sub">
+            <div className="circular-progress" style={{ position: "relative" }}>
+              <p style={{ position: "absolute", bottom: "60px" }}>{service.name}</p>
+              <div>
+                <CircleProgress
+                    width={180}
+                    strokeWidth={15}
+                    fontFamily={"DM Sans"}
+                    fontSize={"20px"}
+                    fontColor={"#5a9df9"}
+                    fontWeight={"700"}
+                    secondaryColor={"#F7F7F7"}
+                    hidePercentageText={showValue ? true : false}
+                    percentage={
+                      service
+                          ? service?.count
+                              ? ((service.count / NumberOfJobs) * 100).toFixed(0)
+                              : 0
+                          : 0
+                    }
+                    primaryColor={["#73C6F9", "#5391F9"]}
+                />
+                {showValue ? (
+                    <div className="circle-text" style={{}}>
+                      {service?.total
+                          ? "£" + parseInt(service.total).toLocaleString()
+                          : "£" + 0}
+                    </div>
+                ) : (
+                    ""
+                )}
+              </div>
             </div>
-          </div>
-          <div className="order-percentage">
+            <div className="order-percentage">
             <span className="order-title">
               {" "}
-              {Skip?.count ? Skip.count : 0} / {NumberOfJobs}{" "}
+              {service?.count ? service.count : 0} / {NumberOfJobs}{" "}
             </span>
-            <span className="orders">orders</span>
-          </div>
-        </div>
-
-        <div className="progress-sub">
-          <div className="circular-progress" style={{ position: "relative" }}>
-            <p style={{ position: "absolute", bottom: "60px" }}>Grab</p>
-            <div>
-              <CircleProgress
-                width={180}
-                strokeWidth={15}
-                fontFamily={"DM Sans"}
-                bottom={20}
-                fontSize={"20px"}
-                fontColor={"#5a9df9"}
-                fontWeight={"700"}
-                secondaryColor={"#F7F7F7"}
-                hidePercentageText={showValue ? true : false}
-                percentage={
-                  Grab
-                    ? Grab?.count
-                      ? ((Grab.count / NumberOfJobs) * 100).toFixed(0)
-                      : 0
-                    : 0
-                }
-                primaryColor={["#73C6F9", "#5391F9"]}
-              />
-              {showValue ? (
-                <div className="circle-text" style={{}}>
-                  {Grab?.total
-                    ? "£" + parseInt(Grab.total).toLocaleString()
-                    : "£" + 0}
-                </div>
-              ) : (
-                ""
-              )}
+              <span className="orders">orders</span>
             </div>
-          </div>
-          <div className="order-percentage">
-            <span className="order-title">
-              {Grab?.count ? Grab.count : 0} / {NumberOfJobs}
-            </span>
-            <span className="orders">orders</span>
-          </div>
-        </div>
+          </div>)
+        })}
 
-        <div className="progress-sub">
-          <div className="circular-progress" style={{ position: "relative" }}>
-            <p style={{ position: "absolute", bottom: "60px" }}>Cage</p>
-            <div>
-              <CircleProgress
-                width={180}
-                strokeWidth={15}
-                fontFamily={"DM Sans"}
-                fontSize={"20px"}
-                fontColor={"#5a9df9"}
-                fontWeight={"700"}
-                secondaryColor={"#F7F7F7"}
-                hidePercentageText={showValue ? true : false}
-                percentage={
-                  Cage
-                    ? Cage?.count
-                      ? ((Cage.count / NumberOfJobs) * 100).toFixed(0)
-                      : 0
-                    : 0
-                }
-                primaryColor={["#73C6F9", "#5391F9"]}
-              />
-              {showValue ? (
-                <div className="circle-text" style={{}}>
-                  {Cage?.total
-                    ? "£" + parseInt(Cage.total).toLocaleString()
-                    : "£" + 0}
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-          <div className="order-percentage">
-            <span className="order-title">
-              {Cage?.count ? Cage.count : 0} / {NumberOfJobs}
-            </span>
-            <span className="orders">orders</span>
-          </div>
-        </div>
 
-        <div className="progress-sub">
-          <div className="circular-progress" style={{ position: "relative" }}>
-            <p style={{ position: "absolute", bottom: "60px" }}>Aggregate</p>
-            <div>
-              <CircleProgress
-                width={180}
-                strokeWidth={15}
-                fontFamily={"DM Sans"}
-                fontSize={"20px"}
-                fontColor={"#5a9df9"}
-                fontWeight={"700"}
-                secondaryColor={"#F7F7F7"}
-                hidePercentageText={showValue ? true : false}
-                percentage={
-                  Aggregate
-                    ? Aggregate?.count
-                      ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0)
-                      : 0
-                    : 0
-                }
-                primaryColor={["#73C6F9", "#5391F9"]}
-              />
-              {showValue ? (
-                <div className="circle-text" style={{}}>
-                  {Aggregate?.count
-                    ? "£" + parseInt(Aggregate.total).toLocaleString()
-                    : "£" + 0}
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-          <div className="order-percentage">
-            <span className="order-title">
-              {Aggregate?.count ? Aggregate.count : 0} / {NumberOfJobs}
-            </span>
-            <span className="orders">orders</span>
-          </div>
-        </div>
 
-        <div className="progress-sub">
-          <div className="circular-progress" style={{ position: "relative" }}>
-            <p style={{ position: "absolute", bottom: "60px" }}>
-              PortableToilet
-            </p>
-            <div>
-              <CircleProgress
-                width={180}
-                strokeWidth={15}
-                fontFamily={"DM Sans"}
-                fontSize={"20px"}
-                fontColor={"#5a9df9"}
-                fontWeight={"700"}
-                secondaryColor={"#F7F7F7"}
-                hidePercentageText={showValue ? true : false}
-                percentage={
-                  PortableToilet
-                    ? PortableToilet?.count
-                      ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0)
-                      : 0
-                    : 0
-                }
-                primaryColor={["#73C6F9", "#5391F9"]}
-              />
-              {showValue ? (
-                <div className="circle-text" style={{}}>
-                  {PortableToilet?.total
-                    ? "£" + parseInt(PortableToilet.total).toLocaleString()
-                    : "£" + 0}
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-          <div className="order-percentage">
-            <span className="order-title">
-              {PortableToilet?.count ? PortableToilet.count : 0} /{" "}
-              {NumberOfJobs}
-            </span>
-            <span className="orders">orders</span>
-          </div>
-        </div>
+
+        {/*<div className="progress-sub">*/}
+        {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
+        {/*    <p style={{ position: "absolute", bottom: "60px" }}>Grab</p>*/}
+        {/*    <div>*/}
+        {/*      <CircleProgress*/}
+        {/*        width={180}*/}
+        {/*        strokeWidth={15}*/}
+        {/*        fontFamily={"DM Sans"}*/}
+        {/*        bottom={20}*/}
+        {/*        fontSize={"20px"}*/}
+        {/*        fontColor={"#5a9df9"}*/}
+        {/*        fontWeight={"700"}*/}
+        {/*        secondaryColor={"#F7F7F7"}*/}
+        {/*        hidePercentageText={showValue ? true : false}*/}
+        {/*        percentage={*/}
+        {/*          Grab*/}
+        {/*            ? Grab?.count*/}
+        {/*              ? ((Grab.count / NumberOfJobs) * 100).toFixed(0)*/}
+        {/*              : 0*/}
+        {/*            : 0*/}
+        {/*        }*/}
+        {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
+        {/*      />*/}
+        {/*      {showValue ? (*/}
+        {/*        <div className="circle-text" style={{}}>*/}
+        {/*          {Grab?.total*/}
+        {/*            ? "£" + parseInt(Grab.total).toLocaleString()*/}
+        {/*            : "£" + 0}*/}
+        {/*        </div>*/}
+        {/*      ) : (*/}
+        {/*        ""*/}
+        {/*      )}*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*  <div className="order-percentage">*/}
+        {/*    <span className="order-title">*/}
+        {/*      {Grab?.count ? Grab.count : 0} / {NumberOfJobs}*/}
+        {/*    </span>*/}
+        {/*    <span className="orders">orders</span>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+
+        {/*<div className="progress-sub">*/}
+        {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
+        {/*    <p style={{ position: "absolute", bottom: "60px" }}>Cage</p>*/}
+        {/*    <div>*/}
+        {/*      <CircleProgress*/}
+        {/*        width={180}*/}
+        {/*        strokeWidth={15}*/}
+        {/*        fontFamily={"DM Sans"}*/}
+        {/*        fontSize={"20px"}*/}
+        {/*        fontColor={"#5a9df9"}*/}
+        {/*        fontWeight={"700"}*/}
+        {/*        secondaryColor={"#F7F7F7"}*/}
+        {/*        hidePercentageText={showValue ? true : false}*/}
+        {/*        percentage={*/}
+        {/*          Cage*/}
+        {/*            ? Cage?.count*/}
+        {/*              ? ((Cage.count / NumberOfJobs) * 100).toFixed(0)*/}
+        {/*              : 0*/}
+        {/*            : 0*/}
+        {/*        }*/}
+        {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
+        {/*      />*/}
+        {/*      {showValue ? (*/}
+        {/*        <div className="circle-text" style={{}}>*/}
+        {/*          {Cage?.total*/}
+        {/*            ? "£" + parseInt(Cage.total).toLocaleString()*/}
+        {/*            : "£" + 0}*/}
+        {/*        </div>*/}
+        {/*      ) : (*/}
+        {/*        ""*/}
+        {/*      )}*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*  <div className="order-percentage">*/}
+        {/*    <span className="order-title">*/}
+        {/*      {Cage?.count ? Cage.count : 0} / {NumberOfJobs}*/}
+        {/*    </span>*/}
+        {/*    <span className="orders">orders</span>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+
+        {/*<div className="progress-sub">*/}
+        {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
+        {/*    <p style={{ position: "absolute", bottom: "60px" }}>Aggregate</p>*/}
+        {/*    <div>*/}
+        {/*      <CircleProgress*/}
+        {/*        width={180}*/}
+        {/*        strokeWidth={15}*/}
+        {/*        fontFamily={"DM Sans"}*/}
+        {/*        fontSize={"20px"}*/}
+        {/*        fontColor={"#5a9df9"}*/}
+        {/*        fontWeight={"700"}*/}
+        {/*        secondaryColor={"#F7F7F7"}*/}
+        {/*        hidePercentageText={showValue ? true : false}*/}
+        {/*        percentage={*/}
+        {/*          Aggregate*/}
+        {/*            ? Aggregate?.count*/}
+        {/*              ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0)*/}
+        {/*              : 0*/}
+        {/*            : 0*/}
+        {/*        }*/}
+        {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
+        {/*      />*/}
+        {/*      {showValue ? (*/}
+        {/*        <div className="circle-text" style={{}}>*/}
+        {/*          {Aggregate?.count*/}
+        {/*            ? "£" + parseInt(Aggregate.total).toLocaleString()*/}
+        {/*            : "£" + 0}*/}
+        {/*        </div>*/}
+        {/*      ) : (*/}
+        {/*        ""*/}
+        {/*      )}*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*  <div className="order-percentage">*/}
+        {/*    <span className="order-title">*/}
+        {/*      {Aggregate?.count ? Aggregate.count : 0} / {NumberOfJobs}*/}
+        {/*    </span>*/}
+        {/*    <span className="orders">orders</span>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+
+        {/*<div className="progress-sub">*/}
+        {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
+        {/*    <p style={{ position: "absolute", bottom: "60px" }}>*/}
+        {/*      PortableToilet*/}
+        {/*    </p>*/}
+        {/*    <div>*/}
+        {/*      <CircleProgress*/}
+        {/*        width={180}*/}
+        {/*        strokeWidth={15}*/}
+        {/*        fontFamily={"DM Sans"}*/}
+        {/*        fontSize={"20px"}*/}
+        {/*        fontColor={"#5a9df9"}*/}
+        {/*        fontWeight={"700"}*/}
+        {/*        secondaryColor={"#F7F7F7"}*/}
+        {/*        hidePercentageText={showValue ? true : false}*/}
+        {/*        percentage={*/}
+        {/*          PortableToilet*/}
+        {/*            ? PortableToilet?.count*/}
+        {/*              ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0)*/}
+        {/*              : 0*/}
+        {/*            : 0*/}
+        {/*        }*/}
+        {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
+        {/*      />*/}
+        {/*      {showValue ? (*/}
+        {/*        <div className="circle-text" style={{}}>*/}
+        {/*          {PortableToilet?.total*/}
+        {/*            ? "£" + parseInt(PortableToilet.total).toLocaleString()*/}
+        {/*            : "£" + 0}*/}
+        {/*        </div>*/}
+        {/*      ) : (*/}
+        {/*        ""*/}
+        {/*      )}*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*  <div className="order-percentage">*/}
+        {/*    <span className="order-title">*/}
+        {/*      {PortableToilet?.count ? PortableToilet.count : 0} /{" "}*/}
+        {/*      {NumberOfJobs}*/}
+        {/*    </span>*/}
+        {/*    <span className="orders">orders</span>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </div>
     </div>
   );
