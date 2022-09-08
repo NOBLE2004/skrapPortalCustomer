@@ -405,11 +405,11 @@ const EmissionReport = (props) => {
                     {state?.data?.year?.map((value, index) => (
                       <div className="sub-heading progress-label" key={index}>
                         <p className="text left">
-                          Tank-to-wheel <br />
+                          Well-to-tank <br />
                           <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>
                         </p>
                         <p className="text right">
-                          Well-to-tank <br />
+                          Tank-to-wheel <br />
                           <span> {value?.WTTCo2e.toFixed(2)} Co2e</span>
                         </p>
                       </div>
