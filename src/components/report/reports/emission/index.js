@@ -314,8 +314,8 @@ const EmissionReport = (props) => {
                       site journeys
                     </p>
                     <p>
-                      <span>525.5 miles</span> equivalent to driving from{" "}
-                      <b>London</b> to <b>Berlin</b>
+                      <span>525.5 miles</span> equivalent to driving from {" "}
+                      <b>London</b> to <b> Cairngorms National Park</b>
                     </p>
                   </div>
                   {stateSiteBreakDown?.isLoading ? (
@@ -405,7 +405,7 @@ const EmissionReport = (props) => {
                     {state?.data?.year?.map((value, index) => (
                       <div className="sub-heading progress-label" key={index}>
                         <p className="text left">
-                          Tank-to-well <br />
+                          Tank-to-wheel <br />
                           <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>
                         </p>
                         <p className="text right">
