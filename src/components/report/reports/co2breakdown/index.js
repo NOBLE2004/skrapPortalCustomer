@@ -269,7 +269,7 @@ const Co2breakdownReport = (props) => {
                           <div className="site-name">
                             <div className="site">{service.address}</div>
                             <div className="percentage">
-                              {service.tonnage} T
+                              {service?.tonnage?.toFixed(2)} T
                             </div>
                           </div>
                         </div>

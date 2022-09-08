@@ -182,8 +182,8 @@ const Register = (props) => {
       user_name: firstname + lastname,
       user_type: 1,
       vat_number: vat,
-      title: value?.title,
-      company_registration_number: value?.company_registration_number,
+      company: value?.title,
+      company_registration_number: value?.company_number,
       company_address: value?.address_snippet,
       company_email: companyemail,
       company_position_title: jobtitle,
@@ -294,7 +294,7 @@ const Register = (props) => {
                   <a
                     className="a-tag-sign-up"
                     href="https://marketfinance.com/"
-                    target="_blank"
+                    target="_blank" rel="noreferrer"
                   >
                     MarketFinance.
                   </a>{" "}
