@@ -236,12 +236,11 @@ const EmissionReport = (props) => {
                     />
                   </div>
                   <div className="total">
-                    Total payment:{" "}
+                    Total CO2:{" "}
                     <span>
-                      £
                       {state?.data?.year?.length > 0
                         ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
-                        : `0.00`}
+                        : `0.00`} Kg
                     </span>
                   </div>
                 </div>
