@@ -1297,8 +1297,8 @@ export default function CreateJob({
                     value={selectedMarketPay}
                     onChange={handleChange}
                   >
-                    {acountInfo && acountInfo.pay30_eofm
-                      ? MARKET_PAY_LIST.map((data, index) => {
+                    {acountInfo
+                      && MARKET_PAY_LIST.map((data, index) => {
                           return (
                             <>
                               <div className="marketMain">
@@ -1338,29 +1338,8 @@ export default function CreateJob({
                               )}
                             </>
                           );
-                        })
-                      : MARKET_PAY_LIST1.map((data, index) => {
-                          return (
-                            <div className="marketMain">
-                              <FormControlLabel
-                                key={data.id}
-                                value={data.id}
-                                control={<Radio color="primary" />}
-                                label={`${data.title}`}
-                              />
-
-                              <img
-                                src={marketInfoIcon}
-                                alt="market"
-                                className="tool-img"
-                                onClick={() => handleToolTip(index)}
-                              />
-                              {showToolTip && data.tooltip && (
-                                <ToolTipCard data={data.tooltip} />
-                              )}
-                            </div>
-                          );
                         })}
+
                   </RadioGroup>
                 )}
               </>

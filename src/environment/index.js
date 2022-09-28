@@ -105,15 +105,15 @@ export const JOB_STATUS = [
   { id: 6, status: "Pickup Ongoing" },
 ];
 export const MARKET_PAY_LIST = [
+  // {
+  //   id: "PAY30 ",
+  //   title: "Pay in 30 days",
+  //   tooltip:
+  //     "Pay by bank transfer on the 30th day after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by",
+  //   text: "Remaining credit after transaction",
+  // },
   {
-    id: "PAY30 ",
-    title: "Pay in 30 days",
-    tooltip:
-      "Pay by bank transfer on the 30th day after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by",
-    text: "Remaining credit after transaction",
-  },
-  {
-    id: "PAY60",
+    id: "PAY30EOFM",
     title: "Pay end of month following",
     tooltip1:
       "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
