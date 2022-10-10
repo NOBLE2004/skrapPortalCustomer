@@ -319,11 +319,8 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     const newEndTime = endTime.trim().slice(0, 5);
     const currentYear = startSelectedDate.getFullYear();
     const dateString = currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
-    console.log(newCurrentMonth, dateString)
     const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
     const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
-    console.log(job_start_time, job_end_time)
-    return false;
 
     let data = {
       card_id: selectedPaymentMethod,
