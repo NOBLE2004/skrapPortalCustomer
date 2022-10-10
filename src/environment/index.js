@@ -11,8 +11,8 @@ import {
   tipingBlack,
   statementBlack,
 } from "../assets/images/index";
-//export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
-export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
+export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
+//export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
 export const API_URL = `${APP_URL}`;
 export const ENV = `prod`;
 export const USER = 236;
@@ -39,7 +39,7 @@ export const REGISTER = {
   SUCCESS_MESSAGE: "User Created Successfully!",
   FAILURE_HEADER: "Failure",
   FAILURE_MESSAGE:
-    "Cannot Create User! User may already have been created with the given email!",
+      "Cannot Create User! User may already have been created with the given email!",
 };
 export const LOGIN = {
   FAILURE_HEADER: "Failure",
@@ -113,10 +113,10 @@ export const MARKET_PAY_LIST = [
   //   text: "Remaining credit after transaction",
   // },
   {
-    id: "PAY30EOFM",
+    id: "PAY60",
     title: "Pay end of month following",
     tooltip1:
-      "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
+        "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
   },
 ];
 
@@ -125,7 +125,7 @@ export const MARKET_PAY_LIST1 = [
     id: "PAY30 ",
     title: "Pay in 30 days",
     tooltip:
-      "Pay by bank transfer on the 30th day after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
+        "Pay by bank transfer on the 30th day after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
     text: "Remaining credit after transaction",
   },
 ];
