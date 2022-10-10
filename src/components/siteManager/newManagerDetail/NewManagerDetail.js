@@ -12,7 +12,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
       {data ? (
         <Card className="new-manager-detail-main">
           <CardContent>
-            <div className="title">Manager's Details</div>
+            <div className="title">Manager Details</div>
             <Grid container spacing={3} className="manager-sub-detail">
               <Grid item md={2}>
                 <img src={personImage} alt="person-img" />

@@ -166,7 +166,7 @@ const NewReports = () => {
           handleChange={handleChange}
           selected={selected}
         />
-        <ReportFilters />
+        {/*<ReportFilters />*/}
         <div className="report-grid">
           <Masonry container columns={2} spacing={4}>
             <div className="report-chart-card-outer">

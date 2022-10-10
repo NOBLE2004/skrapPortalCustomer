@@ -11,8 +11,8 @@ import {
   tipingBlack,
   statementBlack,
 } from "../assets/images/index";
-export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
- //export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
+//export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
+export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
 export const API_URL = `${APP_URL}`;
 export const ENV = `prod`;
 export const USER = 236;
@@ -113,7 +113,7 @@ export const MARKET_PAY_LIST = [
   //   text: "Remaining credit after transaction",
   // },
   {
-    id: "PAY60",
+    id: "PAY30EOFM",
     title: "Pay end of month following",
     tooltip1:
       "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
