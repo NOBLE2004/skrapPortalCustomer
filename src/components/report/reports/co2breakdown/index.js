@@ -161,10 +161,10 @@ const Co2breakdownReport = (props) => {
                         ? wasteOfEnergyData?.data?.result?.kwh_title
                         : "KWhr of energy"}
                     </p>
-                    <label>
-                      Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />
-                      smartphone charges
-                    </label>
+                    {/*<label>*/}
+                    {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
+                    {/*  smartphone charges*/}
+                    {/*</label>*/}
                   </div>
                 </div>
               </div>
