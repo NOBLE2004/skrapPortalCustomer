@@ -124,7 +124,7 @@ const Co2breakdownReport = (props) => {
                         ? recycledData?.data?.result?.emco2_title
                         : "tonns CO2"}
                     </p>
-                    <label>Equivalent to 200 trees</label>
+                    {/*<label>Equivalent to 200 trees</label>*/}
                     <p>
                       {recycledData?.data?.result?.saved
                           ? recycledData?.data?.result?.saved
