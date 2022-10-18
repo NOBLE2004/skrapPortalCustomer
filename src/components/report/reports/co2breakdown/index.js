@@ -124,7 +124,7 @@ const Co2breakdownReport = (props) => {
                         ? recycledData?.data?.result?.emco2_title
                         : "tonns CO2"}
                     </p>
-                    <label>Equivalent to 200 trees</label>
+                    {/*<label>Equivalent to 200 trees</label>*/}
                     <p>
                       {recycledData?.data?.result?.saved
                           ? recycledData?.data?.result?.saved
@@ -161,10 +161,10 @@ const Co2breakdownReport = (props) => {
                         ? wasteOfEnergyData?.data?.result?.kwh_title
                         : "KWhr of energy"}
                     </p>
-                    <label>
-                      Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? wasteOfEnergyData?.data?.result?.kwh / 0.2 : 0 } <br />
-                      smartphone charges
-                    </label>
+                    {/*<label>*/}
+                    {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
+                    {/*  smartphone charges*/}
+                    {/*</label>*/}
                   </div>
                 </div>
               </div>
