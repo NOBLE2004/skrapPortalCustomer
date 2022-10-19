@@ -93,7 +93,7 @@ const Co2breakdownReport = (props) => {
                   </span>
                 </div>
               </div>
-              <div className="salesWp-sub">
+              <div className="salesWp-sub" style={{alignItems: 'flex-start'}}>
                 <div className="guage-with-text">
                   <CircleProgress
                     width={100}
@@ -153,14 +153,14 @@ const Co2breakdownReport = (props) => {
                         ? wasteOfEnergyData?.data?.result?.title
                         : "Waste of energy"}
                     </h1>
-                    <p>
-                      {wasteOfEnergyData?.data?.result?.kwh
-                        ? wasteOfEnergyData?.data?.result?.kwh
-                        : 0}{" "}
-                      {wasteOfEnergyData?.data?.result?.kwh_title
-                        ? wasteOfEnergyData?.data?.result?.kwh_title
-                        : "KWhr of energy"}
-                    </p>
+                    {/*<p>*/}
+                    {/*  {wasteOfEnergyData?.data?.result?.kwh*/}
+                    {/*    ? wasteOfEnergyData?.data?.result?.kwh*/}
+                    {/*    : 0}{" "}*/}
+                    {/*  {wasteOfEnergyData?.data?.result?.kwh_title*/}
+                    {/*    ? wasteOfEnergyData?.data?.result?.kwh_title*/}
+                    {/*    : "KWhr of energy"}*/}
+                    {/*</p>*/}
                     {/*<label>*/}
                     {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
                     {/*  smartphone charges*/}
