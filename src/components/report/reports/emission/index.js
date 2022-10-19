@@ -312,10 +312,10 @@ const EmissionReport = (props) => {
                       </span>{" "}
                       site journeys
                     </p>
-                    <p>
-                      <span>525.5 miles</span> equivalent to driving from{" "}
-                      <b>London</b> to <b>Berlin</b>
-                    </p>
+                    {/*<p>*/}
+                    {/*  <span>525.5 miles</span> equivalent to driving from{" "}*/}
+                    {/*  <b>London</b> to <b>Berlin</b>*/}
+                    {/*</p>*/}
                   </div>
                   {stateSiteBreakDown?.isLoading ? (
                     <div className="d-flex justify-center align-center">

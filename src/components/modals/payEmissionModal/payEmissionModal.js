@@ -197,7 +197,7 @@ function PayEmissionModal(props) {
                   className="label-for-checkbox-emission-modal"
                   style={{ marginBottom: "4px" }}
                 >
-                  How many KG's you need to offset.?
+                  How many kg of CO₂e needs to offset?
                 </label>
                 <TextField
                   label="Amount"
