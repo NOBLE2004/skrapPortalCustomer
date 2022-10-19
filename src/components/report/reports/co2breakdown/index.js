@@ -151,7 +151,7 @@ const Co2breakdownReport = (props) => {
                     <h1>
                       {wasteOfEnergyData?.data?.result?.title
                         ? wasteOfEnergyData?.data?.result?.title
-                        : "Waste of energy"}
+                        : "Waste to energy"}
                     </h1>
                     {/*<p>*/}
                     {/*  {wasteOfEnergyData?.data?.result?.kwh*/}
