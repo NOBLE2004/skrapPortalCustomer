@@ -91,6 +91,7 @@ export default function CreateJob({
   const [roleId, setRoleId] = useState(0);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [addNewCard, setAddNewCard] = useState(false);
+  const user = localStorage.getItem('c_d_storage');
   const [errors, setError] = useState({
     customer: "",
     service: "",
@@ -1116,11 +1117,11 @@ export default function CreateJob({
             <div className="service-cost-width">
               <p>Service Cost</p>
               <TextField
-                value={serviceCost}
+                value={`${(serviceCost/1.2)?.toFixed(2)} + Vat`}
                 onChange={handleChange}
                 placeholder="£"
                 name="serviceCost"
-                type="number"
+                type="text"
                 variant="outlined"
                 disabled={(serviceCost !== null) | (serviceCost !== undefined)}
                 margin="dense"
@@ -1172,7 +1173,6 @@ export default function CreateJob({
                             <em>None</em>
                           </MenuItem>
                           <MenuItem value="10">MarketPay</MenuItem>
-                          <MenuItem value="0">Stripe</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
@@ -1229,9 +1229,9 @@ export default function CreateJob({
                 <TextField
                   placeholder="£"
                   name="totalCost"
-                  value={totalCost}
+                  value={`${totalCost?.toFixed(2)} Inc vat`}
                   onChange={handleChange}
-                  type="number"
+                  type="text"
                   variant="outlined"
                   margin="dense"
                   disabled={(totalCost !== null) | (totalCost !== undefined)}
