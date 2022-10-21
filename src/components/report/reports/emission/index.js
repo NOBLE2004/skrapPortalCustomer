@@ -141,12 +141,12 @@ const EmissionReport = (props) => {
   };
 
   let value = [
-  
     {
+      type: "column",
       name: "",
       data: max
-        ? [max, max, max, max, max, max, max, max, max, max, max, max]
-        : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+          ? [max, max, max, max, max, max, max, max, max, max, max, max]
+          : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
       borderWidth: 0,
       stack: 1,
       borderSkipped: false,
