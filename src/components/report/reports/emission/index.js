@@ -141,8 +141,9 @@ const EmissionReport = (props) => {
   };
 
   let value = [
+  
     {
-      name: "null",
+      name: "",
       data: max
         ? [max, max, max, max, max, max, max, max, max, max, max, max]
         : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
@@ -158,6 +159,14 @@ const EmissionReport = (props) => {
       tooltip: {
         pointFormat: "",
       },
+    },
+    {
+      type: "line",
+      dashStyle: 'dash',
+      color:'gray',
+      name: "2021 emissions",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      boxWidth: "100%",
     },
     {
       type: "column",
@@ -240,7 +249,8 @@ const EmissionReport = (props) => {
                     <span>
                       {state?.data?.year?.length > 0
                         ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
-                        : `0.00`} Kg
+                        : `0.00`}{" "}
+                      Kg
                     </span>
                   </div>
                 </div>

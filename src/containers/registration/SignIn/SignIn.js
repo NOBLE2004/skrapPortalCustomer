@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Box, Button, FormControlLabel, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
@@ -14,6 +14,8 @@ import Header from "../../../components/header/Header";
 import { showPasswordIcon } from "../../../assets/images";
 import { textFieldStyles } from "../../../assets/styles/muiStyles/MuiStyles";
 import { userlogin } from "../../../store/actions/signIn";
+import Checkbox from "@mui/material/Checkbox";
+
 import "./signin.scss";
 
 const SignIn = (props) => {
@@ -35,7 +37,7 @@ const SignIn = (props) => {
   const checkingError = (name, value) => {
     switch (name) {
       case "phone":
-        errors[name] = value.length < 10 ? "Required" : "";
+        errors[name] = value.length < 13 ? "Required" : "";
         break;
       case "password":
         errors[name] = value.length === 0 ? "Required" : "";
@@ -67,14 +69,14 @@ const SignIn = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((phone.length < 10) | (password === "")) {
+    if ((phone.length < 13) | (password === "")) {
       Object.keys(errors).forEach((error, index) => {
         checkingError(error, state[error]);
       });
       return;
     }
 
-    let data = { user_name: "+44" + phone, password: password, user_type: 1 };
+    let data = { user_name: phone, password: password, user_type: 1 };
     await props.userLogin(data);
   };
 
@@ -87,7 +89,6 @@ const SignIn = (props) => {
     }
   }, [props.auth.isAuthenticated]);
 
-
   return (
     <div className="main">
       <NavBar />
@@ -98,18 +99,29 @@ const SignIn = (props) => {
         />
         <div className="login-section">
           <div className="search-input">
+            <Typography
+              variant="body2"
+              sx={{
+                fontFamily: "DM Sans",
+                fontWeight: 800,
+                color: " #0f2851",
+                marginBottom: "-2%",
+                width: "100%",
+              }}
+            >
+              Email:
+            </Typography>
             <TextField
               placeholder="Enter Username"
-              margin="normal"
               variant="outlined"
               size="small"
               name="phone"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">+44</InputAdornment>
-                ),
-              }}
-              inputProps={{ maxLength: 10 }}
+              // InputProps={{
+              //   startAdornment: (
+              //     <InputAdornment position="start">+44</InputAdornment>
+              //   ),
+              // }}
+              inputProps={{ maxLength: 13 }}
               className={
                 errors["phone"].length > 0 ? classes.error : classes.root
               }
@@ -117,11 +129,23 @@ const SignIn = (props) => {
               value={phone}
               error={errors["phone"].length > 0 ? true : false}
             />
+            <Typography
+              variant="body2"
+              sx={{
+                fontFamily: "DM Sans",
+                fontWeight: 800,
+                color: " #0f2851",
+                marginBottom: "-2%",
+                width: "100%",
+              }}
+            >
+              Password:
+            </Typography>
             <TextField
               margin="normal"
               variant="outlined"
               size="small"
-              placeholder="password"
+              placeholder="Password"
               type={showPassword ? "text" : "password"}
               InputProps={{
                 endAdornment: (
@@ -161,10 +185,41 @@ const SignIn = (props) => {
             ""
           )}
           <div className="login-next-btn">
-            <Button sx={{color:'#ffffff'}} onClick={handleSubmit}>Sign In</Button>
+            <Button sx={{ color: "#ffffff" }} onClick={handleSubmit}>
+              Sign In
+            </Button>
+          </div>
+          <Box width="100%" mb={2}>
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              sx={{ alignItems: "flex-start" }}
+              label={
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontFamily: "DM Sans",
+                    fontWeight: 500,
+                    color: " #0f2851",
+                  }}
+                >
+                  Stay logged in.This is a trusted computer
+                  <br />
+                  You will be logged out automatically after a short while
+                  unless you indicate that this is trusted computer.
+                </Typography>
+              }
+            />
+          </Box>
+          <div className="another-account-sign-up">
+            Don’t have an account?{" "}
+            <NavLink to={`signup`}>
+              <span>Sign Up</span>
+            </NavLink>{" "}
           </div>
           <div className="another-account">
-            Don’t have an account? <NavLink to={`signup`}><span>Sign Up</span></NavLink>{" "}
+            <NavLink to={``}>
+              <span>Forget your password?</span>
+            </NavLink>{" "}
           </div>
         </div>
       </div>

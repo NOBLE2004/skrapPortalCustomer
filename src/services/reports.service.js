@@ -28,4 +28,5 @@ class ReportsService extends HttpService {
   offSetCharge = (data) => this.post(`offsetCharge`, data);
 }
 
+
 export default new ReportsService();
