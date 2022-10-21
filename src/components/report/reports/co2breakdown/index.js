@@ -39,7 +39,7 @@ const Co2breakdownReport = (props) => {
             <span>
               {tonnageData?.data?.result?.title
                 ? tonnageData?.data?.result?.title
-                : "Tonnes total weight"}
+                : "Tonnes removed"}
             </span>
           </h1>
           {state?.isLoading ||

@@ -23,7 +23,7 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      .MuiOutlinedInput-root{
+      .MuiOutlinedInput-root {
         padding-left: 0px;
       }
       .MuiInputBase-input {
@@ -71,6 +71,19 @@
       }
     }
   }
+  .another-account-sign-up {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 21px;
+    text-align: center;
+    color: #0f2851;
+    margin-bottom: 15px;
+    span {
+      text-decoration: underline;
+    }
+  }
   .another-account {
     font-family: DM Sans;
     font-style: normal;
@@ -81,7 +94,7 @@
     color: #0f2851;
     padding-bottom: 98px;
 
-    span{
+    span {
       text-decoration: underline;
     }
   }
@@ -90,21 +103,21 @@
 .main {
   background: #36b8fc;
 }
-@media (max-width: 1024px) and (min-width: 769px){
+@media (max-width: 1024px) and (min-width: 769px) {
   .login-main {
     .login-section {
       width: 45%;
     }
   }
 }
-@media (max-width: 768px) and (min-width: 426px){
+@media (max-width: 768px) and (min-width: 426px) {
   .login-main {
     .login-section {
       width: 50%;
     }
   }
 }
-@media (max-width: 425px) and (min-width: 1px){
+@media (max-width: 425px) and (min-width: 1px) {
   .login-main {
     .login-section {
       width: 90%;

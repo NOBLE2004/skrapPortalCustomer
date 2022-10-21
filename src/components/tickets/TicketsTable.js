@@ -77,7 +77,7 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
                   className="normal-dsans-10-primary1"
                   onClick={() => download(props.value)}
                 >
-                  Download Ticket
+                  Download WTN
                   <img
                     src={downloadSite}
                     alt="download-icon"
