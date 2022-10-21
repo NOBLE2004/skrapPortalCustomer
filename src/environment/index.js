@@ -113,7 +113,7 @@ export const MARKET_PAY_LIST = [
   //   text: "Remaining credit after transaction",
   // },
   {
-    id: "PAY60",
+    id: "PAY30EOFM",
     title: "Pay end of month following",
     tooltip1:
         "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
@@ -122,10 +122,10 @@ export const MARKET_PAY_LIST = [
 
 export const MARKET_PAY_LIST1 = [
   {
-    id: "PAY30 ",
-    title: "Pay in 30 days",
+    id: "PAY30EOFM",
+    title: "Pay end of month following",
     tooltip:
-        "Pay by bank transfer on the 30th day after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
+        "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by",
     text: "Remaining credit after transaction",
   },
 ];
