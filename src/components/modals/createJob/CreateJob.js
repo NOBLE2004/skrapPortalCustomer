@@ -1229,7 +1229,7 @@ export default function CreateJob({
                 <TextField
                   placeholder="£"
                   name="totalCost"
-                  value={`${totalCost?.toFixed(2)} Inc vat`}
+                  value={`${totalCost} Inc vat`}
                   onChange={handleChange}
                   type="text"
                   variant="outlined"
