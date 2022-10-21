@@ -109,7 +109,7 @@ const SignIn = (props) => {
                 width: "100%",
               }}
             >
-              Email:
+              Username:
             </Typography>
             <TextField
               placeholder="Enter Username"
