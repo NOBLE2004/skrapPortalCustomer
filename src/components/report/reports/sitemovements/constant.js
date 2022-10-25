@@ -107,6 +107,7 @@ export const siteMovementData = (data, total) => ({
     type: "pie",
     events: {
       render: function () {
+        console.log(data, total)
         var series = this.series[0],
           seriesCenter = series?.center,
           x = seriesCenter[0] + this.plotLeft,

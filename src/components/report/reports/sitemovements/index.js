@@ -21,6 +21,11 @@ const SiteMovementsReport = (props) => {
   const state = useSelector((state) => state?.siteMovements);
   const siteDetail = useSelector((state) => state?.siteMovementDetail);
   const dispatch = useDispatch();
+  const test = [
+      {name:'wait & load 0%', y:0},
+      {name:'Exchange 95.56%', y:95.56},
+      {name:'Delivery 2.22%', y:2.22},
+      {name:'Collection 2.22%', y:2.22}];
   useEffect(() => {
     async function fetchData() {
       // if (!state?.data) {
@@ -60,8 +65,8 @@ const SiteMovementsReport = (props) => {
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={siteMovementData(
-                      state?.data?.result?.data,
-                      siteDetail?.data?.result.reduce((accumulator, object) => {
+                      test,
+                      siteDetail?.data?.result.reduce((accumulator, object, i) => {
                         return  accumulator + object.percentage;
                       }, 0)
                     )}
@@ -70,80 +75,80 @@ const SiteMovementsReport = (props) => {
               </Grid>
             </Grid>
           )}
-          <div
-            className="see-more"
-            style={showMore ? { opacity: 0 } : { opacity: 1 }}
-            onClick={() => {
-              setShow(!show);
-            }}
-          >
-            See more
-          </div>
-          {show && (
-            <div className="see-more-wrap">
-              <div className="border-drop"></div>
-              {siteDetail?.isLoading ? (
-                <div className="d-flex justify-center align-center">
-                  <FadeLoader
-                    color={"#518ef8"}
-                    loading={state?.isLoading}
-                    width={4}
-                  />
-                </div>
-              ) : (
-                <Timeline className="more-drop">
-                  {siteDetail?.data?.result?.map((single, index) => (
-                    <TimelineItem
-                      key={index}
-                      sx={{
-                        width: "100%",
-                      }}
-                    >
-                      <TimelineSeparator>
-                        <div
-                          style={{
-                            display: "flex",
-                            height: "100%",
-                          }}
-                        >
-                          <TimelineConnector
-                            sx={{
-                              width: "8px",
-                              backgroundColor: "#d6eafd",
-                              borderTopLeftRadius: index === 0 ? "8px" : "0px",
-                              borderTopRightRadius: index === 0 ? "8px" : "0px",
-                            }}
-                          />
-                          <div className="d-flex align-center">
-                            <img src={KeyboardTabIcon} alt="" />
-                          </div>
-                        </div>
-                      </TimelineSeparator>
+          {/*<div*/}
+          {/*  className="see-more"*/}
+          {/*  style={showMore ? { opacity: 0 } : { opacity: 1 }}*/}
+          {/*  onClick={() => {*/}
+          {/*    setShow(!show);*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  See more*/}
+          {/*</div>*/}
+          {/*{show && (*/}
+          {/*  <div className="see-more-wrap">*/}
+          {/*    <div className="border-drop"></div>*/}
+          {/*    {siteDetail?.isLoading ? (*/}
+          {/*      <div className="d-flex justify-center align-center">*/}
+          {/*        <FadeLoader*/}
+          {/*          color={"#518ef8"}*/}
+          {/*          loading={state?.isLoading}*/}
+          {/*          width={4}*/}
+          {/*        />*/}
+          {/*      </div>*/}
+          {/*    ) : (*/}
+          {/*      <Timeline className="more-drop">*/}
+          {/*        {siteDetail?.data?.result?.map((single, index) => (*/}
+          {/*          <TimelineItem*/}
+          {/*            key={index}*/}
+          {/*            sx={{*/}
+          {/*              width: "100%",*/}
+          {/*            }}*/}
+          {/*          >*/}
+          {/*            <TimelineSeparator>*/}
+          {/*              <div*/}
+          {/*                style={{*/}
+          {/*                  display: "flex",*/}
+          {/*                  height: "100%",*/}
+          {/*                }}*/}
+          {/*              >*/}
+          {/*                <TimelineConnector*/}
+          {/*                  sx={{*/}
+          {/*                    width: "8px",*/}
+          {/*                    backgroundColor: "#d6eafd",*/}
+          {/*                    borderTopLeftRadius: index === 0 ? "8px" : "0px",*/}
+          {/*                    borderTopRightRadius: index === 0 ? "8px" : "0px",*/}
+          {/*                  }}*/}
+          {/*                />*/}
+          {/*                <div className="d-flex align-center">*/}
+          {/*                  <img src={KeyboardTabIcon} alt="" />*/}
+          {/*                </div>*/}
+          {/*              </div>*/}
+          {/*            </TimelineSeparator>*/}
 
-                      <TimelineContent
-                        sx={{
-                          padding: "12px 0px",
-                        }}
-                      >
-                        <Grid container className="small-chart">
-                          <Grid container className="d-flex align-center">
-                            <div className="flex-3">
-                              <div className="flex-3 high-chart-site-movement">
-                                <HighchartsReact
-                                  highcharts={Highcharts}
-                                  options={smallPieData(single)}
-                                />
-                              </div>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </TimelineContent>
-                    </TimelineItem>
-                  ))}
-                </Timeline>
-              )}
-            </div>
-          )}
+          {/*            <TimelineContent*/}
+          {/*              sx={{*/}
+          {/*                padding: "12px 0px",*/}
+          {/*              }}*/}
+          {/*            >*/}
+          {/*              <Grid container className="small-chart">*/}
+          {/*                <Grid container className="d-flex align-center">*/}
+          {/*                  <div className="flex-3">*/}
+          {/*                    <div className="flex-3 high-chart-site-movement">*/}
+          {/*                      <HighchartsReact*/}
+          {/*                        highcharts={Highcharts}*/}
+          {/*                        options={smallPieData(single)}*/}
+          {/*                      />*/}
+          {/*                    </div>*/}
+          {/*                  </div>*/}
+          {/*                </Grid>*/}
+          {/*              </Grid>*/}
+          {/*            </TimelineContent>*/}
+          {/*          </TimelineItem>*/}
+          {/*        ))}*/}
+          {/*      </Timeline>*/}
+          {/*    )}*/}
+          {/*  </div>*/}
+          {/*)}*/}
         </div>
       </CardContent>
     </Card>
