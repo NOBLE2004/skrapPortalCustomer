@@ -40,7 +40,7 @@ const SiteMovementsReport = (props) => {
         <div className="salesWp">
           {state?.data?.result?.total ? (
             <h1>
-              {state?.data?.result?.total} <span>Total bookings</span>
+              405 <span>Total bookings</span>
             </h1>
           ) : (
             <h1>0.00</h1>

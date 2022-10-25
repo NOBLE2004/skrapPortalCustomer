@@ -5,6 +5,7 @@ import "./report.scss";
 import ReportHeader from "../../components/report/header";
 import ReportFooter from "../../components/report/footer";
 import FinanceReport from "../../components/report/reports/finance";
+import SkipsReport from "../../components/report/reports/skip";
 import EmissionReport from "../../components/report/reports/emission";
 import Co2breakdownReport from "../../components/report/reports/co2breakdown";
 import SiteMovementsReport from "../../components/report/reports/sitemovements";
@@ -190,6 +191,10 @@ const NewReports = () => {
             <div className="report-chart-card-outer">
               <div className="report-card-title">Site Movements</div>
               <SiteMovementsReport sites={selected} showMore={showMore} />
+            </div>
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">Skip report</div>
+              <SkipsReport sites={selected} showMore={showMore} />
             </div>
           </Masonry>
         </div>
