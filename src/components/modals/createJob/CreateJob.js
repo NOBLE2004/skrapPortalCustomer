@@ -1117,7 +1117,7 @@ export default function CreateJob({
             <div className="service-cost-width">
               <p>Service Cost</p>
               <TextField
-                value={`${(serviceCost/1.2)?.toFixed(2)} + Vat`}
+                value={`€${serviceCost}`}
                 onChange={handleChange}
                 placeholder="€"
                 name="serviceCost"
@@ -1229,7 +1229,7 @@ export default function CreateJob({
                 <TextField
                   placeholder="€"
                   name="totalCost"
-                  value={`${totalCost} Inc vat`}
+                  value={`€${totalCost}`}
                   onChange={handleChange}
                   type="text"
                   variant="outlined"
