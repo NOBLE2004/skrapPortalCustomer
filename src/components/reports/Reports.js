@@ -96,7 +96,7 @@ const Reports = (props) => {
   if (report === "Site_movements") {
     lastCalculatedReport =
       reports && reports.length > 0
-        ? `€${reports.slice(-1)[0].transaction_cost}`
+        ? `£${reports.slice(-1)[0].transaction_cost}`
         : "n/a";
   } else if (report === "Carbon_footprint") {
     lastCalculatedReport =

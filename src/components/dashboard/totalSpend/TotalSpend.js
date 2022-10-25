@@ -9,7 +9,7 @@ const TotalSpend = ({ totalSpend, isLoading }) => {
     <div className="listViewWp">
       <div className="lineChartWp">
         <div className="chartInfo">
-          <h1>{`€ ${totalSpend ? totalSpend : "00.00"}`} </h1>
+          <h1>{`£ ${totalSpend ? totalSpend : "00.00"}`} </h1>
           <span className="primary-title"> Total Spend </span>
         </div>
         <div className="lineChart">

@@ -88,7 +88,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
           return (
             <span>
               {props.value
-                ? "€" + parseFloat(props.value).toLocaleString()
+                ? "£" + parseFloat(props.value).toLocaleString()
                 : "n/a"}
             </span>
           );

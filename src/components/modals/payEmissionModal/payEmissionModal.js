@@ -210,7 +210,7 @@ function PayEmissionModal(props) {
                     <p>
                       {single.name}
                       <span>
-                        &nbsp;(€{single?.price_per_kg?.toFixed(2)} per kg)
+                        &nbsp;(£{single?.price_per_kg?.toFixed(2)} per kg)
                       </span>
                     </p>
                   </div>
@@ -361,7 +361,7 @@ function PayEmissionModal(props) {
                 handleSubmit();
               }}
             >
-              Pay Now : €{state.totalPrice}
+              Pay Now : £{state.totalPrice}
             </Button>
           </Grid>
         </form>

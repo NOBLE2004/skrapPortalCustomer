@@ -195,7 +195,7 @@ export const data2 = {
     labels: {
       formatter() {
         const getLabel = (value) => {
-          return `€${value}`;
+          return `£${value}`;
         };
         return getLabel(this.value);
       },

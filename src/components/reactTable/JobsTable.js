@@ -238,7 +238,7 @@ const JobsTable = ({
         disableFilters: true,
         filter: "equals",
         Cell: (props) => {
-          return `€${props.value.toFixed(2)}`;
+          return `£${props.value.toFixed(2)}`;
         },
       },
       {

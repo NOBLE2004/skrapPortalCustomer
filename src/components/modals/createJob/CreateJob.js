@@ -1077,7 +1077,7 @@ export default function CreateJob({
               <TextField
                 value={quantity}
                 onChange={handleChange}
-                placeholder="€"
+                placeholder="£"
                 name="quantity"
                 InputProps={{ inputProps: { min: 5 } }}
                 type="number"
@@ -1098,7 +1098,7 @@ export default function CreateJob({
               <TextField
                 value={portableweeks}
                 onChange={handleChange}
-                placeholder="€"
+                placeholder="£"
                 name="portableweeks"
                 InputProps={{ inputProps: { min: 2 } }}
                 type="number"
@@ -1119,7 +1119,7 @@ export default function CreateJob({
               <TextField
                 value={`${(serviceCost/1.2)?.toFixed(2)} + Vat`}
                 onChange={handleChange}
-                placeholder="€"
+                placeholder="£"
                 name="serviceCost"
                 type="text"
                 variant="outlined"
@@ -1135,7 +1135,7 @@ export default function CreateJob({
                 <TextField
                   value={haulageCost}
                   onChange={handleChange}
-                  placeholder="€"
+                  placeholder="£"
                   name="haulageCost"
                   type="number"
                   variant="outlined"
@@ -1227,7 +1227,7 @@ export default function CreateJob({
               <div className="discount">
                 <p>Total Cost</p>
                 <TextField
-                  placeholder="€"
+                  placeholder="£"
                   name="totalCost"
                   value={`${totalCost} Inc vat`}
                   onChange={handleChange}
@@ -1330,7 +1330,7 @@ export default function CreateJob({
                               </div>
                               {data.text && (
                                 <div className="remaining-balance">
-                                  {`${data.text} : € ${
+                                  {`${data.text} : £ ${
                                     acountInfo.market_finance_balance -
                                     totalCost
                                   }`}
