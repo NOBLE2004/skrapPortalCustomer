@@ -72,16 +72,16 @@ const PaymentDetail = ({ job, updateJobs }) => {
             </div>
             <div className="card-header-sub ">
               <span className="card-header-sub-item">
-                £{job?.service_rate?.toFixed(2)}
+                €{job?.service_rate?.toFixed(2)}
               </span>
               <span className="card-header-sub-item">
-                £{job?.haulage ? job?.haulage?.toFixed(2) : "0.00"}
+                €{job?.haulage ? job?.haulage?.toFixed(2) : "0.00"}
               </span>
               <span className="card-header-sub-item">
-                £{job?.transaction_cost?.toFixed(2)}
+                €{job?.transaction_cost?.toFixed(2)}
               </span>
               <span className="card-header-sub-item">
-                £{job?.discount ? parseInt(job?.discount)?.toFixed(2) : "0.00"}
+                €{job?.discount ? parseInt(job?.discount)?.toFixed(2) : "0.00"}
               </span>
             </div>
           </div>

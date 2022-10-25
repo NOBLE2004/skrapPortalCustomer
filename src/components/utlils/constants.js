@@ -116,7 +116,7 @@ export const spendChartOptions = {
         ticks: {
           stepSize: (c) => ((Math.max(...c.chart.data.datasets[0].data) - Math.min(...c.chart.data.datasets[0].data)) / 4),
           callback: function (value) {
-            return "£" + parseInt(value.toFixed(0)).toLocaleString();
+            return "€" + parseInt(value.toFixed(0)).toLocaleString();
           },
           beginAtZero: true,
           padding: 10,

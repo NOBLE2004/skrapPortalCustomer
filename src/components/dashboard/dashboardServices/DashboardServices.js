@@ -75,8 +75,8 @@ const DashboardServices = ({ servicesData }) => {
                 {showValue ? (
                     <div className="circle-text" style={{}}>
                       {service?.total
-                          ? "£" + parseInt(service.total).toLocaleString()
-                          : "£" + 0}
+                          ? "€" + parseInt(service.total).toLocaleString()
+                          : "€" + 0}
                     </div>
                 ) : (
                     ""
@@ -122,8 +122,8 @@ const DashboardServices = ({ servicesData }) => {
         {/*      {showValue ? (*/}
         {/*        <div className="circle-text" style={{}}>*/}
         {/*          {Grab?.total*/}
-        {/*            ? "£" + parseInt(Grab.total).toLocaleString()*/}
-        {/*            : "£" + 0}*/}
+        {/*            ? "€" + parseInt(Grab.total).toLocaleString()*/}
+        {/*            : "€" + 0}*/}
         {/*        </div>*/}
         {/*      ) : (*/}
         {/*        ""*/}
@@ -163,8 +163,8 @@ const DashboardServices = ({ servicesData }) => {
         {/*      {showValue ? (*/}
         {/*        <div className="circle-text" style={{}}>*/}
         {/*          {Cage?.total*/}
-        {/*            ? "£" + parseInt(Cage.total).toLocaleString()*/}
-        {/*            : "£" + 0}*/}
+        {/*            ? "€" + parseInt(Cage.total).toLocaleString()*/}
+        {/*            : "€" + 0}*/}
         {/*        </div>*/}
         {/*      ) : (*/}
         {/*        ""*/}
@@ -204,8 +204,8 @@ const DashboardServices = ({ servicesData }) => {
         {/*      {showValue ? (*/}
         {/*        <div className="circle-text" style={{}}>*/}
         {/*          {Aggregate?.count*/}
-        {/*            ? "£" + parseInt(Aggregate.total).toLocaleString()*/}
-        {/*            : "£" + 0}*/}
+        {/*            ? "€" + parseInt(Aggregate.total).toLocaleString()*/}
+        {/*            : "€" + 0}*/}
         {/*        </div>*/}
         {/*      ) : (*/}
         {/*        ""*/}
@@ -247,8 +247,8 @@ const DashboardServices = ({ servicesData }) => {
         {/*      {showValue ? (*/}
         {/*        <div className="circle-text" style={{}}>*/}
         {/*          {PortableToilet?.total*/}
-        {/*            ? "£" + parseInt(PortableToilet.total).toLocaleString()*/}
-        {/*            : "£" + 0}*/}
+        {/*            ? "€" + parseInt(PortableToilet.total).toLocaleString()*/}
+        {/*            : "€" + 0}*/}
         {/*        </div>*/}
         {/*      ) : (*/}
         {/*        ""*/}

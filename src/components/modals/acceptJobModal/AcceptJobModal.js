@@ -242,7 +242,7 @@ const AcceptJobModal = (props) => {
           <div className="info">
             <div className="designation">Total Cost</div>
             <div className="personal-title">
-              {jobdata ? "£" + jobdata.service_rate : "n/a"}
+              {jobdata ? "€" + jobdata.service_rate : "n/a"}
             </div>
           </div>
           <Button

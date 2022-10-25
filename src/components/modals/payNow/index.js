@@ -157,7 +157,7 @@ function PayNow(props) {
       maxWidth="sm"
     >
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Pay SK{jobId} cost £{transaction_cost}{" "}
+        Pay SK{jobId} cost €{transaction_cost}{" "}
       </DialogTitle>
       <DialogContent
         dividers

@@ -50,7 +50,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
         accessor: "transaction_cost",
         disableFilters: true,
         Cell: (props) => {
-          return <span>{`£${props.value}` || "n/a"}</span>;
+          return <span>{`€${props.value}` || "n/a"}</span>;
         },
       },
       {
@@ -160,7 +160,7 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
         accessor: "transaction_cost",
         disableFilters: true,
         Cell: (props) => {
-          return <span>{`£${props.value}` || "n/a"}</span>;
+          return <span>{`€${props.value}` || "n/a"}</span>;
         },
       },
       {

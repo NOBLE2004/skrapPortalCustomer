@@ -283,7 +283,7 @@ const EmissionReport = (props) => {
                 />
               </div>
               <div className="total">
-                Total payment: <span>£0.00</span>
+                Total payment: <span>€0.00</span>
               </div>
             </div>
             <HighchartsReact highcharts={Highcharts} options={data2} />

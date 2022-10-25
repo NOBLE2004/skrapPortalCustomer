@@ -582,7 +582,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
                                 </div>
                                 {data.text && (
                                   <div className="remaining-balance">
-                                    {`${data.text} : £ ${acountInfo.market_finance_balance}`}
+                                    {`${data.text} : € ${acountInfo.market_finance_balance}`}
                                   </div>
                                 )}
                               </>
