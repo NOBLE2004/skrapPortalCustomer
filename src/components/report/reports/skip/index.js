@@ -113,7 +113,7 @@ const FinanceReport = (props) => {
                         <div className="border-drop"></div>
 
                         <div className="more-drop">
-                            <div className="sub-heading">Service breakdown</div>
+                            <div className="sub-heading">Hire breakdown</div>
                             <div className="services"></div>
                         </div>
                         <ServiceBreakDown sites={sites} />
