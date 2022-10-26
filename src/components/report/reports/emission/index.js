@@ -221,7 +221,7 @@ const EmissionReport = (props) => {
           <div className="salesWp column-charts-highcharts-">
             <h1>
               {state?.data?.year?.length > 0
-                ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
+                ? state?.data?.year[0]?.Sum_Co2e?.toLocaleString()
                 : `0.00`}{" "}
               <span>kg of CO2e Cumulative Emissions</span>
             </h1>
@@ -248,7 +248,7 @@ const EmissionReport = (props) => {
                     Total CO2:{" "}
                     <span>
                       {state?.data?.year?.length > 0
-                        ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
+                        ? state?.data?.year[0]?.Sum_Co2e?.toLocaleString()
                         : `0.00`}{" "}
                       Kg
                     </span>
