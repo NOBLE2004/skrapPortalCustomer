@@ -15,8 +15,33 @@ const FinanceReport = (props) => {
     const dispatch = useDispatch();
     const stateSites = useSelector((state) => state?.siteBreakdown);
     const [show, setShow] = useState(false);
+    const [currency, setCurrency] = useState('€')
 
     useEffect(() => {
+        setCurrency(sites[0] == 3629 ? '£' : '€');
+        const data = sites[0] == 3629 ? [{
+            name: 'Wood waste',
+            y: 82498.50
+        }, {
+            name: 'Paper waste',
+            y: 27000.00
+        },
+            {
+                name: 'Plastic waste',
+                y: 137025.00
+            }
+        ]:[{
+            name: 'Wood waste',
+            y: 70591.50
+        }, {
+            name: 'Paper waste',
+            y: 16537.50
+        },
+            {
+                name: 'Plastic waste',
+                y: 18900.00
+            }
+            ];
         setChartData({
             chart: {
                 plotBackgroundColor: null,
@@ -28,7 +53,7 @@ const FinanceReport = (props) => {
                 text: null,
             },
             tooltip: {
-                pointFormat: "<b>€{point.y}</b>",
+                pointFormat: sites[0] == 3629 ? '<b>£{point.y}</b>' : '<b>€{point.y}</b>',
             },
             accessibility: {
                 point: {
@@ -62,25 +87,14 @@ const FinanceReport = (props) => {
                 {
                     title: "",
                     type: "pie",
-                    data: [{
-                        name: 'Wood waste',
-                        y: 70591.50
-                    }, {
-                            name: 'Paper waste',
-                            y: 16537.50
-                        },
-                        {
-                            name: 'Plastic waste',
-                            y: 18900.00
-                        }
-                    ],
+                    data: data,
                 },
             ],
             exporting: {
                 filename: `chart-${new Date()?.toLocaleDateString()}`,
             },
         });
-    }, []);
+    }, [sites]);
 
     useEffect(() => {
         async function fetchData() {
@@ -97,7 +111,7 @@ const FinanceReport = (props) => {
             <CardContent>
                 <div className="salesWp">
                     <h1>
-                        €106,029.20
+                        {currency}{sites[0] == 3629 ? '266,965.20' : '106,029.20'}
                         <span> Total spend</span>
                     </h1>
 
@@ -116,7 +130,7 @@ const FinanceReport = (props) => {
                             <div className="sub-heading">Hire breakdown</div>
                             <div className="services"></div>
                         </div>
-                        <ServiceBreakDown sites={sites} />
+                        <ServiceBreakDown sites={sites} currency={currency} />
                     </div>
                 </div>
             </CardContent>
