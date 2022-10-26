@@ -37,7 +37,7 @@ const SignIn = (props) => {
   const checkingError = (name, value) => {
     switch (name) {
       case "phone":
-        errors[name] = value.length < 13 ? "Required" : "";
+        errors[name] = value.length < 10 ? "Required" : "";
         break;
       case "password":
         errors[name] = value.length === 0 ? "Required" : "";
@@ -69,14 +69,14 @@ const SignIn = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((phone.length < 13) | (password === "")) {
+    if ((phone.length < 10) | (password === "")) {
       Object.keys(errors).forEach((error, index) => {
         checkingError(error, state[error]);
       });
       return;
     }
 
-    let data = { user_name: phone, password: password, user_type: 1 };
+    let data = { user_name: "+44" + phone, password: password, user_type: 1 };
     await props.userLogin(data);
   };
 
@@ -116,12 +116,12 @@ const SignIn = (props) => {
               variant="outlined"
               size="small"
               name="phone"
-              // InputProps={{
-              //   startAdornment: (
-              //     <InputAdornment position="start">+44</InputAdornment>
-              //   ),
-              // }}
-              inputProps={{ maxLength: 13 }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">+44</InputAdornment>
+                ),
+              }}
+              inputProps={{ maxLength: 10 }}
               className={
                 errors["phone"].length > 0 ? classes.error : classes.root
               }
