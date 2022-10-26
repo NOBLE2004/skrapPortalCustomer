@@ -137,6 +137,7 @@ function PayEmissionModal(props) {
       single_price: state?.price,
     };
     if (paymentMethodList?.length > 0) {
+      setLoading(true);
       reportsService.offSetCharge(data).then((res) => {
         if (res?.data?.code === 0) {
           toast.success("The offset is paid successfully.");
@@ -145,8 +146,10 @@ function PayEmissionModal(props) {
             ...st,
             addButton: false,
           }));
+          setLoading(false);
           setShow(false);
         } else {
+          setLoading(false);
           toast.error(res?.data?.description);
         }
       });
@@ -183,7 +186,7 @@ function PayEmissionModal(props) {
         setPaymentMethodList(response.data.result);
       })
       .catch((err) => {
-        console.log("err",err);
+        console.log("err", err);
       });
   };
   const handleSaveNewCard = () => {
@@ -284,7 +287,12 @@ function PayEmissionModal(props) {
                         <FormControlLabel
                           key={index}
                           value={data.id}
-                          control={<Radio color="primary" />}
+                          control={
+                            <Radio
+                              color="primary"
+                              checked={card?.id === data?.id}
+                            />
+                          }
                           label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
                         />
                       );
@@ -305,7 +313,7 @@ function PayEmissionModal(props) {
               }
             />
           )}
-          {addNew?.addButton && (
+          {addNew?.addButton && loading === false && (
             <Box
               sx={{
                 textAlign: "center",
@@ -345,6 +353,7 @@ function PayEmissionModal(props) {
               className=""
               variant="contained"
               color="primary"
+              disabled={loading}
               sx={{
                 margin: "unset",
                 borderRadius: "50px",
