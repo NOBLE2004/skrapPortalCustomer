@@ -90,19 +90,19 @@ const NewReports = () => {
     var node = document.getElementById(reports.ids);
     var width = node.clientWidth;
     var height = node.clientHeight;
-    await htmlToImage
-      .toPng(node)
-      .then(function (dataUrl) {
-        var img = new Image();
-        img.src = dataUrl;
-        logo = workbook.addImage({
-          base64: img.src,
-          extension: "png",
-        });
-      })
-      .catch(function (error) {
-        console.error("oops, something went wrong!", error);
-      });
+    // await htmlToImage
+    //   .toPng(node)
+    //   .then(function (dataUrl) {
+    //     var img = new Image();
+    //     img.src = dataUrl;
+    //     logo = workbook.addImage({
+    //       base64: img.src,
+    //       extension: "png",
+    //     });
+    //   })
+    //   .catch(function (error) {
+    //     console.error("oops, something went wrong!", error);
+    //   });
     worksheet.columns = [
       { header: "Job Number", key: "job_number", width: 20 },
       { header: "Job Date", key: "job_date", width: 20 },
@@ -120,16 +120,16 @@ const NewReports = () => {
       { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 20 },
     ];
     worksheet.addRows(csvData);
-    worksheet.addImage(logo, {
-      tl: { col: 2, row: csvData?.length + 4 },
-      ext: { width: width, height: height },
-    });
-    workbook.xlsx
+    // worksheet.addImage(logo, {
+    //   tl: { col: 2, row: csvData?.length + 4 },
+    //   ext: { width: width, height: height },
+    // });
+    workbook.csv
       .writeBuffer()
       .then(function (buffer) {
         saveAs(
           new Blob([buffer], { type: "application/octet-stream" }),
-          `${reports?.ids}-${new Date().toLocaleDateString()}.xlsx`
+          `${reports?.ids}-${new Date().toLocaleDateString()}.csv`
         );
         setShowMore(false);
       })
