@@ -171,13 +171,9 @@ const NewReports = () => {
         {/*<ReportFilters />*/}
         <div className="report-grid">
           <Masonry container columns={2} spacing={4}>
-            {/*<div className="report-chart-card-outer">*/}
-            {/*  <div className="report-card-title">Finance report</div>*/}
-            {/*  <FinanceReport sites={selected} showMore={showMore} />*/}
-            {/*</div>*/}
             <div className="report-chart-card-outer">
-              <div className="report-card-title">Skip report</div>
-              <SkipsReport sites={selected} showMore={showMore} />
+              <div className="report-card-title">Finance report</div>
+              <FinanceReport sites={selected} showMore={showMore} />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Emissions</div>
@@ -195,6 +191,10 @@ const NewReports = () => {
             <div className="report-chart-card-outer">
               <div className="report-card-title">Site Movements</div>
               <SiteMovementsReport sites={selected} showMore={showMore} />
+            </div>
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">Rebate report</div>
+              <SkipsReport sites={selected} showMore={showMore} />
             </div>
           </Masonry>
         </div>

@@ -43,24 +43,24 @@ const ServiceBreakDown = (props) => {
                         <div className="service-box p-2">
                             <div className="service-detail">
                                 <div className="percentage">Wood waste price - {currency}{sites[0] == 3629 ? 97 : 83}/ton</div>
-                                <div className="percentage">Total Tonnage - 850.50 (6.3 ton per skip)</div>
-                                <div className="percentage">Number of Skips - 135</div>
+                                <div className="percentage">Total Tonnage - 850.50 {/*(6.3 ton per skip)*/}</div>
+                                {/*<div className="percentage">Number of Skips - 135</div>*/}
                                 <div className="name">{currency}{sites[0] == 3629 ? '82,498.50' : '70,591.50'}</div>
                             </div>
                         </div>
                       <div className="service-box p-2">
                         <div className="service-detail">
                           <div className="percentage">Paper waste price - {currency}{sites[0] == 3629 ? 200 : 35}/ton</div>
-                          <div className="percentage">Total Tonnage - 472.50 (3.5 ton per skip)</div>
-                          <div className="percentage">Number of Skips - 135</div>
+                          <div className="percentage">Total Tonnage - 472.50 {/*(3.5 ton per skip)*/}</div>
+                          {/*<div className="percentage">Number of Skips - 135</div>*/}
                           <div className="name">{currency}{sites[0] == 3629 ? '27,000.00' : '16,537.50'}</div>
                         </div>
                       </div>
                       <div className="service-box p-2">
                         <div className="service-detail">
                           <div className="percentage">Plastic waste price - {currency}{sites[0] == 3629 ? 145 : 20}/ton</div>
-                          <div className="percentage">Total Tonnage - 945.00 (7.0 ton per skip)</div>
-                          <div className="percentage">Number of Skips - 135</div>
+                          <div className="percentage">Total Tonnage - 945.00 {/*(7.0 ton per skip)*/}</div>
+                          {/*<div className="percentage">Number of Skips - 135</div>*/}
                           <div className="name">{currency}{sites[0] == 3629 ? '137,025.00' : '18,900.00'}</div>
                         </div>
                       </div>
