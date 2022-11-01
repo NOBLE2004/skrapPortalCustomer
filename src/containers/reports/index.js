@@ -9,6 +9,7 @@ import SkipsReport from "../../components/report/reports/skip";
 import EmissionReport from "../../components/report/reports/emission";
 import Co2breakdownReport from "../../components/report/reports/co2breakdown";
 import SiteMovementsReport from "../../components/report/reports/sitemovements";
+import RebateReport from "../../components/report/reports/rebate";
 import { getSiteBreakdownlist } from "../../store/actions/action.siteBd";
 import { getSitesMovementList } from "../../store/actions/action.siteMovements";
 import { getLandfillDiversionList } from "../../store/actions/action.landfillDiversion";
@@ -172,9 +173,13 @@ const NewReports = () => {
         <div className="report-grid">
           <Masonry container columns={2} spacing={4}>
             <div className="report-chart-card-outer">
-              <div className="report-card-title">Finance report</div>
-              <FinanceReport sites={selected} showMore={showMore} />
+              <div className="report-card-title">Rebate report</div>
+              <SkipsReport sites={selected} showMore={showMore} />
             </div>
+            {/*<div className="report-chart-card-outer">*/}
+            {/*  <div className="report-card-title">Finance report</div>*/}
+            {/*  <FinanceReport sites={selected} showMore={showMore} />*/}
+            {/*</div>*/}
             <div className="report-chart-card-outer">
               <div className="report-card-title">Emissions</div>
               <EmissionReport
@@ -194,7 +199,7 @@ const NewReports = () => {
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Rebate report</div>
-              <SkipsReport sites={selected} showMore={showMore} />
+              <RebateReport sites={selected} showMore={showMore} />
             </div>
           </Masonry>
         </div>

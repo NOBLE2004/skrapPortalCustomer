@@ -21,27 +21,27 @@ const FinanceReport = (props) => {
         setCurrency(sites[0] == 3629 ? '£' : '€');
         const data = sites[0] == 3629 ? [{
             name: 'Wood waste',
-            y: 82498.50
+            y: 37.52
         }, {
             name: 'Paper waste',
-            y: 27000.00
+            y: 20.81
         },
             {
                 name: 'Plastic waste',
-                y: 137025.00
+                y: 41.67
             }
         ]:[{
             name: 'Wood waste',
-            y: 70591.50
+            y: 37.52
         }, {
             name: 'Paper waste',
-            y: 16537.50
+            y: 20.81
         },
             {
                 name: 'Plastic waste',
-                y: 18900.00
+                y: 41.67
             }
-        ];
+            ];
         setChartData({
             chart: {
                 plotBackgroundColor: null,
@@ -53,7 +53,7 @@ const FinanceReport = (props) => {
                 text: null,
             },
             tooltip: {
-                pointFormat: sites[0] == 3629 ? '<b>£{point.y}</b>' : '<b>€{point.y}</b>',
+                pointFormat: sites[0] == 3629 ? '<b>{point.y}%</b>' : '<b>{point.y}%</b>',
             },
             accessibility: {
                 point: {
@@ -111,11 +111,11 @@ const FinanceReport = (props) => {
             <CardContent>
                 <div className="salesWp">
                     <h1>
-                        {currency}{sites[0] == 3629 ? '266,965.20' : '106,029.20'}
+                        {currency}{sites[0] == 3629 ? '103,950.00' : '120,842.22'}
                         <span> Total spend</span>
                     </h1>
 
-                    <div className="sub-heading">Skips breakdown</div>
+                    <div className="sub-heading">Rebate breakdown</div>
                     <div className="highchart-sites">
                         <HighchartsReact
                             highcharts={Highcharts}
@@ -127,7 +127,7 @@ const FinanceReport = (props) => {
                         <div className="border-drop"></div>
 
                         <div className="more-drop">
-                            <div className="sub-heading">Hire breakdown</div>
+                            <div className="sub-heading">Waste breakdown</div>
                             <div className="services"></div>
                         </div>
                         <ServiceBreakDown sites={sites} currency={currency} />
