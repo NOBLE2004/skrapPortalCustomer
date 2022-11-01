@@ -111,7 +111,7 @@ const FinanceReport = (props) => {
             <CardContent>
                 <div className="salesWp">
                     <h1>
-                        {currency}{sites[0] == 3629 ? '266,965.20' : '106,029.20'}
+                        {currency}{sites[0] == 3629 ? '103,950.00' : '120,842.22'}
                         <span> Total spend</span>
                     </h1>
 
