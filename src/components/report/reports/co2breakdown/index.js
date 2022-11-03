@@ -125,14 +125,14 @@ const Co2breakdownReport = (props) => {
                         : "tonns CO2"}
                     </p>
                     {/*<label>Equivalent to 200 trees</label>*/}
-                    <p>
+                    {/*<p>
                       {recycledData?.data?.result?.saved
                           ? recycledData?.data?.result?.saved
                           : 0}{" "}
                       {recycledData?.data?.result?.saved_title
                           ? recycledData?.data?.result?.saved_title
                           : "Saved to landfill"}
-                    </p>
+                    </p>*/}
                   </div>
                 </div>
                 <div className="guage-with-text">

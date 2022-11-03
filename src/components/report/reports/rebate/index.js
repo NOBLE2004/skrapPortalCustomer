@@ -21,25 +21,25 @@ const FinanceReport = (props) => {
         setCurrency(sites[0] == 3629 ? '£' : '€');
         const data = sites[0] == 3629 ? [{
             name: 'Wood waste',
-            y: 37.52
+            y: 0
         }, {
             name: 'Paper waste',
-            y: 20.81
+            y: 0
         },
             {
                 name: 'Plastic waste',
-                y: 41.67
+                y: 0
             }
         ]:[{
             name: 'Wood waste',
-            y: 37.52
+            y: 0
         }, {
             name: 'Paper waste',
-            y: 20.81
+            y: 0
         },
             {
                 name: 'Plastic waste',
-                y: 41.67
+                y: 0
             }
             ];
         setChartData({
@@ -111,7 +111,7 @@ const FinanceReport = (props) => {
             <CardContent>
                 <div className="salesWp">
                     <h1>
-                        {currency}{sites[0] == 3629 ? '103,950.00' : '120,842.22'}
+                        {currency}{sites[0] == 3629 ? '0.00' : '0.00'}
                         <span> Total spend</span>
                     </h1>
 
