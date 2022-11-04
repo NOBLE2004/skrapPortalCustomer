@@ -1,12 +1,15 @@
 import { OutlinedInput, Select, Switch } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { getSites } from "../../../store/actions/sites.action";
 import { getJobsMeta } from "../../../store/actions/action.jobsMeta";
 import { connect, useDispatch } from "react-redux";
-import { makeStyles } from "@mui/styles";
+import {makeStyles, ThemeProvider} from "@mui/styles";
 import FadeLoader from "react-spinners/FadeLoader";
 import "./index.scss";
+import {downloadSite} from "../../../assets/images";
+import {DateRangePicker} from "react-date-range";
+import reportsService from "../../../services/reports.service";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -35,6 +38,14 @@ const useStyles = makeStyles((theme) => ({
 const ReportHeader = (props) => {
   const dispatch = useDispatch();
   const { handleChange, selected, sites } = props;
+  const [toggle, setToggle] = useState(false);
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
   const classes = useStyles();
   useEffect(() => {
     async function fetchData() {
@@ -49,6 +60,32 @@ const ReportHeader = (props) => {
   useEffect(() => {
     dispatch(getJobsMeta({ sites: sites }));
   }, [sites]);
+  const handleStatement = () => {
+    setToggle(!toggle)
+  }
+  const handleDate = (item) => {
+    setState([item.selection]);
+    const start = item.selection.startDate.toISOString().split('T')[0];
+    const end = item.selection.endDate.toISOString().split('T')[0];
+    if (start === end) {
+      console.log({date: `${start},${end}` });
+    } else {
+      console.log({date: `${start},${end}` });
+      setToggle(false);
+    }
+    if(start && end){
+      reportsService.getAccountStatement({from: start, to: end})
+          .then((response)=>{
+        if(response.data.code == 0){
+          window.open(response.data.result.Url,'_blank');
+        }else{
+          alert(response.data.description);
+        }
+      }).catch((error)=>{
+        console.log(error);
+      })
+    }
+  };
 
   return (
     <div className="report-header">
@@ -122,6 +159,24 @@ const ReportHeader = (props) => {
           </div>
         ) : (
           <>
+            <div className="report-header-card">
+              <div onClick={handleStatement} className="text" style={{display: "flex", justifyContent: "center", cursor: "pointer"}}>
+                Financial Statement <img
+                  src={downloadSite}
+                  alt="download-icon"
+                  style={{ marginLeft: "5px" }}
+              />
+              </div>
+              {toggle && (
+                  <DateRangePicker
+                      editableDateInputs={false}
+                      moveRangeOnFirstSelection={false}
+                      direction="horizontal"
+                      onChange={handleDate}
+                      ranges={state}
+                  />
+              )}
+            </div>
             <div className="report-header-card">
               <div className="text">
                 <span>{props?.totalSites?.data?.result?.sites}</span> Sites
