@@ -73,6 +73,10 @@ const Sites = (props) => {
   const handleCreateJob = useCallback(() => {
     setIsJobCreated(true);
   }, [isJobCreated]);
+    const handleCreateSite = useCallback(() => {
+        console.log('test')
+        setIsJobCreated(true);
+    }, [isJobCreated]);
 
     const handleChangeFilters = (filtersList) => {
         setFilters(filtersList);
@@ -88,7 +92,7 @@ const Sites = (props) => {
         downloadCSV={false}
         showButton={false}
         isSite={true}
-        handleCreateJob={handleCreateJob}
+        handleCreateSite={handleCreateSite}
       >
         <CommonJobStatus
           jobStatus={{
