@@ -5,7 +5,7 @@ import { getSites } from "../../../store/actions/sites.action";
 import { getJobsMeta } from "../../../store/actions/action.jobsMeta";
 import { connect, useDispatch } from "react-redux";
 import {makeStyles, ThemeProvider} from "@mui/styles";
-import FadeLoader from "react-spinners/FadeLoader";
+import {FadeLoader, ClipLoader} from "react-spinners";
 import "./index.scss";
 import {downloadSite} from "../../../assets/images";
 import {DateRangePicker} from "react-date-range";
@@ -39,6 +39,7 @@ const ReportHeader = (props) => {
   const dispatch = useDispatch();
   const { handleChange, selected, sites } = props;
   const [toggle, setToggle] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -74,14 +75,18 @@ const ReportHeader = (props) => {
       setToggle(false);
     }
     if(start && end){
+      setLoading(true);
       reportsService.getAccountStatement({from: start, to: end})
           .then((response)=>{
         if(response.data.code == 0){
           window.open(response.data.result.Url,'_blank');
+          setLoading(false)
         }else{
           alert(response.data.description);
+          setLoading(false)
         }
       }).catch((error)=>{
+        setLoading(false)
         console.log(error);
       })
     }
@@ -153,7 +158,7 @@ const ReportHeader = (props) => {
           <div className="d-flex justify-center align-center">
             <FadeLoader
               color={"#518ef8"}
-              loading={props?.totalSites?.isLoading}
+              loading={props?.totalSites?.isLoading }
               width={4}
             />
           </div>
@@ -161,11 +166,18 @@ const ReportHeader = (props) => {
           <>
             <div className="report-header-card">
               <div onClick={handleStatement} className="text" style={{display: "flex", justifyContent: "center", cursor: "pointer"}}>
-                Financial Statement <img
+                Financial Statement {!loading ? <img
                   src={downloadSite}
                   alt="download-icon"
                   style={{ marginLeft: "5px" }}
               />
+                  :
+                <ClipLoader
+                    color={"#518ef8"}
+                    loading={true}
+                    width={5}
+                    size={20}
+                />}
               </div>
               {toggle && (
                   <DateRangePicker
