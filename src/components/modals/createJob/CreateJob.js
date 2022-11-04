@@ -293,10 +293,6 @@ export default function CreateJob({
     }
   };
 
-  useEffect(()=>{
-    console.log(po)
-  }, [po]);
-
   //getservices
   useEffect(() => {
     if (managerData) {
@@ -454,10 +450,7 @@ export default function CreateJob({
                     if(response.data){
                       if(response.data.purchase_orders.length > 1){
                         const lastPo = response.data.purchase_orders[response.data.purchase_orders.length - 1];
-                        setState({
-                          ...state,
-                          purchaseOrder: lastPo.purchase_order
-                        });
+                        setPo(lastPo.purchase_order);
                       }
                     }
                   });
@@ -587,7 +580,7 @@ export default function CreateJob({
       customer_user_id: localStorage.getItem("user_id"),
       jobs: 1,
       payment_type: roleId == 12 ? "0" : paymentMethod,
-      purchase_order: siteId && po ? po : purchaseOrder,
+      purchase_order: po ? po : purchaseOrder,
       is_permit: permitOption,
       permitted_weeks: noOfDays,
       permitted_cost: permitted_cost,
@@ -1365,15 +1358,15 @@ export default function CreateJob({
           <div>
             <p>Purchase Order</p>
             <TextField
-              value={siteId && po ? po : purchaseOrder}
+              value={po ? po : purchaseOrder}
               // error={errors["purchaseOrder"].length > 0 ? true : false}
               name="purchaseOrder"
               onChange={handleChange}
               fullWidth
+              inputProps={{ readOnly: po ? true : false }}
               variant="outlined"
               placeholder="SN14662"
               size="small"
-              disabled={siteId && po ? true : false}
             />
           </div>
           <div>
