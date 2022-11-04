@@ -293,6 +293,10 @@ export default function CreateJob({
     }
   };
 
+  useEffect(()=>{
+    console.log(po)
+  }, [po]);
+
   //getservices
   useEffect(() => {
     if (managerData) {
@@ -445,6 +449,18 @@ export default function CreateJob({
                   setNewAddressId("");
                 } else {
                   setNewAddressId(res.data?.result?.address_id);
+                  sitesService.showSitesDetail(res.data?.result?.address_id, {})
+                      .then(response => {
+                    if(response.data){
+                      if(response.data.purchase_orders.length > 1){
+                        const lastPo = response.data.purchase_orders[response.data.purchase_orders.length - 1];
+                        setState({
+                          ...state,
+                          purchaseOrder: lastPo.purchase_order
+                        });
+                      }
+                    }
+                  });
                 }
               })
               .catch((err) => {
