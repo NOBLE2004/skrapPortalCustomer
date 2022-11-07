@@ -81,7 +81,7 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
                           className="normal-dsans-10-primary1"
                           onClick={() => download(DOWNLOAD_URL + ticket.file.name)}
                       >
-                          {ticket.ticket_type == 'wtn' ? 'WTN' : 'Delivery'}
+                          {ticket.ticket_type == 'delivery' ? 'Delivery' : 'WTN'}
                   <img
                       src={downloadSite}
                       alt="download-icon"
