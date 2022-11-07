@@ -4,6 +4,7 @@ import TableContainer from "../reactTable/TableContainer";
 import "../reactTable/jobs-react-table.scss";
 import Pagination from "../reactTable/pagination";
 import ReactTooltip from "react-tooltip";
+import {DOWNLOAD_URL} from "../../environment";
 
 const TicketsTable = ({ data, pagination, handlePagination }) => {
   const toDataURL = (url) => {
@@ -67,23 +68,28 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
       },
       {
         Header: "",
-        accessor: "ticket_file",
+        accessor: "attachments",
         id: "download_id",
         Cell: (props) => {
           return (
             <>
-              {props.value ? (
-                <span
-                  className="normal-dsans-10-primary1"
-                  onClick={() => download(props.value)}
-                >
-                  Download WTN
+              {props.value.length > 0 ? (
+                  <div style={{display: 'flex', justifyContent: "space-evenly", alignItems: "center"}}>
+                      {props.value.map((ticket) => {
+                      return (<span
+                          style={{display: 'flex', justifyContent: "flex-start", alignItems: "center"}}
+                          className="normal-dsans-10-primary1"
+                          onClick={() => download(DOWNLOAD_URL + ticket.file.name)}
+                      >
+                          {ticket.ticket_type == 'wtn' ? 'WTN' : 'Delivery'}
                   <img
-                    src={downloadSite}
-                    alt="download-icon"
-                    style={{ marginLeft: "5px" }}
+                      src={downloadSite}
+                      alt="download-icon"
+                      style={{ marginLeft: "5px" }}
                   />
-                </span>
+                </span>);
+                  })}
+                  </div>
               ) : (
                 <>
                   <span
@@ -92,12 +98,7 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
                     data-tip={true}
                     data-for={"ticket_file"}
                   >
-                    Download Ticket
-                    <img
-                      src={downloadSite}
-                      alt="download-icon"
-                      style={{ marginLeft: "5px" }}
-                    />
+                      ------
                   </span>
                   <ReactTooltip
                     type="error"
