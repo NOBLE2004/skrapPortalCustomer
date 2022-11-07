@@ -26,6 +26,7 @@ class ReportsService extends HttpService {
   getPortfolio = (data) => this.get("portfolios", data);
   payOffSet = (data) => this.post(`placeOrderByValue?${data}`);
   offSetCharge = (data) => this.post(`offsetCharge`, data);
+  getAccountStatement = (data) => this.post(`customers/report/accountStatement`, data);
 }
 
 export default new ReportsService();
