@@ -1,12 +1,16 @@
 .dashboard-services-main {
   background: #ffffff;
-  border: 2px solid #ececec;
+  overflow: auto;
+  // border: 2px solid #ececec;
   box-sizing: border-box;
+  box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05) !important;
   border-radius: 11.6836px;
   padding: 0px 12px;
-  height: 331px;
+  height: 400px;
+  max-height: 100%;
   margin-right: 10px;
   width: 60%;
+
   @media only screen and (max-width: 768px) {
     width: 100% !important;
   }
@@ -24,9 +28,10 @@
       line-height: 18px;
       display: flex;
       align-items: center;
-      color: #52a9dd;
+      color: rgb(81, 142, 248);
     }
   }
+
   .CircularProgressbar-text {
     font-family: "BasierCircleReg";
     font-style: normal;
@@ -38,20 +43,32 @@
     text-align: center;
     fill: #000;
   }
+
   .progress-main {
     display: flex;
     justify-content: flex-start;
-    padding-top: 60px;
-    overflow: auto;
+    // padding-top: 60px;
+    flex-wrap: wrap;
+ 
     .circular-progress {
-      width: 180px;
-      height: 180px;
+      // width: 180px;
+      // height: 180px;
       display: flex;
       flex-direction: column;
       align-items: center;
+
       .CircularProgressbar {
         width: fit-content;
+
+        .CircularProgressbar-path {
+          stroke: #518ef8;
+        }
+
+        .CircularProgressbar-text {
+          fill: #518ef8;
+        }
       }
+
       p {
         font-family: "BasierCircleReg";
         font-style: normal;
@@ -66,11 +83,14 @@
         margin-bottom: 9px;
       }
     }
+
     .progress-sub {
       display: flex;
       align-items: center;
-      padding-bottom: 10px;
+      padding: 5px;
+
       .order-percentage {
+
         .order-title {
           font-family: "BasierCircleReg";
           font-style: normal;
@@ -80,9 +100,10 @@
           display: flex;
           align-items: center;
           text-align: center;
-          color: #52a9dd;
+          color: rgb(81, 142, 248);
           width: max-content;
         }
+
         .orders {
           font-family: "BasierCircleReg";
           font-style: normal;
@@ -96,9 +117,23 @@
           color: #000000;
         }
       }
+
       .order-percentage:last-child {
-        padding-right: 10px;
+        padding-left: 10px;
       }
     }
+  }
+
+  .circle-text {
+    position: absolute;
+    top: 60px;
+    width: 180px;
+    text-align: center;
+    font-size: 20px;
+    color: #518ef8;
+    font-family: "DM Sans";
+  }
+  .circle_reactGradientProgressPercentageSpan__1HdhL{
+    bottom: 16px;
   }
 }

@@ -17,11 +17,11 @@
       color: #0f2851;
       padding-bottom: 98px;
 
-      span{
+      span {
         text-decoration: underline;
       }
     }
-    width: 508px;
+    // width: 508px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -31,36 +31,39 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      .MuiInputBase-input {
-        background-color: transparent;
-      }
-      .MuiOutlinedInput-adornedStart {
-        padding-left: 0px;
-      }
-      .MuiInputBase-root {
-        width: 400px;
-        border-radius: 45px;
-        margin-bottom: 16px;
-        .MuiTypography-root {
-          background-color: #29a7df;
-          color: #fff;
-          padding: 8px;
-          border-bottom-left-radius: 20px;
-          border-top-left-radius: 20px;
-        }
-      }
-      .MuiFormControl-root {
-        margin: 0px;
+      width: 100%;
+    }
+    .MuiInputBase-input {
+      background-color: transparent;
+    }
+    .MuiOutlinedInput-adornedStart {
+      padding-left: 0px;
+    }
+    .MuiInputBase-root {
+      // width: 400px;
+      border-radius: 45px;
+      margin-bottom: 16px;
+      .MuiTypography-root {
+        background-color: #29a7df;
+        color: #fff;
+        padding: 8px;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
       }
     }
+    .MuiFormControl-root {
+      margin: 0px;
+      width: 100%;
+    }
     .register-next-btn {
-      padding-top: 53px;
+      padding-top: 40px;
       padding-bottom: 40px;
       .MuiButton-root {
         border-radius: 64px;
         background: #36b8fc;
         width: 400px;
         height: 48px;
+        color: #fff !important;
       }
       .MuiButton-label {
         font-family: "DM Sans";
@@ -73,11 +76,11 @@
       }
     }
   }
-  .signin{
+  .signin {
     text-align: center;
     padding-top: 15px;
   }
-  .sign-in-link{
+  .sign-in-link {
     font-family: DM Sans;
     font-style: normal;
     font-weight: 500;
@@ -87,19 +90,64 @@
     text-decoration: underline;
     cursor: pointer;
   }
-  .register-loader{
+  .register-loader {
     display: flex;
   }
+  .radio-button-in-signup {
+    width: 100%;
+    margin-bottom: 10px;
+    .MuiFormControlLabel-label {
+      font-family: DM Sans;
+      // font-weight: bold;
+      font-size: 14px;
+      color: #0f2851;
+    }
+  }
+  .agree-term-condition {
+    .MuiFormControlLabel-label {
+      font-family: DM Sans;
+      font-size: 14px;
+      color: #0f2851;
+    }
+    .a-tag-sign-up {
+      text-decoration: underline;
+      color: #29a7df;
+    }
+  }
+  .company-fields-sign-up {
+    margin-bottom: 16px;
+    .MuiInputBase-root {
+      margin: 0px !important;
+    }
+    .MuiOutlinedInput-input {
+      padding: 0px !important;
+    }
+    .MuiInputLabel-root {
+      top: -4px;
+    }
+  }
+  .a-tag-main {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    color: #0f2851;
+    .a-tag-sign-up {
+      text-decoration: underline;
+      color: #29a7df;
+    }
+  }
 }
-@media (max-width: 500px) and (min-width: 1px){
+@media (max-width: 500px) and (min-width: 1px) {
   .register-main {
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
     .register-section {
       width: 100%;
       .search-input {
-        width: 90%;
-        .MuiFormControl-root{
+        // width: 90%;
+        .MuiFormControl-root {
           width: 100%;
           .MuiInputBase-root {
             width: 100%;
@@ -107,9 +155,9 @@
         }
       }
     }
-    .register-next-btn{
+    .register-next-btn {
       width: 90%;
-      .MuiButton-root{
+      .MuiButton-root {
         width: 100% !important;
       }
     }

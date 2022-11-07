@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
 const drawerWidth = 228;
 export const useStyles = makeStyles((theme) => ({
@@ -62,13 +62,13 @@ export const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: 20,
-    overflow: "hidden",
+    //overflow: "hidden",
     width: "-moz-available",
   },
   contents: {
     flexGrow: 1,
     padding: 10,
-    overflow: "hidden",
+    //overflow: "hidden",
     width: "-moz-available",
   },
 }));

@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { withStyles } from "@mui/styles";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import MuiDialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Alert from "@mui/lab/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 import ServiceService from "../../../services/service.service";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+  LocalizationProvider,
+  DatePicker,
+} from "@mui/lab";
 import DateFnsUtils from "@date-io/date-fns";
 import PaymentService from "../../../services/payment.service";
 import CardPayment from "../../commonComponent/cardPayment/CardPayment";
@@ -30,6 +30,7 @@ import JobService from "../../../services/job.service";
 import { useHistory } from "react-router-dom";
 import "./createExchange.scss";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 
 const styles = (theme) => ({
   root: {
@@ -74,6 +75,8 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
   const [serviceList, setServiceList] = useState([]);
   const [credit, setCredit] = useState(0);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
+  const [timeSlots, setTimeSlots] = useState([]);
+  const [isTimeSelected, setIsTimeSelected] = useState(false);
   const [state, setState] = useState({
     startSelectedDate: new Date(),
     cost: "",
@@ -82,14 +85,12 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     notice: null,
     isLoading: false,
     service: "",
-    selectedTime: "firstShift",
-    startTime: "08:00:00",
-    endTime: "12:00:00",
     addNewCard: false,
     addedNewCard: false,
     purchaseOrder: "",
     service_id: "",
     note: "",
+    time_slot_loading: false,
   });
   const {
     startSelectedDate,
@@ -99,13 +100,12 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     service_id,
     cost,
     selectedTime,
-    startTime,
-    endTime,
     notice,
     isLoading,
     addNewCard,
     addedNewCard,
     purchaseOrder,
+    time_slot_loading,
     note,
   } = state;
 
@@ -113,7 +113,6 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     service: "",
     cost: "",
     paymentMethod: "",
-    purchaseOrder: "",
   });
 
   const checkingError = (name, value) => {
@@ -121,7 +120,6 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
       case "service":
       case "cost":
       case "paymentMethod":
-      case "purchaseOrder":
         errors[name] = value.length === 0 ? "Required" : "";
         break;
       default:
@@ -129,6 +127,19 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     }
     setError({ ...errors });
   };
+  useEffect(() => {
+    let t_date = Date.parse(new Date());
+    let d_date = Date.parse(startSelectedDate);
+    setState({ ...state, time_slot_loading: true });
+    PaymentService.getData({ t_date, d_date })
+        .then((res) => {
+          setTimeSlots(res.data.result.time_slots);
+          setState({ ...state, time_slot_loading: false });
+        })
+        .catch((err) => {
+          setState({ ...state, time_slot_loading: false });
+        });
+  }, [startSelectedDate]);
 
   //getcardlist
   useEffect(() => {
@@ -149,6 +160,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
       post_code: postcode,
       service_type: parent_id,
       is_app: 0,
+      user_id: localStorage.getItem('user_id')
     };
     ServiceService.subServicelist(data).then((response) => {
       setServiceList(response.data.result);
@@ -224,13 +236,12 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     setState({ ...state, addNewCard: true });
   };
 
-  const handleTime = (start, end, option) => {
+  const handleTime = (time) => {
     setState({
       ...state,
-      startTime: start,
-      endTime: end,
-      selectedTime: option,
+      selectedTime: time.time_slot,
     });
+    setIsTimeSelected(false);
   };
 
   const handleSaveNewCard = () => {
@@ -277,30 +288,39 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     if (
       service === "" ||
       cost === "" ||
-      paymentMethod === "" ||
-      purchaseOrder === ""
+      paymentMethod === ""
     ) {
       Object.keys(errors).forEach((error) => {
         checkingError(error, state[error]);
       });
       return;
     }
-
-    setState({ ...state, isLoading: true });
-
-    const currentDayOfMonth = startSelectedDate.getDate();
-    let currentMonth = startSelectedDate.getMonth();
-    if (currentMonth < 10) {
-      currentMonth = "0" + (currentMonth + 1);
-    } else {
-      currentMonth = currentMonth + 1;
+    if (!selectedTime) {
+      setIsTimeSelected(true);
+      return;
     }
-    const currentYear = startSelectedDate.getFullYear();
-    const dateString =
-      currentYear + "-" + currentMonth + "-" + currentDayOfMonth;
 
-    const job_start_time = Date.parse(`${dateString}T${startTime}`);
-    const job_end_time = Date.parse(`${dateString}T${endTime}`);
+    //setState({ ...state, isLoading: true });
+
+    let currentDayOfMonth = startSelectedDate.getDate();
+    let currentMonth = startSelectedDate.getMonth();
+    let newCurrentMonth = currentMonth + 1;
+
+    if (newCurrentMonth < 10) {
+      newCurrentMonth = "0" + newCurrentMonth;
+    }
+    if (currentDayOfMonth < 10) {
+      currentDayOfMonth = "0" + currentDayOfMonth;
+    }
+    const time = selectedTime && selectedTime.split("-");
+    const startTime = time[0];
+    const endTime = time[1];
+    const newStartTime = startTime.trim().slice(0, 5);
+    const newEndTime = endTime.trim().slice(0, 5);
+    const currentYear = startSelectedDate.getFullYear();
+    const dateString = currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
+    const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
+    const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
 
     let data = {
       card_id: selectedPaymentMethod,
@@ -418,44 +438,48 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
               error={errors["cost"].length > 0 ? true : false}
             />
           </div>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider utils={DateFnsUtils} dateAdapter={AdapterDateFns}>
             <div className="dateTimeWp">
               <div>
                 <p>Delivery Date Time</p>
-                <KeyboardDatePicker
+                <DatePicker
                   margin="normal"
                   format="MM/dd/yyyy"
                   value={startSelectedDate}
                   onChange={handleStartDateChange}
+                  renderInput={(props) => <TextField {...props} />}
                   KeyboardButtonProps={{
                     "aria-label": "change date",
                   }}
                 />
               </div>
               <div className="timeWp">
-                <label
-                  className={`firstShift ${
-                    selectedTime === "firstShift" && "active"
-                  }`}
-                  onClick={() =>
-                    handleTime("08:00:00", "12:00:00", "firstShift")
-                  }
-                >
-                  8:00 AM - 12:00PM
-                </label>
-                <label
-                  className={`secondShift ${
-                    selectedTime === "secondShift" && "active"
-                  }`}
-                  onClick={() =>
-                    handleTime("12:00:00", "17:00:00", "secondShift")
-                  }
-                >
-                  12:00 PM - 5:00PM
-                </label>
+                {time_slot_loading ? (
+                    <CircularProgress />
+                ) : timeSlots.length > 0 ? (
+                    timeSlots.map((elem, index) => (
+                        <label
+                            className={`firstShift ${
+                                selectedTime === elem.time_slot && "active"
+                            }`}
+                            onClick={() => handleTime(elem)}
+                            key={index}
+                        >
+                          {elem.time_slot}
+                        </label>
+                    ))
+                ) : (
+                    <p className="errorMsg">
+                      Oops! Looks like we do not have any available slots for your
+                      chosen date, at the moment. Try another date?
+                    </p>
+                )}
               </div>
             </div>
-          </MuiPickersUtilsProvider>
+            {isTimeSelected && (
+                <div className="error">Choose Time slot from above</div>
+            )}
+          </LocalizationProvider>
           <div className="selectWp">
             <p>Payment</p>
             <FormControl variant="outlined" margin="dense">
@@ -535,7 +559,6 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
             <p>Purchase Order</p>
             <TextField
               value={purchaseOrder}
-              error={errors["purchaseOrder"].length > 0 ? true : false}
               name="purchaseOrder"
               onChange={handleChange}
               fullWidth={true}

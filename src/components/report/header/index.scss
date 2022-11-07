@@ -1,0 +1,114 @@
+.report-header {
+  .makeStyles-rootMenuItem-16 {
+    background: linear-gradient(
+                    135deg,
+                    #76ccf8 27.99%,
+                    #518ef8 68.87%,
+                    #4981f8 77.07%
+    );
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0% 1%;
+  .report-grid-header {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    @media only screen and (max-width: 425px) {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .report-header-card {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1.5% 2%;
+      background: #fff;
+      margin-left: 5%;
+      border-radius: 16px;
+      box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
+      margin: 2%;
+      .MuiOutlinedInput-notchedOutline {
+        border: none;
+      }
+      .text {
+        font-family: "DM Sans";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 20px;
+        color: #677790;
+        span {
+          color: #0f2851;
+        }
+      }
+      .rdrDateRangePickerWrapper{
+        top: 12%;
+        right: 15%;
+        z-index: 1;
+      }
+    }
+    .first {
+      width: 100%;
+      margin-left: 0%;
+      padding: 1% 0%;
+      background: none;
+      justify-content: flex-start;
+      border-radius: 0;
+      box-shadow: none;
+      padding-right: 3%;
+      @media only screen and (max-width: 1024px) {
+        flex-direction: column;
+        width: 100%;
+      }
+      .text {
+        font-size: 16px;
+        text-align: left;
+        width: 45%;
+        @media only screen and (max-width: 1024px) {
+          margin: 2% 0%;
+          width: 100%;
+        }
+      }
+      .MuiInputBase-root {
+        width: 100%;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
+        background: white;
+        .MuiOutlinedInput-input {
+          font-family: "DM Sans";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 30px;
+          color: #677790;
+          width: 400px;
+          padding: 1.5% 5%;
+          .text-sec {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            span {
+              float: right;
+              font-style: normal;
+              font-weight: 700;
+              font-size: 12px;
+              line-height: 16px;
+              color: #a4adbc;
+              padding: 0% 3%;
+              margin-top: 2%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

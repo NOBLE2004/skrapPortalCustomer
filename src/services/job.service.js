@@ -38,6 +38,8 @@ class JobService extends HttpService {
 
   getOrderFiles = (data) => this.post(`getOrderFiles`, data);
 
+  getRecentAddresses = (data) => this.post(`getRecentAddresses`, data);
+
 }
 
 export default new JobService();

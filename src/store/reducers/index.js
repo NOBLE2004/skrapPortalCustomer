@@ -9,6 +9,26 @@ import { tippingReducer } from "./tippingReducer";
 import { ticketReducer } from "./ticketReducer";
 import { phoneReducer } from "./phoneReducer";
 import { reportReducer } from "./reportReducer";
+import { hireBreakdownReducer } from "./hireBreakdownReducer";
+import { siteBreakdownReducer } from "./siteBreakdownReducer";
+import { siteMovementReducer } from "./siteMovementReducer";
+import { totalSites } from "./jobsMetaReduces";
+import { siteMovementBreakdownReducer } from "./siteMovementBreakdownReducer";
+import { siteMovements } from "./siteMovementsReducer";
+import { siteMovementDetail } from "./siteMovementDetailReducer";
+import { reportEmission } from "./emissonReducer";
+import { reportEmissionSiteBreakDown } from "./emissionSiteBreakDownReducer";
+import { reportEmissionVehicle } from "./emissionVehicleReducer";
+import { landfillDiversion } from "./landfillDiversionReducer";
+import { portfolio } from "./portfolioReducer";
+import { getTonnageReducer } from "./tonnageReducer";
+import { getWasteReducer } from "./wasteReducer";
+import { getWasteOfEnergyReducer } from "./wasteOfEnergyReducer";
+// import { getWasteOfEnergyListReducer } from "./wasteOfEnergyReducer";
+import { siteBreakdownListReducer } from "./siteBreakdownReducer";
+import { getRecycledReducer } from "./recycledReducer";
+import { siteMovementsList } from "./siteMovementsReducer";
+import { landfillDiversionList } from "./landfillDiversionReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -21,4 +41,23 @@ export default combineReducers({
   tickets: ticketReducer,
   phone: phoneReducer,
   report: reportReducer,
+  hireBreakdown: hireBreakdownReducer,
+  siteBreakdown: siteBreakdownReducer,
+  siteMovement: siteMovementReducer,
+  siteMovementBreakdown: siteMovementBreakdownReducer,
+  totalSites: totalSites,
+  siteMovements: siteMovements,
+  siteMovementDetail: siteMovementDetail,
+  reportEmission: reportEmission,
+  reportEmissionSiteBreakDown: reportEmissionSiteBreakDown,
+  reportEmissionVehicle: reportEmissionVehicle,
+  landfillDiversion: landfillDiversion,
+  portfolio: portfolio,
+  tonnage: getTonnageReducer,
+  waste: getWasteReducer,
+  energy: getWasteOfEnergyReducer,
+  landfillList: landfillDiversionList,
+  siteBreakdownList: siteBreakdownListReducer,
+  siteMovementsList: siteMovementsList,
+  recycled: getRecycledReducer,
 });

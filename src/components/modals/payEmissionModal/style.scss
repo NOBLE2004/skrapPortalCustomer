@@ -1,0 +1,26 @@
+.main-modal-content-emision {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0px;
+  p {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #0f2851;
+  }
+}
+
+.label-for-checkbox-emission-modal {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #0f2851;
+}
+.footer-modal-emision {
+  display: flex;
+  justify-content: space-between;
+}

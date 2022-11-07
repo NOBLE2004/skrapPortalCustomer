@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import JobsTable from "../../components/reactTable/JobsTable";
-import { Card, CardContent } from "@material-ui/core";
+import { Card, CardContent } from "@mui/material";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
@@ -17,6 +17,7 @@ import NewMapDirectionsRenderer from "../../components/map/NewMapDirectionsRende
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import JobFilters from "../../components/filters/jobFilters";
 import CreateJob from "../../components/modals/createJob/CreateJob";
+import CreateSite from "../../components/modals/createSite/CreateSite";
 import "./mainjobs.scss";
 import {
   getUserDataFromLocalStorage,
@@ -35,6 +36,7 @@ const MainJobs = (props) => {
   const [isMapView, setMapView] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
   const [isJobBooked, setIsJobBooked] = useState(false);
+  const [createSite, setCreateSite] = useState(false);
   const [isJobCreated, setIsJobCreated] = useState(false);
   const [limit, setLimit] = useState(10);
   const { info, loading } = props.dashboard;
@@ -52,6 +54,10 @@ const MainJobs = (props) => {
   const handleJobCreated = useCallback(() => {
     setIsJobCreated(!isJobCreated);
   }, [isJobCreated]);
+
+    const handleCreateSite = useCallback(() => {
+        setCreateSite(true);
+    }, [createSite]);
 
   useEffect(() => {
     async function fetchData() {
@@ -134,12 +140,13 @@ const MainJobs = (props) => {
         handleShowMap={handleShowMap}
         isMap={isMapView}
         handleBookJob={handleBookJob}
+        handleCreateSite={handleCreateSite}
         downloadCSV={false}
         showButton={true}
       >
         <CommonJobStatus
           jobStatus={{
-            status: "Sales",
+            status: "Spend",
             price: `£${
               info ? parseFloat(info.TotalSpend).toLocaleString() : 0
             }`,
@@ -193,7 +200,7 @@ const MainJobs = (props) => {
         <>
           {isLoading ? (
             <div className="loader">
-              <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+              <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
             </div>
           ) : props.jobs.error ? (
             <div className="jobs-not-found">{props.jobs.error}</div>
@@ -223,7 +230,7 @@ const MainJobs = (props) => {
                 {isLoading ? (
                   <div className="loader">
                     <FadeLoader
-                      color={"#29a7df"}
+                      color={"#518ef8"}
                       loading={isLoading}
                       width={4}
                     />
@@ -314,6 +321,12 @@ const MainJobs = (props) => {
           handleJobCreated={handleJobCreated}
         />
       )}
+        {createSite && (
+            <CreateSite
+                closeModal={() => setCreateSite(!createSite)}
+                sites={true}
+            />
+        )}
     </div>
   );
 };

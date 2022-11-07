@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
-import Alert from "@material-ui/lab/Alert";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Radio from "@material-ui/core/Radio";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { withStyles } from "@mui/styles";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import MuiDialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
+import Alert from "@mui/lab/Alert";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Radio from "@mui/material/Radio";
+import CircularProgress from "@mui/material/CircularProgress";
 import JobService from "../../../services/job.service";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import "../createJob/createJob.scss";
-import { TextField } from "@material-ui/core";
+import { TextField } from "@mui/material";
 import PaymentService from "../../../services/payment.service";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import ServiceService from "../../../services/service.service";
@@ -151,6 +151,7 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
       post_code: postcode,
       service_type: parent_id,
       is_app: 0,
+      user_id: localStorage.getItem('user_id')
     };
     ServiceService.subServicelist(data)
       .then((response) => {
@@ -175,32 +176,32 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
 
   useEffect(() => {
     window.addEventListener(
-        "message",
-        function (ev) {
-          if (ev.data.code === 0) {
-            setState({
-              ...state,
-              isLoading: false,
-              notice: {
-                type: "success",
-                text: "Successfully created extension!",
-              },
-            });
-            setTimeout(() => {
-              closeModal();
-              updateJobs();
-            }, 2000);
-          } else {
-            setState({
-              ...state,
-              notice: {
-                type: "error",
-                text: ev.data.message,
-              },
-            });
-          }
-        },
-        false
+      "message",
+      function (ev) {
+        if (ev.data.code === 0) {
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: "Successfully created extension!",
+            },
+          });
+          setTimeout(() => {
+            closeModal();
+            updateJobs();
+          }, 2000);
+        } else {
+          setState({
+            ...state,
+            notice: {
+              type: "error",
+              text: ev.data.message,
+            },
+          });
+        }
+      },
+      false
     );
   }, []);
 
@@ -229,22 +230,22 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
     setState({ ...state, isLoading: true });
     JobService.addExtention(data)
       .then((res) => {
-        if(res.data.code === 11){
+        if (res.data.code === 11) {
           const iframe = document.createElement("iframe");
           iframe.src = res.data.result.url;
           iframe.width = "800";
           iframe.height = "800";
           // @ts-ignore
           window.open(
-              res.data.result.url,
-              "Dynamic Popup",
-              "height=" +
+            res.data.result.url,
+            "Dynamic Popup",
+            "height=" +
               iframe.height +
               ", width=" +
               iframe.width +
               "scrollbars=auto, resizable=no, location=no, status=no"
           );
-        }else{
+        } else {
           setState({
             ...state,
             isLoading: false,
@@ -283,7 +284,7 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
       open={true}
     >
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Extends Job
+        Extend Job
       </DialogTitle>
       <DialogContent dividers>
         <form noValidate>
@@ -292,7 +293,7 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
             <TextField
               value={portableweeks}
               onChange={handleChange}
-              placeholder="£"
+              placeholder="Enter number of weeks"
               name="portableweeks"
               InputProps={{ inputProps: { min: 2 } }}
               type="number"

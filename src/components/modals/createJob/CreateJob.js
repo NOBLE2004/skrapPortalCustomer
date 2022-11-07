@@ -1,39 +1,40 @@
 import "date-fns";
 import React, { useState, useEffect, useRef } from "react";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import { withStyles } from "@material-ui/core/styles";
-import DialogContent from "@material-ui/core/DialogContent";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import { withStyles } from "@mui/styles";
+import DialogContent from "@mui/material/DialogContent";
 import DateFnsUtils from "@date-io/date-fns";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Alert from "@material-ui/lab/Alert";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import CloseIcon from "@material-ui/icons/Close";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import Alert from "@mui/lab/Alert";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import CloseIcon from "@mui/icons-material/Close";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
 import CardPayment from "../../commonComponent/cardPayment/CardPayment";
-import { createTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/styles";
 import { useHistory } from "react-router-dom";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+  LocalizationProvider,
+  DatePicker,
+} from "@mui/lab";
 import AsychronousAddress from "../../commonComponent/asychronousAddress/AsychronousAddress";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 import ServiceService from "../../../services/service.service";
 import JobService from "../../../services/job.service";
 import PaymentService from "../../../services/payment.service";
-import { colors } from "@material-ui/core";
+import { colors } from "@mui/material";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 import "./createJob.scss";
 import { serviceList } from "../../utlils/constants";
@@ -90,6 +91,7 @@ export default function CreateJob({
   const [roleId, setRoleId] = useState(0);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [addNewCard, setAddNewCard] = useState(false);
+  const user = localStorage.getItem('c_d_storage');
   const [errors, setError] = useState({
     customer: "",
     service: "",
@@ -272,7 +274,6 @@ export default function CreateJob({
       selectedTime: time.time_slot,
     });
   };
-
   const handleStartDateChange = (date) => {
     setStartSelectedDate(date);
   };
@@ -327,6 +328,7 @@ export default function CreateJob({
           post_code: postCode,
           service_type: serviceSelect.service_id,
           is_app: 0,
+          user_id: localStorage.getItem('user_id')
         };
         ServiceService.subServicelist(data).then((response) => {
           if (Object.keys(response.data.result).length === 0) {
@@ -344,6 +346,7 @@ export default function CreateJob({
           post_code: addressData.postcode,
           service_type: serviceSelect.service_id,
           is_app: 0,
+          user_id: localStorage.getItem('user_id')
         };
         ServiceService.subServicelist(data).then((response) => {
           if (Object.keys(response.data.result).length === 0) {
@@ -442,6 +445,15 @@ export default function CreateJob({
                   setNewAddressId("");
                 } else {
                   setNewAddressId(res.data?.result?.address_id);
+                  sitesService.showSitesDetail(res.data?.result?.address_id, {})
+                      .then(response => {
+                    if(response.data){
+                      if(response.data.purchase_orders.length > 1){
+                        const lastPo = response.data.purchase_orders[response.data.purchase_orders.length - 1];
+                        setPo(lastPo.purchase_order);
+                      }
+                    }
+                  });
                 }
               })
               .catch((err) => {
@@ -568,7 +580,7 @@ export default function CreateJob({
       customer_user_id: localStorage.getItem("user_id"),
       jobs: 1,
       payment_type: roleId == 12 ? "0" : paymentMethod,
-      purchase_order: siteId && po ? po : purchaseOrder,
+      purchase_order: po ? po : purchaseOrder,
       is_permit: permitOption,
       permitted_weeks: noOfDays,
       permitted_cost: permitted_cost,
@@ -863,15 +875,16 @@ export default function CreateJob({
             />
           </div>
 
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider utils={DateFnsUtils} dateAdapter={AdapterDateFns}>
             <div className="dateTimeWp">
               <div className="datewp">
                 <p>Delivery Date Time</p>
                 <ThemeProvider theme={materialTheme}>
-                  <KeyboardDatePicker
+                  <DatePicker
                     margin="normal"
                     format="MM/dd/yyyy"
                     disablePast
+                    renderInput={(props) => <TextField {...props} />}
                     value={startSelectedDate}
                     onChange={handleStartDateChange}
                     KeyboardButtonProps={{
@@ -904,7 +917,7 @@ export default function CreateJob({
                 )}
               </div>
             </div>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
 
           <div className="serviceWp">
             <div className="service">
@@ -1113,11 +1126,11 @@ export default function CreateJob({
             <div className="service-cost-width">
               <p>Service Cost</p>
               <TextField
-                value={serviceCost}
+                value={`${(serviceCost/1.2)?.toFixed(2)} + Vat`}
                 onChange={handleChange}
                 placeholder="£"
                 name="serviceCost"
-                type="number"
+                type="text"
                 variant="outlined"
                 disabled={(serviceCost !== null) | (serviceCost !== undefined)}
                 margin="dense"
@@ -1169,7 +1182,6 @@ export default function CreateJob({
                             <em>None</em>
                           </MenuItem>
                           <MenuItem value="10">MarketPay</MenuItem>
-                          <MenuItem value="0">Stripe</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
@@ -1226,9 +1238,9 @@ export default function CreateJob({
                 <TextField
                   placeholder="£"
                   name="totalCost"
-                  value={totalCost}
+                  value={`${totalCost} Inc vat`}
                   onChange={handleChange}
-                  type="number"
+                  type="text"
                   variant="outlined"
                   margin="dense"
                   disabled={(totalCost !== null) | (totalCost !== undefined)}
@@ -1294,8 +1306,8 @@ export default function CreateJob({
                     value={selectedMarketPay}
                     onChange={handleChange}
                   >
-                    {acountInfo && acountInfo.pay30_eofm
-                      ? MARKET_PAY_LIST.map((data, index) => {
+                    {acountInfo
+                      && MARKET_PAY_LIST.map((data, index) => {
                           return (
                             <>
                               <div className="marketMain">
@@ -1335,29 +1347,8 @@ export default function CreateJob({
                               )}
                             </>
                           );
-                        })
-                      : MARKET_PAY_LIST1.map((data, index) => {
-                          return (
-                            <div className="marketMain">
-                              <FormControlLabel
-                                key={data.id}
-                                value={data.id}
-                                control={<Radio color="primary" />}
-                                label={`${data.title}`}
-                              />
-
-                              <img
-                                src={marketInfoIcon}
-                                alt="market"
-                                className="tool-img"
-                                onClick={() => handleToolTip(index)}
-                              />
-                              {showToolTip && data.tooltip && (
-                                <ToolTipCard data={data.tooltip} />
-                              )}
-                            </div>
-                          );
                         })}
+
                   </RadioGroup>
                 )}
               </>
@@ -1367,15 +1358,15 @@ export default function CreateJob({
           <div>
             <p>Purchase Order</p>
             <TextField
-              value={siteId && po ? po : purchaseOrder}
+              value={po ? po : purchaseOrder}
               // error={errors["purchaseOrder"].length > 0 ? true : false}
               name="purchaseOrder"
               onChange={handleChange}
               fullWidth
+              inputProps={{ readOnly: po ? true : false }}
               variant="outlined"
               placeholder="SN14662"
               size="small"
-              disabled={siteId && po ? true : false}
             />
           </div>
           <div>

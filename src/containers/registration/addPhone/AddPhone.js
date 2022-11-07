@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
+import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
 import { registerHeaderData } from "../../../environment";
 import "./addphone.scss";
 import Header from "../../../components/header/Header";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/lab/Alert";
 import { connect } from "react-redux";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import InputAdornment from "@mui/material/InputAdornment";
 import { phoneSuccess } from "../../../store/actions/actionPhone";
 import FadeLoader from "react-spinners/FadeLoader";
 import { userlogin } from "../../../store/actions/signIn";
@@ -205,7 +205,7 @@ const AddPhone = (props) => {
           });
 
           setTimeout(() => {
-            history.push("/signup");
+            history.push("/signup-info");
           }, 2000);
         } else {
           setState({
@@ -320,7 +320,7 @@ const AddPhone = (props) => {
             </div>
             {isLoading ? (
               <div className="notice-alert">
-                <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+                <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
               </div>
             ) : (
               <div className="new-notice-alert">
@@ -335,7 +335,7 @@ const AddPhone = (props) => {
               {props.auth.loading ? (
                 <div className="notice-alert">
                   <FadeLoader
-                    color={"#29a7df"}
+                    color={"#518ef8"}
                     loading={props.auth.loading}
                     width={4}
                   />

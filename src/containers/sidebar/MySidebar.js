@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "@material-ui/core/styles";
-import { Drawer, IconButton, List } from "@material-ui/core";
+import { useTheme } from "@mui/styles";
+import { Drawer, IconButton, List } from "@mui/material";
 import { useHistory, useLocation } from "react-router";
 import clsx from "clsx";
-import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { sidebarTabsList } from "../../environment";
+import { sidebarTabsList, ENV, USER } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
-import { skrap_logo, personImage } from "../../assets/images";
+import { appIcon, personImage } from "../../assets/images";
 import useWindowDimensions from "../../hooks/useWindowDimension";
 import "./mySidebar.scss";
 
@@ -65,6 +65,8 @@ const MySidebar = (props) => {
       setActiveTab("jobs");
     } else if (param === "site-") {
       setActiveTab("site-managers");
+    } else if (param === "new-report") {
+      setActiveTab("new-report");
     } else {
       setActiveTab(activeTab);
     }
@@ -93,8 +95,8 @@ const MySidebar = (props) => {
         props.history.push({ pathname: `/${tabKey}` });
       }
       setActiveTab(tabKey);
-    }else{
-      props.history.push({pathname : `/${tabKey}`})
+    } else {
+      props.history.push({ pathname: `/${tabKey}` });
     }
   };
   const onTabHandlerSub = (e, tab) => {
@@ -155,7 +157,7 @@ const MySidebar = (props) => {
       }}
     >
       <IconButton onClick={handleDrawer} className="sidebar-handler-arrow">
-        <img className="skrapLogin" src={skrap_logo} alt="Skrap-Logo" />
+        <img className="skrapLogin" src={appIcon} alt="Skrap-Logo" />
       </IconButton>
       <List
         className="menuList"
@@ -167,6 +169,7 @@ const MySidebar = (props) => {
               return null;
             }
           }
+    
 
           // if (userData.user_count <= 0) {
           //   if (index === 3) {
@@ -213,9 +216,7 @@ const MySidebar = (props) => {
             className="display-flex align-items-center driver-icon-section"
             style={{
               color: "#86869C",
-              width: 34,
-              height: 34,
-              marginRight: 18,
+              marginRight: 5,
               borderRadius: "50%",
             }}
           >
@@ -238,6 +239,13 @@ const MySidebar = (props) => {
                   (userData.personal_detail.hasOwnProperty("last_name") &&
                     userData.personal_detail?.last_name)) ||
               "Test"
+            }
+            className="current-user"
+          />
+          <br />
+          <ListItemText
+            primary={
+              (userData.hasOwnProperty("company") && userData?.company) || ""
             }
             className="current-user"
           />

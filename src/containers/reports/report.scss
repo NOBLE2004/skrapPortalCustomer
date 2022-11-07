@@ -1,0 +1,173 @@
+.main-report {
+  margin-bottom: 5%;
+  .report-grid {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: 100%;
+    @media only screen and (max-width: 1100px) {
+      flex-direction: column;
+    }
+    .report-chart-card-outer {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 47%;
+      @media only screen and (max-width: 1100px) {
+        width: 100%;
+      }
+      flex-direction: column;
+      .report-card-title {
+        font-family: "DM Sans";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #a4adbc;
+        margin: 0% 0% 1% 0%;
+      }
+
+      .report-chart-card {
+        box-sizing: border-box;
+        border-radius: 12px !important;
+        box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05) !important;
+        width: 100%;
+        //height: 331px;
+        .MuiCardContent-root {
+          padding: 12px 12px;
+        }
+        .MuiInput-underline:hover:not(.Mui-disabled):before {
+          border-bottom: 1px solid rgb(81, 142, 248);
+        }
+        .border-drop {
+          border-top: 1px solid #f5f5f5;
+          width: 100%;
+          display: flex;
+        }
+        .sub-heading {
+          width: 100%;
+          font-family: "DM Sans";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 18px;
+          text-align: left;
+          color: #a4adbc;
+          margin-top: 2%;
+        }
+        .see-more {
+          width: 100%;
+          font-family: "DM Sans";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 20px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+          text-align: right;
+          color: #60a0f8;
+          cursor: pointer;
+        }
+        .see-more-wrap {
+          width: 100%;
+        }
+        .more-drop {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          .head-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            p {
+              font-family: "DM Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 12px;
+              line-height: 16px;
+              color: #677790;
+              b {
+                color: #0f2851;
+              }
+              span {
+                font-size: 14px;
+                line-height: 20px;
+                color: #0f2851;
+              }
+            }
+          }
+        }
+        .salesWp {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 10px;
+          padding: 2%;
+          .salesWp-inner-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            width: 100%;
+            .salesWp-sub {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            }
+          }
+
+          h1 {
+            font-family: "DM Sans";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 34px;
+            width: 100%;
+            color: #60a0f8;
+
+            span {
+              font-weight: 700;
+              font-size: 14px;
+              line-height: 20px;
+              font-style: normal;
+            }
+          }
+          h2 {
+            font-family: "DM Sans";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 22px;
+            width: 100%;
+            color: #60a0f8;
+          }
+          p {
+            font-family: "DM Sans";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #0f2851;
+            span {
+              color: #60a0f8;
+            }
+          }
+        }
+
+        .MuiCardContent-root:last-child {
+          padding-bottom: 10px !important;
+        }
+
+        .MuiInput-underline:before {
+          border-bottom: 1px solid rgb(81, 142, 248) !important;
+        }
+      }
+    }
+  }
+}

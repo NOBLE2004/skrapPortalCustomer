@@ -81,7 +81,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         },
       },
       {
-        Header: "Sales By Site",
+        Header: "Spend By Site",
         accessor: "sales_by_site",
         disableFilters: true,
         Cell: (props) => {
@@ -105,12 +105,13 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
       {
         Header: "",
         id: "edit-id",
+        
         Cell: ({ cell }) => (
           <>
             {roleId === 13 || roleId === 12 ? (
               ""
             ) : (
-              <>
+              <div className="action-for-site">
                 {localStorage.getItem("user_count") > 0 && (
                   <button
                     className="sites-header-btn"
@@ -122,12 +123,12 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
 
                 <button
                   className="sites-header-btn"
-                  style={{ marginLeft: "2px" }}
+                  style={{ marginLeft: "8px" }}
                   onClick={(e) => handleAllocate(e, cell?.row?.original)}
                 >
-                  Allocate Po
+                  Allocate PO
                 </button>
-              </>
+              </div>
             )}
           </>
         ),

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "@material-ui/core";
+import { Card } from "@mui/material";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import "./jobDetail.scss";
 import { status } from "../../services/utils";
@@ -25,7 +25,7 @@ const JobDetail = ({ job }) => {
           <div className="personal-title">SK{job?.job_id}</div>
         </div>
         <div className="info">
-          <div className="designation">Deliver Date</div>
+          <div className="designation">Delivery Date</div>
           <div className="personal-title">
             {new Date(job?.job_start_time).toLocaleString()}
           </div>

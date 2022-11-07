@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../reactTable/TableContainer";
 import { SelectColumnFilter } from "../../reactTable/filters";
 import CommonStatus from "../../commonComponent/commonStatus/CommonStatus";
-import { Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem } from "@mui/material";
 import Pagination from "../../reactTable/pagination";
 import "../../reactTable/jobs-react-table.scss";
 import { payment, status } from "../../../services/utils";
@@ -250,7 +250,20 @@ const SiteManagerTable = ({
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
-        Cell: (props) => <CommonStatus status={props.value} />,
+          Cell: (cell) => {
+              return (
+                  <CommonStatus
+                      status={status(
+                          cell.row.original.order_job_status === 1 &&
+                          (localStorage.getItem("role_id") == 12 ||
+                              localStorage.getItem("role_id") == 13 ||
+                              localStorage.getItem("role_id") == 4)
+                              ? 14
+                              : cell.value
+                      )}
+                  />
+              );
+          },
       },
       {
         Header: "Payment",
@@ -294,8 +307,9 @@ const SiteManagerTable = ({
   const handleExtend = () => {
     setExtends(true);
   };
+
   return (
-    <>
+    <div className={jobs && jobs.length > 0 ? "w-100" : "main-jobs-table"}>
       {exchange && (
         <CreateExchange
           closeModal={() => setExchange(!exchange)}
@@ -363,16 +377,12 @@ const SiteManagerTable = ({
         {row.parent_id === 2 && row.appointment_status === 4 && (
           <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
         )}
-        {row.parent_id === 43 &&
-          row.service_id === 44 &&
-          row.appointment_status === 4 && (
-            <MenuItem onClick={handleExtend}>Extend</MenuItem>
-          )}
+        {row.service_id === 43 && row.appointment_status === 4 && (
+          <MenuItem onClick={handleExtend}>Extend</MenuItem>
+        )}
         <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-        {((row.parent_id === 2 && row.appointment_status === 4) ||
-          (row.parent_id === 43 &&
-            row.service_id === 44 &&
-            row.appointment_status === 4)) && (
+        {(row.appointment_status === 4 ||
+          (row.service_id === 44 && row.appointment_status === 4)) && (
           <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>
         )}
         <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>
@@ -383,7 +393,7 @@ const SiteManagerTable = ({
           trackData={row}
         />
       )}
-    </>
+    </div>
   );
 };
 

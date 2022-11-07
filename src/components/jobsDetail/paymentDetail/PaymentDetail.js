@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@material-ui/core";
+import { Card, CardContent } from "@mui/material";
 import React, { useState } from "react";
 import "./paymentDetail.scss";
 import { payment } from "../../../services/utils";

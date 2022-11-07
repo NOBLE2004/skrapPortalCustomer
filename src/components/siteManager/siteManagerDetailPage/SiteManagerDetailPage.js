@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NewManagerDetail from "../newManagerDetail/NewManagerDetail";
 import SiteManagerTable from "../siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import sitesService from "../../../services/sites.service";
 import FadeLoader from "react-spinners/FadeLoader";
 import JobFilters from "../../filters/jobFilters";
@@ -13,6 +13,8 @@ import { connect } from "react-redux";
 
 const SiteManagerDetailPage = (props) => {
   const { id } = useParams();
+  const [jobsData, setJobsData] = useState({});
+  const [isJobLoading, setJobLoading] = useState(false);
   const [filters, setFilters] = useState({
     status: "",
     date: "",
@@ -43,10 +45,13 @@ const SiteManagerDetailPage = (props) => {
   };
   useEffect(() => {
     setState({ ...state, isLoading: true });
-    const params = Object.entries(filters).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
-    setState({...state , managerData:{}})
+    const params = Object.entries(filters).reduce(
+      (a, [k, v]) => (v ? ((a[k] = v), a) : a),
+      {}
+    );
+    setState({ ...state, managerData: {} });
     sitesService
-      .showManagerDetail(id , params)
+      .showManagerDetail(id, params)
       .then((res) => {
         setState({
           ...state,
@@ -57,7 +62,26 @@ const SiteManagerDetailPage = (props) => {
       .catch((error) => {
         setState({ ...state, isLoading: false });
       });
-  }, [reload , filters]);
+  }, [reload]);
+
+  useEffect(() => {
+    const getJobData = async () => {
+      try {
+        setJobLoading(true);
+        const params = Object.entries(filters).reduce(
+          (a, [k, v]) => (v ? ((a[k] = v), a) : a),
+          {}
+        );
+        const res = await sitesService.showManagerDetail(id, params);
+        setJobsData(res.data);
+        setJobLoading(false);
+      } catch (err) {
+        setJobLoading(false);
+      }
+    };
+
+    getJobData();
+  }, [filters, reload]);
 
   const handlePagination = (page) => {
     setFilters({ ...filters, page: page });
@@ -72,7 +96,7 @@ const SiteManagerDetailPage = (props) => {
       </div>
       <Grid container className="manager-detail-page">
         {isLoading ? (
-          <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+          <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
         ) : (
           <>
             <Grid item md={12}>
@@ -82,7 +106,7 @@ const SiteManagerDetailPage = (props) => {
               />
             </Grid>
             <Grid className="po-detail-page">
-              <PoDetail managerData={managerData} isManager={true}/>
+              <PoDetail managerData={managerData} isManager={true} />
             </Grid>
             <Grid item md={12} className="site-manager-filter">
               <div className="jobs-search-header">
@@ -90,13 +114,15 @@ const SiteManagerDetailPage = (props) => {
                   handleChangeSearch={handleChangeSearch}
                   cname="jobs"
                 />
-                <JobFilters handleChangeFilters={handleChangeFilters}/>
+                <JobFilters handleChangeFilters={handleChangeFilters} />
               </div>
             </Grid>
-            {managerData && managerData.jobs?.data?.length ? (
+            {isJobLoading ? (
+              <FadeLoader color={"#518ef8"} loading={isJobLoading} width={4} />
+            ) : jobsData && jobsData.jobs?.data?.length ? (
               <SiteManagerTable
-                managerData={managerData}
-                pagination={managerData.jobs}
+                managerData={jobsData}
+                pagination={jobsData.jobs}
                 handlePagination={handlePagination}
               />
             ) : (

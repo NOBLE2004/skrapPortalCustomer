@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import SitesTable from "../../components/sites/sitesTable/SitesTable";
-import { Grid, Card, CardContent } from "@material-ui/core";
+import { Grid, Card, CardContent } from "@mui/material";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import MainMap from "../../components/map/MainMap";
 import TipingCard from "../../components/tiping/TipingCard";
@@ -15,6 +15,7 @@ import { getSites, getSitesList } from "../../store/actions/sites.action";
 import "./sites.scss";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
 import CreateSite from "../../components/modals/createSite/CreateSite";
+import SiteFilters from "../../components/filters/SiteFilters";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
@@ -27,6 +28,8 @@ const Sites = (props) => {
   const [filters, setFilters] = useState({
     page: 1,
     search: "",
+      date: "",
+      address: ""
   });
   const [search, setSearch] = useState("");
   useEffect(() => {
@@ -70,6 +73,14 @@ const Sites = (props) => {
   const handleCreateJob = useCallback(() => {
     setIsJobCreated(true);
   }, [isJobCreated]);
+    const handleCreateSite = useCallback(() => {
+        console.log('test')
+        setIsJobCreated(true);
+    }, [isJobCreated]);
+
+    const handleChangeFilters = (filtersList) => {
+        setFilters(filtersList);
+    };
 
   return (
     <>
@@ -81,11 +92,11 @@ const Sites = (props) => {
         downloadCSV={false}
         showButton={false}
         isSite={true}
-        handleCreateJob={handleCreateJob}
+        handleCreateSite={handleCreateSite}
       >
         <CommonJobStatus
           jobStatus={{
-            status: "Sales",
+            status: "Spend",
             price: `£${
               info ? parseFloat(info.TotalSpend).toLocaleString() : 0
             }`,
@@ -120,11 +131,15 @@ const Sites = (props) => {
               cname="postcode"
               handleChangeSearch={handleChangeSearch}
             />
+              <SiteFilters handleChangeFilters={handleChangeFilters} />
           </div>
         </Grid>
       </Grid>
       {isManagerOpen && (
-        <AssignToManager handleClose={() => setIsManagerOpen(false)} />
+        <AssignToManager
+          handleClose={() => setIsManagerOpen(false)}
+          reload={() => setIsReload(!isReload)}
+        />
       )}
       {isJobCreated && (
         <CreateSite
@@ -137,7 +152,7 @@ const Sites = (props) => {
         <>
           <Grid container className="sites-table-loader">
             {isLoading ? (
-              <FadeLoader color={"#29a7df"} loading={isLoading} width={4} />
+              <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
             ) : siteData && siteData.data.length > 0 ? (
               <>
                 <Grid item md={12} sm={12}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Card, CardContent } from "@material-ui/core";
+import { Grid, Card, CardContent } from "@mui/material";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
 import AssignToManager from "../../../components/modals/assignToManager/AssignToManager";
 import "./newmanagerdetail.scss";
@@ -12,7 +12,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
       {data ? (
         <Card className="new-manager-detail-main">
           <CardContent>
-            <div className="title">Managers Details</div>
+            <div className="title">Manager Details</div>
             <Grid container spacing={3} className="manager-sub-detail">
               <Grid item md={2}>
                 <img src={personImage} alt="person-img" />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Card, CardContent } from "@material-ui/core";
+import { Grid, Card, CardContent } from "@mui/material";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
 import { useHistory } from "react-router";
 import "./managerdetail.scss";
@@ -27,7 +27,7 @@ const ManagerDetail = (props) => {
       onClick={() => handleManagerDetail(user_id, siteData)}
     >
       <CardContent>
-        <div className="title">{title ? title : "Managers Details"}</div>
+        <div className="title">{title ? title : "Manager Details"}</div>
         <Grid container spacing={3} className="manager-sub-detail">
           <Grid item md={4} className="profile-info">
             <img src={personImage} alt="person-img" />
