@@ -131,7 +131,7 @@ export default function CreateJob({
     skip_loc: "0",
     time_slot_loading: false,
     quantity: 5,
-    portableweeks: 2,
+    portableweeks: 4,
     isQuantityError: false,
     isWeekError: false,
     selectedMarketPay: "",
@@ -245,7 +245,7 @@ export default function CreateJob({
         break;
 
       case "portableweeks":
-        if (value < 2) {
+        if (value < 4) {
           setState({
             ...state,
             isWeekError: true,
@@ -1117,7 +1117,7 @@ export default function CreateJob({
                 error={isWeekError ? true : false}
               />
               {isWeekError && (
-                <div className="m3-error">must be greater than 2</div>
+                <div className="m3-error">must be greater than 4</div>
               )}
             </div>
           )}
