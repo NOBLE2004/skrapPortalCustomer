@@ -85,7 +85,7 @@ const TicketsTable = ({data, pagination, handlePagination}) => {
                                             className="normal-dsans-10-primary1"
                                             onClick={() => download(DOWNLOAD_URL + ticket?.file?.name)}
                                         >
-                  {ticket.ticket_type == 'delivery' ? 'Delivery' : 'WTN'}
+                  {ticket.ticket_type == 'delivery' ? 'Delivery Ticket' : 'WTN'}
                                             <img
                                                 src={downloadSite}
                                                 alt="download-icon"
@@ -119,14 +119,14 @@ const TicketsTable = ({data, pagination, handlePagination}) => {
                 },
                 disableFilters: true,
             },
-            {
-                Header: "",
-                id: "submenu_id",
-                Cell: ({rows}) => (
-                    <span className="normal-dsans-10-primary">ooo</span>
-                ),
-                disableFilters: true,
-            },
+            // {
+            //     Header: "",
+            //     id: "submenu_id",
+            //     Cell: ({rows}) => (
+            //         <span className="normal-dsans-10-primary">ooo</span>
+            //     ),
+            //     disableFilters: true,
+            // },
         ],
         []
     );
