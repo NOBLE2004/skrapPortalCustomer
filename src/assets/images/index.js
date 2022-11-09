@@ -43,9 +43,9 @@ import viewMoreBtn from "./view_more_btn.svg";
 import RightArrowBtn from "./right_arrow.svg";
 import searchIcon from "./searchIcon.svg";
 import ploygonIcon from "./polygon.svg";
-import likeIcon from "./like.svg";
+import likeIcon from "./reliable.svg";
 import costIcon from "./cost.svg";
-import envirementIcon from "./envirement.svg";
+import envirementIcon from "./enviroment.svg";
 import serviceIcon from "./service.svg";
 import supportIcon from "./support.svg";
 import appIcon from "./logo.svg";
@@ -62,6 +62,14 @@ import appleIcon from "./apple.svg";
 import chatIcon from "./chat.svg";
 import marketInfoIcon from "./market_info.svg";
 import filterIcon from "./filter.svg";
+import Union from "./Union.svg";
+import ImageTwo from "./img-two.svg";
+import ImageThree from "./img-three.svg";
+import Waste from "./emis.svg";
+import Smoke from "./smoke.svg";
+import LoginIconOne from "./login-icon-1.svg";
+import LoginIconTwo from "./login-icon-2.svg";
+
 export {
   chatIcon,
   appleIcon,
@@ -126,5 +134,12 @@ export {
   addCredits,
   deliveredMarker,
   marketInfoIcon,
-  filterIcon
+  filterIcon,
+  Union,
+  ImageTwo,
+  ImageThree,
+  Waste,
+  Smoke,
+  LoginIconOne,
+  LoginIconTwo
 };

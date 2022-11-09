@@ -2,12 +2,11 @@
   display: flex;
   justify-content: flex-start;
   @media only screen and (max-width: 680px) {
-   flex-wrap: wrap;
-   justify-content: flex-start;
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
-  
 }
-.landfill-main{
+.landfill-main {
   width: 100%;
 }
 .landfill {
@@ -33,7 +32,12 @@ hr {
 }
 
 .jobMpWp {
+  width: 100px;
+  height: 100px;
+  position: sticky;
+  top: 12px;
   margin-top: 20px;
+  height: 95vh;
   .live-job-title {
     display: flex;
     align-items: center;
@@ -50,7 +54,7 @@ hr {
 
   .mapCard {
     border-radius: 12px;
-    height: 809px;
+    height: 100%;
     padding: none;
     .MuiCardContent-root {
       height: 100%;
@@ -60,23 +64,22 @@ hr {
       }
     }
   }
- 
 }
-.spend-service-main{
+.spend-service-main {
   display: flex;
   justify-content: space-between !important;
   align-items: center;
   flex-wrap: unset !important;
-  margin-top: 0 !important;;
+  margin-top: 0 !important;
   @media only screen and (max-width: 768px) {
     flex-wrap: wrap !important;
     width: 100%;
   }
 }
-.main-loading{
- width: 100%;
+.main-loading {
+  width: 100%;
 }
-.dashboard-menu{
+.dashboard-menu {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -99,4 +102,122 @@ hr {
     z-index: 1;
     // padding-left: 0.5%;
   }
+}
+
+.select-dashboard {
+  width: 100%;
+  margin-left: 0;
+  background: none;
+  justify-content: flex-start;
+  border-radius: 0;
+  box-shadow: none;
+  .MuiInputBase-root {
+    width: 100% !important;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
+    background: white;
+    .MuiOutlinedInput-notchedOutline {
+      border: none;
+    }
+    .MuiSvgIcon-root {
+      color: #60a0f8;
+    }
+    .MuiOutlinedInput-input {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 30px;
+      color: #677790;
+      // width: 400px;
+      .text-sec {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #60a0f8;
+
+        span {
+          float: right;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 16px;
+          color: #a4adbc;
+          padding: 0% 3%;
+          margin-top: 2%;
+          color: #60a0f8;
+        }
+      }
+    }
+  }
+}
+
+.sub-heading-card {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+}
+.clr-light-gray {
+  color: #677790;
+}
+.clr-dark-blue {
+  color: #0f2851;
+}
+.clr-light-blue {
+  color: #60a0f8;
+}
+.hire-breakdown-title {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #60a0f8;
+}
+.switch-title {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #677790;
+  margin: 0;
+}
+.sustainability-section {
+  .sustainability-title {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 30px;
+  }
+  span {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    margin-left: 10px;
+  }
+  .caption {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #677790;
+    margin: 0;
+    margin-top: 5px;
+  }
+}
+.filter-strong {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  color: #0f2851;
 }

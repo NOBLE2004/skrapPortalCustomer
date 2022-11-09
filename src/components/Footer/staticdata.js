@@ -10,13 +10,13 @@ export const footerData = [
   {
     title: "Reliable",
     descrition:
-        "We know that your time is precious, we offer same day or next day delivery* of your skips where you need it, when you need it.",
+        "We know that your time is precious, we can deliver your skips where you need it, when you need it.",
     icon: likeIcon,
   },
   {
-    title: "Eco-friendly",
+    title: "Environment",
     descrition:
-        "We will always look to recycle your waste and avoid landfill. Your waste is reprocessed and dealt with in an environmentally-friendly manner.",
+        "We will always look to recycle your waste and avoid landfill. Your waste is reprocessed and dealt with correctly.",
     icon: envirementIcon,
   },
   {
@@ -26,15 +26,15 @@ export const footerData = [
     icon: serviceIcon,
   },
   {
-    title: "Cost Effective",
+    title: "Cost",
     descrition:
-        "We consistently check the market to make sure our prices are fairly and competitively priced for low cost, hassle free booking. ",
+        "We consistently check the market to make sure our prices are fairly and competitively priced. ",
     icon: costIcon,
   },
   {
-    title: "Support",
+    title: "On-going support",
     descrition:
-        "We provide guidance, and answer any queries should you need to contact us via Live Chat, Phone or Email.",
+        "We provide guidance and answer any queries should you need to contact us.",
     icon: supportIcon,
   },
 ];

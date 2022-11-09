@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
@@ -87,86 +87,117 @@ const SignIn = (props) => {
     }
   }, [props.auth.isAuthenticated]);
 
-
   return (
     <div className="main">
       <NavBar />
       <div className="login-main">
-        <Header
-          title={loginHeader.title}
-          description={loginHeader.description}
-        />
-        <div className="login-section">
-          <div className="search-input">
-            <TextField
-              placeholder="Enter Username"
-              margin="normal"
-              variant="outlined"
-              size="small"
-              name="phone"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">+44</InputAdornment>
-                ),
-              }}
-              inputProps={{ maxLength: 10 }}
-              className={
-                errors["phone"].length > 0 ? classes.error : classes.root
-              }
-              onChange={(e) => handleChange(e)}
-              value={phone}
-              error={errors["phone"].length > 0 ? true : false}
-            />
-            <TextField
-              margin="normal"
-              variant="outlined"
-              size="small"
-              placeholder="password"
-              type={showPassword ? "text" : "password"}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <img
-                      src={showPasswordIcon}
-                      alt="show-password"
-                      onClick={() =>
-                        setState({ ...state, showPassword: !showPassword })
-                      }
-                      style={{ cursor: "pointer" }}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-              className={
-                errors["password"].length > 0 ? classes.error : classes.root
-              }
-              value={password}
-              onChange={(e) => handleChange(e)}
-              name="password"
-              inputProps={() => {}}
-              error={errors["password"].length > 0 ? true : false}
-            />
-          </div>
-          {props.auth.loading ? (
-            <FadeLoader
-              color={"#518ef8"}
-              loading={props.auth.loading}
-              width={4}
-            />
-          ) : props.auth.isAuthenticated ? (
-            <Alert severity={"success"}>{"Customer Login Successfully"}</Alert>
-          ) : props.auth.error ? (
-            <Alert severity={"error"}>{"Username or Password invalid"}</Alert>
-          ) : (
-            ""
-          )}
-          <div className="login-next-btn">
-            <Button sx={{color:'#ffffff'}} onClick={handleSubmit}>Sign In</Button>
-          </div>
-          <div className="another-account">
-            Don’t have an account? <NavLink to={`signup`}><span>Sign Up</span></NavLink>{" "}
-          </div>
-        </div>
+        <Container>
+          <Grid container justifyContent="center">
+            <Grid xs={12} md={8}>
+              <Header
+                title={loginHeader.title}
+                description={loginHeader.description}
+              />
+              <Grid container justifyContent="center">
+                <Grid item md={6} xs={8}>
+                  <div className="login-section">
+                    <div className="search-input">
+                      <TextField
+                        placeholder="Enter Username"
+                        margin="normal"
+                        variant="outlined"
+                        size="small"
+                        name="phone"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              +44
+                            </InputAdornment>
+                          ),
+                        }}
+                        inputProps={{ maxLength: 10 }}
+                        className={
+                          errors["phone"].length > 0
+                            ? classes.error
+                            : classes.root
+                        }
+                        onChange={(e) => handleChange(e)}
+                        value={phone}
+                        error={errors["phone"].length > 0 ? true : false}
+                      />
+                      <TextField
+                        margin="normal"
+                        variant="outlined"
+                        size="small"
+                        placeholder="password"
+                        type={showPassword ? "text" : "password"}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <img
+                                src={showPasswordIcon}
+                                alt="show-password"
+                                onClick={() =>
+                                  setState({
+                                    ...state,
+                                    showPassword: !showPassword,
+                                  })
+                                }
+                                style={{ cursor: "pointer" }}
+                              />
+                            </InputAdornment>
+                          ),
+                        }}
+                        className={
+                          errors["password"].length > 0
+                            ? classes.error
+                            : classes.root
+                        }
+                        value={password}
+                        onChange={(e) => handleChange(e)}
+                        name="password"
+                        inputProps={() => {}}
+                        error={errors["password"].length > 0 ? true : false}
+                      />
+                      {props.auth.loading ? (
+                        <FadeLoader
+                          color={"#518ef8"}
+                          loading={props.auth.loading}
+                          width={4}
+                        />
+                      ) : props.auth.isAuthenticated ? (
+                        <Alert severity={"success"}>
+                          {"Customer Login Successfully"}
+                        </Alert>
+                      ) : props.auth.error ? (
+                        <Alert severity={"error"}>
+                          {"Username or Password invalid"}
+                        </Alert>
+                      ) : (
+                        ""
+                      )}
+                      <div className="login-next-btn">
+                        <Button
+                          sx={{ color: "#ffffff" }}
+                          onClick={handleSubmit}
+                        >
+                          Sign In
+                        </Button>
+                      </div>
+                      <div className="another-account">
+                        Don’t have an account?{" "}
+                        <NavLink to={`signup`}>
+                          <span>Sign Up</span>
+                        </NavLink>{" "}
+                      </div>
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Container>
+        <div className="login-section"></div>
       </div>
       <Footer />
     </div>

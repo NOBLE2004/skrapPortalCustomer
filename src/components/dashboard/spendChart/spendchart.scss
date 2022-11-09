@@ -1,14 +1,13 @@
 .graphCard {
-//  border: 2px solid #ececec;
+  //  border: 2px solid #ececec;
   box-sizing: border-box;
   border-radius: 12px !important;
   box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05) !important;
-  width: 40%;
-  margin: 20px 10px 20px 0px;
+  // width: 40%;
   //height: 331px;
   @media only screen and (max-width: 815px) {
     width: 100%;
-  } 
+  }
   .MuiCardContent-root {
     padding: 12px 12px;
   }
@@ -31,16 +30,25 @@
     .dateWp {
       display: flex;
       gap: 10px;
-      p {
+      width: 100%;
+      span {
+        padding-left: 5px;
         font-family: "DM Sans";
         font-style: normal;
-        font-weight: bold;
-        font-size: 12px;
-        line-height: 16px;
-        color: #0d0d39;
-        opacity: 0.5;
-        margin-right: 15px;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 20px;
+        color: #0f2851;
       }
+      // p {
+      //   font-family: "DM Sans";
+      //   font-style: normal;
+      //   font-weight: bold;
+      //   font-size: 12px;
+      //   line-height: 16px;
+      //   color: #0d0d39;
+      //   opacity: 0.5;
+      //  }
       .dropdown {
         border-radius: 3px;
         border: 1px solid rgb(81, 142, 248);
@@ -55,6 +63,7 @@
       .spend-filter-year {
         display: flex;
         align-items: center;
+        margin-top: 10px;
       }
     }
   }
@@ -115,7 +124,6 @@
       line-height: 20px;
       color: #fff;
       background: linear-gradient(180deg, #73c6f9 0%, #5391f9 100%);
-  
     }
     .react-datepicker-popper[data-placement^="bottom"]
       .react-datepicker__triangle::before {
@@ -140,7 +148,6 @@
     line-height: 20px;
     color: #0f2851;
   }
-  
 }
 //  .spend-bar-chart{
 //     height: 242px;

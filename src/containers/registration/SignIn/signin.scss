@@ -3,11 +3,11 @@
   border-bottom-left-radius: 80px;
   border-bottom-right-radius: 80px;
   .login-section {
-    width: 20%;
+    // width: 20%;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
     .title {
       font-family: DM Sans;
       font-style: normal;
@@ -23,7 +23,7 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      .MuiOutlinedInput-root{
+      .MuiOutlinedInput-root {
         padding-left: 0px;
       }
       .MuiInputBase-input {
@@ -35,7 +35,7 @@
       .MuiInputBase-root {
         width: 100%;
         border-radius: 45px;
-        margin-bottom: 16px;
+        margin-bottom: 30px;
         .MuiTypography-root {
           background-color: #29a7df;
           color: #fff;
@@ -47,7 +47,6 @@
       .MuiFormControl-root {
         margin: 0px;
         width: 100%;
-        padding: 5%;
       }
     }
     .login-next-btn {
@@ -81,33 +80,33 @@
     color: #0f2851;
     padding-bottom: 98px;
 
-    span{
+    span {
       text-decoration: underline;
     }
   }
 }
 
 .main {
-  background: #36b8fc;
+  background: #0f2851;
 }
-@media (max-width: 1024px) and (min-width: 769px){
-  .login-main {
-    .login-section {
-      width: 45%;
-    }
-  }
-}
-@media (max-width: 768px) and (min-width: 426px){
-  .login-main {
-    .login-section {
-      width: 50%;
-    }
-  }
-}
-@media (max-width: 425px) and (min-width: 1px){
-  .login-main {
-    .login-section {
-      width: 90%;
-    }
-  }
-}
+// @media (max-width: 1024px) and (min-width: 769px){
+//   .login-main {
+//     .login-section {
+//       width: 45%;
+//     }
+//   }
+// }
+// @media (max-width: 768px) and (min-width: 426px){
+//   .login-main {
+//     .login-section {
+//       width: 50%;
+//     }
+//   }
+// }
+// @media (max-width: 425px) and (min-width: 1px){
+//   .login-main {
+//     .login-section {
+//       width: 90%;
+//     }
+//   }
+// }

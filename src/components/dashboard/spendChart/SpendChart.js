@@ -5,7 +5,7 @@ import Select from "@mui/material/Select";
 import DatePicker from "react-datepicker";
 import MenuItem from "@mui/material/MenuItem";
 import { Bar } from "react-chartjs-2";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { lineChartData, data2 } from "./constant";
@@ -208,21 +208,46 @@ const SpendChart = ({
       <CardContent>
         <div className="salesWp">
           <div className="dateWp">
-            <div>
-              <span className="primary-title">Spend</span>
+            <div className="w-100">
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                mt={1}
+              >
+                <Typography component="div" className="hire-breakdown-title">
+                  Spending Breakdown
+                </Typography>
+                <Box display="flex" alignItems="center">
+                  <p className="switch-title">Filter by:</p>
+                  <span>Month</span>
+                </Box>
+              </Box>{" "}
               <div className="spend-filter-year">
-                <p>Filter by year:</p>
-                <div className="date-picker-main">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => handleYearChange(date)}
-                    showYearPicker
-                    dateFormat="yyyy"
-                    yearItemNumber={15}
-                    customInput={<ExampleCustomInput />}
-                    maxDate={new Date()}
-                  />
-                </div>
+                <Box
+                  display="flex"
+                  width="100%"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Box>
+                    <div className="date-picker-main">
+                      <DatePicker
+                        selected={startDate}
+                        onChange={(date) => handleYearChange(date)}
+                        showYearPicker
+                        dateFormat="yyyy"
+                        yearItemNumber={15}
+                        customInput={<ExampleCustomInput />}
+                        maxDate={new Date()}
+                      />
+                    </div>
+                  </Box>
+                  <Box display="flex">
+                    <p className="switch-title">Spent this Year:</p>
+                    <span>£313,163</span>
+                  </Box>
+                </Box>
               </div>
             </div>
           </div>

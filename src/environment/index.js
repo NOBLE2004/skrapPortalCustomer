@@ -11,8 +11,8 @@ import {
   tipingBlack,
   statementBlack,
 } from "../assets/images/index";
-// export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
-export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
+ export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
+// export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
 export const API_URL = `${APP_URL}`;
 export const ENV = `prod`;
 export const USER = 236;
@@ -83,7 +83,7 @@ export const jobStatusExchange = [
 
 export const loginHeader = {
   title: "Customer Portal",
-  description: "Login to continue to access to the platform",
+  description: "The smarter way to order for your construction projects!",
 };
 export const registerHeaderData = {
   title: "Customer Portal",
