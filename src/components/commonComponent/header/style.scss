@@ -1,0 +1,67 @@
+.site-header-main {
+  .title {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 30px;
+  }
+  .card-title {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .card-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 12px;
+  }
+  .btn-site {
+    img {
+      padding-right: 10px;
+    }
+    .button-save {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, #73c6f9 0%, #5391f9 100%);
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 22px;
+      text-align: center;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+      border: none;
+      outline: none;
+      width: 100%;
+      padding: 12px 10px;
+      border-radius: 26px;
+      cursor: pointer;
+    }
+  }
+  .clr-light-blue {
+    color: #60a0f8;
+  }
+  .clr-light-gray {
+    color: #a4adbc;
+  }
+  .clr-blue {
+    color: #0f2851;
+  }
+  .clr-gray {
+    color: #677790;
+  }
+  .fnt-w-700 {
+    font-weight: 700 !important;
+  }
+  .fnt-w-400 {
+    font-weight: 400;
+  }
+  .fnt-w-500 {
+    font-weight: 500 !important;
+  }
+}

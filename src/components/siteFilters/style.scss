@@ -1,0 +1,61 @@
+.site-filter-new-main {
+  .img-caption {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    margin: 0;
+    color: #677790;
+    width: 100%;
+  }
+
+  .filter-option {
+    padding: 0px 4px;
+    cursor: pointer;
+    outline: none;
+    text-transform: capitalize;
+    background: none;
+    border-radius: 3px;
+    border: none;
+    height: 30px;
+    width: 100%;
+
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    color: #677790;
+  }
+  .filter-option::placeholder {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    color: #677790;
+  }
+  .filter-buttons {
+    margin-right: 10px;
+    span {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  .all-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    @media only screen and (max-width: 500px) {
+      flex-wrap: wrap;
+      justify-content: start;
+    }
+  }
+  .MuiInput-underline:before {
+    border-bottom: none;
+  }
+}

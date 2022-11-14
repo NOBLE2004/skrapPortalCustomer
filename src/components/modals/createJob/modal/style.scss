@@ -1,0 +1,166 @@
+.create-job-modal-main {
+  .MuiInputBase-input {
+    color: #677790;
+  }
+  .title {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 34px;
+    color: #0f2851;
+    margin: 0;
+  }
+  .image-modal-main {
+    background: #ffffff;
+    // box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
+    border-radius: 16px;
+    padding: 12px;
+    margin-right: 10px;
+    height: 100%;
+  }
+  .skip-yard-title {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    color: #0f2851;
+    margin: 0;
+  }
+  .add-new-skip {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    color: #60a0f8;
+  }
+  .img-caption {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    margin: 0;
+    color: #677790;
+  }
+  fieldset {
+    border: none !important;
+  }
+  .btn-modal {
+    button {
+      background: linear-gradient(180deg, #73c6f9 0%, #5391f9 100%);
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 22px;
+      text-align: center;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+      border: none;
+      outline: none;
+      width: 100%;
+      padding: 12px 10px;
+      border-radius: 26px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+    }
+  }
+  .btn-modal-add-card {
+    button {
+      background: linear-gradient(180deg, #73c6f9 0%, #5391f9 100%);
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 22px;
+      text-align: center;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+      border: none;
+      outline: none;
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 26px;
+      cursor: pointer;
+    }
+  }
+  .dots-main {
+    .dots {
+      width: 8px;
+      height: 8px;
+      background: #a4adbc;
+      opacity: 0.4;
+      border-radius: 50%;
+      margin: 0px 5px;
+    }
+  }
+  .MuiInputBase-multiline {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #677790;
+  }
+  p {
+    margin: 0;
+  }
+
+  // booking
+  .booking {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-size: 16px;
+    line-height: 22px;
+    color: #677790;
+  }
+  .btn-confirm-booking {
+    button {
+      filter: drop-shadow(0px 17px 24px rgba(58, 58, 58, 0.05));
+      border-radius: 24px;
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 22px;
+      text-align: center;
+      letter-spacing: -0.3px;
+      padding: 14px 10px;
+      color: #60a0f8;
+      border: none;
+      outline: none;
+      width: 100%;
+    }
+  }
+  .MuiAccordionSummary-content.Mui-expanded {
+    margin: 12px 0px !important;
+  }
+  .alert-message-modal {
+    background: #fff !important;
+    border-radius: 16px !important;
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 31px;
+    color: #29a7df;
+    text-align: center;
+  }
+  .MuiAutocomplete-inputRoot {
+    padding: 0px 14px !important;
+  }
+  .MuiAutocomplete-input {
+    padding: 0px !important;
+  }
+}
+
+.react-multi-carousel-item {
+  height: 100%;
+}

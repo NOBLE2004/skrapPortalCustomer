@@ -29,6 +29,7 @@ import { useHistory } from "react-router-dom";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
 import { getJobList } from "../../store/actions/jobs.action";
 import FadeLoader from "react-spinners/FadeLoader";
+import AddNewOrder from "../../components/modals/createJob/modal";
 
 const MainJobs = (props) => {
   const [showInfoIndex, setShowInfoIndex] = useState(null);
@@ -55,9 +56,9 @@ const MainJobs = (props) => {
     setIsJobCreated(!isJobCreated);
   }, [isJobCreated]);
 
-    const handleCreateSite = useCallback(() => {
-        setCreateSite(true);
-    }, [createSite]);
+  const handleCreateSite = useCallback(() => {
+    setCreateSite(true);
+  }, [createSite]);
 
   useEffect(() => {
     async function fetchData() {
@@ -316,17 +317,17 @@ const MainJobs = (props) => {
       )}
 
       {isJobBooked && (
-        <CreateJob
+        <AddNewOrder
           closeModal={() => setIsJobBooked(!isJobBooked)}
           handleJobCreated={handleJobCreated}
         />
       )}
-        {createSite && (
-            <CreateSite
-                closeModal={() => setCreateSite(!createSite)}
-                sites={true}
-            />
-        )}
+      {createSite && (
+        <CreateSite
+          closeModal={() => setCreateSite(!createSite)}
+          sites={true}
+        />
+      )}
     </div>
   );
 };

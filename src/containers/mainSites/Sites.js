@@ -16,6 +16,8 @@ import "./sites.scss";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
 import CreateSite from "../../components/modals/createSite/CreateSite";
 import SiteFilters from "../../components/filters/SiteFilters";
+import EmptyPage from "../../components/commonComponent/emptyPage";
+import HeaderSite from "../../components/commonComponent/header";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
@@ -28,8 +30,8 @@ const Sites = (props) => {
   const [filters, setFilters] = useState({
     page: 1,
     search: "",
-      date: "",
-      address: ""
+    date: "",
+    address: "",
   });
   const [search, setSearch] = useState("");
   useEffect(() => {
@@ -73,18 +75,22 @@ const Sites = (props) => {
   const handleCreateJob = useCallback(() => {
     setIsJobCreated(true);
   }, [isJobCreated]);
-    const handleCreateSite = useCallback(() => {
-        console.log('test')
-        setIsJobCreated(true);
-    }, [isJobCreated]);
+  const handleCreateSite = useCallback(() => {
+    console.log("test");
+    setIsJobCreated(true);
+  }, [isJobCreated]);
 
-    const handleChangeFilters = (filtersList) => {
-        setFilters(filtersList);
-    };
+  const handleChangeFilters = (filtersList) => {
+    setFilters(filtersList);
+  };
 
   return (
     <>
-      <CommonHeader
+      <HeaderSite
+        handleChangeFilters={handleChangeFilters}
+        handleCreateJob={handleCreateJob}
+      />
+      {/* <CommonHeader
         bookSite={"Assign to Manager"}
         handleShowMap={handleShowMap}
         isMap={isMapView}
@@ -131,10 +137,11 @@ const Sites = (props) => {
               cname="postcode"
               handleChangeSearch={handleChangeSearch}
             />
-              <SiteFilters handleChangeFilters={handleChangeFilters} />
+            <SiteFilters handleChangeFilters={handleChangeFilters} />
           </div>
         </Grid>
-      </Grid>
+      </Grid> */}
+
       {isManagerOpen && (
         <AssignToManager
           handleClose={() => setIsManagerOpen(false)}
@@ -166,7 +173,7 @@ const Sites = (props) => {
                 </Grid>
               </>
             ) : (
-              <div className="sitenotfound">No active sites found</div>
+              <EmptyPage />
             )}
           </Grid>
         </>

@@ -9,7 +9,7 @@
   }
 
   table {
-    font-family: 'DM Sans';
+    font-family: "DM Sans";
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -23,33 +23,44 @@
       border: none !important;
 
       td:first-child {
-        font-weight: bolder;
-        color: black;
+        font-weight: 700;
+        color: #0f2851;
         font-size: 14px;
+        font-family: "DM Sans";
+        font-style: normal;
       }
 
       th {
         padding: 10px;
         min-width: 30px;
         color: #677790;
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: "DM Sans";
+        font-style: normal;
       }
 
       td {
-        font-size: 12px;
+        font-size: 14px;
         padding: 10px;
         min-width: 30px;
+        font-family: "DM Sans";
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+
+        color: #677790;
       }
     }
 
     tbody {
       .even {
-        background: #F6F6F6;
+        background: #f6f6f6;
       }
     }
 
     .action-for-site {
-      min-width: 200px;
+      min-width: 80px;
     }
   }
 }

@@ -5,6 +5,9 @@ import "./sites-table.scss";
 import SiteAssignToManager from "../../modals/siteAssignToManager/SiteAssignToManager";
 import AllocatePoModal from "../../modals/allocatePo/AllocatePoModal";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
+import { Delete, Edit } from "@mui/icons-material";
+import DeleteModal from "../../modals/deleteModal";
+import { Box } from "@mui/system";
 
 const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const [isManagerOpen, setIsManagerOpen] = useState(false);
@@ -14,6 +17,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const [addressId, setAddressId] = useState("");
   const [roleId, setRollId] = useState(0);
   const [user, setUser] = useState("");
+  const [deleteSite, setDeleteSite] = useState(false);
 
   const handleButtonClick = (e, props) => {
     e.stopPropagation();
@@ -52,7 +56,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         },
       },
       {
-        Header: "Address",
+        Header: "Site address ",
         accessor: (d) =>
           d.job_address
             ? d.job_address
@@ -65,13 +69,33 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         },
       },
       {
-        Header: "Site Contact",
-        accessor: "site_contact_number",
+        Header: "Purchase Order",
+
         disableFilters: true,
         Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
+          if (props?.value) {
+            return <span>{props.value}</span>;
+          } else {
+            return (
+              <span
+                className="fnt-w-700 clr-light-blue"
+                onClick={(e) => handleAllocate(e, props?.row?.original)}
+              >
+                {"Assign PO"}
+              </span>
+            );
+          }
         },
       },
+      {
+        Header: "Booking",
+        accessor: "booking",
+        disableFilters: true,
+        Cell: (props) => {
+          return <span>{props.value || "9"}</span>;
+        },
+      },
+
       {
         Header: "Number of Jobs",
         accessor: "number_of_jobs",
@@ -95,8 +119,27 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         },
       },
       {
-        Header: "Manager",
+        Header: "Site manager ",
         accessor: "site_concat_name",
+        disableFilters: true,
+        Cell: (props) => {
+          if (props?.value) {
+            return <span>{props.value}</span>;
+          } else {
+            return (
+              <span
+                className="fnt-w-700 clr-light-blue"
+                onClick={(e) => handleButtonClick(e, props?.row?.original)}
+              >
+                {"Assign Manager"}
+              </span>
+            );
+          }
+        },
+      },
+      {
+        Header: "Site Contact",
+        accessor: "site_contact_number",
         disableFilters: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
@@ -105,30 +148,45 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
       {
         Header: "",
         id: "edit-id",
-        
+        accessor: "ac",
         Cell: ({ cell }) => (
           <>
             {roleId === 13 || roleId === 12 ? (
               ""
             ) : (
-              <div className="action-for-site">
-                {localStorage.getItem("user_count") > 0 && (
+              <Box
+                className="action-for-site"
+                display="flex"
+                justifyContent="flex-end"
+              >
+                {/* {localStorage.getItem("user_count") > 0 && (
                   <button
                     className="sites-header-btn"
                     onClick={(e) => handleButtonClick(e, cell?.row?.original)}
                   >
                     Assign
                   </button>
-                )}
-
-                <button
-                  className="sites-header-btn"
-                  style={{ marginLeft: "8px" }}
-                  onClick={(e) => handleAllocate(e, cell?.row?.original)}
+                )} */}
+                <Box>
+                  <Edit
+                    sx={{
+                      fontSize: "20px",
+                      pr: 1,
+                    }}
+                  />
+                </Box>
+                <Box
+                  onClick={() => {
+                    setDeleteSite(true);
+                  }}
                 >
-                  Allocate PO
-                </button>
-              </div>
+                  <Delete
+                    sx={{
+                      fontSize: "20px",
+                    }}
+                  />
+                </Box>
+              </Box>
             )}
           </>
         ),
@@ -168,6 +226,8 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
           addressId={addressId}
         />
       )}
+
+      {deleteSite && <DeleteModal handleClose={() => setDeleteSite(false)} />}
     </>
   );
 };

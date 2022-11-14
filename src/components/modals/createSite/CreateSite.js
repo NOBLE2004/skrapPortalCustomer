@@ -1,181 +1,434 @@
-import "date-fns";
-import React, { useState, useRef } from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import { withStyles } from "@mui/styles";
-import DialogContent from "@mui/material/DialogContent";
-import Alert from "@mui/lab/Alert";
-import CloseIcon from "@mui/icons-material/Close";
-import MuiDialogTitle from "@mui/material/DialogTitle";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import AsychronousAddress from "../../commonComponent/asychronousAddress/AsychronousAddress";
-import CircularProgress from "@mui/material/CircularProgress";
-import sitesService from "../../../services/sites.service";
+// import "date-fns";
+// import React, { useState, useRef } from "react";
+// import Button from "@mui/material/Button";
+// import Dialog from "@mui/material/Dialog";
+// import { withStyles } from "@mui/styles";
+// import DialogContent from "@mui/material/DialogContent";
+// import Alert from "@mui/lab/Alert";
+// import CloseIcon from "@mui/icons-material/Close";
+// import MuiDialogTitle from "@mui/material/DialogTitle";
+// import Typography from "@mui/material/Typography";
+// import IconButton from "@mui/material/IconButton";
+// import AsychronousAddress from "../../commonComponent/asychronousAddress/AsychronousAddress";
+// import CircularProgress from "@mui/material/CircularProgress";
+// import sitesService from "../../../services/sites.service";
 
-export default function CreateSite({
+// export default function CreateSite({
+//   closeModal,
+//   setJobCreated,
+//   handleJobCreated,
+//   sites,
+//   reload,
+// }) {
+//   const divRef = useRef(null);
+//   const [errors, setError] = useState({
+//     addressData: "",
+//   });
+
+//   const [state, setState] = useState({
+//     notice: null,
+//     isLoading: false,
+//     addressData: {},
+//   });
+
+//   const styles = (theme) => ({
+//     root: {
+//       margin: 0,
+//       padding: theme.spacing(2),
+//     },
+//     closeButton: {
+//       position: "absolute",
+//       right: theme.spacing(1),
+//       top: theme.spacing(1),
+//       color: theme.palette.grey[500],
+//     },
+//   });
+
+//   const { isLoading, notice, addressData } = state;
+
+//   const checkingError = (name, value) => {
+//     switch (name) {
+//       case "addressData":
+//         errors[name] =
+//           Object.keys(value).length === 0 ? "Must have selected address" : "";
+//         break;
+//       default:
+//         break;
+//     }
+//     setError({ ...errors });
+//   };
+//   const handleSelectedPostCode = (udprn) => {
+//     if (udprn) {
+//       fetch(
+//         `https://api.ideal-postcodes.co.uk/v1/addresses/${udprn}/?api_key=ak_jc635mjv12swIsWCiEJWOAiDG0W84`
+//       )
+//         .then((response) => response.json())
+//         .then((response) => {
+//           setState({ ...state, addressData: response.result });
+//           checkingError("addressData", response.result);
+//         });
+//     } else {
+//       setState({ ...state, addressData: {} });
+//       checkingError("addressData", {});
+//     }
+//   };
+//   const confirmJob = (e) => {
+//     e.preventDefault();
+//     if (Object.keys(addressData).length === 0) {
+//       Object.keys(errors).forEach((error, index) => {
+//         checkingError(error, state[error]);
+//       });
+//       return;
+//     }
+
+//     setState({ ...state, isLoading: true });
+//     const isUprnDeleted = delete addressData.uprn;
+//     if (isUprnDeleted) {
+//       sitesService
+//         .createNewSite(addressData)
+//         .then((res) => {
+//           if (res.data.data === "Site already exists") {
+//             setState({
+//               ...state,
+//               isLoading: false,
+//               notice: {
+//                 type: "error",
+//                 text: res.data.data,
+//               },
+//             });
+//           } else {
+//             setState({
+//               ...state,
+//               isLoading: false,
+//               notice: {
+//                 type: "success",
+//                 text: res.data.data,
+//               },
+//             });
+//             setTimeout(() => {
+//               closeModal();
+//               reload();
+//             }, 2000);
+//           }
+//         })
+//         .catch((err) => {
+//           setState({
+//             ...state,
+//             isLoading: false,
+//             notice: {
+//               type: "error",
+//               text: err.message,
+//             },
+//           });
+//         });
+//     }
+//   };
+//   const DialogTitle = withStyles(styles)((props) => {
+//     const { children, classes, onClose, ...other } = props;
+//     return (
+//       <MuiDialogTitle disableTypography className={classes.root} {...other}>
+//         <Typography variant="h6">{children}</Typography>
+//         {onClose ? (
+//           <IconButton
+//             aria-label="close"
+//             className={classes.closeButton}
+//             onClick={onClose}
+//           >
+//             <CloseIcon />
+//           </IconButton>
+//         ) : null}
+//       </MuiDialogTitle>
+//     );
+//   });
+
+//   return (
+//     <Dialog
+//       open={true}
+//       onClose={closeModal}
+//       className="creatJobModal"
+//       ref={divRef}
+//     >
+//       <DialogTitle onClose={closeModal}> Create Site </DialogTitle>
+//       <DialogContent dividers>
+//         <form noValidate>
+//           <div className="addressSec">
+//             <p>Site Address</p>
+//             <AsychronousAddress
+//               error={errors.addressData}
+//               handleSelectedPostCode={(value) => handleSelectedPostCode(value)}
+//             />
+//           </div>
+
+//           <Button
+//             className="confirmJob"
+//             onClick={(e) => confirmJob(e)}
+//             variant="contained"
+//             color="primary"
+//           >
+//             Confirm Site
+//             {isLoading && <CircularProgress />}
+//           </Button>
+
+//           {notice && (
+//             <Alert ref={divRef} severity={notice.type}>
+//               {notice.text}
+//             </Alert>
+//           )}
+//         </form>
+//       </DialogContent>
+//     </Dialog>
+//   );
+// }
+
+// ** React Imports
+import { forwardRef } from "react";
+
+// ** MUI Imports
+import Card from "@mui/material/Card";
+import Dialog from "@mui/material/Dialog";
+import "./style.scss";
+import CloseIcon from "@mui/icons-material/Close";
+import Fade from "@mui/material/Fade";
+import Plus from "../../../assets/images/plus.svg";
+import {
+  Box,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  Grid,
+  IconButton,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Fade ref={ref} {...props} />;
+});
+
+const DialogAddSite = ({
   closeModal,
   setJobCreated,
   handleJobCreated,
   sites,
   reload,
-}) {
-  const divRef = useRef(null);
-  const [errors, setError] = useState({
-    addressData: "",
-  });
-
-  const [state, setState] = useState({
-    notice: null,
-    isLoading: false,
-    addressData: {},
-  });
-
-  const styles = (theme) => ({
-    root: {
-      margin: 0,
-      padding: theme.spacing(2),
-    },
-    closeButton: {
-      position: "absolute",
-      right: theme.spacing(1),
-      top: theme.spacing(1),
-      color: theme.palette.grey[500],
-    },
-  });
-
-  const { isLoading, notice, addressData } = state;
-
-  const checkingError = (name, value) => {
-    switch (name) {
-      case "addressData":
-        errors[name] =
-          Object.keys(value).length === 0 ? "Must have selected address" : "";
-        break;
-      default:
-        break;
-    }
-    setError({ ...errors });
-  };
-  const handleSelectedPostCode = (udprn) => {
-    if (udprn) {
-      fetch(
-        `https://api.ideal-postcodes.co.uk/v1/addresses/${udprn}/?api_key=ak_jc635mjv12swIsWCiEJWOAiDG0W84`
-      )
-        .then((response) => response.json())
-        .then((response) => {
-          setState({ ...state, addressData: response.result });
-          checkingError("addressData", response.result);
-        });
-    } else {
-      setState({ ...state, addressData: {} });
-      checkingError("addressData", {});
-    }
-  };
-  const confirmJob = (e) => {
-    e.preventDefault();
-    if (Object.keys(addressData).length === 0) {
-      Object.keys(errors).forEach((error, index) => {
-        checkingError(error, state[error]);
-      });
-      return;
-    }
-
-    setState({ ...state, isLoading: true });
-    const isUprnDeleted = delete addressData.uprn;
-    if (isUprnDeleted) {
-      sitesService
-        .createNewSite(addressData)
-        .then((res) => {
-          if (res.data.data === "Site already exists") {
-            setState({
-              ...state,
-              isLoading: false,
-              notice: {
-                type: "error",
-                text: res.data.data,
-              },
-            });
-          } else {
-            setState({
-              ...state,
-              isLoading: false,
-              notice: {
-                type: "success",
-                text: res.data.data,
-              },
-            });
-            setTimeout(() => {
-              closeModal();
-              reload();
-            }, 2000);
-          }
-        })
-        .catch((err) => {
-          setState({
-            ...state,
-            isLoading: false,
-            notice: {
-              type: "error",
-              text: err.message,
-            },
-          });
-        });
-    }
-  };
-  const DialogTitle = withStyles(styles)((props) => {
-    const { children, classes, onClose, ...other } = props;
-    return (
-      <MuiDialogTitle disableTypography className={classes.root} {...other}>
-        <Typography variant="h6">{children}</Typography>
-        {onClose ? (
+}) => {
+  return (
+    <Card>
+      <Dialog
+        fullWidth
+        open={true}
+        maxWidth="xs"
+        onClose={closeModal}
+        onBackdropClick={closeModal}
+        TransitionComponent={Transition}
+        PaperProps={{
+          style: {
+            borderRadius: "16px",
+            background: "#F7F7F7",
+          },
+        }}
+        className="order-modal-main"
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }}>
+          <Typography
+            sx={{
+              fontFamily: "DM Sans",
+              fontWeight: 700,
+              fontSize: "20px",
+              color: "#0F2851",
+            }}
+          >
+            Add a new site
+          </Typography>
           <IconButton
             aria-label="close"
-            className={classes.closeButton}
-            onClick={onClose}
+            onClick={() => {
+              closeModal();
+            }}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
           >
             <CloseIcon />
           </IconButton>
-        ) : null}
-      </MuiDialogTitle>
-    );
-  });
+        </DialogTitle>
+        <DialogContent>
+          <Grid container>
+            <Grid item xs={12}>
+              <label className="img-caption">Search for address</label>
 
-  return (
-    <Dialog
-      open={true}
-      onClose={closeModal}
-      className="creatJobModal"
-      ref={divRef}
-    >
-      <DialogTitle onClose={closeModal}> Create Site </DialogTitle>
-      <DialogContent dividers>
-        <form noValidate>
-          <div className="addressSec">
-            <p>Site Address</p>
-            <AsychronousAddress
-              error={errors.addressData}
-              handleSelectedPostCode={(value) => handleSelectedPostCode(value)}
-            />
-          </div>
-
-          <Button
-            className="confirmJob"
-            onClick={(e) => confirmJob(e)}
-            variant="contained"
-            color="primary"
+              <FormControl
+                fullWidth
+                size="small"
+                sx={{
+                  background: "#fff",
+                  borderRadius: "16px",
+                  marginTop: "10px",
+                  boxShadow: " 0px 17px 24px rgba(58, 58, 58, 0.05)",
+                }}
+              >
+                <TextField
+                  size="small"
+                  placeholder="Type postcode or street name"
+                  className="img-caption"
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={12}>
+              <FormControl
+                fullWidth
+                size="small"
+                sx={{
+                  background: "#fff",
+                  borderRadius: "16px",
+                  marginTop: "10px",
+                  boxShadow: " 0px 17px 24px rgba(58, 58, 58, 0.05)",
+                }}
+              >
+                <Box
+                  sx={{
+                    padding: "8.5px 14px",
+                  }}
+                  alignItems="center"
+                  display="flex"
+                >
+                  <img src={Plus} alt="" />
+                  <Typography sx={{ ml: 1 }} className="manual-address">
+                    Or add address manually
+                  </Typography>
+                </Box>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container mt={2}>
+            <Grid item xs={12}>
+              <label className="img-caption">Site name</label>
+              <FormControl
+                fullWidth
+                size="small"
+                sx={{
+                  background: "#fff",
+                  borderRadius: "16px",
+                  marginTop: "10px",
+                  boxShadow: " 0px 17px 24px rgba(58, 58, 58, 0.05)",
+                }}
+              >
+                <TextField
+                  size="small"
+                  placeholder="Type postcode or street name"
+                  className="img-caption"
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container mt={2}>
+            <Grid item xs={12}>
+              <label className="img-caption">Assign site manager</label>
+              <FormControl
+                fullWidth
+                size="small"
+                sx={{
+                  background: "#fff",
+                  borderRadius: "16px",
+                  marginTop: "10px",
+                  boxShadow: " 0px 17px 24px rgba(58, 58, 58, 0.05)",
+                }}
+              >
+                <Select
+                  size="small"
+                  defaultValue="one"
+                  className="menu-item-select"
+                >
+                  <MenuItem className="menu-item-select" value="one">
+                    Choose One
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container mt={2}>
+            <Grid item xs={12}>
+              <label className="img-caption">Assign Purchase Order</label>
+              <FormControl
+                fullWidth
+                size="small"
+                sx={{
+                  background: "#fff",
+                  borderRadius: "16px",
+                  marginTop: "10px",
+                  boxShadow: " 0px 17px 24px rgba(58, 58, 58, 0.05)",
+                }}
+              >
+                <Select
+                  size="small"
+                  defaultValue="one"
+                  className="menu-item-select"
+                >
+                  <MenuItem className="menu-item-select" value="one">
+                    Selected multiple
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container mt={2}>
+            <Grid item xs={12}>
+              <label className="img-caption">
+                Instructions for your driver{" "}
+              </label>
+              <Box marginTop={1}>
+                <TextField
+                  rows={3}
+                  multiline
+                  placeholder="Please tell us anything that may assist with your delivery..."
+                  sx={{
+                    background: "#FFFFFF",
+                    boxShadow: "0px 17px 24px rgba(58, 58, 58, 0.05)",
+                    borderRadius: " 16px",
+                    width: "100%",
+                  }}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            marginTop={3}
+            justifyContent="space-between"
+            className="btn-modal"
           >
-            Confirm Site
-            {isLoading && <CircularProgress />}
-          </Button>
-
-          {notice && (
-            <Alert ref={divRef} severity={notice.type}>
-              {notice.text}
-            </Alert>
-          )}
-        </form>
-      </DialogContent>
-    </Dialog>
+            <Grid item xs={5.5}>
+              <button
+                className="button-cancel"
+                onClick={() => {
+                  closeModal();
+                }}
+              >
+                Cancel
+              </button>
+            </Grid>
+            <Grid item xs={5.5}>
+              <button
+                className="button-save"
+                onClick={() => {
+                  closeModal();
+                }}
+              >
+                Save
+              </button>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
+    </Card>
   );
-}
+};
+
+export default DialogAddSite;
