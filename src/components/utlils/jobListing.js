@@ -1,3 +1,5 @@
+const currency = localStorage.getItem("currency");
+
 export const jobListing = {
   sales: {
     total_sale: "9283.00",
@@ -3909,48 +3911,48 @@ export const sitesTableData = [
     siteAddress: "113 Ibsley, Gardens London, SW15 4NQ",
     siteContact: "Noble Eldhose +44 1234 567890",
     siteJobs: "5",
-    sales: "£3,432.00",
+    sales: `${currency ? currency : "£"}3,432.00`,
   },
   {
     siteName: "Hackney site",
     siteAddress: "113 Ibsley, Gardens London, SW15 4NQ",
     siteContact: "Noble Eldhose +44 1234 567890",
     siteJobs: "5",
-    sales: "£3,432.00",
+    sales: `${currency ? currency : "£"}3,432.00`,
   },
   {
     siteName: "Hackney site",
     siteAddress: "113 Ibsley, Gardens London, SW15 4NQ",
     siteContact: "Noble Eldhose +44 1234 567890",
     siteJobs: "5",
-    sales: "£3,432.00",
+    sales: `${currency ? currency : "£"}3,432.00`,
   },
   {
     siteName: "Hackney site",
     siteAddress: "113 Ibsley, Gardens London, SW15 4NQ",
     siteContact: "Noble Eldhose +44 1234 567890",
     siteJobs: "5",
-    sales: "£3,432.00",
+    sales: `${currency ? currency : "£"}3,432.00`,
   },
   {
     siteName: "Hackney site",
     siteAddress: "113 Ibsley, Gardens London, SW15 4NQ",
     siteContact: "Noble Eldhose +44 1234 567890",
     siteJobs: "5",
-    sales: "£3,432.00",
+    sales: `${currency ? currency : "£"}3,432.00`,
   },
   {
     siteName: "Hackney site",
     siteAddress: "113 Ibsley, Gardens London, SW15 4NQ",
     siteContact: "Noble Eldhose +44 1234 567890",
     siteJobs: "5",
-    sales: "£3,432.00",
+    sales: `${currency ? currency : "£"}3,432.00`,
   },
   {
     siteName: "Hackney site",
     siteAddress: "113 Ibsley, Gardens London, SW15 4NQ",
     siteContact: "Noble Eldhose +44 1234 567890",
     siteJobs: "5",
-    sales: "£3,432.00",
+    sales: `${currency ? currency : "£"}3,432.00`,
   },
 ];

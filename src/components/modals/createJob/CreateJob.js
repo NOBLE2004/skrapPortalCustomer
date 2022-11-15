@@ -24,11 +24,8 @@ import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/styles";
 import { useHistory } from "react-router-dom";
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import {
-  LocalizationProvider,
-  DatePicker,
-} from "@mui/lab";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider, DatePicker } from "@mui/lab";
 import AsychronousAddress from "../../commonComponent/asychronousAddress/AsychronousAddress";
 import CircularProgress from "@mui/material/CircularProgress";
 import ServiceService from "../../../services/service.service";
@@ -63,6 +60,8 @@ export default function CreateJob({
 }) {
   const history = useHistory();
   const divRef = useRef(null);
+  const currency = localStorage.getItem("currency");
+
   const [mPay, setMPay] = useState(false);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
@@ -91,7 +90,7 @@ export default function CreateJob({
   const [roleId, setRoleId] = useState(0);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [addNewCard, setAddNewCard] = useState(false);
-  const user = localStorage.getItem('c_d_storage');
+  const user = localStorage.getItem("c_d_storage");
   const [errors, setError] = useState({
     customer: "",
     service: "",
@@ -136,7 +135,7 @@ export default function CreateJob({
     isWeekError: false,
     selectedMarketPay: "",
     isCompanyModal: false,
-    job_documents: []
+    job_documents: [],
   });
   const styles = (theme) => ({
     root: {
@@ -181,8 +180,8 @@ export default function CreateJob({
   } = state;
 
   const handleFileUpload = (event) => {
-    state.job_documents = Array.from(event.target.files);   
-  }
+    state.job_documents = Array.from(event.target.files);
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
@@ -328,7 +327,7 @@ export default function CreateJob({
           post_code: postCode,
           service_type: serviceSelect.service_id,
           is_app: 0,
-          user_id: localStorage.getItem('user_id')
+          user_id: localStorage.getItem("user_id"),
         };
         ServiceService.subServicelist(data).then((response) => {
           if (Object.keys(response.data.result).length === 0) {
@@ -346,7 +345,7 @@ export default function CreateJob({
           post_code: addressData.postcode,
           service_type: serviceSelect.service_id,
           is_app: 0,
-          user_id: localStorage.getItem('user_id')
+          user_id: localStorage.getItem("user_id"),
         };
         ServiceService.subServicelist(data).then((response) => {
           if (Object.keys(response.data.result).length === 0) {
@@ -445,15 +444,19 @@ export default function CreateJob({
                   setNewAddressId("");
                 } else {
                   setNewAddressId(res.data?.result?.address_id);
-                  sitesService.showSitesDetail(res.data?.result?.address_id, {})
-                      .then(response => {
-                    if(response.data){
-                      if(response.data.purchase_orders.length > 1){
-                        const lastPo = response.data.purchase_orders[response.data.purchase_orders.length - 1];
-                        setPo(lastPo.purchase_order);
+                  sitesService
+                    .showSitesDetail(res.data?.result?.address_id, {})
+                    .then((response) => {
+                      if (response.data) {
+                        if (response.data.purchase_orders.length > 1) {
+                          const lastPo =
+                            response.data.purchase_orders[
+                              response.data.purchase_orders.length - 1
+                            ];
+                          setPo(lastPo.purchase_order);
+                        }
                       }
-                    }
-                  });
+                    });
                 }
               })
               .catch((err) => {
@@ -626,53 +629,57 @@ export default function CreateJob({
     JobService.createOrder(newdata)
       .then((response) => {
         if (response.data.code === 0) {
-          if(Object.keys(response.data.result).length != 0 && response.data.result.jobs.length > 0 && response.data.result.jobs[0].job_id != undefined){
-            let fd = new FormData()
+          if (
+            Object.keys(response.data.result).length != 0 &&
+            response.data.result.jobs.length > 0 &&
+            response.data.result.jobs[0].job_id != undefined
+          ) {
+            let fd = new FormData();
             let files = state.job_documents;
             files.forEach((image_file) => {
-              fd.append('files[]', image_file);
+              fd.append("files[]", image_file);
             });
             fd.append("job_id", response.data.result.jobs[0].job_id);
 
             JobService.updateOrderFiles(fd)
-                .then((response) => {
-                    scrollToBottom();
-                    setState({
-                      ...state,
-                      isLoading: false,
-                      notice: {
-                        type: "success",
-                        text: "Successfully Created Job!",
-                      },
-                    });
-                    setTimeout(() => {
-                    closeModal();
-                    if (sites) {
-                      reload();
-                    } else {
-                      handleJobCreated();
-                    }
-                  }, 2000);
-                })
-                .catch((err) => {
-                  scrollToBottom();
-                   setState({
-                    ...state,
-                    isLoading: false,
-                    notice: {
-                      type: "success",
-                      text: "Successfully Created Job!",
-                    },
-                  });
-                  setTimeout(() => {
-                    closeModal();
-                    if (sites) {
-                      reload();
-                    } else {
-                      handleJobCreated();
-                    }
-                  }, 2000);
+              .then((response) => {
+                scrollToBottom();
+                setState({
+                  ...state,
+                  isLoading: false,
+                  notice: {
+                    type: "success",
+                    text: "Successfully Created Job!",
+                  },
                 });
+                setTimeout(() => {
+                  closeModal();
+                  if (sites) {
+                    reload();
+                  } else {
+                    handleJobCreated();
+                  }
+                }, 2000);
+              })
+              .catch((err) => {
+                scrollToBottom();
+                setState({
+                  ...state,
+                  isLoading: false,
+                  notice: {
+                    type: "success",
+                    text: "Successfully Created Job!",
+                  },
+                });
+                setTimeout(() => {
+                  closeModal();
+                  if (sites) {
+                    reload();
+                  } else {
+                    handleJobCreated();
+                  }
+                }, 2000);
+              });
           }
 
           // setState({
@@ -875,7 +882,10 @@ export default function CreateJob({
             />
           </div>
 
-          <LocalizationProvider utils={DateFnsUtils} dateAdapter={AdapterDateFns}>
+          <LocalizationProvider
+            utils={DateFnsUtils}
+            dateAdapter={AdapterDateFns}
+          >
             <div className="dateTimeWp">
               <div className="datewp">
                 <p>Delivery Date Time</p>
@@ -1086,7 +1096,7 @@ export default function CreateJob({
               <TextField
                 value={quantity}
                 onChange={handleChange}
-                placeholder="£"
+                placeholder={`${currency ? currency : "£"}`}
                 name="quantity"
                 InputProps={{ inputProps: { min: 5 } }}
                 type="number"
@@ -1107,7 +1117,7 @@ export default function CreateJob({
               <TextField
                 value={portableweeks}
                 onChange={handleChange}
-                placeholder="£"
+                placeholder={`${currency ? currency : "£"}`}
                 name="portableweeks"
                 InputProps={{ inputProps: { min: 2 } }}
                 type="number"
@@ -1126,9 +1136,9 @@ export default function CreateJob({
             <div className="service-cost-width">
               <p>Service Cost</p>
               <TextField
-                value={`${(serviceCost/1.2)?.toFixed(2)} + Vat`}
+                value={`${(serviceCost / 1.2)?.toFixed(2)} + Vat`}
                 onChange={handleChange}
-                placeholder="£"
+                placeholder={`${currency ? currency : "£"}`}
                 name="serviceCost"
                 type="text"
                 variant="outlined"
@@ -1144,7 +1154,7 @@ export default function CreateJob({
                 <TextField
                   value={haulageCost}
                   onChange={handleChange}
-                  placeholder="£"
+                  placeholder={`${currency ? currency : "£"}`}
                   name="haulageCost"
                   type="number"
                   variant="outlined"
@@ -1236,7 +1246,7 @@ export default function CreateJob({
               <div className="discount">
                 <p>Total Cost</p>
                 <TextField
-                  placeholder="£"
+                  placeholder={`${currency ? currency : "£"}`}
                   name="totalCost"
                   value={`${totalCost} Inc vat`}
                   onChange={handleChange}
@@ -1306,49 +1316,47 @@ export default function CreateJob({
                     value={selectedMarketPay}
                     onChange={handleChange}
                   >
-                    {acountInfo
-                      && MARKET_PAY_LIST.map((data, index) => {
-                          return (
-                            <>
-                              <div className="marketMain">
-                                <FormControlLabel
-                                  key={data.id}
-                                  value={data.id}
-                                  control={<Radio color="primary" />}
-                                  label={`${data.title}`}
-                                />
+                    {acountInfo &&
+                      MARKET_PAY_LIST.map((data, index) => {
+                        return (
+                          <>
+                            <div className="marketMain">
+                              <FormControlLabel
+                                key={data.id}
+                                value={data.id}
+                                control={<Radio color="primary" />}
+                                label={`${data.title}`}
+                              />
 
-                                <img
-                                  src={marketInfoIcon}
-                                  alt="market"
-                                  className="tool-img"
-                                  onClick={() => handleToolTip(index)}
+                              <img
+                                src={marketInfoIcon}
+                                alt="market"
+                                className="tool-img"
+                                onClick={() => handleToolTip(index)}
+                              />
+                              {showToolTip && data.tooltip && (
+                                <ToolTipCard
+                                  data={data.tooltip}
+                                  handleClose={() => setShowToolTip(false)}
                                 />
-                                {showToolTip && data.tooltip && (
-                                  <ToolTipCard
-                                    data={data.tooltip}
-                                    handleClose={() => setShowToolTip(false)}
-                                  />
-                                )}
-                                {showToolTip1 && data.tooltip1 && (
-                                  <ToolTipCard
-                                    data={data.tooltip1}
-                                    handleClose={() => setShowToolTip1(false)}
-                                  />
-                                )}
-                              </div>
-                              {data.text && (
-                                <div className="remaining-balance">
-                                  {`${data.text} : £ ${
-                                    acountInfo.market_finance_balance -
-                                    totalCost
-                                  }`}
-                                </div>
                               )}
-                            </>
-                          );
-                        })}
-
+                              {showToolTip1 && data.tooltip1 && (
+                                <ToolTipCard
+                                  data={data.tooltip1}
+                                  handleClose={() => setShowToolTip1(false)}
+                                />
+                              )}
+                            </div>
+                            {data.text && (
+                              <div className="remaining-balance">
+                                {`${data.text} : ${currency ? currency : "£"} ${
+                                  acountInfo.market_finance_balance - totalCost
+                                }`}
+                              </div>
+                            )}
+                          </>
+                        );
+                      })}
                   </RadioGroup>
                 )}
               </>
@@ -1371,7 +1379,12 @@ export default function CreateJob({
           </div>
           <div>
             <p>Attach documents </p>
-              <input name="job_documents" multiple type="file" onChange={handleFileUpload} />
+            <input
+              name="job_documents"
+              multiple
+              type="file"
+              onChange={handleFileUpload}
+            />
           </div>
           <div className="note">
             <p>Notes</p>

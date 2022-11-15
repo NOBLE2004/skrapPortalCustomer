@@ -38,6 +38,8 @@ const MainJobs = (props) => {
   const [isJobBooked, setIsJobBooked] = useState(false);
   const [createSite, setCreateSite] = useState(false);
   const [isJobCreated, setIsJobCreated] = useState(false);
+  const currency = localStorage.getItem("currency");
+
   const [limit, setLimit] = useState(10);
   const { info, loading } = props.dashboard;
   const history = useHistory();
@@ -55,9 +57,9 @@ const MainJobs = (props) => {
     setIsJobCreated(!isJobCreated);
   }, [isJobCreated]);
 
-    const handleCreateSite = useCallback(() => {
-        setCreateSite(true);
-    }, [createSite]);
+  const handleCreateSite = useCallback(() => {
+    setCreateSite(true);
+  }, [createSite]);
 
   useEffect(() => {
     async function fetchData() {
@@ -147,7 +149,7 @@ const MainJobs = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Spend",
-            price: `£${
+            price: `${currency ? currency : "£"}${
               info ? parseFloat(info.TotalSpend).toLocaleString() : 0
             }`,
             statusName: "primary",
@@ -321,12 +323,12 @@ const MainJobs = (props) => {
           handleJobCreated={handleJobCreated}
         />
       )}
-        {createSite && (
-            <CreateSite
-                closeModal={() => setCreateSite(!createSite)}
-                sites={true}
-            />
-        )}
+      {createSite && (
+        <CreateSite
+          closeModal={() => setCreateSite(!createSite)}
+          sites={true}
+        />
+      )}
     </div>
   );
 };

@@ -238,7 +238,7 @@ const JobsTable = ({
         disableFilters: true,
         filter: "equals",
         Cell: (props) => {
-          return `£${props.value.toFixed(2)}`;
+          return `${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'}${props.value.toFixed(2)}`;
         },
       },
       {

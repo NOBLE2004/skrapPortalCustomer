@@ -12,6 +12,8 @@ import FadeLoader from "react-spinners/FadeLoader";
 const FinanceReport = (props) => {
   const { sites, showMore } = props;
   const [chartData, setChartData] = useState();
+  const currency = localStorage.getItem("currency");
+
   const dispatch = useDispatch();
   const stateSites = useSelector((state) => state?.siteBreakdown);
   const [show, setShow] = useState(false);
@@ -87,7 +89,7 @@ const FinanceReport = (props) => {
         <div className="salesWp">
           {stateSites?.site_breakdown?.result?.total && (
             <h1>
-              £{stateSites?.site_breakdown?.result?.total.toLocaleString()}
+              {`${currency?currency:'£'}`}{stateSites?.site_breakdown?.result?.total.toLocaleString()}
               <span> Total spend</span>
             </h1>
           )}

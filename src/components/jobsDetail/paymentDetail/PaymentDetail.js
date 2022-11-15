@@ -6,6 +6,8 @@ import JobService from "../../../services/job.service";
 import PayNow from "../../modals/payNow";
 const PaymentDetail = ({ job, updateJobs }) => {
   const [payNowModal, setPayNowModal] = useState(false);
+  const currency = localStorage.getItem("currency");
+
   const downloadInvoice = () => {
     JobService.invoice({ job_id: job.job_id })
       .then((response) => {
@@ -72,16 +74,16 @@ const PaymentDetail = ({ job, updateJobs }) => {
             </div>
             <div className="card-header-sub ">
               <span className="card-header-sub-item">
-                £{job?.service_rate?.toFixed(2)}
+                {`${currency?currency:'£'}`}{job?.service_rate?.toFixed(2)}
               </span>
               <span className="card-header-sub-item">
-                £{job?.haulage ? job?.haulage?.toFixed(2) : "0.00"}
+                {`${currency?currency:'£'}`}{job?.haulage ? job?.haulage?.toFixed(2) : "0.00"}
               </span>
               <span className="card-header-sub-item">
-                £{job?.transaction_cost?.toFixed(2)}
+                {`${currency?currency:'£'}`}{job?.transaction_cost?.toFixed(2)}
               </span>
               <span className="card-header-sub-item">
-                £{job?.discount ? parseInt(job?.discount)?.toFixed(2) : "0.00"}
+                {`${currency?currency:'£'}`}{job?.discount ? parseInt(job?.discount)?.toFixed(2) : "0.00"}
               </span>
             </div>
           </div>

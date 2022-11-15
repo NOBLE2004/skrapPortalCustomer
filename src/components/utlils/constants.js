@@ -2,27 +2,27 @@ export const chartLineOption = {
   plugins: {
     legend: {
       display: false,
-    }
+    },
   },
   scales: {
-    x:{
-        grid: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          display: false,
-        },
+    x: {
+      grid: {
+        display: false,
+        drawBorder: false,
       },
+      ticks: {
+        display: false,
+      },
+    },
     y: {
-        grid: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          display: false,
-        },
+      grid: {
+        display: false,
+        drawBorder: false,
       },
+      ticks: {
+        display: false,
+      },
+    },
   },
 };
 
@@ -80,57 +80,65 @@ export const spendChartOptions = {
     legend: {
       borderWidth: 1,
       display: false,
-      position: 'top',
-      horizontalAlign: 'center',
-      verticalAlign: 'left',
-      textAlign: 'center',
+      position: "top",
+      horizontalAlign: "center",
+      verticalAlign: "left",
+      textAlign: "center",
       fullSize: true,
       labels: {
         padding: 25,
         fullWidth: true,
         font: {
           size: 12,
-          family: 'DM Sans',
-          weight: 500
-        }
-      }
+          family: "DM Sans",
+          weight: 500,
+        },
+      },
     },
   },
   scales: {
-    x:
-      {
-        ticks: {
-          padding: 10,
-          font: {
-            size: 12,
-            family: 'DM Sans',
-            weight: 500
-          }
+    x: {
+      ticks: {
+        padding: 10,
+        font: {
+          size: 12,
+          family: "DM Sans",
+          weight: 500,
         },
-        grid: {
-          display: false,
-          drawBorder: false
-        }
       },
-    y: {
-        ticks: {
-          stepSize: (c) => ((Math.max(...c.chart.data.datasets[0].data) - Math.min(...c.chart.data.datasets[0].data)) / 4),
-          callback: function (value) {
-            return "£" + parseInt(value.toFixed(0)).toLocaleString();
-          },
-          beginAtZero: true,
-          padding: 10,
-          font: {
-            size: 12,
-            family: 'DM Sans',
-            weight: 500
-          }
-        },
       grid: {
         display: false,
-        drawBorder: false
-      }
+        drawBorder: false,
       },
+    },
+    y: {
+      ticks: {
+        stepSize: (c) =>
+          (Math.max(...c.chart.data.datasets[0].data) -
+            Math.min(...c.chart.data.datasets[0].data)) /
+          4,
+        callback: function (value) {
+          return (
+            `${
+              localStorage.getItem("currency")
+                ? localStorage.getItem("currency")
+                : "£"
+            }` + parseInt(value.toFixed(0)).toLocaleString()
+          );
+        },
+        beginAtZero: true,
+        padding: 10,
+        font: {
+          size: 12,
+          family: "DM Sans",
+          weight: 500,
+        },
+      },
+      grid: {
+        display: false,
+        drawBorder: false,
+      },
+    },
   },
 };
 
@@ -245,36 +253,40 @@ export const servicesReport = [
   {
     service_id: 2,
     service_name: "Skip Hire",
-    full_url: "https://portaltest2.skrap.app/service_images/5fdc817505c54skip-hire.png",
+    full_url:
+      "https://portaltest2.skrap.app/service_images/5fdc817505c54skip-hire.png",
     img_url: "/service_images/5fdc817505c54skip-hire.png",
     percentage: 20,
-    title:'Exchange'
+    title: "Exchange",
   },
 
   {
     service_id: 1,
     service_name: "Grab Hire",
-    full_url: "https://portal.skrap.app/storage/service_images/61542e3a5509egroup_48818.png",
+    full_url:
+      "https://portal.skrap.app/storage/service_images/61542e3a5509egroup_48818.png",
     img_url: "/service_images/61546f4cae16c5f9fe0d6d5062Group 48624@3x.png",
     percentage: 100,
-    title:'Wait & load'
+    title: "Wait & load",
   },
 
   {
     service_id: 3,
     service_name: "Tipper Hire",
-    full_url: "https://portal.skrap.app/storage/service_images/61d849c9c7969Asset 5@4x.png",
+    full_url:
+      "https://portal.skrap.app/storage/service_images/61d849c9c7969Asset 5@4x.png",
     img_url: "/service_images/5f9fd84dca502Group 49016@3x.png",
     percentage: 60,
-    title:'Collect'
+    title: "Collect",
   },
   {
     service_id: 80,
     service_name: "Plant Hire",
-    full_url: "https://portal.skrap.app/storage/service_images/5f9fe0d6d5062Group 48624@3x.png",
+    full_url:
+      "https://portal.skrap.app/storage/service_images/5f9fe0d6d5062Group 48624@3x.png",
     img_url: "/service_images/5f9fe11ab933aGroup 47848@3x.png",
     percentage: 50,
-    title:'Delivery'
+    title: "Delivery",
   },
   // {
   //   service_id: 43,
@@ -287,52 +299,52 @@ export const servicesReport = [
 
 export const wasteReport = [
   {
-    name: 'Wood',
+    name: "Wood",
     percentage: 29,
-    color: 'grey'
+    color: "grey",
   },
   {
-    name: 'Glass',
+    name: "Glass",
     percentage: 30,
-    color: 'green'
+    color: "green",
   },
   {
-    name: 'Plasterboard',
+    name: "Plasterboard",
     percentage: 40,
-    color: 'green'
+    color: "green",
   },
   {
-    name: 'Soil & stone',
+    name: "Soil & stone",
     percentage: 15,
-    color: 'grey'
+    color: "grey",
   },
   {
-    name: 'Metal',
+    name: "Metal",
     percentage: 10,
-    color: 'green'
+    color: "green",
   },
   {
-    name: 'Gypsum',
+    name: "Gypsum",
     percentage: 60,
-    color: 'grey'
+    color: "grey",
   },
   {
-    name: 'Mixed construction',
+    name: "Mixed construction",
     percentage: 50,
-    color: 'green'
+    color: "green",
   },
   {
-    name: 'Hardcore',
+    name: "Hardcore",
     percentage: 45,
-    color: 'green'
-  }
+    color: "green",
+  },
 ];
 export const sitesReport = [
   {
-    name: 'Century House',
+    name: "Century House",
     percentage: 10.7,
-    color: '#4981F8'
-  }
+    color: "#4981F8",
+  },
   // {
   //   name: 'Richmond Green',
   //   percentage: 2.1,

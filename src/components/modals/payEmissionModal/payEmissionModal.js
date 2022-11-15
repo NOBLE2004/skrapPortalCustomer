@@ -19,6 +19,7 @@ import paymentService from "../../../services/payment.service";
 function PayEmissionModal(props) {
   const dispatch = useDispatch();
   const portfolio = useSelector((state) => state?.portfolio);
+  const currency = localStorage.getItem("currency");
   useEffect(() => {
     async function fetchData() {
       if (!portfolio?.data?.data) {
@@ -171,7 +172,7 @@ function PayEmissionModal(props) {
                   <div>
                     <p>
                       {single.name}
-                      <span>&nbsp;(£{single?.price_per_kg?.toFixed(2)})</span>
+                      <span>&nbsp;({`${currency?currency:'£'}`}{single?.price_per_kg?.toFixed(2)})</span>
                     </p>
                   </div>
                   <div>
@@ -271,7 +272,7 @@ function PayEmissionModal(props) {
                 handleSubmit();
               }}
             >
-              Pay Now : £{state.totalPrice}
+              Pay Now : {`${currency?currency:'£'}`}{state.totalPrice}
             </Button>
           </Grid>
         </form>

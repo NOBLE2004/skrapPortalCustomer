@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Box, Button, FormControlLabel, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { Container, Grid } from "@mui/material";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
@@ -14,6 +15,8 @@ import Header from "../../../components/header/Header";
 import { showPasswordIcon } from "../../../assets/images";
 import { textFieldStyles } from "../../../assets/styles/muiStyles/MuiStyles";
 import { userlogin } from "../../../store/actions/signIn";
+import Checkbox from "@mui/material/Checkbox";
+
 import "./signin.scss";
 
 const SignIn = (props) => {
@@ -91,81 +94,171 @@ const SignIn = (props) => {
     <div className="main">
       <NavBar />
       <div className="login-main">
-        <Header
-          title={loginHeader.title}
-          description={loginHeader.description}
-        />
-        <div className="login-section">
-          <div className="search-input">
-            <TextField
-              placeholder="Enter Username"
-              margin="normal"
-              variant="outlined"
-              size="small"
-              name="phone"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">+44</InputAdornment>
-                ),
-              }}
-              inputProps={{ maxLength: 10 }}
-              className={
-                errors["phone"].length > 0 ? classes.error : classes.root
-              }
-              onChange={(e) => handleChange(e)}
-              value={phone}
-              error={errors["phone"].length > 0 ? true : false}
-            />
-            <TextField
-              margin="normal"
-              variant="outlined"
-              size="small"
-              placeholder="password"
-              type={showPassword ? "text" : "password"}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <img
-                      src={showPasswordIcon}
-                      alt="show-password"
-                      onClick={() =>
-                        setState({ ...state, showPassword: !showPassword })
-                      }
-                      style={{ cursor: "pointer" }}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-              className={
-                errors["password"].length > 0 ? classes.error : classes.root
-              }
-              value={password}
-              onChange={(e) => handleChange(e)}
-              name="password"
-              inputProps={() => {}}
-              error={errors["password"].length > 0 ? true : false}
-            />
-          </div>
-          {props.auth.loading ? (
-            <FadeLoader
-              color={"#518ef8"}
-              loading={props.auth.loading}
-              width={4}
-            />
-          ) : props.auth.isAuthenticated ? (
-            <Alert severity={"success"}>{"Customer Login Successfully"}</Alert>
-          ) : props.auth.error ? (
-            <Alert severity={"error"}>{"Username or Password invalid"}</Alert>
-          ) : (
-            ""
-          )}
-          <div className="login-next-btn">
-            <Button sx={{color:'#ffffff'}} onClick={handleSubmit}>Sign In</Button>
-          </div>
-          <div className="another-account">
-            Don’t have an account? <NavLink to={`signup`}><span>Sign Up</span></NavLink>{" "}
-          </div>
-        </div>
+        <Container>
+          <Grid container justifyContent="center">
+            <Grid xs={12} md={8}>
+              <Header
+                title={loginHeader.title}
+                description={loginHeader.description}
+              />
+              <Grid container justifyContent="center">
+                <Grid item md={6} xs={8}>
+                  <div className="login-section">
+                    <div className="search-input">
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontFamily: "DM Sans",
+                          fontWeight: 800,
+                          color: " #0f2851",
+                          marginBottom: "5px",
+                          width: "100%",
+                        }}
+                      >
+                        Username:
+                      </Typography>
+
+                      <TextField
+                        placeholder="Enter Username"
+                        margin="normal"
+                        variant="outlined"
+                        size="small"
+                        name="phone"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              +44
+                            </InputAdornment>
+                          ),
+                        }}
+                        inputProps={{ maxLength: 10 }}
+                        className={
+                          errors["phone"].length > 0
+                            ? classes.error
+                            : classes.root
+                        }
+                        onChange={(e) => handleChange(e)}
+                        value={phone}
+                        error={errors["phone"].length > 0 ? true : false}
+                      />
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontFamily: "DM Sans",
+                          fontWeight: 800,
+                          color: " #0f2851",
+                          marginBottom: "5px",
+                          width: "100%",
+                        }}
+                      >
+                        Password:
+                      </Typography>
+
+                      <TextField
+                        margin="normal"
+                        variant="outlined"
+                        size="small"
+                        placeholder="password"
+                        type={showPassword ? "text" : "password"}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <img
+                                src={showPasswordIcon}
+                                alt="show-password"
+                                onClick={() =>
+                                  setState({
+                                    ...state,
+                                    showPassword: !showPassword,
+                                  })
+                                }
+                                style={{ cursor: "pointer" }}
+                              />
+                            </InputAdornment>
+                          ),
+                        }}
+                        className={
+                          errors["password"].length > 0
+                            ? classes.error
+                            : classes.root
+                        }
+                        value={password}
+                        onChange={(e) => handleChange(e)}
+                        name="password"
+                        inputProps={() => {}}
+                        error={errors["password"].length > 0 ? true : false}
+                      />
+                      <div>
+                        {props.auth.loading ? (
+                          <Box display="flex" justifyContent="center">
+                            <FadeLoader
+                              color={"#518ef8"}
+                              loading={true}
+                              width={4}
+                            />
+                          </Box>
+                        ) : props.auth.isAuthenticated ? (
+                          <Alert severity={"success"}>
+                            {"Customer Login Successfully"}
+                          </Alert>
+                        ) : props.auth.error ? (
+                          <Alert severity={"error"}>
+                            {"Username or Password invalid"}
+                          </Alert>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+
+                      <div className="login-next-btn">
+                        <Button
+                          sx={{ color: "#ffffff" }}
+                          onClick={handleSubmit}
+                        >
+                          Sign In
+                        </Button>
+                      </div>
+                      <Box width="100%" mb={2}>
+                        <FormControlLabel
+                          control={<Checkbox defaultChecked />}
+                          sx={{ alignItems: "flex-start" }}
+                          label={
+                            <Typography
+                              variant="caption"
+                              sx={{
+                                fontFamily: "DM Sans",
+                                fontWeight: 500,
+                                color: " #0f2851",
+                              }}
+                            >
+                              Stay logged in.This is a trusted computer
+                              <br />
+                              You will be logged out automatically after a short
+                              while unless you indicate that this is trusted
+                              computer.
+                            </Typography>
+                          }
+                        />
+                      </Box>
+                      <div className="another-account-sign-up">
+                        Don’t have an account?{" "}
+                        <NavLink to={`signup`}>
+                          <span>Sign Up</span>
+                        </NavLink>{" "}
+                      </div>
+                      <div className="another-account">
+                        <NavLink to={``}>
+                          <span>Forget your password?</span>
+                        </NavLink>{" "}
+                      </div>
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Container>
+        <div className="login-section"></div>
       </div>
       <Footer />
     </div>

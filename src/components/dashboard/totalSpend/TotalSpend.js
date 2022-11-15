@@ -5,11 +5,13 @@ import BeatLoader from "react-spinners/BeatLoader";
 import "./totalspend.scss";
 
 const TotalSpend = ({ totalSpend, isLoading }) => {
+  const currency = localStorage.getItem("currency");
+
   return (
     <div className="listViewWp">
       <div className="lineChartWp">
         <div className="chartInfo">
-          <h1>{`£ ${totalSpend ? totalSpend : "00.00"}`} </h1>
+          <h1>{`${currency?currency:'£'} ${totalSpend ? totalSpend : "00.00"}`} </h1>
           <span className="primary-title"> Total Spend </span>
         </div>
         <div className="lineChart">
