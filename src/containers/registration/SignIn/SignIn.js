@@ -87,7 +87,6 @@ const SignIn = (props) => {
     }
   }, [props.auth.isAuthenticated]);
 
-
   return (
     <div className="main">
       <NavBar />
