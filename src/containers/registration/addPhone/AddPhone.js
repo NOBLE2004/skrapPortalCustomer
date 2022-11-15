@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
-import { registerHeaderData } from "../../../environment";
+import { RECAPTCHA_KEY, registerHeaderData } from "../../../environment";
 import "./addphone.scss";
 import Header from "../../../components/header/Header";
 import Alert from "@mui/lab/Alert";
@@ -15,6 +15,7 @@ import { userlogin } from "../../../store/actions/signIn";
 import authService from "../../../services/auth.service";
 import NavBar from "../../../components/Navbar/NavBar";
 import Footer from "../../../components/Footer/FooterItem";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const useStyles = makeStyles({
   root: {
@@ -45,6 +46,7 @@ const useStyles = makeStyles({
 const AddPhone = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const DELAY = 1500;
   const [state, setState] = useState({
     phone: "",
     otp: "",
@@ -112,10 +114,11 @@ const AddPhone = (props) => {
   };
 
   const getVerficationCode = () => {
-    authService.getVerificationCode({
-      mobile_number: "+44" + phone,
-      mobile_numnber: "+44" + phone,
-    })
+    authService
+      .getVerificationCode({
+        mobile_number: "+44" + phone,
+        mobile_numnber: "+44" + phone,
+      })
       .then((res) => {
         setState({
           ...state,
@@ -144,7 +147,7 @@ const AddPhone = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (phone.length < 10) {
-      Object.keys(errors).forEach(errorName => {
+      Object.keys(errors).forEach((errorName) => {
         // @ts-ignore
         checkingError(errorName, state[errorName]);
       });
@@ -164,7 +167,8 @@ const AddPhone = (props) => {
       verifyPinCode();
     } else {
       setState({ ...state, isLoading: true });
-      authService.checkUserMobile(data)
+      authService
+        .checkUserMobile(data)
         .then((res) => {
           if (res.data.code === 0) {
             setTimeout(() => {
@@ -187,10 +191,11 @@ const AddPhone = (props) => {
 
   const verifyPinCode = () => {
     setState({ ...state, isLoading: true });
-    authService.verifyPinCode({
-      mobile_number: "+44" + phone,
-      pin_code: otp,
-    })
+    authService
+      .verifyPinCode({
+        mobile_number: "+44" + phone,
+        pin_code: otp,
+      })
       .then((res) => {
         if (res.data.code === 0) {
           props.updatePhone({ phone: phone });
@@ -251,118 +256,145 @@ const AddPhone = (props) => {
   }, [props.auth.isAuthenticated]);
 
   return (
-      <div className="main">
-        <NavBar />
-        <div className="add-phone-main">
-          <Header title={registerHeaderData.title} description={registerHeaderData.description} />
-          <div className="add-phone-section">
-            <div className="search-section">
-              <div className="title">Phone number</div>
-              <div className="search-input">
-                <TextField
-                  placeholder="Enter Phone"
-                  margin="normal"
-                  variant="outlined"
-                  size="small"
-                  name="phone"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">+44</InputAdornment>
-                    ),
-                  }}
-                  inputProps={{ maxLength: 10 }}
-                  className={
-                    errors["phone"].length > 0 ? classes.error : classes.root
-                  }
-                  onChange={(e) => handleChange(e)}
-                  error={errors["phone"].length > 0 ? true : false}
-                />
-              </div>
-              {isPhone && (
-                <>
-                  <div className="otp-title">
-                    Kindly enter the 6-digit OTP (one-time password) sent to your
-                    phone number via SMS.
-                  </div>
-                  <div className="search-input">
-                    <TextField
-                      placeholder="Enter Otp"
-                      margin="normal"
-                      variant="outlined"
-                      size="small"
-                      name="otp"
-                      className={
-                        errors["otp"].length > 0 ? classes.error : classes.root
-                      }
-                      onChange={handleChange}
-                      error={errors["otp"].length > 0 ? true : false}
-                    />
-                  </div>
-                </>
-              )}
-              {isMobileVerfied && (
-                <>
-                  <div className="password-title">Enter Password</div>
+    <div className="main">
+      <NavBar />
+      <div className="add-phone-main">
+        <Header
+          title={registerHeaderData.title}
+          description={registerHeaderData.description}
+        />
+        <div className="add-phone-section">
+          <div className="search-section">
+            <div className="title">Phone number</div>
+            <div className="search-input">
+              <TextField
+                placeholder="Enter Phone"
+                margin="normal"
+                variant="outlined"
+                size="small"
+                name="phone"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">+44</InputAdornment>
+                  ),
+                }}
+                inputProps={{ maxLength: 10 }}
+                className={
+                  errors["phone"].length > 0 ? classes.error : classes.root
+                }
+                onChange={(e) => handleChange(e)}
+                error={errors["phone"].length > 0 ? true : false}
+              />
+            </div>
+            {isPhone && (
+              <>
+                <div className="otp-title">
+                  Kindly enter the 6-digit OTP (one-time password) sent to your
+                  phone number via SMS.
+                </div>
+                <div className="search-input">
                   <TextField
+                    placeholder="Enter Otp"
                     margin="normal"
                     variant="outlined"
                     size="small"
-                    placeholder="password"
-                    type="password"
-                    value={password}
+                    name="otp"
+                    className={
+                      errors["otp"].length > 0 ? classes.error : classes.root
+                    }
                     onChange={handleChange}
-                    name="password"
-                    className={classes.root}
-                    error={errors["password"].length > 0 ? true : false}
-                  />
-                </>
-              )}
-            </div>
-            {isLoading ? (
-              <div className="notice-alert">
-                <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
-              </div>
-            ) : (
-              <div className="new-notice-alert">
-                {notice && (
-                    // @ts-ignore
-                    <Alert // @ts-ignore
-                     severity={notice.type}>{notice.text}</Alert>
-                )}
-              </div>
-            )}
-            <div>
-              {props.auth.loading ? (
-                <div className="notice-alert">
-                  <FadeLoader
-                    color={"#518ef8"}
-                    loading={props.auth.loading}
-                    width={4}
+                    error={errors["otp"].length > 0 ? true : false}
                   />
                 </div>
-              ) : props.auth.isAuthenticated ? (
-                  // @ts-ignore
-                  <Alert severity={"success"}>
-                    {"Customer Login Successfully"}
-                  </Alert>
-              ) : props.auth.error ? (
-                  // @ts-ignore
-                  <Alert severity={"error"}>{"Username or Password invalid"}</Alert>
-              ) : (
-                ""
+              </>
+            )}
+
+            {isMobileVerfied && (
+              <>
+                <div className="password-title">Enter Password</div>
+                <TextField
+                  margin="normal"
+                  variant="outlined"
+                  size="small"
+                  placeholder="password"
+                  type="password"
+                  value={password}
+                  onChange={handleChange}
+                  name="password"
+                  className={classes.root}
+                  error={errors["password"].length > 0 ? true : false}
+                />
+              </>
+            )}
+          </div>
+          {isLoading ? (
+            <div className="notice-alert">
+              <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
+            </div>
+          ) : (
+            <div className="new-notice-alert">
+              {notice && (
+                // @ts-ignore
+                <Alert // @ts-ignore
+                  severity={notice.type}
+                >
+                  {notice.text}
+                </Alert>
               )}
             </div>
-            <div className="addphone-next-btn">
-              {isMobileVerfied ? (
-                <Button onClick={handleLogin} disabled= {password.length < 1 ? true: false}>Next</Button>
-              ) : (
-                <Button onClick={handleSubmit} disabled= {phone.length < 10 ? true: false}>Verify</Button>
-              )}
-            </div>
+          )}
+          <div>
+            {props.auth.loading ? (
+              <div className="notice-alert">
+                <FadeLoader
+                  color={"#518ef8"}
+                  loading={props.auth.loading}
+                  width={4}
+                />
+              </div>
+            ) : props.auth.isAuthenticated ? (
+              // @ts-ignore
+              <Alert severity={"success"}>
+                {"Customer Login Successfully"}
+              </Alert>
+            ) : props.auth.error ? (
+              // @ts-ignore
+              <Alert severity={"error"}>{"Username or Password invalid"}</Alert>
+            ) : (
+              ""
+            )}
+          </div>
+          <Box mt={3}>
+            <ReCAPTCHA
+              style={{ display: "inline-block" }}
+              theme="light"
+              // ref={this._reCaptchaRef}
+              sitekey={RECAPTCHA_KEY}
+              // onChange={this.handleChange}
+              // asyncScriptOnLoad={this.asyncScriptOnLoad}
+            />
+          </Box>
+          <div className="addphone-next-btn">
+            {isMobileVerfied ? (
+              <Button
+                onClick={handleLogin}
+                disabled={password.length < 1 ? true : false}
+              >
+                Next
+              </Button>
+            ) : (
+              <Button
+                onClick={handleSubmit}
+                disabled={phone.length < 10 ? true : false}
+              >
+                Verify
+              </Button>
+            )}
           </div>
         </div>
-        <Footer/>
       </div>
+      <Footer />
+    </div>
   );
 };
 // @ts-ignore

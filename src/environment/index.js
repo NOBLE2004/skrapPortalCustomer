@@ -15,6 +15,7 @@ export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
 // export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
 export const DOWNLOAD_URL = `https://portal.skrap.app/storage`;
 export const API_URL = `${APP_URL}`;
+export const RECAPTCHA_KEY = "6LecGgwjAAAAAB8BlwI6tKLnycxttMlghKIwrnx4";
 export const ENV = `prod`;
 export const USER = 236;
 export const FILE_DIR = "/storage";
