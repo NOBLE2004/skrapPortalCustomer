@@ -15,7 +15,6 @@ import { userlogin } from "../../../store/actions/signIn";
 import authService from "../../../services/auth.service";
 import NavBar from "../../../components/Navbar/NavBar";
 import Footer from "../../../components/Footer/FooterItem";
-import ReCAPTCHA from "react-google-recaptcha";
 import {
   GoogleReCaptchaProvider,
   GoogleReCaptcha,
