@@ -16,9 +16,11 @@ import authService from "../../../services/auth.service";
 import NavBar from "../../../components/Navbar/NavBar";
 import Footer from "../../../components/Footer/FooterItem";
 import ReCAPTCHA from "react-google-recaptcha";
-
-
-
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha,
+} from "react-google-recaptcha-v3";
+import { set } from "date-fns";
 
 const useStyles = makeStyles({
   root: {
@@ -49,6 +51,7 @@ const useStyles = makeStyles({
 const AddPhone = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const [value, setValue] = useState(null);
   const DELAY = 1500;
   const [state, setState] = useState({
     phone: "",
@@ -120,7 +123,7 @@ const AddPhone = (props) => {
     authService
       .getVerificationCode({
         mobile_number: "+44" + phone,
-        mobile_numnber: "+44" + phone,
+        recaptcha: value,
       })
       .then((res) => {
         setState({
@@ -258,6 +261,10 @@ const AddPhone = (props) => {
     }
   }, [props.auth.isAuthenticated]);
 
+  const handleCaptchaChange = (event) => {
+    setValue(event);
+  };
+
   return (
     <div className="main">
       <NavBar />
@@ -373,7 +380,7 @@ const AddPhone = (props) => {
               theme="light"
               // ref={this._reCaptchaRef}
               sitekey={RECAPTCHA_KEY}
-              // onChange={this.handleChange}
+              onChange={handleCaptchaChange}
               // asyncScriptOnLoad={this.asyncScriptOnLoad}
             />
           </Box>
