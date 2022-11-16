@@ -9,7 +9,7 @@ import {
   sitesBlack,
   ticketsBlack,
   tipingBlack,
-  statementBlack,
+  statementBlack
 } from "../assets/images/index";
 export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
 // export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
