@@ -6,6 +6,8 @@ const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 const DownLoadCSV = ({ rdata }) => {
+  const currency = localStorage.getItem("currency");
+
   const footPrintData = [
     {
       columns: footColumns,
@@ -25,7 +27,7 @@ const DownLoadCSV = ({ rdata }) => {
               value: order.ewc_code ? order.ewc_code : "",
             },
             {
-              value: order.transaction_cost ? "£" + order.transaction_cost : "",
+              value: order.transaction_cost ? `${currency?currency:'£'}` + order.transaction_cost : "",
             },
             {
               value: String(order.full_name),
@@ -86,13 +88,13 @@ const DownLoadCSV = ({ rdata }) => {
                   : ""),
             },
             {
-              value: order.transaction_cost ? "£" + order.transaction_cost : "",
+              value: order.transaction_cost ? `${currency?currency:'£'}` + order.transaction_cost : "",
             },
             {
               value: String(order.full_name) ? String(order.full_name) : "",
             },
             {
-              value: order.WTN_number ? "£" + order.WTN_number : "",
+              value: order.WTN_number ? `${currency?currency:'£'}` + order.WTN_number : "",
             },
             {
               value: order.disposal_site ? order.disposal_site : "",

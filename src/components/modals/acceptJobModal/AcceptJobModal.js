@@ -54,6 +54,8 @@ const AcceptJobModal = (props) => {
   const { handleClose, jobdata } = props;
   const [credit, setCredit] = useState("");
   const [paymentError, setPaymentError] = useState(false);
+  const currency = localStorage.getItem("currency");
+
   const [state, setState] = useState({
     notice: null,
     isLoading: false,
@@ -242,7 +244,9 @@ const AcceptJobModal = (props) => {
           <div className="info">
             <div className="designation">Total Cost</div>
             <div className="personal-title">
-              {jobdata ? "£" + jobdata.service_rate : "n/a"}
+              {jobdata
+                ? `${currency ? currency : "£"}` + jobdata.service_rate
+                : "n/a"}
             </div>
           </div>
           <Button

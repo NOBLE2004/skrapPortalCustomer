@@ -1,3 +1,4 @@
+import { getCurrency } from "../../environment";
 import authService from "../../services/auth.service";
 import * as Constants from "../constants/constants";
 
@@ -14,6 +15,12 @@ export const userlogin = (data) => {
           localStorage.setItem(
             "c_d_storage",
             JSON.stringify(response.data.result)
+          );
+          localStorage.setItem(
+            "currency",
+            response?.data?.result?.country_currency !== null
+              ? response?.data?.result?.country_currency?.currency_symbol
+              : "£"
           );
           localStorage.setItem("role_id", response.data.result.role_id);
           localStorage.setItem("user_count", response.data.result.user_count);

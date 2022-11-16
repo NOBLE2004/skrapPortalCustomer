@@ -3,6 +3,7 @@ import TableContainer from "../reactTable/TableContainer";
 import "./reportTable.scss";
 
 const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
+  const currency = localStorage.getItem("currency");
   const siteMovementsColumns = useMemo(
     () => [
       {
@@ -50,7 +51,9 @@ const ReportTable = ({ data, lastCalculatedReport, reportType }) => {
         accessor: "transaction_cost",
         disableFilters: true,
         Cell: (props) => {
-          return <span>{`£${props.value}` || "n/a"}</span>;
+          return (
+            <span>{`${currency ? currency : "£"}${props.value}` || "n/a"}</span>
+          );
         },
       },
       {

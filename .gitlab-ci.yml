@@ -38,3 +38,4 @@ deploy:
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker volume prune -f
   environment:
     name: production
+

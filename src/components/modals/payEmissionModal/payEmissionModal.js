@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, FormControlLabel, Grid, RadioGroup } from "@mui/material";
+import { Box, Button, FormControlLabel, Grid, RadioGroup } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import MuiDialogTitle from "@mui/material/DialogTitle";
 import { withStyles } from "@mui/styles";
@@ -12,9 +12,12 @@ import Radio from "@mui/material/Radio";
 import { getPortfolio } from "../../../store/actions/action.portfolio";
 import TextField from "@mui/material/TextField";
 import "./style.scss";
+import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
 import FadeLoader from "react-spinners/FadeLoader";
 import reportsService from "../../../services/reports.service";
 import paymentService from "../../../services/payment.service";
+import CardPayment from "../../commonComponent/cardPayment/CardPayment";
+import toast from "react-hot-toast";
 
 function PayEmissionModal(props) {
   const dispatch = useDispatch();
@@ -32,10 +35,15 @@ function PayEmissionModal(props) {
   const [selectedValue, setSelectedValue] = useState("");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [paymentMethodList, setPaymentMethodList] = useState([]);
+  const [paymentMethodList, setPaymentMethodList] = useState();
+  const [addNew, setAddNew] = useState({
+    addNewCard: false,
+    addButton: false,
+  });
   const [card, setCard] = useState({
     id: "",
     orderId: "",
+    name: "",
   });
   const [state, setState] = useState({
     price: 0,
@@ -54,12 +62,16 @@ function PayEmissionModal(props) {
     setSelectedValue();
   }, [showModal]);
 
-  const handleChange = (event, price) => {
+  const handleChange = (event, price, name) => {
     setShow(true);
     setState((st) => ({
       ...st,
       price: price,
       totalPrice: price * state.value,
+    }));
+    setCard((st) => ({
+      ...st,
+      name: name,
     }));
     setSelectedValue(event);
   };
@@ -120,11 +132,31 @@ function PayEmissionModal(props) {
       amount: state?.totalPrice?.toString(),
       card_id: card.id,
       order_id: card.orderId,
+      name: card?.name,
+      quantity: state?.value,
+      single_price: state?.price,
     };
     if (paymentMethodList?.length > 0) {
+      setLoading(true);
       reportsService.offSetCharge(data).then((res) => {
-        setShowModal(!showModal);
-      });
+        if (res?.data?.code === 0) {
+          toast.success("The offset is paid successfully.");
+          setShowModal(!showModal);
+          setAddNew((st) => ({
+            ...st,
+            addButton: false,
+          }));
+          setLoading(false);
+          setShow(false);
+        } else {
+          setLoading(false);
+          toast.error(res?.data?.description);
+        }
+      })
+      .catch(()=>{
+        setLoading(false);
+        toast.error('Something went wrong try again.');
+      })
     } else {
       setLoading(true);
       const params = new URLSearchParams({
@@ -134,22 +166,35 @@ function PayEmissionModal(props) {
       reportsService
         .payOffSet(params)
         .then((res) => {
+          getCardList();
           setCard((st) => ({
             ...st,
             orderId: res?.data?.order_ID,
           }));
-          paymentService
-            .list({ user_id: localStorage.getItem("user_id") })
-            .then((response) => {
-              setLoading(false);
-              setPaymentMethodList(response.data.result);
-            });
         })
         .catch((err) => {
           setLoading(false);
           console.log(err);
         });
     }
+  };
+  const getCardList = () => {
+    paymentService
+      .list({ user_id: localStorage.getItem("user_id") })
+      .then((response) => {
+        setLoading(false);
+        setAddNew((st) => ({
+          ...st,
+          addButton: true,
+        }));
+        setPaymentMethodList(response.data.result);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+  const handleSaveNewCard = () => {
+    getCardList();
   };
 
   return (
@@ -171,7 +216,9 @@ function PayEmissionModal(props) {
                   <div>
                     <p>
                       {single.name}
-                      <span>&nbsp;(£{single?.price_per_kg?.toFixed(2)})</span>
+                      <span>
+                        &nbsp;(£{single?.price_per_kg?.toFixed(2)} per kg)
+                      </span>
                     </p>
                   </div>
                   <div>
@@ -180,7 +227,8 @@ function PayEmissionModal(props) {
                       onChange={(e) =>
                         handleChange(
                           single.id,
-                          single?.price_per_kg?.toFixed(2)
+                          single?.price_per_kg?.toFixed(2),
+                          single.name
                         )
                       }
                       value={single.selected}
@@ -197,7 +245,7 @@ function PayEmissionModal(props) {
                   className="label-for-checkbox-emission-modal"
                   style={{ marginBottom: "4px" }}
                 >
-                  How many KG's you need to offset.?
+                  How many kg of CO₂e needs to offset?
                 </label>
                 <TextField
                   label="Amount"
@@ -236,25 +284,80 @@ function PayEmissionModal(props) {
                   }));
                 }}
               >
-                {paymentMethodList &&
-                  paymentMethodList.map((data, index) => {
-                    return (
-                      <FormControlLabel
-                        key={index}
-                        value={data.id}
-                        control={<Radio color="primary" />}
-                        label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
-                      />
-                    );
-                  })}
+                {paymentMethodList?.length > 0
+                  ? paymentMethodList &&
+                    paymentMethodList.map((data, index) => {
+                      return (
+                        <FormControlLabel
+                          key={index}
+                          value={data.id}
+                          control={
+                            <Radio
+                              color="primary"
+                              checked={card?.id === data?.id}
+                            />
+                          }
+                          label={`•••• •••• •••• ${data.card.last4} - ${data.card.brand}`}
+                        />
+                      );
+                    })
+                  : ""}
               </RadioGroup>
             )}
           </Grid>
+          {addNew?.addNewCard && (
+            <CardPayment
+              user_id={localStorage.getItem("user_id")}
+              handleSaveNewCard={() => handleSaveNewCard()}
+              setOpen={() =>
+                setAddNew((st) => ({
+                  ...st,
+                  addNewCard: false,
+                }))
+              }
+            />
+          )}
+          {addNew?.addButton && loading === false && (
+            <Box
+              sx={{
+                textAlign: "center",
+                mt: 2,
+              }}
+            >
+              <Button
+                className=""
+                variant="contained"
+                color="primary"
+                sx={{
+                  margin: "unset",
+                  borderRadius: "50px",
+                  textTransform: "unset",
+                  fontFamily: "DM Sans",
+                  fontStyle: "normal",
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  padding: "10px 20px",
+                  background:
+                    "linear-gradient(180deg, #73c6f9 0%, #5391f9 100%)",
+                }}
+                onClick={() => {
+                  setAddNew((st) => ({
+                    ...st,
+                    addNewCard: true,
+                  }));
+                }}
+              >
+                Add New Card
+              </Button>
+            </Box>
+          )}
           <Grid container justifyContent="flex-end" marginTop={2}>
             <Button
               className=""
               variant="contained"
               color="primary"
+              disabled={loading}
               sx={{
                 margin: "unset",
                 borderRadius: "50px",

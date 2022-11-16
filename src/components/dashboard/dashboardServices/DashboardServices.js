@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { CircleProgress } from "react-gradient-progress";
 
@@ -9,23 +9,28 @@ import "./dashboardservices.scss";
 
 const DashboardServices = ({ servicesData }) => {
   const classes = dashboardServiceStyle();
+  const currency = localStorage.getItem("currency");
   const [showValue, setShowValue] = useState(false);
   const { Cage, Skip, Grab, NumberOfJobs, Aggregate, PortableToilet } =
     servicesData;
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    Cage.name = 'Cage';
-    Skip.name = 'Skip';
-    Grab.name = 'Grab';
-    Aggregate.name = 'Aggregate';
-    PortableToilet.name = 'PortableToilet';
-    let list = [Cage,Skip,Grab,Aggregate,PortableToilet].sort(function(a, b) {
+    Cage.name = "Cage";
+    Skip.name = "Skip";
+    Grab.name = "Grab";
+    Aggregate.name = "Aggregate";
+    PortableToilet.name = "PortableToilet";
+    let list = [Cage, Skip, Grab, Aggregate, PortableToilet].sort(function (
+      a,
+      b
+    ) {
       console.log(a);
-      var x = a['count']; var y = b['count'];
-      return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+      var x = a["count"];
+      var y = b["count"];
+      return x < y ? 1 : x > y ? -1 : 0;
     });
-   setServices(list);
+    setServices(list);
   }, [servicesData]);
   return (
     <div className="dashboard-services-main">
@@ -48,13 +53,18 @@ const DashboardServices = ({ servicesData }) => {
         </div>
       </div>
       <div className="progress-main">
-
-        {services.map((service)=> {
-          return(<div className="progress-sub">
-            <div className="circular-progress" style={{ position: "relative" }}>
-              <p style={{ position: "absolute", bottom: "60px" }}>{service.name}</p>
-              <div>
-                <CircleProgress
+        {services.map((service) => {
+          return (
+            <div className="progress-sub">
+              <div
+                className="circular-progress"
+                style={{ position: "relative" }}
+              >
+                <p style={{ position: "absolute", bottom: "60px" }}>
+                  {service.name}
+                </p>
+                <div>
+                  <CircleProgress
                     width={180}
                     strokeWidth={15}
                     fontFamily={"DM Sans"}
@@ -65,36 +75,35 @@ const DashboardServices = ({ servicesData }) => {
                     hidePercentageText={showValue ? true : false}
                     percentage={
                       service
-                          ? service?.count
-                              ? ((service.count / NumberOfJobs) * 100).toFixed(0)
-                              : 0
+                        ? service?.count
+                          ? ((service.count / NumberOfJobs) * 100).toFixed(0)
                           : 0
+                        : 0
                     }
                     primaryColor={["#73C6F9", "#5391F9"]}
-                />
-                {showValue ? (
+                  />
+                  {showValue ? (
                     <div className="circle-text" style={{}}>
                       {service?.total
-                          ? "£" + parseInt(service.total).toLocaleString()
-                          : "£" + 0}
+                        ? `${currency ? currency : "£"}` +
+                          parseInt(service.total).toLocaleString()
+                        : `${currency ? currency : "£"}` + 0}
                     </div>
-                ) : (
+                  ) : (
                     ""
-                )}
+                  )}
+                </div>
+              </div>
+              <div className="order-percentage">
+                <span className="order-title">
+                  {" "}
+                  {service?.count ? service.count : 0} / {NumberOfJobs}{" "}
+                </span>
+                <span className="orders">orders</span>
               </div>
             </div>
-            <div className="order-percentage">
-            <span className="order-title">
-              {" "}
-              {service?.count ? service.count : 0} / {NumberOfJobs}{" "}
-            </span>
-              <span className="orders">orders</span>
-            </div>
-          </div>)
+          );
         })}
-
-
-
 
         {/*<div className="progress-sub">*/}
         {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}

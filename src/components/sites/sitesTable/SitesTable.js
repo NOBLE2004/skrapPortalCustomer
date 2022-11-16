@@ -88,7 +88,11 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
           return (
             <span>
               {props.value
-                ? "£" + parseFloat(props.value).toLocaleString()
+                ? `${
+                    localStorage.getItem("currency")
+                      ? localStorage.getItem("currency")
+                      : "£"
+                  }` + parseFloat(props.value).toLocaleString()
                 : "n/a"}
             </span>
           );
@@ -105,7 +109,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
       {
         Header: "",
         id: "edit-id",
-        
+
         Cell: ({ cell }) => (
           <>
             {roleId === 13 || roleId === 12 ? (

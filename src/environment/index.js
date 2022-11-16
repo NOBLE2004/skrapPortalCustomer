@@ -9,12 +9,13 @@ import {
   sitesBlack,
   ticketsBlack,
   tipingBlack,
-  statementBlack,
+  statementBlack
 } from "../assets/images/index";
 // export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
 export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
 export const DOWNLOAD_URL = `https://portal.skrap.app/storage`;
 export const API_URL = `${APP_URL}`;
+export const RECAPTCHA_KEY = "6LdPaA8jAAAAACq9tEZOoVR4GPtKOfelW7o6Kh0z";
 export const ENV = `prod`;
 export const USER = 236;
 export const FILE_DIR = "/storage";
@@ -40,7 +41,7 @@ export const REGISTER = {
   SUCCESS_MESSAGE: "User Created Successfully!",
   FAILURE_HEADER: "Failure",
   FAILURE_MESSAGE:
-      "Cannot Create User! User may already have been created with the given email!",
+    "Cannot Create User! User may already have been created with the given email!",
 };
 export const LOGIN = {
   FAILURE_HEADER: "Failure",
@@ -65,7 +66,7 @@ export const sidebarTabsList = [
     icon: customerBlack,
   },
   /*{ text: "Tipping", key: "tiping", sub: false, icon: tipingBlack },*/
-  { text: "Tickets", key: "tickets", sub: false, icon: ticketsBlack },
+  { text: "Compliance", key: "tickets", sub: false, icon: ticketsBlack },
   //{ text: "Reports", key: "reports", sub: false, icon: statementBlack },
   { text: "Reports", key: "new-reports", sub: false, icon: statementBlack },
   // { text: "search", key: "search", icon: search },
@@ -117,7 +118,7 @@ export const MARKET_PAY_LIST = [
     id: "PAY30EOFM",
     title: "Pay end of month following",
     tooltip1:
-        "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
+      "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by ",
   },
 ];
 
@@ -126,7 +127,7 @@ export const MARKET_PAY_LIST1 = [
     id: "PAY30EOFM",
     title: "Pay end of month following",
     tooltip:
-        "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by",
+      "Pay by bank transfer by end of month following after the service delivery. We will send you the payment details in the order confirmation email. MartketPay is powered by",
     text: "Remaining credit after transaction",
   },
 ];

@@ -24,12 +24,13 @@ const Sites = (props) => {
   const [isMapView, setIsMapView] = useState(true);
   const [isReload, setIsReload] = useState(false);
   const [isManagerOpen, setIsManagerOpen] = useState(false);
+  const currency = localStorage.getItem("currency");
   const { info, loading } = props.dashboard;
   const [filters, setFilters] = useState({
     page: 1,
     search: "",
-      date: "",
-      address: ""
+    date: "",
+    address: "",
   });
   const [search, setSearch] = useState("");
   useEffect(() => {
@@ -73,14 +74,14 @@ const Sites = (props) => {
   const handleCreateJob = useCallback(() => {
     setIsJobCreated(true);
   }, [isJobCreated]);
-    const handleCreateSite = useCallback(() => {
-        console.log('test')
-        setIsJobCreated(true);
-    }, [isJobCreated]);
+  const handleCreateSite = useCallback(() => {
+    console.log("test");
+    setIsJobCreated(true);
+  }, [isJobCreated]);
 
-    const handleChangeFilters = (filtersList) => {
-        setFilters(filtersList);
-    };
+  const handleChangeFilters = (filtersList) => {
+    setFilters(filtersList);
+  };
 
   return (
     <>
@@ -97,7 +98,7 @@ const Sites = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Spend",
-            price: `£${
+            price: `${currency ? currency : "£"}${
               info ? parseFloat(info.TotalSpend).toLocaleString() : 0
             }`,
             statusName: "primary",
@@ -131,7 +132,7 @@ const Sites = (props) => {
               cname="postcode"
               handleChangeSearch={handleChangeSearch}
             />
-              <SiteFilters handleChangeFilters={handleChangeFilters} />
+            <SiteFilters handleChangeFilters={handleChangeFilters} />
           </div>
         </Grid>
       </Grid>

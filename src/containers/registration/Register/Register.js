@@ -21,8 +21,10 @@ import { APP_URL } from "../../../environment";
 import { textFieldStyles } from "../../../assets/styles/muiStyles/MuiStyles";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
+
 import axios from "axios";
 const Register = (props) => {
+
   const classes = textFieldStyles();
   const history = useHistory();
   const [radioButton, setRadioButton] = useState("one-off");
@@ -294,7 +296,8 @@ const Register = (props) => {
                   <a
                     className="a-tag-sign-up"
                     href="https://marketfinance.com/"
-                    target="_blank" rel="noreferrer"
+                    target="_blank"
+                    rel="noreferrer"
                   >
                     MarketFinance.
                   </a>{" "}
@@ -482,7 +485,8 @@ const Register = (props) => {
                     <a
                       href="https://marketfinance.com/skrap-marketpay"
                       target="_blank"
-                      className="a-tag-sign-up" rel="noreferrer"
+                      className="a-tag-sign-up"
+                      rel="noreferrer"
                     >
                       how MarketPay works
                     </a>

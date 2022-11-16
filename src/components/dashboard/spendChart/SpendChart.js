@@ -77,7 +77,7 @@ const SpendChart = ({
       labels: {
         formatter() {
           const getLabel = (value) => {
-            return `£${value}`;
+            return `${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'}${value}`;
           };
           return getLabel(this.value);
         },

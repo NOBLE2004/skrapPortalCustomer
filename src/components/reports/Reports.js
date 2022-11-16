@@ -16,6 +16,8 @@ import moment from "moment";
 
 const Reports = (props) => {
   const { data } = props.allsites;
+  const currency = localStorage.getItem("currency");
+
   const { reports, isLoading, error } = props.report;
   const [state, setState] = useState({
     reportType: [
@@ -96,7 +98,7 @@ const Reports = (props) => {
   if (report === "Site_movements") {
     lastCalculatedReport =
       reports && reports.length > 0
-        ? `£${reports.slice(-1)[0].transaction_cost}`
+        ? `${currency?currency:'£'}${reports.slice(-1)[0].transaction_cost}`
         : "n/a";
   } else if (report === "Carbon_footprint") {
     lastCalculatedReport =
