@@ -21,6 +21,7 @@ import {
   GoogleReCaptcha,
 } from "react-google-recaptcha-v3";
 import { set } from "date-fns";
+import { useCallback } from "react";
 
 const useStyles = makeStyles({
   root: {
@@ -261,9 +262,9 @@ const AddPhone = (props) => {
     }
   }, [props.auth.isAuthenticated]);
 
-  const handleCaptchaChange = (event) => {
-    setValue(event);
-  };
+  const onVerify = useCallback((token) => {
+    setValue(token);
+  }, []);
 
   return (
     <div className="main">
@@ -375,14 +376,15 @@ const AddPhone = (props) => {
             )}
           </div>
           <Box mt={3}>
-            <ReCAPTCHA
-              style={{ display: "inline-block" }}
-              theme="light"
-              // ref={this._reCaptchaRef}
-              sitekey={RECAPTCHA_KEY}
-              onChange={handleCaptchaChange}
-              // asyncScriptOnLoad={this.asyncScriptOnLoad}
-            />
+            <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_KEY}>
+              <GoogleReCaptcha
+                onVerify={(token) => {
+                  if (value === null) {
+                    onVerify(token);
+                  }
+                }}
+              />
+            </GoogleReCaptchaProvider>
           </Box>
           <div className="addphone-next-btn">
             {isMobileVerfied ? (
