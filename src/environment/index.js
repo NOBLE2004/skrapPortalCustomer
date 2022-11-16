@@ -92,6 +92,11 @@ export const registerHeaderData = {
   description: "Sign up to continue to hire",
 };
 
+export const forgetPasswordHeader = {
+  title: "Customer Portal",
+  description: "Enter your email and we'll send you a instructions to reset your password.",
+};
+
 export const dummyStatus = [
   { id: 0, price: 30, status: "Total Delivered", statusName: "primary" },
   { id: 1, price: 2, status: "Pending", statusName: "pending" },

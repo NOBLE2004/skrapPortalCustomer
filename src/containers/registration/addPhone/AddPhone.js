@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { RECAPTCHA_KEY, registerHeaderData } from "../../../environment";
 import "./addphone.scss";
 import Header from "../../../components/header/Header";
@@ -374,17 +374,17 @@ const AddPhone = (props) => {
               ""
             )}
           </div>
-          <Box mt={3}>
-            <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_KEY}>
-              <GoogleReCaptcha
-                onVerify={(token) => {
-                  if (value === null) {
-                    onVerify(token);
-                  }
-                }}
-              />
-            </GoogleReCaptchaProvider>
-          </Box>
+
+          <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_KEY}>
+            <GoogleReCaptcha
+              onVerify={(token) => {
+                if (value === null) {
+                  onVerify(token);
+                }
+              }}
+            />
+          </GoogleReCaptchaProvider>
+
           <div className="addphone-next-btn">
             {isMobileVerfied ? (
               <Button
@@ -401,6 +401,12 @@ const AddPhone = (props) => {
                 Verify
               </Button>
             )}
+            <Box className="another-account-sign-up" mt={2}>
+              Already have an account back to?{" "}
+              <NavLink to={`login`}>
+                <span>Login</span>
+              </NavLink>{" "}
+            </Box>
           </div>
         </div>
       </div>

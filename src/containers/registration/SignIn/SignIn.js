@@ -95,7 +95,7 @@ const SignIn = (props) => {
       <div className="login-main">
         <Container>
           <Grid container justifyContent="center">
-            <Grid xs={12} md={8}>
+            <Grid item xs={12} md={8}>
               <Header
                 title={loginHeader.title}
                 description={loginHeader.description}
@@ -246,7 +246,7 @@ const SignIn = (props) => {
                         </NavLink>{" "}
                       </div>
                       <div className="another-account">
-                        <NavLink to={``}>
+                        <NavLink to={`forget-password`}>
                           <span>Forget your password?</span>
                         </NavLink>{" "}
                       </div>
