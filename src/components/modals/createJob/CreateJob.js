@@ -61,7 +61,7 @@ export default function CreateJob({
   const history = useHistory();
   const divRef = useRef(null);
   const currency = localStorage.getItem("currency");
-
+  const vat = JSON.parse(localStorage.getItem("c_d_storage"));
   const [mPay, setMPay] = useState(false);
   const [startSelectedDate, setStartSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
@@ -1136,7 +1136,12 @@ export default function CreateJob({
             <div className="service-cost-width">
               <p>Service Cost</p>
               <TextField
-                value={`${(serviceCost / 1.2)?.toFixed(2)} + Vat`}
+                value={`${(
+                  serviceCost /
+                  (vat?.country_currency?.vat
+                    ? vat?.country_currency?.vat
+                    : 1.2)
+                )?.toFixed(2)} + Vat`}
                 onChange={handleChange}
                 placeholder={`${currency ? currency : "£"}`}
                 name="serviceCost"
