@@ -21,6 +21,7 @@ import {
 } from "react-google-recaptcha-v3";
 import { set } from "date-fns";
 import { useCallback } from "react";
+import { getAllCounteries } from "../../../store/actions/action.counteries";
 
 const useStyles = makeStyles({
   root: {
@@ -261,9 +262,15 @@ const AddPhone = (props) => {
     }
   }, [props.auth.isAuthenticated]);
 
+  useEffect(() => {
+    props?.getAllCounteries();
+  }, []);
+
   const onVerify = useCallback((token) => {
     setValue(token);
   }, []);
+
+  console.log("props", props);
 
   return (
     <div className="main">
@@ -415,14 +422,15 @@ const AddPhone = (props) => {
   );
 };
 // @ts-ignore
-const mapStateToProps = ({ auth, phone }) => {
-  return { auth, phone };
+const mapStateToProps = ({ auth, phone, allCounteries }) => {
+  return { auth, phone, allCounteries };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updatePhone: (credential) => dispatch(phoneSuccess(credential)),
     userLogin: (credential) => dispatch(userlogin(credential)),
+    getAllCounteries: (credential) => dispatch(getAllCounteries(credential)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddPhone);
