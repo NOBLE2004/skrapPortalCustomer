@@ -23,6 +23,7 @@ const NewReports = () => {
   const [selected, setSelected] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [csvData, setCsvData] = useState([]);
+  const [siteCurrency, setSiteCurrency] = useState(null);
   const [showMore, setShowMore] = useState(false);
   const [reports, setReports] = useState({
     finance: false,
@@ -78,6 +79,7 @@ const NewReports = () => {
           ids: "waste_statistics",
         });
         break;
+      default:
     }
   };
 
@@ -153,9 +155,15 @@ const NewReports = () => {
   }, [state, reports]);
 
   useEffect(() => {
-    dispatch(getLandfillDiversionList({ sites: selected }));
-    dispatch(getSiteBreakdownlist({ sites: selected }));
-    dispatch(getSitesMovementList({ sites: selected }));
+    dispatch(
+      getLandfillDiversionList(selected?.length !== 0 && { sites: [selected] })
+    );
+    dispatch(
+      getSiteBreakdownlist(selected?.length !== 0 && { sites: [selected] })
+    );
+    dispatch(
+      getSitesMovementList(selected?.length !== 0 && { sites: [selected] })
+    );
   }, [selected]);
 
   return (
@@ -165,13 +173,19 @@ const NewReports = () => {
           sites={selected}
           handleChange={handleChange}
           selected={selected}
+          setSelected={setSelected}
+          setSiteCurrency={setSiteCurrency}
         />
         {/*<ReportFilters />*/}
         <div className="report-grid">
           <Masonry container columns={2} spacing={4}>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Finance report</div>
-              <FinanceReport sites={selected} showMore={showMore} />
+              <FinanceReport
+                sites={selected}
+                showMore={showMore}
+                siteCurrency={siteCurrency}
+              />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Emissions</div>
@@ -180,6 +194,7 @@ const NewReports = () => {
                 startDate={startDate}
                 setStartDate={setStartDate}
                 showMore={showMore}
+                siteCurrency={siteCurrency}
               />
             </div>
             <div className="report-chart-card-outer">

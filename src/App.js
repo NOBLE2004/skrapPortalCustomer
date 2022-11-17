@@ -18,6 +18,7 @@ import AddPhone from "./containers/registration/addPhone/AddPhone";
 import MainReports from "./containers/mainReports/MainReports";
 import NewReports from "./containers/reports";
 import SitesDetailPage from "./components/sites/sitesDetailPage/SitesDetailPage";
+import ForgetPassword from "./containers/registration/forgetPassword";
 
 const history = createBrowserHistory();
 
@@ -29,6 +30,7 @@ function App() {
         <PublicRoute path="/login" component={() => <SignIn />} exact restricted={true}/>
         <PublicRoute path="/signup-info" component={() => <Register />} exact restricted={true}/>
         <PublicRoute path="/signup" component={() => <AddPhone />} exact restricted={true}/>
+        <PublicRoute path="/forget-password" component={() => <ForgetPassword />} exact restricted={true}/>
         <Layout>
           <PrivateRoute path="/" component={() => <DashBoard />} exact />
           <PrivateRoute path="/dashboard" component={() => <DashBoard />} />

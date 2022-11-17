@@ -1,4 +1,4 @@
-export const chartOptions = data => ({
+export const chartOptions = (siteCurrency) => ({
   chart: {
     type: "column",
     height: 300,
@@ -62,17 +62,17 @@ export const chartOptions = data => ({
   },
   plotOptions: {
     column: {
-      grouping: false
+      grouping: false,
       // pointPadding: 0.2,
       // groupPadding: 0.9,
     },
     series: {
       states: {
         hover: {
-          enabled: false
-        }
-      }
-    }
+          enabled: false,
+        },
+      },
+    },
   },
   legend: {
     symbolRadius: 2,
@@ -82,8 +82,8 @@ export const chartOptions = data => ({
       fontWeight: 700,
     },
   },
- });
-export const data2 = {
+});
+export const data2 = (siteCurrency) => ({
   chart: {
     type: "column",
     height: 300,
@@ -130,7 +130,13 @@ export const data2 = {
     labels: {
       formatter() {
         const getLabel = (value) => {
-          return `${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'}${value}`;
+          return `${
+            siteCurrency
+              ? siteCurrency
+              : localStorage.getItem("currency")
+              ? localStorage.getItem("currency")
+              : "£"
+          }${value}`;
         };
         return getLabel(this.value);
       },
@@ -147,17 +153,17 @@ export const data2 = {
   },
   plotOptions: {
     column: {
-      grouping: false
+      grouping: false,
       // pointPadding: 0.2,
       // borderWidth: 0,
     },
     series: {
       states: {
         hover: {
-          enabled: false
-        }
-      }
-    }
+          enabled: false,
+        },
+      },
+    },
   },
   legend: {
     enabled: false,
@@ -170,7 +176,7 @@ export const data2 = {
   },
   series: [
     {
-      name: 'null',
+      name: "null",
       data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
       borderWidth: 0,
       stack: 1,
@@ -184,7 +190,20 @@ export const data2 = {
     {
       type: "column",
       name: "Emissions produced",
-      data: [null, null, null, null, null, 50, null, null, null, null, null, null],
+      data: [
+        null,
+        null,
+        null,
+        null,
+        null,
+        50,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      ],
       color: "#5BA842",
       borderSkipped: false,
       borderRadius: 6,
@@ -193,4 +212,4 @@ export const data2 = {
       boxWidth: "100%",
     },
   ],
-};
+});

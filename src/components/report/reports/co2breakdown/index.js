@@ -20,11 +20,11 @@ const Co2breakdownReport = (props) => {
   const { sites, showMore } = props;
   const [show, setShow] = useState(false);
   useEffect(() => {
-    dispatch(getLandfillDiversion({ sites }));
-    dispatch(getTonnage({ sites }));
-    dispatch(getWaste({ sites }));
-    dispatch(getWasteOfEnergy({ sites }));
-    dispatch(getRecycled({ sites }));
+    dispatch(getLandfillDiversion(sites?.length !== 0 && { sites: [sites] }));
+    dispatch(getTonnage(sites?.length !== 0 && { sites: [sites] }));
+    dispatch(getWaste(sites?.length !== 0 && { sites: [sites] }));
+    dispatch(getWasteOfEnergy(sites?.length !== 0 && { sites: [sites] }));
+    dispatch(getRecycled(sites?.length !== 0 && { sites: [sites] }));
   }, [sites]);
 
   return (
@@ -93,7 +93,7 @@ const Co2breakdownReport = (props) => {
                   </span>
                 </div>
               </div>
-              <div className="salesWp-sub" style={{alignItems: 'flex-start'}}>
+              <div className="salesWp-sub" style={{ alignItems: "flex-start" }}>
                 <div className="guage-with-text">
                   <CircleProgress
                     width={100}

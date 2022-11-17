@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { RECAPTCHA_KEY, registerHeaderData } from "../../../environment";
 import "./addphone.scss";
 import Header from "../../../components/header/Header";
 import Alert from "@mui/lab/Alert";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import InputAdornment from "@mui/material/InputAdornment";
 import { phoneSuccess } from "../../../store/actions/actionPhone";
 import FadeLoader from "react-spinners/FadeLoader";
@@ -21,7 +21,9 @@ import {
 } from "react-google-recaptcha-v3";
 import { set } from "date-fns";
 import { useCallback } from "react";
-
+import { getAllCounteries } from "../../../store/actions/action.counteries";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 const useStyles = makeStyles({
   root: {
     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
@@ -52,7 +54,8 @@ const AddPhone = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const [value, setValue] = useState(null);
-  const DELAY = 1500;
+  const dispatch = useDispatch();
+  const counteriesList = useSelector((state) => state?.allCounteries);
   const [state, setState] = useState({
     phone: "",
     otp: "",
@@ -104,7 +107,7 @@ const AddPhone = (props) => {
   const checkingError = (name, value) => {
     switch (name) {
       case "phone":
-        errors[name] = value.length < 10 ? "Required" : "";
+        errors[name] = value.length < 12 ? "Required" : "";
         break;
       case "otp":
         errors[name] = value.length < 6 ? "Required" : "";
@@ -150,6 +153,7 @@ const AddPhone = (props) => {
         });
       });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (phone.length < 10) {
@@ -159,7 +163,7 @@ const AddPhone = (props) => {
       });
       return;
     }
-    let data = { mobile: "+44" + phone, user_type: 1 };
+    let data = { mobile: "+" + state?.phone, user_type: 1 };
     if (isPhone) {
       if (otp.length < 6) {
         Object.keys(errors).forEach((error, index) => {
@@ -199,12 +203,12 @@ const AddPhone = (props) => {
     setState({ ...state, isLoading: true });
     authService
       .verifyPinCode({
-        mobile_number: "+44" + phone,
+        mobile_number: "+" + state?.phone,
         pin_code: otp,
       })
       .then((res) => {
         if (res.data.code === 0) {
-          props.updatePhone({ phone: phone });
+          props.updatePhone({ phone: "+" + state?.phone });
           setState({
             ...state,
             isLoading: false,
@@ -261,9 +265,23 @@ const AddPhone = (props) => {
     }
   }, [props.auth.isAuthenticated]);
 
+  useEffect(() => {
+    if (!counteriesList?.data) {
+      dispatch(getAllCounteries());
+    }
+  }, []);
+
   const onVerify = useCallback((token) => {
     setValue(token);
   }, []);
+
+  const handlePhoneChange = (value) => {
+    setState((st) => ({
+      ...st,
+      phone: value,
+    }));
+    checkingError("phone", value);
+  };
 
   return (
     <div className="main">
@@ -277,7 +295,39 @@ const AddPhone = (props) => {
           <div className="search-section">
             <div className="title">Phone number</div>
             <div className="search-input">
-              <TextField
+              {counteriesList?.loading ? (
+                <Box className="" display="flex" justifyContent="center">
+                  <FadeLoader
+                    color={"#518ef8"}
+                    loading={counteriesList?.loading}
+                    width={4}
+                  />
+                </Box>
+              ) : (
+                <PhoneInput
+                  country={"gb"}
+                  name="phone"
+                  countryCodeEditable={false}
+                  onlyCountries={
+                    counteriesList?.data ? counteriesList?.data : []
+                  }
+                  inputClass={
+                    errors["phone"].length > 0 ? "error-class" : "root-class"
+                  }
+                  buttonClass={
+                    errors["phone"].length > 0
+                      ? "error-class-drop"
+                      : "root-class-drop"
+                  }
+                  inputProps={{
+                    name: "phone",
+                    required: true,
+                    autoFocus: true,
+                  }}
+                  onChange={(e) => handlePhoneChange(e)}
+                />
+              )}
+              {/* <TextField
                 placeholder="Enter Phone"
                 margin="normal"
                 variant="outlined"
@@ -294,7 +344,7 @@ const AddPhone = (props) => {
                 }
                 onChange={(e) => handleChange(e)}
                 error={errors["phone"].length > 0 ? true : false}
-              />
+              /> */}
             </div>
             {isPhone && (
               <>
@@ -374,17 +424,17 @@ const AddPhone = (props) => {
               ""
             )}
           </div>
-          <Box mt={3}>
-            <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_KEY}>
-              <GoogleReCaptcha
-                onVerify={(token) => {
-                  if (value === null) {
-                    onVerify(token);
-                  }
-                }}
-              />
-            </GoogleReCaptchaProvider>
-          </Box>
+
+          <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_KEY}>
+            <GoogleReCaptcha
+              onVerify={(token) => {
+                if (value === null) {
+                  onVerify(token);
+                }
+              }}
+            />
+          </GoogleReCaptchaProvider>
+
           <div className="addphone-next-btn">
             {isMobileVerfied ? (
               <Button
@@ -396,11 +446,17 @@ const AddPhone = (props) => {
             ) : (
               <Button
                 onClick={handleSubmit}
-                disabled={phone.length < 10 ? true : false}
+                disabled={phone.length < 12 ? true : false}
               >
                 Verify
               </Button>
             )}
+            <Box className="another-account-sign-up" mt={2}>
+              Already have an account back to?{" "}
+              <NavLink to={`login`}>
+                <span>Login</span>
+              </NavLink>{" "}
+            </Box>
           </div>
         </div>
       </div>

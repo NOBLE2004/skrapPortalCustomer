@@ -10,13 +10,21 @@ import HireBreakDown from "./hireBreakDown/hireBreakDown";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const FinanceReport = (props) => {
-  const { sites, showMore } = props;
+  const { sites, showMore, siteCurrency } = props;
   const [chartData, setChartData] = useState();
-  const currency = localStorage.getItem("currency");
+  const [currency, setCurrency] = useState();
 
   const dispatch = useDispatch();
   const stateSites = useSelector((state) => state?.siteBreakdown);
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (siteCurrency !== null) {
+      setCurrency(siteCurrency);
+    } else {
+      setCurrency(localStorage.getItem("currency"));
+    }
+  }, [siteCurrency]);
 
   useEffect(() => {
     setChartData({
@@ -76,8 +84,8 @@ const FinanceReport = (props) => {
   useEffect(() => {
     async function fetchData() {
       //if (!stateSites?.site_breakdown?.result?.data) {
-      await dispatch(getSiteBreakdown({ sites: sites }));
-      await dispatch(getHireBreakdown({ sites }));
+      await dispatch(getSiteBreakdown(sites?.length !== 0 &&{ sites: [sites] }));
+      await dispatch(getHireBreakdown(sites?.length !== 0 &&{ sites: [sites] }));
       //}
     }
     fetchData();
@@ -89,7 +97,8 @@ const FinanceReport = (props) => {
         <div className="salesWp">
           {stateSites?.site_breakdown?.result?.total && (
             <h1>
-              {`${currency?currency:'£'}`}{stateSites?.site_breakdown?.result?.total.toLocaleString()}
+              {`${currency ? currency : "£"}`}
+              {stateSites?.site_breakdown?.result?.total.toLocaleString()}
               <span> Total spend</span>
             </h1>
           )}

@@ -11,8 +11,8 @@ import {
   tipingBlack,
   statementBlack
 } from "../assets/images/index";
-// export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
-export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
+ export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
+// export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
 export const DOWNLOAD_URL = `https://portal.skrap.app/storage`;
 export const API_URL = `${APP_URL}`;
 export const RECAPTCHA_KEY = "6LdPaA8jAAAAACq9tEZOoVR4GPtKOfelW7o6Kh0z";
@@ -90,6 +90,11 @@ export const loginHeader = {
 export const registerHeaderData = {
   title: "Customer Portal",
   description: "Sign up to continue to hire",
+};
+
+export const forgetPasswordHeader = {
+  title: "Customer Portal",
+  description: "Enter your email and we'll send you a instructions to reset your password.",
 };
 
 export const dummyStatus = [
