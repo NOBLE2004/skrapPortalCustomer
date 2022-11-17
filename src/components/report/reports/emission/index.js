@@ -56,16 +56,17 @@ const EmissionReport = (props) => {
   const stateSiteBreakDown = useSelector(
     (state) => state?.reportEmissionSiteBreakDown
   );
+  const { sites, startDate, setStartDate, showMore, siteCurrency } = props;
+
   // const stateEmissionVehicle = useSelector(state => state?.reportEmissionVehicle)
   const dispatch = useDispatch();
-  const [chartData, setChartData] = useState(chartOptions);
+  const [chartData, setChartData] = useState(chartOptions(siteCurrency));
   const [isNewYear, setNewYear] = useState(false);
   //dummy states for secend graph date picker
   const [date, setDate] = useState(new Date());
   const handleDate = () => {
     console.log("date");
   };
-  const { sites, startDate, setStartDate, showMore } = props;
   const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
   const [max, setMax] = useState(100);
@@ -92,7 +93,7 @@ const EmissionReport = (props) => {
 
   useEffect(() => {
     getData();
-    dispatch(getReportSiteBreakDownEmissions({ address_id: sites.toString() }));
+    dispatch(getReportSiteBreakDownEmissions({ address_id: sites?.toString() }));
     dispatch(getReportEmissionVehicles());
   }, [sites]);
   const getMonthData = (month, value) => {
@@ -240,7 +241,8 @@ const EmissionReport = (props) => {
                     <span>
                       {state?.data?.year?.length > 0
                         ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
-                        : `0.00`} Kg
+                        : `0.00`}{" "}
+                      Kg
                     </span>
                   </div>
                 </div>
@@ -257,16 +259,16 @@ const EmissionReport = (props) => {
         </CardContent>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-           <h2>Did you know?</h2>
-           <p>
-             By upgrading your <span>8-yard skips</span> to a{" "}
-             <span>12 yard skips</span> you would reduce your site movements by
-             15% which could reduce your carbon emissions
-           </p>
-           <div className="sub-heading">Offset payments</div>
-           <div className="filters">
-             <div className="year">
-               <DatePicker
+            <h2>Did you know?</h2>
+            <p>
+              By upgrading your <span>8-yard skips</span> to a{" "}
+              <span>12 yard skips</span> you would reduce your site movements by
+              15% which could reduce your carbon emissions
+            </p>
+            <div className="sub-heading">Offset payments</div>
+            <div className="filters">
+              <div className="year">
+                <DatePicker
                   startDate={date}
                   setStartDate={setDate}
                   getData={handleDate}
@@ -276,7 +278,20 @@ const EmissionReport = (props) => {
                 Total payment: <span>£0.00</span>
               </div>
             </div>
-            <HighchartsReact highcharts={Highcharts} options={data2} />
+            {state?.isLoading ? (
+              <div className="d-flex justify-center align-center">
+                <FadeLoader
+                  color={"#518ef8"}
+                  loading={state?.isLoading}
+                  width={4}
+                />
+              </div>
+            ) : (
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={data2(siteCurrency)}
+              />
+            )}
             <div
               className="w-100 button-with-icon-bar-chart"
               style={showMore ? { opacity: 0 } : { opacity: 1 }}

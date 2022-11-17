@@ -43,6 +43,7 @@
     "react-gradient-progress": "^1.0.3",
     "react-grid-carousel": "^1.0.1",
     "react-hot-toast": "^2.4.0",
+    "react-phone-input-2": "^2.15.1",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",

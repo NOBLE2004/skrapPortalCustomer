@@ -24,14 +24,14 @@ const SiteMovementsReport = (props) => {
   useEffect(() => {
     async function fetchData() {
       // if (!state?.data) {
-      await dispatch(getSitesMovement({ sites: sites }));
+      await dispatch(getSitesMovement({ sites: [sites] }));
       // }
     }
     fetchData();
   }, [sites]);
 
   useEffect(() => {
-    dispatch(getSiteMovementDetails({ sites: sites }));
+    dispatch(getSiteMovementDetails({ sites: [sites] }));
   }, [sites]);
 
   return (
@@ -47,11 +47,7 @@ const SiteMovementsReport = (props) => {
           )}
           {state?.isLoading || siteDetail?.isLoading ? (
             <div className="d-flex justify-center align-center">
-              <FadeLoader
-                color={"#518ef8"}
-                loading={true}
-                width={4}
-              />
+              <FadeLoader color={"#518ef8"} loading={true} width={4} />
             </div>
           ) : (
             <Grid container className="small-chart-large">
@@ -62,7 +58,7 @@ const SiteMovementsReport = (props) => {
                     options={siteMovementData(
                       state?.data?.result?.data,
                       siteDetail?.data?.result.reduce((accumulator, object) => {
-                        return  accumulator + object.percentage;
+                        return accumulator + object.percentage;
                       }, 0)
                     )}
                   />

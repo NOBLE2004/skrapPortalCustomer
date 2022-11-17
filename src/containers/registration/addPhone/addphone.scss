@@ -26,6 +26,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
     .otp-title {
       font-family: DM Sans;
       font-style: normal;
@@ -48,7 +49,6 @@
         border-bottom-left-radius: 20px;
         border-top-left-radius: 20px;
       }
-      
     }
     .MuiFormControl-root {
       margin: 0px;
@@ -63,12 +63,36 @@
       cursor: pointer;
       padding-bottom: 24px;
     }
-    .search-input{
-      .MuiOutlinedInput-inputAdornedStart{
+    .search-input {
+      width: 100%;
+      .MuiOutlinedInput-inputAdornedStart {
         padding-left: 10px;
       }
-      .MuiInputBase-input{
+      .MuiInputBase-input {
         background-color: transparent;
+      }
+      .root-class {
+        width: 100%;
+        height: 40px;
+        border-radius: 25px;
+        border-color: #36b8fc;
+      }
+      .error-class {
+        width: 100%;
+        height: 40px;
+        border-radius: 25px;
+        border-color: red;
+      }
+      .root-class-drop {
+        border-radius: 25px 0px 0px 25px;
+        border-color: #36b8fc;
+      }
+      .error-class-drop {
+        border-radius: 25px 0px 0px 25px;
+        border-color: red;
+      }
+      .selected-flag {
+        background: none !important;
       }
     }
   }
@@ -80,7 +104,7 @@
       background: #36b8fc;
       width: 400px;
       height: 48px;
-      color: #fff!important;
+      color: #fff !important;
     }
     .Mui-disabled {
       opacity: 0.4 !important;
@@ -98,7 +122,7 @@
       text-transform: initial;
     }
   }
-  .password-title{
+  .password-title {
     font-family: DM Sans;
     font-style: normal;
     font-weight: bold;
@@ -109,51 +133,51 @@
     padding-bottom: 24px;
     padding-top: 15px;
   }
-  .new-notice-alert{
+  .new-notice-alert {
     margin-top: 10px;
   }
 }
-@media (max-width: 768px) and (min-width: 1px){
-  .add-phone-main{
-    .add-phone-section{
+@media (max-width: 768px) and (min-width: 1px) {
+  .add-phone-main {
+    .add-phone-section {
       width: 100%;
-      .search-section{
+      .search-section {
         width: 70%;
-        .MuiFormControl-root{
+        .MuiFormControl-root {
           width: 100%;
-          .MuiInputBase-root{
+          .MuiInputBase-root {
             width: 100%;
           }
         }
-        .search-input{
+        .search-input {
           width: 100%;
-          .MuiFormControl-root{
+          .MuiFormControl-root {
             width: 100%;
-            .MuiInputBase-root{
+            .MuiInputBase-root {
               width: 100%;
             }
           }
         }
       }
     }
-    .addphone-next-btn{
+    .addphone-next-btn {
       width: 70%;
-      .MuiButton-root{
+      .MuiButton-root {
         width: 100%;
       }
     }
   }
 }
-@media (max-width: 425px) and (min-width: 1px){
-  .add-phone-main{
+@media (max-width: 425px) and (min-width: 1px) {
+  .add-phone-main {
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    .add-phone-section{
-      .search-section{
+    .add-phone-section {
+      .search-section {
         width: 90%;
       }
     }
-    .addphone-next-btn{
+    .addphone-next-btn {
       width: 90%;
     }
   }

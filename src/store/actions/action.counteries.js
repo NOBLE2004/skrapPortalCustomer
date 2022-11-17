@@ -6,10 +6,12 @@ export const getAllCounteries = (data) => {
     dispatch(getCounteriesStart());
     DashBoardService.getAllCounteries(data)
       .then((response) => {
-        console.log("reesss", response);
         if (Object.keys(response.data).length !== 0) {
-          const siteBreakdown = response.data;
-          dispatch(getCounteriesSuccess(siteBreakdown));
+          const filter = [];
+          response?.data?.result?.map((single) => {
+            filter.push(single?.iso);
+          });
+          dispatch(getCounteriesSuccess(filter));
         } else {
           dispatch(getCounteriesFailure(response.data.description));
         }

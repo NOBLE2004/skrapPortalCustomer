@@ -30,7 +30,7 @@ export default function AsychronousAddress({
             .then((response) => {
                 if(response.data.code === 0){
                     const addresses = response.data.result.map((data) => {
-                        data.suggestion = `${data.line_1}, ${data.post_town}, ${data.postcode_outward}, ${data.postcode}`;
+                        data.suggestion = `${data.line_1}, ${data.post_town}, ${data.postcode}`;
                         return data;
                     });
                     setRecentAddresses(addresses);

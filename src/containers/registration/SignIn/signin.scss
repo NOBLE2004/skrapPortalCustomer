@@ -54,7 +54,7 @@
     }
     .search-input {
       width: 100%;
-      .MuiOutlinedInput-root{
+      .MuiOutlinedInput-root {
         padding-left: 0px;
       }
       .MuiInputBase-input {
@@ -78,6 +78,33 @@
       .MuiFormControl-root {
         margin: 0px;
         width: 100%;
+      }
+      .root-class {
+        width: 100%;
+        height: 40px;
+        border-radius: 25px;
+        border-color: #36b8fc;
+        margin-bottom: 20px;
+      }
+      .error-class {
+        width: 100%;
+        height: 40px;
+        border-radius: 25px;
+        border-color: red;
+      }
+      .react-tel-input {
+        margin-bottom: 20px;
+      }
+      .root-class-drop {
+        border-radius: 25px 0px 0px 25px;
+        border-color: #36b8fc;
+      }
+      .error-class-drop {
+        border-radius: 25px 0px 0px 25px;
+        border-color: red;
+      }
+      .selected-flag {
+        background: none !important;
       }
     }
     .login-next-btn {
