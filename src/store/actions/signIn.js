@@ -12,6 +12,7 @@ export const userlogin = (data) => {
           localStorage.setItem("isAuthenticated", true);
           localStorage.setItem("token", response.data.result.token);
           localStorage.setItem("user_id", response.data.result.user_id);
+          response.data.result.hide_price=response?.data?.result?.hide_price?response?.data?.result?.hide_price:0
           localStorage.setItem(
             "c_d_storage",
             JSON.stringify(response.data.result)

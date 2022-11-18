@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/lab/Autocomplete";
 import JobService from "../../../services/job.service";
@@ -8,7 +8,7 @@ export default function AsychronousAddress({
   inputClass,
   error,
   address,
-  sites
+  sites,
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
@@ -25,20 +25,25 @@ export default function AsychronousAddress({
         });
     }
   };
-    useEffect(()=>{
-        JobService.getRecentAddresses({user_id: localStorage.getItem("user_id"), limit: 0})
-            .then((response) => {
-                if(response.data.code === 0){
-                    const addresses = response.data.result.map((data) => {
-                        data.suggestion = `${data.line_1}, ${data.post_town}, ${data.postcode}`;
-                        return data;
-                    });
-                    setRecentAddresses(addresses);
-                }
-            }).catch(error => {
-            console.log(error);
-        })
-    }, []);
+  useEffect(() => {
+    JobService.getRecentAddresses({
+      user_id: localStorage.getItem("user_id"),
+      limit: 0,
+    })
+      .then((response) => {
+        if (response.data.code === 0) {
+          let addresses = [];
+          addresses = response.data.result.map((data) => {
+            data.suggestion = `${data.line_1}, ${data.post_town}, ${data.postcode}`;
+            return data;
+          });
+          setRecentAddresses(addresses);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   React.useEffect(() => {
     if (!open) {
       setOptions(recentAddresses);
@@ -57,7 +62,7 @@ export default function AsychronousAddress({
         setOpen(false);
       }}
       disabled={sites}
-      defaultValue={{ suggestion: address ? address : '' }}
+      defaultValue={{ suggestion: address ? address : "" }}
       getOptionLabel={(option) => option.suggestion}
       onChange={(event, value) => handleSelectedPostCode(value && value.udprn)}
       options={options}
