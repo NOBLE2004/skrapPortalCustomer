@@ -73,30 +73,47 @@ const TableContainer = ({ columns, data, name }) => {
   };
   return (
     <div className="table-container-main" ref={inputRef}>
-
       <table {...getTableProps()}>
         <thead>
-        {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-              ))}
+              {headerGroup.headers.map((column) => {
+                if (column?.show === 1) {
+                  return null;
+                } else {
+                  return (
+                    <th {...column.getHeaderProps()}>
+                      {column.render("Header")}
+                    </th>
+                  );
+                }
+              })}
             </tr>
-        ))}
+          ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row)
-          return (
-              <tr {...row.getRowProps()} className={
-                `${name === "tickets" ? "table-body-row1" : "table-body-row"} ${i % 2 === 0 ? 'even' : 'odd'}`
-              } onClick={() => handleRowClick(row.original)}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr
+                {...row.getRowProps()}
+                className={`${
+                  name === "tickets" ? "table-body-row1" : "table-body-row"
+                } ${i % 2 === 0 ? "even" : "odd"}`}
+                onClick={() => handleRowClick(row.original)}
+              >
+                {row.cells.map((cell) => {
+                  if (cell?.column?.show === 1) {
+                    return null;
+                  } else {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  }
                 })}
               </tr>
-          )
-        })}
+            );
+          })}
         </tbody>
       </table>
 

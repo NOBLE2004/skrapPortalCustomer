@@ -5,7 +5,11 @@ import CommonStatus from "../../commonComponent/commonStatus/CommonStatus";
 import { Menu, MenuItem } from "@mui/material";
 import Pagination from "../../reactTable/pagination";
 import "../../reactTable/jobs-react-table.scss";
-import { payment, status } from "../../../services/utils";
+import {
+  getUserDataFromLocalStorage,
+  payment,
+  status,
+} from "../../../services/utils";
 import TrackDriverModal from "../../modals/trackDriver/TrackDriverModal";
 import JobService from "../../../services/job.service";
 import LoadingModal from "../../modals/LoadingModal/LoadingModal";
@@ -25,6 +29,8 @@ const SiteManagerTable = ({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [exchange, setExchange] = useState(false);
   const [collection, setCollection] = useState(false);
+  const [userData, setUserData] = useState({});
+
   const [isLoading, setLoading] = useState(false);
   const [notice, setNotice] = React.useState(null);
   const [isTrackDriver, setTrackDriver] = useState(false);
@@ -38,6 +44,8 @@ const SiteManagerTable = ({
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
     setJobs(managerData?.jobs?.data);
+    const user = getUserDataFromLocalStorage();
+    setUserData(user);
   }, []);
   const { openMenu, mouseX, mouseY, contextRow } = state;
 
@@ -135,8 +143,16 @@ const SiteManagerTable = ({
         Header: "Cost",
         accessor: "transaction_cost",
         disableSortBy: true,
+        show: userData?.hide_price,
         disableFilters: true,
         filter: "equals",
+        Cell: (props) => {
+          return `${
+            userData?.country_currency?.currency_symbol
+              ? userData?.country_currency?.currency_symbol
+              : "£"
+          }${props?.value}`;
+        },
       },
       {
         Header: "Status",
@@ -189,7 +205,7 @@ const SiteManagerTable = ({
         ),
       },
     ],
-    []
+    [userData]
   );
 
   const columns = useMemo(
@@ -243,27 +259,35 @@ const SiteManagerTable = ({
         Header: "Cost",
         accessor: "transaction_cost",
         disableSortBy: true,
+        show: userData?.hide_price,
         disableFilters: true,
         filter: "equals",
+        Cell: (props) => {
+          return `${
+            userData?.country_currency?.currency_symbol
+              ? userData?.country_currency?.currency_symbol
+              : "£"
+          }${props?.value}`;
+        },
       },
       {
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
-          Cell: (cell) => {
-              return (
-                  <CommonStatus
-                      status={status(
-                          cell.row.original.order_job_status === 1 &&
-                          (localStorage.getItem("role_id") == 12 ||
-                              localStorage.getItem("role_id") == 13 ||
-                              localStorage.getItem("role_id") == 4)
-                              ? 14
-                              : cell.value
-                      )}
-                  />
-              );
-          },
+        Cell: (cell) => {
+          return (
+            <CommonStatus
+              status={status(
+                cell.row.original.order_job_status === 1 &&
+                  (localStorage.getItem("role_id") == 12 ||
+                    localStorage.getItem("role_id") == 13 ||
+                    localStorage.getItem("role_id") == 4)
+                  ? 14
+                  : cell.value
+              )}
+            />
+          );
+        },
       },
       {
         Header: "Payment",
@@ -302,7 +326,7 @@ const SiteManagerTable = ({
         ),
       },
     ],
-    []
+    [userData]
   );
   const handleExtend = () => {
     setExtends(true);
