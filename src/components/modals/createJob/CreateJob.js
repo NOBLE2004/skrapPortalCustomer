@@ -1159,22 +1159,26 @@ export default function CreateJob({
               </div>
             )}
             {subServiceSelect.haulage >= 0 ? (
-              <div className="haulage-cost-width">
-                <p>Haulage Cost</p>
-                <TextField
-                  value={haulageCost}
-                  onChange={handleChange}
-                  placeholder={`${currency ? currency : "£"}`}
-                  name="haulageCost"
-                  type="number"
-                  variant="outlined"
-                  margin="dense"
-                  disabled={
-                    (haulageCost !== null) | (haulageCost !== undefined)
-                  }
-                  fullWidth
-                />
-              </div>
+              <>
+                {user?.hide_price === 0 && (
+                  <div className="haulage-cost-width">
+                    <p>Haulage Cost</p>
+                    <TextField
+                      value={haulageCost}
+                      onChange={handleChange}
+                      placeholder={`${currency ? currency : "£"}`}
+                      name="haulageCost"
+                      type="number"
+                      variant="outlined"
+                      margin="dense"
+                      disabled={
+                        (haulageCost !== null) | (haulageCost !== undefined)
+                      }
+                      fullWidth
+                    />
+                  </div>
+                )}
+              </>
             ) : (
               ""
             )}
