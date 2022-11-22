@@ -90,7 +90,8 @@ export default function CreateJob({
   const [roleId, setRoleId] = useState(0);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [addNewCard, setAddNewCard] = useState(false);
-  const user = localStorage.getItem("c_d_storage");
+  const user = JSON.parse(localStorage.getItem("c_d_storage"));
+
   const [errors, setError] = useState({
     customer: "",
     service: "",
@@ -1133,43 +1134,51 @@ export default function CreateJob({
           )}
 
           <div className="serviceCostWp">
-            <div className="service-cost-width">
-              <p>Service Cost</p>
-              <TextField
-                value={`${(
-                  serviceCost /
-                  (vat?.country_currency?.vat
-                    ? vat?.country_currency?.vat
-                    : 1.2)
-                )?.toFixed(2)} + Vat`}
-                onChange={handleChange}
-                placeholder={`${currency ? currency : "£"}`}
-                name="serviceCost"
-                type="text"
-                variant="outlined"
-                disabled={(serviceCost !== null) | (serviceCost !== undefined)}
-                margin="dense"
-                fullwidth
-                // error= {errors['serviceCost'].length > 0 ? true : false}
-              />
-            </div>
-            {subServiceSelect.haulage >= 0 ? (
-              <div className="haulage-cost-width">
-                <p>Haulage Cost</p>
+            {user?.hide_price === 0 && (
+              <div className="service-cost-width">
+                <p>Service Cost</p>
                 <TextField
-                  value={haulageCost}
+                  value={`${(
+                    serviceCost /
+                    (vat?.country_currency?.vat
+                      ? vat?.country_currency?.vat
+                      : 1.2)
+                  )?.toFixed(2)} + Vat`}
                   onChange={handleChange}
                   placeholder={`${currency ? currency : "£"}`}
-                  name="haulageCost"
-                  type="number"
+                  name="serviceCost"
+                  type="text"
                   variant="outlined"
-                  margin="dense"
                   disabled={
-                    (haulageCost !== null) | (haulageCost !== undefined)
+                    (serviceCost !== null) | (serviceCost !== undefined)
                   }
-                  fullWidth
+                  margin="dense"
+                  fullwidth
+                  // error= {errors['serviceCost'].length > 0 ? true : false}
                 />
               </div>
+            )}
+            {subServiceSelect.haulage >= 0 ? (
+              <>
+                {user?.hide_price === 0 && (
+                  <div className="haulage-cost-width">
+                    <p>Haulage Cost</p>
+                    <TextField
+                      value={haulageCost}
+                      onChange={handleChange}
+                      placeholder={`${currency ? currency : "£"}`}
+                      name="haulageCost"
+                      type="number"
+                      variant="outlined"
+                      margin="dense"
+                      disabled={
+                        (haulageCost !== null) | (haulageCost !== undefined)
+                      }
+                      fullWidth
+                    />
+                  </div>
+                )}
+              </>
             ) : (
               ""
             )}
@@ -1248,20 +1257,22 @@ export default function CreateJob({
                   </FormControl>
                 </div>
               )}
-              <div className="discount">
-                <p>Total Cost</p>
-                <TextField
-                  placeholder={`${currency ? currency : "£"}`}
-                  name="totalCost"
-                  value={`${totalCost} Inc vat`}
-                  onChange={handleChange}
-                  type="text"
-                  variant="outlined"
-                  margin="dense"
-                  disabled={(totalCost !== null) | (totalCost !== undefined)}
-                  // error= {errors['totalCost'].length > 0 ? true : false}
-                />
-              </div>
+              {user?.hide_price === 0 && (
+                <div className="discount">
+                  <p>Total Cost</p>
+                  <TextField
+                    placeholder={`${currency ? currency : "£"}`}
+                    name="totalCost"
+                    value={`${totalCost} Inc vat`}
+                    onChange={handleChange}
+                    type="text"
+                    variant="outlined"
+                    margin="dense"
+                    disabled={(totalCost !== null) | (totalCost !== undefined)}
+                    // error= {errors['totalCost'].length > 0 ? true : false}
+                  />
+                </div>
+              )}
             </div>
           )}
 

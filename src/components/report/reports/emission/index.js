@@ -351,14 +351,14 @@ const EmissionReport = (props) => {
                                   className="circle"
                                   style={{
                                     width: `${
-                                      service.Sum_Co2e.toFixed(1) > 100
+                                      service?.Sum_Co2e?.toFixed(1) > 100
                                         ? 100
-                                        : service.Sum_Co2e.toFixed(1)
+                                        : service?.Sum_Co2e?.toFixed(1)
                                     }px`,
                                     height: `${
-                                      service.Sum_Co2e.toFixed(1) > 100
+                                      service?.Sum_Co2e?.toFixed(1) > 100
                                         ? 100
-                                        : service.Sum_Co2e.toFixed(1)
+                                        : service?.Sum_Co2e?.toFixed(1)
                                     }px`,
                                     background:
                                       index % 3 === 0
@@ -373,7 +373,7 @@ const EmissionReport = (props) => {
                               <div className="site-name">
                                 <div className="site">{service.SiteName}</div>
                                 <div className="percentage">
-                                  {service.Sum_Co2e.toFixed(1)} CO2e
+                                  {service?.Sum_Co2e?.toFixed(1)} CO2e
                                 </div>
                               </div>
                             </div>

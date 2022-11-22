@@ -35,6 +35,7 @@ const JobsTable = ({
 
   const [jobIds, setJobIds] = useState([]);
   const [user, setUser] = useState({});
+  const [userData, setUserData] = useState({});
   const [exchange, setExchange] = useState(false);
   const [collection, setCollection] = useState(false);
   const [isJobAccepted, setIsJobAccepted] = useState(false);
@@ -127,6 +128,7 @@ const JobsTable = ({
   useEffect(() => {
     const userdata = getUserDataFromLocalStorage();
     setUser(userdata.personal_detail);
+    setUserData(userdata);
   }, []);
   // const handleInvoice = () => {
   //   if (jobIds.length > 0) {
@@ -236,9 +238,14 @@ const JobsTable = ({
         accessor: "transaction_cost",
         disableSortBy: true,
         disableFilters: true,
+        show: userData?.hide_price,
         filter: "equals",
         Cell: (props) => {
-          return `${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'}${props.value.toFixed(2)}`;
+          return `${
+            userData?.country_currency?.currency_symbol
+              ? userData?.country_currency?.currency_symbol
+              : "£"
+          }${props.value.toFixed(2)}`;
         },
       },
       {
@@ -282,17 +289,22 @@ const JobsTable = ({
         accessor: "job_id",
         id: "invoice",
         Cell: (props) => {
-          return (props.row.original.appointment_status === 4 || props.row.original.appointment_status == 3) ? (<span
+          return props.row.original.appointment_status === 4 ||
+            props.row.original.appointment_status == 3 ? (
+            <span
               className="normal-dsans-10-primary"
               onClick={(e) => downloadInvoice(e, props.value)}
-          >
-            Invoice
-            <img
+            >
+              Invoice
+              <img
                 src={downloadSite}
                 alt="download-icon"
-                style={{marginLeft: "5px"}}
-            />
-          </span>) : ('')
+                style={{ marginLeft: "5px" }}
+              />
+            </span>
+          ) : (
+            ""
+          );
         },
       },
       {
@@ -408,7 +420,7 @@ const JobsTable = ({
       //   ),
       // },
     ],
-    []
+    [userData]
   );
   const handleExtend = () => {
     setExtends(true);
