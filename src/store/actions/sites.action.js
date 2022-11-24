@@ -6,9 +6,14 @@ export const getSites = () => {
   return (dispatch) => {
     dispatch(sitesStart());
     sitesService
-    .getAllSites()
+      .getAllSites()
       .then((res) => {
-        dispatch(sitesSuccess(res.data.data));
+        const unique = [
+          ...new Map(
+            res?.data?.data.map((item) => [item?.job_address, item])
+          ).values(),
+        ];
+        dispatch(sitesSuccess(unique));
       })
       .catch((err) => {
         dispatch(sitesFailure(err.message));
@@ -36,14 +41,15 @@ export const sitesFailure = (error) => {
   };
 };
 
-
-
-// getSiteList 
+// getSiteList
 
 export const getSitesList = (filters) => {
   return (dispatch) => {
     dispatch(sitesListStart());
-    const params = Object.entries(filters).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
+    const params = Object.entries(filters).reduce(
+      (a, [k, v]) => (v ? ((a[k] = v), a) : a),
+      {}
+    );
     sitesService
       .getSitesList(params)
       .then((res) => {
