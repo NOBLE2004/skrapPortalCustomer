@@ -10,7 +10,9 @@ export const getSites = () => {
       .then((res) => {
         const unique = [
           ...new Map(
-            res?.data?.data.map((item) => [item?.job_address, item])
+            [...res?.data?.data]
+              ?.reverse()
+              ?.map((item) => [item?.job_address, item])
           ).values(),
         ];
         dispatch(sitesSuccess(unique));
