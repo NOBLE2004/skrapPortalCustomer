@@ -16,6 +16,7 @@ import "./sites.scss";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
 import CreateSite from "../../components/modals/createSite/CreateSite";
 import SiteFilters from "../../components/filters/SiteFilters";
+import { getUserDataFromLocalStorage } from "../../services/utils";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
@@ -24,6 +25,7 @@ const Sites = (props) => {
   const [isMapView, setIsMapView] = useState(true);
   const [isReload, setIsReload] = useState(false);
   const [isManagerOpen, setIsManagerOpen] = useState(false);
+  const [userData, setUserData] = useState({});
   const currency = localStorage.getItem("currency");
   const { info, loading } = props.dashboard;
   const [filters, setFilters] = useState({
@@ -40,6 +42,7 @@ const Sites = (props) => {
     }
 
     fetchData();
+    setUserData(getUserDataFromLocalStorage());
   }, []);
 
   useEffect(() => {
@@ -95,17 +98,19 @@ const Sites = (props) => {
         isSite={true}
         handleCreateSite={handleCreateSite}
       >
-        <CommonJobStatus
-          jobStatus={{
-            status: "Spend",
-            price: `${currency ? currency : "£"}${
-              info ? parseFloat(info.TotalSpend).toLocaleString() : 0
-            }`,
-            statusName: "primary",
-            width: "184px",
-            height: "84px",
-          }}
-        />
+        {userData?.hide_price === 0 && (
+          <CommonJobStatus
+            jobStatus={{
+              status: "Spend",
+              price: `${currency ? currency : "£"}${
+                info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+              }`,
+              statusName: "primary",
+              width: "184px",
+              height: "84px",
+            }}
+          />
+        )}
         <CommonJobStatus
           jobStatus={{
             status: "Jobs",

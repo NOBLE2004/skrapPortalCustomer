@@ -169,13 +169,12 @@ const MySidebar = (props) => {
               return null;
             }
           }
-    
 
-          // if (userData.user_count <= 0) {
-          //   if (index === 3) {
-          //     return null;
-          //   }
-          // }
+          if (userData?.hide_price === 1) {
+            if (obj?.key === "tickets" || obj?.key==='new-reports') {
+              return null;
+            }
+          }
           let [textClass, iconColor] = ["sidebar-tab-text", "black_icon"];
           if (!obj.sub) {
             [textClass, iconColor] =
