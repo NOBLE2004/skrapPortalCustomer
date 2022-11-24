@@ -12,6 +12,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const [siteData, setSiteData] = useState(null);
   const [userId, setUserId] = useState(null);
   const [addressId, setAddressId] = useState("");
+  const [userData,setUserData]=useState({})
   const [roleId, setRollId] = useState(0);
   const [user, setUser] = useState("");
 
@@ -30,10 +31,12 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
 
   useEffect(() => {
     const data = getUserDataFromLocalStorage();
+    setUserData(data);
     setUser(data.user_count);
     setRollId(data.role_id);
   }, []);
 
+ 
   const columns = useMemo(
     () => [
       {
@@ -83,6 +86,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
       {
         Header: "Spend By Site",
         accessor: "sales_by_site",
+        show: userData?.hide_price,
         disableFilters: true,
         Cell: (props) => {
           return (
@@ -138,7 +142,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         ),
       },
     ],
-    []
+    [userData]
   );
 
   return (
