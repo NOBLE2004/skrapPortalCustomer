@@ -135,6 +135,7 @@ const MainJobs = (props) => {
       longitude: Number(selectedItem?.destination_lng),
     },
   ];
+
   return (
     <div>
       <CommonHeader
@@ -146,17 +147,19 @@ const MainJobs = (props) => {
         downloadCSV={false}
         showButton={true}
       >
-        <CommonJobStatus
-          jobStatus={{
-            status: "Spend",
-            price: `${currency ? currency : "£"}${
-              info ? parseFloat(info.TotalSpend).toLocaleString() : 0
-            }`,
-            statusName: "primary",
-            width: "184px",
-            height: "84px",
-          }}
-        />
+        {userData?.hide_price === 0 && (
+          <CommonJobStatus
+            jobStatus={{
+              status: "Spend",
+              price: `${currency ? currency : "£"}${
+                info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+              }`,
+              statusName: "primary",
+              width: "184px",
+              height: "84px",
+            }}
+          />
+        )}
         <CommonJobStatus
           jobStatus={{
             status: "Jobs",

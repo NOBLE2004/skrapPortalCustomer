@@ -28,6 +28,7 @@ import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
+import { getUserDataFromLocalStorage } from "../../services/utils";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -52,6 +53,7 @@ const DashBoard = (props) => {
   const [latestYear, setLatestYear] = useState(2022);
   const [startDate, setStartDate] = useState();
   const state = useSelector((state) => state?.landfillDiversion);
+  const [userData, setUserData] = useState({});
   const history = useHistory();
   const dispatch = useDispatch();
   const { info, loading } = props.dashboard;
@@ -69,6 +71,7 @@ const DashBoard = (props) => {
       setStartDate(new Date());
       getData();
     }
+    setUserData(getUserDataFromLocalStorage());
   }, []);
 
   useEffect(() => {
@@ -101,13 +104,15 @@ const DashBoard = (props) => {
       ) :*/ info && (
           <>
             <Grid container spacing={3}>
-              <Grid item md={4}>
-                <TotalSpend
-                  totalSpend={
-                    info ? parseFloat(info.TotalSpend).toLocaleString() : ""
-                  }
-                />
-              </Grid>
+              {userData?.hide_price === 0 && (
+                <Grid item md={4}>
+                  <TotalSpend
+                    totalSpend={
+                      info ? parseFloat(info.TotalSpend).toLocaleString() : ""
+                    }
+                  />
+                </Grid>
+              )}
               <Grid item md={8} xs={12}>
                 <div className="job-status-outer">
                   <JobStatus jobStatus={info ? info : ""} />
