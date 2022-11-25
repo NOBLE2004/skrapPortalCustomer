@@ -294,14 +294,14 @@ const SiteManagerTable = ({
         accessor: "payment_type",
         disableFilters: true,
       },
-      {
-        Header: "Booked By",
-        accessor: "booked_by",
-        disableFilters: true,
-        Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
-        },
-      },
+      // {
+      //   Header: "Booked By",
+      //   accessor: "booked_by",
+      //   disableFilters: true,
+      //   Cell: (props) => {
+      //     return <span>{props.value || "n/a"}</span>;
+      //   },
+      // },
       {
         Header: "PO",
         accessor: "purchase_order",
