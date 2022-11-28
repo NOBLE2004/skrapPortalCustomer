@@ -198,7 +198,7 @@ const NewReports = () => {
               />
             </div>
             <div className="report-chart-card-outer">
-              <div className="report-card-title">C02e Breakdown</div>
+              <div className="report-card-title">Waste Breakdown</div>
               <Co2breakdownReport sites={selected} showMore={showMore} />
             </div>
             <div className="report-chart-card-outer">
