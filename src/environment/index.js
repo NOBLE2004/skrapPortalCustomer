@@ -9,9 +9,9 @@ import {
   sitesBlack,
   ticketsBlack,
   tipingBlack,
-  statementBlack
+  statementBlack,
 } from "../assets/images/index";
-//  export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
+// export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
 export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
 export const DOWNLOAD_URL = `https://portal.skrap.app/storage`;
 export const API_URL = `${APP_URL}`;
@@ -94,7 +94,8 @@ export const registerHeaderData = {
 
 export const forgetPasswordHeader = {
   title: "Customer Portal",
-  description: "Enter your email and we'll send you a instructions to reset your password.",
+  description:
+    "Enter your email and we'll send you a instructions to reset your password.",
 };
 
 export const dummyStatus = [

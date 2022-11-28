@@ -291,17 +291,24 @@ const JobsTable = ({
         Cell: (props) => {
           return props.row.original.appointment_status === 4 ||
             props.row.original.appointment_status == 3 ? (
-            <span
-              className="normal-dsans-10-primary"
-              onClick={(e) => downloadInvoice(e, props.value)}
-            >
-              Invoice
-              <img
-                src={downloadSite}
-                alt="download-icon"
-                style={{ marginLeft: "5px" }}
-              />
-            </span>
+            <>
+              {userData?.country_currency?.country_code === "+49" &&
+              props.cell.row.original.appointment_status===3 ? (
+                <span
+                  className="normal-dsans-10-primary"
+                  onClick={(e) => downloadInvoice(e, props.value)}
+                >
+                  Invoice
+                  <img
+                    src={downloadSite}
+                    alt="download-icon"
+                    style={{ marginLeft: "5px" }}
+                  />
+                </span>
+              ) : (
+                ""
+              )}
+            </>
           ) : (
             ""
           );

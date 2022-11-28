@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { OutlinedInput, Select, Switch } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import React, { useEffect, useState } from "react";
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ReportHeader = (props) => {
   const dispatch = useDispatch();
-  const { handleChange, selected, sites, setSiteCurrency } = props;
+  const { handleChange, selected, sites, setSiteCurrency, setSelected } = props;
   const classes = useStyles();
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -61,6 +62,14 @@ const ReportHeader = (props) => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if(props?.allsites?.data){
+    setSelected(props?.allsites?.data?.[0]?.address_id);
+    }
+  }, [props.allsites.data]);
+
+  console.log("selec", selected);
 
   useEffect(() => {
     dispatch(getJobsMeta({ sites: [sites] }));
