@@ -92,9 +92,11 @@ const EmissionReport = (props) => {
   }, [startDate, isNewYear]);
 
   useEffect(() => {
-    getData();
-    dispatch(getReportSiteBreakDownEmissions({ address_id: sites?.toString() }));
-    dispatch(getReportEmissionVehicles());
+    if (sites !== "") {
+      getData();
+      dispatch(getReportSiteBreakDownEmissions({ address_id: sites?.toString() }));
+      dispatch(getReportEmissionVehicles());
+    }
   }, [sites]);
   const getMonthData = (month, value) => {
     switch (month) {

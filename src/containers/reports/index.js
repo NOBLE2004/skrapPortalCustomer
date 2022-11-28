@@ -20,7 +20,7 @@ import { saveAs } from "file-saver";
 const NewReports = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [csvData, setCsvData] = useState([]);
   const [siteCurrency, setSiteCurrency] = useState(null);
@@ -155,15 +155,11 @@ const NewReports = () => {
   }, [state, reports]);
 
   useEffect(() => {
-    dispatch(
-      getLandfillDiversionList(selected?.length !== 0 && { sites: [selected] })
-    );
-    dispatch(
-      getSiteBreakdownlist(selected?.length !== 0 && { sites: [selected] })
-    );
-    dispatch(
-      getSitesMovementList(selected?.length !== 0 && { sites: [selected] })
-    );
+    if (selected !== "") {
+      dispatch(getLandfillDiversionList({ sites: [selected] }));
+      dispatch(getSiteBreakdownlist({ sites: [selected] }));
+      dispatch(getSitesMovementList({ sites: [selected] }));
+    }
   }, [selected]);
 
   return (
