@@ -7,19 +7,25 @@ import FadeLoader from "react-spinners/FadeLoader";
 import { getSiteManager } from "../../store/actions/siteManager.action";
 import CreateManager from "../../components/modals/createManager/CreateManager";
 import "./sitemanager.scss";
+import UpdateManager from "../../components/modals/updateManager";
 
 const SiteManagers = (props) => {
   const [isSiteBooked, setSiteBooked] = useState(false);
+  const [updateManager, setUpdateManager] = useState({
+    show: false,
+    data: "",
+  });
   const { sites } = props.siteManager;
   const handleBookSite = () => {
     setSiteBooked(true);
   };
 
+  const getManagerList = () => {
+    props.getSiteManager();
+  };
+
   useEffect(() => {
-    async function fetchData() {
-      !sites && (await props.getSiteManager());
-    }
-    fetchData();
+    getManagerList();
   }, []);
 
   const handleManagerCreated = useCallback(() => {
@@ -47,7 +53,11 @@ const SiteManagers = (props) => {
         ) : props.siteManager.sites && props.siteManager.sites.length > 0 ? (
           props.siteManager.sites.map((site, index) => (
             <Grid item xm={12} sm={8} md={6} key={index}>
-              <ManagerDetail siteData={site} key={index} />
+              <ManagerDetail
+                siteData={site}
+                key={index}
+                setUpdateManager={setUpdateManager}
+              />
             </Grid>
           ))
         ) : (
@@ -58,6 +68,19 @@ const SiteManagers = (props) => {
         <CreateManager
           handleClose={() => setSiteBooked(!isSiteBooked)}
           updateManager={handleManagerCreated}
+        />
+      )}
+      {updateManager?.show && (
+        <UpdateManager
+          handleClose={() => {
+            setUpdateManager((st) => ({
+              ...st,
+              show: false,
+              data: "",
+            }));
+          }}
+          updateManager={updateManager}
+          getManagerList={getManagerList}
         />
       )}
       <Grid container spacing={5}>

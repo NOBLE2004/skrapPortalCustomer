@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 import "./managerdetail.scss";
 
 const ManagerDetail = (props) => {
-  const { title, siteData } = props;
+  const { title, siteData, setUpdateManager } = props;
   const history = useHistory();
   const { address_data, mobile_number, site_assigned, email, user_id, name } =
     siteData;
@@ -19,6 +19,11 @@ const ManagerDetail = (props) => {
   };
   const handleEdit = (e) => {
     e.stopPropagation();
+    setUpdateManager((st) => ({
+      ...st,
+      show: true,
+      data: siteData,
+    }));
   };
 
   return (
@@ -32,12 +37,12 @@ const ManagerDetail = (props) => {
           <Grid item md={4} className="profile-info">
             <img src={personImage} alt="person-img" />
             <div className="p-title">Action</div>
-            {/* <div className="profile-action">
+            <div className="profile-action">
               <img src={editIcon} alt="person-img" onClick={handleEdit} />
               <div className="edit-title" onClick={handleEdit}>
                 Edit
               </div>
-            </div> */}
+            </div>
             <div className="profile-action">
               <img src={showIcon} alt="person-img" />
               <div className="edit-title">View Jobs</div>
