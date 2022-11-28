@@ -10,7 +10,7 @@ const ManagerDetail = (props) => {
   const { address_data, mobile_number, site_assigned, email, user_id, name } =
     siteData;
   const handleManagerDetail = (id, data) => {
-    history.push("site-managers/" + id);
+    history.push("/site-managers/" + id);
   };
 
   const handleViewJob = (e) => {
@@ -32,17 +32,15 @@ const ManagerDetail = (props) => {
           <Grid item md={4} className="profile-info">
             <img src={personImage} alt="person-img" />
             <div className="p-title">Action</div>
-            <div className="profile-action">
+            {/* <div className="profile-action">
               <img src={editIcon} alt="person-img" onClick={handleEdit} />
               <div className="edit-title" onClick={handleEdit}>
                 Edit
               </div>
-            </div>
+            </div> */}
             <div className="profile-action">
-              <img src={showIcon} alt="person-img" onClick={handleViewJob} />
-              <div className="edit-title" onClick={handleViewJob}>
-                View Jobs
-              </div>
+              <img src={showIcon} alt="person-img" />
+              <div className="edit-title">View Jobs</div>
             </div>
           </Grid>
           <Grid item md={8} className="personal-info">
