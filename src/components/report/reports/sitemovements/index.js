@@ -23,15 +23,17 @@ const SiteMovementsReport = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     async function fetchData() {
-      // if (!state?.data) {
-      await dispatch(getSitesMovement({ sites: [sites] }));
-      // }
+      if (sites !== "") {
+        await dispatch(getSitesMovement({ sites: [sites] }));
+      }
     }
     fetchData();
   }, [sites]);
 
   useEffect(() => {
-    dispatch(getSiteMovementDetails({ sites: [sites] }));
+    if (sites !== "") {
+      dispatch(getSiteMovementDetails({ sites: [sites] }));
+    }
   }, [sites]);
 
   return (
