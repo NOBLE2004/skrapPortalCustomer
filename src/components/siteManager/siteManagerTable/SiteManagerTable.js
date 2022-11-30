@@ -158,7 +158,13 @@ const SiteManagerTable = ({
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
-        Cell: (props) => <CommonStatus status={status(props.value)} />,
+          Cell: (cell) => {
+              return (
+                  <CommonStatus
+                      status={status(cell.value)}
+                  />
+              );
+          },
       },
       {
         Header: "Ewc Code",
@@ -274,20 +280,13 @@ const SiteManagerTable = ({
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
-        Cell: (cell) => {
-          return (
-            <CommonStatus
-              status={status(
-                cell.row.original.order_job_status === 1 &&
-                  (localStorage.getItem("role_id") == 12 ||
-                    localStorage.getItem("role_id") == 13 ||
-                    localStorage.getItem("role_id") == 4)
-                  ? 14
-                  : cell.value
-              )}
-            />
-          );
-        },
+          Cell: (cell) => {
+              return (
+                  <CommonStatus
+                      status={cell.value}
+                  />
+              );
+          },
       },
       {
         Header: "Payment",
@@ -310,6 +309,14 @@ const SiteManagerTable = ({
           return <span>{props.value || "n/a"}</span>;
         },
       },
+        {
+            Header: "Utilisation rating",
+            disableFilters: true,
+            show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
+            Cell: (props) => {
+                return <span>8/10</span>;
+            },
+        },
       {
         Header: "",
         id: "id-edit",

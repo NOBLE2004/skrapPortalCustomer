@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Grid, Card, CardContent } from "@mui/material";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
 import { useHistory } from "react-router";
 import "./managerdetail.scss";
+import {getUserDataFromLocalStorage} from "../../../services/utils";
 
 const ManagerDetail = (props) => {
   const { title, siteData, setUpdateManager } = props;
   const history = useHistory();
+  const [userData, setUserData] = useState({});
   const { address_data, mobile_number, site_assigned, email, user_id, name } =
     siteData;
   const handleManagerDetail = (id, data) => {
@@ -25,6 +27,11 @@ const ManagerDetail = (props) => {
       data: siteData,
     }));
   };
+
+  useEffect(()=>{
+    const user = getUserDataFromLocalStorage();
+    setUserData(user);
+  }, [])
 
   return (
     <Card
@@ -47,6 +54,11 @@ const ManagerDetail = (props) => {
               <img src={showIcon} alt="person-img" />
               <div className="edit-title">View Jobs</div>
             </div>
+            {userData?.country_currency?.country_code === "+49" &&
+                <div className="profile-action">
+                  <div className="edit-title">Utilisation rating 8/10</div>
+                </div>
+            }
           </Grid>
           <Grid item md={8} className="personal-info">
             <div className="info">

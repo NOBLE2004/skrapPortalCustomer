@@ -1205,7 +1205,7 @@ export default function CreateJob({
                           <MenuItem value="">
                             <em>None</em>
                           </MenuItem>
-                          <MenuItem value="10">MarketPay</MenuItem>
+                          <MenuItem value="10">Kriya</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
@@ -1227,7 +1227,7 @@ export default function CreateJob({
                             <em>None</em>
                           </MenuItem>
                           {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
-                          <MenuItem value="10">MarketPay</MenuItem>
+                          <MenuItem value="10">Kriya</MenuItem>
                           <MenuItem value="0">Stripe</MenuItem>
                         </Select>
                       </FormControl>
