@@ -108,7 +108,7 @@ const Co2breakdownReport = (props) => {
                     percentage={
                       recycledData?.data?.result?.land_fill
                         ? recycledData?.data?.result?.land_fill
-                        : 0
+                        : 100
                     }
                     primaryColor={["#50D226", "#50D226"]}
                   />
