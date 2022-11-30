@@ -44,6 +44,7 @@ export const jobFailure = (error) => {
 export const getJobList = (data, filters) => {
     return (dispatch) => {
         dispatch(jobListStart());
+        data.all = true;
         const params = Object.entries(filters).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
         JobService
             .list(data, params)

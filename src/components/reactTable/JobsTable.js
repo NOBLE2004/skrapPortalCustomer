@@ -226,6 +226,12 @@ const JobsTable = ({
         Header: "Service",
         accessor: "service_name",
         disableFilters: true,
+        // Cell: (cell) => {
+        //   return <span>
+        //     {cell.value} <br />
+        //     {cell.row.original.exchanged_by && `Exchange by (${cell.row.original.exchanged_by})` }
+        //   </span>
+        // }
       },
       {
         Header: "Address",
@@ -255,16 +261,16 @@ const JobsTable = ({
         disableFilters: true,
         Cell: (cell) => {
           return (
-            <CommonStatus
-              status={status(
-                cell.row.original.order_job_status === 1 &&
-                  (localStorage.getItem("role_id") == 12 ||
-                    localStorage.getItem("role_id") == 13 ||
-                    localStorage.getItem("role_id") == 4)
-                  ? 14
-                  : cell.value
-              )}
-            />
+              <CommonStatus
+                status={status(
+                  cell.row.original.order_job_status === 1 &&
+                    (localStorage.getItem("role_id") == 12 ||
+                      localStorage.getItem("role_id") == 13 ||
+                      localStorage.getItem("role_id") == 4)
+                    ? 14
+                    : cell.value
+                )}
+              />
           );
         },
       },
