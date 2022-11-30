@@ -7,7 +7,7 @@ const PoDetail = ({ managerData, isManager }) => {
   const { purchase_orders, data } = managerData;
   return (
     <div>
-      <Card className="new-manager-detail-main">
+        {data ? (<Card className="new-manager-detail-main">
         <CardContent>
           <div className="title">Purchase Order Details</div>
           {isManager ? (
@@ -22,7 +22,7 @@ const PoDetail = ({ managerData, isManager }) => {
             "Purchase Order not found!"
           )}
         </CardContent>
-      </Card>
+      </Card>) : ''}
     </div>
   );
 };

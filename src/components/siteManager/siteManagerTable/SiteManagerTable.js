@@ -314,7 +314,7 @@ const SiteManagerTable = ({
             disableFilters: true,
             show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
             Cell: (props) => {
-                return <span>8/10</span>;
+                return <span>{props.row.original.appointment_status == 'Completed' ? '8/10' : '--'}</span>;
             },
         },
       {
