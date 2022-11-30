@@ -196,7 +196,7 @@ export const data2 = (siteCurrency) => ({
         null,
         null,
         null,
-        50,
+        null,
         null,
         null,
         null,
