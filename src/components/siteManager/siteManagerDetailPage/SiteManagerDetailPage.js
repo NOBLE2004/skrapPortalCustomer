@@ -105,9 +105,9 @@ const SiteManagerDetailPage = (props) => {
                 setReload={() => setReload(!reload)}
               />
             </Grid>
-            <Grid className="po-detail-page">
+            { managerData && <Grid className="po-detail-page">
               <PoDetail managerData={managerData} isManager={true} />
-            </Grid>
+            </Grid>}
             <Grid item md={12} className="site-manager-filter">
               <div className="jobs-search-header">
                 <CommonSearch
