@@ -152,9 +152,6 @@ const Co2breakdownReport = (props) => {
                       <h1>
                         {"Repurpose"}
                       </h1>
-                      <p>
-                        {0}{" "}
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -205,9 +202,6 @@ const Co2breakdownReport = (props) => {
                       <h1>
                         {"Landfill"}
                       </h1>
-                      <p>
-                        {0}{" "}
-                      </p>
                     </div>
                   </div>
                 </div>
