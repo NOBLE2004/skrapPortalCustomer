@@ -98,33 +98,33 @@ const Co2breakdownReport = (props) => {
               <div className="salesWp-sub" style={{ alignItems: "flex-start" }}>
                 <div className="guage-with-text">
                   <CircleProgress
-                    width={100}
-                    strokeWidth={10}
-                    fontFamily={"DM Sans"}
-                    fontSize={"14px"}
-                    fontColor={"#0F285"}
-                    fontWeight={700}
-                    secondaryColor={"#F7F7F7"}
-                    percentage={
-                      recycledData?.data?.result?.land_fill
-                        ? recycledData?.data?.result?.land_fill
-                        : 100
-                    }
-                    primaryColor={["#50D226", "#50D226"]}
+                      width={100}
+                      strokeWidth={10}
+                      fontFamily={"DM Sans"}
+                      fontSize={"14px"}
+                      fontColor={"#0F285"}
+                      fontWeight={700}
+                      secondaryColor={"#F7F7F7"}
+                      percentage={
+                        recycledData?.data?.result?.land_fill
+                            ? recycledData?.data?.result?.land_fill
+                            : 100
+                      }
+                      primaryColor={["#50D226", "#50D226"]}
                   />
                   <div className="text">
                     <h1>
                       {recycledData?.data?.result?.title
-                        ? recycledData?.data?.result?.title
-                        : "Recycled"}
+                          ? recycledData?.data?.result?.title
+                          : "Recycled"}
                     </h1>
                     <p>
                       {recycledData?.data?.result?.emco2
-                        ? recycledData?.data?.result?.emco2
-                        : 0}{" "}
+                          ? recycledData?.data?.result?.emco2
+                          : 0}{" "}
                       {recycledData?.data?.result?.emco2_title
-                        ? recycledData?.data?.result?.emco2_title
-                        : "tonns CO2"}
+                          ? recycledData?.data?.result?.emco2_title
+                          : "tonns CO2"}
                     </p>
                     {/*<label>Equivalent to 200 trees</label>*/}
                     {/*<p>*/}
@@ -135,6 +135,27 @@ const Co2breakdownReport = (props) => {
                     {/*      ? recycledData?.data?.result?.saved_title*/}
                     {/*      : "Saved to landfill"}*/}
                     {/*</p>*/}
+                  </div>
+                  <div className="guage-with-text">
+                    <CircleProgress
+                        width={100}
+                        strokeWidth={10}
+                        fontFamily={"DM Sans"}
+                        fontSize={"14px"}
+                        fontColor={"#0F285"}
+                        fontWeight={700}
+                        secondaryColor={"#F7F7F7"}
+                        percentage={0}
+                        primaryColor={["#50D226", "#50D226"]}
+                    />
+                    <div className="text">
+                      <h1>
+                        {"Repurpose"}
+                      </h1>
+                      <p>
+                        {0}{" "}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="guage-with-text">
@@ -167,6 +188,27 @@ const Co2breakdownReport = (props) => {
                     {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
                     {/*  smartphone charges*/}
                     {/*</label>*/}
+                  </div>
+                  <div className="guage-with-text">
+                    <CircleProgress
+                        width={100}
+                        strokeWidth={10}
+                        fontFamily={"DM Sans"}
+                        fontSize={"14px"}
+                        fontColor={"#0F285"}
+                        fontWeight={700}
+                        secondaryColor={"#F7F7F7"}
+                        percentage={0}
+                        primaryColor={["#50D226", "#50D226"]}
+                    />
+                    <div className="text">
+                      <h1>
+                        {"Landfill"}
+                      </h1>
+                      <p>
+                        {0}{" "}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
