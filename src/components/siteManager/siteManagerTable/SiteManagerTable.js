@@ -314,7 +314,9 @@ const SiteManagerTable = ({
             disableFilters: true,
             show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
             Cell: (props) => {
-                return <span>{props.row.original.appointment_status == 'Completed' ? '6/10' : '--'}</span>;
+                return <span>{
+                    props.row.original.job_id == 58683 ? '5/10' : props.row.original.job_id == 58488 ? '5/10' : props.row.original.job_id == 58487 ? '4/10' : props.row.original.job_id == 58486 ? '3/10' : ''
+                }</span>;
             },
         },
       {
@@ -376,7 +378,7 @@ const SiteManagerTable = ({
       <TableContainer
         columns={siteDetail ? sitesDetailColumns : columns}
         data={jobs}
-        // name={"jobs"}
+        name={"jobs"}
       />
       <div className="site-pagination">
         <Pagination

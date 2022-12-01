@@ -73,7 +73,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
                       <div className="info">
                           <div className="designation">Utilisation rating</div>
                           <div className="personal-title">
-                              6/10
+                              4/10
                           </div>
                       </div>
                   }

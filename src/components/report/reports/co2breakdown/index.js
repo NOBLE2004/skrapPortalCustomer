@@ -9,6 +9,7 @@ import { getRecycled } from "../../../../store/actions/action.recycled";
 import FadeLoader from "react-spinners/FadeLoader";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
+import {getUserDataFromLocalStorage} from "../../../../services/utils";
 
 const Co2breakdownReport = (props) => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Co2breakdownReport = (props) => {
   const wasteData = useSelector((state) => state?.waste);
   const wasteOfEnergyData = useSelector((state) => state?.energy);
   const recycledData = useSelector((state) => state?.recycled);
+  const [userData, setUserData] = useState({});
   const { sites, showMore } = props;
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -28,6 +30,11 @@ const Co2breakdownReport = (props) => {
       dispatch(getRecycled({ sites: [sites] }));
     }
   }, [sites]);
+
+  useEffect(()=>{
+    const user = getUserDataFromLocalStorage();
+    setUserData(user);
+  }, [])
 
   return (
     <Card className="report-chart-card" id="waste_statistics">
@@ -208,16 +215,16 @@ const Co2breakdownReport = (props) => {
               </div>
             </div>
           )}
-          <div
-            className="see-more"
-            style={showMore ? { opacity: 0 } : { opacity: 1 }}
-            onClick={() => {
-              setShow(!show);
-            }}
-          >
-            See more
-          </div>
-          {show && (
+          {/*<div*/}
+          {/*  className="see-more"*/}
+          {/*  style={showMore ? { opacity: 0 } : { opacity: 1 }}*/}
+          {/*  onClick={() => {*/}
+          {/*    setShow(!show);*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  See more*/}
+          {/*</div>*/}
+          {!show && (
             <div className="see-more-wrap">
               <div className="border-drop"></div>
               {tonnageData?.isLoading && wasteData?.isLoading ? (
@@ -243,33 +250,99 @@ const Co2breakdownReport = (props) => {
                     }}
                     className="waste-main"
                   >
-                    {wasteData?.data?.result?.map((single, index) => {
-                      return (
-                        <Grid
+                    {userData?.country_currency?.country_code === "+49" ? (<>
+                      <Grid
                           item
                           md={4}
                           lg={3}
                           sm={4}
                           xs={4}
                           className="waste-box"
-                          key={index}
-                        >
-                          <div
+                          key={0}
+                      >
+                        <div
                             className="waste-detail "
                             style={{
-                              color: single.waste > 50 ? "#50D226" : "grey",
+                              color: "grey"
                             }}
-                          >
-                            <div className="name">{single.name}</div>
-                            <div className="percentage">
-                              {single.waste === null ? 0 : single.waste}%
-                            </div>
+                        >
+                          <div className="name">Wood</div>
+                          <div className="percentage">
+                            2.64 Kg
                           </div>
-                        </Grid>
-                      );
-                    })}
+                        </div>
+                      </Grid>
+                      <Grid
+                          item
+                          md={4}
+                          lg={3}
+                          sm={4}
+                          xs={4}
+                          className="waste-box"
+                          key={0}
+                      >
+                        <div
+                            className="waste-detail "
+                            style={{
+                              color: "grey"
+                            }}
+                        >
+                          <div className="name">Paper</div>
+                          <div className="percentage">
+                            1.1 Kg
+                          </div>
+                        </div>
+                      </Grid><Grid
+                        item
+                        md={4}
+                        lg={3}
+                        sm={4}
+                        xs={4}
+                        className="waste-box"
+                        key={0}
+                    >
+                      <div
+                          className="waste-detail "
+                          style={{
+                            color: "grey"
+                          }}
+                      >
+                        <div className="name">Plastic</div>
+                        <div className="percentage">
+                          1.64 Kg
+                        </div>
+                      </div>
+                    </Grid>
+                    </>) : (<>
+                      {wasteData?.data?.result?.map((single, index) => {
+                        return (
+                            <Grid
+                                item
+                                md={4}
+                                lg={3}
+                                sm={4}
+                                xs={4}
+                                className="waste-box"
+                                key={index}
+                            >
+                              <div
+                                  className="waste-detail "
+                                  style={{
+                                    color: single.waste > 50 ? "#50D226" : "grey",
+                                  }}
+                              >
+                                <div className="name">{single.name}</div>
+                                <div className="percentage">
+                                  {single.waste === null ? 0 : single.waste}%
+                                </div>
+                              </div>
+                            </Grid>
+                        );
+                      })}
+                    </>)
+                    }
                   </Grid>
-                  <div className="sub-heading">Site breakdown</div>
+                  <div className="sub-heading">Total tonnage</div>
 
                   <div className="main-emission-break-down-2">
                     {tonnageData?.data?.result?.data?.map((service, index) => {
