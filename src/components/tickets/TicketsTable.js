@@ -118,6 +118,24 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
                         className="normal-dsans-10-primary1-disable"
                       >
                         Delivery Ticket
+                          <span
+                              style={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                              }}
+                              className="normal-dsans-10-primary1"
+                          >
+                      <img
+                          src={downloadSite}
+                          alt="download-icon"
+                          style={{
+                              marginLeft: "5px",
+                              filter:
+                                  "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
+                          }}
+                      />
+                          </span>
                       </span>
                     )}
                     {props.value.findIndex((x) => x.ticket_type == "wtn") ==
@@ -131,26 +149,26 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
                         className="normal-dsans-10-primary1-disable"
                       >
                         WTN
+                          <span
+                              style={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                              }}
+                              className="normal-dsans-10-primary1"
+                          >
+                      <img
+                          src={downloadSite}
+                          alt="download-icon"
+                          style={{
+                              marginLeft: "5px",
+                              filter:
+                                  "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
+                          }}
+                      />
+                          </span>
                       </span>
                     )}
-                    <span
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                      className="normal-dsans-10-primary1"
-                    >
-                      <img
-                        src={downloadSite}
-                        alt="download-icon"
-                        style={{
-                          marginLeft: "5px",
-                          filter:
-                            "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
-                        }}
-                      />
-                    </span>
                   </>
                 </div>
               ) : (
