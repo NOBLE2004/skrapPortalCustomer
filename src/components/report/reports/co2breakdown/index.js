@@ -268,7 +268,7 @@ const Co2breakdownReport = (props) => {
                         >
                           <div className="name">Wood</div>
                           <div className="percentage">
-                            2.64 Kg
+                            4.28 Kg
                           </div>
                         </div>
                       </Grid>
@@ -309,7 +309,7 @@ const Co2breakdownReport = (props) => {
                       >
                         <div className="name">Plastic</div>
                         <div className="percentage">
-                          1.64 Kg
+                          0 Kg
                         </div>
                       </div>
                     </Grid>
