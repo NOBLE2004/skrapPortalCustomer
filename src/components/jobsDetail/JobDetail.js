@@ -88,7 +88,7 @@ const JobDetail = ({ job }) => {
         </div>
         {userData?.country_currency?.country_code === "+49" && <div className="info">
           <div className="designation">CO2 kg</div>
-          <div className="personal-title">{ job?.job_id == '58683' ? '16.897' : job?.job_id == '58486' ? '12.254' : job?.job_id == '58487' ? '13.113' : job?.job_id == '58488' ? '15.176' : '2.797'}</div>
+          <div className="personal-title">{ job?.job_id == '58683' ? '16.897' : job?.job_id == '58486' ? '12.254' : job?.job_id == '58487' ? '13.113' : job?.job_id == '58488' ? '15.176' : '---'}</div>
         </div>}
       </div>
     </Card>

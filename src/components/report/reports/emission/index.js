@@ -414,9 +414,9 @@ const EmissionReport = (props) => {
                   {/*    </div>*/}
                   {/*  </div>*/}
                   {/*</div>*/}
-                  <Grid container marginTop={5}>
-                    <BorderLinearProgress2 value={60} variant="determinate" />
-                  </Grid>
+                  {/*<Grid container marginTop={5}>*/}
+                  {/*  <BorderLinearProgress2 value={60} variant="determinate" />*/}
+                  {/*</Grid>*/}
                   {/*<Grid container justifyContent="space-between">*/}
                   {/*  {state?.data?.year?.map((value, index) => (*/}
                   {/*    <div className="sub-heading progress-label" key={index}>*/}
