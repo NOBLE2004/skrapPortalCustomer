@@ -325,7 +325,7 @@ const JobsTable = ({
         disableFilters: true,
         show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
-          return <>{props.row.original?.job_id == '58683' ? '16.897' : props.row.original?.job_id == '58486' ? '12.254' : props.row.original?.job_id == '58487' ? '13.113' : props.row.original?.job_id == '58488' ? '15.176' : '2.797'} kg</>;
+          return <>{props.row.original?.job_id == '58683' ? '16.897' : props.row.original?.job_id == '58486' ? '12.254' : props.row.original?.job_id == '58487' ? '13.113' : props.row.original?.job_id == '58488' ? '15.176' : '2.797'}kg</>;
         },
       },
       {
