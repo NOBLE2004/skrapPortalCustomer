@@ -295,6 +295,7 @@ const JobsTable = ({
         Header: "Payment",
         accessor: "payment_type",
         disableFilters: true,
+        show: userData?.country_currency?.country_code == "+49"? 1 : 0,
         Cell: (props) => {
           return payment(props.value);
         },
@@ -303,12 +304,40 @@ const JobsTable = ({
         Header: "PO",
         accessor: "purchase_order",
         disableFilters: true,
+        show: userData?.country_currency?.country_code == "+49"? 1 : 0,
         Cell: (props) => {
           return props.value == null ? "---" : props.value;
         },
       },
       {
-        Header: "",
+        Header: "Utilisation",
+        disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
+        Cell: (props) => {
+          return <span>{
+            props.row.original.job_id == 58683 ? '54%' : props.row.original.job_id == 58488 ? '48%' : props.row.original.job_id == 58487 ? '40%' : props.row.original.job_id == 58486 ? '37%' : ''
+          }</span>;
+        },
+      },
+      {
+        Header: "CO2",
+        accessor: "order_job_status",
+        disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
+        Cell: (props) => {
+          return <>{props.row.original?.job_id == '58683' ? '16.897' : props.row.original?.job_id == '58486' ? '12.254' : props.row.original?.job_id == '58487' ? '13.113' : props.row.original?.job_id == '58488' ? '15.176' : '2.797'} kg</>;
+        },
+      },
+      {
+        Header: "Weight",
+        disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
+        Cell: (props) => {
+          return <>{props.row.original?.job_id == '58683' ? '1.64 T' : props.row.original?.job_id == '58486' ? '1.1 T' : props.row.original?.job_id == '58487' ? '1.2 T' : props.row.original?.job_id == '58488' ? '1.44 T' : ''}</>;
+        },
+      },
+      {
+        Header: "Image",
         accessor: "job_images_count",
         disableFilters: true,
         Cell: (props) => {
@@ -316,7 +345,7 @@ const JobsTable = ({
         },
       },
       {
-        Header: "",
+        Header: "Invoice",
         accessor: "job_id",
         id: "invoice",
         Cell: (props) => {
@@ -346,7 +375,7 @@ const JobsTable = ({
         },
       },
       {
-        Header: "",
+        Header: "Ticket",
         accessor: "waste_transfer_document",
         id: "ticket",
         Cell: (props) => (

@@ -40,7 +40,7 @@ const MainJobs = (props) => {
   const [isJobCreated, setIsJobCreated] = useState(false);
   const currency = localStorage.getItem("currency");
 
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(15);
   const { info, loading } = props.dashboard;
   const history = useHistory();
   const { jobData, isLoading, error } = props.jobs;
