@@ -284,7 +284,7 @@ const JobsTable = ({
                             localStorage.getItem("role_id") == 13 ||
                             localStorage.getItem("role_id") == 4)
                             ? 14
-                            : cell.value == 8
+                            : cell.value
                     )}
                 />}
               </>
