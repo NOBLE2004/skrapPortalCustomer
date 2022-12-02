@@ -417,20 +417,20 @@ const EmissionReport = (props) => {
                   <Grid container marginTop={5}>
                     <BorderLinearProgress2 value={60} variant="determinate" />
                   </Grid>
-                  <Grid container justifyContent="space-between">
-                    {state?.data?.year?.map((value, index) => (
-                      <div className="sub-heading progress-label" key={index}>
-                        <p className="text left">
-                          Tank-to-well <br />
-                          <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>
-                        </p>
-                        <p className="text right">
-                          Well-to-tank <br />
-                          <span> {value?.WTTCo2e.toFixed(2)} Co2e</span>
-                        </p>
-                      </div>
-                    ))}
-                  </Grid>
+                  {/*<Grid container justifyContent="space-between">*/}
+                  {/*  {state?.data?.year?.map((value, index) => (*/}
+                  {/*    <div className="sub-heading progress-label" key={index}>*/}
+                  {/*      <p className="text left">*/}
+                  {/*        Tank-to-well <br />*/}
+                  {/*        <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>*/}
+                  {/*      </p>*/}
+                  {/*      <p className="text right">*/}
+                  {/*        Well-to-tank <br />*/}
+                  {/*        <span> {value?.WTTCo2e.toFixed(2)} Co2e</span>*/}
+                  {/*      </p>*/}
+                  {/*    </div>*/}
+                  {/*  ))}*/}
+                  {/*</Grid>*/}
                 </div>
               </div>
             )}

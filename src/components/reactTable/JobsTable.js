@@ -378,31 +378,50 @@ const JobsTable = ({
         Header: "Ticket",
         accessor: "waste_transfer_document",
         id: "ticket",
-        Cell: (props) => (
-          <>
-            {props.value !== "" ? (
-              <span
-                className="normal-dsans-10-primary"
-                onClick={(e) => handleShowReport(e, props.value)}
-              >
+        Cell: (props) => {
+          return (<>
+            {userData?.country_currency?.country_code === "+49" ?
+                <>
+                  <>{(props.row.original?.job_id == '58683' || props.row.original?.job_id == '58486' || props.row.original?.job_id == '58487' || props.row.original?.job_id == '58488') && <span
+                      className="normal-dsans-10-primary"
+                      onClick={(e) => handleShowReport(e, props.value)}
+                  >
                 Ticket
                 <img
-                  src={downloadSite}
-                  alt="download-icon"
-                  style={{ marginLeft: "5px" }}
+                    src={downloadSite}
+                    alt="download-icon"
+                    style={{marginLeft: "5px"}}
+                />
+              </span>
+            }</>
+
+                </>
+                :
+            <>
+            {props.value !== "" ? (
+                <span
+                    className="normal-dsans-10-primary"
+                    onClick={(e) => handleShowReport(e, props.value)}
+                >
+                Ticket
+                <img
+                    src={downloadSite}
+                    alt="download-icon"
+                    style={{marginLeft: "5px"}}
                 />
               </span>
             ) : (
-              <span
-                className="normal-dsans-10-primary"
-                style={{ color: "lightgrey" }}
-                onClick={(e) => e.stopPropagation()}
-              >
+                <span
+                    className="normal-dsans-10-primary"
+                    style={{color: "lightgrey"}}
+                    onClick={(e) => e.stopPropagation()}
+                >
                 Ticket
               </span>
             )}
-          </>
-        ),
+          </>}
+          </>)
+        },
       },
       {
         Header: "",
