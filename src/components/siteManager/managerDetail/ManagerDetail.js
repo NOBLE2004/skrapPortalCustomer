@@ -56,7 +56,7 @@ const ManagerDetail = (props) => {
             </div>
             {userData?.country_currency?.country_code === "+49" &&
                 <div className="profile-action">
-                  <div className="edit-title">Utilisation rating 4/10</div>
+                  <div className="edit-title">Utilisation 45%</div>
                 </div>
             }
           </Grid>

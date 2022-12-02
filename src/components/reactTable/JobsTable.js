@@ -19,6 +19,7 @@ import JobReorderModal from "../modals/reorderModal/JobReorderModal";
 import ExtendModal from "../modals/extendModal/ExtendModal";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import ViewJobDocumentsModal from "../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
+import ImageIcon from '@mui/icons-material/Image';
 
 const JobsTable = ({
   data,
@@ -65,6 +66,11 @@ const JobsTable = ({
     // }
     setRowDate(props);
     setRow(props);
+  };
+  const handleIconClick = (e, props) => {
+    e.stopPropagation();
+    setJobId(props.job_id)
+    setViewDocument(true);
   };
   const handleClose = () => {
     setState({
@@ -261,16 +267,27 @@ const JobsTable = ({
         disableFilters: true,
         Cell: (cell) => {
           return (
-              <CommonStatus
-                status={status(
-                  cell.row.original.order_job_status === 1 &&
-                    (localStorage.getItem("role_id") == 12 ||
-                      localStorage.getItem("role_id") == 13 ||
-                      localStorage.getItem("role_id") == 4)
-                    ? 14
-                    : cell.value
-                )}
-              />
+              <>
+                {userData?.country_currency?.country_code === "+49" ? <CommonStatus
+                    status={status(
+                        cell.row.original.order_job_status === 1 &&
+                        (localStorage.getItem("role_id") == 12 ||
+                            localStorage.getItem("role_id") == 13 ||
+                            localStorage.getItem("role_id") == 4)
+                            ? 14
+                            : cell.value == 8 ? 15 : cell.value
+                    )}
+                /> : <CommonStatus
+                    status={status(
+                        cell.row.original.order_job_status === 1 &&
+                        (localStorage.getItem("role_id") == 12 ||
+                            localStorage.getItem("role_id") == 13 ||
+                            localStorage.getItem("role_id") == 4)
+                            ? 14
+                            : cell.value == 8
+                    )}
+                />}
+              </>
           );
         },
       },
@@ -288,6 +305,14 @@ const JobsTable = ({
         disableFilters: true,
         Cell: (props) => {
           return props.value == null ? "---" : props.value;
+        },
+      },
+      {
+        Header: "",
+        accessor: "job_images_count",
+        disableFilters: true,
+        Cell: (props) => {
+          return props.value > 0 && <ImageIcon onClick={(e) => handleIconClick(e, props?.row?.original)} sx={{color: '#518ef8'}} />;
         },
       },
       {

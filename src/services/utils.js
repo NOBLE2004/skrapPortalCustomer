@@ -65,7 +65,9 @@ export const status = (status) => {
     return "Confirmed by supplier";
   } else if (status === 14) {
     return "Requested";
-  } else {
+  } else if (status === 15) {
+    return "On Site";
+  }else {
     return "----";
   }
 };

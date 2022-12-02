@@ -25,12 +25,33 @@ const CommonStatus = ({ status }) => {
               : status?.toLowerCase() === "pickup-ongoing"
               ? "#6fff22"
               : status?.toLowerCase() === "requested"
-              ? "rgb(81, 142, 248)"
+              ? "rgb(81, 142, 248)" : status?.toLowerCase() === "on site"
+                                            ? "rgb(81, 142, 248)"
               : "#FF9013"
           }`,
         }}
       ></span>
-      <span className={`${status?.toLowerCase().replace(/\s/g, "-")}-title`}>
+      <span  style={{
+          color: `${
+              status?.toLowerCase() === "pending" ||
+              status?.toLowerCase() === "cancelled"
+                  ? "red"
+                  : status?.toLowerCase() === "completed"
+                      ? "#00B25D"
+                      : status?.toLowerCase() === "delivered"
+                          ? "#FF9013"
+                          : status?.toLowerCase() === "heading"
+                              ? "#3ca5e3"
+                              : status?.toLowerCase() === "ongoing"
+                                  ? "#ecac63"
+                                  : status?.toLowerCase() === "pickup-ongoing"
+                                      ? "#6fff22"
+                                      : status?.toLowerCase() === "requested"
+                                          ? "rgb(81, 142, 248)" : status?.toLowerCase() === "on site"
+                                              ? "rgb(81, 142, 248)"
+                                              : "#FF9013"
+          }`,
+      }}>
         {status ? capitalize(status) : ""}
       </span>
     </div>

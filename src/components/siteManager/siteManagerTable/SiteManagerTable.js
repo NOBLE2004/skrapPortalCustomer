@@ -160,9 +160,13 @@ const SiteManagerTable = ({
         disableFilters: true,
           Cell: (cell) => {
               return (
-                  <CommonStatus
-                      status={status(cell.value)}
-                  />
+                  <>
+                      {userData?.country_currency?.country_code == '+49' ? <CommonStatus
+                          status={status(cell.value == 8 ? 15 : cell.value)}
+                      /> : <CommonStatus
+                          status={status(cell.value)}
+                      />}
+                  </>
               );
           },
       },
@@ -282,9 +286,13 @@ const SiteManagerTable = ({
         disableFilters: true,
           Cell: (cell) => {
               return (
-                  <CommonStatus
-                      status={cell.value}
-                  />
+                  <>
+                  {userData?.country_currency?.country_code == '+49' ? <CommonStatus
+                      status={cell.value == "Collection" ? "On Site" : cell.value}
+                  /> : <CommonStatus
+                      status={cell.value }
+                  />}
+                  </>
               );
           },
       },
@@ -310,12 +318,12 @@ const SiteManagerTable = ({
         },
       },
         {
-            Header: "Utilisation rating",
+            Header: "Utilisation",
             disableFilters: true,
             show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
             Cell: (props) => {
                 return <span>{
-                    props.row.original.job_id == 58683 ? '5/10' : props.row.original.job_id == 58488 ? '5/10' : props.row.original.job_id == 58487 ? '4/10' : props.row.original.job_id == 58486 ? '3/10' : ''
+                    props.row.original.job_id == 58683 ? '54%' : props.row.original.job_id == 58488 ? '48%' : props.row.original.job_id == 58487 ? '40%' : props.row.original.job_id == 58486 ? '37%' : ''
                 }</span>;
             },
         },

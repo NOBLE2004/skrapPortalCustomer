@@ -71,9 +71,9 @@ const NewManagerDetail = ({ managerData, setReload }) => {
                 </div>
                   {userData?.country_currency?.country_code === "+49" &&
                       <div className="info">
-                          <div className="designation">Utilisation rating</div>
+                          <div className="designation">Utilisation</div>
                           <div className="personal-title">
-                              4/10
+                            45%
                           </div>
                       </div>
                   }
