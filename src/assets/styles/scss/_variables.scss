@@ -67,6 +67,8 @@ $v110: 110px;
   align-items: center;
 }
 .normal-dsans-10-primary1-disable {
+  pointer-events: none;
+  cursor: not-allowed;
   color: "#677790!important";
   font-family: DM Sans;
   font-style: normal;
@@ -75,7 +77,6 @@ $v110: 110px;
   line-height: 13px;
   display: contents;
   font-weight: bolder;
-  cursor: pointer;
 }
 .primary-title {
   @extend .common-title;

@@ -6,8 +6,20 @@ import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import moment from "moment";
+import SingleSelect from "../single-select-auto-complete";
+import {
+  ArrowDownward,
+  ChevronLeftRounded,
+  KeyboardArrowDown,
+} from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { getSites } from "../../store/actions/sites.action";
+import { Typography } from "@mui/material";
 
 const JobFilters = ({ handleChangeFilters }) => {
+  const dispatch = useDispatch();
+  const siteState = useSelector((state) => state?.allsites);
+
   const [filters, setFilters] = useState({
     status: "",
     date: "",
@@ -23,7 +35,7 @@ const JobFilters = ({ handleChangeFilters }) => {
     },
   ]);
   const [services, setServices] = useState([]);
-  const { status, date, address, service } = filters;
+  const { status, date, address, service, sites } = filters;
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFilters({ ...filters, [name]: value });
@@ -44,6 +56,13 @@ const JobFilters = ({ handleChangeFilters }) => {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    if (!siteState?.data) {
+      dispatch(getSites());
+    }
+  }, [siteState.data]);
+
   const toggle = () => {
     setTogle(!togle);
   };
@@ -53,7 +72,7 @@ const JobFilters = ({ handleChangeFilters }) => {
       .toLocaleDateString()
       .replace(/\//g, "-");
     const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
-    console.log(start,end)
+    console.log(start, end);
     if (start === end) {
       setFilters({ ...filters, date: `${start},${end}` });
     } else {
@@ -130,6 +149,26 @@ const JobFilters = ({ handleChangeFilters }) => {
               return <option value={status.id}>{status.status}</option>;
             })}
           </select>
+          {siteState?.isLoading ? (
+            <Typography
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+              variant="body2"
+              className={"filter-option"}
+            >
+              Loading...
+            </Typography>
+          ) : (
+            <SingleSelect
+              name="site"
+              data={siteState?.data}
+              value={filters?.site}
+              handleChange={handleChange}
+              loading={siteState?.isLoading}
+            />
+          )}
           <button onClick={resetFilters} className={"filter-option"}>
             reset
           </button>

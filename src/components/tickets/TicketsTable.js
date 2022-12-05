@@ -5,6 +5,7 @@ import "../reactTable/jobs-react-table.scss";
 import Pagination from "../reactTable/pagination";
 import ReactTooltip from "react-tooltip";
 import { DOWNLOAD_URL } from "../../environment";
+import { Box } from "@mui/system";
 
 const TicketsTable = ({ data, pagination, handlePagination }) => {
   const toDataURL = (url) => {
@@ -74,38 +75,90 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
           return (
             <>
               {props.value?.length > 0 ? (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                  }}
-                >
+                <div>
                   {props.value.map((ticket) => {
                     return (
-                      <span
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          alignItems: "center",
-                        }}
-                        className="normal-dsans-10-primary1"
-                        onClick={() =>
-                          download(DOWNLOAD_URL + ticket?.file?.name)
-                        }
-                      >
-                        {ticket.ticket_type == "delivery"
-                          ? "Delivery Ticket"
-                          : "WTN"}
-                        <img
-                          src={downloadSite}
-                          alt="download-icon"
-                          style={{ marginLeft: "5px" }}
-                        />
-                      </span>
+                      <Box display="flex" alignItems="center" mr={2}>
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          mr={1}
+                          className={
+                            ticket.ticket_type == "delivery"
+                              ? "normal-dsans-10-primary1"
+                              : "normal-dsans-10-primary1-disable"
+                          }
+                          onClick={() =>
+                            download(DOWNLOAD_URL + ticket?.file?.name)
+                          }
+                        >
+                          <span>Delivery</span>
+                          <Box>
+                            <img
+                              src={downloadSite}
+                              alt="download-icon"
+                              style={
+                                ticket.ticket_type == "delivery"
+                                  ? { marginLeft: "5px" }
+                                  : {
+                                      filter:
+                                        "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
+                                      marginLeft: "5px",
+                                    }
+                              }
+                            />
+                          </Box>
+                        </Box>
+                        <Box display="flex" alignItems="center">
+                          <span
+                            className={
+                              ticket.ticket_type == "wtn"
+                                ? "normal-dsans-10-primary1"
+                                : "normal-dsans-10-primary1-disable"
+                            }
+                          >
+                            WTN
+                          </span>
+                          <Box>
+                            <img
+                              src={downloadSite}
+                              alt="download-icon"
+                              style={
+                                ticket.ticket_type == "wtn"
+                                  ? { marginLeft: "5px" }
+                                  : {
+                                      filter:
+                                        "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
+                                      marginLeft: "5px",
+                                    }
+                              }
+                            />
+                          </Box>
+                        </Box>{" "}
+                      </Box>
+                      // <span
+                      //   style={{
+                      //     display: "flex",
+                      //     justifyContent: "flex-start",
+                      //     alignItems: "center",
+                      //   }}
+                      //   className="normal-dsans-10-primary1"
+                      //   onClick={() =>
+                      //     download(DOWNLOAD_URL + ticket?.file?.name)
+                      //   }
+                      // >
+                      //   {ticket.ticket_type == "delivery"
+                      //     ? "Delivery Ticket"
+                      //     : "WTN"}
+                      //   <img
+                      //     src={downloadSite}
+                      //     alt="download-icon"
+                      //     style={{ marginLeft: "5px" }}
+                      //   />
+                      // </span>
                     );
                   })}
-                  <>
+                  {/* <>
                     {props.value.findIndex(
                       (x) => x.ticket_type == "delivery"
                     ) == -1 && (
@@ -151,7 +204,7 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
                         }}
                       />
                     </span>
-                  </>
+                  </> */}
                 </div>
               ) : (
                 <>

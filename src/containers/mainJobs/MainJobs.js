@@ -24,7 +24,7 @@ import {
   payment,
   status,
 } from "../../services/utils";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
 import { getJobList } from "../../store/actions/jobs.action";
