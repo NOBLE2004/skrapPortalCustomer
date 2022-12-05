@@ -10,18 +10,36 @@ import "./dashboardservices.scss";
 const DashboardServices = ({ servicesData }) => {
   const classes = dashboardServiceStyle();
   const currency = localStorage.getItem("currency");
+
+  const country_code = localStorage.getItem("country_code");
+
+  // console.log(country_code,'country Code')
+
+
   const [showValue, setShowValue] = useState(false);
-  const { Cage, Skip, Grab, NumberOfJobs, Aggregate, PortableToilet } =
+  const { Cage, Skip, Grab, NumberOfJobs, Aggregate, PortableToilet
+  // ,
+  // Compactor,Trailer 
+    
+  } =
     servicesData;
   const [services, setServices] = useState([]);
 
   useEffect(() => {
+
+    // if(country_code==='+49'){
+    //   Compactor.name = "Compactor";
+    //   Trailer.name = "Trailer";
+    // }
+
     Cage.name = "Cage";
     Skip.name = "Skip";
     Grab.name = "Grab";
     Aggregate.name = "Aggregate";
     PortableToilet.name = "PortableToilet";
-    let list = [Cage, Skip, Grab, Aggregate, PortableToilet].sort(function (
+    let list = [Cage, Skip, Grab, Aggregate, PortableToilet
+      // ,Compactor,Trailer
+      ].sort(function (
       a,
       b
     ) {
