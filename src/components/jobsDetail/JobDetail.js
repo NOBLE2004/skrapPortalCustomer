@@ -4,6 +4,7 @@ import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
 import "./jobDetail.scss";
 import { status } from "../../services/utils";
 const JobDetail = ({ job }) => {
+  console.log("job", job);
   return (
     <Card className="job-detail-main">
       <div className="personal-info">
@@ -47,26 +48,15 @@ const JobDetail = ({ job }) => {
 
       <div className="personal-info">
         <div className="info">
-          <div className="designation">Booked By</div>
+          <div className="designation">Waste Tonnes</div>
           <div className="personal-title">
-            {job?.bookedby
-              ? `${job?.bookedby.first_name} ${job?.bookedby.last_name}`
-              : "Skarp"}
+            {job?.weight ? `${job?.weight}` : "----"}
           </div>
         </div>
         <div className="info">
-          <div className="designation">Waste Type</div>
+          <div className="designation">Co2</div>
           <div className="personal-title">
-            {job?.job_waste?.length === 0 && <p className="item-value">n/a</p>}
-            {(job?.job_waste || []).map((waste, index) => {
-              if (index === 0) {
-                return (
-                  <p className="item-value">
-                    {waste.waste_type.name.substr(0, 24)}.. {waste.percentage}%
-                  </p>
-                );
-              }
-            })}
+            {job?.co2 ? `${job?.co2}` : "----"}
           </div>
         </div>
       </div>

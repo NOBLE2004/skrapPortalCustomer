@@ -12,7 +12,7 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
   const [siteData, setSiteData] = useState(null);
   const [userId, setUserId] = useState(null);
   const [addressId, setAddressId] = useState("");
-  const [userData,setUserData]=useState({})
+  const [userData, setUserData] = useState({});
   const [roleId, setRollId] = useState(0);
   const [user, setUser] = useState("");
 
@@ -36,7 +36,6 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
     setRollId(data.role_id);
   }, []);
 
- 
   const columns = useMemo(
     () => [
       {
@@ -51,7 +50,13 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         disableSortBy: true,
         filter: "equals",
         Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
+          return (
+            <span>
+              {props?.cell?.row?.original?.site_name !== null
+                ? props?.cell?.row?.original?.site_name
+                : props.value || "n/a"}
+            </span>
+          );
         },
       },
       {
