@@ -19,6 +19,8 @@ import JobReorderModal from "../modals/reorderModal/JobReorderModal";
 import ExtendModal from "../modals/extendModal/ExtendModal";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import ViewJobDocumentsModal from "../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
+import ImageIcon from '@mui/icons-material/Image';
+
 
 const JobsTable = ({
   data,
@@ -66,6 +68,12 @@ const JobsTable = ({
     setRowDate(props);
     setRow(props);
   };
+  const handleIconClick = (e, props) => {
+    e.stopPropagation();
+    setJobId(props.job_id)
+    setViewDocument(true);
+  };
+
   const handleClose = () => {
     setState({
       ...state,
@@ -275,23 +283,60 @@ const JobsTable = ({
         },
       },
       {
-        Header: "Payment",
-        accessor: "payment_type",
+        Header: "Utilisation",
         disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
         Cell: (props) => {
-          return payment(props.value);
+          return <span>{
+               props?.cell?.row?.original?.utilization ?props?.cell?.row?.original?.utilization?.toFixed(2) : ''
+          }</span>;
         },
       },
       {
-        Header: "PO",
-        accessor: "purchase_order",
+        Header: "CO2",
+        accessor: "order_job_status",
         disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
-          return props.value == null ? "---" : props.value;
+          return <>{props.cell.row.original?.co2  ?props.cell.row.original?.co2
+             : ''}</>;
         },
       },
       {
-        Header: "",
+        Header: "Weight",
+        disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
+        Cell: (props) => {
+          return <>{props?.cell?.row?.original?.weight?props?.cell?.row?.original?.weight  : ''}</>;
+        },
+      },
+      {
+        Header: "Image",
+        accessor: "job_images_count",
+        disableFilters: true,
+        Cell: (props) => {
+          return props.value > 0 && <ImageIcon onClick={(e) => handleIconClick(e, props?.row?.original)} sx={{color: '#518ef8'}} />;
+        },
+      },
+
+      // {
+      //   Header: "Payment",
+      //   accessor: "payment_type",
+      //   disableFilters: true,
+      //   Cell: (props) => {
+      //     return payment(props.value);
+      //   },
+      // },
+      // {
+      //   Header: "PO",
+      //   accessor: "purchase_order",
+      //   disableFilters: true,
+      //   Cell: (props) => {
+      //     return props.value == null ? "---" : props.value;
+      //   },
+      // },
+      {
+        Header: "Invoice",
         accessor: "job_id",
         id: "invoice",
         Cell: (props) => {
@@ -321,7 +366,7 @@ const JobsTable = ({
         },
       },
       {
-        Header: "",
+        Header: "Ticket",
         accessor: "waste_transfer_document",
         id: "ticket",
         Cell: (props) => (
