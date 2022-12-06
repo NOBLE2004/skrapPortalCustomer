@@ -29,10 +29,11 @@ const SingleSelect = (props) => {
   return (
     <>
       <FormControl
-        sx={{
-          width: "300px",
-        }}
+        // sx={{
+        //   width: "300px",
+        // }}
         size="small"
+        fullWidth
         className="single-select-main"
       >
         <Select

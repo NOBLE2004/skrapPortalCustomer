@@ -14,7 +14,7 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { getSites } from "../../store/actions/sites.action";
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 const JobFilters = ({ handleChangeFilters }) => {
   const dispatch = useDispatch();
@@ -96,10 +96,17 @@ const JobFilters = ({ handleChangeFilters }) => {
     ]);
   };
   return (
-    <div className="filter-container">
-      <div className="filter-title">Filter : </div>
-      <div className="all-filters">
-        <>
+    <>
+      <Grid
+        container
+        className="filter-container"
+        columnSpacing={2}
+        justifyContent="space-between"
+      >
+        <Grid item xs={1}>
+          <div className="filter-title">Filter : </div>
+        </Grid>
+        <Grid item xs={1}>
           <button onClick={toggle} className={"filter-option"}>
             Date
           </button>
@@ -112,6 +119,8 @@ const JobFilters = ({ handleChangeFilters }) => {
               direction="horizontal"
             />
           )}
+        </Grid>
+        <Grid item xs={2}>
           <select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
@@ -129,6 +138,8 @@ const JobFilters = ({ handleChangeFilters }) => {
               );
             })}
           </select>
+        </Grid>
+        <Grid item xs={2}>
           <input
             name="address"
             value={address}
@@ -136,6 +147,8 @@ const JobFilters = ({ handleChangeFilters }) => {
             className={"filter-option"}
             placeholder="postcode"
           />
+        </Grid>
+        <Grid item xs={2}>
           <select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
@@ -149,6 +162,8 @@ const JobFilters = ({ handleChangeFilters }) => {
               return <option value={status.id}>{status.status}</option>;
             })}
           </select>
+        </Grid>
+        <Grid item xs={2}>
           {siteState?.isLoading ? (
             <Typography
               sx={{
@@ -169,12 +184,93 @@ const JobFilters = ({ handleChangeFilters }) => {
               loading={siteState?.isLoading}
             />
           )}
+        </Grid>
+        <Grid item xs={1}>
           <button onClick={resetFilters} className={"filter-option"}>
             reset
           </button>
-        </>
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+      {/* <div className="filter-container">
+        <div className="filter-title">Filter : </div>
+        <div className="all-filters">
+          <>
+            <button onClick={toggle} className={"filter-option"}>
+              Date
+            </button>
+            {togle && (
+              <DateRangePicker
+                editableDateInputs={false}
+                onChange={handleDate}
+                moveRangeOnFirstSelection={false}
+                ranges={state}
+                direction="horizontal"
+              />
+            )}
+            <select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              name="service"
+              value={service}
+              onChange={handleChange}
+              className={"filter-option"}
+            >
+              <option value="">All Services</option>
+              {services.map((service) => {
+                return (
+                  <option value={service.service_id}>
+                    {service.service_name}
+                  </option>
+                );
+              })}
+            </select>
+            <input
+              name="address"
+              value={address}
+              onChange={handleChange}
+              className={"filter-option"}
+              placeholder="postcode"
+            />
+            <select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              name="status"
+              value={status}
+              onChange={handleChange}
+              className={"filter-option"}
+            >
+              <option value="">All Statuses </option>
+              {JOB_STATUS.map((status) => {
+                return <option value={status.id}>{status.status}</option>;
+              })}
+            </select>
+            {siteState?.isLoading ? (
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                variant="body2"
+                className={"filter-option"}
+              >
+                Loading...
+              </Typography>
+            ) : (
+              <SingleSelect
+                name="site"
+                data={siteState?.data}
+                value={filters?.site}
+                handleChange={handleChange}
+                loading={siteState?.isLoading}
+              />
+            )}
+            <button onClick={resetFilters} className={"filter-option"}>
+              reset
+            </button>
+          </>
+        </div>
+      </div> */}
+    </>
   );
 };
 
