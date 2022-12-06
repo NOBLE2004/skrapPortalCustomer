@@ -61,7 +61,7 @@ const DashBoard = (props) => {
   const getData = async (year) => {
     setLatestYear(year);
     if (isNewYear) {
-      await props.getDashboardsData(year);
+      await props.getDashboardsData({year:year});
     }
     setNewYear(true);
   };

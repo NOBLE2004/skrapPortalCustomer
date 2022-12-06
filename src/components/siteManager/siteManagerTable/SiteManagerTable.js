@@ -10,12 +10,16 @@ import {
   payment,
   status,
 } from "../../../services/utils";
+ 
 import TrackDriverModal from "../../modals/trackDriver/TrackDriverModal";
 import JobService from "../../../services/job.service";
 import LoadingModal from "../../modals/LoadingModal/LoadingModal";
 import CreateExchange from "../../modals/createExchange/CreateExchange";
 import RequestCollection from "../../modals/requestCollection/RequestCollection";
 import ExtendModal from "../../modals/extendModal/ExtendModal";
+import { downloadSite } from "../../../assets/images";
+import ImageIcon from '@mui/icons-material/Image';
+import ViewJobDocumentsModal from "../../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
 
 const SiteManagerTable = ({
   managerData,
@@ -41,6 +45,9 @@ const SiteManagerTable = ({
     mouseY: null,
     contextRow: null,
   });
+
+  const [isViewDocument, setViewDocument] = useState(false);
+  const [jobId, setJobId] = React.useState(null);
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
     setJobs(managerData?.jobs?.data);
@@ -87,6 +94,37 @@ const SiteManagerTable = ({
     setCollection(true);
     handleClose();
   };
+  const toDataURL = (url) => {
+    return fetch(url)
+      .then((response) => {
+        return response.blob();
+      })
+      .then((blob) => {
+        return URL.createObjectURL(blob);
+      });
+  };
+  const handleShowReport = async (e, url) => {
+    e.stopPropagation();
+    var element = document.createElement("a");
+    element.href = await toDataURL(url);
+    element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
+    element.click();
+    handleClose();
+  };
+  const downloadInvoice = (e, job_id) => {
+    e.stopPropagation();
+    setLoading(true);
+    JobService.invoice({ job_id })
+      .then((response) => {
+        if (response.data?.code === 0) {
+          handleShowReport(e, response.data?.result?.Url);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleReorderResponse = (id) => {
     JobService.copy({ job_id: id, payment_type: row.payment_type })
@@ -107,6 +145,12 @@ const SiteManagerTable = ({
           text: "Job Reorder failed",
         });
       });
+  };
+
+  const handleIconClick = (e, props) => {
+    e.stopPropagation();
+    setJobId(props.job_id)
+    setViewDocument(true);
   };
 
   const sitesDetailColumns = useMemo(
@@ -166,24 +210,90 @@ const SiteManagerTable = ({
               );
           },
       },
+      // {
+      //   Header: "Ewc Code",
+      //   accessor: "ewc_code",
+      //   disableFilters: true,
+      //   Cell: (props) => {
+      //     return <span>{props.value || "n/a"}</span>;
+      //   },
+      // },
       {
-        Header: "Ewc Code",
-        accessor: "ewc_code",
+        Header: "Utilisation",
         disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
         Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
+          return <span>{
+               props?.cell?.row?.original?.utilization ?`${props?.cell?.row?.original?.utilization?.toFixed(2)}%` : ''
+          }</span>;
         },
       },
       {
-        Header: "PO",
-        accessor: "purchase_order",
+        Header: "CO2",
+        accessor: "order_job_status",
         disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
+          return <>{props.cell.row.original?.co2  ?`${props.cell.row.original?.co2}kg`
+             : ''}</>;
         },
       },
       {
-        Header: "",
+        Header: "Weight",
+        disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
+        Cell: (props) => {
+          return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
+        },
+      },
+      {
+        Header: "Image",
+        accessor: "job_images_count",
+        disableFilters: true,
+        Cell: (props) => {
+          return props.value > 0 && <ImageIcon onClick={(e) => handleIconClick(e, props?.row?.original)} sx={{color: '#518ef8'}} />;
+        },
+      },
+      // {
+      //   Header: "PO",
+      //   accessor: "purchase_order",
+      //   disableFilters: true,
+      //   Cell: (props) => {
+      //     return <span>{props.value || "n/a"}</span>;
+      //   },
+      // },
+      {
+        Header: "Invoice",
+        accessor: "job_id",
+        id: "invoice",
+        Cell: (props) => {
+          return props.row.original.appointment_status === 4 ||
+            props.row.original.appointment_status == 3 ? (
+            <>
+              {userData?.country_currency?.country_code === "+49" &&
+              props.cell.row.original.appointment_status===3 ? (
+                <span
+                  className="normal-dsans-10-primary"
+                  onClick={(e) => downloadInvoice(e, props.value)}
+                >
+                  Invoice
+                  <img
+                    src={downloadSite}
+                    alt="download-icon"
+                    style={{ marginLeft: "5px" }}
+                  />
+                </span>
+              ) : (
+                ""
+              )}
+            </>
+          ) : (
+            ""
+          );
+        },
+      },
+      {
+        Header: "Ticket",
         id: "ticket",
         Cell: (props) => (
           <span
@@ -288,11 +398,11 @@ const SiteManagerTable = ({
               );
           },
       },
-      {
-        Header: "Payment",
-        accessor: "payment_type",
-        disableFilters: true,
-      },
+      // {
+      //   Header: "Payment",
+      //   accessor: "payment_type",
+      //   disableFilters: true,
+      // },
       // {
       //   Header: "Booked By",
       //   accessor: "booked_by",
@@ -301,22 +411,109 @@ const SiteManagerTable = ({
       //     return <span>{props.value || "n/a"}</span>;
       //   },
       // },
+      // {
+      //   Header: "PO",
+      //   accessor: "purchase_order",
+      //   disableFilters: true,
+      //   Cell: (props) => {
+      //     return <span>{props.value || "n/a"}</span>;
+      //   },
+      // },
+      //   {
+      //       Header: "Utilisation rating",
+      //       disableFilters: true,
+      //       show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
+      //       Cell: (props) => {
+      //           return <span>{props.row.original.appointment_status == 'Completed' ? '6/10' : '--'}</span>;
+      //       },
+      //   },
       {
-        Header: "PO",
-        accessor: "purchase_order",
+        Header: "Utilisation",
         disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
         Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
+          return <span>{
+               props?.cell?.row?.original?.utilization ?`${props?.cell?.row?.original?.utilization?.toFixed(2)}%` : ''
+          }</span>;
         },
       },
-        {
-            Header: "Utilisation rating",
-            disableFilters: true,
-            show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
-            Cell: (props) => {
-                return <span>{props.row.original.appointment_status == 'Completed' ? '6/10' : '--'}</span>;
-            },
+      {
+        Header: "CO2",
+        accessor: "order_job_status",
+        disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
+        Cell: (props) => {
+          return <>{props.cell.row.original?.co2  ?`${props.cell.row.original?.co2}kg`
+             : ''}</>;
         },
+      },
+      {
+        Header: "Weight",
+        disableFilters: true,
+        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
+        Cell: (props) => {
+          return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
+        },
+      },
+      {
+        Header: "Image",
+        accessor: "job_images_count",
+        disableFilters: true,
+        Cell: (props) => {
+          return props.value > 0 && <ImageIcon onClick={(e) => handleIconClick(e, props?.row?.original)} sx={{color: '#518ef8'}} />;
+        },
+      },
+      // {
+      //   Header: "PO",
+      //   accessor: "purchase_order",
+      //   disableFilters: true,
+      //   Cell: (props) => {
+      //     return <span>{props.value || "n/a"}</span>;
+      //   },
+      // },
+      {
+        Header: "Invoice",
+        accessor: "job_id",
+        id: "invoice",
+        Cell: (props) => {
+          return props.row.original.appointment_status === 4 ||
+            props.row.original.appointment_status == 3 ? (
+            <>
+              {userData?.country_currency?.country_code === "+49" &&
+              props.cell.row.original.appointment_status===3 ? (
+                <span
+                  className="normal-dsans-10-primary"
+                  onClick={(e) => downloadInvoice(e, props.value)}
+                >
+                  Invoice
+                  <img
+                    src={downloadSite}
+                    alt="download-icon"
+                    style={{ marginLeft: "5px" }}
+                  />
+                </span>
+              ) : (
+                ""
+              )}
+            </>
+          ) : (
+            ""
+          );
+        },
+      },
+      {
+        Header: "Ticket",
+        id: "ticket",
+        Cell: (props) => (
+          <span
+            className="normal-dsans-10-primary"
+            style={{ color: "lightgrey" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            Ticket
+          </span>
+        ),
+      },
       {
         Header: "",
         id: "id-edit",
@@ -373,6 +570,12 @@ const SiteManagerTable = ({
           updateJobs={reload}
         />
       )}
+      {isViewDocument && (
+            <ViewJobDocumentsModal
+              handleClose={() => setViewDocument(false)}
+              jobId={jobId}
+            />
+          )}
       <TableContainer
         columns={siteDetail ? sitesDetailColumns : columns}
         data={jobs}
