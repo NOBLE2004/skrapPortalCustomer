@@ -22,6 +22,7 @@ const JobStatus = ({ jobStatus }) => {
 
       <div className="jobcard">
         <Paper className="box">
+        
           <h1>{parseFloat(jobStatus.Completed).toLocaleString() ?? ""}</h1>
           <span className={`${"completed"}-title`}>{"Completed"}</span>
         </Paper>
