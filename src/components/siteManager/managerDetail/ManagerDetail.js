@@ -9,7 +9,7 @@ const ManagerDetail = (props) => {
   const { title, siteData, setUpdateManager } = props;
   const history = useHistory();
   const [userData, setUserData] = useState({});
-  const { address_data, mobile_number, site_assigned, email, user_id, name } =
+  const { address_data, mobile_number, site_assigned, email, user_id, name,site_name } =
     siteData;
   const handleManagerDetail = (id, data) => {
     history.push("/site-managers/" + id);
@@ -66,9 +66,9 @@ const ManagerDetail = (props) => {
               <div className="personal-title">{name ? name : "n/a"}</div>
             </div>
             <div className="info">
-              <div className="designation">Site Assigned</div>
+              <div className="designation">Site Name</div>
               <div className="personal-title">
-                {site_assigned ? site_assigned : "n/a"}
+                {site_name ? site_name : "n/a"}
               </div>
             </div>
             <div className="info">

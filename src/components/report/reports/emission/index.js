@@ -91,12 +91,19 @@ const EmissionReport = (props) => {
     }
   }, [startDate, isNewYear]);
 
+  // useEffect(() => {
+  //   if (sites !== "") {
+  //     getData();
+  //     dispatch(getReportSiteBreakDownEmissions({ address_id: sites?.toString() }));
+  //     dispatch(getReportEmissionVehicles());
+  //   }
+  // }, [sites]);
+
   useEffect(() => {
-    if (sites !== "") {
-      getData();
+       getData();
       dispatch(getReportSiteBreakDownEmissions({ address_id: sites?.toString() }));
       dispatch(getReportEmissionVehicles());
-    }
+    
   }, [sites]);
   const getMonthData = (month, value) => {
     switch (month) {

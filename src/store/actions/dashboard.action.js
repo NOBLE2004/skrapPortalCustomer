@@ -2,7 +2,7 @@ import * as Constants from "../constants/constants";
 import dashboardService from "../../services/dashboard.service";
 export const getDashboardsData = (year) => {
   return (dispatch) => {
-     dispatch(dashboardStart());
+    dispatch(dashboardStart());
     dashboardService
       .getDashboardData(year)
       .then((res) => {

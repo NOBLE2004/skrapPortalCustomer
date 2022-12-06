@@ -19,14 +19,22 @@ const Co2breakdownReport = (props) => {
   const recycledData = useSelector((state) => state?.recycled);
   const { sites, showMore } = props;
   const [show, setShow] = useState(false);
+  // useEffect(() => {
+  //   if (sites !== "") {
+  //     dispatch(getLandfillDiversion({ sites: [sites] }));
+  //     dispatch(getTonnage({ sites: [sites] }));
+  //     dispatch(getWaste({ sites: [sites] }));
+  //     dispatch(getWasteOfEnergy({ sites: [sites] }));
+  //     dispatch(getRecycled({ sites: [sites] }));
+  //   }
+  // }, [sites]);
+
   useEffect(() => {
-    if (sites !== "") {
-      dispatch(getLandfillDiversion({ sites: [sites] }));
-      dispatch(getTonnage({ sites: [sites] }));
-      dispatch(getWaste({ sites: [sites] }));
-      dispatch(getWasteOfEnergy({ sites: [sites] }));
-      dispatch(getRecycled({ sites: [sites] }));
-    }
+    dispatch(getLandfillDiversion({ sites: sites }));
+    dispatch(getTonnage({ sites: sites }));
+    dispatch(getWaste({ sites: sites }));
+    dispatch(getWasteOfEnergy({ sites: sites }));
+    dispatch(getRecycled({ sites: sites }));
   }, [sites]);
 
   return (

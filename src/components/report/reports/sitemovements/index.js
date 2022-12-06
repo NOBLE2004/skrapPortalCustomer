@@ -21,19 +21,30 @@ const SiteMovementsReport = (props) => {
   const state = useSelector((state) => state?.siteMovements);
   const siteDetail = useSelector((state) => state?.siteMovementDetail);
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     if (sites !== "") {
+  //       await dispatch(getSitesMovement({ sites: [sites] }));
+  //     }
+  //   }
+  //   fetchData();
+  // }, [sites]);
+
+  // useEffect(() => {
+  //   if (sites !== "") {
+  //     dispatch(getSiteMovementDetails({ sites: [sites] }));
+  //   }
+  // }, [sites]);
+
   useEffect(() => {
     async function fetchData() {
-      if (sites !== "") {
-        await dispatch(getSitesMovement({ sites: [sites] }));
-      }
+      await dispatch(getSitesMovement({ sites: sites }));
     }
     fetchData();
   }, [sites]);
 
   useEffect(() => {
-    if (sites !== "") {
-      dispatch(getSiteMovementDetails({ sites: [sites] }));
-    }
+    dispatch(getSiteMovementDetails({ sites: sites }));
   }, [sites]);
 
   return (

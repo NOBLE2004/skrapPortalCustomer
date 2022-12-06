@@ -34,9 +34,9 @@ const NewManagerDetail = ({ managerData, setReload }) => {
                 </div>
                 <div className="change-info">
                   <div className="info">
-                    <div className="designation">Site Assigned</div>
+                    <div className="designation">Site Name</div>
                     <div className="personal-title">{`${
-                      site && site.line_1 ? site.line_1 : "n/a"
+                      site && site.site_name ? site.site_name : "n/a"
                     }`}</div>
                   </div>
                   <div

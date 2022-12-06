@@ -81,12 +81,20 @@ const FinanceReport = (props) => {
     });
   }, [stateSites?.site_breakdown]);
 
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     if (sites !== "") {
+  //       await dispatch(getSiteBreakdown({ sites: [sites] }));
+  //       await dispatch(getHireBreakdown({ sites: [sites] }));
+  //     }
+  //   }
+  //   fetchData();
+  // }, [sites]);
+
   useEffect(() => {
     async function fetchData() {
-      if (sites !== "") {
-        await dispatch(getSiteBreakdown({ sites: [sites] }));
-        await dispatch(getHireBreakdown({ sites: [sites] }));
-      }
+      await dispatch(getSiteBreakdown({ sites: sites }));
+      await dispatch(getHireBreakdown({ sites: sites }));
     }
     fetchData();
   }, [sites]);
