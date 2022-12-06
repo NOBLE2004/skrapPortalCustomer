@@ -163,7 +163,9 @@ const MainJobs = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Jobs",
-            price: `${info ? info.NumberOfJobs : 0}`,
+            price: `${
+              info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0
+            }`,
             statusName: "primary",
             width: "115px",
             height: "84px",
@@ -181,7 +183,9 @@ const MainJobs = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Completed",
-            price: `${info ? info.Completed : 0}`,
+            price: `${
+              info ? parseFloat(info.Completed).toLocaleString() : 0
+            }`,
             statusName: "completed",
             width: "115px",
             height: "84px",

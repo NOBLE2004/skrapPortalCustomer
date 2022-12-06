@@ -3,6 +3,7 @@ import { Paper } from "@mui/material";
 import "./jobStatus.scss";
 
 const JobStatus = ({ jobStatus }) => {
+
   return (
     <>
       <div className="jobcard">
@@ -21,7 +22,8 @@ const JobStatus = ({ jobStatus }) => {
 
       <div className="jobcard">
         <Paper className="box">
-          <h1>{jobStatus.Completed}</h1>
+        
+          <h1>{parseFloat(jobStatus.Completed).toLocaleString() ?? ""}</h1>
           <span className={`${"completed"}-title`}>{"Completed"}</span>
         </Paper>
       </div>

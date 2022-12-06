@@ -115,7 +115,13 @@ const DashBoard = (props) => {
               )}
               <Grid item md={8} xs={12}>
                 <div className="job-status-outer">
-                  <JobStatus jobStatus={info ? info : ""} />
+                  <JobStatus 
+                  jobStatus={ 
+                    
+                    info ? info : ""
+                  } 
+
+                />
                 </div>
               </Grid>
               {/* <Grid item md={2} xs={12}>

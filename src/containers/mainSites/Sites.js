@@ -114,7 +114,8 @@ const Sites = (props) => {
         <CommonJobStatus
           jobStatus={{
             status: "Jobs",
-            price: `${info ? info.NumberOfJobs : 0}`,
+            price: info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0,
+
             statusName: "primary",
             width: "115px",
             height: "84px",
