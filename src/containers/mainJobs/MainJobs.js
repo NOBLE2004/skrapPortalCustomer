@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import JobsTable from "../../components/reactTable/JobsTable";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Grid } from "@mui/material";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
@@ -40,7 +40,7 @@ const MainJobs = (props) => {
   const [isJobCreated, setIsJobCreated] = useState(false);
   const currency = localStorage.getItem("currency");
 
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(20);
   const { info, loading } = props.dashboard;
   const history = useHistory();
   const { jobData, isLoading, error } = props.jobs;
@@ -198,8 +198,17 @@ const MainJobs = (props) => {
         />
       </CommonHeader>
       <div className="jobs-search-header">
-        <CommonSearch handleChangeSearch={handleChangeSearch} cname="jobs" />
-        <JobFilters handleChangeFilters={handleChangeFilters} />
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <CommonSearch
+              handleChangeSearch={handleChangeSearch}
+              cname="jobs"
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <JobFilters handleChangeFilters={handleChangeFilters} />
+          </Grid>
+        </Grid>
       </div>
       {isMapView ? (
         <>
