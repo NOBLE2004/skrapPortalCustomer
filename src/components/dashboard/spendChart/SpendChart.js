@@ -11,6 +11,7 @@ import HighchartsReact from "highcharts-react-official";
 import { lineChartData, data2 } from "./constant";
 import { spendChartOptions, dates } from "../../utlils/constants";
 import "./spendchart.scss";
+import { numberWithCommas } from "../../utlils/dashboard";
 
 const SpendChart = ({
   chartData,
@@ -77,9 +78,9 @@ const SpendChart = ({
       labels: {
         formatter() {
           const getLabel = (value) => {
-            return `${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'}${value}`;
+            return `${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'}${numberWithCommas(value)}`;
           };
-          return getLabel(this.value);
+          return getLabel(numberWithCommas(this.value));
         },
       },
     },
@@ -92,6 +93,7 @@ const SpendChart = ({
       shared: true,
       useHTML: true,
     },
+    
     plotOptions: {
       column: {
         grouping: false,
