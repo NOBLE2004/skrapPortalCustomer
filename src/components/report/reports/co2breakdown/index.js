@@ -226,7 +226,7 @@ const Co2breakdownReport = (props) => {
                           >
                             <div className="name">{single.name}</div>
                             <div className="percentage">
-                              {single.waste === null ? 0 : single.waste}%
+                              {single.waste === null ? 0 : single.waste}T
                             </div>
                           </div>
                         </Grid>

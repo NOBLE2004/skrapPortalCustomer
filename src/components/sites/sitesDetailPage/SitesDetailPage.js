@@ -59,13 +59,20 @@ const SitesDetailPage = (props) => {
     isLoadings: false,
     managerData: {},
     isCreateManager: false,
+    sitename: "",
     isJobCreated: false,
     addressData: "",
     postCode: "",
   });
 
-  const { isLoadings, managerData, isJobCreated, addressData, postCode } =
-    state;
+  const {
+    isLoadings,
+    managerData,
+    isJobCreated,
+    addressData,
+    postCode,
+    sitename,
+  } = state;
 
   const handleChangeFilters = (filtersList) => {
     setFilters(filtersList);
@@ -88,6 +95,7 @@ const SitesDetailPage = (props) => {
           ...state,
           managerData: res.data,
           addressData: res.data?.address?.address,
+          sitename: res.data?.address?.site_name,
           postCode: res.data?.address?.postcode,
           isLoadings: false,
         });
@@ -134,13 +142,14 @@ const SitesDetailPage = (props) => {
     <div className="site-manager-detail-page-main">
       <div className="header-main">
         <div className="sites-header-title">
-          {width < 600
+          {/* {width < 600
             ? addressData
               ? addressData.slice(0, 16)
               : "n/a"
             : addressData
             ? addressData
-            : ""}
+            : ""} */}
+          {sitename !== null ? sitename : addressData?.slice(0, 16)}
         </div>
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
