@@ -42,7 +42,7 @@ const MainJobs = (props) => {
 
   const [limit, setLimit] = useState(20);
   const { info, loading } = props.dashboard;
-  const history = useHistory();
+   const history = useHistory();
   const { jobData, isLoading, error } = props.jobs;
   const [filters, setFilters] = useState({
     status: "",

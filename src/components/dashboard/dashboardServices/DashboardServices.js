@@ -16,7 +16,7 @@ const DashboardServices = ({ servicesData }) => {
   // console.log(country_code,'country Code')
 
   const [showValue, setShowValue] = useState(false);
-  const { Cage, Skip, Grab, NumberOfJobs, Aggregate, PortableToilet
+  const { Cage, Skip, Grab, NumberOfJobs, Aggregate, PortableToilet,Compacter,Trailer
   // ,
   // Compactor,Trailer 
     
@@ -31,12 +31,22 @@ const DashboardServices = ({ servicesData }) => {
     //   Trailer.name = "Trailer";
     // }
 
-    Cage.name = "Cage";
+    // Cage.name = "Cage";
+
+    Trailer.name = "Trailer";
+
+    Compacter.name = "Compacter";
+
+    
     Skip.name = "Skip";
-    Grab.name = "Grab";
-    Aggregate.name = "Aggregate";
-    PortableToilet.name = "PortableToilet";
-    let list = [Cage, Skip, Grab, Aggregate, PortableToilet
+    // Grab.name = "Grab";
+    // Aggregate.name = "Aggregate";
+    // PortableToilet.name = "PortableToilet";
+    let list = [
+      // Cage,
+       Skip,
+      //   Grab, Aggregate, PortableToilet,
+        Trailer,Compacter
       // ,Compactor,Trailer
       ].sort(function (
       a,

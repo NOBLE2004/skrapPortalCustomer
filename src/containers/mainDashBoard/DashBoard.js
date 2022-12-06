@@ -15,6 +15,7 @@ import { getDashboardsData } from "../../store/actions/dashboard.action";
 import { getLandfillDiversion } from "../../store/actions/action.landfillDiversion";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+
 import FadeLoader from "react-spinners/FadeLoader";
 import {
   assignMarker,
@@ -29,6 +30,7 @@ import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { getUserDataFromLocalStorage } from "../../services/utils";
+import { dummyDashboardData } from "../../components/utlils/dashboard";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -48,6 +50,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const DashBoard = (props) => {
+  console.log('dashboard',dummyDashboardData)
   const [showInfoIndex, setShowInfoIndex] = useState(null);
   const [isNewYear, setNewYear] = useState(false);
   const [latestYear, setLatestYear] = useState(2022);
@@ -56,7 +59,8 @@ const DashBoard = (props) => {
   const [userData, setUserData] = useState({});
   const history = useHistory();
   const dispatch = useDispatch();
-  const { info, loading } = props.dashboard;
+  // const { info, loading } = props.dashboard;
+  const info=dummyDashboardData
 
   const getData = async (year) => {
     setLatestYear(year);
@@ -88,13 +92,13 @@ const DashBoard = (props) => {
     history.push({ pathname: `job-detail/${id}` });
   };
 
-  if (loading) {
-    return (
-      <div className="dashboard-menu">
-        <FadeLoader color={"#518ef8"} loading={loading} width={4} />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="dashboard-menu">
+  //       <FadeLoader color={"#518ef8"} loading={loading} width={4} />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>

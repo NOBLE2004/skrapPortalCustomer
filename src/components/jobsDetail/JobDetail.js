@@ -50,13 +50,13 @@ const JobDetail = ({ job }) => {
         <div className="info">
           <div className="designation">Waste Tonnes</div>
           <div className="personal-title">
-            {job?.weight ? `${job?.weight}` : "----"}
+            {job?.weight ? `${job?.weight}T` : "----"}
           </div>
         </div>
         <div className="info">
           <div className="designation">Co2</div>
           <div className="personal-title">
-            {job?.co2 ? `${job?.co2}` : "----"}
+            {job?.co2 ? `${job?.co2}kg` : "----"}
           </div>
         </div>
       </div>
