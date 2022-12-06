@@ -288,7 +288,7 @@ const JobsTable = ({
         show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
         Cell: (props) => {
           return <span>{
-               props?.cell?.row?.original?.utilization ?props?.cell?.row?.original?.utilization?.toFixed(2) : ''
+               props?.cell?.row?.original?.utilization ?`${props?.cell?.row?.original?.utilization?.toFixed(2)}%` : ''
           }</span>;
         },
       },
@@ -298,7 +298,7 @@ const JobsTable = ({
         disableFilters: true,
         show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
-          return <>{props.cell.row.original?.co2  ?props.cell.row.original?.co2
+          return <>{props.cell.row.original?.co2  ?`${props.cell.row.original?.co2}kg`
              : ''}</>;
         },
       },
@@ -307,7 +307,7 @@ const JobsTable = ({
         disableFilters: true,
         show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
-          return <>{props?.cell?.row?.original?.weight?props?.cell?.row?.original?.weight  : ''}</>;
+          return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
         },
       },
       {

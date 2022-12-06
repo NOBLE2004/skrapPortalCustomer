@@ -110,11 +110,17 @@ const SiteManagerDetailPage = (props) => {
             </Grid>}
             <Grid item md={12} className="site-manager-filter">
               <div className="jobs-search-header">
-                <CommonSearch
-                  handleChangeSearch={handleChangeSearch}
-                  cname="jobs"
-                />
-                <JobFilters handleChangeFilters={handleChangeFilters} />
+              <Grid container spacing={2}>
+                  <Grid item xs={4}>
+                    <CommonSearch
+                      handleChangeSearch={handleChangeSearch}
+                      cname="jobs"
+                    />
+                  </Grid>
+                  <Grid item xs={8}>
+                    <JobFilters handleChangeFilters={handleChangeFilters} />
+                  </Grid>
+                </Grid>
               </div>
             </Grid>
             {isJobLoading ? (
