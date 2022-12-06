@@ -74,8 +74,8 @@ export const dummyDashboardData = {
     count: 0,
   },
   Trailer: {
-    total: "0.00",
-    count: 0,
+    total: "92,160",
+    count: 63,
   },
   Aggregate: {
     total: "0.00",
@@ -42571,3 +42571,7 @@ export const dummyDashboardData = {
     map_count: 4500,
   },
 };
+
+export const numberWithCommas=(x)=> {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

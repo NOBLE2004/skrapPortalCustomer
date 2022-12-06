@@ -6,6 +6,7 @@ import { Switch } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { dashboardServiceStyle } from "../../../assets/styles/muiStyles/MuiStyles";
 import "./dashboardservices.scss";
+import { numberWithCommas } from "../../utlils/dashboard";
 
 const DashboardServices = ({ servicesData }) => {
   const classes = dashboardServiceStyle();
@@ -124,7 +125,7 @@ const DashboardServices = ({ servicesData }) => {
               <div className="order-percentage">
                 <span className="order-title">
                   {" "}
-                  {service?.count ? service.count : 0} / {NumberOfJobs}{" "}
+                  {service?.count ? numberWithCommas(service.count) : 0} / {numberWithCommas(NumberOfJobs)}{" "}
                 </span>
                 <span className="orders">orders</span>
               </div>

@@ -71,12 +71,12 @@ const ManagerDetail = (props) => {
                 {site_name ? site_name : "n/a"}
               </div>
             </div>
-            <div className="info">
+            {/* <div className="info">
               <div className="designation">Address</div>
               <div className="personal-title">
                 {address_data ? address_data : "n/a"}
               </div>
-            </div>
+            </div> */}
             <div className="info">
               <div className="designation">Email</div>
               <div className="personal-title">{email ? email : "n/a"}</div>
