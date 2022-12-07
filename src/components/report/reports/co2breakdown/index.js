@@ -254,14 +254,14 @@ const Co2breakdownReport = (props) => {
                                 service.tonnage === 0
                                   ? 10
                                   : service?.tonnage > 100
-                                  ? 100
+                                  ? 70
                                   : service?.tonnage + 20
                               }px`,
                               height: `${
                                 service.tonnage === 0
                                   ? 10
                                   : service?.tonnage > 100
-                                  ? 100
+                                  ? 70
                                   : service?.tonnage + 20
                               }px`,
                               background:
