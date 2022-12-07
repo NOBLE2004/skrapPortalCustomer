@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import "./index.scss";
 import { numberWithCommas } from "../../../utlils/dashboard";
 
+
 const Co2breakdownReport = (props) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state?.landfillDiversion);
@@ -43,6 +44,7 @@ const Co2breakdownReport = (props) => {
       <CardContent>
         <div className="salesWp">
           <h1>
+          
             {tonnageData?.data?.result?.total
               ? numberWithCommas(tonnageData?.data?.result?.total?.toFixed(2))
               : "0.00"}

@@ -1,4 +1,5 @@
 import { numberWithCommas } from "../../../utlils/dashboard";
+
 export const chartOptions = (siteCurrency) => ({
   chart: {
     type: "column",
@@ -46,12 +47,15 @@ export const chartOptions = (siteCurrency) => ({
     labels: {
       formatter() {
         const getLabel = (value) => {
+
           return `${numberWithCommas(value)} kg`;
+
         };
         return getLabel(numberWithCommas(this.value));
       },
     },
   },
+
   // tooltip: {
   //   headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
   //   pointFormat:
@@ -61,6 +65,7 @@ export const chartOptions = (siteCurrency) => ({
   //   shared: true,
   //   useHTML: true,
   // },
+
 
   tooltip: {
     formatter: function () {
