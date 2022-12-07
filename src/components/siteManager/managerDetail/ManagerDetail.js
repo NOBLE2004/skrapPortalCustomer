@@ -9,7 +9,8 @@ const ManagerDetail = (props) => {
   const { title, siteData, setUpdateManager } = props;
   const history = useHistory();
   const [userData, setUserData] = useState({});
-  const { address_data, mobile_number, site_assigned, email, user_id, name,site_name } =
+  const { address_data, mobile_number, site_assigned, email, user_id, name,site_name,utilization
+  } =
     siteData;
   const handleManagerDetail = (id, data) => {
     history.push("/site-managers/" + id);
@@ -33,6 +34,7 @@ const ManagerDetail = (props) => {
     setUserData(user);
   }, [])
 
+ 
   return (
     <Card
       className="manager-detail-main"
@@ -56,7 +58,7 @@ const ManagerDetail = (props) => {
             </div>
             {userData?.country_currency?.country_code === "+49" &&
                 <div className="profile-action">
-                  <div className="edit-title">Utilisation rating 6/10</div>
+                  <div className="edit-title">Utilisation rating {utilization}%</div>
                 </div>
             }
           </Grid>

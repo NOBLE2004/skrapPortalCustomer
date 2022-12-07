@@ -135,7 +135,7 @@ const Sites = (props) => {
         <Grid item md={12}>
           <div className="common-search-for-tables">
             <CommonSearch
-              cname="postcode"
+              cname=""
               handleChangeSearch={handleChangeSearch}
             />
             <SiteFilters handleChangeFilters={handleChangeFilters} />
