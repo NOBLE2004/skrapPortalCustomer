@@ -16,6 +16,7 @@ import { smallPieData, siteMovementData } from "./constant";
 import "./index.scss";
 import { numberWithCommas } from "../../../utlils/dashboard";
 
+
 const SiteMovementsReport = (props) => {
   const { sites, showMore } = props;
   const [show, setShow] = useState(false);
@@ -54,6 +55,7 @@ const SiteMovementsReport = (props) => {
         <div className="salesWp">
           {state?.data?.result?.total ? (
             <h1>
+            
               {numberWithCommas(state?.data?.result?.total)} <span>Total bookings</span>
             </h1>
           ) : (

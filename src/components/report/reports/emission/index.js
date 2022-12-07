@@ -19,6 +19,7 @@ import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal"
 import { numberWithCommas } from "../../../utlils/dashboard";
 
 
+
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   width: "100%",
@@ -222,6 +223,7 @@ const EmissionReport = (props) => {
       <Card className="report-chart-card" id={"emissions"}>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
+
             <h1>
             {state?.data?.year?.length > 0
                 ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
@@ -250,6 +252,7 @@ const EmissionReport = (props) => {
                   <div className="total">
                     Total CO2:{" "}
                     <span>
+                    
                       {state?.data?.year?.length > 0
                         ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
                         : `0.00`}{" "}
