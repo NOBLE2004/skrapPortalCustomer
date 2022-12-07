@@ -56,7 +56,7 @@ const JobDetail = ({ job }) => {
         <div className="info">
           <div className="designation">Co2</div>
           <div className="personal-title">
-            {job?.co2 ? `${job?.co2}kg` : "----"}
+            {job?.co2 ? `${Number(job?.co2).toFixed(2)}kg` : "----"}
           </div>
         </div>
       </div>
