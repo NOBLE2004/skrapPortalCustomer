@@ -83,10 +83,11 @@ const FinanceReport = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      if (sites !== "") {
-        await dispatch(getSiteBreakdown({ sites: [sites] }));
-        await dispatch(getHireBreakdown({ sites: [sites] }));
-      }
+      //if (sites !== "") {
+      await dispatch(getSiteBreakdown(sites !=='' &&{ sites: [sites] }));
+      await dispatch(getHireBreakdown(sites !=='' &&{ sites: [sites] }));
+
+      //}
     }
     fetchData();
   }, [sites]);

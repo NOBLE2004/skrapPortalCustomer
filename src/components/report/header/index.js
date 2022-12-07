@@ -64,9 +64,10 @@ const ReportHeader = (props) => {
   }, []);
 
   useEffect(() => {
-    if (props?.allsites?.data) {
-      setSelected(props?.allsites?.data?.[0]?.address_id);
-    }
+    // if (props?.allsites?.data) {
+    //
+    //   setSelected(props?.allsites?.data?.map(x => x.address_id));
+    // }
   }, [props.allsites.data]);
 
   useEffect(() => {
