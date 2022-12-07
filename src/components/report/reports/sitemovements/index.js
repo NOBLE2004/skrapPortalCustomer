@@ -16,38 +16,37 @@ import { smallPieData, siteMovementData } from "./constant";
 import "./index.scss";
 import { numberWithCommas } from "../../../utlils/dashboard";
 
-
 const SiteMovementsReport = (props) => {
   const { sites, showMore } = props;
   const [show, setShow] = useState(false);
   const state = useSelector((state) => state?.siteMovements);
   const siteDetail = useSelector((state) => state?.siteMovementDetail);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     if (sites !== "") {
-  //       await dispatch(getSitesMovement({ sites: [sites] }));
-  //     }
-  //   }
-  //   fetchData();
-  // }, [sites]);
-
-  // useEffect(() => {
-  //   if (sites !== "") {
-  //     dispatch(getSiteMovementDetails({ sites: [sites] }));
-  //   }
-  // }, [sites]);
-
   useEffect(() => {
     async function fetchData() {
-      await dispatch(getSitesMovement({ sites: sites }));
+      // if (sites !== "") {
+      await dispatch(getSitesMovement(sites !== "" && { sites: [sites] }));
+      // }
     }
     fetchData();
   }, [sites]);
 
   useEffect(() => {
-    dispatch(getSiteMovementDetails({ sites: sites }));
+    // if (sites !== "") {
+    dispatch(getSiteMovementDetails(sites !== "" && { sites: [sites] }));
+    // }
   }, [sites]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     await dispatch(getSitesMovement({ sites: sites }));
+  //   }
+  //   fetchData();
+  // }, [sites]);
+
+  // useEffect(() => {
+  //   dispatch(getSiteMovementDetails({ sites: sites }));
+  // }, [sites]);
 
   return (
     <Card className="report-chart-card " id="site_movements">
@@ -55,8 +54,8 @@ const SiteMovementsReport = (props) => {
         <div className="salesWp">
           {state?.data?.result?.total ? (
             <h1>
-            
-              {numberWithCommas(state?.data?.result?.total)} <span>Total bookings</span>
+              {numberWithCommas(state?.data?.result?.total)}{" "}
+              <span>Total bookings</span>
             </h1>
           ) : (
             <h1>0.00</h1>

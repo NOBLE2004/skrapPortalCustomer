@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import "./index.scss";
 import { numberWithCommas } from "../../../utlils/dashboard";
 
-
 const Co2breakdownReport = (props) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state?.landfillDiversion);
@@ -21,30 +20,29 @@ const Co2breakdownReport = (props) => {
   const recycledData = useSelector((state) => state?.recycled);
   const { sites, showMore } = props;
   const [show, setShow] = useState(false);
-  // useEffect(() => {
-  //   if (sites !== "") {
-  //     dispatch(getLandfillDiversion({ sites: [sites] }));
-  //     dispatch(getTonnage({ sites: [sites] }));
-  //     dispatch(getWaste({ sites: [sites] }));
-  //     dispatch(getWasteOfEnergy({ sites: [sites] }));
-  //     dispatch(getRecycled({ sites: [sites] }));
-  //   }
-  // }, [sites]);
-
   useEffect(() => {
-    dispatch(getLandfillDiversion({ sites: sites }));
-    dispatch(getTonnage({ sites: sites }));
-    dispatch(getWaste({ sites: sites }));
-    dispatch(getWasteOfEnergy({ sites: sites }));
-    dispatch(getRecycled({ sites: sites }));
+    // if (sites !== "") {
+    dispatch(getLandfillDiversion(sites !== "" && { sites: [sites] }));
+    dispatch(getTonnage(sites !== "" && { sites: [sites] }));
+    dispatch(getWaste(sites !== "" && { sites: [sites] }));
+    dispatch(getWasteOfEnergy(sites !== "" && { sites: [sites] }));
+    dispatch(getRecycled(sites !== "" && { sites: [sites] }));
+    // }
   }, [sites]);
+
+  // useEffect(() => {
+  //   dispatch(getLandfillDiversion({ sites: sites }));
+  //   dispatch(getTonnage({ sites: sites }));
+  //   dispatch(getWaste({ sites: sites }));
+  //   dispatch(getWasteOfEnergy({ sites: sites }));
+  //   dispatch(getRecycled({ sites: sites }));
+  // }, [sites]);
 
   return (
     <Card className="report-chart-card" id="waste_statistics">
       <CardContent>
         <div className="salesWp">
           <h1>
-          
             {tonnageData?.data?.result?.total
               ? numberWithCommas(tonnageData?.data?.result?.total?.toFixed(2))
               : "0.00"}
@@ -183,7 +181,7 @@ const Co2breakdownReport = (props) => {
               </div>
             </div>
           )}
-          <div
+          {/* <div
             className="see-more"
             style={showMore ? { opacity: 0 } : { opacity: 1 }}
             onClick={() => {
@@ -192,107 +190,105 @@ const Co2breakdownReport = (props) => {
           >
             See more
           </div>
-          {show && (
-            <div className="see-more-wrap">
-              <div className="border-drop"></div>
-              {tonnageData?.isLoading && wasteData?.isLoading ? (
-                <div className="d-flex justify-center align-center">
-                  <FadeLoader
-                    color={"#518ef8"}
-                    loading={tonnageData?.isLoading && wasteData?.isLoading}
-                    width={4}
-                  />
-                </div>
-              ) : (
-                <div className="more-drop">
-                  <div className="sub-heading">Waste breakdown</div>
-                  <Grid
-                    container
-                    spacing={2}
-                    marginTop={1}
-                    style={{
-                      height:
-                        wasteData?.data?.result?.length > 10
-                          ? "300px"
-                          : "unset",
-                    }}
-                    className="waste-main"
-                  >
-                    {wasteData?.data?.result?.map((single, index) => {
-                      return (
-                        <Grid
-                          item
-                          md={4}
-                          lg={3}
-                          sm={4}
-                          xs={4}
-                          className="waste-box"
-                          key={index}
+          {show && ( */}
+          <div className="see-more-wrap">
+            <div className="border-drop"></div>
+            {tonnageData?.isLoading && wasteData?.isLoading ? (
+              <div className="d-flex justify-center align-center">
+                <FadeLoader
+                  color={"#518ef8"}
+                  loading={tonnageData?.isLoading && wasteData?.isLoading}
+                  width={4}
+                />
+              </div>
+            ) : (
+              <div className="more-drop">
+                <div className="sub-heading">Waste breakdown</div>
+                <Grid
+                  container
+                  spacing={2}
+                  marginTop={1}
+                  style={{
+                    height:
+                      wasteData?.data?.result?.length > 10 ? "300px" : "unset",
+                  }}
+                  className="waste-main"
+                >
+                  {wasteData?.data?.result?.map((single, index) => {
+                    return (
+                      <Grid
+                        item
+                        md={4}
+                        lg={3}
+                        sm={4}
+                        xs={4}
+                        className="waste-box"
+                        key={index}
+                      >
+                        <div
+                          className="waste-detail "
+                          style={{
+                            color: single.waste > 50 ? "#50D226" : "grey",
+                          }}
                         >
-                          <div
-                            className="waste-detail "
-                            style={{
-                              color: single.waste > 50 ? "#50D226" : "grey",
-                            }}
-                          >
-                            <div className="name">{single.name}</div>
-                            <div className="percentage">
-                              {single.waste === null ? 0 : single.waste}T
-                            </div>
-                          </div>
-                        </Grid>
-                      );
-                    })}
-                  </Grid>
-                  <div className="sub-heading">Site breakdown</div>
-
-                  <div className="main-emission-break-down-2">
-                    {tonnageData?.data?.result?.data?.map((service, index) => {
-                      return (
-                        <div className="inner-break-down" key={index}>
-                          <div className="circle-main">
-                            <div
-                              className="circle"
-                              style={{
-                                width: `${
-                                  service.tonnage === 0
-                                    ? 10
-                                    : service?.tonnage > 100
-                                    ? 100
-                                    : service?.tonnage + 20
-                                }px`,
-                                height: `${
-                                  service.tonnage === 0
-                                    ? 10
-                                    : service?.tonnage > 100
-                                    ? 100
-                                    : service?.tonnage + 20
-                                }px`,
-                                background:
-                                  index % 3 === 0
-                                    ? "#0F2851"
-                                    : index % 3 === 1
-                                    ? "#4981F8"
-                                    : "#60A0F8",
-                                borderRadius: "50%",
-                                margin: "auto",
-                              }}
-                            />
-                          </div>
-                          <div className="site-name">
-                            <div className="site">{service.address}</div>
-                            <div className="percentage">
-                              {service?.tonnage?.toFixed(2)} T
-                            </div>
+                          <div className="name">{single.name}</div>
+                          <div className="percentage">
+                            {single.waste === null ? 0 : single.waste}T
                           </div>
                         </div>
-                      );
-                    })}
-                  </div>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+                <div className="sub-heading">Site breakdown</div>
+
+                <div className="main-emission-break-down-2">
+                  {tonnageData?.data?.result?.data?.map((service, index) => {
+                    return (
+                      <div className="inner-break-down" key={index}>
+                        <div className="circle-main">
+                          <div
+                            className="circle"
+                            style={{
+                              width: `${
+                                service.tonnage === 0
+                                  ? 10
+                                  : service?.tonnage > 100
+                                  ? 100
+                                  : service?.tonnage + 20
+                              }px`,
+                              height: `${
+                                service.tonnage === 0
+                                  ? 10
+                                  : service?.tonnage > 100
+                                  ? 100
+                                  : service?.tonnage + 20
+                              }px`,
+                              background:
+                                index % 3 === 0
+                                  ? "#0F2851"
+                                  : index % 3 === 1
+                                  ? "#4981F8"
+                                  : "#60A0F8",
+                              borderRadius: "50%",
+                              margin: "auto",
+                            }}
+                          />
+                        </div>
+                        <div className="site-name">
+                          <div className="site">{service.address}</div>
+                          <div className="percentage">
+                            {service?.tonnage?.toFixed(2)} T
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              )}
-            </div>
-          )}
+              </div>
+            )}
+          </div>
+          {/* )} */}
         </div>
       </CardContent>
     </Card>
