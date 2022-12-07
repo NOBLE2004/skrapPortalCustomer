@@ -234,7 +234,7 @@ const SiteManagerTable = ({
         disableFilters: true,
         show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
-          return <>{props.cell.row.original?.co2  ?`${props.cell.row.original?.co2}kg`
+          return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
              : ''}</>;
         },
       },
@@ -443,7 +443,7 @@ const SiteManagerTable = ({
         disableFilters: true,
         show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
-          return <>{props.cell.row.original?.co2  ?`${props.cell.row.original?.co2}kg`
+          return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
              : ''}</>;
         },
       },

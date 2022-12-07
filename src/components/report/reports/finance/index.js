@@ -81,23 +81,23 @@ const FinanceReport = (props) => {
     });
   }, [stateSites?.site_breakdown]);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     if (sites !== "") {
-  //       await dispatch(getSiteBreakdown({ sites: [sites] }));
-  //       await dispatch(getHireBreakdown({ sites: [sites] }));
-  //     }
-  //   }
-  //   fetchData();
-  // }, [sites]);
-
   useEffect(() => {
     async function fetchData() {
-      await dispatch(getSiteBreakdown({ sites: sites }));
-      await dispatch(getHireBreakdown({ sites: sites }));
+      // if (sites !== "") {
+        await dispatch(getSiteBreakdown(sites !=='' &&{ sites: [sites] }));
+        await dispatch(getHireBreakdown(sites !=='' &&{ sites: [sites] }));
+      // }
     }
     fetchData();
   }, [sites]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     await dispatch(getSiteBreakdown({ sites: sites }));
+  //     await dispatch(getHireBreakdown({ sites: sites }));
+  //   }
+  //   fetchData();
+  // }, [sites]);
 
   return (
     <Card className="report-chart-card" id={"finance"}>

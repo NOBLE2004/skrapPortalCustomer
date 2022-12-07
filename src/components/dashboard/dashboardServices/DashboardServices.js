@@ -30,8 +30,20 @@ const DashboardServices = ({ servicesData, loading }) => {
     // ,
     // Compactor,Trailer
   } = servicesData;
-  console.log("ser", servicesData);
   const [services, setServices] = useState([]);
+
+  const dummyService = [
+    {
+      count: 63,
+      name: "Trailer",
+      total: 92160,
+    },
+    {
+      count: 0,
+      name: "Compactor",
+      total: 0,
+    },
+  ];
 
   useEffect(() => {
     // if(country_code==='+49'){
@@ -39,22 +51,22 @@ const DashboardServices = ({ servicesData, loading }) => {
     //   Trailer.name = "Trailer";
     // }
     if (servicesData) {
-      Cage.name = "Cage";
+      // Cage.name = "Cage";
 
       // Trailer.name = "Trailer";
 
       // Compacter.name = "Compacter";
 
       Skip.name = "Skip";
-      Grab.name = "Grab";
-      Aggregate.name = "Aggregate";
-      PortableToilet.name = "PortableToilet";
+      // Grab.name = "Grab";
+      // Aggregate.name = "Aggregate";
+      // PortableToilet.name = "PortableToilet";
       let list = [
-        Cage,
+        // Cage,
         Skip,
-        Grab,
-        Aggregate,
-        PortableToilet,
+        // Grab,
+        // Aggregate,
+        // PortableToilet,
         // Trailer,
         // Compacter,
         // ,Compactor,Trailer
@@ -64,9 +76,11 @@ const DashboardServices = ({ servicesData, loading }) => {
         var y = b["count"];
         return x < y ? 1 : x > y ? -1 : 0;
       });
-      setServices(list);
+      setServices([...list, ...dummyService]);
     }
   }, [servicesData]);
+
+  console.log("ser", services);
 
   return (
     <>

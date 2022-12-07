@@ -112,9 +112,6 @@ const DashBoard = (props) => {
   //   );
   // }
 
-  console.log("info", info);
-  console.log("dashboardSale", dashboardSale);
-
   return (
     <>
       {/* // info && ( */}
