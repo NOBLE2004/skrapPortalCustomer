@@ -224,7 +224,7 @@ const SiteManagerTable = ({
         show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
         Cell: (props) => {
           return <span>{
-               props?.cell?.row?.original?.utilization ?`${props?.cell?.row?.original?.utilization?.toFixed(2)}%` : ''
+               props?.cell?.row?.original?.utilization ?`${Number(props?.cell?.row?.original?.utilization)?.toFixed()}%` : ''
           }</span>;
         },
       },
@@ -433,7 +433,7 @@ const SiteManagerTable = ({
         show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
         Cell: (props) => {
           return <span>{
-               props?.cell?.row?.original?.utilization ?`${props?.cell?.row?.original?.utilization?.toFixed(2)}%` : ''
+               props?.cell?.row?.original?.utilization ?`${Number(props?.cell?.row?.original?.utilization)?.toFixed()}%` : ''
           }</span>;
         },
       },

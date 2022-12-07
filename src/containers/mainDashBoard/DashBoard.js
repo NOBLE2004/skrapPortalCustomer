@@ -50,7 +50,6 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const DashBoard = (props) => {
-  console.log('dashboard',dummyDashboardData)
   const [showInfoIndex, setShowInfoIndex] = useState(null);
   const [isNewYear, setNewYear] = useState(false);
   const [latestYear, setLatestYear] = useState(2022);

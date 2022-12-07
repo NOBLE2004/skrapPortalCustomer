@@ -78,22 +78,38 @@ const SpendChart = ({
       labels: {
         formatter() {
           const getLabel = (value) => {
-            return `${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'}${numberWithCommas(value)}`;
+            return `${
+              localStorage.getItem("currency")
+                ? localStorage.getItem("currency")
+                : "£"
+            }${numberWithCommas(value)}`;
           };
           return getLabel(numberWithCommas(this.value));
         },
       },
     },
     tooltip: {
-      headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-      pointFormat:
-        '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-        `<td style="padding:0"><b>${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'} {point.y:.1f} </b></td></tr>`,
-      footerFormat: "</table>",
+      formatter: function () {
+        let s = `<b> ${this.x} </b>`;
+        this.points.forEach((point) => {
+          if (point?.series?.name !== "null") {
+            s += `<br/> ${point.series.name} : ${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'} ${numberWithCommas(point.y)}`;
+          }
+        });
+        return s;
+      },
       shared: true,
-      useHTML: true,
     },
-    
+    // tooltip: {
+    //   headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+    //   pointFormat:
+    //     '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //     `<td style="padding:0"><b>${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'}  {point.y:.1f} </b></td></tr>`,
+    //   footerFormat: "</table>",
+    //   shared: true,
+    //   useHTML: true,
+    // },
+
     plotOptions: {
       column: {
         grouping: false,
