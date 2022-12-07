@@ -9,6 +9,8 @@ import { getRecycled } from "../../../../store/actions/action.recycled";
 import FadeLoader from "react-spinners/FadeLoader";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
+import { numberWithCommas } from "../../../utlils/dashboard";
+
 
 const Co2breakdownReport = (props) => {
   const dispatch = useDispatch();
@@ -42,8 +44,9 @@ const Co2breakdownReport = (props) => {
       <CardContent>
         <div className="salesWp">
           <h1>
+          
             {tonnageData?.data?.result?.total
-              ? tonnageData?.data?.result?.total?.toFixed(2)
+              ? numberWithCommas(tonnageData?.data?.result?.total?.toFixed(2))
               : "0.00"}
             &nbsp;
             <span>
