@@ -1,7 +1,12 @@
 import { combineReducers } from "redux";
 import { authReducer, signUpReducer } from "./authReducer";
 import { siteManagerReducer } from "./siteManagerReducer";
-import { dashboardReducer } from "./dashboardReducer";
+import {
+  dashboardReducer,
+  dashboardMapReducer,
+  dashboardSaleReducer,
+  dashboardServiceReducer,
+} from "./dashboardReducer";
 import { sitesReducer } from "./sitesReducer";
 import { allSiteReducer } from "./allSiteReducer";
 import { jobReducer } from "./jobReducer";
@@ -35,6 +40,9 @@ export default combineReducers({
   signup: signUpReducer,
   siteManager: siteManagerReducer,
   dashboard: dashboardReducer,
+  dashboardMap: dashboardMapReducer,
+  dashboardService: dashboardServiceReducer,
+  dashboardSale: dashboardSaleReducer,
   sites: sitesReducer,
   jobs: jobReducer,
   allsites: allSiteReducer,
