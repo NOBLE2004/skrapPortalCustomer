@@ -12,12 +12,14 @@ import { lineChartData, data2 } from "./constant";
 import { spendChartOptions, dates } from "../../utlils/constants";
 import "./spendchart.scss";
 import { numberWithCommas } from "../../utlils/dashboard";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const SpendChart = ({
   chartData,
   getDashBoardData,
   startDate,
   setStartDate,
+  loading,
 }) => {
   const [max, setMax] = useState();
   const handleYearChange = (event) => {
@@ -31,6 +33,8 @@ const SpendChart = ({
     });
     setMax(Math.max(...arr));
   }, []);
+
+  console.log("chart", chartData);
   const spendChartData = {
     chart: {
       type: "column",
@@ -93,7 +97,11 @@ const SpendChart = ({
         let s = `<b> ${this.x} </b>`;
         this.points.forEach((point) => {
           if (point?.series?.name !== "null") {
-            s += `<br/> ${point.series.name} : ${localStorage.getItem("currency")?localStorage.getItem("currency"):'£'} ${numberWithCommas(point.y)}`;
+            s += `<br/> ${point.series.name} : ${
+              localStorage.getItem("currency")
+                ? localStorage.getItem("currency")
+                : "£"
+            } ${numberWithCommas(point.y)}`;
           }
         });
         return s;
@@ -223,32 +231,45 @@ const SpendChart = ({
 
   return (
     <Card className="graphCard">
-      <CardContent>
-        <div className="salesWp">
-          <div className="dateWp">
-            <div>
-              <span className="primary-title">Spend</span>
-              <div className="spend-filter-year">
-                <p>Filter by year:</p>
-                <div className="date-picker-main">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => handleYearChange(date)}
-                    showYearPicker
-                    dateFormat="yyyy"
-                    yearItemNumber={15}
-                    customInput={<ExampleCustomInput />}
-                    maxDate={new Date()}
-                  />
+      {loading ? (
+        <Box
+          height={"100px"}
+          display="flex"
+          // my={2}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <FadeLoader color={"#518ef8"} loading={loading} width={4} />
+        </Box>
+      ) : (
+        <CardContent>
+          <div className="salesWp">
+            <div className="dateWp">
+              <div>
+                <span className="primary-title">Spend</span>
+                <div className="spend-filter-year">
+                  <p>Filter by year:</p>
+                  <div className="date-picker-main">
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => handleYearChange(date)}
+                      showYearPicker
+                      dateFormat="yyyy"
+                      yearItemNumber={15}
+                      customInput={<ExampleCustomInput />}
+                      maxDate={new Date()}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <Box className="spend-bar-chart">
-          <HighchartsReact highcharts={Highcharts} options={spendChartData} />
-        </Box>
-      </CardContent>
+
+          <Box className="spend-bar-chart">
+            <HighchartsReact highcharts={Highcharts} options={spendChartData} />
+          </Box>
+        </CardContent>
+      )}
     </Card>
   );
 };
