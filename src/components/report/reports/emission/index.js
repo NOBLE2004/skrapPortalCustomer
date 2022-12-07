@@ -16,6 +16,8 @@ import { getReportSiteBreakDownEmissions } from "../../../../store/actions/actio
 import { getReportEmissionVehicles } from "../../../../store/actions/action.reportEmisionVehicle";
 import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
+import { numberWithCommas } from "../../../utlils/dashboard";
+
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -221,8 +223,8 @@ const EmissionReport = (props) => {
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
             <h1>
-              {state?.data?.year?.length > 0
-                ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
+            {state?.data?.year?.length > 0
+                ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
                 : `0.00`}{" "}
               <span>kg of CO2e Cumulative Emissions</span>
             </h1>
@@ -249,7 +251,7 @@ const EmissionReport = (props) => {
                     Total CO2:{" "}
                     <span>
                       {state?.data?.year?.length > 0
-                        ? state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
+                        ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
                         : `0.00`}{" "}
                       Kg
                     </span>

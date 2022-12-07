@@ -14,6 +14,7 @@ import { getSiteMovementDetails } from "../../../../store/actions/action.siteMov
 import FadeLoader from "react-spinners/FadeLoader";
 import { smallPieData, siteMovementData } from "./constant";
 import "./index.scss";
+import { numberWithCommas } from "../../../utlils/dashboard";
 
 const SiteMovementsReport = (props) => {
   const { sites, showMore } = props;
@@ -53,7 +54,7 @@ const SiteMovementsReport = (props) => {
         <div className="salesWp">
           {state?.data?.result?.total ? (
             <h1>
-              {state?.data?.result?.total} <span>Total bookings</span>
+              {numberWithCommas(state?.data?.result?.total)} <span>Total bookings</span>
             </h1>
           ) : (
             <h1>0.00</h1>

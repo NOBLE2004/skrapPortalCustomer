@@ -1,3 +1,4 @@
+import { numberWithCommas } from "../../../utlils/dashboard";
 export const chartOptions = (siteCurrency) => ({
   chart: {
     type: "column",
@@ -45,21 +46,35 @@ export const chartOptions = (siteCurrency) => ({
     labels: {
       formatter() {
         const getLabel = (value) => {
-          return `${value} kg`;
+          return `${numberWithCommas(value)} kg`;
         };
-        return getLabel(this.value);
+        return getLabel(numberWithCommas(this.value));
       },
     },
   },
+  // tooltip: {
+  //   headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+  //   pointFormat:
+  //     '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+  //     '<td style="padding:0"><b>{point.y:.1f} kg</b></td></tr>',
+  //   footerFormat: "</table>",
+  //   shared: true,
+  //   useHTML: true,
+  // },
+
   tooltip: {
-    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-    pointFormat:
-      '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-      '<td style="padding:0"><b>{point.y:.1f} kg</b></td></tr>',
-    footerFormat: "</table>",
+    formatter: function () {
+      let s = `<b> ${this.x} </b>`;
+      this.points.forEach((point) => {
+        if (point?.series?.name !== "null") {
+          s += `<br/> ${point.series.name} :  ${numberWithCommas(point.y)} kg`;
+        }
+      });
+      return s;
+    },
     shared: true,
-    useHTML: true,
   },
+  
   plotOptions: {
     column: {
       grouping: false,
@@ -142,6 +157,7 @@ export const data2 = (siteCurrency) => ({
       },
     },
   },
+
   tooltip: {
     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
     pointFormat:
