@@ -267,11 +267,12 @@ const SiteManagerTable = ({
         accessor: "job_id",
         id: "invoice",
         Cell: (props) => {
-          return props.row.original.appointment_status === 4 ||
-            props.row.original.appointment_status == 3 ? (
+          return props?.row?.original?.appointment_status === 4 ||
+            props?.row?.original?.appointment_status == 3 ? (
             <>
-              {userData?.country_currency?.country_code === "+49" &&
-              props.cell.row.original.appointment_status===3 ? (
+           
+              {/* {userData?.country_currency?.country_code === "+49" &&
+              props.cell.row.original.appointment.appointment_status===3 ? ( */}
                 <span
                   className="normal-dsans-10-primary"
                   onClick={(e) => downloadInvoice(e, props.value)}
@@ -283,9 +284,9 @@ const SiteManagerTable = ({
                     style={{ marginLeft: "5px" }}
                   />
                 </span>
-              ) : (
+              {/* ) : (
                 ""
-              )}
+              )} */}
             </>
           ) : (
             ""
@@ -476,11 +477,11 @@ const SiteManagerTable = ({
         accessor: "job_id",
         id: "invoice",
         Cell: (props) => {
-          return props.row.original.appointment_status === 4 ||
-            props.row.original.appointment_status == 3 ? (
+           return props?.row?.original?.appointment?.appointment_status === 4 ||
+            props?.row?.original?.appointment?.appointment_status == 3 ? (
             <>
-              {userData?.country_currency?.country_code === "+49" &&
-              props.cell.row.original.appointment_status===3 ? (
+              {/* {userData?.country_currency?.country_code === "+49" &&
+              props.cell.row.original.appointment_status===3 ? ( */}
                 <span
                   className="normal-dsans-10-primary"
                   onClick={(e) => downloadInvoice(e, props.value)}
@@ -492,9 +493,9 @@ const SiteManagerTable = ({
                     style={{ marginLeft: "5px" }}
                   />
                 </span>
-              ) : (
+              {/* ) : (
                 ""
-              )}
+              )} */}
             </>
           ) : (
             ""
@@ -579,7 +580,7 @@ const SiteManagerTable = ({
       <TableContainer
         columns={siteDetail ? sitesDetailColumns : columns}
         data={jobs}
-        // name={"jobs"}
+         name={"jobs"}
       />
       <div className="site-pagination">
         <Pagination

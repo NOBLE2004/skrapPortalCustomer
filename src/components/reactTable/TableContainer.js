@@ -7,12 +7,14 @@ import {
   useGlobalFilter,
 } from "react-table";
 import { DefaultColumnFilter } from "./filters";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import usePagePosition from "../../hooks/usePagePosition";
 import "./jobs-react-table.scss";
 
 const TableContainer = ({ columns, data, name }) => {
   const history = useHistory();
+  const location = useLocation();
+
   const [cellWidth, setCellWidth] = useState(100);
   const [cellPadding, setCellPadding] = useState("10px");
   const [yPosition, setYposition] = useState(0);
@@ -62,7 +64,9 @@ const TableContainer = ({ columns, data, name }) => {
 
   const handleRowClick = (row) => {
     if (name === "jobs") {
-      history.push({ pathname: `job-detail/${row.job_id}` });
+      // if (history?.location?.pathname !== "sites/:id") {
+        history.push({ pathname: `/job-detail/${row.job_id}` });
+      
     }
     if (name === "sites") {
       history.push({
