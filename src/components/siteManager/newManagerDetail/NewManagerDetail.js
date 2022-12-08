@@ -3,19 +3,19 @@ import { Grid, Card, CardContent } from "@mui/material";
 import { personImage, editIcon, showIcon } from "../../../assets/images";
 import AssignToManager from "../../../components/modals/assignToManager/AssignToManager";
 import "./newmanagerdetail.scss";
-import {getUserDataFromLocalStorage} from "../../../services/utils";
+import { getUserDataFromLocalStorage } from "../../../services/utils";
 
 const NewManagerDetail = ({ managerData, setReload }) => {
-  const { data, site, address } = managerData;
-    const [userData, setUserData] = useState({});
+  const { data, site, address, utilization } = managerData;
+  const [userData, setUserData] = useState({});
   const [isManagerOpen, setIsManagerOpen] = useState(false);
 
-    useEffect(()=>{
-        const user = getUserDataFromLocalStorage();
-        setUserData(user);
-    }, [])
+  useEffect(() => {
+    const user = getUserDataFromLocalStorage();
+    setUserData(user);
+  }, []);
 
-    return (
+  return (
     <div>
       {data ? (
         <Card className="new-manager-detail-main">
@@ -69,14 +69,14 @@ const NewManagerDetail = ({ managerData, setReload }) => {
                     {data ? data.mobile_number : "n/a"}
                   </div>
                 </div>
-                  {userData?.country_currency?.country_code === "+49" &&
-                      <div className="info">
-                          <div className="designation">Utilisation rating</div>
-                          <div className="personal-title">
-                              6/10
-                          </div>
-                      </div>
-                  }
+                {userData?.country_currency?.country_code === "+49" && (
+                  <div className="info">
+                    <div className="designation">Utilisation rating</div>
+                    <div className="personal-title">
+                      {utilization ? utilization : 0}/10
+                    </div>
+                  </div>
+                )}
               </Grid>
             </Grid>
           </CardContent>

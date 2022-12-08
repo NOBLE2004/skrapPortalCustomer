@@ -88,10 +88,18 @@ const DashBoard = (props) => {
 
   useEffect(() => {
     dispatch(getLandfillDiversion());
-    dispatch(getDashboardsMapData());
-    dispatch(getDashboardServiceData());
-    dispatch(getDashboardSaleData());
-    dispatch(getDashboardsData());
+    if (!dashboardMap?.info) {
+      dispatch(getDashboardsMapData());
+    }
+    if (!dashboardService?.info) {
+      dispatch(getDashboardServiceData());
+    }
+    if (!dashboardService?.info) {
+      dispatch(getDashboardSaleData());
+    }
+    if (!dashboardData?.info) {
+      dispatch(getDashboardsData());
+    }
   }, []);
 
   useEffect(() => {

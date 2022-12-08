@@ -21,6 +21,15 @@ body {
 .rdrDateRangeWrapper {
   border-left: 1px solid gainsboro;
 }
+ 
+
+.jobs-date-picker .rdrDateRangePickerWrapper {
+  position: absolute;
+  top: unset!important;
+  border: 1px solid gainsboro;
+  right: unset!important;
+  z-index: 2;
+}
 .rdrDateRangePickerWrapper {
   position: absolute;
   top: 100%;

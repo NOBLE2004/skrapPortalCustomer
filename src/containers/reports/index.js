@@ -20,8 +20,8 @@ import { saveAs } from "file-saver";
 const NewReports = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState('');
-  // const [selected, setSelected] = useState([]);
+  // const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState([]);
 
   const [startDate, setStartDate] = useState(new Date());
   const [csvData, setCsvData] = useState([]);
@@ -156,19 +156,19 @@ const NewReports = () => {
     }
   }, [state, reports]);
 
-  useEffect(() => {
-    // if (selected) {
-      dispatch(getLandfillDiversionList(selected !=='' &&{ sites: [selected] }));
-      dispatch(getSiteBreakdownlist(selected !=='' &&{ sites: [selected] }));
-      dispatch(getSitesMovementList(selected !=='' &&{ sites: [selected] }));
-    // }
-  }, [selected]);
-
   // useEffect(() => {
-  //   dispatch(getLandfillDiversionList({ sites: selected }));
-  //   dispatch(getSiteBreakdownlist({ sites: selected }));
-  //   dispatch(getSitesMovementList({ sites: selected }));
+  //   // if (selected) {
+  //     dispatch(getLandfillDiversionList(selected !=='' &&{ sites: [selected] }));
+  //     dispatch(getSiteBreakdownlist(selected !=='' &&{ sites: [selected] }));
+  //     dispatch(getSitesMovementList(selected !=='' &&{ sites: [selected] }));
+  //   // }
   // }, [selected]);
+
+  useEffect(() => {
+    dispatch(getLandfillDiversionList({ sites: selected }));
+    dispatch(getSiteBreakdownlist({ sites: selected }));
+    dispatch(getSitesMovementList({ sites: selected }));
+  }, [selected]);
 
   return (
     <>

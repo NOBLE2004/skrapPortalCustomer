@@ -210,7 +210,7 @@ const JobsTable = ({
       },
       {
         Header: "Booked",
-        accessor: "save_date",
+        accessor: "job_time",
         disableFilters: true,
         Cell: (props) => new Date(props.value).toLocaleDateString(),
       },
