@@ -33,7 +33,7 @@ const PoTable = ({ data, isManager }) => {
         accessor: (d) => d.max - d.uses,
         disableFilters: true,
         Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
+          return <span>{props.value || 0}</span>;
         },
       },
       {
