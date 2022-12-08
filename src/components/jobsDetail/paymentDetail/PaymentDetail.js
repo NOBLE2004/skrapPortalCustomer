@@ -62,7 +62,7 @@ const PaymentDetail = ({ job, updateJobs }) => {
             <div className="card-header-sub-title">Payment Methods</div>
             <div className="card-header-sub ">
               <span className="card-header-sub-title">Service Cost</span>
-              <span className="card-header-sub-title">Haulage Cost</span>
+              {/* <span className="card-header-sub-title">Haulage Cost</span> */}
               <span className="card-header-sub-title">Total cost</span>
               <span className="card-header-sub-title">Discount</span>
             </div>
@@ -76,9 +76,9 @@ const PaymentDetail = ({ job, updateJobs }) => {
               <span className="card-header-sub-item">
                 {`${currency?currency:'£'}`}{job?.service_rate?.toFixed(2)}
               </span>
-              <span className="card-header-sub-item">
+              {/* <span className="card-header-sub-item">
                 {`${currency?currency:'£'}`}{job?.haulage ? job?.haulage?.toFixed(2) : "0.00"}
-              </span>
+              </span> */}
               <span className="card-header-sub-item">
                 {`${currency?currency:'£'}`}{job?.transaction_cost?.toFixed(2)}
               </span>
