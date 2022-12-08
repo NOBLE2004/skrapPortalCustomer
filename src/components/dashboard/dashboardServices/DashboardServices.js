@@ -80,8 +80,6 @@ const DashboardServices = ({ servicesData, loading }) => {
     }
   }, [servicesData]);
 
-  console.log("ser", services);
-
   return (
     <>
       {loading ? (
@@ -124,9 +122,9 @@ const DashboardServices = ({ servicesData, loading }) => {
               </div>
             </div>
             <div className="progress-main">
-              {services?.map((service) => {
+              {services?.map((service,index) => {
                 return (
-                  <div className="progress-sub">
+                  <div className="progress-sub" key={index}>
                     <div
                       className="circular-progress"
                       style={{ position: "relative" }}

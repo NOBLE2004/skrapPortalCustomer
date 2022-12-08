@@ -61,7 +61,7 @@ const DashBoard = (props) => {
   const dashboardMap = useSelector((state) => state?.dashboardMap);
   const dashboardService = useSelector((state) => state?.dashboardService);
   const [isNewYear, setNewYear] = useState(false);
-  const [latestYear, setLatestYear] = useState(2022);
+  const [latestYear, setLatestYear] = useState();
   const [startDate, setStartDate] = useState();
   const state = useSelector((state) => state?.landfillDiversion);
   const [userData, setUserData] = useState({});
@@ -71,7 +71,7 @@ const DashBoard = (props) => {
   const info = dummyDashboardData;
 
   const getData = async (year) => {
-    setLatestYear(year);
+    // setLatestYear(year);
     if (isNewYear) {
       await getDashboardsData({ year: year });
     }
@@ -94,19 +94,19 @@ const DashBoard = (props) => {
     if (!dashboardService?.info) {
       dispatch(getDashboardServiceData());
     }
-    if (!dashboardService?.info) {
-      dispatch(getDashboardSaleData());
-    }
+    // if (!dashboardSale?.info) {
+    // dispatch(getDashboardSaleData());
+    // }
     if (!dashboardData?.info) {
       dispatch(getDashboardsData());
     }
   }, []);
 
   useEffect(() => {
-    if (!info | isNewYear) {
-      getData();
-    }
-  }, [isNewYear]);
+    // if (!info | isNewYear) {
+    dispatch(getDashboardSaleData({ year: latestYear }));
+    // }
+  }, [latestYear]);
 
   const gotoJobDetail = (id) => {
     history.push({ pathname: `job-detail/${id}` });
@@ -170,12 +170,12 @@ const DashBoard = (props) => {
         )}
         <Grid container className="spend-service-main" mt={1}>
           <SpendChart
-            chartData={dashboardSale?.info ? dashboardSale?.info : info}
+            chartData={dashboardSale?.info}
             loading={dashboardSale?.loading}
             getDashBoardData={getData}
             startDate={startDate}
             setStartDate={setStartDate}
-            latestYear={latestYear ? latestYear : 2022}
+            setLatestYear={setLatestYear}
           />
           <DashboardServices
             servicesData={dashboardService?.info ? dashboardService.info : ""}
