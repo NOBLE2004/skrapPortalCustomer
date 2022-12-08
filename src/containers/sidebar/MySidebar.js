@@ -222,7 +222,7 @@ const MySidebar = (props) => {
           >
             {userData.personal_detail && userData.personal_detail.profile_pic != "" ? (
               <img
-                style={{ width: "50%", height: "50%", borderRadius: "50%" }}
+                style={{   height: "50px", borderRadius: "50%" }}
                 src={userData?.personal_detail?.profile_pic}
                 alt={""}
               />
