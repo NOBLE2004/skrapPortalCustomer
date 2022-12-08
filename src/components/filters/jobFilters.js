@@ -68,18 +68,22 @@ const JobFilters = ({ handleChangeFilters }) => {
   };
   const handleDate = (item) => {
     setState([item.selection]);
-    const start = item.selection.startDate
-      .toLocaleDateString()
-      .replace(/\//g, "-");
-    const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
-    console.log(start, end);
+    // const start = item.selection.startDate
+    //     .toLocaleDateString()
+    //     .replace(/\//g, "-");
+    // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
+    const start = new Date(item.selection.startDate.toDateString() + ' UTC').toISOString().split('T')[0].split('-').reverse().join('-');
+    // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, '-');
+    const end = new Date(item.selection.endDate.toDateString() + ' UTC').toISOString().split('T')[0].split('-').reverse().join('-');
+    const newStartDate = moment(item.selection.startDate).format("DD-MM-YYYY");
+    const newEndDate = moment(item.selection.endDate).format("DD-MM-YYYY");
     if (start === end) {
-      setFilters({ ...filters, date: `${start},${end}` });
+        setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
     } else {
-      setFilters({ ...filters, date: `${start},${end}` });
-      setTogle(false);
+        setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
+        setTogle(false);
     }
-  };
+};
   const resetFilters = () => {
     setFilters({
       status: "",
@@ -96,7 +100,7 @@ const JobFilters = ({ handleChangeFilters }) => {
     ]);
   };
   return (
-    <>
+    <Grid>
       <Grid
         container
         className="filter-container"
@@ -111,6 +115,7 @@ const JobFilters = ({ handleChangeFilters }) => {
             Date
           </button>
           {togle && (
+            <div className="jobs-date-picker">
             <DateRangePicker
               editableDateInputs={false}
               onChange={handleDate}
@@ -118,6 +123,7 @@ const JobFilters = ({ handleChangeFilters }) => {
               ranges={state}
               direction="horizontal"
             />
+            </div>
           )}
         </Grid>
         <Grid item xs={2}>
@@ -270,7 +276,7 @@ const JobFilters = ({ handleChangeFilters }) => {
           </>
         </div>
       </div> */}
-    </>
+    </Grid>
   );
 };
 

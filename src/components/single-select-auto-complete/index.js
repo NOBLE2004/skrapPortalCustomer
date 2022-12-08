@@ -27,80 +27,77 @@ const SingleSelect = (props) => {
   );
 
   return (
-    <>
-      <FormControl
-        // sx={{
-        //   width: "300px",
-        // }}
-        size="small"
+    <FormControl
+      // sx={{
+      //   width: "300px",
+      // }}
+      size="small"
+      fullWidth
+      className="single-select-main"
+    >
+      <Select
         fullWidth
-        className="single-select-main"
+        name={name}
+        className="filter-option"
+        id="demo-simple-select-outlined"
+        value={value ? value : ""}
+        error={error}
+        displayEmpty
+        onChange={handleChange}
+        IconComponent={() => (
+          <KeyboardArrowDown
+            sx={{
+              color: "#518ef8",
+              fontSize: "20px",
+            }}
+          />
+        )}
+        sx={{ width: "100%" }}
+        size={"small"}
       >
-        <Select
-          fullWidth
-          name={name}
-          className="filter-option"
-          id="demo-simple-select-outlined"
-          value={value ? value : ""}
-          error={error}
-          displayEmpty
-          onChange={handleChange}
-          IconComponent={() => (
-            <KeyboardArrowDown
+        <ListSubheader>
+          <TextField
+            size="small"
+            autoFocus
+            fullWidth
+            value={searchText}
+            // InputProps={{
+            //   startAdornment: (
+            //     <InputAdornment position='start'>
+            //       <SearchIcon />
+            //     </InputAdornment>
+            //   )
+            // }}
+            onChange={(e) => setSearchText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key !== "Escape") {
+                // Prevents autoselecting item while typing (default Select behaviour)
+                e.stopPropagation();
+              }
+            }}
+          />
+        </ListSubheader>
+        <MenuItem value=""> All Sites</MenuItem>
+        {displayedOptions?.length > 0 ? (
+          displayedOptions?.map((single) => (
+            <MenuItem
+              key={single.address_id}
+              value={single.address_id}
               sx={{
+                fontSize: "12px",
+                minWidth: "250px",
                 color: "#518ef8",
-                fontSize: "20px",
+                fontWeight: "normal",
               }}
-            />
-          )}
-          sx={{ width: "100%" }}
-          size={"small"}
-        >
-          <ListSubheader>
-            <TextField
-              size="small"
-              autoFocus
-              fullWidth
-              value={searchText}
-              // InputProps={{
-              //   startAdornment: (
-              //     <InputAdornment position='start'>
-              //       <SearchIcon />
-              //     </InputAdornment>
-              //   )
-              // }}
-              onChange={(e) => setSearchText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key !== "Escape") {
-                  // Prevents autoselecting item while typing (default Select behaviour)
-                  e.stopPropagation();
-                }
-              }}
-            />
-          </ListSubheader>
-          <MenuItem value=""> All Sites</MenuItem>
-          <></>
-          {displayedOptions?.length > 0 ? (
-            displayedOptions?.map((single) => (
-              <MenuItem
-                key={single.address_id}
-                value={single.address_id}
-                sx={{
-                  fontSize: "12px",
-                  minWidth: "250px",
-                  color: "#518ef8",
-                  fontWeight: "normal",
-                }}
-              >
-                {single.job_address}
-              </MenuItem>
-            ))
-          ) : (
-            <MenuItem>No options</MenuItem>
-          )}
-        </Select>
-      </FormControl>
-    </>
+            >
+              {single.job_address}
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem>No options</MenuItem>
+        )}
+      </Select>
+    </FormControl>
   );
 };
 

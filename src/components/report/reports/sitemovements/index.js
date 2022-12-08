@@ -22,31 +22,31 @@ const SiteMovementsReport = (props) => {
   const state = useSelector((state) => state?.siteMovements);
   const siteDetail = useSelector((state) => state?.siteMovementDetail);
   const dispatch = useDispatch();
-  useEffect(() => {
-    async function fetchData() {
-      // if (sites !== "") {
-      await dispatch(getSitesMovement(sites !== "" && { sites: [sites] }));
-      // }
-    }
-    fetchData();
-  }, [sites]);
-
-  useEffect(() => {
-    // if (sites !== "") {
-    dispatch(getSiteMovementDetails(sites !== "" && { sites: [sites] }));
-    // }
-  }, [sites]);
-
   // useEffect(() => {
   //   async function fetchData() {
-  //     await dispatch(getSitesMovement({ sites: sites }));
+  //      if (sites !== "") {
+  //     await dispatch(getSitesMovement(sites !== "" && { sites: [sites] }));
+  //      }
   //   }
   //   fetchData();
   // }, [sites]);
 
   // useEffect(() => {
-  //   dispatch(getSiteMovementDetails({ sites: sites }));
+  //    if (sites !== "") {
+  //   dispatch(getSiteMovementDetails(sites !== "" && { sites: [sites] }));
+  //    }
   // }, [sites]);
+
+  useEffect(() => {
+    async function fetchData() {
+      await dispatch(getSitesMovement({ sites: sites }));
+    }
+    fetchData();
+  }, [sites]);
+
+  useEffect(() => {
+    dispatch(getSiteMovementDetails({ sites: sites }));
+  }, [sites]);
 
   return (
     <Card className="report-chart-card " id="site_movements">

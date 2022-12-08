@@ -136,6 +136,8 @@ const MainJobs = (props) => {
     },
   ];
 
+  console.log('job',jobData)
+
   return (
     <div>
       <CommonHeader
@@ -235,6 +237,12 @@ const MainJobs = (props) => {
         </>
       ) : (
         <>
+              {isLoading ? (
+            <div className="loader">
+              <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
+            </div>
+              )
+            :(
           <Card className="mapCard">
             <CardContent>
               <MainMap
@@ -256,7 +264,7 @@ const MainJobs = (props) => {
                 ) : (
                   jobData && (
                     <>
-                      {jobData?.data.map((job, index) => {
+                      {jobData?.data?.map((job, index) => {
                         return (
                           <Marker
                             position={{
@@ -330,6 +338,7 @@ const MainJobs = (props) => {
               </MainMap>
             </CardContent>
           </Card>
+              )}
         </>
       )}
 
