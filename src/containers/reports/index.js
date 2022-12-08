@@ -143,16 +143,16 @@ const NewReports = () => {
 
   useEffect(() => {
     if (reports.ids === "waste_statistics") {
-      setCsvData(state?.landfillList?.data?.result);
+      setCsvData(state?.landfillList?.data?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
     }
     if (reports.ids === "finance") {
-      setCsvData(state?.siteBreakdownList?.site_breakdown?.result);
+      setCsvData(state?.siteBreakdownList?.site_breakdown?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
     }
     if (reports.ids === "emissions") {
-      setCsvData(state?.landfillList?.data?.result);
+      setCsvData(state?.landfillList?.data?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
     }
     if (reports.ids === "site_movements") {
-      setCsvData(state?.siteMovementsList?.data?.result);
+      setCsvData(state?.siteMovementsList?.data?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
     }
   }, [state, reports]);
 
