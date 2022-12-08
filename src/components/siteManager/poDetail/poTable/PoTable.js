@@ -30,10 +30,9 @@ const PoTable = ({ data, isManager }) => {
       },
       {
         Header: "Remaining",
-        accessor: (d) => d.max - d.uses,
         disableFilters: true,
         Cell: (props) => {
-          return <span>{props.value || 0}</span>;
+          return <span>{props.row.original?.max - props.row.original?.uses}</span>;
         },
       },
       {
