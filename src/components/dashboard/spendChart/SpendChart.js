@@ -19,22 +19,25 @@ const SpendChart = ({
   getDashBoardData,
   startDate,
   setStartDate,
+  setLatestYear,
   loading,
 }) => {
   const [max, setMax] = useState();
   const handleYearChange = (event) => {
     setStartDate(event);
+    setLatestYear(event.getFullYear())
     getDashBoardData(event.getFullYear());
   };
   let arr = [];
   useEffect(() => {
-    Object.keys(chartData?.salesTotal?.Months).map(function (key, index) {
-      arr.push(chartData?.salesTotal?.Months[key].total);
-    });
-    setMax(Math.max(...arr));
-  }, []);
+    if (chartData !== null) {
+      Object.keys(chartData?.salesTotal?.Months).map(function (key, index) {
+        arr.push(chartData?.salesTotal?.Months[key].total);
+      });
+      setMax(Math.max(...arr));
+    }
+  }, [chartData]);
 
-  console.log("chart", chartData);
   const spendChartData = {
     chart: {
       type: "column",
@@ -197,6 +200,7 @@ const SpendChart = ({
       const aYearFromNow = startDate;
       let newDate = aYearFromNow?.setFullYear(aYearFromNow?.getFullYear() + 1);
       setStartDate(new Date(newDate));
+      setLatestYear(startDate.getFullYear())
       getDashBoardData(startDate.getFullYear());
     }
   };
@@ -205,6 +209,7 @@ const SpendChart = ({
       const aYearFromNow = startDate;
       let newDate = aYearFromNow?.setFullYear(aYearFromNow?.getFullYear() - 1);
       setStartDate(new Date(newDate));
+      setLatestYear(startDate.getFullYear())
       getDashBoardData(startDate.getFullYear());
     }
   };

@@ -32,7 +32,7 @@ const PoTable = ({ data, isManager }) => {
         Header: "Remaining",
         disableFilters: true,
         Cell: (props) => {
-          return <span>{props.row.original?.max - props.row.original?.uses}</span>;
+          return <span>{props.row.original?.max - props.row.original?.uses || 0}</span>;
         },
       },
       {
