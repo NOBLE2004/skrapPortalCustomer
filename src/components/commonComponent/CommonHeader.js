@@ -28,10 +28,10 @@ const CommonHeader = ({
       <div className="common-header-links-main">
         <div className="header-link">{downloadCSV ? "Download CSV" : ""}</div>
         <div className="view-container" onClick={handleShowMap}>
-          {isMap && (
+          {/* {isMap && (
             <img src={location} alt="location-icon" className="view-icon" />
           )}
-          <div className="header-link">{isMap ? "Map View" : "Table View"}</div>
+          <div className="header-link">{isMap ? "Map View" : "Table View"}</div> */}
         </div>
 
         {showButton && (
