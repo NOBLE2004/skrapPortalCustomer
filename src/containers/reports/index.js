@@ -156,6 +156,8 @@ const NewReports = () => {
     }
   }, [state, reports]);
 
+  console.log('state',state?.siteMovementsList)
+
   // useEffect(() => {
   //   // if (selected) {
   //     dispatch(getLandfillDiversionList(selected !=='' &&{ sites: [selected] }));
@@ -167,7 +169,7 @@ const NewReports = () => {
   useEffect(() => {
     dispatch(getLandfillDiversionList({ sites: selected }));
     dispatch(getSiteBreakdownlist({ sites: selected }));
-    dispatch(getSitesMovementList({ sites: selected }));
+    dispatch(getSitesMovementList({ sites: selected[0] }));
   }, [selected]);
 
   return (
