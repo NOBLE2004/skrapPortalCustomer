@@ -117,7 +117,7 @@ const ReportHeader = (props) => {
             id="demo-multiple-name"
             value={selected}
             displayEmpty
-            // multiple
+             multiple
             onChange={(e) => {
               handleChange(e);
               const filterSite = props.allsites.data?.find(
@@ -133,21 +133,21 @@ const ReportHeader = (props) => {
               />
             }
             MenuProps={MenuProps}
-            // renderValue={(selected) => {
-            //   if (selected.length === 0) {
-            //     return <em>Sites</em>;
-            //   }
-            //   return (
-            //     selected.length > 0 && (
-            //       <div className="text-sec">
-            //         Viewing: Multiple sites{" "}
-            //         <span>
-            //           {selected.length} of {props.allsites.data.length} sites
-            //         </span>
-            //       </div>
-            //     )
-            //   );
-            // }}
+            renderValue={(selected) => {
+              if (selected.length === 0) {
+                return <em>Sites</em>;
+              }
+              return (
+                selected.length > 0 && (
+                  <div className="text-sec">
+                    Viewing: Multiple sites{" "}
+                    <span>
+                      {selected.length} of {props.allsites.data.length} sites
+                    </span>
+                  </div>
+                )
+              );
+            }}
           >
             {props.allsites.data &&
               props.allsites?.data.map((site, index) => (
