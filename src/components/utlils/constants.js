@@ -248,6 +248,15 @@ export const serviceList = [
     service_id: 43,
     service_name: "Portable Toilet",
   },
+  {
+    description:
+        "<p>Tipper trucks come with a fitted chassis and open-top body suited for lifting and transporting different heavy materials on-site.</p>",
+    full_url:
+        "https://portal.skrap.app/storage/service_images/61d849c9c7969Asset 5@4x.png",
+    img_url: "/service_images/61d849c9c7969Asset 5@4x.png",
+    service_id: 283,
+    service_name: "Tipper Hire",
+  },
 ];
 export const servicesReport = [
   {
