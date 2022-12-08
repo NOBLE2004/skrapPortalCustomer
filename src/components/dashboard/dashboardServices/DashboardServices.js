@@ -33,11 +33,11 @@ const DashboardServices = ({ servicesData, loading }) => {
   const [services, setServices] = useState([]);
 
   const dummyService = [
-    {
-      count: 63,
-      name: "Trailer",
-      total: 92160,
-    },
+    // {
+    //   count: 63,
+    //   name: "Trailer",
+    //   total: 92160,
+    // },
     {
       count: 0,
       name: "Compactor",
@@ -51,7 +51,7 @@ const DashboardServices = ({ servicesData, loading }) => {
     //   Trailer.name = "Trailer";
     // }
     if (servicesData) {
-      // Cage.name = "Cage";
+       Cage.name = "Cage";
 
       // Trailer.name = "Trailer";
 
@@ -62,7 +62,7 @@ const DashboardServices = ({ servicesData, loading }) => {
       // Aggregate.name = "Aggregate";
       // PortableToilet.name = "PortableToilet";
       let list = [
-        // Cage,
+         Cage,
         Skip,
         // Grab,
         // Aggregate,
@@ -132,7 +132,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                       style={{ position: "relative" }}
                     >
                       <p style={{ position: "absolute", bottom: "60px" }}>
-                        {service.name}
+                        {service.name ==='Cage' ? 'Trailer' :service.name}
                       </p>
                       <div>
                         <CircleProgress

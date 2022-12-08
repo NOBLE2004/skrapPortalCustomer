@@ -54,7 +54,9 @@ const ReportFooter = (props) => {
       <Button
         classes="footer-btn"
         disabled={
-          sites?.length > 1 || sites?.length === 0 || csvData?.length === 0
+          sites?.length > 1 
+          || sites?.length === 0 
+          || csvData?.length === 0
         }
         onClick={() => {
           exTest();
