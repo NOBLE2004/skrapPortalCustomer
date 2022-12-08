@@ -136,8 +136,6 @@ const MainJobs = (props) => {
     },
   ];
 
-  console.log('job',jobData)
-
   return (
     <div>
       <CommonHeader
