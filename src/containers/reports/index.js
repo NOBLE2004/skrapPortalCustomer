@@ -118,8 +118,8 @@ const NewReports = () => {
       { header: "% Recycled", key: "recycled", width: 20 },
       { header: "Diverted T", key: "diverted", width: 20 },
       { header: "% Landfill", key: "landfill_diversion_rate", width: 20 },
-      { header: "Supplier", key: "supplier", width: 20 },
-      { header: "Supplier Postcode", key: "supplier_postcode", width: 20 },
+      // { header: "Supplier", key: "supplier", width: 20 },
+      // { header: "Supplier Postcode", key: "supplier_postcode", width: 20 },
       { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 20 },
     ];
     worksheet.addRows(csvData);

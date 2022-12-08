@@ -217,12 +217,13 @@ const MySidebar = (props) => {
               color: "#86869C",
               marginRight: 5,
               borderRadius: "50%",
+              textAlign: "center"
             }}
           >
-            {userData.logo && userData.logo != "" ? (
+            {userData.personal_detail && userData.personal_detail.profile_pic != "" ? (
               <img
-                style={{ width: "100%", height: "100%", borderRadius: "50%" }}
-                src={userData.logo}
+                style={{ width: "50%", height: "50%", borderRadius: "50%" }}
+                src={userData?.personal_detail?.profile_pic}
                 alt={""}
               />
             ) : (
