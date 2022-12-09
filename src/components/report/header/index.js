@@ -70,9 +70,9 @@ const ReportHeader = (props) => {
   // }, [props.allsites.data]);
 
   useEffect(() => {
-    if (sites !== "") {
-      dispatch(getJobsMeta({ sites: [sites] }));
-    }
+    // if (sites !== "") {
+      dispatch(getJobsMeta({ sites: sites }));
+    // }
   }, [sites]);
 
   const handleDate = (item) => {
