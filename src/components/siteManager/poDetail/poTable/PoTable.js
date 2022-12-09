@@ -9,7 +9,7 @@ const PoTable = ({ data, isManager }) => {
         accessor: "service_name",
         disableSortBy: true,
         Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
+          return <span>{props?.value || "n/a"}</span>;
         },
       },
       {
@@ -59,7 +59,7 @@ const PoTable = ({ data, isManager }) => {
     () => [
       {
         Header: "Service Name",
-        accessor: (d) => d.service.service_name,
+        accessor: 'service_name',
         disableSortBy: true,
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;

@@ -217,6 +217,7 @@ const EmissionReport = (props) => {
     }
   }, [state?.data?.data, startDate]);
 
+ 
   return (
     <>
       <PayEmissionModal showModal={showModal} setShowModal={setShowModal} />
