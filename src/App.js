@@ -44,6 +44,7 @@ function App() {
           <PrivateRoute path="/reports" component={() => <MainReports />} /> 
           <PrivateRoute path="/job-detail/:id" component={() => <MainJobDetail />} />
           <PrivateRoute path="/site-managers/job-detail/:id" component={() => <MainJobDetail />} />
+          <PrivateRoute path="/sites/job-detail/:id" component={() => <MainJobDetail />} />
           <PrivateRoute path="/new-reports" component={() => <NewReports />} />
         </Layout>
       </Switch>
