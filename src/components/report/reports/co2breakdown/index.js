@@ -127,14 +127,14 @@ const Co2breakdownReport = (props) => {
                         ? recycledData?.data?.result?.title
                         : "Recycled"}
                     </h1>
-                    <p>
-                      {recycledData?.data?.result?.emco2
-                        ? recycledData?.data?.result?.emco2
-                        : 0}{" "}
-                      {recycledData?.data?.result?.emco2_title
-                        ? recycledData?.data?.result?.emco2_title
-                        : "tonns CO2"}
-                    </p>
+                    {/*<p>*/}
+                    {/*  {recycledData?.data?.result?.emco2*/}
+                    {/*    ? recycledData?.data?.result?.emco2*/}
+                    {/*    : 0}{" "}*/}
+                    {/*  {recycledData?.data?.result?.emco2_title*/}
+                    {/*    ? recycledData?.data?.result?.emco2_title*/}
+                    {/*    : "tonns CO2"}*/}
+                    {/*</p>*/}
                     {/*<label>Equivalent to 200 trees</label>*/}
                     {/*<p>*/}
                     {/*  {recycledData?.data?.result?.saved*/}
