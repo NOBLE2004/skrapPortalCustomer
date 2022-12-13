@@ -96,6 +96,7 @@ const EmissionReport = (props) => {
       getData();
       dispatch(getReportSiteBreakDownEmissions({ address_id: sites?.toString() }));
       dispatch(getReportEmissionVehicles());
+      setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
     //}
   }, [sites]);
   const getMonthData = (month, value) => {
