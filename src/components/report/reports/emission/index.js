@@ -18,8 +18,6 @@ import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
 import { numberWithCommas } from "../../../utlils/dashboard";
 
-
-
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   width: "100%",
@@ -103,12 +101,15 @@ const EmissionReport = (props) => {
   // }, [sites]);
 
   useEffect(() => {
-       getData();
-      dispatch(getReportSiteBreakDownEmissions({ address_id: sites?.toString() }));
-      dispatch(getReportEmissionVehicles());
-    
+    getData();
+    dispatch(
+      getReportSiteBreakDownEmissions({ address_id: sites?.toString() })
+    );
+    dispatch(getReportEmissionVehicles());
+    setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   }, [sites]);
-  const getMonthData = (month, value) => {
+
+   const getMonthData = (month, value) => {
     switch (month) {
       case "january":
         emission[0] = value;
@@ -217,16 +218,14 @@ const EmissionReport = (props) => {
     }
   }, [state?.data?.data, startDate]);
 
- 
   return (
     <>
       <PayEmissionModal showModal={showModal} setShowModal={setShowModal} />
       <Card className="report-chart-card" id={"emissions"}>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-
             <h1>
-            {state?.data?.year?.length > 0
+              {state?.data?.year?.length > 0
                 ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
                 : `0.00`}{" "}
               <span>kg of CO2e Cumulative Emissions</span>
@@ -253,9 +252,10 @@ const EmissionReport = (props) => {
                   <div className="total">
                     Total CO2:{" "}
                     <span>
-                    
                       {state?.data?.year?.length > 0
-                        ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
+                        ? numberWithCommas(
+                            state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
+                          )
                         : `0.00`}{" "}
                       Kg
                     </span>
