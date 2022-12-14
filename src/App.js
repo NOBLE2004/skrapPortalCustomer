@@ -19,6 +19,7 @@ import MainReports from "./containers/mainReports/MainReports";
 import NewReports from "./containers/reports";
 import SitesDetailPage from "./components/sites/sitesDetailPage/SitesDetailPage";
 import ForgetPassword from "./containers/registration/forgetPassword";
+import Supplier from "./containers/supplier";
 
 const history = createBrowserHistory();
 
@@ -45,6 +46,7 @@ function App() {
           <PrivateRoute path="/job-detail/:id" component={() => <MainJobDetail />} />
           <PrivateRoute path="/site-managers/job-detail/:id" component={() => <MainJobDetail />} />
           <PrivateRoute path="/new-reports" component={() => <NewReports />} />
+          <PrivateRoute path="/supplier" component={() => <Supplier />} />
         </Layout>
       </Switch>
     </Router>
