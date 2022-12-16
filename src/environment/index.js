@@ -75,7 +75,7 @@ export const sidebarTabsList = [
 
   //{ text: "Reports", key: "reports", sub: false, icon: statementBlack },
   { text: "Reports", key: "new-reports", sub: false, icon: statementBlack },
-  { text: "Supplier", key: "supplier", sub: false, icon: customerBlack },
+  // { text: "Supplier", key: "supplier", sub: false, icon: customerBlack },
 
   // { text: "search", key: "search", icon: search },
 ];

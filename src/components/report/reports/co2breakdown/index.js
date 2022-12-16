@@ -117,7 +117,7 @@ const Co2breakdownReport = (props) => {
                     percentage={
                       recycledData?.data?.result?.land_fill
                         ? recycledData?.data?.result?.land_fill
-                        : 100
+                        : 99
                     }
                     primaryColor={["#50D226", "#50D226"]}
                   />
@@ -145,24 +145,80 @@ const Co2breakdownReport = (props) => {
                     {/*      : "Saved to landfill"}*/}
                     {/*</p>*/}
                   </div>
-                </div>
-                <div className="guage-with-text">
                   <CircleProgress
-                    width={100}
-                    strokeWidth={10}
-                    fontFamily={"DM Sans"}
-                    fontSize={"14px"}
-                    fontColor={"#0F285"}
-                    fontWeight={700}
-                    secondaryColor={"#F7F7F7"}
-                    percentage={wasteOfEnergyData?.data?.result?.land_fill}
-                    primaryColor={["#0F2851", "#0F2851"]}
+                      width={100}
+                      strokeWidth={10}
+                      fontFamily={"DM Sans"}
+                      fontSize={"14px"}
+                      fontColor={"#0F285"}
+                      fontWeight={700}
+                      secondaryColor={"#F7F7F7"}
+                      percentage={wasteOfEnergyData?.data?.result?.land_fill}
+                      primaryColor={["#0F2851", "#0F2851"]}
                   />
                   <div className="text">
                     <h1>
                       {wasteOfEnergyData?.data?.result?.title
-                        ? wasteOfEnergyData?.data?.result?.title
-                        : "Waste to energy"}
+                          ? wasteOfEnergyData?.data?.result?.title
+                          : "Waste to energy"}
+                    </h1>
+                    {/*<p>*/}
+                    {/*  {wasteOfEnergyData?.data?.result?.kwh*/}
+                    {/*    ? wasteOfEnergyData?.data?.result?.kwh*/}
+                    {/*    : 0}{" "}*/}
+                    {/*  {wasteOfEnergyData?.data?.result?.kwh_title*/}
+                    {/*    ? wasteOfEnergyData?.data?.result?.kwh_title*/}
+                    {/*    : "KWhr of energy"}*/}
+                    {/*</p>*/}
+                    {/*<label>*/}
+                    {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
+                    {/*  smartphone charges*/}
+                    {/*</label>*/}
+                  </div>
+                </div>
+                <div className="guage-with-text">
+                  <CircleProgress
+                      width={100}
+                      strokeWidth={10}
+                      fontFamily={"DM Sans"}
+                      fontSize={"14px"}
+                      fontColor={"#0F285"}
+                      fontWeight={700}
+                      secondaryColor={"#F7F7F7"}
+                      percentage={1}
+                      primaryColor={["#0F2851", "#0F2851"]}
+                  />
+                  <div className="text">
+                    <h1>
+                      {"Reuse"}
+                    </h1>
+                    {/*<p>*/}
+                    {/*  {wasteOfEnergyData?.data?.result?.kwh*/}
+                    {/*    ? wasteOfEnergyData?.data?.result?.kwh*/}
+                    {/*    : 0}{" "}*/}
+                    {/*  {wasteOfEnergyData?.data?.result?.kwh_title*/}
+                    {/*    ? wasteOfEnergyData?.data?.result?.kwh_title*/}
+                    {/*    : "KWhr of energy"}*/}
+                    {/*</p>*/}
+                    {/*<label>*/}
+                    {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
+                    {/*  smartphone charges*/}
+                    {/*</label>*/}
+                  </div>
+                  <CircleProgress
+                      width={100}
+                      strokeWidth={10}
+                      fontFamily={"DM Sans"}
+                      fontSize={"14px"}
+                      fontColor={"#0F285"}
+                      fontWeight={700}
+                      secondaryColor={"#F7F7F7"}
+                      percentage={0}
+                      primaryColor={["#0F2851", "#0F2851"]}
+                  />
+                  <div className="text">
+                    <h1>
+                      {"Recovery"}
                     </h1>
                     {/*<p>*/}
                     {/*  {wasteOfEnergyData?.data?.result?.kwh*/}
