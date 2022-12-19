@@ -39,13 +39,14 @@ const DashboardServices = ({ servicesData, loading }) => {
     //   total: 92160,
     // },
     {
-      count: 0,
+      count: Grab?.count,
       name: "Compactor",
-      total: 0,
+      total: Grab?.total,
     },
   ];
 
   useEffect(() => {
+    console.log(servicesData);
     // if(country_code==='+49'){
     //   Compactor.name = "Compactor";
     //   Trailer.name = "Trailer";
@@ -64,7 +65,7 @@ const DashboardServices = ({ servicesData, loading }) => {
       let list = [
          Cage,
         Skip,
-        // Grab,
+        //Grab,
         // Aggregate,
         // PortableToilet,
         // Trailer,
@@ -148,7 +149,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                                 ? (
                                     (service.count / NumberOfJobs) *
                                     100
-                                  )?.toFixed(0)
+                                  )?.toFixed(1)
                                 : 0
                               : 0
                           }
