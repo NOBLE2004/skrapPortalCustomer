@@ -46,7 +46,6 @@ const DashboardServices = ({ servicesData, loading }) => {
   ];
 
   useEffect(() => {
-    console.log(servicesData);
     // if(country_code==='+49'){
     //   Compactor.name = "Compactor";
     //   Trailer.name = "Trailer";
@@ -80,6 +79,17 @@ const DashboardServices = ({ servicesData, loading }) => {
       setServices([...list, ...dummyService]);
     }
   }, [servicesData]);
+
+  const getPercentage = (service) => {
+    if(service?.count){
+      const per = ((service.count / NumberOfJobs) * 100).toFixed(2);
+      const percentage = per.split('.')[1].substring(1,2) > '5' ? parseFloat(per).toFixed(1) : per.length > 4 ? parseFloat(per.substring(0,4)) : parseFloat(per.substring(0,3));
+      return percentage;
+    }else{
+      return 0
+    }
+
+  }
 
   return (
     <>
@@ -143,16 +153,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                           fontWeight={"700"}
                           secondaryColor={"#F7F7F7"}
                           hidePercentageText={showValue ? true : false}
-                          percentage={
-                            service
-                              ? service?.count
-                                ? (
-                                    (service.count / NumberOfJobs) *
-                                    100
-                                  )?.toFixed(1)
-                                : 0
-                              : 0
-                          }
+                          percentage={getPercentage(service)}
                           primaryColor={["#73C6F9", "#5391F9"]}
                         />
                         {showValue ? (
