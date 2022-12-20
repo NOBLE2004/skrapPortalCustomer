@@ -39,9 +39,9 @@ const DashboardServices = ({ servicesData, loading }) => {
     //   total: 92160,
     // },
     {
-      count: 0,
+      count: Grab?.count,
       name: "Compactor",
-      total: 0,
+      total: Grab?.total,
     },
   ];
 
@@ -64,7 +64,7 @@ const DashboardServices = ({ servicesData, loading }) => {
       let list = [
          Cage,
         Skip,
-        // Grab,
+        //Grab,
         // Aggregate,
         // PortableToilet,
         // Trailer,
@@ -79,6 +79,17 @@ const DashboardServices = ({ servicesData, loading }) => {
       setServices([...list, ...dummyService]);
     }
   }, [servicesData]);
+
+  const getPercentage = (service) => {
+    if(service?.count){
+      const per = ((service.count / NumberOfJobs) * 100).toFixed(2);
+      const percentage = per.split('.')[1].substring(1,2) > '5' ? parseFloat(per).toFixed(1) : per.length > 4 ? parseFloat(per.substring(0,4)) : parseFloat(per.substring(0,3));
+      return percentage;
+    }else{
+      return 0
+    }
+
+  }
 
   return (
     <>
@@ -142,16 +153,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                           fontWeight={"700"}
                           secondaryColor={"#F7F7F7"}
                           hidePercentageText={showValue ? true : false}
-                          percentage={
-                            service
-                              ? service?.count
-                                ? (
-                                    (service.count / NumberOfJobs) *
-                                    100
-                                  )?.toFixed(0)
-                                : 0
-                              : 0
-                          }
+                          percentage={getPercentage(service)}
                           primaryColor={["#73C6F9", "#5391F9"]}
                         />
                         {showValue ? (

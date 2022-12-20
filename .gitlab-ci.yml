@@ -34,12 +34,12 @@ deploy:
     - echo "deploying app on server"
   script:
     - chmod 400 $SSH_PRIVATE_KEY
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker pull registry.gitlab.com/noble2/skrap-customer-portal:develop
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker stop cusrtomer-dev || true
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker rm cusrtomer-dev || true
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker run -p 3010:80 -d --restart unless-stopped --name cusrtomer-dev registry.gitlab.com/noble2/skrap-customer-portal:develop
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker system prune -a -f
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker image prune -a -f
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP sudo docker volume prune -f
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP docker pull registry.gitlab.com/noble2/skrap-customer-portal:develop
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP docker stop cusrtomer-dev || true
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP docker rm cusrtomer-dev || true
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP docker run -p 3010:80 -d --restart unless-stopped --name cusrtomer-dev registry.gitlab.com/noble2/skrap-customer-portal:develop
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP docker system prune -a -f
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP docker image prune -a -f
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_2_IP docker volume prune -f
   environment:
     name: develop
