@@ -15,10 +15,18 @@ const NewManagerDetail = ({ managerData, setReload }) => {
     setUserData(user);
   }, []);
 
+  console.log("data", data);
+
   return (
     <Grid container spacing={1}>
-      {data?.map((single) => (
-        <Grid item xs={12} sm={12} md={data?.length > 1 ? 6 : 12} key={single.id}>
+      {data?.map((single,index) => (
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={data?.length > 1 ? 6 : 12}
+          key={index}
+        >
           <Card className="new-manager-detail-main">
             <CardContent>
               <div className="title">Manager Details</div>
