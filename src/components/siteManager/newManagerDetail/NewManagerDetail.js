@@ -16,74 +16,76 @@ const NewManagerDetail = ({ managerData, setReload }) => {
   }, []);
 
   return (
-    <div>
-      {data ? (
-        <Card className="new-manager-detail-main">
-          <CardContent>
-            <div className="title">Manager Details</div>
-            <Grid container spacing={3} className="manager-sub-detail">
-              <Grid item md={2}>
-                <img src={personImage} alt="person-img" />
-              </Grid>
-              <Grid item md={3} className="new-personal-info">
-                <div className="info">
-                  <div className="designation">Manager</div>
-                  <div className="personal-title">
-                    {data ? data.first_name + " " + data.last_name : "n/a"}
-                  </div>
-                </div>
-                <div className="change-info">
+    <Grid container spacing={1}>
+      {data?.map((single) => (
+        <Grid item xs={12} sm={12} md={data?.length > 1 ? 6 : 12} key={single.id}>
+          <Card className="new-manager-detail-main">
+            <CardContent>
+              <div className="title">Manager Details</div>
+              <Grid container spacing={3} className="manager-sub-detail">
+                <Grid item md={2}>
+                  <img src={personImage} alt="person-img" />
+                </Grid>
+                <Grid item md={3} className="new-personal-info">
                   <div className="info">
-                    <div className="designation">Site Name</div>
-                    <div className="personal-title">{`${
-                      site && site.site_name ? site.site_name : "n/a"
-                    }`}</div>
-                  </div>
-                  <div
-                    className="change-title"
-                    onClick={() => setIsManagerOpen(true)}
-                  >
-                    Change
-                  </div>
-                </div>
-              </Grid>
-              <Grid item md={3} className="new-personal-info">
-                <div className="info">
-                  <div className="designation">Address</div>
-                  <div className="personal-title">
-                    {`${address ? address.address : "n/a"}`}
-                  </div>
-                </div>
-                <div className="info">
-                  <div className="designation">Email</div>
-                  <div className="personal-title">
-                    {data ? data.email : "n/a"}
-                  </div>
-                </div>
-              </Grid>
-
-              <Grid item md={2} className="new-personal-info">
-                <div className="info">
-                  <div className="designation">Phone</div>
-                  <div className="personal-title">
-                    {data ? data.mobile_number : "n/a"}
-                  </div>
-                </div>
-                {userData?.country_currency?.country_code === "+49" && (
-                  <div className="info">
-                    <div className="designation">Utilisation rating</div>
+                    <div className="designation">Manager</div>
                     <div className="personal-title">
-                      {utilization ? utilization : 0}/10
+                      {single?.first_name
+                        ? single?.first_name + " " + single?.last_name
+                        : "n/a"}
                     </div>
                   </div>
-                )}
+                  <div className="change-info">
+                    <div className="info">
+                      <div className="designation">Site Name</div>
+                      <div className="personal-title">{`${
+                        site && site.site_name ? site.site_name : "n/a"
+                      }`}</div>
+                    </div>
+                    <div
+                      className="change-title"
+                      onClick={() => setIsManagerOpen(true)}
+                    >
+                      Change
+                    </div>
+                  </div>
+                </Grid>
+                <Grid item md={4} className="new-personal-info">
+                  <div className="info">
+                    <div className="designation">Address</div>
+                    <div className="personal-title">
+                      {`${address ? address.address : "n/a"}`}
+                    </div>
+                  </div>
+                  <div className="info">
+                    <div className="designation">Email</div>
+                    <div className="personal-title">
+                      {single?.email ? single?.email : "n/a"}
+                    </div>
+                  </div>
+                </Grid>
+
+                <Grid item md={3} className="new-personal-info">
+                  <div className="info">
+                    <div className="designation">Phone</div>
+                    <div className="personal-title">
+                      {single?.mobile_number ? single?.mobile_number : "n/a"}
+                    </div>
+                  </div>
+                  {userData?.country_currency?.country_code === "+49" && (
+                    <div className="info">
+                      <div className="designation">Utilisation rating</div>
+                      <div className="personal-title">
+                        {utilization ? utilization : 0}/10
+                      </div>
+                    </div>
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      ) : (
-        ""
-      )}
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
       <>
         {isManagerOpen && (
           <AssignToManager
@@ -93,7 +95,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
           />
         )}
       </>
-    </div>
+    </Grid>
   );
 };
 

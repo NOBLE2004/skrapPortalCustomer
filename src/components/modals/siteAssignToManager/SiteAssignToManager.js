@@ -19,7 +19,7 @@ import "./assignToManager.scss";
 function SiteAssignToManager(props) {
   const { handleClose, managerId, setReload, siteData } = props;
   const [state, setState] = useState({
-    manager: "",
+    manager: [],
     notice: null,
   });
 
@@ -37,6 +37,11 @@ function SiteAssignToManager(props) {
       color: theme.palette.grey[500],
     },
   });
+  function getStyles(name, personName) {
+    return {
+      fontWeight: personName.indexOf(name) === -1 ? 500 : 800,
+    };
+  }
 
   const DialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;
@@ -77,7 +82,7 @@ function SiteAssignToManager(props) {
     setState({ ...state, isLoading: true });
 
     SiteService.siteAssignToManager({
-      manager_id: managerId ? managerId : manager,
+      manager_ids: state?.manager ? state?.manager : manager,
       address_id: siteData ? siteData.address_id : "",
     })
       .then((response) => {
@@ -123,15 +128,21 @@ function SiteAssignToManager(props) {
                   label="manager"
                   name="manager"
                   fullWidth
+                  multiple
+                  value={state?.manager ? state?.manager : []}
                   onChange={handleOnChange}
                 >
-                  <MenuItem value="">
+                  {/* <MenuItem value="">
                     <em>None</em>
-                  </MenuItem>
+                  </MenuItem> */}
                   {props.siteManager.sites &&
                     props.siteManager.sites.map((data, index) => {
                       return (
-                        <MenuItem key={index} value={data.user_id}>
+                        <MenuItem
+                          key={index}
+                          value={data.user_id}
+                          style={getStyles(data.user_id, state?.manager)}
+                        >
                           {data.name}
                         </MenuItem>
                       );

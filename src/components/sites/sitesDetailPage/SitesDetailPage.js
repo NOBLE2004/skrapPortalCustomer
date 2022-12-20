@@ -177,7 +177,7 @@ const SitesDetailPage = (props) => {
           />
         ) : (
           <>
-            <Grid item md={12} xs={12}>
+            <Grid item md={12} xs={12} mb={1}>
               <div className="landfill">Landfill Diversion Rate</div>
               <div className="progress-bar">
                 <label
