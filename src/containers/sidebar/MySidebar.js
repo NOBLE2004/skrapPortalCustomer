@@ -171,9 +171,15 @@ const MySidebar = (props) => {
           }
 
           if (userData?.hide_price === 1) {
-            if (obj?.key === "tickets" || obj?.key==='new-reports') {
+            if (obj?.key === "tickets" || obj?.key === "new-reports") {
               return null;
             }
+          }
+          if (
+            obj?.key === "supplier" &&
+            userData?.country_currency?.country_name === "Germany"
+          ) {
+            return null;
           }
           let [textClass, iconColor] = ["sidebar-tab-text", "black_icon"];
           if (!obj.sub) {
@@ -217,12 +223,13 @@ const MySidebar = (props) => {
               color: "#86869C",
               marginRight: 5,
               borderRadius: "50%",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
-            {userData.personal_detail && userData.personal_detail.profile_pic != "" ? (
+            {userData.personal_detail &&
+            userData.personal_detail.profile_pic != "" ? (
               <img
-                style={{   height: "50px", borderRadius: "50%" }}
+                style={{ height: "50px", borderRadius: "50%" }}
                 src={userData?.personal_detail?.profile_pic}
                 alt={""}
               />
