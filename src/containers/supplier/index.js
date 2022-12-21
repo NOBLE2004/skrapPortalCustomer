@@ -35,7 +35,6 @@ const Supplier = () => {
   useEffect(() => {
     dispatch(getSupplierList(filters));
   }, [filters]);
-  console.log("ssss", filters);
 
   const handleChangeFilters = (filtersList) => {
     setFilters(filtersList);

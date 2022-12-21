@@ -12,6 +12,7 @@ import {
   statementBlack,
 } from "../assets/images/index";
 export const APP_URL = `https://apitest2.skrap.app/scrapapi`;
+// export const APP_URL='http://192.168.10.111:8000'
 // export const APP_URL = `https://skrapapis.skrap.app/live/public/scrapapi`;
 
 
@@ -75,7 +76,7 @@ export const sidebarTabsList = [
 
   //{ text: "Reports", key: "reports", sub: false, icon: statementBlack },
   { text: "Reports", key: "new-reports", sub: false, icon: statementBlack },
-  // { text: "Supplier", key: "supplier", sub: false, icon: customerBlack },
+  { text: "Supplier", key: "supplier", sub: false, icon: customerBlack },
 
   // { text: "search", key: "search", icon: search },
 ];

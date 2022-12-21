@@ -15,8 +15,6 @@ const NewManagerDetail = ({ managerData, setReload }) => {
     setUserData(user);
   }, []);
 
-  console.log("data", data);
-
   return (
     <Grid container spacing={1}>
       {data?.map((single,index) => (
