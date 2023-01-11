@@ -67,171 +67,139 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
         ),
         disableFilters: true,
       },
-      {
-        Header: "",
-        accessor: "attachments",
-        id: "download_id",
-        Cell: (props) => {
-          return (
-            <>
-              {props.value?.length > 0 ? (
-                <div>
-                  {props.value.map((ticket) => {
-                    return (
-                      <Box display="flex" alignItems="center" mr={2}>
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          mr={1}
-                          className={
-                            ticket.ticket_type == "delivery"
-                              ? "normal-dsans-10-primary1"
-                              : "normal-dsans-10-primary1-disable"
-                          }
-                          onClick={() =>
-                            download(DOWNLOAD_URL + ticket?.file?.name)
-                          }
-                        >
-                          <span>Delivery</span>
-                          <Box>
-                            <img
-                              src={downloadSite}
-                              alt="download-icon"
-                              style={
-                                ticket.ticket_type == "delivery"
-                                  ? { marginLeft: "5px" }
-                                  : {
-                                      filter:
-                                        "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
-                                      marginLeft: "5px",
-                                    }
-                              }
-                            />
-                          </Box>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                          <span
-                            className={
-                              ticket.ticket_type == "wtn"
-                                ? "normal-dsans-10-primary1"
-                                : "normal-dsans-10-primary1-disable"
-                            }
-                          >
-                            WTN
-                          </span>
-                          <Box>
-                            <img
-                              src={downloadSite}
-                              alt="download-icon"
-                              style={
-                                ticket.ticket_type == "wtn"
-                                  ? { marginLeft: "5px" }
-                                  : {
-                                      filter:
-                                        "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
-                                      marginLeft: "5px",
-                                    }
-                              }
-                            />
-                          </Box>
-                        </Box>{" "}
-                      </Box>
-                      // <span
-                      //   style={{
-                      //     display: "flex",
-                      //     justifyContent: "flex-start",
-                      //     alignItems: "center",
-                      //   }}
-                      //   className="normal-dsans-10-primary1"
-                      //   onClick={() =>
-                      //     download(DOWNLOAD_URL + ticket?.file?.name)
-                      //   }
-                      // >
-                      //   {ticket.ticket_type == "delivery"
-                      //     ? "Delivery Ticket"
-                      //     : "WTN"}
-                      //   <img
-                      //     src={downloadSite}
-                      //     alt="download-icon"
-                      //     style={{ marginLeft: "5px" }}
-                      //   />
-                      // </span>
-                    );
-                  })}
-                  {/* <>
-                    {props.value.findIndex(
-                      (x) => x.ticket_type == "delivery"
-                    ) == -1 && (
-                      <span
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          alignItems: "center",
-                        }}
-                        className="normal-dsans-10-primary1-disable"
-                      >
+        {
+            Header: "",
+            accessor: "attachments",
+            id: "download_id",
+            Cell: (props) => {
+                return (
+                    <>
+                        {props.value?.length > 0 ? (
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "space-evenly",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <>
+                                    {props.value.findIndex(
+                                        (x) => x.ticket_type == "delivery"
+                                    ) == -1 && (
+                                        <span
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-start",
+                                                alignItems: "center",
+                                            }}
+                                            className="normal-dsans-10-primary1-disable"
+                                        >
                         Delivery Ticket
-                      </span>
-                    )}
-                    {props.value.findIndex((x) => x.ticket_type == "wtn") ==
-                      -1 && (
-                      <span
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          alignItems: "center",
-                        }}
-                        className="normal-dsans-10-primary1-disable"
-                      >
-                        WTN
-                      </span>
-                    )}
-                    <span
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                      className="normal-dsans-10-primary1"
-                    >
+                          <span
+                              style={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                              }}
+                              className="normal-dsans-10-primary1"
+                          >
                       <img
-                        src={downloadSite}
-                        alt="download-icon"
-                        style={{
-                          marginLeft: "5px",
-                          filter:
-                            "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
-                        }}
+                          src={downloadSite}
+                          alt="download-icon"
+                          style={{
+                              marginLeft: "5px",
+                              filter:
+                                  "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
+                          }}
                       />
-                    </span>
-                  </> */}
-                </div>
-              ) : (
-                <>
+                          </span>
+                      </span>
+                                    )}
+                                </>
+                                {props.value.map((ticket) => {
+                                    return (
+                                        <span
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-start",
+                                                alignItems: "center",
+                                            }}
+                                            className="normal-dsans-10-primary1"
+                                            onClick={() =>
+                                                download(DOWNLOAD_URL + ticket?.file?.name)
+                                            }
+                                        >
+                        {ticket.ticket_type == "delivery"
+                            ? "Delivery Ticket"
+                            : "WTN"}
+                                            <img
+                                                src={downloadSite}
+                                                alt="download-icon"
+                                                style={{ marginLeft: "5px" }}
+                                            />
+                      </span>
+                                    );
+                                })}
+                                <>
+                                    {props.value.findIndex((x) => x.ticket_type == "wtn" ||  x.ticket_type == null) ==
+                                        -1 && (
+                                            <span
+                                                style={{
+                                                    display: "flex",
+                                                    justifyContent: "flex-start",
+                                                    alignItems: "center",
+                                                }}
+                                                className="normal-dsans-10-primary1-disable"
+                                            >
+                        WTN
+                          <span
+                              style={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                              }}
+                              className="normal-dsans-10-primary1"
+                          >
+                      <img
+                          src={downloadSite}
+                          alt="download-icon"
+                          style={{
+                              marginLeft: "5px",
+                              filter:
+                                  "invert(61%) sepia(71%) saturate(10%) hue-rotate(10deg) brightness(121%) contrast(67%)",
+                          }}
+                      />
+                          </span>
+                      </span>
+                                        )}
+                                </>
+                            </div>
+                        ) : (
+                            <>
                   <span
-                    className="normal-dsans-10-tooltip"
-                    style={{ cursor: "not-allowed" }}
-                    data-tip={true}
-                    data-for={"ticket_file"}
+                      className="normal-dsans-10-tooltip"
+                      style={{ cursor: "not-allowed" }}
+                      data-tip={true}
+                      data-for={"ticket_file"}
                   >
                     ------
                   </span>
-                  <ReactTooltip
-                    type="error"
-                    place="top"
-                    effect="solid"
-                    id={"ticket_file"}
-                  >
-                    File not attached
-                  </ReactTooltip>
-                </>
-              )}
-            </>
-          );
+                                <ReactTooltip
+                                    type="error"
+                                    place="top"
+                                    effect="solid"
+                                    id={"ticket_file"}
+                                >
+                                    File not attached
+                                </ReactTooltip>
+                            </>
+                        )}
+                    </>
+                );
+            },
+            disableFilters: true,
         },
-        disableFilters: true,
-      },
-      // {
+        // {
       //     Header: "",
       //     id: "submenu_id",
       //     Cell: ({rows}) => (
