@@ -19,18 +19,19 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import {
-  LocalizationProvider,
-  DatePicker,
-} from "@mui/lab";
+import { LocalizationProvider, DatePicker } from "@mui/lab";
 import DateFnsUtils from "@date-io/date-fns";
 import PaymentService from "../../../services/payment.service";
 import CardPayment from "../../commonComponent/cardPayment/CardPayment";
 import JobService from "../../../services/job.service";
 import { useHistory } from "react-router-dom";
 import "./createExchange.scss";
+import { MARKET_PAY_LIST } from "../../../environment";
+import { marketInfoIcon } from "../../../assets/images";
+import ToolTipCard from "../../commonComponent/toolTipCard/ToolTipCard";
+
 import { getUserDataFromLocalStorage } from "../../../services/utils";
-import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const styles = (theme) => ({
   root: {
@@ -72,8 +73,15 @@ const DialogContent = withStyles((theme) => ({
 function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
   const { postcode, customer_user_id, job_id, parent_id } = row;
   let history = useHistory();
+  const currency = localStorage.getItem("currency");
   const [serviceList, setServiceList] = useState([]);
   const [credit, setCredit] = useState(0);
+  const [mPay, setMPay] = useState(false);
+  const [mData, setmData] = useState("");
+  const [paymentLoading, setPaymentloader] = useState(false);
+  const [acountInfo, setAccountInfo] = useState({});
+  const [showToolTip, setShowToolTip] = useState(false);
+  const [showToolTip1, setShowToolTip1] = useState(false);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const [isTimeSelected, setIsTimeSelected] = useState(false);
@@ -87,8 +95,10 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     service: "",
     addNewCard: false,
     addedNewCard: false,
+    selectedMarketPay: "",
     purchaseOrder: "",
     service_id: "",
+    totalCost: 0,
     note: "",
     time_slot_loading: false,
   });
@@ -104,8 +114,10 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     isLoading,
     addNewCard,
     addedNewCard,
+    totalCost,
     purchaseOrder,
     time_slot_loading,
+    selectedMarketPay,
     note,
   } = state;
 
@@ -132,13 +144,13 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     let d_date = Date.parse(startSelectedDate);
     setState({ ...state, time_slot_loading: true });
     PaymentService.getData({ t_date, d_date })
-        .then((res) => {
-          setTimeSlots(res.data.result.time_slots);
-          setState({ ...state, time_slot_loading: false });
-        })
-        .catch((err) => {
-          setState({ ...state, time_slot_loading: false });
-        });
+      .then((res) => {
+        setTimeSlots(res.data.result.time_slots);
+        setState({ ...state, time_slot_loading: false });
+      })
+      .catch((err) => {
+        setState({ ...state, time_slot_loading: false });
+      });
   }, [startSelectedDate]);
 
   //getcardlist
@@ -154,19 +166,37 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     );
   }, [addedNewCard]);
 
+  useEffect(() => {
+    if (paymentMethod === "10") {
+      setPaymentloader(true);
+      JobService.checkBlocked({ user_id: localStorage.getItem("user_id") })
+        .then((res) => {
+          setAccountInfo(res.data.result);
+          setPaymentloader(false);
+        })
+        .catch((err) => {
+          console.log("err", err.message);
+          setPaymentloader(false);
+        });
+    }
+  }, [paymentMethod]);
+
   //getservices
   useEffect(() => {
     let data = {
       post_code: postcode,
       service_type: parent_id,
       is_app: 0,
-      user_id: localStorage.getItem('user_id')
+      user_id: localStorage.getItem("user_id"),
     };
     ServiceService.subServicelist(data).then((response) => {
       setServiceList(response.data.result);
     });
     const userCredit = getUserDataFromLocalStorage();
     setCredit(userCredit.credit_balance);
+    setMPay(userCredit.market_pay);
+    setmData(userCredit.market_finance_balance);
+
     setState({
       ...state,
       customerUserId: localStorage.getItem("user_id"),
@@ -175,32 +205,32 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
 
   useEffect(() => {
     window.addEventListener(
-        "message",
-        function (ev) {
-          if (ev.data.code === 0) {
-            setState({
-              ...state,
-              isLoading: false,
-              notice: {
-                type: "success",
-                text: "Successfully Created Job!",
-              },
-            });
-            setTimeout(() => {
-              closeModal();
-              updateJobs();
-            }, 2000);
-          } else {
-            setState({
-              ...state,
-              notice: {
-                type: "error",
-                text: ev.data.message,
-              },
-            });
-          }
-        },
-        false
+      "message",
+      function (ev) {
+        if (ev.data.code === 0) {
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: "Successfully Created Job!",
+            },
+          });
+          setTimeout(() => {
+            closeModal();
+            updateJobs();
+          }, 2000);
+        } else {
+          setState({
+            ...state,
+            notice: {
+              type: "error",
+              text: ev.data.message,
+            },
+          });
+        }
+      },
+      false
     );
   }, []);
 
@@ -219,6 +249,9 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
           setState({ ...state, [name]: value, cost: "", service_id: "" });
         }
         break;
+        case "selectedMarketPay":
+          setState({ ...state, isCompanyModal: true, [name]: value });
+          break;
       case "cost":
         setState({ ...state, [name]: +value });
         break;
@@ -250,46 +283,42 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
 
   useEffect(() => {
     window.addEventListener(
-        "message",
-        function (ev) {
-          if (ev.data.code === 0) {
-            setState({
-              ...state,
-              isLoading: false,
-              notice: {
-                type: "success",
-                text: "Successfully created exchange!",
-              },
-            });
-            setTimeout(() => {
-              handleClose();
-              if (isfromJob) {
-                updateJobs();
-                history.push("/jobs");
-              } else {
-                updateJobs();
-              }
-            }, 2000);
-          } else {
-            setState({
-              ...state,
-              notice: {
-                type: "error",
-                text: ev.data.message,
-              },
-            });
-          }
-        },
-        false
+      "message",
+      function (ev) {
+        if (ev.data.code === 0) {
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "success",
+              text: "Successfully created exchange!",
+            },
+          });
+          setTimeout(() => {
+            handleClose();
+            if (isfromJob) {
+              updateJobs();
+              history.push("/jobs");
+            } else {
+              updateJobs();
+            }
+          }, 2000);
+        } else {
+          setState({
+            ...state,
+            notice: {
+              type: "error",
+              text: ev.data.message,
+            },
+          });
+        }
+      },
+      false
     );
   }, []);
 
   const handleCreate = () => {
-    if (
-      service === "" ||
-      cost === "" ||
-      paymentMethod === ""
-    ) {
+    if (service === "" || cost === "" || paymentMethod === "") {
       Object.keys(errors).forEach((error) => {
         checkingError(error, state[error]);
       });
@@ -318,7 +347,8 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     const newStartTime = startTime.trim().slice(0, 5);
     const newEndTime = endTime.trim().slice(0, 5);
     const currentYear = startSelectedDate.getFullYear();
-    const dateString = currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
+    const dateString =
+      currentYear + "-" + newCurrentMonth + "-" + currentDayOfMonth;
     const job_start_time = Date.parse(`${dateString}T${newStartTime}`);
     const job_end_time = Date.parse(`${dateString}T${newEndTime}`);
 
@@ -344,22 +374,32 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
 
     JobService.createExchange(data)
       .then((response) => {
-        if(response.data.code === 11){
+        if (response.data.code === 11) {
           const iframe = document.createElement("iframe");
           iframe.src = response.data.result.url;
           iframe.width = "800";
           iframe.height = "800";
           // @ts-ignore
           window.open(
-              response.data.result.url,
-              "Dynamic Popup",
-              "height=" +
+            response.data.result.url,
+            "Dynamic Popup",
+            "height=" +
               iframe.height +
               ", width=" +
               iframe.width +
               "scrollbars=auto, resizable=no, location=no, status=no"
           );
-        }else{
+        } else if (response.data.code === 6) {
+          setState({
+            ...state,
+            isLoading: false,
+            notice: {
+              type: "error",
+              text: response.data.description,
+            },
+          });
+        } 
+        else {
           setTimeout(() => {
             handleClose();
             if (isfromJob) {
@@ -392,6 +432,17 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
   };
   const handleClose = () => {
     closeModal();
+  };
+
+  const handleToolTip = (ab) => {
+    if (ab === 0) {
+      setShowToolTip(!showToolTip);
+      setShowToolTip1(false);
+    }
+    if (ab === 1) {
+      setShowToolTip1(!showToolTip1);
+      setShowToolTip(false);
+    }
   };
 
   return (
@@ -438,7 +489,10 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
               error={errors["cost"].length > 0 ? true : false}
             />
           </div>
-          <LocalizationProvider utils={DateFnsUtils} dateAdapter={AdapterDateFns}>
+          <LocalizationProvider
+            utils={DateFnsUtils}
+            dateAdapter={AdapterDateFns}
+          >
             <div className="dateTimeWp">
               <div>
                 <p>Delivery Date Time</p>
@@ -455,35 +509,97 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
               </div>
               <div className="timeWp">
                 {time_slot_loading ? (
-                    <CircularProgress />
+                  <CircularProgress />
                 ) : timeSlots.length > 0 ? (
-                    timeSlots.map((elem, index) => (
-                        <label
-                            className={`firstShift ${
-                                selectedTime === elem.time_slot && "active"
-                            }`}
-                            onClick={() => handleTime(elem)}
-                            key={index}
-                        >
-                          {elem.time_slot}
-                        </label>
-                    ))
+                  timeSlots.map((elem, index) => (
+                    <label
+                      className={`firstShift ${
+                        selectedTime === elem.time_slot && "active"
+                      }`}
+                      onClick={() => handleTime(elem)}
+                      key={index}
+                    >
+                      {elem.time_slot}
+                    </label>
+                  ))
                 ) : (
-                    <p className="errorMsg">
-                      Oops! Looks like we do not have any available slots for your
-                      chosen date, at the moment. Try another date?
-                    </p>
+                  <p className="errorMsg">
+                    Oops! Looks like we do not have any available slots for your
+                    chosen date, at the moment. Try another date?
+                  </p>
                 )}
               </div>
             </div>
             {isTimeSelected && (
-                <div className="error">Choose Time slot from above</div>
+              <div className="error">Choose Time slot from above</div>
             )}
           </LocalizationProvider>
           <div className="selectWp">
-            <p>Payment</p>
             <FormControl variant="outlined" margin="dense">
-              {credit === 0 ? (
+              {mPay ? (
+                <>
+                  {mData ? (
+                    <div className="payment">
+                      <p>Payment Method</p>
+                      <FormControl variant="outlined" margin="dense">
+                        <Select
+                          name="paymentMethod"
+                          value={paymentMethod}
+                          onChange={handleChange}
+                          error={
+                            errors["paymentMethod"].length > 0 ? true : false
+                          }
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          <MenuItem value="10">Kriya</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                  ) : (
+                    <div className="payment">
+                      <p>Payment Method</p>
+                      <FormControl variant="outlined" margin="dense">
+                        <Select
+                          name="paymentMethod"
+                          value={paymentMethod}
+                          onChange={handleChange}
+                          error={
+                            errors["paymentMethod"].length > 0 ? true : false
+                          }
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
+                          <MenuItem value="10">Kriya</MenuItem>
+                          <MenuItem value="0">Stripe</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="payment">
+                  <p>Payment Method</p>
+                  <FormControl variant="outlined" margin="dense">
+                    <Select
+                      name="paymentMethod"
+                      value={paymentMethod}
+                      onChange={handleChange}
+                      error={errors["paymentMethod"].length > 0 ? true : false}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {credit > 0 && <MenuItem value="2">Credit</MenuItem>}
+                      <MenuItem value="0">Stripe</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              )}
+              {/* {credit === 0 ? (
                 <Select
                   value={paymentMethod}
                   onChange={handleChange}
@@ -508,7 +624,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
                   <MenuItem value="0">Stripe</MenuItem>
                   <MenuItem value="2">Credit</MenuItem>
                 </Select>
-              )}
+              )} */}
             </FormControl>
           </div>
 
@@ -554,6 +670,66 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
               )}
             </>
           )}
+
+          <div style={{ position: "relative" }}>
+            {paymentMethod === "10" && (
+              <>
+                {paymentLoading ? (
+                  <div className="payLoading">
+                    <CircularProgress />
+                  </div>
+                ) : (
+                  <RadioGroup
+                    name="selectedMarketPay"
+                    value={selectedMarketPay}
+                    onChange={handleChange}
+                  >
+                    {acountInfo &&
+                      MARKET_PAY_LIST.map((data, index) => {
+                        return (
+                          <>
+                            <div className="marketMain">
+                              <FormControlLabel
+                                key={data.id}
+                                value={data.id}
+                                control={<Radio color="primary" />}
+                                label={`${data.title}`}
+                              />
+
+                              <img
+                                src={marketInfoIcon}
+                                alt="market"
+                                className="tool-img"
+                                onClick={() => handleToolTip(index)}
+                              />
+                              {showToolTip && data.tooltip && (
+                                <ToolTipCard
+                                  data={data.tooltip}
+                                  handleClose={() => setShowToolTip(false)}
+                                />
+                              )}
+                              {showToolTip1 && data.tooltip1 && (
+                                <ToolTipCard
+                                  data={data.tooltip1}
+                                  handleClose={() => setShowToolTip1(false)}
+                                />
+                              )}
+                            </div>
+                            {data.text && (
+                              <div className="remaining-balance">
+                                {`${data.text} : ${currency ? currency : "£"} ${
+                                  acountInfo.market_finance_balance - totalCost
+                                }`}
+                              </div>
+                            )}
+                          </>
+                        );
+                      })}
+                  </RadioGroup>
+                )}
+              </>
+            )}
+          </div>
 
           <div>
             <p>Purchase Order</p>
