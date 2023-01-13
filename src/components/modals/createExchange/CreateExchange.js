@@ -249,9 +249,9 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
           setState({ ...state, [name]: value, cost: "", service_id: "" });
         }
         break;
-        case "selectedMarketPay":
-          setState({ ...state, isCompanyModal: true, [name]: value });
-          break;
+      case "selectedMarketPay":
+        setState({ ...state, isCompanyModal: true, [name]: value });
+        break;
       case "cost":
         setState({ ...state, [name]: +value });
         break;
@@ -371,7 +371,10 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
       comments: note,
       show_on_portal: 0,
     };
-
+    setState({
+      ...state,
+      isLoading: true,
+    });
     JobService.createExchange(data)
       .then((response) => {
         if (response.data.code === 11) {
@@ -398,8 +401,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
               text: response.data.description,
             },
           });
-        } 
-        else {
+        } else {
           setTimeout(() => {
             handleClose();
             if (isfromJob) {
