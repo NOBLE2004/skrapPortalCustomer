@@ -185,7 +185,11 @@ const Co2breakdownReport = (props) => {
                       fontColor={"#0F285"}
                       fontWeight={700}
                       secondaryColor={"#F7F7F7"}
-                      percentage={0}
+                      percentage={
+                        recycledData?.data?.result?.reuse
+                          ? recycledData?.data?.result?.reuse
+                          : 0
+                      }
                       primaryColor={["#0F2851", "#0F2851"]}
                   />
                   <div className="text">
@@ -213,7 +217,11 @@ const Co2breakdownReport = (props) => {
                       fontColor={"#0F285"}
                       fontWeight={700}
                       secondaryColor={"#F7F7F7"}
-                      percentage={0}
+                      percentage={
+                        recycledData?.data?.result?.recovery
+                          ? recycledData?.data?.result?.recovery
+                          : 0
+                      }
                       primaryColor={["#0F2851", "#0F2851"]}
                   />
                   <div className="text">
