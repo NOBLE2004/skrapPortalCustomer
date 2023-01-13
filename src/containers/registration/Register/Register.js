@@ -178,7 +178,7 @@ const Register = (props) => {
       invitation_code: "",
       last_name: lastname,
       marketing: false,
-      mobile_number: props.phone ? `+44` + props.phone.phone.phone : "",
+      mobile_number: props.phone ? props.phone.phone.phone : "",
       password: password,
       referal: "",
       user_name: firstname + lastname,

@@ -125,7 +125,7 @@ const AddPhone = (props) => {
   const getVerficationCode = () => {
     authService
       .getVerificationCode({
-        mobile_number: "+44" + phone,
+        mobile_number: "+" + phone,
         recaptcha: value,
       })
       .then((res) => {
@@ -279,7 +279,12 @@ const AddPhone = (props) => {
     setState((st) => ({
       ...st,
       phone: value,
+      isPhone: false,
+      isMobileVerfied: false,
+      notice: null,
+      password: "",
     }));
+    props.auth.error = false;
     checkingError("phone", value);
   };
 
