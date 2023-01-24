@@ -32,53 +32,24 @@ const DashboardServices = ({ servicesData, loading }) => {
   } = servicesData;
   const [services, setServices] = useState([]);
 
-  const dummyService = [
-    // {
-    //   count: 63,
-    //   name: "Trailer",
-    //   total: 92160,
-    // },
-    {
-      count: Grab?.count,
-      name: "Compactor",
-      total: Grab?.total,
-    },
-  ];
-
   useEffect(() => {
-    // if(country_code==='+49'){
-    //   Compactor.name = "Compactor";
-    //   Trailer.name = "Trailer";
-    // }
-    if (servicesData) {
-       Cage.name = "Cage";
-
-      // Trailer.name = "Trailer";
-
-      // Compacter.name = "Compacter";
-
-      Skip.name = "Skip";
-      // Grab.name = "Grab";
-      // Aggregate.name = "Aggregate";
-      // PortableToilet.name = "PortableToilet";
-      let list = [
-         Cage,
-        Skip,
-        //Grab,
-        // Aggregate,
-        // PortableToilet,
-        // Trailer,
-        // Compacter,
-        // ,Compactor,Trailer
-      ].sort(function (a, b) {
-        console.log(a);
-        var x = a["count"];
-        var y = b["count"];
-        return x < y ? 1 : x > y ? -1 : 0;
-      });
-      setServices([...list, ...dummyService]);
-    }
+    Cage.name = "Cage";
+    Skip.name = "Skip";
+    Grab.name = "Grab";
+    Aggregate.name = "Aggregate";
+    PortableToilet.name = "PortableToilet";
+    let list = [Cage, Skip, Grab, Aggregate, PortableToilet].sort(function (
+        a,
+        b
+    ) {
+      console.log(a);
+      var x = a["count"];
+      var y = b["count"];
+      return x < y ? 1 : x > y ? -1 : 0;
+    });
+    setServices(list);
   }, [servicesData]);
+
 
   const getPercentage = (service) => {
     if(service?.count){
