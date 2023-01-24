@@ -33,21 +33,23 @@ const DashboardServices = ({ servicesData, loading }) => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    Cage.name = "Cage";
-    Skip.name = "Skip";
-    Grab.name = "Grab";
-    Aggregate.name = "Aggregate";
-    PortableToilet.name = "PortableToilet";
-    let list = [Cage, Skip, Grab, Aggregate, PortableToilet].sort(function (
-        a,
-        b
-    ) {
-      console.log(a);
-      var x = a["count"];
-      var y = b["count"];
-      return x < y ? 1 : x > y ? -1 : 0;
-    });
-    setServices(list);
+    if(servicesData){
+      Cage.name = "Cage";
+      Skip.name = "Skip";
+      Grab.name = "Grab";
+      Aggregate.name = "Aggregate";
+      PortableToilet.name = "PortableToilet";
+      let list = [Cage, Skip, Grab, Aggregate, PortableToilet].sort(function (
+          a,
+          b
+      ) {
+        console.log(a);
+        var x = a["count"];
+        var y = b["count"];
+        return x < y ? 1 : x > y ? -1 : 0;
+      });
+      setServices(list);
+    }
   }, [servicesData]);
 
 
