@@ -296,7 +296,6 @@ const JobsTable = ({
         Header: "CO2",
         accessor: "order_job_status",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
              : ''}</>;
@@ -305,7 +304,6 @@ const JobsTable = ({
       {
         Header: "Weight",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
         },
@@ -339,12 +337,10 @@ const JobsTable = ({
         Header: "Invoice",
         accessor: "job_id",
         id: "invoice",
-        Cell: (props) => {
-          return props.row.original.appointment_status === 4 ||
-            props.row.original.appointment_status == 3 ? (
-            <>
-              {userData?.country_currency?.country_code === "+49" &&
-              props.cell.row.original.appointment_status===3 ? (
+        Cell: (props) =>
+          (<>
+              {props.row.original.appointment_status === 4 ||
+              props.row.original.appointment_status == 3 ? (
                 <span
                   className="normal-dsans-10-primary"
                   onClick={(e) => downloadInvoice(e, props.value)}
@@ -359,11 +355,7 @@ const JobsTable = ({
               ) : (
                 ""
               )}
-            </>
-          ) : (
-            ""
-          );
-        },
+            </>)
       },
       {
         Header: "Ticket",
