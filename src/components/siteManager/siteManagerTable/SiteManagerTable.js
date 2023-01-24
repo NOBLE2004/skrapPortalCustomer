@@ -232,7 +232,6 @@ const SiteManagerTable = ({
         Header: "CO2",
         accessor: "order_job_status",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
              : ''}</>;
@@ -241,7 +240,6 @@ const SiteManagerTable = ({
       {
         Header: "Weight",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
         },
@@ -459,7 +457,6 @@ const SiteManagerTable = ({
         Header: "CO2",
         accessor: "order_job_status",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
              : ''}</>;
@@ -468,7 +465,6 @@ const SiteManagerTable = ({
       {
         Header: "Weight",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
         },
@@ -497,8 +493,6 @@ const SiteManagerTable = ({
            return props?.row?.original?.appointment?.appointment_status === 4 ||
             props?.row?.original?.appointment?.appointment_status == 3 ? (
             <>
-              {/* {userData?.country_currency?.country_code === "+49" &&
-              props.cell.row.original.appointment_status===3 ? ( */}
                 <span
                   className="normal-dsans-10-primary"
                   onClick={(e) => downloadInvoice(e, props.value)}
