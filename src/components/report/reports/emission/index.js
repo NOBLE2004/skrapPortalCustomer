@@ -109,7 +109,7 @@ const EmissionReport = (props) => {
     setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   }, [sites]);
 
-   const getMonthData = (month, value) => {
+  const getMonthData = (month, value) => {
     switch (month) {
       case "january":
         emission[0] = value;
@@ -193,6 +193,13 @@ const EmissionReport = (props) => {
   ];
 
   const filterSeries = () => {
+   const dummy= emission?.map((single, index) => {
+     return emission[index] = 0;
+    });
+    setEmission(dummy);
+    emission[0] = 0;
+    emission[1] = 0;
+    setEmission(emission);
     state?.data?.data?.map((single) => {
       getMonthData(
         single.month?.toLowerCase(),
@@ -217,6 +224,8 @@ const EmissionReport = (props) => {
       setMax(0);
     }
   }, [state?.data?.data, startDate]);
+
+  console.log("emission", emission);
 
   return (
     <>
