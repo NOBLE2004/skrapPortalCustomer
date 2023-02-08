@@ -94,23 +94,23 @@ const SiteManagerTable = ({
     setCollection(true);
     handleClose();
   };
-  const toDataURL = (url) => {
-    return fetch(url)
-      .then((response) => {
-        return response.blob();
-      })
-      .then((blob) => {
-        return URL.createObjectURL(blob);
-      });
-  };
-  const handleShowReport = async (e, url) => {
-    e.stopPropagation();
-    var element = document.createElement("a");
-    element.href = await toDataURL(url);
-    element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
-    element.click();
-    handleClose();
-  };
+    const toDataURL = (url) => {
+        return fetch(url)
+            .then((response) => {
+                return response.blob();
+            })
+            .then((blob) => {
+                return URL.createObjectURL(blob);
+            });
+    };
+    const handleShowReport = async (e, url) => {
+        e.stopPropagation();
+        var element = document.createElement("a");
+        element.href = await toDataURL(url);
+        element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
+        element.click();
+        handleClose();
+    };
   const downloadInvoice = (e, job_id) => {
     e.stopPropagation();
     setLoading(true);
@@ -232,7 +232,6 @@ const SiteManagerTable = ({
         Header: "CO2",
         accessor: "order_job_status",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
              : ''}</>;
@@ -241,7 +240,6 @@ const SiteManagerTable = ({
       {
         Header: "Weight",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
         },
@@ -293,19 +291,36 @@ const SiteManagerTable = ({
           );
         },
       },
-      {
-        Header: "Ticket",
-        id: "ticket",
-        Cell: (props) => (
-          <span
-            className="normal-dsans-10-primary"
-            style={{ color: "lightgrey" }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            Ticket
-          </span>
-        ),
-      },
+        {
+            Header: "Ticket",
+            accessor: "waste_transfer_document",
+            id: "ticket",
+            Cell: (props) => (
+                <>
+                    {(props.value !== "" && props.value !== null) ? (
+                        <span
+                            className="normal-dsans-10-primary"
+                            onClick={(e) => handleShowReport(e, props.value)}
+                        >
+                Ticket
+                <img
+                    src={downloadSite}
+                    alt="download-icon"
+                    style={{ marginLeft: "5px" }}
+                />
+              </span>
+                    ) : (
+                        <span
+                            className="normal-dsans-10-primary"
+                            style={{ color: "lightgrey" }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                Ticket
+              </span>
+                    )}
+                </>
+            ),
+        },
       {
         Header: "",
         id: "id-edit",
@@ -442,7 +457,6 @@ const SiteManagerTable = ({
         Header: "CO2",
         accessor: "order_job_status",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
              : ''}</>;
@@ -451,7 +465,6 @@ const SiteManagerTable = ({
       {
         Header: "Weight",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49"? 0 : 1,
         Cell: (props) => {
           return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
         },
@@ -480,8 +493,6 @@ const SiteManagerTable = ({
            return props?.row?.original?.appointment?.appointment_status === 4 ||
             props?.row?.original?.appointment?.appointment_status == 3 ? (
             <>
-              {/* {userData?.country_currency?.country_code === "+49" &&
-              props.cell.row.original.appointment_status===3 ? ( */}
                 <span
                   className="normal-dsans-10-primary"
                   onClick={(e) => downloadInvoice(e, props.value)}
@@ -502,19 +513,36 @@ const SiteManagerTable = ({
           );
         },
       },
-      {
-        Header: "Ticket",
-        id: "ticket",
-        Cell: (props) => (
-          <span
-            className="normal-dsans-10-primary"
-            style={{ color: "lightgrey" }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            Ticket
-          </span>
-        ),
-      },
+        {
+            Header: "Ticket",
+            accessor: "waste_transfer_document",
+            id: "ticket",
+            Cell: (props) => (
+                <>
+                    {(props.value !== "" && props.value !== null) ? (
+                        <span
+                            className="normal-dsans-10-primary"
+                            onClick={(e) => handleShowReport(e, props.value)}
+                        >
+                Ticket
+                <img
+                    src={downloadSite}
+                    alt="download-icon"
+                    style={{ marginLeft: "5px" }}
+                />
+              </span>
+                    ) : (
+                        <span
+                            className="normal-dsans-10-primary"
+                            style={{ color: "lightgrey" }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                Ticket
+              </span>
+                    )}
+                </>
+            ),
+        },
       {
         Header: "",
         id: "id-edit",
