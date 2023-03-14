@@ -279,7 +279,7 @@ export const newChart = () => ({
         "</b><br/>" +
         this.series.name +
         ": " +
-        numberWithCommas(this?.y?.toFixed(2))
+        numberWithCommas(this?.y == 0 ? this.y : this.y?.toFixed(2))
       );
     },
   },
@@ -295,7 +295,7 @@ export const newChart = () => ({
           color: "#677790",
         },
         formatter: function () {
-          return numberWithCommas(this.y?.toFixed(2));
+          return numberWithCommas(this?.y == 0 ? this.y : this.y?.toFixed(2));
         },
       },
       pointPadding: 0.1,
