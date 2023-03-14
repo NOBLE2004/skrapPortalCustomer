@@ -266,14 +266,21 @@ export const newChart = () => ({
         const getLabel = (value) => {
           return `${value} ${"kg CO2e"} `;
         };
-        return getLabel(this.value);
+        return getLabel(numberWithCommas(this.value));
       },
     },
   },
 
   tooltip: {
     formatter: function () {
-      return "<b>" + this.x + "</b><br/>" + this.series.name + ": " + this.y;
+      return (
+        "<b>" +
+        this.x +
+        "</b><br/>" +
+        this.series.name +
+        ": " +
+        numberWithCommas(this?.y == 0 ? this.y : this.y?.toFixed(2))
+      );
     },
   },
 
@@ -286,6 +293,9 @@ export const newChart = () => ({
         style: {
           fontWeight: "bold",
           color: "#677790",
+        },
+        formatter: function () {
+          return numberWithCommas(this?.y == 0 ? this.y : this.y?.toFixed(2));
         },
       },
       pointPadding: 0.1,
