@@ -47,9 +47,7 @@ export const chartOptions = (siteCurrency) => ({
     labels: {
       formatter() {
         const getLabel = (value) => {
-
           return `${numberWithCommas(value)} kg`;
-
         };
         return getLabel(numberWithCommas(this.value));
       },
@@ -66,7 +64,6 @@ export const chartOptions = (siteCurrency) => ({
   //   useHTML: true,
   // },
 
-
   tooltip: {
     formatter: function () {
       let s = `<b> ${this.x} </b>`;
@@ -79,7 +76,7 @@ export const chartOptions = (siteCurrency) => ({
     },
     shared: true,
   },
-  
+
   plotOptions: {
     column: {
       grouping: false,
@@ -231,6 +228,86 @@ export const data2 = (siteCurrency) => ({
       pointStyle: "rectRounded",
       pointWidth: 15,
       boxWidth: "100%",
+    },
+  ],
+});
+
+export const newChart = () => ({
+  chart: {
+    type: "column",
+    style: {
+      fontFamily: "DM Sans",
+      color: "#677790",
+      fontWeight: 700,
+    },
+  },
+  title: {
+    text: null,
+    align: "left",
+  },
+  xAxis: {
+    categories: ["28/11/2022", "29/11/2022", "30/11/2022", "01/12/2022"],
+    gridLineColor: "transparent",
+    gridTextColor: "#ffffff",
+    lineColor: "transparent",
+    tickColor: "transparent",
+  },
+
+  yAxis: {
+    allowDecimals: false,
+    gridLineColor: "#ffffff",
+    gridLineWidth: 0,
+    min: 0,
+    title: {
+      text: null,
+    },
+    labels: {
+      formatter() {
+        const getLabel = (value) => {
+          return `${value} ${"kg CO2e"} `;
+        };
+        return getLabel(this.value);
+      },
+    },
+  },
+
+  tooltip: {
+    formatter: function () {
+      return "<b>" + this.x + "</b><br/>" + this.series.name + ": " + this.y;
+    },
+  },
+
+  plotOptions: {
+    series: {
+      dataLabels: {
+        enabled: true,
+        align: "left",
+        x: -10,
+        style: {
+          fontWeight: "bold",
+          color: "#677790",
+        },
+      },
+      pointPadding: 0.1,
+      groupPadding: 0,
+    },
+  },
+
+  series: [
+    {
+      name: "Closed loop",
+      data: [79.63, 99.646, 108.52, 96.971],
+      stack: "1",
+    },
+    {
+      name: "Landfill",
+      data: [3331.98, 4221.49, 1843, 1267],
+      stack: "2",
+    },
+    {
+      name: "Reuse",
+      data: [0, 0, 0, 0],
+      stack: "3",
     },
   ],
 });
