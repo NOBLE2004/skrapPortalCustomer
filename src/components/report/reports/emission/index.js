@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Card, CardContent, Grid } from "@mui/material";
 import DatePicker from "../../../yearPicker/yearPicker";
 import Vector from "../../../../assets/images/vector.svg";
@@ -17,6 +18,8 @@ import { getReportEmissionVehicles } from "../../../../store/actions/action.repo
 import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
 import { numberWithCommas } from "../../../utlils/dashboard";
+import { newChart } from "./constant";
+import { getUserDataFromLocalStorage } from "../../../../services/utils";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -54,6 +57,7 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 
 const EmissionReport = (props) => {
   const state = useSelector((state) => state?.reportEmission);
+  const userDetail = getUserDataFromLocalStorage();
   const stateSiteBreakDown = useSelector(
     (state) => state?.reportEmissionSiteBreakDown
   );
@@ -193,8 +197,8 @@ const EmissionReport = (props) => {
   ];
 
   const filterSeries = () => {
-   const dummy= emission?.map((single, index) => {
-     return emission[index] = 0;
+    const dummy = emission?.map((single, index) => {
+      return (emission[index] = 0);
     });
     setEmission(dummy);
     emission[0] = 0;
@@ -225,7 +229,7 @@ const EmissionReport = (props) => {
     }
   }, [state?.data?.data, startDate]);
 
-  console.log("emission", emission);
+  console.log("userDetail", userDetail);
 
   return (
     <>
@@ -239,7 +243,7 @@ const EmissionReport = (props) => {
                 : `0.00`}{" "}
               <span>kg of CO2e Cumulative Emissions</span>
             </h1>
-            <div className="sub-heading">Monthly breakdown</div>
+            <div className="sub-heading">Transport Emission</div>
             {state?.isLoading ? (
               <div className="d-flex justify-center align-center">
                 <FadeLoader
@@ -281,14 +285,29 @@ const EmissionReport = (props) => {
             )}
           </div>
         </CardContent>
+        {userDetail?.country_currency?.country_name == "Germany" && (
+          <CardContent>
+            <div className="salesWp  ">
+              <div
+                className="sub-heading"
+                style={{
+                  margin: "0px 0px 10px 0px",
+                }}
+              >
+                Waste Emission
+              </div>
+              {chartData && chartData?.series !== undefined && (
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={newChart()}
+                  ref={props.ref2}
+                />
+              )}
+            </div>
+          </CardContent>
+        )}
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            {/*<h2>Did you know?</h2>*/}
-            {/*<p>*/}
-            {/*  By upgrading your <span>8-yard skips</span> to a{" "}*/}
-            {/*  <span>12 yard skips</span> you would reduce your site movements by*/}
-            {/*  15% which could reduce your carbon emissions*/}
-            {/*</p>*/}
             <div className="sub-heading">Offset payments</div>
             <div className="filters">
               <div className="year">
@@ -344,18 +363,7 @@ const EmissionReport = (props) => {
                 <div className="border-drop"></div>
                 <div className="more-drop">
                   <div className="sub-heading">Site breakdown</div>
-                  {/*<div className="head-text">*/}
-                  {/*  <p>*/}
-                  {/*    <span>*/}
-                  {/*      {stateSiteBreakDown?.data?.graph_data?.length}*/}
-                  {/*    </span>{" "}*/}
-                  {/*    site journeys*/}
-                  {/*  </p>*/}
-                  {/*  <p>*/}
-                  {/*    <span>525.5 miles</span> equivalent to driving from{" "}*/}
-                  {/*    <b>London</b> to <b>Berlin</b>*/}
-                  {/*  </p>*/}
-                  {/*</div>*/}
+
                   {stateSiteBreakDown?.isLoading ? (
                     <div className="d-flex justify-center align-center">
                       <FadeLoader

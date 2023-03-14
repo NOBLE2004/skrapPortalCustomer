@@ -1,8 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import DashBoard from "./containers/mainDashBoard/DashBoard";
-import { createBrowserHistory } from "history";
+import {createBrowserHistory} from "history";
 import SiteManagers from "./containers/mainSiteManagers/SiteManagers";
 import Sites from "./containers/mainSites/Sites"
 import SignIn from "./containers/registration/SignIn/SignIn";
@@ -24,33 +24,32 @@ import Supplier from "./containers/supplier";
 const history = createBrowserHistory();
 
 function App() {
-  return (
-    <Router history={history}>
-      <Switch>
-        {/* <Route path="/login" component={() => <SignIn />} exact /> */}
-        <PublicRoute path="/login" component={() => <SignIn />} exact restricted={true}/>
-        <PublicRoute path="/signup-info" component={() => <Register />} exact restricted={true}/>
-        <PublicRoute path="/signup" component={() => <AddPhone />} exact restricted={true}/>
-        <PublicRoute path="/forget-password" component={() => <ForgetPassword />} exact restricted={true}/>
-        <Layout>
-          <PrivateRoute path="/" component={() => <DashBoard />} exact />
-          <PrivateRoute path="/dashboard" component={() => <DashBoard />} />
-          <PrivateRoute path="/site-managers" component={() => <SiteManagers />} exact/>
-          <PrivateRoute path="/site-managers/:id" component={() => <SiteManagerDetailPage />} exact/>
-          <PrivateRoute path="/sites" component={() => <Sites />} exact/> 
-          <PrivateRoute path="/sites/:id" component={() => <SitesDetailPage />} exact/> 
-          <PrivateRoute path="/jobs" component={() => <MainJobs />} /> 
-          <PrivateRoute path="/tiping" component={() => <MainTiping />} /> 
-          <PrivateRoute path="/tickets" component={() => <MainTickets />} /> 
-          <PrivateRoute path="/reports" component={() => <MainReports />} /> 
-          <PrivateRoute path="/job-detail/:id" component={() => <MainJobDetail />} />
-          <PrivateRoute path="/site-managers/job-detail/:id" component={() => <MainJobDetail />} />
-          <PrivateRoute path="/new-reports" component={() => <NewReports />} />
-          <PrivateRoute path="/supplier" component={() => <Supplier />} />
-        </Layout>
-      </Switch>
-    </Router>
-  );
+    return (
+        <Router history={history}>
+            <Switch>
+                <PublicRoute path="/login" component={() => <SignIn/>} exact restricted={true}/>
+                <PublicRoute path="/signup-info" component={() => <Register/>} exact restricted={true}/>
+                <PublicRoute path="/signup" component={() => <AddPhone/>} exact restricted={true}/>
+                <PublicRoute path="/forget-password" component={() => <ForgetPassword/>} exact restricted={true}/>
+                <Layout>
+                    <PrivateRoute path="/" component={() => <DashBoard/>} exact/>
+                    <PrivateRoute path="/dashboard" component={() => <DashBoard/>}/>
+                    <PrivateRoute path="/site-managers" component={() => <SiteManagers/>} exact/>
+                    <PrivateRoute path="/site-managers/:id" component={() => <SiteManagerDetailPage/>} exact/>
+                    <PrivateRoute path="/sites" component={() => <Sites/>} exact/>
+                    <PrivateRoute path="/sites/:id" component={() => <SitesDetailPage/>} exact/>
+                    <PrivateRoute path="/jobs" component={() => <MainJobs/>}/>
+                    <PrivateRoute path="/tiping" component={() => <MainTiping/>}/>
+                    <PrivateRoute path="/tickets" component={() => <MainTickets/>}/>
+                    <PrivateRoute path="/reports" component={() => <MainReports/>}/>
+                    <PrivateRoute path="/job-detail/:id" component={() => <MainJobDetail/>}/>
+                    <PrivateRoute path="/site-managers/job-detail/:id" component={() => <MainJobDetail/>}/>
+                    <PrivateRoute path="/new-reports" component={() => <NewReports/>}/>
+                    <PrivateRoute path="/supplier" component={() => <Supplier/>}/>
+                </Layout>
+            </Switch>
+        </Router>
+    );
 }
 
 export default App;
