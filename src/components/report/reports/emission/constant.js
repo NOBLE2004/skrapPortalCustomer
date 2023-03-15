@@ -47,7 +47,7 @@ export const chartOptions = (siteCurrency) => ({
     labels: {
       formatter() {
         const getLabel = (value) => {
-          return `${numberWithCommas(value)} kg`;
+          return `${numberWithCommas(value)} kgco2e`;
         };
         return getLabel(numberWithCommas(this.value));
       },
@@ -264,7 +264,7 @@ export const newChart = () => ({
     labels: {
       formatter() {
         const getLabel = (value) => {
-          return `${value} ${"kg CO2e"} `;
+          return `${value} ${"kgco2e"} `;
         };
         return getLabel(numberWithCommas(this.value));
       },
@@ -305,19 +305,21 @@ export const newChart = () => ({
 
   series: [
     {
-      name: "Closed loop",
+      name: "Recycled",
       data: [79.63, 99.646, 108.52, 96.971],
+      pointWidth: 30,
+      borderRadius: 6,
       stack: "1",
     },
-    {
-      name: "Landfill",
-      data: [3331.98, 4221.49, 1843, 1267],
-      stack: "2",
-    },
-    {
-      name: "Reuse",
-      data: [0, 0, 0, 0],
-      stack: "3",
-    },
+//    {
+//      name: "Landfill",
+//      data: [3331.98, 4221.49, 1843, 1267],
+//      stack: "2",
+//    },
+//    {
+//      name: "Reuse",
+//      data: [0, 0, 0, 0],
+//      stack: "3",
+//    },
   ],
 });
