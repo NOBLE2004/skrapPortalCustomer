@@ -41,7 +41,7 @@ export const status = (status) => {
     return "Heading";
   } else if (status === 2) {
     return "Ongoing";
-  } else if (status === 3) {
+  } else if (status === 3 || status === 14) {
     return "Completed";
   } else if (status === 4) {
     return "Delivered";
