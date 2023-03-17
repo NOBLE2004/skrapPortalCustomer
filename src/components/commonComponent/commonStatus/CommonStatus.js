@@ -14,7 +14,7 @@ const CommonStatus = ({ status }) => {
             status?.toLowerCase() === "pending" ||
             status?.toLowerCase() === "cancelled"
               ? "red"
-              : status?.toLowerCase() === "completed"
+              : (status?.toLowerCase() === "completed" || status?.toLowerCase() === "collection requested")
               ? "#00B25D"
               : status?.toLowerCase() === "delivered"
               ? "#FF9013"

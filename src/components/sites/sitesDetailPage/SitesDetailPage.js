@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import NewManagerDetail from "../../siteManager/newManagerDetail/NewManagerDetail";
-import ManagerDetail from "../../siteManager/managerDetail/ManagerDetail";
 import SiteManagerTable from "../../siteManager/siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
 import { Grid } from "@mui/material";
