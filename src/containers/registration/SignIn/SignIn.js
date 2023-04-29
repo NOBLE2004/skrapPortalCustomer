@@ -157,6 +157,7 @@ const SignIn = (props) => {
                           country={"gb"}
                           name="phone"
                           countryCodeEditable={false}
+                          enableLongNumbers={true}
                           onlyCountries={
                             props?.allCounteries?.data
                               ? props?.allCounteries?.data
