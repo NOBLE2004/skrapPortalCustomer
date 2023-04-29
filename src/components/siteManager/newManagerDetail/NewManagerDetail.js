@@ -45,7 +45,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
                     <div className="info">
                       <div className="designation">Site Name</div>
                       <div className="personal-title">{`${
-                        site && site.site_name ? site.site_name : "n/a"
+                          single.site_name && single.site_name ? single.site_name : "n/a"
                       }`}</div>
                     </div>
                     <div
@@ -82,7 +82,7 @@ const NewManagerDetail = ({ managerData, setReload }) => {
                     <div className="info">
                       <div className="designation">Utilisation rating</div>
                       <div className="personal-title">
-                        {utilization ? utilization : 0}/10
+                        {single.utilization ? single.utilization : 0}/10
                       </div>
                     </div>
                   )}

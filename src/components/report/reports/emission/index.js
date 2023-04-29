@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Card, CardContent, Grid } from "@mui/material";
 import DatePicker from "../../../yearPicker/yearPicker";
 import Vector from "../../../../assets/images/vector.svg";
@@ -17,6 +18,8 @@ import { getReportEmissionVehicles } from "../../../../store/actions/action.repo
 import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
 import { numberWithCommas } from "../../../utlils/dashboard";
+import { newChart } from "./constant";
+import { getUserDataFromLocalStorage } from "../../../../services/utils";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -54,6 +57,7 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 
 const EmissionReport = (props) => {
   const state = useSelector((state) => state?.reportEmission);
+  const userDetail = getUserDataFromLocalStorage();
   const stateSiteBreakDown = useSelector(
     (state) => state?.reportEmissionSiteBreakDown
   );
@@ -109,7 +113,7 @@ const EmissionReport = (props) => {
     setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   }, [sites]);
 
-   const getMonthData = (month, value) => {
+  const getMonthData = (month, value) => {
     switch (month) {
       case "january":
         emission[0] = value;
@@ -193,6 +197,13 @@ const EmissionReport = (props) => {
   ];
 
   const filterSeries = () => {
+    const dummy = emission?.map((single, index) => {
+      return (emission[index] = 0);
+    });
+    setEmission(dummy);
+    emission[0] = 0;
+    emission[1] = 0;
+    setEmission(emission);
     state?.data?.data?.map((single) => {
       getMonthData(
         single.month?.toLowerCase(),
@@ -218,6 +229,8 @@ const EmissionReport = (props) => {
     }
   }, [state?.data?.data, startDate]);
 
+  console.log("userDetail", userDetail);
+
   return (
     <>
       <PayEmissionModal showModal={showModal} setShowModal={setShowModal} />
@@ -230,7 +243,7 @@ const EmissionReport = (props) => {
                 : `0.00`}{" "}
               <span>kg of CO2e Cumulative Emissions</span>
             </h1>
-            <div className="sub-heading">Monthly breakdown</div>
+            <div className="sub-heading">Transport Emission</div>
             {state?.isLoading ? (
               <div className="d-flex justify-center align-center">
                 <FadeLoader
@@ -272,183 +285,187 @@ const EmissionReport = (props) => {
             )}
           </div>
         </CardContent>
-        <CardContent>
-          <div className="salesWp column-charts-highcharts-">
-            {/*<h2>Did you know?</h2>*/}
-            {/*<p>*/}
-            {/*  By upgrading your <span>8-yard skips</span> to a{" "}*/}
-            {/*  <span>12 yard skips</span> you would reduce your site movements by*/}
-            {/*  15% which could reduce your carbon emissions*/}
-            {/*</p>*/}
-            <div className="sub-heading">Offset payments</div>
-            <div className="filters">
-              <div className="year">
-                <DatePicker
-                  startDate={date}
-                  setStartDate={setDate}
-                  getData={handleDate}
-                />
-              </div>
-              <div className="total">
-                Total payment: <span>£0.00</span>
-              </div>
-            </div>
-            {state?.isLoading ? (
-              <div className="d-flex justify-center align-center">
-                <FadeLoader
-                  color={"#518ef8"}
-                  loading={state?.isLoading}
-                  width={4}
-                />
-              </div>
-            ) : (
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={data2(siteCurrency)}
-              />
-            )}
-            <div
-              className="w-100 button-with-icon-bar-chart"
-              style={showMore ? { opacity: 0 } : { opacity: 1 }}
-            >
-              <div className="w-100">
-                <button
-                  onClick={() => {
-                    setShowModal(true);
-                  }}
-                >
-                  <img src={Vector} alt="" />
-                  <span>Pay CO2e offset</span>
-                </button>
-              </div>
+        {userDetail?.country_currency?.country_name == "Germany" && (
+          <CardContent>
+            <div className="salesWp  ">
               <div
-                className="see-more"
-                onClick={() => {
-                  setShow(!show);
+                className="sub-heading"
+                style={{
+                  margin: "0px 0px 10px 0px",
                 }}
               >
-                See more
+                Waste Emission
               </div>
+              {chartData && chartData?.series !== undefined && (
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={newChart()}
+                  ref={props.ref2}
+                />
+              )}
             </div>
-            {show && (
-              <div className="see-more-wrap">
-                <div className="border-drop"></div>
-                <div className="more-drop">
-                  <div className="sub-heading">Site breakdown</div>
-                  {/*<div className="head-text">*/}
-                  {/*  <p>*/}
-                  {/*    <span>*/}
-                  {/*      {stateSiteBreakDown?.data?.graph_data?.length}*/}
-                  {/*    </span>{" "}*/}
-                  {/*    site journeys*/}
-                  {/*  </p>*/}
-                  {/*  <p>*/}
-                  {/*    <span>525.5 miles</span> equivalent to driving from{" "}*/}
-                  {/*    <b>London</b> to <b>Berlin</b>*/}
-                  {/*  </p>*/}
-                  {/*</div>*/}
-                  {stateSiteBreakDown?.isLoading ? (
-                    <div className="d-flex justify-center align-center">
-                      <FadeLoader
-                        color={"#518ef8"}
-                        loading={stateSiteBreakDown?.isLoading}
-                        width={4}
-                      />
-                    </div>
-                  ) : (
-                    <div className="main-emission-break-down">
-                      {stateSiteBreakDown?.data?.graph_data?.map(
-                        (service, index) => {
-                          return (
-                            <div className="inner-break-down" key={index}>
-                              <div className="circle-main">
-                                <div
-                                  className="circle"
-                                  style={{
-                                    width: `${
-                                      service?.Sum_Co2e?.toFixed(1) > 100
-                                        ? 100
-                                        : service?.Sum_Co2e?.toFixed(1)
-                                    }px`,
-                                    height: `${
-                                      service?.Sum_Co2e?.toFixed(1) > 100
-                                        ? 100
-                                        : service?.Sum_Co2e?.toFixed(1)
-                                    }px`,
-                                    background:
-                                      index % 3 === 0
-                                        ? "#0F2851"
-                                        : index % 3 === 1
-                                        ? "#4981F8"
-                                        : "#60A0F8",
-                                    borderRadius: "50%",
-                                  }}
-                                />
-                              </div>
-                              <div className="site-name">
-                                <div className="site">{service.SiteName}</div>
-                                <div className="percentage">
-                                  {service?.Sum_Co2e?.toFixed(1)} CO2e
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        }
-                      )}
-                    </div>
-                  )}
-                  {/*<div className="sub-heading">CO2e breakdown</div>*/}
-                  {/*<div className="sub-heading progress-label">*/}
-                  {/*  <p>Van</p>*/}
-                  {/*  <p>Truck</p>*/}
-                  {/*</div>*/}
-                  {/*<div className="services">*/}
-                  {/*  <div className="progress-div">*/}
-                  {/*    <div className="progress-bar" style={{ width: "40%" }}>*/}
-                  {/*      <label>25%</label>*/}
-                  {/*      <BorderLinearProgress*/}
-                  {/*        value={100}*/}
-                  {/*        variant="determinate"*/}
-                  {/*      />*/}
-                  {/*    </div>*/}
-                  {/*    <div*/}
-                  {/*      className="progress-bar"*/}
-                  {/*      style={{ width: "60%", position: "relative" }}*/}
-                  {/*    >*/}
-                  {/*      <BorderLinearProgress value={0} variant="determinate" />*/}
-                  {/*      <label*/}
-                  {/*        style={{*/}
-                  {/*          right: 0,*/}
-                  {/*          paddingRight: "2.5%",*/}
-                  {/*        }}*/}
-                  {/*      >*/}
-                  {/*        60%*/}
-                  {/*      </label>*/}
-                  {/*    </div>*/}
-                  {/*  </div>*/}
-                  {/*</div>*/}
-                  <Grid container marginTop={5}>
-                    <BorderLinearProgress2 value={60} variant="determinate" />
-                  </Grid>
-                  <Grid container justifyContent="space-between">
-                    {state?.data?.year?.map((value, index) => (
-                      <div className="sub-heading progress-label" key={index}>
-                        <p className="text left">
-                          Tank-to-well <br />
-                          <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>
-                        </p>
-                        <p className="text right">
-                          Well-to-tank <br />
-                          <span> {value?.WTTCo2e.toFixed(2)} Co2e</span>
-                        </p>
-                      </div>
-                    ))}
-                  </Grid>
-                </div>
-              </div>
-            )}
-          </div>
-        </CardContent>
+          </CardContent>
+        )}
+          {/*<CardContent>*/}
+          {/*  <div className="salesWp column-charts-highcharts-">*/}
+          {/*    <div className="sub-heading">Offset payments</div>*/}
+          {/*    <div className="filters">*/}
+          {/*      <div className="year">*/}
+          {/*        <DatePicker*/}
+          {/*          startDate={date}*/}
+          {/*          setStartDate={setDate}*/}
+          {/*          getData={handleDate}*/}
+          {/*        />*/}
+          {/*      </div>*/}
+          {/*      <div className="total">*/}
+          {/*        Total payment: <span>£0.00</span>*/}
+          {/*      </div>*/}
+          {/*    </div>*/}
+          {/*    {state?.isLoading ? (*/}
+          {/*      <div className="d-flex justify-center align-center">*/}
+          {/*        <FadeLoader*/}
+          {/*          color={"#518ef8"}*/}
+          {/*          loading={state?.isLoading}*/}
+          {/*          width={4}*/}
+          {/*        />*/}
+          {/*      </div>*/}
+          {/*    ) : (*/}
+          {/*      <HighchartsReact*/}
+          {/*        highcharts={Highcharts}*/}
+          {/*        options={data2(siteCurrency)}*/}
+          {/*      />*/}
+          {/*    )}*/}
+          {/*    <div*/}
+          {/*      className="w-100 button-with-icon-bar-chart"*/}
+          {/*      style={showMore ? { opacity: 0 } : { opacity: 1 }}*/}
+          {/*    >*/}
+          {/*      <div className="w-100">*/}
+          {/*        <button*/}
+          {/*          onClick={() => {*/}
+          {/*            setShowModal(true);*/}
+          {/*          }}*/}
+          {/*        >*/}
+          {/*          <img src={Vector} alt="" />*/}
+          {/*          <span>Pay CO2e offset</span>*/}
+          {/*        </button>*/}
+          {/*      </div>*/}
+          {/*      <div*/}
+          {/*        className="see-more"*/}
+          {/*        onClick={() => {*/}
+          {/*          setShow(!show);*/}
+          {/*        }}*/}
+          {/*      >*/}
+          {/*        See more*/}
+          {/*      </div>*/}
+          {/*    </div>*/}
+          {/*    {show && (*/}
+          {/*      <div className="see-more-wrap">*/}
+          {/*        <div className="border-drop"></div>*/}
+          {/*        <div className="more-drop">*/}
+          {/*          <div className="sub-heading">Site breakdown</div>*/}
+
+          {/*          {stateSiteBreakDown?.isLoading ? (*/}
+          {/*            <div className="d-flex justify-center align-center">*/}
+          {/*              <FadeLoader*/}
+          {/*                color={"#518ef8"}*/}
+          {/*                loading={stateSiteBreakDown?.isLoading}*/}
+          {/*                width={4}*/}
+          {/*              />*/}
+          {/*            </div>*/}
+          {/*          ) : (*/}
+          {/*            <div className="main-emission-break-down">*/}
+          {/*              {stateSiteBreakDown?.data?.graph_data?.map(*/}
+          {/*                (service, index) => {*/}
+          {/*                  return (*/}
+          {/*                    <div className="inner-break-down" key={index}>*/}
+          {/*                      <div className="circle-main">*/}
+          {/*                        <div*/}
+          {/*                          className="circle"*/}
+          {/*                          style={{*/}
+          {/*                            width: `${*/}
+          {/*                              service?.Sum_Co2e?.toFixed(1) > 100*/}
+          {/*                                ? 100*/}
+          {/*                                : service?.Sum_Co2e?.toFixed(1)*/}
+          {/*                            }px`,*/}
+          {/*                            height: `${*/}
+          {/*                              service?.Sum_Co2e?.toFixed(1) > 100*/}
+          {/*                                ? 100*/}
+          {/*                                : service?.Sum_Co2e?.toFixed(1)*/}
+          {/*                            }px`,*/}
+          {/*                            background:*/}
+          {/*                              index % 3 === 0*/}
+          {/*                                ? "#0F2851"*/}
+          {/*                                : index % 3 === 1*/}
+          {/*                                ? "#4981F8"*/}
+          {/*                                : "#60A0F8",*/}
+          {/*                            borderRadius: "50%",*/}
+          {/*                          }}*/}
+          {/*                        />*/}
+          {/*                      </div>*/}
+          {/*                      <div className="site-name">*/}
+          {/*                        <div className="site">{service.SiteName}</div>*/}
+          {/*                        <div className="percentage">*/}
+          {/*                          {service?.Sum_Co2e?.toFixed(1)} CO2e*/}
+          {/*                        </div>*/}
+          {/*                      </div>*/}
+          {/*                    </div>*/}
+          {/*                  );*/}
+          {/*                }*/}
+          {/*              )}*/}
+          {/*            </div>*/}
+          {/*          )}*/}
+          {/*          /!*<div className="sub-heading">CO2e breakdown</div>*!/*/}
+          {/*          /!*<div className="sub-heading progress-label">*!/*/}
+          {/*          /!*  <p>Van</p>*!/*/}
+          {/*          /!*  <p>Truck</p>*!/*/}
+          {/*          /!*</div>*!/*/}
+          {/*          /!*<div className="services">*!/*/}
+          {/*          /!*  <div className="progress-div">*!/*/}
+          {/*          /!*    <div className="progress-bar" style={{ width: "40%" }}>*!/*/}
+          {/*          /!*      <label>25%</label>*!/*/}
+          {/*          /!*      <BorderLinearProgress*!/*/}
+          {/*          /!*        value={100}*!/*/}
+          {/*          /!*        variant="determinate"*!/*/}
+          {/*          /!*      />*!/*/}
+          {/*          /!*    </div>*!/*/}
+          {/*          /!*    <div*!/*/}
+          {/*          /!*      className="progress-bar"*!/*/}
+          {/*          /!*      style={{ width: "60%", position: "relative" }}*!/*/}
+          {/*          /!*    >*!/*/}
+          {/*          /!*      <BorderLinearProgress value={0} variant="determinate" />*!/*/}
+          {/*          /!*      <label*!/*/}
+          {/*          /!*        style={{*!/*/}
+          {/*          /!*          right: 0,*!/*/}
+          {/*          /!*          paddingRight: "2.5%",*!/*/}
+          {/*          /!*        }}*!/*/}
+          {/*          /!*      >*!/*/}
+          {/*          /!*        60%*!/*/}
+          {/*          /!*      </label>*!/*/}
+          {/*          /!*    </div>*!/*/}
+          {/*          /!*  </div>*!/*/}
+          {/*          /!*</div>*!/*/}
+          {/*          <Grid container marginTop={5}>*/}
+          {/*            <BorderLinearProgress2 value={60} variant="determinate" />*/}
+          {/*          </Grid>*/}
+          {/*          <Grid container justifyContent="space-between">*/}
+          {/*            {state?.data?.year?.map((value, index) => (*/}
+          {/*              <div className="sub-heading progress-label" key={index}>*/}
+          {/*                <p className="text left">*/}
+          {/*                  Tank-to-well <br />*/}
+          {/*                  <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>*/}
+          {/*                </p>*/}
+          {/*                <p className="text right">*/}
+          {/*                  Well-to-tank <br />*/}
+          {/*                  <span> {value?.WTTCo2e.toFixed(2)} Co2e</span>*/}
+          {/*                </p>*/}
+          {/*              </div>*/}
+          {/*            ))}*/}
+          {/*          </Grid>*/}
+          {/*        </div>*/}
+          {/*      </div>*/}
+          {/*    )}*/}
+          {/*  </div>*/}
+          {/*</CardContent>*/}
       </Card>
     </>
   );
