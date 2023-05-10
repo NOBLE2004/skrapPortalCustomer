@@ -585,15 +585,14 @@ const JobsTable = ({
                 : undefined
             }
           >
-            {row.appointment_status === 4 && (
+            {(row.appointment_status === 4 && (row.parent_id == 2 || row.parent_id == 602)) && (
               <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
             )}
             {row.service_id === 44 && row.appointment_status === 4 && (
               <MenuItem onClick={handleExtend}>Extend</MenuItem>
             )}
             <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-            {(row.appointment_status === 4 ||
-              (row.service_id === 44 && row.appointment_status === 4)) && (
+            {(row.appointment_status === 4 && (row.parent_id == 2 || row.parent_id == 602 || row.service_id === 44)) && (
               <MenuItem onClick={handleShowCollectionDialog}>
                 Collection
               </MenuItem>

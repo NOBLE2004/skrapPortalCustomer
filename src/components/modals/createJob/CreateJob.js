@@ -85,6 +85,7 @@ export default function CreateJob({
   const [isCardAdded, setIsCardAdded] = useState(false);
   const [paymentLoading, setPaymentloader] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [showPayment, setShowPayment] = useState(true);
   const [paymentError, setPaymentError] = useState(false);
   const [credit, setCredit] = useState(0);
   const [roleId, setRoleId] = useState(0);
@@ -313,6 +314,10 @@ export default function CreateJob({
     setMPay(userCredit.market_pay);
     setmData(userCredit.market_finance_balance);
     setComp_number(userCredit.company_reg_number);
+    if(userCredit?.account_type == 3){
+      setShowPayment(false);
+      setPaymentMethod('2');
+    }
     setState({
       ...state,
       customerUserId: localStorage.getItem("user_id"),
@@ -801,7 +806,7 @@ export default function CreateJob({
     let t_date = Date.parse(new Date());
     let d_date = Date.parse(startSelectedDate);
     setState({ ...state, time_slot_loading: true });
-    PaymentService.getData({ t_date, d_date })
+    PaymentService.getData({ t_date, d_date, user_id: localStorage.getItem("user_id") })
       .then((res) => {
         setTimeSlots(res.data.result.time_slots);
         setState({ ...state, time_slot_loading: false });
@@ -1184,7 +1189,7 @@ export default function CreateJob({
             )}
           </div>
 
-          {roleId != 12 && (
+          {(roleId != 12 && showPayment) && (
             <div className="paymentWp">
               {mPay ? (
                 <>

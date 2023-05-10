@@ -85,6 +85,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
   const [paymentMethodList, setPaymentMethodList] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const [isTimeSelected, setIsTimeSelected] = useState(false);
+  const [showPayment, setShowPayment] = useState(true);
   const [state, setState] = useState({
     startSelectedDate: new Date(),
     cost: "",
@@ -143,7 +144,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
     let t_date = Date.parse(new Date());
     let d_date = Date.parse(startSelectedDate);
     setState({ ...state, time_slot_loading: true });
-    PaymentService.getData({ t_date, d_date })
+    PaymentService.getData({ t_date, d_date, user_id: localStorage.getItem("user_id") })
       .then((res) => {
         setTimeSlots(res.data.result.time_slots);
         setState({ ...state, time_slot_loading: false });
@@ -183,6 +184,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
 
   //getservices
   useEffect(() => {
+    console.log(row);
     let data = {
       post_code: postcode,
       service_type: parent_id,
@@ -190,9 +192,17 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
       user_id: localStorage.getItem("user_id"),
     };
     ServiceService.subServicelist(data).then((response) => {
-      setServiceList(response.data.result);
+      if(response.data.code == 0){
+        setServiceList(response.data.result);
+      }else{
+        setServiceList([]);
+      }
     });
     const userCredit = getUserDataFromLocalStorage();
+    if(userCredit?.account_type == 3){
+      setShowPayment(false);
+      setState({ ...state, paymentMethod: 2 });
+    }
     setCredit(userCredit.credit_balance);
     setMPay(userCredit.market_pay);
     setmData(userCredit.market_finance_balance);
@@ -469,7 +479,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {serviceList.map((data, index) => {
+                {serviceList?.map((data, index) => {
                   return (
                     <MenuItem value={index} key={index}>
                       {data.service_name}
@@ -538,6 +548,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
           </LocalizationProvider>
           <div className="selectWp">
             <FormControl variant="outlined" margin="dense">
+              { showPayment && <>
               {mPay ? (
                 <>
                   {mData ? (
@@ -601,6 +612,7 @@ function CreateExchange({ closeModal, row, updateJobs, isfromJob }) {
                   </FormControl>
                 </div>
               )}
+              </>}
               {/* {credit === 0 ? (
                 <Select
                   value={paymentMethod}

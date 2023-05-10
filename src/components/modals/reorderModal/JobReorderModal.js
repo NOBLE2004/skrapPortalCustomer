@@ -99,6 +99,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
   const [mPay, setMPay] = useState(false);
   const [comp_number, setComp_number] = useState("");
   const [addNewCard, setAddNewCard] = useState(false);
+  const [showPayment, setShowPayment] = useState(true);
   const [paymentMethodList, setPaymentMethodList] = useState([]);
 
   const [state, setState] = useState({
@@ -179,6 +180,10 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
     setMPay(userCredit.market_pay);
     setmData(userCredit.market_finance_balance);
     setComp_number(userCredit.company_reg_number);
+    if(userCredit?.account_type == 3){
+      setShowPayment(false);
+      setPaymentMethod('2');
+    }
   }, []);
 
   useEffect(() => {
@@ -209,7 +214,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
     let t_date = Date.parse(new Date());
     let d_date = Date.parse(startSelectedDate);
     setState({ ...state, time_slot_loading: true });
-    PaymentService.getData({ t_date, d_date })
+    PaymentService.getData({ t_date, d_date, user_id: localStorage.getItem("user_id") })
       .then((res) => {
         setTimeSlots(res.data.result.time_slots);
         setState({ ...state, time_slot_loading: false });
@@ -420,7 +425,7 @@ function JobReorderModal({ row, updateJobs, closeModal, isfromJob }) {
             )}
           </LocalizationProvider>
           <div>
-            {roleId != 12 && (
+            {(roleId != 12 && showPayment) && (
               <div className="paymentWp">
                 {mPay ? (
                   <>

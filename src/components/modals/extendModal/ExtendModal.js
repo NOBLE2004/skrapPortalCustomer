@@ -78,6 +78,7 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
   const [price, setPrice] = useState(0);
   const [userId, setUserId] = useState("");
   const [paymentMethodList, setPaymentMethodList] = useState([]);
+  const [showPayment, setShowPayment] = useState(true);
 
   const [state, setState] = useState({
     notice: null,
@@ -143,6 +144,10 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
 
   useEffect(() => {
     const userCredit = getUserDataFromLocalStorage();
+    if(userCredit?.account_type == 3){
+      setShowPayment(false);
+      setPaymentMethod('2');
+    }
     setRoleId(userCredit.role_id);
     setCredit(userCredit.credit_balance);
     setUserId(userCredit.user_id);
@@ -306,7 +311,7 @@ const ExtendModal = ({ row, closeModal, updateJobs }) => {
               <div className="m3-error">must be greater than 2</div>
             )}
           </div>
-          {roleId != 12 && (
+          {(roleId != 12 && showPayment) && (
             <div className="paymentWp">
               <div className="payment">
                 <p>Payment Method</p>

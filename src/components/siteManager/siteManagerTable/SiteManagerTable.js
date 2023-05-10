@@ -64,6 +64,7 @@ const SiteManagerTable = ({
       mouseX: e.clientX - 2,
       mouseY: e.clientY - 4,
     });
+    props.postcode = managerData.address.postcode;
     setRow(props);
   };
   const handleClose = () => {
