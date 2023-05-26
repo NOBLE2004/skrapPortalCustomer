@@ -39,7 +39,8 @@ const DashboardServices = ({ servicesData, loading }) => {
       Grab.name = "Grab";
       Aggregate.name = "Aggregate";
       PortableToilet.name = "PortableToilet";
-      let list = [Cage, Skip, Grab, Aggregate, PortableToilet].sort(function (
+      Trailer.name = "Trailer";
+      let list = [Cage, Skip, Grab, Aggregate, PortableToilet, Trailer].sort(function (
           a,
           b
       ) {
