@@ -407,10 +407,10 @@ const SiteManagerTable = ({
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
-          Cell: (cell) => {
+          Cell: (props) => {
               return (
                   <CommonStatus
-                      status={cell.value}
+                      status={status(props?.row?.original?.appointment?.appointment_status)}
                   />
               );
           },

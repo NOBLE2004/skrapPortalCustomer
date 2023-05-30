@@ -66,6 +66,6 @@ export const status = (status) => {
   } else if (status === 14) {
     return "Requested";
   } else {
-    return "----";
+    return "Pending";
   }
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import "./commonstatus.scss";
-const CommonStatus = ({ status }) => {
+const CommonStatus = ({ status, value }) => {
   function capitalize(str) {
     const lower = str.toLowerCase();
     return str.charAt(0).toUpperCase() + lower.slice(1);
