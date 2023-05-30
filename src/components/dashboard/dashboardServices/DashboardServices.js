@@ -115,7 +115,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                       style={{ position: "relative" }}
                     >
                       <p style={{ position: "absolute", bottom: "60px" }}>
-                        {service.name ==='Cage' ? 'Trailer' :service.name}
+                        {service.name}
                       </p>
                       <div>
                         <CircleProgress
