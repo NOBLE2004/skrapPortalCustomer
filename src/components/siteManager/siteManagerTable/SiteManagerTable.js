@@ -219,10 +219,25 @@ const SiteManagerTable = ({
       //     return <span>{props.value || "n/a"}</span>;
       //   },
       // },
+        {
+            Header: "#Pallets",
+            disableFilters: true,
+            Cell: (props) => {
+                return <>{props.cell.row.original?.pallets  ?`${Number(props.cell.row.original?.pallets).toFixed(2)}kg`
+                    : ''}</>;
+            },
+        },
+        {
+            Header: "Rebate",
+            disableFilters: true,
+            Cell: (props) => {
+                return <>{props.cell.row.original?.rebate  ?`${Number(props.cell.row.original?.rebate).toFixed(2)}kg`
+                    : ''}</>;
+            },
+        },
       {
         Header: "Utilisation",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
         Cell: (props) => {
           return <span>{
                props?.cell?.row?.original?.utilization ?`${Number(props?.cell?.row?.original?.utilization)?.toFixed()}%` : ''
@@ -444,10 +459,25 @@ const SiteManagerTable = ({
       //           return <span>{props.row.original.appointment_status == 'Completed' ? '6/10' : '--'}</span>;
       //       },
       //   },
+        {
+            Header: "#Pallets",
+            disableFilters: true,
+            Cell: (props) => {
+                return <>{props.cell.row.original?.pallets  ?`${Number(props.cell.row.original?.pallets).toFixed(2)}kg`
+                    : ''}</>;
+            },
+        },
+        {
+            Header: "Rebate",
+            disableFilters: true,
+            Cell: (props) => {
+                return <>{props.cell.row.original?.rebate  ?`${Number(props.cell.row.original?.rebate).toFixed(2)}kg`
+                    : ''}</>;
+            },
+        },
       {
         Header: "Utilisation",
         disableFilters: true,
-        show: userData?.country_currency?.country_code === "+49" ? 0 : 1,
         Cell: (props) => {
           return <span>{
                props?.cell?.row?.original?.utilization ?`${Number(props?.cell?.row?.original?.utilization)?.toFixed()}%` : ''
@@ -638,15 +668,14 @@ const SiteManagerTable = ({
             : undefined
         }
       >
-        {row.parent_id === 2 && row.appointment_status === 4 && (
+        {((row.appointment_status === 4 || userData.account_type == 3) && (row.parent_id == 2 || row.parent_id == 602)) && (
           <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
         )}
         {row.service_id === 43 && row.appointment_status === 4 && (
           <MenuItem onClick={handleExtend}>Extend</MenuItem>
         )}
         <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-        {(row.appointment_status === 4 ||
-          (row.service_id === 44 && row.appointment_status === 4)) && (
+        {((row.appointment_status === 4 || userData.account_type == 3) && (row.parent_id == 2 || row.parent_id == 602)) && (
           <MenuItem onClick={handleShowCollectionDialog}>Collection</MenuItem>
         )}
         <MenuItem onClick={handleTrackDriver}>Track Driver</MenuItem>

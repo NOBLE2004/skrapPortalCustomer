@@ -20,7 +20,7 @@ const CommonHeader = ({
   const [userData, setUserData] = useState(0);
   useEffect(() => {
     const userdata = getUserDataFromLocalStorage();
-    setUserData(userdata.user_count);
+    setUserData(userdata);
   }, []);
   return (
     <div className="common-header-main">
@@ -44,16 +44,16 @@ const CommonHeader = ({
             Create Job
           </button>
         )}
-        {isSite && (userData > 0 || (siteManager.sites && siteManager.sites.length > 0)) && (
+        {isSite && (userData.user_count > 0 || (siteManager.sites && siteManager.sites.length > 0)) && (
             <>
               <button className="header-btn" onClick={handleBookJob}>
                 Assign to Manager
               </button>
             </>
         )}
-        <button className="header-btn" onClick={handleCreateSite}>
+        {(userData?.role_id != 12 && userData?.role_id != 13) && <button className="header-btn" onClick={handleCreateSite}>
           Create Site
-        </button>
+        </button>}
 
       </div>
     </div>
