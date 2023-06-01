@@ -231,19 +231,6 @@ export const serviceList = [
     img_url: "/service_images/5f9fd84dca502Group 49016@3x.png",
   },
   {
-    service_id: 602,
-
-    service_name: "Trailer",
-
-    description:
-        "<p>An alternative removal solution to skip hire, suitable for all types of waste removals and includes a professional and experienced driver who will assist you in loading your waste. Ideal for removal of bulky items or for locations where a skip isn&#39;t practical, such as more congested roads or busy urban areas with parking restrictions.</p>",
-
-    full_url:
-        "https://portaltest2.skrap.app/service_images/5f9fd84dca502Group 49016@3x.png",
-
-    img_url: "/service_images/5f9fd84dca502Group 49016@3x.png",
-  },
-  {
     description:
       "<p>Ready Mix Concrete is a batch of concrete that is pre-mixed before being delivered to the project site. Tell us the volume required, and we have it delivered to site in a volume metric vehicle.&nbsp;</p>",
     full_url:
@@ -260,6 +247,19 @@ export const serviceList = [
     img_url: "/service_images/5f9fe5eca9899Group 45309@3x.png",
     service_id: 43,
     service_name: "Portable Toilet",
+  },
+  {
+    service_id: 602,
+
+    service_name: "Trailer",
+
+    description:
+        "<p>An alternative removal solution to skip hire, suitable for all types of waste removals and includes a professional and experienced driver who will assist you in loading your waste. Ideal for removal of bulky items or for locations where a skip isn&#39;t practical, such as more congested roads or busy urban areas with parking restrictions.</p>",
+
+    full_url:
+        "https://portaltest2.skrap.app/service_images/5f9fd84dca502Group 49016@3x.png",
+
+    img_url: "/service_images/5f9fd84dca502Group 49016@3x.png",
   },
 ];
 export const servicesReport = [

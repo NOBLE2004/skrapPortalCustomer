@@ -220,7 +220,8 @@ const SiteManagerTable = ({
       //   },
       // },
         {
-            Header: "#Pallets",
+            Header: "Pallets",
+            show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
             disableFilters: true,
             Cell: (props) => {
                 return <>{props.cell.row.original?.pallets  ?`${Number(props.cell.row.original?.pallets).toFixed(2)}kg`
@@ -229,6 +230,7 @@ const SiteManagerTable = ({
         },
         {
             Header: "Rebate",
+            show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
             disableFilters: true,
             Cell: (props) => {
                 return <>{props.cell.row.original?.rebate  ?`${Number(props.cell.row.original?.rebate).toFixed(2)}kg`
@@ -237,6 +239,7 @@ const SiteManagerTable = ({
         },
       {
         Header: "Utilisation",
+          show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
         disableFilters: true,
         Cell: (props) => {
           return <span>{
@@ -460,7 +463,8 @@ const SiteManagerTable = ({
       //       },
       //   },
         {
-            Header: "#Pallets",
+            Header: "Pallets",
+            show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
             disableFilters: true,
             Cell: (props) => {
                 return <>{props.cell.row.original?.pallets  ?`${Number(props.cell.row.original?.pallets).toFixed(2)}kg`
@@ -469,6 +473,7 @@ const SiteManagerTable = ({
         },
         {
             Header: "Rebate",
+            show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
             disableFilters: true,
             Cell: (props) => {
                 return <>{props.cell.row.original?.rebate  ?`${Number(props.cell.row.original?.rebate).toFixed(2)}kg`
@@ -477,6 +482,7 @@ const SiteManagerTable = ({
         },
       {
         Header: "Utilisation",
+          show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
         disableFilters: true,
         Cell: (props) => {
           return <span>{

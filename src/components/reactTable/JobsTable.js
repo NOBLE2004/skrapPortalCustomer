@@ -283,8 +283,9 @@ const JobsTable = ({
         },
       },
       {
-        Header: "#Pallets",
+        Header: "Pallets",
         disableFilters: true,
+        show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
         Cell: (props) => {
           return <>{props.cell.row.original?.pallets  ?`${Number(props.cell.row.original?.pallets).toFixed(2)}kg`
               : ''}</>;
@@ -293,6 +294,7 @@ const JobsTable = ({
       {
         Header: "Rebate",
         disableFilters: true,
+        show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
         Cell: (props) => {
           return <>{props.cell.row.original?.rebate  ?`${Number(props.cell.row.original?.rebate).toFixed(2)}kg`
               : ''}</>;
@@ -301,6 +303,7 @@ const JobsTable = ({
       {
         Header: "Utilisation",
         disableFilters: true,
+        show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
         Cell: (props) => {
           return <span>{
                props?.cell?.row?.original?.utilization ?`${Number(props?.cell?.row?.original?.utilization).toFixed()}%` : ''
