@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useMemo} from "react";
 import NewManagerDetail from "../../siteManager/newManagerDetail/NewManagerDetail";
 import SiteManagerTable from "../../siteManager/siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
@@ -18,6 +18,7 @@ import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
+import {useLocation} from "react-router-dom";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -47,6 +48,7 @@ const SitesDetailPage = (props) => {
   const [userInfo, setUserInfo] = useState(0);
   const [jobsData, setJobsData] = useState({});
   const [isJobLoading, setJobLoading] = useState(false);
+  const {total, setTotal} = useState(0);
   const [filters, setFilters] = useState({
     status: "",
     date: "",
@@ -63,6 +65,7 @@ const SitesDetailPage = (props) => {
     isJobCreated: false,
     addressData: "",
     postCode: "",
+    sale: 0
   });
 
   const {
@@ -72,6 +75,7 @@ const SitesDetailPage = (props) => {
     addressData,
     postCode,
     sitename,
+    sale
   } = state;
 
   const handleChangeFilters = (filtersList) => {
@@ -97,6 +101,7 @@ const SitesDetailPage = (props) => {
           addressData: res.data?.address?.address,
           sitename: res.data?.address?.site_name,
           postCode: res.data?.address?.postcode,
+          sale: res.data?.site_sale,
           isLoadings: false,
         });
       } catch (err) {
@@ -149,7 +154,7 @@ const SitesDetailPage = (props) => {
             : addressData
             ? addressData
             : ""} */}
-          {sitename !== null ? sitename : addressData?.slice(0, 16)}
+          {sitename !== null ? sitename : addressData?.slice(0, 16)} (£{state?.sale})
         </div>
         <div>
           <button className="header-btn" onClick={handleCreateJob}>

@@ -284,8 +284,7 @@ const SiteManagerTable = ({
         accessor: "job_id",
         id: "invoice",
         Cell: (props) => {
-          return props?.row?.original?.appointment_status === 4 ||
-            props?.row?.original?.appointment_status == 3 ? (
+          return props?.row?.original?.appointment_status == 3 ? (
             <>
            
               {/* {userData?.country_currency?.country_code === "+49" &&
@@ -527,8 +526,7 @@ const SiteManagerTable = ({
         accessor: "job_id",
         id: "invoice",
         Cell: (props) => {
-           return props?.row?.original?.appointment?.appointment_status === 4 ||
-            props?.row?.original?.appointment?.appointment_status == 3 ? (
+           return props?.row?.original?.appointment?.appointment_status == 3 ? (
             <>
                 <span
                   className="normal-dsans-10-primary"

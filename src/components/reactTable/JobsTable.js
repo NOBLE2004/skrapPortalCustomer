@@ -357,8 +357,7 @@ const JobsTable = ({
         id: "invoice",
         Cell: (props) =>
           (<>
-              {props.row.original.appointment_status === 4 ||
-              props.row.original.appointment_status == 3 ? (
+              {props.row.original.appointment_status == 3 ? (
                 <span
                   className="normal-dsans-10-primary"
                   onClick={(e) => downloadInvoice(e, props.value)}

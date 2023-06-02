@@ -71,7 +71,7 @@ const TableContainer = ({ columns, data, name }) => {
     if (name === "sites") {
       history.push({
         pathname: `sites/${row.address_id}`,
-        state: { site_address: row.job_address },
+        data: { site_address: row.job_address, sales_by_site: row.sales_by_site },
       });
     }
   };
