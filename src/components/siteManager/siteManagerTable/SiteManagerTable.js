@@ -260,7 +260,7 @@ const SiteManagerTable = ({
         Header: "Weight",
         disableFilters: true,
         Cell: (props) => {
-          return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
+          return <>{props?.cell?.row?.original?.weight > 0 ?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
         },
       },
       {
@@ -502,7 +502,7 @@ const SiteManagerTable = ({
         Header: "Weight",
         disableFilters: true,
         Cell: (props) => {
-          return <>{props?.cell?.row?.original?.weight?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
+          return <>{props?.cell?.row?.original?.weight > 0 ?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
         },
       },
       {
