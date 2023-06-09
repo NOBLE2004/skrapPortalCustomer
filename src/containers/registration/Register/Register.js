@@ -302,7 +302,7 @@ const Register = (props) => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    MarketFinance.
+                    Kriya.
                   </a>{" "}
                   To sign up to credit, please fill in the form and submit for
                   review. If you wish to pay upfront, please continue
@@ -491,7 +491,7 @@ const Register = (props) => {
                       className="a-tag-sign-up"
                       rel="noreferrer"
                     >
-                      how MarketPay works
+                      how Kriya works
                     </a>
                   </div>
                 }
