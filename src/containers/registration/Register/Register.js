@@ -197,8 +197,11 @@ const Register = (props) => {
   };
 
   const getCompanyDetail = (e) => {
+    if(e.length > 3)
     axios.get(`${APP_URL}/findCompany/${e}`).then((response) => {
       setDetails(response?.data?.result?.items);
+    }).catch(ex => {
+      console.log(ex);
     });
   };
 
