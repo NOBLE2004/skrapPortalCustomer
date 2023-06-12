@@ -234,12 +234,13 @@ const JobsTable = ({
         Header: "Service",
         accessor: "service_name",
         disableFilters: true,
-        // Cell: (cell) => {
-        //   return <span>
-        //     {cell.value} <br />
-        //     {cell.row.original.exchanged_by && `Exchange by (${cell.row.original.exchanged_by})` }
-        //   </span>
-        // }
+        Cell: (cell) => {
+          return <span>
+            {cell.value}<br />
+            {cell.row.original.parent_id == 2 && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
+            {cell.row.original.parent_id != 2 && <span style={{color: 'red'}}>{cell.row.original.extended_job_id > 0 && `Extension`}</span>}
+          </span>
+        }
       },
       {
         Header: "Address",

@@ -178,11 +178,18 @@ const SiteManagerTable = ({
         disableFilters: true,
         Cell: (props) => new Date(props.value).toLocaleString(),
       },
-      {
-        Header: "Service",
-        accessor: "service_name",
-        disableFilters: true,
-      },
+        {
+            Header: "Service",
+            accessor: "service_name",
+            disableFilters: true,
+            Cell: (cell) => {
+                return <span>
+            {cell.value}<br />
+                    {cell.row.original.parent_id == 2 && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
+                    {cell.row.original.parent_id != 2 && <span style={{color: 'red'}}>{cell.row.original.extended_job_id > 0 && `Extension`}</span>}
+          </span>
+            }
+        },,
 
       {
         Header: "Cost",
@@ -394,11 +401,18 @@ const SiteManagerTable = ({
           return <span>{props.value || "n/a"}</span>;
         },
       },
-      {
-        Header: "Service",
-        accessor: "service_name",
-        disableFilters: true,
-      },
+        {
+            Header: "Service",
+            accessor: "service_name",
+            disableFilters: true,
+            Cell: (cell) => {
+                return <span>
+            {cell.row.original.service.service_name}<br />
+                    {cell.row.original.service.parent_id == 2 && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
+                    {cell.row.original.service.parent_id != 2 && <span style={{color: 'red'}}>{cell.row.original.extended_job_id > 0 && `Extension`}</span>}
+          </span>
+            }
+        },
       {
         Header: "Address",
         accessor: "job_address",
