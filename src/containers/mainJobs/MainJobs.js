@@ -50,6 +50,7 @@ const MainJobs = (props) => {
     service: "",
     address: "",
     search: "",
+    show_on_app: [0,1]
   });
   let userData = getUserDataFromLocalStorage();
 
