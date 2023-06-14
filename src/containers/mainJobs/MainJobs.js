@@ -81,6 +81,7 @@ const MainJobs = (props) => {
       service: "",
       address: "",
       search: "",
+      show_on_app: [0,1]
     };
     if (isJobCreated || !compare(newFilter, filters))
       props.getJobList(
