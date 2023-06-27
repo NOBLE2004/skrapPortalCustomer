@@ -114,6 +114,7 @@ const MainJobs = (props) => {
     { latitude: 51.56078, longitude: -0.25256 },
   ];
   const handleChangeFilters = (filtersList) => {
+    filtersList.show_on_app = [0,1];
     setFilters(filtersList);
   };
   const handleChangeSearch = (search) => {
