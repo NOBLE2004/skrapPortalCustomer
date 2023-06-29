@@ -146,7 +146,7 @@ const SitesDetailPage = (props) => {
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
-        <div className="sites-header-title">
+        {addressData && <div className="sites-header-title">
           {/* {width < 600
             ? addressData
               ? addressData.slice(0, 16)
@@ -155,7 +155,7 @@ const SitesDetailPage = (props) => {
             ? addressData
             : ""} */}
           {sitename !== null ? sitename : addressData?.slice(0, 16)} (£{state?.sale})
-        </div>
+        </div>}
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
             Create Job
