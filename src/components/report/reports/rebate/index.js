@@ -97,6 +97,9 @@ const RebateReport = (props) => {
     }, [sites]);
 
     return (
+        <>
+            {stateSites?.rebate_breakdown?.result?.total > 0 && <div className="report-chart-card-outer">
+        <div className="report-card-title">Rebate report</div>
         <Card className="report-chart-card" id={"finance"}>
             <CardContent>
                 <div className="salesWp">
@@ -132,6 +135,8 @@ const RebateReport = (props) => {
                 </div>
             </CardContent>
         </Card>
+        </div>}
+            </>
     );
 };
 export default RebateReport;

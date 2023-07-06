@@ -194,14 +194,11 @@ const NewReports = () => {
                 siteCurrency={siteCurrency}
               />
             </div>
-            <div className="report-chart-card-outer">
-              <div className="report-card-title">Rebate report</div>
               <RebateReport
                   sites={selected}
                   showMore={showMore}
                   siteCurrency={siteCurrency}
               />
-            </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Emissions</div>
               <EmissionReport
