@@ -36,6 +36,7 @@ import { siteMovementsList } from "./siteMovementsReducer";
 import { landfillDiversionList } from "./landfillDiversionReducer";
 import { allCounteriesReducer } from "./allCounteriesReducer";
 import { supplierReducer } from "./supplierReducer";
+import { rebateBreakdownReducer } from "./rebateBreakdownReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -72,4 +73,5 @@ export default combineReducers({
   recycled: getRecycledReducer,
   allCounteries: allCounteriesReducer,
   allSupplier: supplierReducer,
+  rebateBreakDown: rebateBreakdownReducer,
 });

@@ -4,6 +4,9 @@ class ReportsService extends HttpService {
   getHireBreakdown = (data) => this.get("customers/report/hireBreakDown", data);
   getSitesBreakdown = (data) =>
     this.get("customers/report/sitesBreakDown", data);
+
+  getRebateBreakdown = (data) =>
+      this.get("customers/report/rebateReport", data);
   getSitesBreakdownList = (data) =>
     this.get("customers/report/sitesBreakDown/list", data);
   getJobsMeta = (data) => this.get("customers/report/jobsMeta", data);

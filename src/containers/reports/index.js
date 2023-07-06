@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as htmlToImage from "html-to-image";
 import * as Excel from "exceljs";
 import { saveAs } from "file-saver";
+import RebateReport from "../../components/report/reports/rebate";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -191,6 +192,14 @@ const NewReports = () => {
                 sites={selected}
                 showMore={showMore}
                 siteCurrency={siteCurrency}
+              />
+            </div>
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">Rebate report</div>
+              <RebateReport
+                  sites={selected}
+                  showMore={showMore}
+                  siteCurrency={siteCurrency}
               />
             </div>
             <div className="report-chart-card-outer">
