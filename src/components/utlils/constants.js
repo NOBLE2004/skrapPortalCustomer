@@ -239,15 +239,15 @@ export const serviceList = [
     service_id: 80,
     service_name: "Concrete",
   },
-  {
-    description:
-      "<p>We have portable Toilets available for varied workforce sizes, hired on a weekly basis with an additional haulage charge.</p>",
-    full_url:
-      "https://portaltest2.skrap.app/service_images/5f9fe5eca9899Group 45309@3x.png",
-    img_url: "/service_images/5f9fe5eca9899Group 45309@3x.png",
-    service_id: 43,
-    service_name: "Portable Toilet",
-  },
+  // {
+  //   description:
+  //     "<p>We have portable Toilets available for varied workforce sizes, hired on a weekly basis with an additional haulage charge.</p>",
+  //   full_url:
+  //     "https://portaltest2.skrap.app/service_images/5f9fe5eca9899Group 45309@3x.png",
+  //   img_url: "/service_images/5f9fe5eca9899Group 45309@3x.png",
+  //   service_id: 43,
+  //   service_name: "Portable Toilet",
+  // },
   {
     service_id: 602,
 
