@@ -56,11 +56,9 @@ const ManagerDetail = (props) => {
               <img src={showIcon} alt="person-img" />
               <div className="edit-title">View Jobs</div>
             </div>
-            {userData?.country_currency?.country_code === "+49" &&
                 <div className="profile-action">
                   <div className="edit-title">Utilisation rating {utilization}/10</div>
                 </div>
-            }
           </Grid>
           <Grid item md={8} className="personal-info">
             <div className="info">

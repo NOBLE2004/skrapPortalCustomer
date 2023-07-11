@@ -78,12 +78,14 @@ const NewManagerDetail = ({ managerData, setReload }) => {
                       {single?.mobile_number ? single?.mobile_number : "n/a"}
                     </div>
                   </div>
+                  {userData?.country_currency?.country_code === "+49" && (
                     <div className="info">
                       <div className="designation">Utilisation rating</div>
                       <div className="personal-title">
                         {single.utilization ? single.utilization : 0}/10
                       </div>
                     </div>
+                  )}
                 </Grid>
               </Grid>
             </CardContent>
