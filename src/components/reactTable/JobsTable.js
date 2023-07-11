@@ -297,7 +297,7 @@ const JobsTable = ({
         disableFilters: true,
         show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
         Cell: (props) => {
-          return <>{props.cell.row.original?.rebate  ?`${Number(props.cell.row.original?.rebate).toFixed(2)}kg`
+          return <>{props.cell.row.original?.rebate  ?`£${Number(props.cell.row.original?.rebate).toFixed(2)}`
               : ''}</>;
         },
       },
