@@ -10,7 +10,7 @@ import HireBreakDown from "./hireBreakDown/hireBreakDown";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const FinanceReport = (props) => {
-  const { sites, showMore, siteCurrency } = props;
+  const { sites, showMore, siteCurrency, date } = props;
   const [chartData, setChartData] = useState();
   const [currency, setCurrency] = useState();
 
@@ -93,11 +93,11 @@ const FinanceReport = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      await dispatch(getSiteBreakdown({ sites: sites }));
-      await dispatch(getHireBreakdown({ sites: sites }));
+      await dispatch(getSiteBreakdown({ sites: sites, date }));
+      await dispatch(getHireBreakdown({ sites: sites, date }));
     }
     fetchData();
-  }, [sites]);
+  }, [sites, date]);
 
   return (
     <Card className="report-chart-card" id={"finance"}>

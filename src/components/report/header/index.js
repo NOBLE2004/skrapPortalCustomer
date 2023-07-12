@@ -11,6 +11,7 @@ import { DateRangePicker } from "react-date-range";
 import "./index.scss";
 import reportsService from "../../../services/reports.service";
 import { downloadSite } from "../../../assets/images";
+import {ArrowDropDown} from "@mui/icons-material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -41,6 +42,7 @@ const ReportHeader = (props) => {
   const { handleChange, selected, sites, setSiteCurrency, setSelected } = props;
   const classes = useStyles();
   const [toggle, setToggle] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState([
     {
@@ -52,6 +54,9 @@ const ReportHeader = (props) => {
 
   const handleStatement = () => {
     setToggle(!toggle);
+  };
+  const handleDateFilter = () => {
+    setToggle2(!toggle2);
   };
   useEffect(() => {
     async function fetchData() {
@@ -74,6 +79,19 @@ const ReportHeader = (props) => {
       dispatch(getJobsMeta({ sites: sites }));
     // }
   }, [sites]);
+
+  const handleDateFull = (item) => {
+    setState([item.selection]);
+    const start = item.selection.startDate.toISOString().split("T")[0];
+    const end = item.selection.endDate.toISOString().split("T")[0];
+    if (start === end) {
+      console.log({date: `${start},${end}`});
+    } else {
+      console.log({date: `${start},${end}`});
+      setToggle2(false);
+    }
+    props.setDate(`${start},${end}`);
+  }
 
   const handleDate = (item) => {
     setState([item.selection]);
@@ -107,10 +125,10 @@ const ReportHeader = (props) => {
 
   return (
     <div className="report-header">
-      <div className="report-grid-header">
+      <div className="report-grid-header" style={{width: '50%', justifyContent: 'flex-start'}}>
         <div className="report-header-card first">
-          <div className="text">
-            <span>Management Reporting</span>
+          <div className="text" style={{width: '20%'}}>
+            <span>Reporting</span>
           </div>
           <Select
             labelId="demo-multiple-name-label"
@@ -164,9 +182,26 @@ const ReportHeader = (props) => {
                 </MenuItem>
               ))}
           </Select>
+          <div className="report-header-card" style={{width: '40%', justifyContent: 'flex-start'}}>
+            <div className="text" style={{fontSize: '14px', cursor: 'pointer'}}>
+              <label style={{fontWeight: 'lighter'}}> Filter By : </label> <span onClick={handleDateFilter}> Date </span> <ArrowDropDown onClick={handleDateFilter}/>
+              <label style={{cursor: 'pointer'}} onClick={() => props.setDate(null)}>reset</label>
+            </div>
+
+            {toggle2 && (
+                <DateRangePicker
+                    editableDateInputs={false}
+                    moveRangeOnFirstSelection={false}
+                    direction="horizontal"
+                    onChange={handleDateFull}
+                    ranges={state}
+                />
+            )}
+          </div>
         </div>
       </div>
       <div
+          style={{width: '50%'}}
         className={
           props?.totalSites?.isLoading
             ? "report-grid-header justify-center"
@@ -221,18 +256,18 @@ const ReportHeader = (props) => {
             </div>
             <div className="report-header-card">
               <div className="text">
-                <span>{props?.totalSites?.data?.result?.sites}</span> Sites
+                <span>{props?.totalSites?.data?.result?.sites} </span> Sites
               </div>
             </div>
             <div className="report-header-card">
               <div className="text">
-                <span>{props?.totalSites?.data?.result?.total_jobs}</span>{" "}
+                <span>{props?.totalSites?.data?.result?.total_jobs} </span>{" "}
                 Bookings complete
               </div>
             </div>
             <div className="report-header-card">
               <div className="text">
-                <span>{props?.totalSites?.data?.result?.hires}</span> Hire Types
+                <span>{props?.totalSites?.data?.result?.hires} </span> Hire Types
               </div>
             </div>
           </>

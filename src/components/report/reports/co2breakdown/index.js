@@ -18,7 +18,7 @@ const Co2breakdownReport = (props) => {
   const wasteData = useSelector((state) => state?.waste);
   const wasteOfEnergyData = useSelector((state) => state?.energy);
   const recycledData = useSelector((state) => state?.recycled);
-  const { sites, showMore } = props;
+  const { sites, showMore, date } = props;
   const [show, setShow] = useState(false);
   // useEffect(() => {
   //    if (sites !== "") {
@@ -31,12 +31,12 @@ const Co2breakdownReport = (props) => {
   // }, [sites]);
 
   useEffect(() => {
-    dispatch(getLandfillDiversion({ sites: sites }));
-    dispatch(getTonnage({ sites: sites }));
-    dispatch(getWaste({ sites: sites }));
-    dispatch(getWasteOfEnergy({ sites: sites }));
-    dispatch(getRecycled({ sites: sites }));
-  }, [sites]);
+    dispatch(getLandfillDiversion({ sites: sites, date }));
+    dispatch(getTonnage({ sites: sites, date }));
+    dispatch(getWaste({ sites: sites, date }));
+    dispatch(getWasteOfEnergy({ sites: sites, date }));
+    dispatch(getRecycled({ sites: sites, date }));
+  }, [sites, date]);
 
   return (
     <Card className="report-chart-card" id="waste_statistics">

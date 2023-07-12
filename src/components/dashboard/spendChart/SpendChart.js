@@ -252,20 +252,20 @@ const SpendChart = ({
             <div className="dateWp">
               <div>
                 <span className="primary-title">Spend</span>
-                <div className="spend-filter-year">
-                  <p>Filter by year:</p>
-                  <div className="date-picker-main">
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => handleYearChange(date)}
-                      showYearPicker
-                      dateFormat="yyyy"
-                      yearItemNumber={15}
-                      customInput={<ExampleCustomInput />}
-                      maxDate={new Date()}
-                    />
-                  </div>
-                </div>
+                {/*<div className="spend-filter-year">*/}
+                {/*  <p>Filter by year:</p>*/}
+                {/*  <div className="date-picker-main">*/}
+                {/*    <DatePicker*/}
+                {/*      selected={startDate}*/}
+                {/*      onChange={(date) => handleYearChange(date)}*/}
+                {/*      showYearPicker*/}
+                {/*      dateFormat="yyyy"*/}
+                {/*      yearItemNumber={15}*/}
+                {/*      customInput={<ExampleCustomInput />}*/}
+                {/*      maxDate={new Date()}*/}
+                {/*    />*/}
+                {/*  </div>*/}
+                {/*</div>*/}
               </div>
             </div>
           </div>

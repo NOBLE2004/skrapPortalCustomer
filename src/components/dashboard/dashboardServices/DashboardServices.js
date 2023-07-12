@@ -59,7 +59,10 @@ const DashboardServices = ({ servicesData, loading }) => {
   const getPercentage = (service) => {
     if(service?.count){
       const per = ((service.count / NumberOfJobs) * 100).toFixed(2);
-      const percentage = per.split('.')[1].substring(1,2) > '5' ? parseFloat(per).toFixed(1) : per.length > 4 ? parseFloat(per.substring(0,4)) : parseFloat(per.substring(0,3));
+      let percentage = 0;
+      if(per > 0){
+        percentage = per?.split('.')[1]?.substring(1,2) > '5' ? parseFloat(per)?.toFixed(1) : per?.length > 4 ? parseFloat(per?.substring(0,4)) : parseFloat(per?.substring(0,3));
+      }
       return percentage;
     }else{
       return 0

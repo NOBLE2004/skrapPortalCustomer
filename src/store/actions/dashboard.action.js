@@ -1,6 +1,7 @@
 import * as Constants from "../constants/constants";
 import dashboardService from "../../services/dashboard.service";
 export const getDashboardsData = (year) => {
+  year = Object.entries(year).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
   return (dispatch) => {
     dispatch(dashboardStart());
     dashboardService

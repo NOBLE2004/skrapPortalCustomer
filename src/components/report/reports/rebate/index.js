@@ -8,7 +8,7 @@ import HighchartsReact from "highcharts-react-official";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const RebateReport = (props) => {
-    const { sites, showMore, siteCurrency } = props;
+    const { sites, showMore, siteCurrency, date } = props;
     const [chartData, setChartData] = useState();
     const [currency, setCurrency] = useState();
 
@@ -91,10 +91,10 @@ const RebateReport = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            await dispatch(getRebateBreakdown({ sites: sites }));
+            await dispatch(getRebateBreakdown({ sites: sites, date }));
         }
         fetchData();
-    }, [sites]);
+    }, [sites, date]);
 
     return (
         <>

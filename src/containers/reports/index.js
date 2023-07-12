@@ -23,6 +23,7 @@ const NewReports = () => {
   const dispatch = useDispatch();
   // const [selected, setSelected] = useState('');
   const [selected, setSelected] = useState([]);
+  const [date, setDate] = useState();
 
   const [startDate, setStartDate] = useState(new Date());
   const [csvData, setCsvData] = useState([]);
@@ -168,15 +169,16 @@ const NewReports = () => {
   // }, [selected]);
 
   useEffect(() => {
-    dispatch(getLandfillDiversionList({ sites: selected }));
-    dispatch(getSiteBreakdownlist({ sites: selected }));
-    dispatch(getSitesMovementList({ sites: selected[0] }));
-  }, [selected]);
+    dispatch(getLandfillDiversionList({ sites: selected, date }));
+    dispatch(getSiteBreakdownlist({ sites: selected, date }));
+    dispatch(getSitesMovementList({ sites: selected[0], date }));
+  }, [selected, date]);
 
   return (
     <>
       <div className="main-report">
         <ReportHeader
+            setDate={setDate}
           sites={selected}
           handleChange={handleChange}
           selected={selected}
@@ -189,12 +191,14 @@ const NewReports = () => {
             <div className="report-chart-card-outer">
               <div className="report-card-title">Finance report</div>
               <FinanceReport
+                  date={date}
                 sites={selected}
                 showMore={showMore}
                 siteCurrency={siteCurrency}
               />
             </div>
               <RebateReport
+                  date={date}
                   sites={selected}
                   showMore={showMore}
                   siteCurrency={siteCurrency}
@@ -202,6 +206,7 @@ const NewReports = () => {
             <div className="report-chart-card-outer">
               <div className="report-card-title">Emissions</div>
               <EmissionReport
+                  dateM={date}
                 sites={selected}
                 startDate={startDate}
                 setStartDate={setStartDate}
@@ -211,11 +216,11 @@ const NewReports = () => {
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Waste Breakdown</div>
-              <Co2breakdownReport sites={selected} showMore={showMore} />
+              <Co2breakdownReport date={date} sites={selected} showMore={showMore} />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Site Movements</div>
-              <SiteMovementsReport sites={selected} showMore={showMore} />
+              <SiteMovementsReport date={date} sites={selected} showMore={showMore} />
             </div>
           </Masonry>
         </div>
@@ -224,6 +229,7 @@ const NewReports = () => {
         handleChangeReportType={handleChangeReportType}
         reports={reports}
         sites={selected}
+        date={date}
         exTest={exTest}
         csvData={csvData}
       />

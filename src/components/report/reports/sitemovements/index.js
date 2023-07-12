@@ -17,7 +17,7 @@ import "./index.scss";
 import { numberWithCommas } from "../../../utlils/dashboard";
 
 const SiteMovementsReport = (props) => {
-  const { sites, showMore } = props;
+  const { sites, showMore, date } = props;
   const [show, setShow] = useState(false);
   const state = useSelector((state) => state?.siteMovements);
   const siteDetail = useSelector((state) => state?.siteMovementDetail);
@@ -39,14 +39,14 @@ const SiteMovementsReport = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      await dispatch(getSitesMovement({ sites: sites }));
+      await dispatch(getSitesMovement({ sites: sites, date }));
     }
     fetchData();
-  }, [sites]);
+  }, [sites, date]);
 
   useEffect(() => {
-    dispatch(getSiteMovementDetails({ sites: sites }));
-  }, [sites]);
+    dispatch(getSiteMovementDetails({ sites: sites, date }));
+  }, [sites, date]);
 
   return (
     <Card className="report-chart-card " id="site_movements">

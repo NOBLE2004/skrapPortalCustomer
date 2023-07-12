@@ -88,6 +88,7 @@ const MainJobs = (props) => {
         { user_id: userData.user_id, limit, orders_type: 4 },
         filters
       );
+    props.getDashboardsData(filters)
   }, [filters, isJobCreated]);
 
   const compare = (a, b) => {

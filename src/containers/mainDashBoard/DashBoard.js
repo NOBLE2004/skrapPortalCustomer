@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TotalSpend from "../../components/dashboard/totalSpend/TotalSpend";
 import JobStatus from "../../components/dashboard/jobStatus/JobStatus";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
-import { Box, Grid } from "@mui/material";
+import {Box, Grid, OutlinedInput, Select} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import SpendChart from "../../components/dashboard/spendChart/SpendChart";
@@ -36,6 +36,9 @@ import LinearProgress, {
 } from "@mui/material/LinearProgress";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { dummyDashboardData } from "../../components/utlils/dashboard";
+import MenuItem from "@mui/material/MenuItem";
+import ReportHeader from "../../components/report/header";
+import DashboardHeader from "../../components/dashboard/Header";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -63,10 +66,13 @@ const DashBoard = (props) => {
   const [isNewYear, setNewYear] = useState(false);
   const [latestYear, setLatestYear] = useState();
   const [startDate, setStartDate] = useState();
+  const [date, setDate] = useState();
   const state = useSelector((state) => state?.landfillDiversion);
   const [userData, setUserData] = useState({});
   const history = useHistory();
   const dispatch = useDispatch();
+  const [selected, setSelected] = useState([]);
+  const [siteCurrency, setSiteCurrency] = useState(null);
   // const { info, loading } = props.dashboard;
   const info = dummyDashboardData;
 
@@ -87,29 +93,36 @@ const DashBoard = (props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(getLandfillDiversion());
+    dispatch(getLandfillDiversion({ sites: selected, date }));
     if (!dashboardMap?.info) {
-      dispatch(getDashboardsMapData());
+      dispatch(getDashboardsMapData({ sites: selected, date }));
     }
     if (!dashboardService?.info) {
-      dispatch(getDashboardServiceData());
+      dispatch(getDashboardServiceData({ sites: selected, date }));
     }
     // if (!dashboardSale?.info) {
     // dispatch(getDashboardSaleData());
     // }
     if (!dashboardData?.info) {
-      dispatch(getDashboardsData());
+      dispatch(getDashboardsData({ sites: selected, date }));
     }
   }, []);
 
   useEffect(() => {
-    // if (!info | isNewYear) {
-    dispatch(getDashboardSaleData({ year: latestYear }));
-    // }
-  }, [latestYear]);
+    dispatch(getLandfillDiversion({ sites: selected, date }));
+    dispatch(getDashboardsMapData({ sites: selected, date }));
+    dispatch(getDashboardServiceData({ sites: selected, date }));
+    dispatch(getDashboardsData({ sites: selected, date }));
+    dispatch(getDashboardSaleData({ year: latestYear, sites: selected, date }));
+  }, [selected, latestYear, date]);
 
   const gotoJobDetail = (id) => {
     history.push({ pathname: `job-detail/${id}` });
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setSelected(value);
   };
 
   // if (loading) {
@@ -141,19 +154,34 @@ const DashBoard = (props) => {
         ) : (
           <Grid container spacing={3}>
             <>
-              {userData?.hide_price === 0 && (
-                <Grid item md={4}>
-                  <TotalSpend
-                    totalSpend={
-                      dashboardData?.info?.TotalSpend
+              <DashboardHeader
+                  sites={selected}
+                  handleChange={handleChange}
+                  selected={selected}
+                  setSelected={setSelected}
+                  setSiteCurrency={setSiteCurrency}
+                  setDate={setDate}
+                  totalSpend={
+                    dashboardData?.info?.TotalSpend
                         ? parseFloat(
                             dashboardData?.info?.TotalSpend
-                          ).toLocaleString()
+                        ).toLocaleString()
                         : ""
-                    }
-                  />
-                </Grid>
-              )}
+                  }
+              />
+              {/*{userData?.hide_price === 0 && (*/}
+              {/*  <Grid item md={4}>*/}
+              {/*    <TotalSpend*/}
+              {/*      totalSpend={*/}
+              {/*        dashboardData?.info?.TotalSpend*/}
+              {/*          ? parseFloat(*/}
+              {/*              dashboardData?.info?.TotalSpend*/}
+              {/*            ).toLocaleString()*/}
+              {/*          : ""*/}
+              {/*      }*/}
+              {/*    />*/}
+              {/*  </Grid>*/}
+              {/*)}*/}
               <Grid item md={8} xs={12}>
                 <div className="job-status-outer">
                   <JobStatus
