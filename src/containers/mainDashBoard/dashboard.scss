@@ -1,11 +1,8 @@
 .job-status-outer {
   display: flex;
   justify-content: flex-start;
-  @media only screen and (max-width: 680px) {
-   flex-wrap: wrap;
-   justify-content: flex-start;
-  }
-  
+  margin-top: 0.5%;
+  margin-right: 10px;
 }
 .landfill-main{
   width: 100%;

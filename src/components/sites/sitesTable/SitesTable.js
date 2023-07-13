@@ -89,6 +89,22 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         },
       },
       {
+        Header: "Delivered Jobs",
+        accessor: "delivired",
+        disableFilters: true,
+        Cell: (props) => {
+          return <span>{props.value || "n/a"}</span>;
+        },
+      },
+      {
+        Header: "Collected Jobs",
+        accessor: "completed",
+        disableFilters: true,
+        Cell: (props) => {
+          return <span>{props.value || "n/a"}</span>;
+        },
+      },
+      {
         Header: "Spend By Site",
         accessor: "sales_by_site",
         show: userData?.hide_price,

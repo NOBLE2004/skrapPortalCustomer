@@ -182,7 +182,7 @@ const DashBoard = (props) => {
               {/*    />*/}
               {/*  </Grid>*/}
               {/*)}*/}
-              <Grid item md={8} xs={12}>
+              <Grid item md={7} xs={12}>
                 <div className="job-status-outer">
                   <JobStatus
                     jobStatus={dashboardData?.info ? dashboardData?.info : ""}
@@ -197,6 +197,7 @@ const DashBoard = (props) => {
           </Grid>
         )}
         <Grid container className="spend-service-main" mt={1}>
+          <Grid item md={5} xs={12}>
           <SpendChart
             chartData={dashboardSale?.info}
             loading={dashboardSale?.loading}
@@ -205,10 +206,13 @@ const DashBoard = (props) => {
             setStartDate={setStartDate}
             setLatestYear={setLatestYear}
           />
+          </Grid>
+          <Grid item md={7} xs={12}>
           <DashboardServices
             servicesData={dashboardService?.info ? dashboardService.info : ""}
             loading={dashboardService?.loading}
           />
+          </Grid>
         </Grid>
         <Grid container spacing={3}>
           <Grid item md={12} className="landfill-main">

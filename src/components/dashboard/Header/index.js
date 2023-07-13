@@ -79,7 +79,7 @@ const DashboardHeader = (props) => {
     };
 
     return (
-            <Grid item md={4}>
+            <Grid item md={5} xs={12}>
                 <div className="report-header-card first">
                     <Select
                         labelId="demo-multiple-name-label"

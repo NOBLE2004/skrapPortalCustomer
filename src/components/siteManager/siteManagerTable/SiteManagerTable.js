@@ -249,7 +249,7 @@ const SiteManagerTable = ({
           show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
         disableFilters: true,
         Cell: (props) => {
-          return <span>{
+          return <span style={{color: props?.cell?.row?.original?.utilization >= 50 ? '#00B25D' : 'red'}}>{
                props?.cell?.row?.original?.utilization ?`${Number(props?.cell?.row?.original?.utilization)?.toFixed()}%` : ''
           }</span>;
         },
@@ -498,7 +498,7 @@ const SiteManagerTable = ({
           show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
         disableFilters: true,
         Cell: (props) => {
-          return <span>{
+          return <span style={{color: props?.cell?.row?.original?.utilization >= 50 ? '#00B25D' : 'red'}}>{
                props?.cell?.row?.original?.utilization ?`${Number(props?.cell?.row?.original?.utilization)?.toFixed()}%` : ''
           }</span>;
         },

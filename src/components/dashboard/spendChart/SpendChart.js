@@ -235,7 +235,7 @@ const SpendChart = ({
   ));
 
   return (
-    <Card className="graphCard">
+    <div className="wrapper">
       {loading ? (
         <Box
           height={"100px"}
@@ -275,7 +275,7 @@ const SpendChart = ({
           </Box>
         </CardContent>
       )}
-    </Card>
+    </div>
   );
 };
 

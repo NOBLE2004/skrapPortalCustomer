@@ -1,43 +1,25 @@
-.jobcard {
-  width: 190px;
-  margin-right: 10px;
-  @media only screen and (max-width: 768px) {
-    margin-bottom: 10px;
-    margin-right: 10px;
-  }
-  @media only screen and (max-width: 430px) {
-    width: 100%;
-    margin-right: 0px;
-  }
-  @media only screen and (min-width: 960px) and (max-width: 1400px) {
-    margin-right: 5px;
-  }
-  .MuiPaper-root {
-    box-shadow: none;
-  }
-}
 
 .box {
-  text-align: center;
   background-color: #fff;
-  padding: 33px 20px 20px;
+  padding: 20px 15px;
   // border: 2px solid #ececec;
   box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05) !important;
   box-sizing: border-box;
-  height: 130px;
   border-radius: 11.6836px !important;
   display: flex;
   justify-content: center;
   flex-direction: column;
   h1 {
-    font-family: "BasierCircleBold";
     font-style: normal;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 32px;
     line-height: 38px;
     display: flex;
     align-items: center;
     color: #0d0d39;
     margin: 0px;
+  }
+  span{
+    color: slategray;
   }
 }
