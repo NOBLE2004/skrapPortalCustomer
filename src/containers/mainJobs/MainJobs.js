@@ -151,6 +151,7 @@ const MainJobs = (props) => {
         downloadCSV={false}
         showButton={true}
       >
+        <Grid item container spacing={1}>
         {userData?.hide_price === 0 && (
           <CommonJobStatus
             jobStatus={{
@@ -158,9 +159,7 @@ const MainJobs = (props) => {
               price: `${currency ? currency : "£"}${
                 info ? parseFloat(info.TotalSpend).toLocaleString() : 0
               }`,
-              statusName: "primary",
-              width: "184px",
-              height: "84px",
+              statusName: "primary"
             }}
           />
         )}
@@ -170,18 +169,14 @@ const MainJobs = (props) => {
             price: `${
               info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0
             }`,
-            statusName: "primary",
-            width: "115px",
-            height: "84px",
+            statusName: "primary"
           }}
         />
         <CommonJobStatus
           jobStatus={{
             status: "Pending",
             price: `${info ? info.Pending : 0}`,
-            statusName: "pending",
-            width: "115px",
-            height: "84px",
+            statusName: "pending"
           }}
         />
         <CommonJobStatus
@@ -190,20 +185,17 @@ const MainJobs = (props) => {
             price: `${
               info ? parseFloat(info.Completed).toLocaleString() : 0
             }`,
-            statusName: "completed",
-            width: "115px",
-            height: "84px",
+            statusName: "completed"
           }}
         />
         <CommonJobStatus
           jobStatus={{
             status: "Delivered",
             price: `${info ? info.Delivered : 0}`,
-            statusName: "delivered",
-            width: "115px",
-            height: "84px",
+            statusName: "delivered"
           }}
         />
+        </Grid>
       </CommonHeader>
       <div className="jobs-search-header">
         <Grid container spacing={2}>

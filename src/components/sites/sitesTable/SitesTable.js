@@ -72,14 +72,14 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
           return <span>{props.value || "n/a"}</span>;
         },
       },
-      {
-        Header: "Site Contact",
-        accessor: "site_contact_number",
-        disableFilters: true,
-        Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
-        },
-      },
+      // {
+      //   Header: "Site Contact",
+      //   accessor: "site_contact_number",
+      //   disableFilters: true,
+      //   Cell: (props) => {
+      //     return <span>{props.value || "n/a"}</span>;
+      //   },
+      // },
       {
         Header: "Number of Jobs",
         accessor: "number_of_jobs",

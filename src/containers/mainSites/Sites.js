@@ -98,6 +98,7 @@ const Sites = (props) => {
         isSite={true}
         handleCreateSite={handleCreateSite}
       >
+        <Grid item container spacing={1}>
         {userData?.hide_price === 0 && (
           <CommonJobStatus
             jobStatus={{
@@ -105,9 +106,7 @@ const Sites = (props) => {
               price: `${currency ? currency : "£"}${
                 info ? parseFloat(info.TotalSpend).toLocaleString() : 0
               }`,
-              statusName: "primary",
-              width: "184px",
-              height: "84px",
+              statusName: "primary"
             }}
           />
         )}
@@ -116,20 +115,17 @@ const Sites = (props) => {
             status: "Jobs",
             price: info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0,
 
-            statusName: "primary",
-            width: "115px",
-            height: "84px",
+            statusName: "primary"
           }}
         />
         <CommonJobStatus
           jobStatus={{
-            status: "Sites",
+            status: "Spend",
             price: `${siteData ? siteData.total : 0}`,
-            statusName: "primary",
-            width: "115px",
-            height: "84px",
+            statusName: "primary"
           }}
         />
+        </Grid>
       </CommonHeader>
       <Grid container>
         <Grid item md={12}>

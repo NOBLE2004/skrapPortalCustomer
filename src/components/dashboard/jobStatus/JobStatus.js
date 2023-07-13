@@ -8,7 +8,7 @@ const JobStatus = ({ jobStatus }) => {
     <Grid item container spacing={1}>
         <Grid item lg={2.4} md={4}>
             <Paper className="box">
-              <h1>{jobStatus.Pending}</h1>
+              <h1>{jobStatus.NumberOfJobs}</h1>
               <span>Total<br/>Bookings</span>
             </Paper>
         </Grid>
@@ -20,19 +20,19 @@ const JobStatus = ({ jobStatus }) => {
         </Grid>
         <Grid item lg={2.4} md={4}>
             <Paper className="box">
-              <h1>{parseFloat(jobStatus.Completed).toLocaleString() ?? ""}</h1>
+              <h1>{jobStatus.Completed}</h1>
               <span>Total<br/>Completed</span>
             </Paper>
         </Grid>
         <Grid item lg={2.4} md={4}>
             <div className="box">
-                <h1>4,235tn</h1>
+                <h1>{parseFloat(jobStatus.TotalTonnage).toFixed(2).toLocaleString()}<label style={{fontSize: '20px', marginTop: '4%', lineHeight: '20px'}}>tn</label></h1>
                 <span>Total<br/>Weight</span>
             </div>
         </Grid>
         <Grid item lg={2.4} md={4}>
             <div className="box">
-                <h1>3.23tn</h1>
+                <h1>{parseFloat(jobStatus.TotalCo2).toFixed(2).toLocaleString()}<label style={{fontSize: '20px', marginTop: '4%', lineHeight: '20px'}}>kg</label></h1>
                 <span>Total<br/>Co2</span>
             </div>
         </Grid>

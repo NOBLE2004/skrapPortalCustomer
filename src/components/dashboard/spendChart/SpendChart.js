@@ -5,7 +5,7 @@ import Select from "@mui/material/Select";
 import DatePicker from "react-datepicker";
 import MenuItem from "@mui/material/MenuItem";
 import { Bar } from "react-chartjs-2";
-import { Box } from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { lineChartData, data2 } from "./constant";
@@ -247,7 +247,7 @@ const SpendChart = ({
           <FadeLoader color={"#518ef8"} loading={loading} width={4} />
         </Box>
       ) : (
-        <CardContent>
+        <>
           <div className="salesWp">
             <div className="dateWp">
               <div>
@@ -273,7 +273,7 @@ const SpendChart = ({
           <Box className="spend-bar-chart">
             <HighchartsReact highcharts={Highcharts} options={spendChartData} />
           </Box>
-        </CardContent>
+        </>
       )}
     </div>
   );
