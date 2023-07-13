@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import NewManagerDetail from "../../siteManager/newManagerDetail/NewManagerDetail";
 import SiteManagerTable from "../../siteManager/siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
@@ -18,7 +18,8 @@ import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { changeJobsFilter } from "../../../store/actions/jobs.action";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -39,16 +40,17 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const SitesDetailPage = (props) => {
+  const dispatch = useDispatch();
+  const jobsFilter = useSelector((state) => state?.jobsFilter);
   const { width } = useWindowDimensions();
   const { id } = useParams();
-  const dispatch = useDispatch();
   const stateLandFill = useSelector((state) => state?.landfillDiversion);
   const [isReload, setIsReload] = useState(false);
   const [reload, setReload] = useState(false);
   const [userInfo, setUserInfo] = useState(0);
   const [jobsData, setJobsData] = useState({});
   const [isJobLoading, setJobLoading] = useState(false);
-  const {total, setTotal} = useState(0);
+  const { total, setTotal } = useState(0);
   const [filters, setFilters] = useState({
     status: "",
     date: "",
@@ -65,7 +67,7 @@ const SitesDetailPage = (props) => {
     isJobCreated: false,
     addressData: "",
     postCode: "",
-    sale: 0
+    sale: 0,
   });
 
   const {
@@ -75,10 +77,11 @@ const SitesDetailPage = (props) => {
     addressData,
     postCode,
     sitename,
-    sale
+    sale,
   } = state;
 
   const handleChangeFilters = (filtersList) => {
+    dispatch(changeJobsFilter({ ...jobsFilter, ...filtersList }));
     setFilters(filtersList);
   };
   useEffect(() => {
@@ -89,7 +92,7 @@ const SitesDetailPage = (props) => {
     const getData = async () => {
       try {
         setState({ ...state, isLoadings: true });
-        const params = Object.entries(filters).reduce(
+        const params = Object.entries(jobsFilter).reduce(
           (a, [k, v]) => (v ? ((a[k] = v), a) : a),
           {}
         );
@@ -116,7 +119,7 @@ const SitesDetailPage = (props) => {
     const getJobData = async () => {
       try {
         setJobLoading(true);
-        const params = Object.entries(filters).reduce(
+        const params = Object.entries(jobsFilter).reduce(
           (a, [k, v]) => (v ? ((a[k] = v), a) : a),
           {}
         );
@@ -132,10 +135,16 @@ const SitesDetailPage = (props) => {
   }, [filters, reload, isReload]);
 
   const handlePagination = (page) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.page = page;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, page: page });
   };
 
   const handleChangeSearch = (search) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.search = search;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, search: search });
   };
 
@@ -146,16 +155,19 @@ const SitesDetailPage = (props) => {
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
-        {addressData && <div className="sites-header-title">
-          {/* {width < 600
+        {addressData && (
+          <div className="sites-header-title">
+            {/* {width < 600
             ? addressData
               ? addressData.slice(0, 16)
               : "n/a"
             : addressData
             ? addressData
             : ""} */}
-          {sitename !== null ? sitename : addressData?.slice(0, 16)} (£{state?.sale})
-        </div>}
+            {sitename !== null ? sitename : addressData?.slice(0, 16)} (£
+            {state?.sale})
+          </div>
+        )}
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
             Create Job
@@ -228,6 +240,8 @@ const SitesDetailPage = (props) => {
                     <CommonSearch
                       handleChangeSearch={handleChangeSearch}
                       cname="jobs"
+                      jobsFilter={jobsFilter}
+
                     />
                   </Grid>
                   <Grid item xs={8}>
