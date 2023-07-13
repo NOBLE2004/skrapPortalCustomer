@@ -222,14 +222,14 @@ const MainJobsNew = (props) => {
               />
             )
           )}
-          <Paper className="box" style={{width: '15%'}}>
+          {jobData && (<Paper className="box" style={{width: '15%'}}>
             <span>*</span>
             <span>100% skip utilisation</span>
             <span>Wood = 3 Tonnes</span>
             <span>General = 2.5 Tonnes</span>
             <span>Plastic = 2 Tonnes</span>
             <span>Cardboard = 1.5 Tonnes</span>
-          </Paper>
+          </Paper>)}
         </>
       ) : (
         <>
