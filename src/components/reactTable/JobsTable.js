@@ -302,7 +302,7 @@ const JobsTable = ({
         },
       },
       {
-        Header: "Utilisation",
+        Header: "Utilisation*",
         disableFilters: true,
         show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
         Cell: (props) => {
