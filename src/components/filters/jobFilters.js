@@ -7,11 +7,6 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import moment from "moment";
 import SingleSelect from "../single-select-auto-complete";
-import {
-  ArrowDownward,
-  ChevronLeftRounded,
-  KeyboardArrowDown,
-} from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { getSites } from "../../store/actions/sites.action";
 import { Grid, Typography } from "@mui/material";
@@ -19,13 +14,8 @@ import { Grid, Typography } from "@mui/material";
 const JobFilters = ({ handleChangeFilters }) => {
   const dispatch = useDispatch();
   const siteState = useSelector((state) => state?.allsites);
+  const jobsFilter = useSelector((state) => state?.jobsFilter);
 
-  const [filters, setFilters] = useState({
-    status: "",
-    date: "",
-    service: "",
-    address: "",
-  });
   const [togle, setTogle] = useState(false);
   const [state, setState] = useState([
     {
@@ -35,14 +25,13 @@ const JobFilters = ({ handleChangeFilters }) => {
     },
   ]);
   const [services, setServices] = useState([]);
-  const { status, date, address, service, sites } = filters;
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFilters({ ...filters, [name]: value });
+    const duplicateFilter = { ...jobsFilter };
+    duplicateFilter[name] = value;
+    handleChangeFilters(duplicateFilter);
   };
-  useEffect(() => {
-    handleChangeFilters(filters);
-  }, [filters]);
+
   useEffect(() => {
     ServicesService.list()
       .then((response) => {
@@ -72,25 +61,43 @@ const JobFilters = ({ handleChangeFilters }) => {
     //     .toLocaleDateString()
     //     .replace(/\//g, "-");
     // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
-    const start = new Date(item.selection.startDate.toDateString() + ' UTC').toISOString().split('T')[0].split('-').reverse().join('-');
+    const start = new Date(item.selection.startDate.toDateString() + " UTC")
+      .toISOString()
+      .split("T")[0]
+      .split("-")
+      .reverse()
+      .join("-");
     // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, '-');
-    const end = new Date(item.selection.endDate.toDateString() + ' UTC').toISOString().split('T')[0].split('-').reverse().join('-');
+    const end = new Date(item.selection.endDate.toDateString() + " UTC")
+      .toISOString()
+      .split("T")[0]
+      .split("-")
+      .reverse()
+      .join("-");
     const newStartDate = moment(item.selection.startDate).format("DD-MM-YYYY");
     const newEndDate = moment(item.selection.endDate).format("DD-MM-YYYY");
     if (start === end) {
-        setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
+      const duplicateFilter = { ...jobsFilter };
+      duplicateFilter.date = `${newStartDate},${newEndDate}`;
+      handleChangeFilters(duplicateFilter);
     } else {
-        setFilters({ ...filters, date: `${newStartDate},${newEndDate}` });
-        setTogle(false);
+      const duplicateFilter = { ...jobsFilter };
+      duplicateFilter.date = `${newStartDate},${newEndDate}`;
+      handleChangeFilters(duplicateFilter);
+      setTogle(false);
     }
-};
+  };
   const resetFilters = () => {
-    setFilters({
+    handleChangeFilters({
       status: "",
       date: "",
       service: "",
+      search: "",
+      site: "",
       address: "",
+      page: 1,
     });
+
     setState([
       {
         startDate: new Date(),
@@ -116,13 +123,13 @@ const JobFilters = ({ handleChangeFilters }) => {
           </button>
           {togle && (
             <div className="jobs-date-picker">
-            <DateRangePicker
-              editableDateInputs={false}
-              onChange={handleDate}
-              moveRangeOnFirstSelection={false}
-              ranges={state}
-              direction="horizontal"
-            />
+              <DateRangePicker
+                editableDateInputs={false}
+                onChange={handleDate}
+                moveRangeOnFirstSelection={false}
+                ranges={state}
+                direction="horizontal"
+              />
             </div>
           )}
         </Grid>
@@ -131,14 +138,14 @@ const JobFilters = ({ handleChangeFilters }) => {
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
             name="service"
-            value={service}
+            value={jobsFilter?.service}
             onChange={handleChange}
             className={"filter-option"}
           >
             <option value="">All Services</option>
             {services.map((service) => {
               return (
-                <option value={service.service_id}>
+                <option value={service.service_id} key={service?.service_id}>
                   {service.service_name}
                 </option>
               );
@@ -148,7 +155,7 @@ const JobFilters = ({ handleChangeFilters }) => {
         <Grid item xs={2}>
           <input
             name="address"
-            value={address}
+            value={jobsFilter?.address || ""}
             onChange={handleChange}
             className={"filter-option"}
             placeholder="postcode"
@@ -159,13 +166,17 @@ const JobFilters = ({ handleChangeFilters }) => {
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
             name="status"
-            value={status}
+            value={jobsFilter?.status || ""}
             onChange={handleChange}
             className={"filter-option"}
           >
             <option value="">All Statuses </option>
             {JOB_STATUS.map((status) => {
-              return <option value={status.id}>{status.status}</option>;
+              return (
+                <option value={status.id} key={status?.id}>
+                  {status.status}
+                </option>
+              );
             })}
           </select>
         </Grid>
@@ -185,7 +196,7 @@ const JobFilters = ({ handleChangeFilters }) => {
             <SingleSelect
               name="site"
               data={siteState?.data}
-              value={filters?.site}
+              value={jobsFilter?.site}
               handleChange={handleChange}
               loading={siteState?.isLoading}
             />

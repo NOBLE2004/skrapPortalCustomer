@@ -9,10 +9,13 @@ import JobFilters from "../../filters/jobFilters";
 import { useParams } from "react-router";
 import "./siteManagerDetailPage.scss";
 import PoDetail from "../poDetail/PoDetail";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { changeJobsFilter } from "../../../store/actions/jobs.action";
 
 const SiteManagerDetailPage = (props) => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const jobsFilter = useSelector((state) => state?.jobsFilter);
   const [jobsData, setJobsData] = useState({});
   const [isJobLoading, setJobLoading] = useState(false);
   const [filters, setFilters] = useState({
@@ -37,15 +40,19 @@ const SiteManagerDetailPage = (props) => {
   };
 
   const handleChangeSearch = (search) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.search = search;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, search: search });
   };
 
   const handleChangeFilters = (filtersList) => {
+    dispatch(changeJobsFilter({ ...jobsFilter, ...filtersList }));
     setFilters(filtersList);
   };
   useEffect(() => {
     setState({ ...state, isLoading: true });
-    const params = Object.entries(filters).reduce(
+    const params = Object.entries(jobsFilter).reduce(
       (a, [k, v]) => (v ? ((a[k] = v), a) : a),
       {}
     );
@@ -68,7 +75,7 @@ const SiteManagerDetailPage = (props) => {
     const getJobData = async () => {
       try {
         setJobLoading(true);
-        const params = Object.entries(filters).reduce(
+        const params = Object.entries(jobsFilter).reduce(
           (a, [k, v]) => (v ? ((a[k] = v), a) : a),
           {}
         );
@@ -84,6 +91,9 @@ const SiteManagerDetailPage = (props) => {
   }, [filters, reload]);
 
   const handlePagination = (page) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.page = page;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, page: page });
   };
   return (
@@ -115,6 +125,8 @@ const SiteManagerDetailPage = (props) => {
                     <CommonSearch
                       handleChangeSearch={handleChangeSearch}
                       cname="jobs"
+                      jobsFilter={jobsFilter}
+
                     />
                   </Grid>
                   <Grid item xs={8}>

@@ -2,18 +2,16 @@ import React, { useEffect, useState, memo } from "react";
 import { searchIcon } from "../../../assets/images";
 import "./commonSearch.scss";
 
-const CommonSearch = ({ cname, handleChangeSearch }) => {
+const CommonSearch = ({ cname, handleChangeSearch, jobsFilter }) => {
   const [value, setValue] = useState("");
-  useEffect(() => {
-    handleChangeSearch(value);
-  }, [value]);
   return (
     <div className="search-bar-container">
       <img src={searchIcon} alt="search-icon" />
       <input
-        value={value || ""}
+        value={jobsFilter?.search || value || ""}
         onChange={(e) => {
           setValue(e.target.value);
+          handleChangeSearch(e.target.value);
         }}
         placeholder={`Search ${cname}`}
       />
