@@ -18,8 +18,9 @@ import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
-import { useLocation } from "react-router-dom";
-import { changeJobsFilter } from "../../../store/actions/jobs.action";
+ import { changeJobsFilter } from "../../../store/actions/jobs.action";
+import {useLocation} from "react-router-dom";
+import CommonJobStatus from "../../commonComponent/commonJobStatus/CommonJobStatus";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -104,7 +105,7 @@ const SitesDetailPage = (props) => {
           addressData: res.data?.address?.address,
           sitename: res.data?.address?.site_name,
           postCode: res.data?.address?.postcode,
-          sale: res.data?.site_sale,
+          stats: res.data?.stats,
           isLoadings: false,
         });
       } catch (err) {
@@ -155,25 +156,45 @@ const SitesDetailPage = (props) => {
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
-        {addressData && (
-          <div className="sites-header-title">
-            {/* {width < 600
-            ? addressData
-              ? addressData.slice(0, 16)
-              : "n/a"
-            : addressData
-            ? addressData
-            : ""} */}
-            {sitename !== null ? sitename : addressData?.slice(0, 16)} (£
-            {state?.sale})
-          </div>
-        )}
+        {addressData && <div className="sites-header-title">
+          {sitename !== null ? sitename : addressData?.slice(0, 16)}
+        </div>}
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
             Create Job
           </button>
         </div>
       </div>
+      <Grid container item spacing={1} mb={2}>
+        <CommonJobStatus
+            jobStatus={{
+              status: "Spend",
+              price: `£${state?.stats?.sale || 0}`,
+              statusName: "primary"
+            }}
+        />
+        <CommonJobStatus
+            jobStatus={{
+              status: "Total",
+              price: `${state?.stats?.total || 0}`,
+              statusName: "primary"
+            }}
+        />
+        <CommonJobStatus
+            jobStatus={{
+              status: "Delivered",
+              price: `${state?.stats?.delivered || 0 || 0}`,
+              statusName: "primary"
+            }}
+        />
+        <CommonJobStatus
+            jobStatus={{
+              status: "Completed",
+              price: `${state?.stats?.completed || 0 || 0}`,
+              statusName: "primary"
+            }}
+        />
+      </Grid>
       {isJobCreated && (
         <CreateJob
           closeModal={() => setState({ ...state, isJobCreated: false })}
