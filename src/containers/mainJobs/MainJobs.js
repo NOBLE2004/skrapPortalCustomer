@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import JobsTable from "../../components/reactTable/JobsTable";
-import { Card, CardContent, Grid } from "@mui/material";
+import {Card, CardContent, Grid, Paper} from "@mui/material";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
@@ -222,6 +222,14 @@ const MainJobsNew = (props) => {
               />
             )
           )}
+          <Paper className="box" style={{width: '15%'}}>
+            <span>*</span>
+            <span>100% skip utilisation</span>
+            <span>Wood = 3 Tonnes</span>
+            <span>General = 2.5 Tonnes</span>
+            <span>Plastic = 2 Tonnes</span>
+            <span>Cardboard = 1.5 Tonnes</span>
+          </Paper>
         </>
       ) : (
         <>
