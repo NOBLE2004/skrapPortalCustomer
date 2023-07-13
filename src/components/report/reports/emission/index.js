@@ -61,7 +61,7 @@ const EmissionReport = (props) => {
   const stateSiteBreakDown = useSelector(
     (state) => state?.reportEmissionSiteBreakDown
   );
-  const { sites, startDate, setStartDate, showMore, siteCurrency } = props;
+  const { sites, startDate, setStartDate, showMore, siteCurrency, dateM } = props;
 
   // const stateEmissionVehicle = useSelector(state => state?.reportEmissionVehicle)
   const dispatch = useDispatch();
@@ -85,6 +85,7 @@ const EmissionReport = (props) => {
         getReportEmissions({
           year: year ? year : startDate.getFullYear(),
           address_id: sites.toString(),
+          date: dateM
         })
       );
     }
@@ -94,7 +95,7 @@ const EmissionReport = (props) => {
     if (isNewYear) {
       getData();
     }
-  }, [startDate, isNewYear]);
+  }, [startDate, isNewYear, dateM]);
 
   // useEffect(() => {
   //    if (sites !== "") {
@@ -107,11 +108,11 @@ const EmissionReport = (props) => {
   useEffect(() => {
     getData();
     dispatch(
-      getReportSiteBreakDownEmissions({ address_id: sites?.toString() })
+      getReportSiteBreakDownEmissions({ address_id: sites?.toString(), date: dateM })
     );
     dispatch(getReportEmissionVehicles());
     setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  }, [sites]);
+  }, [sites, dateM]);
 
   const getMonthData = (month, value) => {
     switch (month) {

@@ -5,7 +5,7 @@ import Select from "@mui/material/Select";
 import DatePicker from "react-datepicker";
 import MenuItem from "@mui/material/MenuItem";
 import { Bar } from "react-chartjs-2";
-import { Box } from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { lineChartData, data2 } from "./constant";
@@ -235,7 +235,7 @@ const SpendChart = ({
   ));
 
   return (
-    <Card className="graphCard">
+    <div className="wrapper">
       {loading ? (
         <Box
           height={"100px"}
@@ -247,25 +247,25 @@ const SpendChart = ({
           <FadeLoader color={"#518ef8"} loading={loading} width={4} />
         </Box>
       ) : (
-        <CardContent>
+        <>
           <div className="salesWp">
             <div className="dateWp">
               <div>
                 <span className="primary-title">Spend</span>
-                <div className="spend-filter-year">
-                  <p>Filter by year:</p>
-                  <div className="date-picker-main">
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => handleYearChange(date)}
-                      showYearPicker
-                      dateFormat="yyyy"
-                      yearItemNumber={15}
-                      customInput={<ExampleCustomInput />}
-                      maxDate={new Date()}
-                    />
-                  </div>
-                </div>
+                {/*<div className="spend-filter-year">*/}
+                {/*  <p>Filter by year:</p>*/}
+                {/*  <div className="date-picker-main">*/}
+                {/*    <DatePicker*/}
+                {/*      selected={startDate}*/}
+                {/*      onChange={(date) => handleYearChange(date)}*/}
+                {/*      showYearPicker*/}
+                {/*      dateFormat="yyyy"*/}
+                {/*      yearItemNumber={15}*/}
+                {/*      customInput={<ExampleCustomInput />}*/}
+                {/*      maxDate={new Date()}*/}
+                {/*    />*/}
+                {/*  </div>*/}
+                {/*</div>*/}
               </div>
             </div>
           </div>
@@ -273,9 +273,9 @@ const SpendChart = ({
           <Box className="spend-bar-chart">
             <HighchartsReact highcharts={Highcharts} options={spendChartData} />
           </Box>
-        </CardContent>
+        </>
       )}
-    </Card>
+    </div>
   );
 };
 

@@ -27,10 +27,12 @@ import {
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
-import { getJobList } from "../../store/actions/jobs.action";
+import { changeJobsFilter, getJobList } from "../../store/actions/jobs.action";
 import FadeLoader from "react-spinners/FadeLoader";
 
-const MainJobs = (props) => {
+const MainJobsNew = (props) => {
+  const dispatch = useDispatch();
+  const jobsFilter = useSelector((state) => state?.jobsFilter);
   const [showInfoIndex, setShowInfoIndex] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isMapView, setMapView] = useState(true);
@@ -42,15 +44,16 @@ const MainJobs = (props) => {
 
   const [limit, setLimit] = useState(10);
   const { info, loading } = props.dashboard;
-   const history = useHistory();
+  const history = useHistory();
   const { jobData, isLoading, error } = props.jobs;
   const [filters, setFilters] = useState({
     status: "",
     date: "",
     service: "",
+    page: 1,
     address: "",
     search: "",
-    show_on_app: [0,1]
+    show_on_app: [0, 1],
   });
   let userData = getUserDataFromLocalStorage();
 
@@ -62,37 +65,21 @@ const MainJobs = (props) => {
     setCreateSite(true);
   }, [createSite]);
 
-  useEffect(() => {
-    async function fetchData() {
-      !jobData &&
-        (await props.getJobList(
-          { user_id: userData.user_id, limit, orders_type: 4 },
-          filters
-        ));
-      !info && (await props.getDashboardsData(""));
-    }
-    fetchData();
-  }, []);
+  const getData = () => {
+    dispatch(
+      getJobList(
+        { user_id: userData.user_id, limit, orders_type: 4 },
+        jobsFilter
+      )
+    );
+
+    dispatch(getDashboardsData(jobsFilter));
+  };
 
   useEffect(() => {
-    const newFilter = {
-      status: "",
-      date: "",
-      service: "",
-      address: "",
-      search: "",
-      show_on_app: [0,1]
-    };
-    if (isJobCreated || !compare(newFilter, filters))
-      props.getJobList(
-        { user_id: userData.user_id, limit, orders_type: 4 },
-        filters
-      );
+    getData();
   }, [filters, isJobCreated]);
 
-  const compare = (a, b) => {
-    return JSON.stringify(a) === JSON.stringify(b);
-  };
   const handleShowMap = useCallback(() => {
     if (isMapView === true) {
       setLimit(10000);
@@ -114,14 +101,21 @@ const MainJobs = (props) => {
     { latitude: 51.56078, longitude: -0.25256 },
   ];
   const handleChangeFilters = (filtersList) => {
-    filtersList.show_on_app = [0,1];
+    dispatch(changeJobsFilter({ ...jobsFilter, ...filtersList }));
+    filtersList.show_on_app = [0, 1];
     setFilters(filtersList);
   };
   const handleChangeSearch = (search) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.search = search;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, search: search });
   };
 
   const handlePagination = (page) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.page = page;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, page: page });
   };
   const gotoJobDetail = (id) => {
@@ -150,6 +144,7 @@ const MainJobs = (props) => {
         downloadCSV={false}
         showButton={true}
       >
+        <Grid item container spacing={1}>
         {userData?.hide_price === 0 && (
           <CommonJobStatus
             jobStatus={{
@@ -157,9 +152,7 @@ const MainJobs = (props) => {
               price: `${currency ? currency : "£"}${
                 info ? parseFloat(info.TotalSpend).toLocaleString() : 0
               }`,
-              statusName: "primary",
-              width: "184px",
-              height: "84px",
+              statusName: "primary"
             }}
           />
         )}
@@ -169,18 +162,14 @@ const MainJobs = (props) => {
             price: `${
               info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0
             }`,
-            statusName: "primary",
-            width: "115px",
-            height: "84px",
+            statusName: "primary"
           }}
         />
         <CommonJobStatus
           jobStatus={{
             status: "Pending",
             price: `${info ? info.Pending : 0}`,
-            statusName: "pending",
-            width: "115px",
-            height: "84px",
+            statusName: "pending"
           }}
         />
         <CommonJobStatus
@@ -189,20 +178,17 @@ const MainJobs = (props) => {
             price: `${
               info ? parseFloat(info.Completed).toLocaleString() : 0
             }`,
-            statusName: "completed",
-            width: "115px",
-            height: "84px",
+            statusName: "completed"
           }}
         />
         <CommonJobStatus
           jobStatus={{
             status: "Delivered",
             price: `${info ? info.Delivered : 0}`,
-            statusName: "delivered",
-            width: "115px",
-            height: "84px",
+            statusName: "delivered"
           }}
         />
+        </Grid>
       </CommonHeader>
       <div className="jobs-search-header">
         <Grid container spacing={2}>
@@ -210,6 +196,7 @@ const MainJobs = (props) => {
             <CommonSearch
               handleChangeSearch={handleChangeSearch}
               cname="jobs"
+              jobsFilter={jobsFilter}
             />
           </Grid>
           <Grid item xs={8}>
@@ -238,108 +225,110 @@ const MainJobs = (props) => {
         </>
       ) : (
         <>
-              {isLoading ? (
+          {isLoading ? (
             <div className="loader">
               <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
             </div>
-              )
-            :(
-          <Card className="mapCard">
-            <CardContent>
-              <MainMap
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `100%` }} />}
-                mapElement={
-                  <div style={{ height: `100%`, borderRadius: "12px" }} />
-                }
-              >
-                {isLoading ? (
-                  <div className="loader">
-                    <FadeLoader
-                      color={"#518ef8"}
-                      loading={isLoading}
-                      width={4}
-                    />
-                  </div>
-                ) : (
-                  jobData && (
-                    <>
-                      {jobData?.data?.map((job, index) => {
-                        return (
-                          <Marker
-                            position={{
-                              lat: Number(job.latitude),
-                              lng: Number(job.longitude),
-                            }}
-                            icon={
-                              status(job.appointment_status) === "Pending"
-                                ? pendingMarker
-                                : status(job.appointment_status) === "Completed"
-                                ? completeMarker
-                                : status(job.appointment_status) === "Heading"
-                                ? cancelMarker
-                                : status(job.appointment_status) === "Delivered"
-                                ? deliveredMarker
-                                : status(job.appointment_status) === "Ongoing"
-                                ? enRouteMarker
-                                : cancelMarker
-                            }
-                            onClick={() => {
-                              setSelectedItem(job);
-                              setShowInfo(true);
-                              setShowInfoIndex(index);
-                            }}
-                          >
-                            {showInfo && showInfoIndex === index && (
-                              <InfoWindow
-                                position={{
-                                  lat:
-                                    selectedItem.destination_lat === 0
-                                      ? selectedItem.latitude
-                                      : Number(selectedItem.destination_lat),
-                                  lng:
-                                    selectedItem.destination_lng === 0
-                                      ? selectedItem.longitude
-                                      : Number(selectedItem.destination_lng),
-                                }}
-                              >
-                                <TipingCard
-                                  jobInfo={{
-                                    job_address: selectedItem.job_address,
-                                    jobStatus: status(
-                                      selectedItem.appointment_status
-                                    ),
-                                    site_manager_mobile_number:
-                                      selectedItem.site_contact_number !== null
-                                        ? selectedItem.site_contact_number
-                                        : selectedItem.mobile_number,
+          ) : (
+            <Card className="mapCard">
+              <CardContent>
+                <MainMap
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `100%` }} />}
+                  mapElement={
+                    <div style={{ height: `100%`, borderRadius: "12px" }} />
+                  }
+                >
+                  {isLoading ? (
+                    <div className="loader">
+                      <FadeLoader
+                        color={"#518ef8"}
+                        loading={isLoading}
+                        width={4}
+                      />
+                    </div>
+                  ) : (
+                    jobData && (
+                      <>
+                        {jobData?.data?.map((job, index) => {
+                          return (
+                            <Marker
+                              position={{
+                                lat: Number(job.latitude),
+                                lng: Number(job.longitude),
+                              }}
+                              icon={
+                                status(job.appointment_status) === "Pending"
+                                  ? pendingMarker
+                                  : status(job.appointment_status) ===
+                                    "Completed"
+                                  ? completeMarker
+                                  : status(job.appointment_status) === "Heading"
+                                  ? cancelMarker
+                                  : status(job.appointment_status) ===
+                                    "Delivered"
+                                  ? deliveredMarker
+                                  : status(job.appointment_status) === "Ongoing"
+                                  ? enRouteMarker
+                                  : cancelMarker
+                              }
+                              onClick={() => {
+                                setSelectedItem(job);
+                                setShowInfo(true);
+                                setShowInfoIndex(index);
+                              }}
+                            >
+                              {showInfo && showInfoIndex === index && (
+                                <InfoWindow
+                                  position={{
+                                    lat:
+                                      selectedItem.destination_lat === 0
+                                        ? selectedItem.latitude
+                                        : Number(selectedItem.destination_lat),
+                                    lng:
+                                      selectedItem.destination_lng === 0
+                                        ? selectedItem.longitude
+                                        : Number(selectedItem.destination_lng),
                                   }}
-                                  gotoJobDetail={() =>
-                                    gotoJobDetail(selectedItem.job_id)
-                                  }
-                                />
-                              </InfoWindow>
-                            )}
-                          </Marker>
-                        );
-                      })}
+                                >
+                                  <TipingCard
+                                    jobInfo={{
+                                      job_address: selectedItem.job_address,
+                                      jobStatus: status(
+                                        selectedItem.appointment_status
+                                      ),
+                                      site_manager_mobile_number:
+                                        selectedItem.site_contact_number !==
+                                        null
+                                          ? selectedItem.site_contact_number
+                                          : selectedItem.mobile_number,
+                                    }}
+                                    gotoJobDetail={() =>
+                                      gotoJobDetail(selectedItem.job_id)
+                                    }
+                                  />
+                                </InfoWindow>
+                              )}
+                            </Marker>
+                          );
+                        })}
 
-                      {selectedItem &&
-                        selectedItem.appointment_status === 2 && (
-                          <NewMapDirectionsRenderer
-                            places={places}
-                            travelMode={window.google.maps.TravelMode.DRIVING}
-                            onMarkerClick={handleMarkerClick}
-                          />
-                        )}
-                    </>
-                  )
-                )}
-              </MainMap>
-            </CardContent>
-          </Card>
-              )}
+                        {selectedItem &&
+                          selectedItem.appointment_status === 2 && (
+                            <NewMapDirectionsRenderer
+                              places={places}
+                              travelMode={window.google.maps.TravelMode.DRIVING}
+                              onMarkerClick={handleMarkerClick}
+                            />
+                          )}
+                      </>
+                    )
+                  )}
+                </MainMap>
+              </CardContent>
+            </Card>
+          )}
         </>
       )}
 
@@ -361,10 +350,5 @@ const MainJobs = (props) => {
 const mapStateToProps = ({ dashboard, jobs }) => {
   return { dashboard, jobs };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getDashboardsData: (year) => dispatch(getDashboardsData(year)),
-    getJobList: (data, filters) => dispatch(getJobList(data, filters)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(MainJobs);
+
+export default connect(mapStateToProps)(MainJobsNew);

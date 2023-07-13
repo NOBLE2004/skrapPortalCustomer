@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import NewManagerDetail from "../../siteManager/newManagerDetail/NewManagerDetail";
 import SiteManagerTable from "../../siteManager/siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
@@ -18,7 +18,9 @@ import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
+ import { changeJobsFilter } from "../../../store/actions/jobs.action";
 import {useLocation} from "react-router-dom";
+import CommonJobStatus from "../../commonComponent/commonJobStatus/CommonJobStatus";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -39,16 +41,17 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const SitesDetailPage = (props) => {
+  const dispatch = useDispatch();
+  const jobsFilter = useSelector((state) => state?.jobsFilter);
   const { width } = useWindowDimensions();
   const { id } = useParams();
-  const dispatch = useDispatch();
   const stateLandFill = useSelector((state) => state?.landfillDiversion);
   const [isReload, setIsReload] = useState(false);
   const [reload, setReload] = useState(false);
   const [userInfo, setUserInfo] = useState(0);
   const [jobsData, setJobsData] = useState({});
   const [isJobLoading, setJobLoading] = useState(false);
-  const {total, setTotal} = useState(0);
+  const { total, setTotal } = useState(0);
   const [filters, setFilters] = useState({
     status: "",
     date: "",
@@ -65,7 +68,7 @@ const SitesDetailPage = (props) => {
     isJobCreated: false,
     addressData: "",
     postCode: "",
-    sale: 0
+    sale: 0,
   });
 
   const {
@@ -75,10 +78,11 @@ const SitesDetailPage = (props) => {
     addressData,
     postCode,
     sitename,
-    sale
+    sale,
   } = state;
 
   const handleChangeFilters = (filtersList) => {
+    dispatch(changeJobsFilter({ ...jobsFilter, ...filtersList }));
     setFilters(filtersList);
   };
   useEffect(() => {
@@ -89,7 +93,7 @@ const SitesDetailPage = (props) => {
     const getData = async () => {
       try {
         setState({ ...state, isLoadings: true });
-        const params = Object.entries(filters).reduce(
+        const params = Object.entries(jobsFilter).reduce(
           (a, [k, v]) => (v ? ((a[k] = v), a) : a),
           {}
         );
@@ -101,7 +105,7 @@ const SitesDetailPage = (props) => {
           addressData: res.data?.address?.address,
           sitename: res.data?.address?.site_name,
           postCode: res.data?.address?.postcode,
-          sale: res.data?.site_sale,
+          stats: res.data?.stats,
           isLoadings: false,
         });
       } catch (err) {
@@ -116,7 +120,7 @@ const SitesDetailPage = (props) => {
     const getJobData = async () => {
       try {
         setJobLoading(true);
-        const params = Object.entries(filters).reduce(
+        const params = Object.entries(jobsFilter).reduce(
           (a, [k, v]) => (v ? ((a[k] = v), a) : a),
           {}
         );
@@ -132,10 +136,16 @@ const SitesDetailPage = (props) => {
   }, [filters, reload, isReload]);
 
   const handlePagination = (page) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.page = page;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, page: page });
   };
 
   const handleChangeSearch = (search) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.search = search;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, search: search });
   };
 
@@ -147,14 +157,7 @@ const SitesDetailPage = (props) => {
     <div className="site-manager-detail-page-main">
       <div className="header-main">
         {addressData && <div className="sites-header-title">
-          {/* {width < 600
-            ? addressData
-              ? addressData.slice(0, 16)
-              : "n/a"
-            : addressData
-            ? addressData
-            : ""} */}
-          {sitename !== null ? sitename : addressData?.slice(0, 16)} (£{state?.sale})
+          {sitename !== null ? sitename : addressData?.slice(0, 16)}
         </div>}
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
@@ -162,6 +165,36 @@ const SitesDetailPage = (props) => {
           </button>
         </div>
       </div>
+      <Grid container item spacing={1} mb={2}>
+        <CommonJobStatus
+            jobStatus={{
+              status: "Spend",
+              price: `£${state?.stats?.sale || 0}`,
+              statusName: "primary"
+            }}
+        />
+        <CommonJobStatus
+            jobStatus={{
+              status: "Total",
+              price: `${state?.stats?.total || 0}`,
+              statusName: "primary"
+            }}
+        />
+        <CommonJobStatus
+            jobStatus={{
+              status: "Delivered",
+              price: `${state?.stats?.delivered || 0 || 0}`,
+              statusName: "primary"
+            }}
+        />
+        <CommonJobStatus
+            jobStatus={{
+              status: "Completed",
+              price: `${state?.stats?.completed || 0 || 0}`,
+              statusName: "primary"
+            }}
+        />
+      </Grid>
       {isJobCreated && (
         <CreateJob
           closeModal={() => setState({ ...state, isJobCreated: false })}
@@ -228,6 +261,8 @@ const SitesDetailPage = (props) => {
                     <CommonSearch
                       handleChangeSearch={handleChangeSearch}
                       cname="jobs"
+                      jobsFilter={jobsFilter}
+
                     />
                   </Grid>
                   <Grid item xs={8}>

@@ -1,0 +1,122 @@
+.date-filter{
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5%;
+}
+.right-text{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  h1{
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    color: #518ef8;
+  }
+  span{
+    margin-left: 2%;
+    display: flex;
+    align-self: flex-end;
+  }
+}
+.left-text{
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  padding-left: 4%;
+}
+.small-text{
+  font-size: 16px;
+  font-weight: lighter;
+  color: grey;
+}
+.lg-text{
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 1%;
+}
+.MuiOutlinedInput-notchedOutline {
+  border: none;
+}
+.first{
+  .rdrDateRangePickerWrapper {
+    top: 15%;
+    left: 13%;
+    z-index: 1;
+    width: fit-content;
+  }
+ }
+.report-header-card .first{
+  .rdrDateRangePickerWrapper {
+    top: 15%;
+    left: 13%;
+    z-index: 1;
+    width: fit-content;
+  }
+}
+
+.first {
+  width: 100%;
+  margin-left: 0%;
+  padding: 1% 0%;
+  background: none;
+  justify-content: flex-start;
+  border-radius: 0;
+  box-shadow: none;
+  padding-right: 3%;
+  @media only screen and (max-width: 1024px) {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .text {
+    font-size: 16px;
+    text-align: left;
+    width: 45%;
+    @media only screen and (max-width: 1024px) {
+      margin: 2% 0%;
+      width: 100%;
+    }
+  }
+
+  .MuiInputBase-root {
+    width: 100%;
+    border: none !important;
+    border-radius: 16px;
+    box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
+    background: white;
+
+    .MuiOutlinedInput-input {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 30px;
+      color: #677790;
+      width: 400px;
+      padding: 1.5% 5%;
+
+      .text-sec {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          float: right;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 16px;
+          color: #a4adbc;
+          padding: 0% 3%;
+          margin-top: 2%;
+        }
+      }
+    }
+  }
+}
