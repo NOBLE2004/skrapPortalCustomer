@@ -37,8 +37,15 @@
       th {
         padding: 10px;
         min-width: 30px;
-        color: #677790;
+        color: #fff;
         font-size: 12px;
+        background: #518ef8;
+        &:first-child {
+          border-top-left-radius: 11px;
+        }
+        &:last-child {
+          border-top-right-radius: 11px;
+        }
       }
 
       td {

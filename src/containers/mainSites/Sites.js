@@ -38,7 +38,7 @@ const Sites = (props) => {
   useEffect(() => {
     async function fetchData() {
       !siteData && (await props.getSitesList(filters));
-      !info && (await props.getDashboardsData(""));
+       (await props.getDashboardsData(""));
     }
 
     fetchData();
@@ -120,7 +120,7 @@ const Sites = (props) => {
         />
         <CommonJobStatus
           jobStatus={{
-            status: "Spend",
+            status: "Sites",
             price: `${siteData ? siteData.total : 0}`,
             statusName: "primary"
           }}

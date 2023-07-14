@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
-import { Menu, MenuItem } from "@mui/material";
+import { Button, Menu, MenuItem } from "@mui/material";
 import "./jobs-react-table.scss";
 import { payment, status } from "../../services/utils";
 import CreateExchange from "../modals/createExchange/CreateExchange";
@@ -19,8 +19,7 @@ import JobReorderModal from "../modals/reorderModal/JobReorderModal";
 import ExtendModal from "../modals/extendModal/ExtendModal";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import ViewJobDocumentsModal from "../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
-import ImageIcon from '@mui/icons-material/Image';
-
+import ImageIcon from "@mui/icons-material/Image";
 
 const JobsTable = ({
   data,
@@ -70,7 +69,7 @@ const JobsTable = ({
   };
   const handleIconClick = (e, props) => {
     e.stopPropagation();
-    setJobId(props.job_id)
+    setJobId(props.job_id);
     setViewDocument(true);
   };
 
@@ -235,12 +234,23 @@ const JobsTable = ({
         accessor: "service_name",
         disableFilters: true,
         Cell: (cell) => {
-          return <span>
-            {cell.value}<br />
-            {cell.row.original.parent_id == 2 && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
-            {cell.row.original.parent_id != 2 && <span style={{color: 'red'}}>{cell.row.original.extended_job_id > 0 && `Extension`}</span>}
-          </span>
-        }
+          return (
+            <span>
+              {cell.value}
+              <br />
+              {cell.row.original.parent_id == 2 && (
+                <span style={{ color: "red" }}>
+                  {cell.row.original.exchanged_by > 0 && `Exchange`}
+                </span>
+              )}
+              {cell.row.original.parent_id != 2 && (
+                <span style={{ color: "red" }}>
+                  {cell.row.original.extended_job_id > 0 && `Extension`}
+                </span>
+              )}
+            </span>
+          );
+        },
       },
       {
         Header: "Address",
@@ -270,45 +280,68 @@ const JobsTable = ({
         disableFilters: true,
         Cell: (cell) => {
           return (
-              <CommonStatus
-                status={status(
-                  cell.row.original.order_job_status === 1 &&
-                    (localStorage.getItem("role_id") == 12 ||
-                      localStorage.getItem("role_id") == 13 ||
-                      localStorage.getItem("role_id") == 4)
-                    ? 14
-                    : cell.value
-                )}
-              />
+            <CommonStatus
+              status={status(
+                cell.row.original.order_job_status === 1 &&
+                  (localStorage.getItem("role_id") == 12 ||
+                    localStorage.getItem("role_id") == 13 ||
+                    localStorage.getItem("role_id") == 4)
+                  ? 14
+                  : cell.value
+              )}
+            />
           );
         },
       },
       {
         Header: "Pallets",
         disableFilters: true,
-        show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
+        show: userData.role_id == 13 || userData.role_id == 12 ? 1 : 0,
         Cell: (props) => {
-          return <>{props.cell.row.original?.pallets  ?`${Number(props.cell.row.original?.pallets).toFixed(2)}kg`
-              : ''}</>;
+          return (
+            <>
+              {props.cell.row.original?.pallets
+                ? `${Number(props.cell.row.original?.pallets).toFixed(2)}kg`
+                : ""}
+            </>
+          );
         },
       },
       {
         Header: "Rebate",
         disableFilters: true,
-        show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
+        show: userData.role_id == 13 || userData.role_id == 12 ? 1 : 0,
         Cell: (props) => {
-          return <>{props.cell.row.original?.rebate  ?`£${Number(props.cell.row.original?.rebate).toFixed(2)}`
-              : ''}</>;
+          return (
+            <>
+              {props.cell.row.original?.rebate
+                ? `£${Number(props.cell.row.original?.rebate).toFixed(2)}`
+                : ""}
+            </>
+          );
         },
       },
       {
         Header: "Utilisation*",
         disableFilters: true,
-        show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
+        show: userData.role_id == 13 || userData.role_id == 12 ? 1 : 0,
         Cell: (props) => {
-          return <span style={{color: props?.cell?.row?.original?.utilization >= 50 ? '#00B25D' : 'red'}}>{
-               props?.cell?.row?.original?.utilization ?`${Number(props?.cell?.row?.original?.utilization).toFixed()}%` : ''
-          }</span>;
+          return (
+            <span
+              style={{
+                color:
+                  props?.cell?.row?.original?.utilization >= 50
+                    ? "#00B25D"
+                    : "red",
+              }}
+            >
+              {props?.cell?.row?.original?.utilization
+                ? `${Number(
+                    props?.cell?.row?.original?.utilization
+                  ).toFixed()}%`
+                : ""}
+            </span>
+          );
         },
       },
       {
@@ -316,15 +349,26 @@ const JobsTable = ({
         accessor: "order_job_status",
         disableFilters: true,
         Cell: (props) => {
-          return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
-             : ''}</>;
+          return (
+            <>
+              {props.cell.row.original?.co2
+                ? `${Number(props.cell.row.original?.co2).toFixed(2)}kg`
+                : ""}
+            </>
+          );
         },
       },
       {
         Header: "Weight",
         disableFilters: true,
         Cell: (props) => {
-          return <>{props?.cell?.row?.original?.weight > 0 ?`${props?.cell?.row?.original?.weight}T`  : ''}</>;
+          return (
+            <>
+              {props?.cell?.row?.original?.weight > 0
+                ? `${props?.cell?.row?.original?.weight}T`
+                : ""}
+            </>
+          );
         },
       },
       {
@@ -332,7 +376,14 @@ const JobsTable = ({
         accessor: "job_images_count",
         disableFilters: true,
         Cell: (props) => {
-          return props.value > 0 && <ImageIcon onClick={(e) => handleIconClick(e, props?.row?.original)} sx={{color: '#518ef8'}} />;
+          return (
+            props.value > 0 && (
+              <ImageIcon
+                onClick={(e) => handleIconClick(e, props?.row?.original)}
+                sx={{ color: "#518ef8" }}
+              />
+            )
+          );
         },
       },
 
@@ -356,24 +407,25 @@ const JobsTable = ({
         Header: "Invoice",
         accessor: "job_id",
         id: "invoice",
-        Cell: (props) =>
-          (<>
-              {props.row.original.appointment_status == 3 ? (
-                <span
-                  className="normal-dsans-10-primary"
-                  onClick={(e) => downloadInvoice(e, props.value)}
-                >
-                  Invoice
-                  <img
-                    src={downloadSite}
-                    alt="download-icon"
-                    style={{ marginLeft: "5px" }}
-                  />
-                </span>
-              ) : (
-                ""
-              )}
-            </>)
+        Cell: (props) => (
+          <>
+            {props.row.original.appointment_status == 3 ? (
+              <span
+                className="normal-dsans-10-primary"
+                onClick={(e) => downloadInvoice(e, props.value)}
+              >
+                Invoice
+                <img
+                  src={downloadSite}
+                  alt="download-icon"
+                  style={{ marginLeft: "5px" }}
+                />
+              </span>
+            ) : (
+              ""
+            )}
+          </>
+        ),
       },
       {
         Header: "Ticket",
@@ -493,6 +545,28 @@ const JobsTable = ({
   const handleExtend = () => {
     setExtends(true);
   };
+
+  const [filterColumn, setFilterColumn] = useState(columns);
+
+  const handleColumnClick = (column, index) => {
+    const lastIndex = filterColumn[filterColumn?.length - 1];
+    filterColumn.pop();
+    const duplicate = { ...column };
+    duplicate.show = 1;
+    if (filterColumn?.find((x, index) => x.Header == column?.Header)) {
+      const filter = filterColumn?.filter(
+        (row) => row?.Header != column?.Header
+      );
+      filter.push(lastIndex);
+      setFilterColumn(filter);
+    } else {
+      const newFormValues = [...filterColumn];
+      newFormValues.splice(index, 0, column);
+      newFormValues.push(lastIndex);
+      setFilterColumn(newFormValues);
+    }
+  };
+
   return (
     <div className={data && data.length > 0 ? "" : "main-jobs-table"}>
       {exchange && (
@@ -572,8 +646,36 @@ const JobsTable = ({
       )}
       {data && data.length > 0 ? (
         <>
+          <div
+            style={{
+              margin: "10px 0px",
+            }}
+          >
+            {columns?.map((single, index) => {
+              if (single?.Header != "") {
+                return (
+                  <Button
+                    variant="contained"
+                    style={{
+                      marginRight: "8px",
+                      background: filterColumn?.find(
+                        (row) => row?.Header == single?.Header
+                      )
+                        ? "#518ef8"
+                        : "#84878c",
+                    }}
+                    onClick={() => {
+                      handleColumnClick(single, index);
+                    }}
+                  >
+                    {single?.Header}
+                  </Button>
+                );
+              }
+            })}
+          </div>
           <TableContainer
-            columns={columns}
+            columns={filterColumn ? filterColumn : columns}
             data={data}
             name={"jobs"}
             className="-striped -highlight"
@@ -603,18 +705,20 @@ const JobsTable = ({
                 : undefined
             }
           >
-            {((row.appointment_status === 4 || userData.account_type == 3) && (row.parent_id == 2 || row.parent_id == 602)) && (
-              <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
-            )}
+            {(row.appointment_status === 4 || userData.account_type == 3) &&
+              (row.parent_id == 2 || row.parent_id == 602) && (
+                <MenuItem onClick={handleShowExchangeDialog}>Exchange</MenuItem>
+              )}
             {row.service_id === 44 && row.appointment_status === 4 && (
               <MenuItem onClick={handleExtend}>Extend</MenuItem>
             )}
             <MenuItem onClick={handlereorder1}>Reorder</MenuItem>
-            {((row.appointment_status === 4 || userData.account_type == 3) && (row.parent_id == 2 || row.parent_id == 602)) && (
-              <MenuItem onClick={handleShowCollectionDialog}>
-                Collection
-              </MenuItem>
-            )}
+            {(row.appointment_status === 4 || userData.account_type == 3) &&
+              (row.parent_id == 2 || row.parent_id == 602) && (
+                <MenuItem onClick={handleShowCollectionDialog}>
+                  Collection
+                </MenuItem>
+              )}
             {row?.waste_transfer_document != "" && (
               <MenuItem
                 onClick={(e) =>
