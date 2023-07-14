@@ -27,8 +27,11 @@ import {
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
-import { changeJobsFilter, getJobList } from "../../store/actions/jobs.action";
+import {changeJobsFilter, getJobList, jobListFailure, jobListSuccess} from "../../store/actions/jobs.action";
 import FadeLoader from "react-spinners/FadeLoader";
+import * as Excel from "exceljs";
+import { saveAs } from "file-saver";
+import JobService from "../../services/job.service";
 
 const MainJobsNew = (props) => {
   const dispatch = useDispatch();
@@ -132,6 +135,74 @@ const MainJobsNew = (props) => {
       longitude: Number(selectedItem?.destination_lng),
     },
   ];
+  const [csvData, setCsvData] = useState([]);
+
+  async function exTest() {
+    var workbook = new Excel.Workbook();
+    var worksheet = workbook.addWorksheet("Main sheet");
+    worksheet.columns = [
+      { header: "Order #", key: "job_id", width: 20 },
+      { header: "Booked", key: "job_time", width: 20 },
+      { header: "Delivery Date", key: "job_start_time", width: 20 },
+      { header: "Address", key: "job_address", width: 20 },
+      { header: "Postcode", key: "postcode", width: 20 },
+      { header: "Site Contact", key: "mobile_number", width: 20 },
+      { header: "Service", key: "service_name", width: 20 },
+      { header: "Cost", key: "transaction_cost", width: 20 },
+      { header: "Status", key: "appointment_status", width: 20 },
+      { header: "Rebate", key: "rebate", width: 20 },
+      { header: "Pallets", key: "pallets", width: 20 },
+      { header: "Utilisation (%)", key: "utilization", width: 20 },
+      { header: "CO2 (Kg)", key: "co2", width: 20 },
+      { header: "Weight (Ton)", key: "weight", width: 20 },
+    ];
+    worksheet.addRows(csvData);
+    workbook.xlsx
+        .writeBuffer()
+        .then(function (buffer) {
+          saveAs(
+              new Blob([buffer], { type: "application/octet-stream" }),
+              `Orders-${new Date().toLocaleDateString()}.xlsx`
+          );
+          //setShowMore(false);
+        })
+        .catch(() => {
+          //setShowMore(false);
+        });
+  }
+  useEffect(() => {
+    if(csvData.length > 0){
+      exTest();
+    }
+  }, [csvData])
+  const downloadExcel = () => {
+    const params = Object.entries(jobsFilter).reduce(
+        (a, [k, v]) => (v ? ((a[k] = v), a) : a),
+        {}
+    );
+    JobService.list({ user_id: userData.user_id, noPaginate: 1, orders_type: 4 }, params)
+        .then((res) => {
+          setCsvData(res?.data?.result?.data.map(obj => {
+            obj.job_id = `SK${obj?.job_id}`;
+            obj.transaction_cost = `£${obj?.transaction_cost}`;
+            obj.job_time = new Date(obj?.job_time).toLocaleDateString();
+            obj.job_start_time = new Date(obj.job_start_time).toLocaleString().substring(0, 17);
+            obj.utilization = obj?.utilization > 0 ? `${obj?.utilization?.toFixed(2)}%` : `0%`;
+            obj.co2 = obj?.co2 > 0 ? `${obj?.co2?.toFixed(2)}kg` : `0kg`;
+            obj.rebate = obj?.rebate > 0 ? `£${obj?.rebate?.toFixed(2)}` : `£0`;
+            if(obj.parent_id == 2){
+              obj.service_name = `${obj?.service_name} ${obj?.exchanged_by > 0 && `(Exchange)`}`;
+            }else if(obj.parent_id != 2){
+              obj.service_name = `${obj?.service_name} ${obj?.extended_job_id > 0 && `(Extension)`}`;
+            }
+            obj.appointment_status = status(obj?.appointment_status);
+            return obj;
+          }));
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+  }
 
   return (
     <div>
@@ -203,6 +274,11 @@ const MainJobsNew = (props) => {
             <JobFilters handleChangeFilters={handleChangeFilters} />
           </Grid>
         </Grid>
+        <div style={{display: 'flex', justifyContent: 'flex-end', width: '100%', marginTop: '10px', cursor: 'pointer'}}>
+          <button className="header-btn" onClick={downloadExcel}>
+          DownloadCsv
+        </button>
+      </div>
       </div>
       {isMapView ? (
         <>
