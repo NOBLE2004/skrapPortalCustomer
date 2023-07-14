@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import JobDetail from "../../components/jobsDetail/JobDetail";
 import JobDetailHeader from "../../components/jobsDetail/jobHeader/JobDetailHeader";
 import { Grid } from "@mui/material";
@@ -8,43 +8,51 @@ import PaymentDetail from "../../components/jobsDetail/paymentDetail/PaymentDeta
 import SmallCard from "../../components/jobsDetail/smallCard/SmallCard";
 import JobNotes from "../../components/jobsDetail/jobNote/JobNotes";
 import JobStatus from "../../components/jobsDetail/jobStatus";
-import JobService from '../../services/job.service';
+import JobService from "../../services/job.service";
 import { useHistory, useParams } from "react-router-dom";
-import {getJob} from "../../store/actions/jobs.action";
+import { getJob } from "../../store/actions/jobs.action";
 import FadeLoader from "react-spinners/FadeLoader";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 const MainJobDetail = (props) => {
-    let { id } = useParams();
-    const history = useHistory();
-    const { job, isLoading, error } = props.jobs;
-    const [update, setUpdate] = useState(false);
-    useEffect(() => {
-        async function fetchData() {
-            await props.getJob({job_id: id});
-        }
-        fetchData();
-    }, [update]);
+  let { id } = useParams();
+  const history = useHistory();
+  const { job, isLoading, error } = props.jobs;
+  const [update, setUpdate] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      await props.getJob({ job_id: id });
+    }
+    fetchData();
+  }, [update]);
 
-const redirectBack = () =>{
+  const redirectBack = () => {
     history.goBack();
-};
+  };
 
   return (
     <>
-      <JobDetailHeader job={job} redirectBack={redirectBack}/>
+      <JobDetailHeader job={job} redirectBack={redirectBack} />
       <Grid container spacing={3}>
         <Grid item md={7}>
           <JobDetail job={job} />
-          <FindPostCode lat={parseFloat(job?.latitude)} lng={parseFloat(job?.longitude)}/>
-          <PaymentDetail job={job} updateJobs={()=>{setUpdate(!update)}}/>
+          <FindPostCode
+            lat={parseFloat(job?.latitude)}
+            lng={parseFloat(job?.longitude)}
+          />
+          <PaymentDetail
+            job={job}
+            updateJobs={() => {
+              setUpdate(!update);
+            }}
+          />
 
           <JobStatus status={job?.appointment_status} />
-          <JobNotes comments={job?.comments}/>
+          <JobNotes comments={job?.comments} />
         </Grid>
         <Grid item md={5}>
-            {job?.driver_id && <DriverDetail job={job}/>}
-           {/* <SmallCard />*/}
+          {job?.driver_id && <DriverDetail job={job} />}
+          {/* <SmallCard />*/}
         </Grid>
       </Grid>
 
@@ -61,11 +69,11 @@ const redirectBack = () =>{
 };
 
 const mapStateToProps = ({ jobs }) => {
-    return { jobs };
+  return { jobs };
 };
 const mapDispatchToProps = (dispatch) => {
-    return {
-        getJob: (data) => dispatch(getJob(data))
-    };
+  return {
+    getJob: (data) => dispatch(getJob(data)),
+  };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MainJobDetail);
