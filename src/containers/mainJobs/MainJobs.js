@@ -165,6 +165,7 @@ const MainJobsNew = (props) => {
               `Orders-${new Date().toLocaleDateString()}.xlsx`
           );
           //setShowMore(false);
+          setCsvData([]);
         })
         .catch(() => {
           //setShowMore(false);
@@ -180,7 +181,7 @@ const MainJobsNew = (props) => {
         (a, [k, v]) => (v ? ((a[k] = v), a) : a),
         {}
     );
-    JobService.list({ user_id: userData.user_id, noPaginate: 1, orders_type: 4 }, params)
+    JobService.list({ user_id: userData.user_id, noPaginate: 1, orders_type: 4, all: true }, params)
         .then((res) => {
           setCsvData(res?.data?.result?.data.map(obj => {
             obj.job_id = `SK${obj?.job_id}`;
@@ -191,9 +192,9 @@ const MainJobsNew = (props) => {
             obj.co2 = obj?.co2 > 0 ? `${obj?.co2?.toFixed(2)}kg` : `0kg`;
             obj.rebate = obj?.rebate > 0 ? `£${obj?.rebate?.toFixed(2)}` : `£0`;
             if(obj.parent_id == 2){
-              obj.service_name = `${obj?.service_name} ${obj?.exchanged_by > 0 && `(Exchange)`}`;
+              obj.service_name = `${obj?.service_name} ${obj?.exchanged_by > 0 ? `(Exchange)` : ``}`;
             }else if(obj.parent_id != 2){
-              obj.service_name = `${obj?.service_name} ${obj?.extended_job_id > 0 && `(Extension)`}`;
+              obj.service_name = `${obj?.service_name} ${obj?.extended_job_id > 0 ? `(Extension)`  : ``}`;
             }
             obj.appointment_status = status(obj?.appointment_status);
             return obj;
@@ -276,7 +277,7 @@ const MainJobsNew = (props) => {
         </Grid>
         <div style={{display: 'flex', justifyContent: 'flex-end', width: '100%', marginTop: '10px', cursor: 'pointer'}}>
           <button className="header-btn" onClick={downloadExcel}>
-          DownloadCsv
+          Download CSV
         </button>
       </div>
       </div>
