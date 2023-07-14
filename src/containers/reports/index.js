@@ -118,7 +118,7 @@ const NewReports = () => {
       { header: "Container", key: "container", width: 20 },
       { header: "Customer Cost", key: "customer_cost", width: 20 },
       { header: "% Recycled", key: "recycled", width: 20 },
-      { header: "Diverted T", key: "diverted", width: 20 },
+      { header: "Tonnage", key: "diverted", width: 20 },
       { header: "% Landfill", key: "landfill_diversion_rate", width: 20 },
       // { header: "Supplier", key: "supplier", width: 20 },
       // { header: "Supplier Postcode", key: "supplier_postcode", width: 20 },
