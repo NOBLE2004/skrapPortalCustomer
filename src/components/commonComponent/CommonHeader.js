@@ -33,7 +33,6 @@ const CommonHeader = ({
           )}
           <div className="header-link">{isMap ? "Map View" : "Table View"}</div> */}
         </div>
-
         {showButton && (
           <button className="header-btn" onClick={handleBookJob}>
             {bookSite ? bookSite : ""}
