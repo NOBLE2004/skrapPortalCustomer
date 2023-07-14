@@ -5,16 +5,18 @@ import { useHistory, useLocation } from "react-router";
 import clsx from "clsx";
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { sidebarTabsList, ENV, USER } from "../../environment";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import { useStyles } from "./styles";
 import { appIcon, personImage } from "../../assets/images";
 import useWindowDimensions from "../../hooks/useWindowDimension";
 import "./mySidebar.scss";
+import { changeJobsFilter } from "../../store/actions/jobs.action";
 
 const drawerWidth = 240;
 const MySidebar = (props) => {
+  const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const location = useLocation();
   const history = useHistory();
@@ -98,6 +100,17 @@ const MySidebar = (props) => {
     } else {
       props.history.push({ pathname: `/${tabKey}` });
     }
+    dispatch(
+      changeJobsFilter({
+        status: "",
+        date: "",
+        service: "",
+        search: "",
+        site: "",
+        address: "",
+        page: 1,
+      })
+    );
   };
   const onTabHandlerSub = (e, tab) => {
     e.preventDefault();

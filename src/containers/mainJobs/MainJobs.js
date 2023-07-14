@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import JobsTable from "../../components/reactTable/JobsTable";
-import {Card, CardContent, Grid, Paper} from "@mui/material";
+import { Card, CardContent, Grid, Paper } from "@mui/material";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import TipingCard from "../../components/tiping/TipingCard";
@@ -145,49 +145,49 @@ const MainJobsNew = (props) => {
         showButton={true}
       >
         <Grid item container spacing={1}>
-        {userData?.hide_price === 0 && (
+          {userData?.hide_price === 0 && (
+            <CommonJobStatus
+              jobStatus={{
+                status: "Spend",
+                price: `${currency ? currency : "£"}${
+                  info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+                }`,
+                statusName: "primary",
+              }}
+            />
+          )}
           <CommonJobStatus
             jobStatus={{
-              status: "Spend",
-              price: `${currency ? currency : "£"}${
-                info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+              status: "Jobs",
+              price: `${
+                info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0
               }`,
-              statusName: "primary"
+              statusName: "primary",
             }}
           />
-        )}
-        <CommonJobStatus
-          jobStatus={{
-            status: "Jobs",
-            price: `${
-              info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0
-            }`,
-            statusName: "primary"
-          }}
-        />
-        <CommonJobStatus
-          jobStatus={{
-            status: "Pending",
-            price: `${info ? info.Pending : 0}`,
-            statusName: "pending"
-          }}
-        />
-        <CommonJobStatus
-          jobStatus={{
-            status: "Completed",
-            price: `${
-              info ? parseFloat(info.Completed).toLocaleString() : 0
-            }`,
-            statusName: "completed"
-          }}
-        />
-        <CommonJobStatus
-          jobStatus={{
-            status: "Delivered",
-            price: `${info ? info.Delivered : 0}`,
-            statusName: "delivered"
-          }}
-        />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Pending",
+              price: `${info ? info.Pending : 0}`,
+              statusName: "pending",
+            }}
+          />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Completed",
+              price: `${
+                info ? parseFloat(info.Completed).toLocaleString() : 0
+              }`,
+              statusName: "completed",
+            }}
+          />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Delivered",
+              price: `${info ? info.Delivered : 0}`,
+              statusName: "delivered",
+            }}
+          />
         </Grid>
       </CommonHeader>
       <div className="jobs-search-header">
@@ -222,14 +222,16 @@ const MainJobsNew = (props) => {
               />
             )
           )}
-          {jobData && (<Paper className="box" style={{width: '15%'}}>
-            <span>*</span>
-            <span>100% skip utilisation</span>
-            <span>Wood = 3 Tonnes</span>
-            <span>General = 2.5 Tonnes</span>
-            <span>Plastic = 2 Tonnes</span>
-            <span>Cardboard = 1.5 Tonnes</span>
-          </Paper>)}
+          {(jobData?.data?.length && userData.personal_detail.first_name.includes('Amazon')) && (
+            <Paper className="box" style={{ width: "15%", padding: "1%" }}>
+              <span>*</span>
+              <span>100% skip utilisation</span>
+              <span>Wood = 3 Tonnes</span>
+              <span>General = 2.5 Tonnes</span>
+              <span>Plastic = 2 Tonnes</span>
+              <span>Cardboard = 1.5 Tonnes</span>
+            </Paper>
+          )}
         </>
       ) : (
         <>
