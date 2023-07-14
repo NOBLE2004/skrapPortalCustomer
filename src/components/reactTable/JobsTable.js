@@ -651,28 +651,28 @@ const JobsTable = ({
               margin: "10px 0px",
             }}
           >
-            {columns?.map((single, index) => {
-              if (single?.Header != "") {
-                return (
-                  <Button
-                    variant="contained"
-                    style={{
-                      marginRight: "8px",
-                      background: filterColumn?.find(
-                        (row) => row?.Header == single?.Header
-                      )
-                        ? "#518ef8"
-                        : "#84878c",
-                    }}
-                    onClick={() => {
-                      handleColumnClick(single, index);
-                    }}
-                  >
-                    {single?.Header}
-                  </Button>
-                );
-              }
-            })}
+            {/*{columns?.map((single, index) => {*/}
+            {/*  if (single?.Header != "") {*/}
+            {/*    return (*/}
+            {/*      <Button*/}
+            {/*        variant="contained"*/}
+            {/*        style={{*/}
+            {/*          marginRight: "8px",*/}
+            {/*          background: filterColumn?.find(*/}
+            {/*            (row) => row?.Header == single?.Header*/}
+            {/*          )*/}
+            {/*            ? "#518ef8"*/}
+            {/*            : "#84878c",*/}
+            {/*        }}*/}
+            {/*        onClick={() => {*/}
+            {/*          handleColumnClick(single, index);*/}
+            {/*        }}*/}
+            {/*      >*/}
+            {/*        {single?.Header}*/}
+            {/*      </Button>*/}
+            {/*    );*/}
+            {/*  }*/}
+            {/*})}*/}
           </div>
           <TableContainer
             columns={filterColumn ? filterColumn : columns}
