@@ -222,7 +222,7 @@ const MainJobsNew = (props) => {
               />
             )
           )}
-          {jobData?.data?.length && (
+          {(jobData?.data?.length && userData.personal_detail.first_name.includes('Amazon')) && (
             <Paper className="box" style={{ width: "15%", padding: "1%" }}>
               <span>*</span>
               <span>100% skip utilisation</span>
