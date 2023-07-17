@@ -1,6 +1,6 @@
 import React from "react";
 import {Grid, Paper} from "@mui/material";
-import CommonStatus from "../commonStatus/CommonStatus";
+import Skeleton from '@mui/material/Skeleton';
 import "./commonJobStatus.scss";
 
 const CommonJobStatus = ({ jobStatus }) => {
@@ -27,7 +27,8 @@ const CommonJobStatus = ({ jobStatus }) => {
 
       <Grid item lg={2} md={4}>
         <Paper className="box">
-          <h1>{jobStatus.price}</h1>
+            {jobStatus.price != null && jobStatus.price != undefined ? (<h1>{jobStatus.price}</h1>) :
+                (<Skeleton variant="rectangular" width={100} height={40} />)}
           <span>{jobStatus.status}</span>
         </Paper>
       </Grid>

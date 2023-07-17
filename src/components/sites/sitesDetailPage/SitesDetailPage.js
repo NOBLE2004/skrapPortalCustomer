@@ -126,6 +126,15 @@ const SitesDetailPage = (props) => {
         );
         const res = await sitesService.showSitesDetail(id, params);
         setJobsData(res.data);
+        setState({
+          ...state,
+          managerData: res.data,
+          addressData: res.data?.address?.address,
+          sitename: res.data?.address?.site_name,
+          postCode: res.data?.address?.postcode,
+          stats: res.data?.stats,
+          isLoadings: false,
+        });
         setJobLoading(false);
       } catch (err) {
         setJobLoading(false);
@@ -156,9 +165,9 @@ const SitesDetailPage = (props) => {
   return (
     <div className="site-manager-detail-page-main">
       <div className="header-main">
-        {addressData && <div className="sites-header-title">
+        <div className="sites-header-title">
           {sitename !== null ? sitename : addressData?.slice(0, 16)}
-        </div>}
+        </div>
         <div>
           <button className="header-btn" onClick={handleCreateJob}>
             Create Job
@@ -169,28 +178,28 @@ const SitesDetailPage = (props) => {
         <CommonJobStatus
             jobStatus={{
               status: "Spend",
-              price: `£${state?.stats?.sale || 0}`,
+              price: `£${state?.stats?.sale}`,
               statusName: "primary"
             }}
         />
         <CommonJobStatus
             jobStatus={{
               status: "Total",
-              price: `${state?.stats?.total || 0}`,
+              price: `${state?.stats?.total}`,
               statusName: "primary"
             }}
         />
         <CommonJobStatus
             jobStatus={{
               status: "Delivered",
-              price: `${state?.stats?.delivered || 0 || 0}`,
+              price: `${state?.stats?.delivered}`,
               statusName: "primary"
             }}
         />
         <CommonJobStatus
             jobStatus={{
               status: "Completed",
-              price: `${state?.stats?.completed || 0 || 0}`,
+              price: `${state?.stats?.completed}`,
               statusName: "primary"
             }}
         />
