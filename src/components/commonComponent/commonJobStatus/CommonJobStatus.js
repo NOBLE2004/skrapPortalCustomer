@@ -27,8 +27,8 @@ const CommonJobStatus = ({ jobStatus }) => {
 
       <Grid item lg={2} md={4}>
         <Paper className="box">
-            {jobStatus.price != null && jobStatus.price != undefined ? (<h1>{jobStatus.price}</h1>) :
-                (<Skeleton variant="rectangular" width={100} height={40} />)}
+            {jobStatus.price == null || jobStatus.price == undefined ? (<Skeleton variant="rectangular" width={100} height={40} />) :
+                (<h1>{jobStatus.price}</h1>)}
           <span>{jobStatus.status}</span>
         </Paper>
       </Grid>

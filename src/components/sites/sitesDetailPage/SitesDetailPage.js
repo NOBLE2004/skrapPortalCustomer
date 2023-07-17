@@ -51,6 +51,7 @@ const SitesDetailPage = (props) => {
   const [userInfo, setUserInfo] = useState(0);
   const [jobsData, setJobsData] = useState({});
   const [isJobLoading, setJobLoading] = useState(false);
+  const currency = localStorage.getItem("currency");
   const { total, setTotal } = useState(0);
   const [filters, setFilters] = useState({
     status: "",
@@ -178,28 +179,28 @@ const SitesDetailPage = (props) => {
         <CommonJobStatus
             jobStatus={{
               status: "Spend",
-              price: `£${state?.stats?.sale}`,
+              price: `${currency ? currency : "£"}${state?.stats?.sale}`,
               statusName: "primary"
             }}
         />
         <CommonJobStatus
             jobStatus={{
               status: "Total",
-              price: `${state?.stats?.total}`,
+              price: `${state?.stats?.total || 0}`,
               statusName: "primary"
             }}
         />
         <CommonJobStatus
             jobStatus={{
               status: "Delivered",
-              price: `${state?.stats?.delivered}`,
+              price: `${state?.stats?.delivered || 0}`,
               statusName: "primary"
             }}
         />
         <CommonJobStatus
             jobStatus={{
               status: "Completed",
-              price: `${state?.stats?.completed}`,
+              price: `${state?.stats?.completed || 0}`,
               statusName: "primary"
             }}
         />
