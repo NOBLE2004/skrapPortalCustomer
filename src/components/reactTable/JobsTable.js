@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
-import { Box, Button, Menu, MenuItem } from "@mui/material";
+import { Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import "./jobs-react-table.scss";
 import { payment, status } from "../../services/utils";
 import CreateExchange from "../modals/createExchange/CreateExchange";
@@ -21,10 +21,18 @@ import { getUserDataFromLocalStorage } from "../../services/utils";
 import ViewJobDocumentsModal from "../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
 import ImageIcon from "@mui/icons-material/Image";
 import OutlinedInput from "@mui/material/OutlinedInput";
- import FormControl from "@mui/material/FormControl";
+import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
-import Select  from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
+import { Clear, SearchOff } from "@mui/icons-material";
+
+import {
+  CircularProgress,
+  InputAdornment,
+  ListSubheader,
+  TextField,
+} from "@mui/material";
 
 const ITEM_HEIGHT = 80;
 const ITEM_PADDING_TOP = 8;
@@ -568,6 +576,7 @@ const JobsTable = ({
   };
 
   const handleChange = (event) => {
+    event.preventDefault();
     const {
       target: { value },
     } = event;
@@ -680,10 +689,30 @@ const JobsTable = ({
                     return <em>Columns</em>;
                   }
 
-                  return selected.join(", ");
+                  return (
+                    selected.length > 0 && (
+                      <div className="text-sec">
+                        <span>{`${selected?.length} columns`}</span>
+                      </div>
+                    )
+                  );
                 }}
                 MenuProps={MenuProps}
               >
+                <ListSubheader sx={{ py: 1 }}>
+                  <Button
+                    size="small"
+                    color="info"
+                    variant="contained"
+                    onClick={() => {
+                      setPersonName(columns?.map((single) => single?.Header));
+                      setFilterColumn(columns);
+                    }}
+                  >
+                    Select All
+                  </Button>
+                </ListSubheader>
+
                 {columns?.map((column) => {
                   if (column?.Header != "") {
                     return (
