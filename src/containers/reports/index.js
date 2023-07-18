@@ -17,6 +17,7 @@ import * as htmlToImage from "html-to-image";
 import * as Excel from "exceljs";
 import { saveAs } from "file-saver";
 import RebateReport from "../../components/report/reports/rebate";
+import DualAxisGraph from "../../components/report/reports/dualAxis";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -145,20 +146,44 @@ const NewReports = () => {
 
   useEffect(() => {
     if (reports.ids === "waste_statistics") {
-      setCsvData(state?.landfillList?.data?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
+      setCsvData(
+        state?.landfillList?.data?.result.map((obj) => {
+          obj.recycled = 100;
+          obj.landfill_diversion_rate = 100;
+          return obj;
+        })
+      );
     }
     if (reports.ids === "finance") {
-      setCsvData(state?.siteBreakdownList?.site_breakdown?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
+      setCsvData(
+        state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
+          obj.recycled = 100;
+          obj.landfill_diversion_rate = 100;
+          return obj;
+        })
+      );
     }
     if (reports.ids === "emissions") {
-      setCsvData(state?.landfillList?.data?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
+      setCsvData(
+        state?.landfillList?.data?.result.map((obj) => {
+          obj.recycled = 100;
+          obj.landfill_diversion_rate = 100;
+          return obj;
+        })
+      );
     }
     if (reports.ids === "site_movements") {
-      setCsvData(state?.siteMovementsList?.data?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
+      setCsvData(
+        state?.siteMovementsList?.data?.result.map((obj) => {
+          obj.recycled = 100;
+          obj.landfill_diversion_rate = 100;
+          return obj;
+        })
+      );
     }
   }, [state, reports]);
 
-  console.log('state',state?.siteMovementsList)
+  console.log("state", state?.siteMovementsList);
 
   // useEffect(() => {
   //   // if (selected) {
@@ -178,7 +203,7 @@ const NewReports = () => {
     <>
       <div className="main-report">
         <ReportHeader
-            setDate={setDate}
+          setDate={setDate}
           sites={selected}
           handleChange={handleChange}
           selected={selected}
@@ -191,22 +216,22 @@ const NewReports = () => {
             <div className="report-chart-card-outer">
               <div className="report-card-title">Finance report</div>
               <FinanceReport
-                  date={date}
+                date={date}
                 sites={selected}
                 showMore={showMore}
                 siteCurrency={siteCurrency}
               />
             </div>
-              <RebateReport
-                  date={date}
-                  sites={selected}
-                  showMore={showMore}
-                  siteCurrency={siteCurrency}
-              />
+            <RebateReport
+              date={date}
+              sites={selected}
+              showMore={showMore}
+              siteCurrency={siteCurrency}
+            />
             <div className="report-chart-card-outer">
               <div className="report-card-title">Emissions</div>
               <EmissionReport
-                  dateM={date}
+                dateM={date}
                 sites={selected}
                 startDate={startDate}
                 setStartDate={setStartDate}
@@ -216,11 +241,30 @@ const NewReports = () => {
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Waste Breakdown</div>
-              <Co2breakdownReport date={date} sites={selected} showMore={showMore} />
+              <Co2breakdownReport
+                date={date}
+                sites={selected}
+                showMore={showMore}
+              />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Site Movements</div>
-              <SiteMovementsReport date={date} sites={selected} showMore={showMore} />
+              <SiteMovementsReport
+                date={date}
+                sites={selected}
+                showMore={showMore}
+              />
+            </div>
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">Delivery/Utilization</div>
+              <DualAxisGraph
+                dateM={date}
+                sites={selected}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                showMore={showMore}
+                siteCurrency={siteCurrency}
+              />
             </div>
           </Masonry>
         </div>
