@@ -108,7 +108,7 @@ export const chartOptions = (siteCurrency) => ({
       type: "line",
       yAxis: 2,
       data: [
-        20.9, 40.5, 70.4, 100.2, 80.0, 50.0, 90.6
+        20.9, 40.5, 70.4, 95, 80.0, 50.0, 90.6
       ],
       tooltip: {
         valueSuffix: "%",
