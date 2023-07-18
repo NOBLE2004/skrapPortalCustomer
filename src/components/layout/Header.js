@@ -29,7 +29,7 @@ const Header = (props) => {
                             USA
                         </option>
                         <option value="€">
-                            EURO
+                            EU
                         </option>
                     </select>
                 </FormControl>
