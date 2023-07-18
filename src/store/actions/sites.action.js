@@ -2,11 +2,11 @@ import sitesService from "../../services/sites.service";
 import * as Constants from "../constants/constants";
 
 //getSites
-export const getSites = () => {
+export const getSites = (params) => {
   return (dispatch) => {
     dispatch(sitesStart());
     sitesService
-      .getAllSites()
+      .getAllSites(params)
       .then((res) => {
         const unique = [
           ...new Map(

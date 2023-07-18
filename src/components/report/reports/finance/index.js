@@ -12,7 +12,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 const FinanceReport = (props) => {
   const { sites, showMore, siteCurrency, date } = props;
   const [chartData, setChartData] = useState();
-  const [currency, setCurrency] = useState();
+  const [currency, setCurrency] = useState(siteCurrency);
 
   const dispatch = useDispatch();
   const stateSites = useSelector((state) => state?.siteBreakdown);
@@ -93,11 +93,11 @@ const FinanceReport = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      await dispatch(getSiteBreakdown({ sites: sites, date }));
-      await dispatch(getHireBreakdown({ sites: sites, date }));
+      await dispatch(getSiteBreakdown({ sites: sites, date, currency }));
+      await dispatch(getHireBreakdown({ sites: sites, date, currency }));
     }
     fetchData();
-  }, [sites, date]);
+  }, [sites, date, currency]);
 
   return (
     <Card className="report-chart-card" id={"finance"}>
