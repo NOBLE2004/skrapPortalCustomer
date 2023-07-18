@@ -15,18 +15,13 @@ export const chartOptions = (siteCurrency) => ({
   xAxis: [
     {
       categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
       ],
       crosshair: true,
     },
@@ -58,7 +53,7 @@ export const chartOptions = (siteCurrency) => ({
         },
       },
       labels: {
-        format: "{value} mm",
+        format: "{value}",
         style: {
           color: Highcharts.getOptions().colors[0],
         },
@@ -102,11 +97,10 @@ export const chartOptions = (siteCurrency) => ({
       type: "line",
       yAxis: 1,
       data: [
-        49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1,
-        95.6, 54.4,
+        49, 71, 106, 129, 144, 176, 300
       ],
       tooltip: {
-        valueSuffix: " mm",
+        valueSuffix: "",
       },
     },
     {
@@ -114,11 +108,10 @@ export const chartOptions = (siteCurrency) => ({
       type: "line",
       yAxis: 2,
       data: [
-        20.9, 40.5, 70.4, 100.2, 120.0, 150.0, 112.6, 160.5, 180.4, 1600.1,
-        80.6, 20.4,
+        20.9, 40.5, 70.4, 100.2, 80.0, 50.0, 90.6
       ],
       tooltip: {
-        valueSuffix: " mm",
+        valueSuffix: "%",
       },
     },
   ],
