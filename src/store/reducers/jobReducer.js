@@ -14,6 +14,7 @@ const initialFilter = {
   page:1,
   search: "",
   show_on_app: [0, 1],
+  currency: localStorage.getItem("currency")
 };
 
 export const jobReducer = (state = initialState, action) => {

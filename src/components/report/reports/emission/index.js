@@ -75,17 +75,26 @@ const EmissionReport = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
   const [max, setMax] = useState(100);
+  const [currency, setCurrency] = useState(siteCurrency);
   const [emission, setEmission] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
 
+  useEffect(() => {
+    if (siteCurrency !== null) {
+      setCurrency(siteCurrency);
+    } else {
+      setCurrency(localStorage.getItem("currency"));
+    }
+  }, [siteCurrency]);
   const getData = (year) => {
     if (startDate) {
       dispatch(
         getReportEmissions({
           year: year ? year : startDate.getFullYear(),
           address_id: sites.toString(),
-          date: dateM
+          date: dateM,
+          currency
         })
       );
     }
@@ -95,7 +104,7 @@ const EmissionReport = (props) => {
     if (isNewYear) {
       getData();
     }
-  }, [startDate, isNewYear, dateM]);
+  }, [startDate, isNewYear, dateM, currency]);
 
   // useEffect(() => {
   //    if (sites !== "") {
@@ -108,11 +117,11 @@ const EmissionReport = (props) => {
   useEffect(() => {
     getData();
     dispatch(
-      getReportSiteBreakDownEmissions({ address_id: sites?.toString(), date: dateM })
+      getReportSiteBreakDownEmissions({ address_id: sites?.toString(), date: dateM , currency})
     );
     dispatch(getReportEmissionVehicles());
     setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  }, [sites, dateM]);
+  }, [sites, dateM, currency]);
 
   const getMonthData = (month, value) => {
     switch (month) {

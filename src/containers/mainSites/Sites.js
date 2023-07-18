@@ -33,23 +33,24 @@ const Sites = (props) => {
     search: "",
     date: "",
     address: "",
+    currency
   });
   const [search, setSearch] = useState("");
   useEffect(() => {
-    async function fetchData() {
-      !siteData && (await props.getSitesList(filters));
-       (await props.getDashboardsData(""));
-    }
-
-    fetchData();
     setUserData(getUserDataFromLocalStorage());
   }, []);
 
   useEffect(() => {
-    const newFilter = { page: null, search: "" };
-    if (isReload || !compare(newFilter, filters)) {
-      props.getSitesList(filters);
+    //const newFilter = { page: null, search: "", currency };
+    // if (isReload || !compare(newFilter, filters)) {
+    //   props.getSitesList(filters);
+    // }
+    async function fetchData() {
+      console.log(filters);
+      !siteData && (await props.getSitesList(filters));
+      (await props.getDashboardsData(filters));
     }
+    fetchData();
   }, [filters, isReload]);
 
   const compare = (a, b) => {
@@ -83,7 +84,11 @@ const Sites = (props) => {
   }, [isJobCreated]);
 
   const handleChangeFilters = (filtersList) => {
-    setFilters(filtersList);
+    let all = {
+      ...filters,
+      ...filtersList
+    };
+    setFilters(all);
   };
 
   return (
@@ -232,7 +237,6 @@ const mapStateToProps = ({ sites, dashboard }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSites: () => dispatch(getSites()),
     getSitesList: (filters) => dispatch(getSitesList(filters)),
     getDashboardsData: (year) => dispatch(getDashboardsData(year)),
   };

@@ -1,0 +1,41 @@
+import {Container, Grid} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import FormControl from "@mui/material/FormControl";
+import { useHistory } from "react-router-dom";
+
+const Header = (props) => {
+    const navigate = useHistory();
+    const handleChange = ({target}) => {
+        props.setCurrency(target.value);
+        setTimeout(()=> {
+            navigate.go(0);
+        },100)
+    }
+    return (
+        <Grid container style={{display: 'flex', justifyContent: 'flex-end', paddingRight: '13px'}}>
+            <Grid item md={1} xs={12}>
+                <FormControl variant="outlined" margin="dense" style={{width: '100%'}}>
+                    <select
+                        value={props.currency}
+                        style={{width: '100%', padding: '4px', marginRight: '2px'}}
+                        onChange={handleChange}
+                        label="service"
+                        name="service"
+                    >
+                        <option value="£">
+                            UK
+                        </option>
+                        <option value="$">
+                            USA
+                        </option>
+                        <option value="€">
+                            EURO
+                        </option>
+                    </select>
+                </FormControl>
+            </Grid>
+        </Grid>
+    );
+};
+
+export default Header;

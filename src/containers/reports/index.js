@@ -27,7 +27,8 @@ const NewReports = () => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [csvData, setCsvData] = useState([]);
-  const [siteCurrency, setSiteCurrency] = useState(null);
+  let currency = localStorage.getItem("currency");
+  const [siteCurrency, setSiteCurrency] = useState(currency);
   const [showMore, setShowMore] = useState(false);
   const [reports, setReports] = useState({
     finance: false,
@@ -169,9 +170,9 @@ const NewReports = () => {
   // }, [selected]);
 
   useEffect(() => {
-    dispatch(getLandfillDiversionList({ sites: selected, date }));
-    dispatch(getSiteBreakdownlist({ sites: selected, date }));
-    dispatch(getSitesMovementList({ sites: selected[0], date }));
+    dispatch(getLandfillDiversionList({ sites: selected, date, currency }));
+    dispatch(getSiteBreakdownlist({ sites: selected, date, currency }));
+    dispatch(getSitesMovementList({ sites: selected[0], date, currency }));
   }, [selected, date]);
 
   return (
@@ -183,6 +184,7 @@ const NewReports = () => {
           handleChange={handleChange}
           selected={selected}
           setSelected={setSelected}
+          currency={currency}
           setSiteCurrency={setSiteCurrency}
         />
         {/*<ReportFilters />*/}
@@ -216,11 +218,11 @@ const NewReports = () => {
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Waste Breakdown</div>
-              <Co2breakdownReport date={date} sites={selected} showMore={showMore} />
+              <Co2breakdownReport date={date} sites={selected} showMore={showMore} siteCurrency={siteCurrency} />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Site Movements</div>
-              <SiteMovementsReport date={date} sites={selected} showMore={showMore} />
+              <SiteMovementsReport date={date} sites={selected} showMore={showMore} siteCurrency={siteCurrency} />
             </div>
           </Masonry>
         </div>
