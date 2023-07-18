@@ -32,7 +32,7 @@ function App() {
                 <PublicRoute path="/signup" component={() => <AddPhone/>} exact restricted={true}/>
                 <PublicRoute path="/forget-password" component={() => <ForgetPassword/>} exact restricted={true}/>
                 <Layout>
-                    <PrivateRoute path="/" component={() => <DashBoard/>} exact/>
+                    <PrivateRoute path="/" component={() => <DashBoard />} exact/>
                     <PrivateRoute path="/dashboard" component={() => <DashBoard/>}/>
                     <PrivateRoute path="/site-managers" component={() => <SiteManagers/>} exact/>
                     <PrivateRoute path="/site-managers/:id" component={() => <SiteManagerDetailPage/>} exact/>

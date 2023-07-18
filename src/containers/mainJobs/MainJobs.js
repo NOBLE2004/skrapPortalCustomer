@@ -63,6 +63,7 @@ const MainJobsNew = (props) => {
     address: "",
     search: "",
     show_on_app: [0, 1],
+    currency: currency
   });
   let userData = getUserDataFromLocalStorage();
 
@@ -112,9 +113,11 @@ const MainJobsNew = (props) => {
   const handleChangeFilters = (filtersList) => {
     dispatch(changeJobsFilter({ ...jobsFilter, ...filtersList }));
     filtersList.show_on_app = [0, 1];
+    filtersList.currency = currency;
     setFilters(filtersList);
   };
   const handleChangeSearch = (search) => {
+    console.log('jobsFilter', jobsFilter)
     const duplicate = { ...jobsFilter };
     duplicate.search = search;
     dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));

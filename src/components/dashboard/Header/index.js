@@ -58,7 +58,7 @@ const DashboardHeader = (props) => {
     useEffect(() => {
         async function fetchData() {
             if (!props.allsites.data) {
-                await props.getSites();
+                await props.getSites({currency});
             }
         }
 
@@ -162,7 +162,7 @@ const mapStateToProps = ({allsites, totalSites}) => {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        getSites: () => dispatch(getSites()),
+        getSites: (filters) => dispatch(getSites(filters)),
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardHeader);
