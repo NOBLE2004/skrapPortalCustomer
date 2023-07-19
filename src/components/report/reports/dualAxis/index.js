@@ -90,7 +90,6 @@ const DualAxisGraph = (props) => {
 
   const handleChange = (e) => {
     setService(e.target.value);
-    console.log("eee", e);
   };
 
   return (
@@ -141,7 +140,7 @@ const DualAxisGraph = (props) => {
                   </div>
                 </Grid>
                 <Grid item xs={5}>
-                  {/* <FormControl fullWidth>
+                  <FormControl fullWidth>
                     <div className="total" style={{ marginBottom: "5px" }}>
                       <span>Service:</span>
                     </div>
@@ -168,14 +167,14 @@ const DualAxisGraph = (props) => {
                         </MenuItem>
                       ))}
                     </Select>
-                  </FormControl> */}
+                  </FormControl>
                 </Grid>
               </Grid>
             </div>
-            {data?.isLoading ? (
+            {/* {data?.isLoading ? (
               <div
                 className="d-flex justify-center align-center"
-                style={{ height: "300px" }}
+                style={{  marginTop: "10px" }}
               >
                 <FadeLoader
                   color={"#518ef8"}
@@ -183,15 +182,15 @@ const DualAxisGraph = (props) => {
                   width={4}
                 />
               </div>
-            ) : (
-              <div style={{ width: "100%" }}>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={chartOptions(data?.data)}
-                  ref={props.ref2}
-                />
-              </div>
-            )}
+            ) : ( */}
+            <div style={{ width: "100%", marginTop: "10px" }}>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={chartOptions(data?.data)}
+                ref={props.ref2}
+              />
+            </div>
+            {/* )} */}
           </div>
         </CardContent>
       </Card>
