@@ -179,7 +179,7 @@ const SitesDetailPage = (props) => {
         <CommonJobStatus
             jobStatus={{
               status: "Spend",
-              price: `${currency ? currency : "£"}${state?.stats?.sale}`,
+              price: `${currency ? currency : "£"}${state?.stats?.sale || 0}`,
               statusName: "primary"
             }}
         />
