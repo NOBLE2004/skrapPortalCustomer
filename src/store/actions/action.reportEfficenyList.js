@@ -19,12 +19,12 @@ export const getEfficencyList = (data) => {
             if (!procFirst) {
               filterData.Utilization.push(prev?.Utilization);
               filterData.date.push(prev?.date);
-              filterData.TotalDeliveryJobs.push(prev?.TotalDeliveryJobs);
+              filterData.TotalDeliveryJobs.push(prev?.TotalJobs);
               procFirst = true;
             }
             filterData.Utilization.push(curr?.Utilization);
             filterData.date.push(curr?.date);
-            filterData.TotalDeliveryJobs.push(curr?.TotalDeliveryJobs);
+            filterData.TotalDeliveryJobs.push(curr?.TotalJobs);
           });
           dispatch(efficencyListSuccess(filterData));
         } else {

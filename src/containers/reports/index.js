@@ -259,7 +259,7 @@ const NewReports = () => {
               />
             </div>
             <div className="report-chart-card-outer">
-              <div className="report-card-title">Delivery/Utilization</div>
+              <div className="report-card-title">Delivery Vs Utilization</div>
               <DualAxisGraph
                 dateM={date}
                 sites={selected}
