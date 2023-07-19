@@ -188,12 +188,12 @@ const MainJobsNew = (props) => {
         .then((res) => {
           setCsvData(res?.data?.result?.data.map(obj => {
             obj.job_id = `SK${obj?.job_id}`;
-            obj.transaction_cost = `£${obj?.transaction_cost}`;
+            obj.transaction_cost = `${currency}${obj?.transaction_cost}`;
             obj.job_time = new Date(obj?.job_time).toLocaleDateString();
             obj.job_start_time = new Date(obj.job_start_time).toLocaleString().substring(0, 17);
             obj.utilization = obj?.utilization > 0 ? `${obj?.utilization?.toFixed(2)}%` : `0%`;
             obj.co2 = obj?.co2 > 0 ? `${obj?.co2?.toFixed(2)}kg` : `0kg`;
-            obj.rebate = obj?.rebate > 0 ? `£${obj?.rebate?.toFixed(2)}` : `£0`;
+            obj.rebate = obj?.rebate > 0 ? `${currency}${obj?.rebate?.toFixed(2)}` : `${currency}0`;
             if(obj.parent_id == 2){
               obj.service_name = `${obj?.service_name} ${obj?.exchanged_by > 0 ? `(Exchange)` : ``}`;
             }else if(obj.parent_id != 2){
