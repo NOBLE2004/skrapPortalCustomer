@@ -31,8 +31,9 @@ class ReportsService extends HttpService {
   offSetCharge = (data) => this.post(`offsetCharge`, data);
   getAccountStatement = (data) =>
     this.post(`customers/report/accountStatement`, data);
-    getEfficencyList = (data) =>
+  getEfficencyList = (data) =>
     this.get(`customers/report/getEfficiencyList`, data);
+  getUserService = (data) => this.get("getUserServices", data);
 }
 
 export default new ReportsService();
