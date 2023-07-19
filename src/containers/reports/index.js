@@ -18,6 +18,7 @@ import * as Excel from "exceljs";
 import { saveAs } from "file-saver";
 import RebateReport from "../../components/report/reports/rebate";
 import DualAxisGraph from "../../components/report/reports/dualAxis";
+import { getEfficencyList } from "../../store/actions/action.reportEfficenyList";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -183,8 +184,6 @@ const NewReports = () => {
       );
     }
   }, [state, reports]);
-
-  console.log("state", state?.siteMovementsList);
 
   // useEffect(() => {
   //   // if (selected) {

@@ -37,6 +37,7 @@ import { landfillDiversionList } from "./landfillDiversionReducer";
 import { allCounteriesReducer } from "./allCounteriesReducer";
 import { supplierReducer } from "./supplierReducer";
 import { rebateBreakdownReducer } from "./rebateBreakdownReducer";
+import { reportEfficencyReducer } from "./reportEfficencyReducer";
 import { jobFilterReducer } from "./jobReducer";
 export default combineReducers({
   auth: authReducer,
@@ -75,5 +76,6 @@ export default combineReducers({
   allCounteries: allCounteriesReducer,
   allSupplier: supplierReducer,
   rebateBreakDown: rebateBreakdownReducer,
+  efficencyList: reportEfficencyReducer,
   jobsFilter: jobFilterReducer,
 });
