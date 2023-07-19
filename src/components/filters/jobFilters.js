@@ -15,6 +15,7 @@ const JobFilters = ({ handleChangeFilters }) => {
   const dispatch = useDispatch();
   const siteState = useSelector((state) => state?.allsites);
   const jobsFilter = useSelector((state) => state?.jobsFilter);
+  const currency = localStorage.getItem("currency");
 
   const [togle, setTogle] = useState(false);
   const [state, setState] = useState([
@@ -48,9 +49,9 @@ const JobFilters = ({ handleChangeFilters }) => {
 
   useEffect(() => {
     if (!siteState?.data) {
-      dispatch(getSites());
+      dispatch(getSites({currency}));
     }
-  }, [siteState.data]);
+  }, [siteState.data, currency]);
 
   const toggle = () => {
     setTogle(!togle);

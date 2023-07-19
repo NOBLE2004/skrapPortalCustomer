@@ -77,9 +77,9 @@ const ReportHeader = (props) => {
 
   useEffect(() => {
     // if (sites !== "") {
-      dispatch(getJobsMeta({ sites: sites }));
+      dispatch(getJobsMeta({ sites: sites, currency }));
     // }
-  }, [sites]);
+  }, [sites, currency]);
 
   const handleDateFull = (item) => {
     setState([item.selection]);
