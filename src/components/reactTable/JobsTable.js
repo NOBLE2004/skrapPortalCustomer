@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
-import { Button, Menu, MenuItem } from "@mui/material";
+import { Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import "./jobs-react-table.scss";
 import { payment, status } from "../../services/utils";
 import CreateExchange from "../modals/createExchange/CreateExchange";
@@ -20,12 +20,39 @@ import ExtendModal from "../modals/extendModal/ExtendModal";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import ViewJobDocumentsModal from "../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
 import ImageIcon from "@mui/icons-material/Image";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import Select from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
+import { Clear, SearchOff } from "@mui/icons-material";
+
+import {
+  CircularProgress,
+  InputAdornment,
+  ListSubheader,
+  TextField,
+} from "@mui/material";
+
+const ITEM_HEIGHT = 80;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const JobsTable = ({
   data,
   pagination,
   handleUpdateJobs,
   handlePagination,
+  filterColumn,
+  setFilterColumn,
+  downloadExcel,
 }) => {
   const [state, setState] = useState({
     openMenu: false,
@@ -42,7 +69,7 @@ const JobsTable = ({
   const [isJobAccepted, setIsJobAccepted] = useState(false);
   const [isJobRejected, setIsJobRejected] = useState(false);
   const [jobData, setJobData] = useState({});
-
+  const [personName, setPersonName] = React.useState([]);
   const { openMenu, mouseX, mouseY, contextRow } = state;
   const [row, setRow] = useState({});
   const [reorder, setReorder] = useState(false);
@@ -137,6 +164,8 @@ const JobsTable = ({
     const userdata = getUserDataFromLocalStorage();
     setUser(userdata.personal_detail);
     setUserData(userdata);
+    setFilterColumn(columns);
+    setPersonName(columns?.map((single) => single?.Header));
   }, []);
   // const handleInvoice = () => {
   //   if (jobIds.length > 0) {
@@ -402,7 +431,7 @@ const JobsTable = ({
       // },
       {
         Header: "Invoice",
-        accessor: "job_id",
+        accessor: "invoice",
         id: "invoice",
         Cell: (props) => (
           <>
@@ -543,25 +572,16 @@ const JobsTable = ({
     setExtends(true);
   };
 
-  const [filterColumn, setFilterColumn] = useState(columns);
-
-  const handleColumnClick = (column, index) => {
-    const lastIndex = filterColumn[filterColumn?.length - 1];
-    filterColumn.pop();
-    const duplicate = { ...column };
-    duplicate.show = 1;
-    if (filterColumn?.find((x, index) => x.Header == column?.Header)) {
-      const filter = filterColumn?.filter(
-        (row) => row?.Header != column?.Header
-      );
-      filter.push(lastIndex);
-      setFilterColumn(filter);
-    } else {
-      const newFormValues = [...filterColumn];
-      newFormValues.splice(index, 0, column);
-      newFormValues.push(lastIndex);
-      setFilterColumn(newFormValues);
-    }
+  const handleChange = (event) => {
+    event.preventDefault();
+    const {
+      target: { value },
+    } = event;
+    const filterData = columns?.filter((column) => {
+      return value?.some((row) => column?.Header == row);
+    });
+    setFilterColumn(filterData);
+    setPersonName(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
@@ -643,6 +663,73 @@ const JobsTable = ({
       )}
       {data && data.length > 0 ? (
         <>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+            }}
+            mt={2}
+          >
+            <FormControl sx={{ width: 400 }}>
+              <Select
+                id="demo-multiple-checkbox"
+                multiple
+                size="small"
+                value={personName}
+                displayEmpty
+                onChange={handleChange}
+                input={<OutlinedInput placeholder="Tag" />}
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return <em>Columns</em>;
+                  }
+
+                  return (
+                    selected.length > 0 && (
+                      <div className="text-sec">
+                        <span>{`${selected?.length} columns`}</span>
+                      </div>
+                    )
+                  );
+                }}
+                MenuProps={MenuProps}
+              >
+                <ListSubheader sx={{ py: 1 }}>
+                  <Button
+                    size="small"
+                    color="info"
+                    variant="contained"
+                    onClick={() => {
+                      setPersonName(columns?.map((single) => single?.Header));
+                      setFilterColumn(columns);
+                    }}
+                  >
+                    Select All
+                  </Button>
+                </ListSubheader>
+
+                {columns?.map((column) => {
+                  if (column?.Header != "") {
+                    return (
+                      <MenuItem key={column?.id} value={column?.Header}>
+                        <Checkbox
+                          checked={personName.indexOf(column?.Header) > -1}
+                        />
+                        <ListItemText primary={column?.Header} />
+                      </MenuItem>
+                    );
+                  }
+                })}
+              </Select>
+            </FormControl>
+            <div>
+              <button className="header-btn" onClick={downloadExcel}>
+                Download CSV
+              </button>
+            </div>
+          </Box>
           <div
             style={{
               margin: "10px 0px",
