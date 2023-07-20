@@ -1,4 +1,5 @@
 import Highcharts from "highcharts";
+import {numberWithCommas} from "../../../utlils/dashboard";
 
 export const chartOptions = (data) => ({
   chart: {
@@ -41,8 +42,15 @@ export const chartOptions = (data) => ({
           color: Highcharts.getOptions().colors[0],
         },
       },
+      min: 0,
+      max: Math.max.apply(Math, data?.TotalDeliveryJobs) > 50 ? Math.max.apply(Math, data?.TotalDeliveryJobs) : 50,
       labels: {
-        format: "{value}",
+        formatter() {
+          const getLabel = (value) => {
+            return `${value}`;
+          };
+          return getLabel(this.value);
+        },
         style: {
           color: Highcharts.getOptions().colors[0],
         },
@@ -55,6 +63,8 @@ export const chartOptions = (data) => ({
           color: Highcharts.getOptions().colors[1],
         },
       },
+      min: 0,
+      max: 100,
       labels: {
         format: "{value} %",
         style: {
