@@ -19,6 +19,7 @@ import { saveAs } from "file-saver";
 import RebateReport from "../../components/report/reports/rebate";
 import DualAxisGraph from "../../components/report/reports/dualAxis";
 import { getEfficencyList } from "../../store/actions/action.reportEfficenyList";
+import { Grid } from "@mui/material";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -258,18 +259,25 @@ const NewReports = () => {
                 siteCurrency={siteCurrency}
               />
             </div>
-            <div className="report-chart-card-outer">
-              <div className="report-card-title">Delivery Vs Utilization</div>
-              <DualAxisGraph
-                dateM={date}
-                sites={selected}
-                startDate={startDate}
-                setStartDate={setStartDate}
-                showMore={showMore}
-                siteCurrency={siteCurrency}
-              />
-            </div>
           </Masonry>
+          <Grid container>
+            <Grid item xs={12}>
+              <div
+                className="report-chart-card-outer"
+                style={{ width: "100%" }}
+              >
+                <div className="report-card-title">Delivery Vs Utilization</div>
+                <DualAxisGraph
+                  dateM={date}
+                  sites={selected}
+                  startDate={startDate}
+                  setStartDate={setStartDate}
+                  showMore={showMore}
+                  siteCurrency={siteCurrency}
+                />
+              </div>{" "}
+            </Grid>
+          </Grid>
         </div>
       </div>
       <ReportFooter

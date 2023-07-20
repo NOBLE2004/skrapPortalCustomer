@@ -1,5 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Card, CardContent, Grid, TextField } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Popover,
+  Popper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
@@ -18,31 +27,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import { getEfficencyList } from "../../../../store/actions/action.reportEfficenyList";
 import { forwardRef } from "react";
 import { getUserService } from "../../../../store/actions/action.userService";
+import { DateRange } from "react-date-range";
 
 const DualAxisGraph = (props) => {
   const dispatch = useDispatch();
   const { sites, dateM, siteCurrency } = props;
-  const [dateMonth, setDateMonth] = useState(new Date());
-  const [dateWeek, setDateWeek] = useState();
+  const [type, setType] = useState("month");
   const data = useSelector((state) => state?.efficencyList);
   const [service, setService] = useState([]);
   const userService = useSelector((state) => state?.userService);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
-  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-    <TextField
-      size="small"
-      value={value}
-      fullWidth
-      onClick={onClick}
-      placeholder="Select Month"
-      sx={{
-        "& .MuiOutlinedInput-notchedOutline": {
-          borderRadius: "12px",
-          border: dateMonth ? "1px solid #518ef8" : null,
-        },
-      }}
-    />
-  ));
   const ExampleCustomInput2 = forwardRef(({ value, onClick }, ref) => (
     <TextField
       size="small"
@@ -53,18 +49,23 @@ const DualAxisGraph = (props) => {
       sx={{
         "& .MuiOutlinedInput-notchedOutline": {
           borderRadius: "12px",
-          border: dateWeek ? "1px solid #518ef8" : null,
         },
       }}
     />
   ));
 
-  const getData = (date) => {
+  const getData = () => {
     dispatch(
       getEfficencyList({
         sites: sites,
-        date: dateM,
-        date_month: date,
+        date:
+          endDate &&
+          `${startDate?.getDate()}-${
+            startDate?.getMonth() + 1
+          }-${startDate?.getFullYear()},${endDate?.getDate()}-${
+            endDate?.getMonth() + 1
+          }-${endDate?.getFullYear()}`,
+        type: type,
         service_id: service,
         currency: siteCurrency,
       })
@@ -78,65 +79,82 @@ const DualAxisGraph = (props) => {
   }, [userService?.data]);
 
   useEffect(() => {
-    getData(
-      dateMonth
-        ? `${dateMonth?.getMonth() + 1}-${dateMonth?.getFullYear()}`
-        : `${dateWeek?.getDate()}-${
-            dateWeek?.getMonth() + 1
-          }-${dateWeek?.getFullYear()}`
-    );
-  }, [sites, service, siteCurrency]);
+    getData();
+  }, [sites, service, siteCurrency, endDate, type]);
 
   const handleChange = (e) => {
     setService(e.target.value);
   };
 
-  console.log("dattt", data);
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+  const handleReset = () => {
+    setService([]);
+    setType("month");
+    setStartDate(null);
+    setEndDate(null);
+  };
 
   return (
     <>
       <Card className="report-chart-card" id={"emissions"}>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            <div className="filters">
-              <Grid container spacing={2} justifyContent={"space-between"}>
-                <Grid item xs={3}>
+            <div className="filters" style={{ margin: 0 }}>
+              <Grid container spacing={1} justifyContent={"space-between"}>
+                <Grid item xs={12}>
+                  <Typography
+                    color="primary"
+                    component="h4"
+                    sx={{ textAlign: "end" }}
+                  >
+                    <span
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        handleReset();
+                      }}
+                    >
+                      Reset
+                    </span>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6} sx={{ display: "flex" }}>
                   <div>
                     <div className="total" style={{ marginBottom: "5px" }}>
-                      <span>Month:</span>{" "}
+                      <span>Type:</span>
                     </div>
-                    <DatePicker
-                      selected={dateMonth}
-                      onChange={(date) => {
-                        setDateMonth(date);
-                        getData(
-                          `${date?.getMonth() + 1}-${date?.getFullYear()}`
-                        );
-                        setDateWeek();
+                    <Select
+                      value={type}
+                      onChange={(e) => {
+                        setType(e.target.value);
                       }}
-                      dateFormat="MM/yyyy"
-                      customInput={<ExampleCustomInput />}
-                      showMonthYearPicker
-                    />
+                      sx={{ borderRadius: "12px" }}
+                      size="small"
+                      displayEmpty
+                      inputProps={{
+                        "aria-label": "Without label",
+                        placeholder: "testing",
+                      }}
+                    >
+                      <MenuItem value={"month"}>Month</MenuItem>
+                      <MenuItem value={"day"}>Days</MenuItem>
+                    </Select>
                   </div>
-                </Grid>
-                <Grid item xs={3}>
-                  <div>
+                  <div style={{ marginLeft: "6px" }}>
                     <div className="total" style={{ marginBottom: "5px" }}>
                       <span>Days:</span>
                     </div>
                     <DatePicker
-                      selected={dateWeek}
-                      onChange={(date) => {
-                        const filterDates = `${date?.getDate()}-${
-                          date?.getMonth() + 1
-                        }-${date?.getFullYear()}`;
-                        setDateWeek(date);
-                        getData(filterDates);
-                        setDateMonth();
-                      }}
-                      showMonthDropdown
+                      selectsRange={true}
+                      startDate={startDate}
+                      monthsShown={2}
+                      endDate={endDate}
                       customInput={<ExampleCustomInput2 />}
+                      onChange={onChange}
                     />
                   </div>
                 </Grid>
