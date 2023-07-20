@@ -43,7 +43,7 @@ export const chartOptions = (data) => ({
         },
       },
       min: 0,
-      max: Math.max.apply(Math, data?.TotalDeliveryJobs) > 50 ? Math.max.apply(Math, data?.TotalDeliveryJobs) : 50,
+      max: Math.max.apply(Math, data?.TotalDeliveryJobs) > 50 ? Math.max.apply(Math, data?.TotalDeliveryJobs) : 60,
       labels: {
         formatter() {
           const getLabel = (value) => {
@@ -93,8 +93,13 @@ export const chartOptions = (data) => ({
         //     data?.job_service_name?.[this.x]?.length > 0 ? "<br/>" : ""
         //   }`;
         // },
-        valueSuffix: ``,
+        enabled: false,
+        crosshairs: true
       },
+      dataLabels: {
+        enabled: true,
+        color: '#6cacf5',
+      }
     },
     {
       name: "Utilization",
@@ -102,8 +107,13 @@ export const chartOptions = (data) => ({
       yAxis: 2,
       data: data?.Utilization || [],
       tooltip: {
-        valueSuffix: "%",
+        enabled: false,
+        crosshairs: true
       },
+      dataLabels: {
+        enabled: true,
+        format: '{y}%',
+      }
     },
   ],
   responsive: {
