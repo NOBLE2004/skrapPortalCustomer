@@ -21,7 +21,7 @@ import { getUserService } from "../../../../store/actions/action.userService";
 
 const DualAxisGraph = (props) => {
   const dispatch = useDispatch();
-  const { sites, dateM } = props;
+  const { sites, dateM, siteCurrency } = props;
   const [dateMonth, setDateMonth] = useState(new Date());
   const [dateWeek, setDateWeek] = useState();
   const data = useSelector((state) => state?.efficencyList);
@@ -38,11 +38,7 @@ const DualAxisGraph = (props) => {
       sx={{
         "& .MuiOutlinedInput-notchedOutline": {
           borderRadius: "12px",
-        },
-        "& .MuiOutlinedInput-input": {
-          borderRadius: "12px",
-          background: dateMonth ? "#518ef8" : null,
-          color: dateMonth && "#fff",
+          border: dateMonth ? "1px solid #518ef8" : null,
         },
       }}
     />
@@ -57,11 +53,7 @@ const DualAxisGraph = (props) => {
       sx={{
         "& .MuiOutlinedInput-notchedOutline": {
           borderRadius: "12px",
-        },
-        "& .MuiOutlinedInput-input": {
-          borderRadius: "12px",
-          background: dateWeek ? "#518ef8" : null,
-          color: dateWeek && "#fff",
+          border: dateWeek ? "1px solid #518ef8" : null,
         },
       }}
     />
@@ -74,6 +66,7 @@ const DualAxisGraph = (props) => {
         date: dateM,
         date_month: date,
         service_id: service,
+        currency: siteCurrency,
       })
     );
   };
@@ -85,12 +78,20 @@ const DualAxisGraph = (props) => {
   }, [userService?.data]);
 
   useEffect(() => {
-    getData(`${dateMonth?.getMonth() + 1}-${dateMonth?.getFullYear()}`);
-  }, [sites, service]);
+    getData(
+      dateMonth
+        ? `${dateMonth?.getMonth() + 1}-${dateMonth?.getFullYear()}`
+        : `${dateWeek?.getDate()}-${
+            dateWeek?.getMonth() + 1
+          }-${dateWeek?.getFullYear()}`
+    );
+  }, [sites, service, siteCurrency]);
 
   const handleChange = (e) => {
     setService(e.target.value);
   };
+
+  console.log("dattt", data);
 
   return (
     <>

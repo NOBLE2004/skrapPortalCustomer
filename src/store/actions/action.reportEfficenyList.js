@@ -12,6 +12,8 @@ export const getEfficencyList = (data) => {
             Utilization: [],
             date: [],
             TotalDeliveryJobs: [],
+            job_service_name: [],
+            utilization_service_name: [],
           };
           let procFirst = false;
 
@@ -20,11 +22,19 @@ export const getEfficencyList = (data) => {
               filterData.Utilization.push(prev?.Utilization);
               filterData.date.push(prev?.date);
               filterData.TotalDeliveryJobs.push(prev?.TotalJobs);
+              filterData.job_service_name.push(prev?.job_service_name);
+              filterData.utilization_service_name.push(
+                prev?.utilization_service_name
+              );
               procFirst = true;
             }
             filterData.Utilization.push(curr?.Utilization);
             filterData.date.push(curr?.date);
             filterData.TotalDeliveryJobs.push(curr?.TotalJobs);
+            filterData.job_service_name.push(curr?.job_service_name);
+            filterData.utilization_service_name.push(
+              curr?.utilization_service_name
+            );
           });
           dispatch(efficencyListSuccess(filterData));
         } else {
