@@ -45,7 +45,7 @@ const SiteManagerTable = ({
     mouseY: null,
     contextRow: null,
   });
-
+    const currency = localStorage.getItem("currency");
   const [isViewDocument, setViewDocument] = useState(false);
   const [jobId, setJobId] = React.useState(null);
   const [jobs, setJobs] = useState([]);
@@ -199,11 +199,7 @@ const SiteManagerTable = ({
         disableFilters: true,
         filter: "equals",
         Cell: (props) => {
-          return `${
-            userData?.country_currency?.currency_symbol
-              ? userData?.country_currency?.currency_symbol
-              : "£"
-          }${props?.value}`;
+          return `${currency}${props?.value}`;
         },
       },
       {
@@ -240,7 +236,7 @@ const SiteManagerTable = ({
             show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
             disableFilters: true,
             Cell: (props) => {
-                return <>{props.cell.row.original?.rebate  ?`£${Number(props.cell.row.original?.rebate).toFixed(2)}`
+                return <>{props.cell.row.original?.rebate  ?`${currency}${Number(props.cell.row.original?.rebate).toFixed(2)}`
                     : ''}</>;
             },
         },
@@ -427,11 +423,7 @@ const SiteManagerTable = ({
         disableFilters: true,
         filter: "equals",
         Cell: (props) => {
-          return `${
-            userData?.country_currency?.currency_symbol
-              ? userData?.country_currency?.currency_symbol
-              : "£"
-          }${props?.value}`;
+          return `${currency}${props?.value}`;
         },
       },
       {
@@ -489,7 +481,7 @@ const SiteManagerTable = ({
             show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
             disableFilters: true,
             Cell: (props) => {
-                return <>{props.cell.row.original?.rebate  ?`£${Number(props.cell.row.original?.rebate).toFixed(2)}`
+                return <>{props.cell.row.original?.rebate  ?`${currency}${Number(props.cell.row.original?.rebate).toFixed(2)}`
                     : ''}</>;
             },
         },

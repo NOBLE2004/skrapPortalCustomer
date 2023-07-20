@@ -72,14 +72,14 @@ const DashBoard = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [selected, setSelected] = useState([]);
-  const [siteCurrency, setSiteCurrency] = useState(null);
+  const [currency, setCurrency] = useState(localStorage.getItem("currency"));
   // const { info, loading } = props.dashboard;
   const info = dummyDashboardData;
 
   const getData = async (year) => {
     // setLatestYear(year);
     if (isNewYear) {
-      await getDashboardsData({ year: year });
+      await getDashboardsData({ year: year, currency });
     }
     setNewYear(true);
   };
@@ -93,28 +93,28 @@ const DashBoard = (props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(getLandfillDiversion({ sites: selected, date }));
+    dispatch(getLandfillDiversion({ sites: selected, date, currency }));
     if (!dashboardMap?.info) {
-      dispatch(getDashboardsMapData({ sites: selected, date }));
+      dispatch(getDashboardsMapData({ sites: selected, date, currency }));
     }
     if (!dashboardService?.info) {
-      dispatch(getDashboardServiceData({ sites: selected, date }));
+      dispatch(getDashboardServiceData({ sites: selected, date, currency }));
     }
     // if (!dashboardSale?.info) {
     // dispatch(getDashboardSaleData());
     // }
     if (!dashboardData?.info) {
-      dispatch(getDashboardsData({ sites: selected, date }));
+      dispatch(getDashboardsData({ sites: selected, date, currency }));
     }
   }, []);
 
   useEffect(() => {
-    dispatch(getLandfillDiversion({ sites: selected, date }));
-    dispatch(getDashboardsMapData({ sites: selected, date }));
-    dispatch(getDashboardServiceData({ sites: selected, date }));
-    dispatch(getDashboardsData({ sites: selected, date }));
-    dispatch(getDashboardSaleData({ year: latestYear, sites: selected, date }));
-  }, [selected, latestYear, date]);
+    dispatch(getLandfillDiversion({ sites: selected, date, currency }));
+    dispatch(getDashboardsMapData({ sites: selected, date, currency }));
+    dispatch(getDashboardServiceData({ sites: selected, date, currency }));
+    dispatch(getDashboardsData({ sites: selected, date, currency }));
+    dispatch(getDashboardSaleData({ year: latestYear, sites: selected, date, currency }));
+  }, [selected, latestYear, date, currency]);
 
   const gotoJobDetail = (id) => {
     history.push({ pathname: `job-detail/${id}` });
@@ -159,7 +159,7 @@ const DashBoard = (props) => {
                   handleChange={handleChange}
                   selected={selected}
                   setSelected={setSelected}
-                  setSiteCurrency={setSiteCurrency}
+                  setSiteCurrency={setCurrency}
                   setDate={setDate}
                   totalSpend={
                     dashboardData?.info?.TotalSpend

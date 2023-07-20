@@ -54,6 +54,7 @@ const JobsTable = ({
   const [rowData, setRowDate] = useState("");
   const [isViewDocument, setViewDocument] = useState(false);
   const [jobId, setJobId] = React.useState(null);
+  const currency = localStorage.getItem("currency");
   const handleButtonClick = (e, props) => {
     e.stopPropagation();
     // if (contextRow === null) {
@@ -266,11 +267,7 @@ const JobsTable = ({
         show: userData?.hide_price,
         filter: "equals",
         Cell: (props) => {
-          return `${
-            userData?.country_currency?.currency_symbol
-              ? userData?.country_currency?.currency_symbol
-              : "£"
-          }${props.value.toFixed(2)}`;
+          return `${currency}${props.value.toFixed(2)}`;
         },
       },
       {
@@ -315,7 +312,7 @@ const JobsTable = ({
           return (
             <>
               {props.cell.row.original?.rebate
-                ? `£${Number(props.cell.row.original?.rebate).toFixed(2)}`
+                ? `${currency}${Number(props.cell.row.original?.rebate).toFixed(2)}`
                 : ""}
             </>
           );

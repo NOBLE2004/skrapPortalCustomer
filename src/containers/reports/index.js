@@ -17,6 +17,8 @@ import * as htmlToImage from "html-to-image";
 import * as Excel from "exceljs";
 import { saveAs } from "file-saver";
 import RebateReport from "../../components/report/reports/rebate";
+import DualAxisGraph from "../../components/report/reports/dualAxis";
+import { getEfficencyList } from "../../store/actions/action.reportEfficenyList";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -27,7 +29,8 @@ const NewReports = () => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [csvData, setCsvData] = useState([]);
-  const [siteCurrency, setSiteCurrency] = useState(null);
+  let currency = localStorage.getItem("currency");
+  const [siteCurrency, setSiteCurrency] = useState(currency);
   const [showMore, setShowMore] = useState(false);
   const [reports, setReports] = useState({
     finance: false,
@@ -145,20 +148,42 @@ const NewReports = () => {
 
   useEffect(() => {
     if (reports.ids === "waste_statistics") {
-      setCsvData(state?.landfillList?.data?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
+      setCsvData(
+        state?.landfillList?.data?.result.map((obj) => {
+          obj.recycled = 100;
+          obj.landfill_diversion_rate = 100;
+          return obj;
+        })
+      );
     }
     if (reports.ids === "finance") {
-      setCsvData(state?.siteBreakdownList?.site_breakdown?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
+      setCsvData(
+        state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
+          obj.recycled = 100;
+          obj.landfill_diversion_rate = 100;
+          return obj;
+        })
+      );
     }
     if (reports.ids === "emissions") {
-      setCsvData(state?.landfillList?.data?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
+      setCsvData(
+        state?.landfillList?.data?.result.map((obj) => {
+          obj.recycled = 100;
+          obj.landfill_diversion_rate = 100;
+          return obj;
+        })
+      );
     }
     if (reports.ids === "site_movements") {
-      setCsvData(state?.siteMovementsList?.data?.result.map(obj => { obj.recycled = 100; obj.landfill_diversion_rate=100; return obj}));
+      setCsvData(
+        state?.siteMovementsList?.data?.result.map((obj) => {
+          obj.recycled = 100;
+          obj.landfill_diversion_rate = 100;
+          return obj;
+        })
+      );
     }
   }, [state, reports]);
-
-  console.log('state',state?.siteMovementsList)
 
   // useEffect(() => {
   //   // if (selected) {
@@ -169,20 +194,21 @@ const NewReports = () => {
   // }, [selected]);
 
   useEffect(() => {
-    dispatch(getLandfillDiversionList({ sites: selected, date }));
-    dispatch(getSiteBreakdownlist({ sites: selected, date }));
-    dispatch(getSitesMovementList({ sites: selected[0], date }));
+    dispatch(getLandfillDiversionList({ sites: selected, date, currency }));
+    dispatch(getSiteBreakdownlist({ sites: selected, date, currency }));
+    dispatch(getSitesMovementList({ sites: selected[0], date, currency }));
   }, [selected, date]);
 
   return (
     <>
       <div className="main-report">
         <ReportHeader
-            setDate={setDate}
+          setDate={setDate}
           sites={selected}
           handleChange={handleChange}
           selected={selected}
           setSelected={setSelected}
+          currency={currency}
           setSiteCurrency={setSiteCurrency}
         />
         {/*<ReportFilters />*/}
@@ -191,22 +217,22 @@ const NewReports = () => {
             <div className="report-chart-card-outer">
               <div className="report-card-title">Finance report</div>
               <FinanceReport
-                  date={date}
+                date={date}
                 sites={selected}
                 showMore={showMore}
                 siteCurrency={siteCurrency}
               />
             </div>
-              <RebateReport
-                  date={date}
-                  sites={selected}
-                  showMore={showMore}
-                  siteCurrency={siteCurrency}
-              />
+            <RebateReport
+              date={date}
+              sites={selected}
+              showMore={showMore}
+              siteCurrency={siteCurrency}
+            />
             <div className="report-chart-card-outer">
               <div className="report-card-title">Emissions</div>
               <EmissionReport
-                  dateM={date}
+                dateM={date}
                 sites={selected}
                 startDate={startDate}
                 setStartDate={setStartDate}
@@ -216,11 +242,32 @@ const NewReports = () => {
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Waste Breakdown</div>
-              <Co2breakdownReport date={date} sites={selected} showMore={showMore} />
+              <Co2breakdownReport
+                date={date}
+                sites={selected}
+                showMore={showMore}
+                siteCurrency={siteCurrency}
+              />
             </div>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Site Movements</div>
-              <SiteMovementsReport date={date} sites={selected} showMore={showMore} />
+              <SiteMovementsReport
+                date={date}
+                sites={selected}
+                showMore={showMore}
+                siteCurrency={siteCurrency}
+              />
+            </div>
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">Delivery Vs Utilization</div>
+              <DualAxisGraph
+                dateM={date}
+                sites={selected}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                showMore={showMore}
+                siteCurrency={siteCurrency}
+              />
             </div>
           </Masonry>
         </div>

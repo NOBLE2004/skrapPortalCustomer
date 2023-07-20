@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ReportHeader = (props) => {
   const dispatch = useDispatch();
-  const { handleChange, selected, sites, setSiteCurrency, setSelected } = props;
+  const { handleChange, selected, sites, setSiteCurrency, setSelected, currency } = props;
   const classes = useStyles();
   const [toggle, setToggle] = useState(false);
   const [toggle2, setToggle2] = useState(false);
@@ -60,9 +60,10 @@ const ReportHeader = (props) => {
   };
   useEffect(() => {
     async function fetchData() {
-      if (!props.allsites.data) {
-        await props.getSites();
-      }
+      //if (!props.allsites.data) {
+      //console.log('currency', {currency});
+        await props.getSites({currency});
+      //}
     }
 
     fetchData();
@@ -76,9 +77,9 @@ const ReportHeader = (props) => {
 
   useEffect(() => {
     // if (sites !== "") {
-      dispatch(getJobsMeta({ sites: sites }));
+      dispatch(getJobsMeta({ sites: sites, currency }));
     // }
-  }, [sites]);
+  }, [sites, currency]);
 
   const handleDateFull = (item) => {
     setState([item.selection]);
@@ -141,7 +142,7 @@ const ReportHeader = (props) => {
               const filterSite = props.allsites.data?.find(
                 (x) => x.address_id === e.target.value
               );
-              setSiteCurrency(filterSite?.currency_symbol);
+              //setSiteCurrency(filterSite?.currency_symbol);
             }}
             input={
               <OutlinedInput
@@ -281,7 +282,7 @@ const mapStateToProps = ({ allsites, totalSites }) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSites: () => dispatch(getSites()),
+    getSites: (filters) => dispatch(getSites(filters)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ReportHeader);

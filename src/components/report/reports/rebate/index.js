@@ -10,7 +10,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 const RebateReport = (props) => {
     const { sites, showMore, siteCurrency, date } = props;
     const [chartData, setChartData] = useState();
-    const [currency, setCurrency] = useState();
+    const [currency, setCurrency] = useState(siteCurrency);
 
     const dispatch = useDispatch();
     const stateSites = useSelector((state) => state?.rebateBreakDown);
@@ -91,14 +91,14 @@ const RebateReport = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            await dispatch(getRebateBreakdown({ sites: sites, date }));
+            await dispatch(getRebateBreakdown({ sites: sites, date, currency }));
         }
         fetchData();
-    }, [sites, date]);
+    }, [sites, date, currency]);
 
     return (
         <>
-            {stateSites?.rebate_breakdown?.result?.total != 0 && <div className="report-chart-card-outer">
+            {(stateSites?.rebate_breakdown?.result?.length > 0 && stateSites?.rebate_breakdown?.result?.total != 0) && <div className="report-chart-card-outer">
         <div className="report-card-title">Rebate report</div>
         <Card className="report-chart-card" id={"finance"}>
             <CardContent>

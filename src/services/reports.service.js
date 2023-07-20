@@ -6,7 +6,7 @@ class ReportsService extends HttpService {
     this.get("customers/report/sitesBreakDown", data);
 
   getRebateBreakdown = (data) =>
-      this.get("customers/report/rebateReport", data);
+    this.get("customers/report/rebateReport", data);
   getSitesBreakdownList = (data) =>
     this.get("customers/report/sitesBreakDown/list", data);
   getJobsMeta = (data) => this.get("customers/report/jobsMeta", data);
@@ -29,7 +29,11 @@ class ReportsService extends HttpService {
   getPortfolio = (data) => this.get("portfolios", data);
   payOffSet = (data) => this.post(`placeOrderByValue?${data}`);
   offSetCharge = (data) => this.post(`offsetCharge`, data);
-  getAccountStatement = (data) => this.post(`customers/report/accountStatement`, data);
+  getAccountStatement = (data) =>
+    this.post(`customers/report/accountStatement`, data);
+  getEfficencyList = (data) =>
+    this.get(`customers/report/getEfficiencyList`, data);
+  getUserService = (data) => this.get("getUserServices", data);
 }
 
 export default new ReportsService();
