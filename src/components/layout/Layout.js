@@ -13,7 +13,6 @@ const Layout = (props) => {
       localStorage.setItem("currency", curr);
       currency = localStorage.getItem("currency");
   }, [curr])
-    console.log(props.children);
   return (
     <div className={[classes.root, " sidebar-container"]}>
       <SideBar />
