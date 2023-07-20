@@ -7,6 +7,7 @@ import {
   Popover,
   Popper,
   TextField,
+  Typography,
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -32,7 +33,6 @@ const DualAxisGraph = (props) => {
   const dispatch = useDispatch();
   const { sites, dateM, siteCurrency } = props;
   const [type, setType] = useState("month");
-  const [dateWeek, setDateWeek] = useState();
   const data = useSelector((state) => state?.efficencyList);
   const [service, setService] = useState([]);
   const userService = useSelector((state) => state?.userService);
@@ -92,13 +92,36 @@ const DualAxisGraph = (props) => {
     setEndDate(end);
   };
 
+  const handleReset = () => {
+    setService([]);
+    setType("month");
+    setStartDate(null);
+    setEndDate(null);
+  };
+
   return (
     <>
       <Card className="report-chart-card" id={"emissions"}>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            <div className="filters">
-              <Grid container spacing={2} justifyContent={"space-between"}>
+            <div className="filters" style={{ margin: 0 }}>
+              <Grid container spacing={1} justifyContent={"space-between"}>
+                <Grid item xs={12}>
+                  <Typography
+                    color="primary"
+                    component="h4"
+                    sx={{ textAlign: "end" }}
+                  >
+                    <span
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        handleReset();
+                      }}
+                    >
+                      Reset
+                    </span>
+                  </Typography>
+                </Grid>
                 <Grid item xs={6} sx={{ display: "flex" }}>
                   <div>
                     <div className="total" style={{ marginBottom: "5px" }}>
@@ -128,6 +151,7 @@ const DualAxisGraph = (props) => {
                     <DatePicker
                       selectsRange={true}
                       startDate={startDate}
+                      monthsShown={2}
                       endDate={endDate}
                       customInput={<ExampleCustomInput2 />}
                       onChange={onChange}
