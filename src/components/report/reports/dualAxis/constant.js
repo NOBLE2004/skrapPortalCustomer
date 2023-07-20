@@ -74,7 +74,16 @@ export const chartOptions = (data) => ({
       yAxis: 1,
       data: data?.TotalDeliveryJobs || [],
       tooltip: {
-        valueSuffix: "",
+        // pointFormatter: function () {
+        //   let y = this.y;
+        //   console.log(data?.job_service_name?.[this.x]);
+        //   return `<p>${this.series.name}: ${this.y}</p> ${
+        //     data?.job_service_name?.[this.x]?.length > 0 ? "<br/>" : ""
+        //   } <p>${data?.job_service_name?.[this.x]}</p>${
+        //     data?.job_service_name?.[this.x]?.length > 0 ? "<br/>" : ""
+        //   }`;
+        // },
+        valueSuffix: ``,
       },
     },
     {
