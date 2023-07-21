@@ -239,7 +239,7 @@ const JobsTable = ({
             <span>
               {cell.value}
               <br />
-              {cell.row.original.parent_id == 2 && (
+              {(cell.row.original.parent_id == 2 || cell.row.original.parent_id == 602 || cell.row.original.parent_id == 101) && (
                 <span style={{ color: "red" }}>
                   {cell.row.original.exchanged_by > 0 && `Exchange`}
                 </span>

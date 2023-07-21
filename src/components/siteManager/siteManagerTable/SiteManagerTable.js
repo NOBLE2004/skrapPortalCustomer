@@ -185,7 +185,7 @@ const SiteManagerTable = ({
             Cell: (cell) => {
                 return <span>
             {cell.value}<br />
-                    {cell.row.original.parent_id == 2 && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
+                    {(cell.row.original.parent_id == 2 || cell.row.original.parent_id == 602 || cell.row.original.parent_id == 101) && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
                     {cell.row.original.parent_id != 2 && <span style={{color: 'red'}}>{cell.row.original.extended_job_id > 0 && `Extension`}</span>}
           </span>
             }
@@ -404,7 +404,7 @@ const SiteManagerTable = ({
             Cell: (cell) => {
                 return <span>
             {cell.row.original.service.service_name}<br />
-                    {cell.row.original.service.parent_id == 2 && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
+                    {(cell.row.original.parent_id == 2 || cell.row.original.parent_id == 602 || cell.row.original.parent_id == 101) && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
                     {cell.row.original.service.parent_id != 2 && <span style={{color: 'red'}}>{cell.row.original.extended_job_id > 0 && `Extension`}</span>}
           </span>
             }
