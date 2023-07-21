@@ -41,7 +41,7 @@ const SignIn = (props) => {
   const checkingError = (name, value) => {
     switch (name) {
       case "phone":
-        errors[name] = value.length < 12 ? "Required" : "";
+        errors[name] = value.length < 10 || value.length > 15 ? "Required" : "";
         break;
       case "password":
         errors[name] = value.length === 0 ? "Required" : "";
