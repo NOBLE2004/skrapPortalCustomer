@@ -30,13 +30,13 @@ body {
   right: unset!important;
   z-index: 2;
 }
-.rdrDateRangePickerWrapper {
+/* .rdrDateRangePickerWrapper {
   position: absolute;
   top: 100%;
   border: 1px solid gainsboro;
   right: 5%;
   z-index: 5;
-}
+} */
 .loader {
   display: flex;
   justify-content: center;
