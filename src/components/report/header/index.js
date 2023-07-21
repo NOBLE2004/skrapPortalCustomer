@@ -11,7 +11,9 @@ import { DateRangePicker } from "react-date-range";
 import "./index.scss";
 import reportsService from "../../../services/reports.service";
 import { downloadSite } from "../../../assets/images";
-import {ArrowDropDown} from "@mui/icons-material";
+import { ArrowDropDown } from "@mui/icons-material";
+import RangeDatePicker from "../../RangePicker/index";
+import moment from "moment";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -39,10 +41,16 @@ const useStyles = makeStyles((theme) => ({
 
 const ReportHeader = (props) => {
   const dispatch = useDispatch();
-  const { handleChange, selected, sites, setSiteCurrency, setSelected, currency } = props;
+  const {
+    handleChange,
+    selected,
+    sites,
+    setSiteCurrency,
+    setSelected,
+    currency,
+  } = props;
   const classes = useStyles();
-  const [toggle, setToggle] = useState(false);
-  const [toggle2, setToggle2] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState([
     {
@@ -52,17 +60,11 @@ const ReportHeader = (props) => {
     },
   ]);
 
-  const handleStatement = () => {
-    setToggle(!toggle);
-  };
-  const handleDateFilter = () => {
-    setToggle2(!toggle2);
-  };
   useEffect(() => {
     async function fetchData() {
       //if (!props.allsites.data) {
       //console.log('currency', {currency});
-        await props.getSites({currency});
+      await props.getSites({ currency });
       //}
     }
 
@@ -77,58 +79,74 @@ const ReportHeader = (props) => {
 
   useEffect(() => {
     // if (sites !== "") {
-      dispatch(getJobsMeta({ sites: sites, currency }));
+    dispatch(getJobsMeta({ sites: sites, currency }));
     // }
   }, [sites, currency]);
 
   const handleDateFull = (item) => {
     setState([item.selection]);
-    const start = item.selection.startDate.toISOString().split("T")[0];
-    const end = item.selection.endDate.toISOString().split("T")[0];
-    if (start === end) {
-      console.log({date: `${start},${end}`});
-    } else {
-      console.log({date: `${start},${end}`});
-      setToggle2(false);
-    }
-    props.setDate(`${start},${end}`);
-  }
+  };
 
   const handleDate = (item) => {
     setState([item.selection]);
-    const start = item.selection.startDate.toISOString().split("T")[0];
-    const end = item.selection.endDate.toISOString().split("T")[0];
-    if (start === end) {
-      console.log({ date: `${start},${end}` });
-    } else {
-      console.log({ date: `${start},${end}` });
-      setToggle(false);
-    }
-    if (start && end) {
-      setLoading(true);
-      reportsService
-        .getAccountStatement({ from: start, to: end })
-        .then((response) => {
-          if (response.data.code == 0) {
-            window.open(response.data.result.Url, "_blank");
-            setLoading(false);
-          } else {
-            alert(response.data.description);
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElDate, setAnchorElDate] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClickDate = (event) => {
+    setAnchorElDate(event.currentTarget);
+  };
+
+  const handleCloseDate = () => {
+    setAnchorElDate(null);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOk = () => {
+    const newStartDate = moment(state?.[0]?.startDate).format("DD-MM-YYYY");
+    const newEndDate = moment(state?.[0]?.endDate).format("DD-MM-YYYY");
+    setLoading(true);
+    reportsService
+      .getAccountStatement({ from: newStartDate, to: newEndDate })
+      .then((response) => {
+        if (response.data.code == 0) {
+          window.open(response.data.result.Url, "_blank");
           setLoading(false);
-          console.log(error);
-        });
-    }
+          handleClose();
+        } else {
+          alert(response.data.description);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+        handleClose();
+      });
+  };
+
+  const handleOkDate = () => {
+    const newStartDate = moment(state?.[0]?.startDate).format("DD-MM-YYYY");
+    const newEndDate = moment(state?.[0]?.endDate).format("DD-MM-YYYY");
+    props.setDate(`${newStartDate},${newEndDate}`);
+    handleCloseDate();
   };
 
   return (
     <div className="report-header">
-      <div className="report-grid-header" style={{width: '50%', justifyContent: 'flex-start'}}>
+      <div
+        className="report-grid-header"
+        style={{ width: "50%", justifyContent: "flex-start" }}
+      >
         <div className="report-header-card first">
-          <div className="text" style={{width: '20%'}}>
+          <div className="text" style={{ width: "20%" }}>
             <span>Reporting</span>
           </div>
           <Select
@@ -136,7 +154,7 @@ const ReportHeader = (props) => {
             id="demo-multiple-name"
             value={selected}
             displayEmpty
-             multiple
+            multiple
             onChange={(e) => {
               handleChange(e);
               const filterSite = props.allsites.data?.find(
@@ -183,26 +201,47 @@ const ReportHeader = (props) => {
                 </MenuItem>
               ))}
           </Select>
-          <div className="report-header-card" style={{width: '40%', justifyContent: 'flex-start'}}>
-            <div className="text" style={{fontSize: '14px', cursor: 'pointer'}}>
-              <label style={{fontWeight: 'lighter'}}> Filter By : </label> <span onClick={handleDateFilter}> Date </span> <ArrowDropDown onClick={handleDateFilter}/>
-              <label style={{cursor: 'pointer'}} onClick={() => props.setDate(null)}>reset</label>
+          <div
+            className="report-header-card"
+            style={{ width: "40%", justifyContent: "flex-start" }}
+          >
+            <div
+              className="text"
+              style={{ fontSize: "14px", cursor: "pointer" }}
+            >
+              <label
+                onClick={handleClickDate}
+                style={{ fontWeight: "lighter" }}
+              >
+                {" "}
+                Filter By :{" "}
+              </label>{" "}
+              <span onClick={handleClickDate}> Date </span>{" "}
+              <RangeDatePicker
+                anchorEl={anchorElDate}
+                handleClose={() => {
+                  handleCloseDate();
+                }}
+                handleOk={() => {
+                  handleOkDate();
+                }}
+                onChange={handleDateFull}
+                name="si_date"
+                dateState={state}
+              />
+              <ArrowDropDown onClick={handleClickDate} />
+              <label
+                style={{ cursor: "pointer" }}
+                onClick={() => props.setDate(null)}
+              >
+                reset
+              </label>
             </div>
-
-            {toggle2 && (
-                <DateRangePicker
-                    editableDateInputs={false}
-                    moveRangeOnFirstSelection={false}
-                    direction="horizontal"
-                    onChange={handleDateFull}
-                    ranges={state}
-                />
-            )}
           </div>
         </div>
       </div>
       <div
-          style={{width: '50%'}}
+        style={{ width: "50%" }}
         className={
           props?.totalSites?.isLoading
             ? "report-grid-header justify-center"
@@ -221,7 +260,7 @@ const ReportHeader = (props) => {
           <>
             <div className="report-header-card">
               <div
-                onClick={handleStatement}
+                onClick={handleClick}
                 className="text"
                 style={{
                   display: "flex",
@@ -245,15 +284,18 @@ const ReportHeader = (props) => {
                   />
                 )}
               </div>
-              {toggle && (
-                <DateRangePicker
-                  editableDateInputs={false}
-                  moveRangeOnFirstSelection={false}
-                  direction="horizontal"
-                  onChange={handleDate}
-                  ranges={state}
-                />
-              )}
+              <RangeDatePicker
+                anchorEl={anchorEl}
+                handleClose={() => {
+                  handleClose();
+                }}
+                handleOk={() => {
+                  handleOk();
+                }}
+                onChange={handleDate}
+                name="si_date"
+                dateState={state}
+              />
             </div>
             <div className="report-header-card">
               <div className="text">
@@ -268,7 +310,8 @@ const ReportHeader = (props) => {
             </div>
             <div className="report-header-card">
               <div className="text">
-                <span>{props?.totalSites?.data?.result?.hires} </span> Hire Types
+                <span>{props?.totalSites?.data?.result?.hires} </span> Hire
+                Types
               </div>
             </div>
           </>

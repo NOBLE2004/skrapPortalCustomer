@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "../commonComponent/commonfilter/commonfilter.scss";
 import { JOB_STATUS } from "../../environment/";
@@ -10,9 +11,12 @@ import SingleSelect from "../single-select-auto-complete";
 import { useDispatch, useSelector } from "react-redux";
 import { getSites } from "../../store/actions/sites.action";
 import { Grid, Typography } from "@mui/material";
+import { getUserService } from "../../store/actions/action.userService";
+import RangeDatePicker from "../RangePicker/index";
 
 const JobFilters = ({ handleChangeFilters }) => {
   const dispatch = useDispatch();
+  const userService = useSelector((state) => state?.userService);
   const siteState = useSelector((state) => state?.allsites);
   const jobsFilter = useSelector((state) => state?.jobsFilter);
   const currency = localStorage.getItem("currency");
@@ -48,8 +52,14 @@ const JobFilters = ({ handleChangeFilters }) => {
   }, []);
 
   useEffect(() => {
+    if (!userService?.data) {
+      dispatch(getUserService({ currency: currency }));
+    }
+  }, [userService?.data]);
+
+  useEffect(() => {
     if (!siteState?.data) {
-      dispatch(getSites({currency}));
+      dispatch(getSites({ currency }));
     }
   }, [siteState.data, currency]);
 
@@ -58,41 +68,13 @@ const JobFilters = ({ handleChangeFilters }) => {
   };
   const handleDate = (item) => {
     setState([item.selection]);
-    // const start = item.selection.startDate
-    //     .toLocaleDateString()
-    //     .replace(/\//g, "-");
-    // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
-    const start = new Date(item.selection.startDate.toDateString() + " UTC")
-      .toISOString()
-      .split("T")[0]
-      .split("-")
-      .reverse()
-      .join("-");
-    // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, '-');
-    const end = new Date(item.selection.endDate.toDateString() + " UTC")
-      .toISOString()
-      .split("T")[0]
-      .split("-")
-      .reverse()
-      .join("-");
-    const newStartDate = moment(item.selection.startDate).format("DD-MM-YYYY");
-    const newEndDate = moment(item.selection.endDate).format("DD-MM-YYYY");
-    if (start === end) {
-      const duplicateFilter = { ...jobsFilter };
-      duplicateFilter.date = `${newStartDate},${newEndDate}`;
-      handleChangeFilters(duplicateFilter);
-    } else {
-      const duplicateFilter = { ...jobsFilter };
-      duplicateFilter.date = `${newStartDate},${newEndDate}`;
-      handleChangeFilters(duplicateFilter);
-      setTogle(false);
-    }
   };
   const resetFilters = () => {
     handleChangeFilters({
       status: "",
       date: "",
       service: "",
+      service_id: "",
       search: "",
       site: "",
       address: "",
@@ -107,6 +89,25 @@ const JobFilters = ({ handleChangeFilters }) => {
       },
     ]);
   };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOk = () => {
+    const newStartDate = moment(state?.[0]?.startDate).format("DD-MM-YYYY");
+    const newEndDate = moment(state?.[0]?.endDate).format("DD-MM-YYYY");
+    const duplicateFilter = { ...jobsFilter };
+    duplicateFilter.date = `${newStartDate},${newEndDate}`;
+    handleChangeFilters(duplicateFilter);
+    handleClose();
+  };
   return (
     <Grid>
       <Grid
@@ -119,9 +120,21 @@ const JobFilters = ({ handleChangeFilters }) => {
           <div className="filter-title">Filter : </div>
         </Grid>
         <Grid item xs={1}>
-          <button onClick={toggle} className={"filter-option"}>
+          <button onClick={handleClick} className={"filter-option"}>
             Date
           </button>
+          <RangeDatePicker
+            anchorEl={anchorEl}
+            handleClose={() => {
+              handleClose();
+            }}
+            handleOk={() => {
+              handleOk();
+            }}
+            onChange={handleDate}
+            name="si_date"
+            dateState={state}
+          />
           {togle && (
             <div className="jobs-date-picker">
               <DateRangePicker
@@ -134,7 +147,7 @@ const JobFilters = ({ handleChangeFilters }) => {
             </div>
           )}
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={1.5}>
           <select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
@@ -143,8 +156,27 @@ const JobFilters = ({ handleChangeFilters }) => {
             onChange={handleChange}
             className={"filter-option"}
           >
-            <option value="">All Services</option>
+            <option value="">Services</option>
             {services.map((service) => {
+              return (
+                <option value={service.service_id} key={service?.service_id}>
+                  {service.service_name}
+                </option>
+              );
+            })}
+          </select>
+        </Grid>
+        <Grid item xs={1.5}>
+          <select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            name="service_id"
+            value={jobsFilter?.service_id}
+            onChange={handleChange}
+            className={"filter-option"}
+          >
+            <option value="">Sub Services</option>
+            {userService?.data?.result?.map((service) => {
               return (
                 <option value={service.service_id} key={service?.service_id}>
                   {service.service_name}
