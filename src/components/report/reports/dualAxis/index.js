@@ -74,7 +74,7 @@ const DualAxisGraph = (props) => {
 
   useEffect(() => {
     if (!userService?.data) {
-      dispatch(getUserService());
+      dispatch(getUserService({ currency: siteCurrency }));
     }
   }, [userService?.data]);
 
