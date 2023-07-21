@@ -1,11 +1,11 @@
 import sitesService from "../../services/sites.service";
 import * as Constants from "../constants/constants";
 
-export const getSiteManager = () => {
+export const getSiteManager = (params) => {
   return (dispatch) => {
     dispatch(siteManagerStart());
     sitesService
-      .getManagerList()
+      .getManagerList(params)
       .then((res) => {
         dispatch(siteManagerSuccess(res.data.result));
       })

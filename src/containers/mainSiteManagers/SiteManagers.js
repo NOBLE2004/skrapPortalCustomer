@@ -15,13 +15,14 @@ const SiteManagers = (props) => {
     show: false,
     data: "",
   });
+  const currency = localStorage.getItem("currency");
   const { sites } = props.siteManager;
   const handleBookSite = () => {
     setSiteBooked(true);
   };
 
   const getManagerList = () => {
-    props.getSiteManager();
+    props.getSiteManager({currency});
   };
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const SiteManagers = (props) => {
 
   const handleManagerCreated = useCallback(() => {
     setSiteBooked(!isSiteBooked);
-    props.getSiteManager();
+    props.getSiteManager({currency});
   }, [isSiteBooked]);
 
   return (
