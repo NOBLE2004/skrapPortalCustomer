@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSites } from "../../store/actions/sites.action";
 import { Grid, Typography } from "@mui/material";
 import { getUserService } from "../../store/actions/action.userService";
+import RangeDatePicker from "../RangePicker/index";
 
 const JobFilters = ({ handleChangeFilters }) => {
   const dispatch = useDispatch();
@@ -67,35 +68,6 @@ const JobFilters = ({ handleChangeFilters }) => {
   };
   const handleDate = (item) => {
     setState([item.selection]);
-    // const start = item.selection.startDate
-    //     .toLocaleDateString()
-    //     .replace(/\//g, "-");
-    // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, "-");
-    const start = new Date(item.selection.startDate.toDateString() + " UTC")
-      .toISOString()
-      .split("T")[0]
-      .split("-")
-      .reverse()
-      .join("-");
-    // const end = item.selection.endDate.toLocaleDateString().replace(/\//g, '-');
-    const end = new Date(item.selection.endDate.toDateString() + " UTC")
-      .toISOString()
-      .split("T")[0]
-      .split("-")
-      .reverse()
-      .join("-");
-    const newStartDate = moment(item.selection.startDate).format("DD-MM-YYYY");
-    const newEndDate = moment(item.selection.endDate).format("DD-MM-YYYY");
-    if (start === end) {
-      const duplicateFilter = { ...jobsFilter };
-      duplicateFilter.date = `${newStartDate},${newEndDate}`;
-      handleChangeFilters(duplicateFilter);
-    } else {
-      const duplicateFilter = { ...jobsFilter };
-      duplicateFilter.date = `${newStartDate},${newEndDate}`;
-      handleChangeFilters(duplicateFilter);
-      setTogle(false);
-    }
   };
   const resetFilters = () => {
     handleChangeFilters({
@@ -117,6 +89,25 @@ const JobFilters = ({ handleChangeFilters }) => {
       },
     ]);
   };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOk = () => {
+    const newStartDate = moment(state?.[0]?.startDate).format("DD-MM-YYYY");
+    const newEndDate = moment(state?.[0]?.endDate).format("DD-MM-YYYY");
+    const duplicateFilter = { ...jobsFilter };
+    duplicateFilter.date = `${newStartDate},${newEndDate}`;
+    handleChangeFilters(duplicateFilter);
+    handleClose();
+  };
   return (
     <Grid>
       <Grid
@@ -129,9 +120,21 @@ const JobFilters = ({ handleChangeFilters }) => {
           <div className="filter-title">Filter : </div>
         </Grid>
         <Grid item xs={1}>
-          <button onClick={toggle} className={"filter-option"}>
+          <button onClick={handleClick} className={"filter-option"}>
             Date
           </button>
+          <RangeDatePicker
+            anchorEl={anchorEl}
+            handleClose={() => {
+              handleClose();
+            }}
+            handleOk={() => {
+              handleOk();
+            }}
+            onChange={handleDate}
+            name="si_date"
+            dateState={state}
+          />
           {togle && (
             <div className="jobs-date-picker">
               <DateRangePicker

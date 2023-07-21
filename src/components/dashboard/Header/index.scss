@@ -1,4 +1,4 @@
-.date-filter{
+.date-filter {
   background: white;
   border-radius: 16px;
   box-shadow: 0px 17px 24px rgba(58, 58, 58, 0.05);
@@ -7,35 +7,35 @@
   align-items: center;
   padding: 1.5%;
 }
-.right-text{
+.right-text {
   display: flex;
   width: 100%;
   justify-content: flex-end;
-  h1{
+  h1 {
     padding: 0;
     margin: 0;
     line-height: 1;
     color: #518ef8;
   }
-  span{
+  span {
     margin-left: 2%;
     display: flex;
     align-self: flex-end;
   }
 }
-.left-text{
+.left-text {
   cursor: pointer;
   display: flex;
   width: 100%;
   justify-content: flex-start;
   padding-left: 4%;
 }
-.small-text{
+.small-text {
   font-size: 16px;
   font-weight: lighter;
   color: grey;
 }
-.lg-text{
+.lg-text {
   font-size: 16px;
   font-weight: bold;
   padding-left: 1%;
@@ -43,15 +43,15 @@
 .MuiOutlinedInput-notchedOutline {
   border: none;
 }
-.first{
+.first {
   .rdrDateRangePickerWrapper {
     top: 15%;
     left: 13%;
     z-index: 1;
     width: fit-content;
   }
- }
-.report-header-card .first{
+}
+.report-header-card .first {
   .rdrDateRangePickerWrapper {
     top: 15%;
     left: 13%;
@@ -119,4 +119,21 @@
       }
     }
   }
+}
+
+.btn-apply-picker {
+  margin-left: 5px;
+  border-radius: 7px;
+  padding: 6px 12px;
+  background: #518ef8;
+  border: 1px solid #518ef8;
+  color: #fff;
+}
+.btn-cencel-picker {
+  margin-left: 5px;
+  border-radius: 7px;
+  padding: 6px 12px;
+  background: #fff;
+  border: 1px solid #518ef8;
+  color: #518ef8;
 }
