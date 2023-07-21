@@ -73,7 +73,7 @@ const SignIn = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((phone.length < 12) | (password === "")) {
+    if ((phone.length < 10 || phone.length > 15) | (password === "")) {
       Object.keys(errors).forEach((error, index) => {
         checkingError(error, state[error]);
       });
