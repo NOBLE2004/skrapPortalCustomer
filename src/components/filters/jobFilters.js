@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "../commonComponent/commonfilter/commonfilter.scss";
 import { JOB_STATUS } from "../../environment/";
@@ -10,9 +11,11 @@ import SingleSelect from "../single-select-auto-complete";
 import { useDispatch, useSelector } from "react-redux";
 import { getSites } from "../../store/actions/sites.action";
 import { Grid, Typography } from "@mui/material";
+import { getUserService } from "../../store/actions/action.userService";
 
 const JobFilters = ({ handleChangeFilters }) => {
   const dispatch = useDispatch();
+  const userService = useSelector((state) => state?.userService);
   const siteState = useSelector((state) => state?.allsites);
   const jobsFilter = useSelector((state) => state?.jobsFilter);
   const currency = localStorage.getItem("currency");
@@ -48,8 +51,14 @@ const JobFilters = ({ handleChangeFilters }) => {
   }, []);
 
   useEffect(() => {
+    if (!userService?.data) {
+      dispatch(getUserService({ currency: currency }));
+    }
+  }, [userService?.data]);
+
+  useEffect(() => {
     if (!siteState?.data) {
-      dispatch(getSites({currency}));
+      dispatch(getSites({ currency }));
     }
   }, [siteState.data, currency]);
 
@@ -93,6 +102,7 @@ const JobFilters = ({ handleChangeFilters }) => {
       status: "",
       date: "",
       service: "",
+      service_id: "",
       search: "",
       site: "",
       address: "",
@@ -134,7 +144,7 @@ const JobFilters = ({ handleChangeFilters }) => {
             </div>
           )}
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={1.5}>
           <select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
@@ -143,8 +153,27 @@ const JobFilters = ({ handleChangeFilters }) => {
             onChange={handleChange}
             className={"filter-option"}
           >
-            <option value="">All Services</option>
+            <option value="">Services</option>
             {services.map((service) => {
+              return (
+                <option value={service.service_id} key={service?.service_id}>
+                  {service.service_name}
+                </option>
+              );
+            })}
+          </select>
+        </Grid>
+        <Grid item xs={1.5}>
+          <select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            name="service_id"
+            value={jobsFilter?.service_id}
+            onChange={handleChange}
+            className={"filter-option"}
+          >
+            <option value="">Sub Services</option>
+            {userService?.data?.result?.map((service) => {
               return (
                 <option value={service.service_id} key={service?.service_id}>
                   {service.service_name}
