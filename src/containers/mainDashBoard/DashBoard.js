@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TotalSpend from "../../components/dashboard/totalSpend/TotalSpend";
 import JobStatus from "../../components/dashboard/jobStatus/JobStatus";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
-import {Box, Grid, OutlinedInput, Select} from "@mui/material";
+import { Box, Grid, OutlinedInput, Select } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import SpendChart from "../../components/dashboard/spendChart/SpendChart";
@@ -113,7 +113,14 @@ const DashBoard = (props) => {
     dispatch(getDashboardsMapData({ sites: selected, date, currency }));
     dispatch(getDashboardServiceData({ sites: selected, date, currency }));
     dispatch(getDashboardsData({ sites: selected, date, currency }));
-    dispatch(getDashboardSaleData({ year: latestYear, sites: selected, date, currency }));
+    dispatch(
+      getDashboardSaleData({
+        year: latestYear,
+        sites: selected,
+        date,
+        currency,
+      })
+    );
   }, [selected, latestYear, date, currency]);
 
   const gotoJobDetail = (id) => {
@@ -132,6 +139,8 @@ const DashBoard = (props) => {
   //     </div>
   //   );
   // }
+
+  console.log("çcccc", currency);
 
   return (
     <>
@@ -155,19 +164,19 @@ const DashBoard = (props) => {
           <Grid container spacing={3}>
             <>
               <DashboardHeader
-                  sites={selected}
-                  handleChange={handleChange}
-                  selected={selected}
-                  setSelected={setSelected}
-                  setSiteCurrency={setCurrency}
-                  setDate={setDate}
-                  totalSpend={
-                    dashboardData?.info?.TotalSpend
-                        ? parseFloat(
-                            dashboardData?.info?.TotalSpend
-                        ).toLocaleString()
-                        : ""
-                  }
+                sites={selected}
+                handleChange={handleChange}
+                selected={selected}
+                setSelected={setSelected}
+                setSiteCurrency={setCurrency}
+                setDate={setDate}
+                totalSpend={
+                  dashboardData?.info?.TotalSpend
+                    ? parseFloat(
+                        dashboardData?.info?.TotalSpend
+                      ).toLocaleString()
+                    : ""
+                }
               />
               {/*{userData?.hide_price === 0 && (*/}
               {/*  <Grid item md={4}>*/}
@@ -198,20 +207,20 @@ const DashBoard = (props) => {
         )}
         <Grid container className="spend-service-main" mt={1}>
           <Grid item lg={5} md={12}>
-          <SpendChart
-            chartData={dashboardSale?.info}
-            loading={dashboardSale?.loading}
-            getDashBoardData={getData}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            setLatestYear={setLatestYear}
-          />
+            <SpendChart
+              chartData={dashboardSale?.info}
+              loading={dashboardSale?.loading}
+              getDashBoardData={getData}
+              startDate={startDate}
+              setStartDate={setStartDate}
+              setLatestYear={setLatestYear}
+            />
           </Grid>
           <Grid item lg={7} md={12}>
-          <DashboardServices
-            servicesData={dashboardService?.info ? dashboardService.info : ""}
-            loading={dashboardService?.loading}
-          />
+            <DashboardServices
+              servicesData={dashboardService?.info ? dashboardService.info : ""}
+              loading={dashboardService?.loading}
+            />
           </Grid>
         </Grid>
         <Grid container spacing={3}>
@@ -282,9 +291,13 @@ const DashBoard = (props) => {
                             position={{
                               lat: data.job_location_lat
                                 ? data.job_location_lat
+                                : currency == "$"
+                                ? "37.17567"
                                 : "51.5506351",
                               lng: data.job_location_lng
                                 ? data.job_location_lng
+                                : currency == "$"
+                                ? "-95.84670"
                                 : "-0.0460716",
                             }}
                             icon={{

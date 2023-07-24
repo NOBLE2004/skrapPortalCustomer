@@ -5,6 +5,8 @@ import JobsTable from "../../components/reactTable/JobsTable";
 import { Card, CardContent, Grid, Paper } from "@mui/material";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
+import LoadingButton from "@mui/lab/LoadingButton";
+
 import TipingCard from "../../components/tiping/TipingCard";
 import {
   enRouteMarker,
@@ -27,7 +29,12 @@ import {
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
-import {changeJobsFilter, getJobList, jobListFailure, jobListSuccess} from "../../store/actions/jobs.action";
+import {
+  changeJobsFilter,
+  getJobList,
+  jobListFailure,
+  jobListSuccess,
+} from "../../store/actions/jobs.action";
 import FadeLoader from "react-spinners/FadeLoader";
 import * as Excel from "exceljs";
 import { saveAs } from "file-saver";
@@ -44,6 +51,7 @@ const MainJobsNew = (props) => {
   const [createSite, setCreateSite] = useState(false);
   const [isJobCreated, setIsJobCreated] = useState(false);
   const currency = localStorage.getItem("currency");
+  const [csvDownload, setCsvDownload] = useState(false);
 
   const [limit, setLimit] = useState(10);
   const { info, loading } = props.dashboard;
@@ -57,7 +65,7 @@ const MainJobsNew = (props) => {
     address: "",
     search: "",
     show_on_app: [0, 1],
-    currency: currency
+    currency: currency,
   });
   let userData = getUserDataFromLocalStorage();
 
@@ -111,7 +119,7 @@ const MainJobsNew = (props) => {
     setFilters(filtersList);
   };
   const handleChangeSearch = (search) => {
-    console.log('jobsFilter', jobsFilter)
+    console.log("jobsFilter", jobsFilter);
     const duplicate = { ...jobsFilter };
     duplicate.search = search;
     dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
@@ -161,52 +169,70 @@ const MainJobsNew = (props) => {
     ];
     worksheet.addRows(csvData);
     workbook.xlsx
-        .writeBuffer()
-        .then(function (buffer) {
-          saveAs(
-              new Blob([buffer], { type: "application/octet-stream" }),
-              `Orders-${new Date().toLocaleDateString()}.xlsx`
-          );
-          //setShowMore(false);
-          setCsvData([]);
-        })
-        .catch(() => {
-          //setShowMore(false);
-        });
+      .writeBuffer()
+      .then(function (buffer) {
+        saveAs(
+          new Blob([buffer], { type: "application/octet-stream" }),
+          `Orders-${new Date().toLocaleDateString()}.xlsx`
+        );
+        //setShowMore(false);
+        setCsvData([]);
+      })
+      .catch(() => {
+        //setShowMore(false);
+      });
   }
   useEffect(() => {
-    if(csvData.length > 0){
+    if (csvData.length > 0) {
       exTest();
     }
-  }, [csvData])
+  }, [csvData]);
   const downloadExcel = () => {
+    setCsvDownload(true);
     const params = Object.entries(jobsFilter).reduce(
-        (a, [k, v]) => (v ? ((a[k] = v), a) : a),
-        {}
+      (a, [k, v]) => (v ? ((a[k] = v), a) : a),
+      {}
     );
-    JobService.list({ user_id: userData.user_id, noPaginate: 1, orders_type: 4, all: true }, params)
-        .then((res) => {
-          setCsvData(res?.data?.result?.data.map(obj => {
+    JobService.list(
+      { user_id: userData.user_id, noPaginate: 1, orders_type: 4, all: true },
+      params
+    )
+      .then((res) => {
+        setCsvData(
+          res?.data?.result?.data.map((obj) => {
             obj.job_id = `SK${obj?.job_id}`;
             obj.transaction_cost = `${currency}${obj?.transaction_cost}`;
             obj.job_time = new Date(obj?.job_time).toLocaleDateString();
-            obj.job_start_time = new Date(obj.job_start_time).toLocaleString().substring(0, 17);
-            obj.utilization = obj?.utilization > 0 ? `${obj?.utilization?.toFixed(2)}%` : `0%`;
+            obj.job_start_time = new Date(obj.job_start_time)
+              .toLocaleString()
+              .substring(0, 17);
+            obj.utilization =
+              obj?.utilization > 0 ? `${obj?.utilization?.toFixed(2)}%` : `0%`;
             obj.co2 = obj?.co2 > 0 ? `${obj?.co2?.toFixed(2)}kg` : `0kg`;
-            obj.rebate = obj?.rebate > 0 ? `${currency}${obj?.rebate?.toFixed(2)}` : `${currency}0`;
-            if(obj.parent_id == 2){
-              obj.service_name = `${obj?.service_name} ${obj?.exchanged_by > 0 ? `(Exchange)` : ``}`;
-            }else if(obj.parent_id != 2){
-              obj.service_name = `${obj?.service_name} ${obj?.extended_job_id > 0 ? `(Extension)`  : ``}`;
+            obj.rebate =
+              obj?.rebate > 0
+                ? `${currency}${obj?.rebate?.toFixed(2)}`
+                : `${currency}0`;
+            if (obj.parent_id == 2) {
+              obj.service_name = `${obj?.service_name} ${
+                obj?.exchanged_by > 0 ? `(Exchange)` : ``
+              }`;
+            } else if (obj.parent_id != 2) {
+              obj.service_name = `${obj?.service_name} ${
+                obj?.extended_job_id > 0 ? `(Extension)` : ``
+              }`;
             }
             obj.appointment_status = status(obj?.appointment_status);
             return obj;
-          }));
-        })
-        .catch((err) => {
-          console.log(err)
-        });
-  }
+          })
+        );
+        setCsvDownload(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setCsvDownload(false);
+      });
+  };
 
   return (
     <div>
@@ -278,11 +304,36 @@ const MainJobsNew = (props) => {
             <JobFilters handleChangeFilters={handleChangeFilters} />
           </Grid>
         </Grid>
-        <div style={{display: 'flex', justifyContent: 'flex-end', width: '100%', marginTop: '10px', cursor: 'pointer'}}>
-          <button className="header-btn" onClick={downloadExcel}>
-          Download CSV
-        </button>
-      </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            width: "100%",
+            marginTop: "10px",
+            cursor: "pointer",
+          }}
+        >
+          <LoadingButton
+            color="primary"
+            variant="contained"
+            sx={{
+              background: "rgb(81, 142, 248)",
+              borderRadius: "64px",
+              color: "#fff",
+              fontFamily: "DM Sans",
+              textTransform: "none",
+              fontWeight: "bold",
+              fontSize: "12px",
+              "&:hover": {
+                background: "rgb(81, 142, 248)",
+              },
+            }}
+            loading={csvDownload}
+            onClick={downloadExcel}
+          >
+            Download CSV
+          </LoadingButton>
+        </div>
       </div>
       {isMapView ? (
         <>
@@ -302,16 +353,17 @@ const MainJobsNew = (props) => {
               />
             )
           )}
-          {(jobData?.data?.length && userData.personal_detail.first_name.includes('Amazon')) && (
-            <Paper className="box" style={{ width: "15%", padding: "1%" }}>
-              <span>*</span>
-              <span>100% skip utilisation</span>
-              <span>Wood = 3 Tonnes</span>
-              <span>General = 2.5 Tonnes</span>
-              <span>Plastic = 2 Tonnes</span>
-              <span>Cardboard = 1.5 Tonnes</span>
-            </Paper>
-          )}
+          {jobData?.data?.length &&
+            userData.personal_detail.first_name.includes("Amazon") && (
+              <Paper className="box" style={{ width: "15%", padding: "1%" }}>
+                <span>*</span>
+                <span>100% skip utilisation</span>
+                <span>Wood = 3.5 Tonnes</span>
+                <span>General = 3 Tonnes</span>
+                <span>Plastic = 2.5 Tonnes</span>
+                <span>Cardboard = 2 Tonnes</span>
+              </Paper>
+            )}
         </>
       ) : (
         <>
