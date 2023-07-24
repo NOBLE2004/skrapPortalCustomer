@@ -175,7 +175,7 @@ const JobFilters = ({ handleChangeFilters }) => {
             onChange={handleChange}
             className={"filter-option"}
           >
-            <option value="">Sub Services</option>
+            <option value="">Hire Type</option>
             {userService?.data?.result?.map((service) => {
               return (
                 <option value={service.service_id} key={service?.service_id}>
