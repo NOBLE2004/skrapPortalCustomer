@@ -161,7 +161,7 @@ const DualAxisGraph = (props) => {
                 <Grid item xs={5}>
                   <FormControl fullWidth>
                     <div className="total" style={{ marginBottom: "5px" }}>
-                      <span>Service:</span>
+                      <span>Hire Type</span>
                     </div>
                     <Select
                       value={service || []}
@@ -208,6 +208,15 @@ const DualAxisGraph = (props) => {
                 options={chartOptions(data?.data)}
                 ref={props.ref2}
               />
+              {type == "month" ? (
+                <span>
+                  <b>Weekly</b>
+                </span>
+              ) : (
+                <span>
+                  <b>Days</b>
+                </span>
+              )}
             </div>
             {/* )} */}
           </div>
