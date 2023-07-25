@@ -33,7 +33,7 @@ const Sites = (props) => {
     search: "",
     date: "",
     address: "",
-    currency
+    currency,
   });
   const [search, setSearch] = useState("");
   useEffect(() => {
@@ -48,7 +48,7 @@ const Sites = (props) => {
     async function fetchData() {
       console.log(filters);
       !siteData && (await props.getSitesList(filters));
-      (await props.getDashboardsData(filters));
+      await props.getDashboardsData(filters);
     }
     fetchData();
   }, [filters, isReload]);
@@ -86,9 +86,18 @@ const Sites = (props) => {
   const handleChangeFilters = (filtersList) => {
     let all = {
       ...filters,
-      ...filtersList
+      ...filtersList,
     };
     setFilters(all);
+  };
+
+  const handleReset = () => {
+    setFilters({
+      page: 1,
+      search: "",
+      date: "",
+      currency: currency,
+    });
   };
 
   return (
@@ -104,45 +113,54 @@ const Sites = (props) => {
         handleCreateSite={handleCreateSite}
       >
         <Grid item container spacing={1}>
-        {userData?.hide_price === 0 && (
+          {userData?.hide_price === 0 && (
+            <CommonJobStatus
+              jobStatus={{
+                status: "Spend",
+                price: `${currency ? currency : "£"}${
+                  info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+                }`,
+                statusName: "primary",
+              }}
+            />
+          )}
           <CommonJobStatus
             jobStatus={{
-              status: "Spend",
-              price: `${currency ? currency : "£"}${
-                info ? parseFloat(info.TotalSpend).toLocaleString() : 0
-              }`,
-              statusName: "primary"
+              status: "Jobs",
+              price: info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0,
+
+              statusName: "primary",
             }}
           />
-        )}
-        <CommonJobStatus
-          jobStatus={{
-            status: "Jobs",
-            price: info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0,
-
-            statusName: "primary"
-          }}
-        />
-        <CommonJobStatus
-          jobStatus={{
-            status: "Sites",
-            price: `${siteData ? siteData.total : 0}`,
-            statusName: "primary"
-          }}
-        />
+          <CommonJobStatus
+            jobStatus={{
+              status: "Sites",
+              price: `${siteData ? siteData.total : 0}`,
+              statusName: "primary",
+            }}
+          />
         </Grid>
       </CommonHeader>
-      <Grid container>
-        <Grid item md={12}>
-          <div className="common-search-for-tables">
+
+      <div className="common-search-for-tables">
+        <Grid container spacing={2} justifyContent="space-between">
+          <Grid item xs={6}>
             <CommonSearch
               cname=""
               handleChangeSearch={handleChangeSearch}
+              jobsFilter={filters}
             />
-            <SiteFilters handleChangeFilters={handleChangeFilters} />
-          </div>
+          </Grid>
+          <Grid utem xs={4}>
+            <SiteFilters
+              handleReset={handleReset}
+              filters={filters}
+              setFilters={setFilters}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
+
       {isManagerOpen && (
         <AssignToManager
           handleClose={() => setIsManagerOpen(false)}

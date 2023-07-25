@@ -8,9 +8,9 @@ const CommonSearch = ({ cname, handleChangeSearch, jobsFilter }) => {
     <div className="search-bar-container">
       <img src={searchIcon} alt="search-icon" />
       <input
-        value={jobsFilter?.search || value || ""}
+        value={jobsFilter?.search  || ""}
         onChange={(e) => {
-          setValue(e.target.value);
+          // setValue(e.target.value);
           handleChangeSearch(e.target.value);
         }}
         placeholder={`Search ${cname}`}

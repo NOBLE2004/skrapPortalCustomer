@@ -104,6 +104,11 @@ const DashboardHeader = (props) => {
           value={selected}
           displayEmpty
           multiple
+          sx={{
+            ".MuiSelect-select": {
+              width: "100%!important",
+            },
+          }}
           onChange={(e) => {
             handleChange(e);
             const filterSite = props.allsites.data?.find(
