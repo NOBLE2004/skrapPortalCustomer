@@ -40,6 +40,15 @@ const Supplier = () => {
     setFilters(filtersList);
   };
 
+  const handleReset = () => {
+    setFilters({
+      page: 1,
+      search: "",
+      date: "",
+      address: "",
+    });
+  };
+
   return (
     <>
       <div className="header-main">
@@ -49,7 +58,11 @@ const Supplier = () => {
         <Grid item md={12}>
           <div className="common-search-for-tables">
             <CommonSearch cname="" handleChangeSearch={handleChangeSearch} />
-            <SiteFilters handleChangeFilters={handleChangeFilters} />
+            <SiteFilters
+              filters={filters}
+              setFilters={setFilters}
+              handleReset={handleReset}
+            />
           </div>
         </Grid>
       </Grid>
