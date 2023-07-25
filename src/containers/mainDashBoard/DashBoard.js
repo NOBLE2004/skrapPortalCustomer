@@ -140,8 +140,6 @@ const DashBoard = (props) => {
   //   );
   // }
 
-  console.log("çcccc", currency);
-
   return (
     <>
       {/* // info && ( */}

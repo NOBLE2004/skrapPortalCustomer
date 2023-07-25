@@ -119,8 +119,7 @@ const MainJobsNew = (props) => {
     setFilters(filtersList);
   };
   const handleChangeSearch = (search) => {
-    console.log("jobsFilter", jobsFilter);
-    const duplicate = { ...jobsFilter };
+     const duplicate = { ...jobsFilter };
     duplicate.search = search;
     dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, search: search });
