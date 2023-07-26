@@ -115,14 +115,14 @@ const MainTickets = (props) => {
 
       <div className="common-search-for-tables">
         <Grid container spacing={2} justifyContent="space-between">
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <CommonSearch
               cname="ticket"
               handleChangeSearch={handleChangeSearch}
               jobsFilter={filters}
             />
           </Grid>
-          <Grid xs={4}>
+          <Grid item xs={8}>
             <SiteFilters
               filters={filters}
               setFilters={setFilters}
