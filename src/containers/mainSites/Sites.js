@@ -46,8 +46,7 @@ const Sites = (props) => {
     //   props.getSitesList(filters);
     // }
     async function fetchData() {
-      console.log(filters);
-      !siteData && (await props.getSitesList(filters));
+      await props.getSitesList(filters);
       await props.getDashboardsData(filters);
     }
     fetchData();
@@ -153,6 +152,7 @@ const Sites = (props) => {
           </Grid>
           <Grid item xs={8}>
             <SiteFilters
+              name="site"
               handleReset={handleReset}
               filters={filters}
               setFilters={setFilters}
