@@ -85,10 +85,12 @@ const SiteFilters = ({ handleReset, filters, setFilters }) => {
         columnSpacing={2}
         justifyContent="end"
       >
-        <Grid item xs={1.5}>
-          <div className="filter-title">Filter : </div>
+        <Grid item >
+          <div className="filter-title" style={{ textAlign: "end" }}>
+            Filter :{" "}
+          </div>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item md={2} xs={3}>
           {siteState?.isLoading ? (
             <Typography
               sx={{
@@ -110,7 +112,7 @@ const SiteFilters = ({ handleReset, filters, setFilters }) => {
             />
           )}
         </Grid>
-        <Grid item xs={1}>
+        <Grid item md={1} xs={2}>
           <>
             <button onClick={handleClick} className={"filter-option"}>
               Date
@@ -129,7 +131,7 @@ const SiteFilters = ({ handleReset, filters, setFilters }) => {
             />
           </>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item md={1} xs={2}>
           <button onClick={resetFilters} className={"filter-option"}>
             reset
           </button>
