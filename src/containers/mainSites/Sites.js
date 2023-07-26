@@ -144,14 +144,14 @@ const Sites = (props) => {
 
       <div className="common-search-for-tables">
         <Grid container spacing={2} justifyContent="space-between">
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <CommonSearch
               cname=""
               handleChangeSearch={handleChangeSearch}
               jobsFilter={filters}
             />
           </Grid>
-          <Grid utem xs={4}>
+          <Grid item xs={8}>
             <SiteFilters
               handleReset={handleReset}
               filters={filters}
