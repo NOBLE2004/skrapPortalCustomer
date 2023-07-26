@@ -13,7 +13,7 @@ import { Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getSites } from "../../store/actions/sites.action";
 
-const SiteFilters = ({ handleReset, filters, setFilters }) => {
+const SiteFilters = ({ handleReset, filters, setFilters, name }) => {
   const dispatch = useDispatch();
   const siteState = useSelector((state) => state?.allsites);
   const currency = localStorage.getItem("currency");
@@ -85,7 +85,7 @@ const SiteFilters = ({ handleReset, filters, setFilters }) => {
         columnSpacing={2}
         justifyContent="end"
       >
-        <Grid item >
+        <Grid item>
           <div className="filter-title" style={{ textAlign: "end" }}>
             Filter :{" "}
           </div>
@@ -112,25 +112,27 @@ const SiteFilters = ({ handleReset, filters, setFilters }) => {
             />
           )}
         </Grid>
-        <Grid item md={1} xs={2}>
-          <>
-            <button onClick={handleClick} className={"filter-option"}>
-              Date
-            </button>
-            <RangeDatePicker
-              anchorEl={anchorEl}
-              handleClose={() => {
-                handleClose();
-              }}
-              handleOk={() => {
-                handleOk();
-              }}
-              onChange={handleDate}
-              name="si_date"
-              dateState={state}
-            />
-          </>
-        </Grid>
+        {name == "ticket" && (
+          <Grid item md={1} xs={2}>
+            <>
+              <button onClick={handleClick} className={"filter-option"}>
+                Date
+              </button>
+              <RangeDatePicker
+                anchorEl={anchorEl}
+                handleClose={() => {
+                  handleClose();
+                }}
+                handleOk={() => {
+                  handleOk();
+                }}
+                onChange={handleDate}
+                name="si_date"
+                dateState={state}
+              />
+            </>
+          </Grid>
+        )}
         <Grid item md={1} xs={2}>
           <button onClick={resetFilters} className={"filter-option"}>
             reset
