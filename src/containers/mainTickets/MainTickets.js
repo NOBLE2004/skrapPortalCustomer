@@ -124,6 +124,7 @@ const MainTickets = (props) => {
           </Grid>
           <Grid item xs={8}>
             <SiteFilters
+              name="ticket"
               filters={filters}
               setFilters={setFilters}
               handleReset={handleReset}
