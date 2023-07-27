@@ -17,6 +17,7 @@ function CreateManager(props) {
   const { handleClose, updateManager } = props;
   const [value, setValue] = React.useState(12);
   const [radioPermission, setRadioPermission] = useState([]);
+  const currency = localStorage.getItem("currency");
   const [state, setState] = useState({
     isLoading: false,
     siteData: [],
@@ -130,7 +131,7 @@ function CreateManager(props) {
   };
   useEffect(() => {
     siteService
-      .getAllSites()
+      .getAllSites({ currency })
       .then((res) => {
         setState({ ...state, siteData: res.data.data });
       })
