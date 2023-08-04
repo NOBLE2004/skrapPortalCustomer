@@ -7,7 +7,7 @@ export const getRebateBreakdown = (data) => {
         ReportsService
             .getRebateBreakdown(data)
             .then((response) => {
-                if (Object.keys(response.data).length !== 0) {
+                if (response.data.code == 0) {
                     const siteBreakdown = response.data;
                     dispatch(rebateBreakdownSuccess(siteBreakdown));
                 } else {
