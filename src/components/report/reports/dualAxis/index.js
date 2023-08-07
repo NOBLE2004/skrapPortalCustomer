@@ -202,7 +202,7 @@ const DualAxisGraph = (props) => {
                 />
               </div>
             ) : ( */}
-            <div style={{ width: "100%", marginTop: "10px" }}>
+            <div style={{ width: "100%", marginTop: "20px" }}>
               <HighchartsReact
                 highcharts={Highcharts}
                 options={chartOptions(data?.data)}
