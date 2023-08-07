@@ -40,6 +40,7 @@ import { rebateBreakdownReducer } from "./rebateBreakdownReducer";
 import { reportEfficencyReducer } from "./reportEfficencyReducer";
 import { userServiceReducer } from "./userService";
 import { jobFilterReducer } from "./jobReducer";
+import { wasteEmissionReducer } from "./reportWasteEmissionReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -79,5 +80,6 @@ export default combineReducers({
   rebateBreakDown: rebateBreakdownReducer,
   userService: userServiceReducer,
   efficencyList: reportEfficencyReducer,
+  wasteEmission: wasteEmissionReducer,
   jobsFilter: jobFilterReducer,
 });
