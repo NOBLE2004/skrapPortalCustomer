@@ -100,11 +100,9 @@ const WasteEmissionGraph = (props) => {
     setEndDate(null);
   };
 
-  console.log("data", data);
-
   return (
     <>
-      <div className="salesWp column-charts-highcharts-">
+      <div className="salesWp  ">
         <div className="filters" style={{ margin: 0 }}>
           <Grid container spacing={1} justifyContent={"space-between"}>
             <Grid item xs={12}>
@@ -191,10 +189,11 @@ const WasteEmissionGraph = (props) => {
             </Grid>
           </Grid>
         </div>
-         
+
         <div style={{ width: "100%", marginTop: "10px" }}>
           <HighchartsReact
             highcharts={Highcharts}
+            height="300px"
             options={chartOptions(data?.data)}
             ref={props.ref2}
           />
@@ -208,7 +207,6 @@ const WasteEmissionGraph = (props) => {
             </span>
           )}
         </div>
-        {/* )} */}
       </div>
     </>
   );

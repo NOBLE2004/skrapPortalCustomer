@@ -23,6 +23,27 @@ export const chartOptions = (data) => ({
     title: {
       text: null,
     },
+    labels: {
+      formatter() {
+        const getLabel = (value) => {
+          return `${numberWithCommas(value)} kgco2e`;
+        };
+        return getLabel(numberWithCommas(this.value));
+      },
+    },
+  },
+
+  tooltip: {
+    formatter: function () {
+      let s = `<b> ${this.x} </b>`;
+      this.points.forEach((point) => {
+        if (point?.series?.name !== "null") {
+          s += `<br/> ${point.series.name} :  ${numberWithCommas(point.y)} kg`;
+        }
+      });
+      return s;
+    },
+    shared: true,
   },
 
   xAxis: {
@@ -49,8 +70,27 @@ export const chartOptions = (data) => ({
 
   series: [
     {
-      name: "Emission",
+      name: "Emission Produce",
       data: data?.Emission || [],
+      color: {
+        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+        stops: [
+          [0, "#73C6F9"],
+          [1, "#5391F9"],
+        ],
+      },
+      borderRadius: 6,
+      dataLabels: {
+        enabled: true,
+        color: "#6cacf5",
+        formatter() {
+          if (this.y > 0) {
+            return numberWithCommas(this.y);
+          } else {
+            return null;
+          }
+        },
+      },
     },
   ],
 
