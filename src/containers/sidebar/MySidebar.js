@@ -183,11 +183,11 @@ const MySidebar = (props) => {
             }
           }
 
-          if (userData?.hide_price === 1) {
+          /*if (userData?.hide_price === 1) {
             if (obj?.key === "tickets" || obj?.key === "new-reports") {
               return null;
             }
-          }
+          }*/
           if (
             obj?.key === "supplier" &&
             userData?.country_currency?.country_name === "Germany"
