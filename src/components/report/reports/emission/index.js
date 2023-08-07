@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Card, CardContent, Grid } from "@mui/material";
+import { Card, CardContent, Divider, Grid } from "@mui/material";
 import DatePicker from "../../../yearPicker/yearPicker";
 import Vector from "../../../../assets/images/vector.svg";
 import React, { useEffect, useState } from "react";
@@ -289,37 +289,28 @@ const EmissionReport = (props) => {
                   </div>
                 </div>
                 {chartData && chartData?.series !== undefined && (
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={chartData}
-                    ref={props.ref2}
-                  />
+                  <div style={{ width: "100%" }}>
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={chartData}
+                      ref={props.ref2}
+                    />
+                  </div>
                 )}
               </>
             )}
           </div>
         </CardContent>
+        <div className="border-drop"></div>
         <CardContent>
-          <div className="salesWp  ">
-            <div
-              className="sub-heading"
-              style={{
-                margin: "0px 0px 10px 0px",
-              }}
-            >
-              Waste Emission
-            </div>
-            <div   style={{ width: "100%" }}>
-               <WasteEmissionGraph
-                dateM={date}
-                sites={sites}
-                startDate={startDate}
-                setStartDate={setStartDate}
-                showMore={showMore}
-                siteCurrency={siteCurrency}
-              />
-            </div>
-          </div>
+          <WasteEmissionGraph
+            dateM={date}
+            sites={sites}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            showMore={showMore}
+            siteCurrency={siteCurrency}
+          />
         </CardContent>
 
         {/*<CardContent>*/}
