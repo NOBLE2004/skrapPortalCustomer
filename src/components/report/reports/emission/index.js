@@ -302,16 +302,16 @@ const EmissionReport = (props) => {
           </div>
         </CardContent>
         <div className="border-drop"></div>
-        <CardContent>
-          <WasteEmissionGraph
-            dateM={date}
-            sites={sites}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            showMore={showMore}
-            siteCurrency={siteCurrency}
-          />
-        </CardContent>
+        {/*<CardContent>*/}
+        {/*  <WasteEmissionGraph*/}
+        {/*    dateM={date}*/}
+        {/*    sites={sites}*/}
+        {/*    startDate={startDate}*/}
+        {/*    setStartDate={setStartDate}*/}
+        {/*    showMore={showMore}*/}
+        {/*    siteCurrency={siteCurrency}*/}
+        {/*  />*/}
+        {/*</CardContent>*/}
 
         {/*<CardContent>*/}
         {/*  <div className="salesWp column-charts-highcharts-">*/}
