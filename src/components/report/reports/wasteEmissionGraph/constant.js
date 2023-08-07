@@ -70,8 +70,8 @@ export const chartOptions = (data) => ({
 
   series: [
     {
-      name: "Emission Produce",
-      data: data?.Emission || [],
+      name: "LandFill",
+      data: data?.LandFill || [],
       color: {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
         stops: [
@@ -83,6 +83,29 @@ export const chartOptions = (data) => ({
       dataLabels: {
         enabled: true,
         color: "#6cacf5",
+        formatter() {
+          if (this.y > 0) {
+            return numberWithCommas(this.y);
+          } else {
+            return null;
+          }
+        },
+      },
+    },
+    {
+      name: "Recycled",
+      data: data?.Recycled || [],
+      color: {
+        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+        stops: [
+          [0, "#50D226"],
+          [1, "#50D226"],
+        ],
+      },
+      borderRadius: 6,
+      dataLabels: {
+        enabled: true,
+        color: "#50D226",
         formatter() {
           if (this.y > 0) {
             return numberWithCommas(this.y);

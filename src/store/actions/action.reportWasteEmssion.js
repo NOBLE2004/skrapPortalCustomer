@@ -8,14 +8,14 @@ export const getWasteEmssionData = (data) => {
       .then((response) => {
         if (Object.keys(response.data).length !== 0) {
            const filterData = {
-            Emission: [],
+            LandFill: [],
             date: [],
-            TotalJobs: [],
+            Recycled: [],
           };
           response?.data?.data?.map((data) => {
-            filterData.Emission.push(data?.Emission);
+            filterData.Recycled.push(data?.Recycled);
             filterData.date.push(data?.date);
-            filterData.TotalJobs.push(data?.TotalJobs);
+            filterData.LandFill.push(data?.LandFill);
           });
           dispatch(wasteEmissionSuccess(filterData));
         } else {

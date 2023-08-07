@@ -190,7 +190,7 @@ const WasteEmissionGraph = (props) => {
           </Grid>
         </div>
 
-        <div style={{ width: "100%", marginTop: "10px" }}>
+        <div style={{ width: "100%", marginTop: "20px" }}>
           <HighchartsReact
             highcharts={Highcharts}
             height="300px"
