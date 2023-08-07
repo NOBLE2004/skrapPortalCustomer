@@ -70,7 +70,7 @@ export const chartOptions = (data) => ({
 
   series: [
     {
-      name: "LandFill",
+      name: "Landfill",
       data: data?.LandFill || [],
       color: {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
