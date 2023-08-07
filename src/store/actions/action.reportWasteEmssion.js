@@ -15,7 +15,7 @@ export const getWasteEmssionData = (data) => {
           response?.data?.data?.map((data) => {
             filterData.Recycled.push(data?.Recycled);
             filterData.date.push(data?.date);
-            filterData.LandFill.push(data?.LandFill);
+            filterData.LandFill.push(data?.Landfill);
           });
           dispatch(wasteEmissionSuccess(filterData));
         } else {
