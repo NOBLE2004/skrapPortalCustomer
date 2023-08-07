@@ -20,6 +20,7 @@ import RebateReport from "../../components/report/reports/rebate";
 import DualAxisGraph from "../../components/report/reports/dualAxis";
 import { getEfficencyList } from "../../store/actions/action.reportEfficenyList";
 import { Grid } from "@mui/material";
+import WasteEmissionGraph from "../../components/report/reports/wasteEmissionGraph/index";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -260,7 +261,7 @@ const NewReports = () => {
               />
             </div>
           </Masonry>
-          <Grid container>
+          <Grid container spacing={4}>
             <Grid item xs={12}>
               <div
                 className="report-chart-card-outer"
