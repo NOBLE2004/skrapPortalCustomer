@@ -267,6 +267,22 @@ const NewReports = () => {
                 className="report-chart-card-outer"
                 style={{ width: "100%" }}
               >
+                <div className="report-card-title">Emission Produce</div>
+                <WasteEmissionGraph
+                  dateM={date}
+                  sites={selected}
+                  startDate={startDate}
+                  setStartDate={setStartDate}
+                  showMore={showMore}
+                  siteCurrency={siteCurrency}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div
+                className="report-chart-card-outer"
+                style={{ width: "100%" }}
+              >
                 <div className="report-card-title">Delivery Vs Utilization</div>
                 <DualAxisGraph
                   dateM={date}
