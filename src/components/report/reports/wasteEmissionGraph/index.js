@@ -222,13 +222,13 @@ const WasteEmissionGraph = (props) => {
                 <Box>
                   <span style={{ marginRight: "10px", color: "#518ef8" }}>
                     <b>
-                      Landfill Total : {data?.data?.total?.[0]?.Landfill || 0}{" "}
+                      Landfill Total : {data?.data?.total?.[0]?.Landfill.toLocaleString() || 0}{" "}
                       kgco2e
                     </b>
                   </span>{" "}
                   <span style={{ color: "#50D226" }}>
                     <b>
-                      Recycled Total: {data?.data?.total?.[0]?.Recycled || 0}{" "}
+                      Recycled Total: {data?.data?.total?.[0]?.Recycled.toLocaleString() || 0}{" "}
                       kgco2e{" "}
                     </b>
                   </span>
