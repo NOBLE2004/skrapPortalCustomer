@@ -59,6 +59,14 @@ export const chartOptions = (data) => ({
     },
   },
   plotOptions: {
+    column: {
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: "10px",
+        },
+      },
+    },
     series: {
       states: {
         hover: {
@@ -70,7 +78,7 @@ export const chartOptions = (data) => ({
 
   series: [
     {
-      name: "Landfill",
+      name: `Landfill`,
       data: data?.LandFill || [],
       color: {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -79,7 +87,6 @@ export const chartOptions = (data) => ({
           [1, "#5391F9"],
         ],
       },
-      borderRadius: 6,
       dataLabels: {
         enabled: true,
         color: "#6cacf5",
@@ -93,7 +100,7 @@ export const chartOptions = (data) => ({
       },
     },
     {
-      name: "Recycled",
+      name: `Recycled`,
       data: data?.Recycled || [],
       color: {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -102,7 +109,6 @@ export const chartOptions = (data) => ({
           [1, "#50D226"],
         ],
       },
-      borderRadius: 6,
       dataLabels: {
         enabled: true,
         color: "#50D226",

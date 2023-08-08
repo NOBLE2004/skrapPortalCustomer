@@ -100,114 +100,144 @@ const WasteEmissionGraph = (props) => {
     setEndDate(null);
   };
 
+  console.log("data", data);
+
   return (
     <>
-      <div className="salesWp  ">
-        <div className="filters" style={{ margin: 0 }}>
-          <Grid container spacing={1} justifyContent={"space-between"}>
-            <Grid item xs={12}>
-              <Typography
-                color="primary"
-                component="h4"
-                sx={{ textAlign: "end" }}
-              >
-                <span
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    handleReset();
-                  }}
-                >
-                  Reset
-                </span>
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sx={{ display: "flex" }}>
-              <div>
-                <div className="total" style={{ marginBottom: "5px" }}>
-                  <span>Type:</span>
-                </div>
-                <Select
-                  value={type}
-                  onChange={(e) => {
-                    setType(e.target.value);
-                  }}
-                  sx={{ borderRadius: "12px" }}
-                  size="small"
-                  displayEmpty
-                  inputProps={{
-                    "aria-label": "Without label",
-                    placeholder: "testing",
-                  }}
-                >
-                  <MenuItem value={"month"}>Month</MenuItem>
-                  <MenuItem value={"day"}>Days</MenuItem>
-                </Select>
-              </div>
-              <div style={{ marginLeft: "6px" }}>
-                <div className="total" style={{ marginBottom: "5px" }}>
-                  <span>Days:</span>
-                </div>
-                <DatePicker
-                  selectsRange={true}
-                  startDate={startDate}
-                  monthsShown={2}
-                  endDate={endDate}
-                  customInput={<ExampleCustomInput2 />}
-                  onChange={onChange}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={5}>
-              <FormControl fullWidth>
-                <div className="total" style={{ marginBottom: "5px" }}>
-                  <span>Hire Type</span>
-                </div>
-                <Select
-                  value={service || []}
-                  onChange={handleChange}
-                  sx={{
-                    borderRadius: "12px",
-                  }}
-                  multiple
-                  size="small"
-                  displayEmpty
-                  inputProps={{
-                    "aria-label": "Without label",
-                    placeholder: "testing",
-                  }}
-                >
-                  {userService?.data?.result?.map((single) => (
-                    <MenuItem
-                      key={single?.service_id}
-                      value={single?.service_id}
+      <Card className="report-chart-card">
+        <CardContent>
+          <div className="salesWp  ">
+            <div className="filters" style={{ margin: 0 }}>
+              <Grid container spacing={1} justifyContent={"space-between"}>
+                <Grid item xs={12}>
+                  <Typography
+                    color="primary"
+                    component="h4"
+                    sx={{ textAlign: "end" }}
+                  >
+                    <span
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        handleReset();
+                      }}
                     >
-                      {single?.service_name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </div>
+                      Reset
+                    </span>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6} sx={{ display: "flex" }}>
+                  <div>
+                    <div className="total" style={{ marginBottom: "5px" }}>
+                      <span>Type:</span>
+                    </div>
+                    <Select
+                      value={type}
+                      onChange={(e) => {
+                        setType(e.target.value);
+                      }}
+                      sx={{ borderRadius: "12px" }}
+                      size="small"
+                      displayEmpty
+                      inputProps={{
+                        "aria-label": "Without label",
+                        placeholder: "testing",
+                      }}
+                    >
+                      <MenuItem value={"month"}>Month</MenuItem>
+                      <MenuItem value={"day"}>Days</MenuItem>
+                    </Select>
+                  </div>
+                  <div style={{ marginLeft: "6px" }}>
+                    <div className="total" style={{ marginBottom: "5px" }}>
+                      <span>Days:</span>
+                    </div>
+                    <DatePicker
+                      selectsRange={true}
+                      startDate={startDate}
+                      monthsShown={2}
+                      endDate={endDate}
+                      customInput={<ExampleCustomInput2 />}
+                      onChange={onChange}
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={5}>
+                  <FormControl fullWidth>
+                    <div className="total" style={{ marginBottom: "5px" }}>
+                      <span>Hire Type</span>
+                    </div>
+                    <Select
+                      value={service || []}
+                      onChange={handleChange}
+                      sx={{
+                        borderRadius: "12px",
+                      }}
+                      multiple
+                      size="small"
+                      displayEmpty
+                      inputProps={{
+                        "aria-label": "Without label",
+                        placeholder: "testing",
+                      }}
+                    >
+                      {userService?.data?.result?.map((single) => (
+                        <MenuItem
+                          key={single?.service_id}
+                          value={single?.service_id}
+                        >
+                          {single?.service_name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </div>
 
-        <div style={{ width: "100%", marginTop: "20px" }}>
-          <HighchartsReact
-            highcharts={Highcharts}
-            height="300px"
-            options={chartOptions(data?.data)}
-            ref={props.ref2}
-          />
-          {type == "month" ? (
-            <span>
-              <b>Weekly</b>
-            </span>
-          ) : (
-            <span>
-              <b>Days</b>
-            </span>
-          )}
-        </div>
-      </div>
+            <div style={{ width: "100%", marginTop: "20px" }}>
+              <HighchartsReact
+                highcharts={Highcharts}
+                height="300px"
+                options={chartOptions(data?.data)}
+                ref={props.ref2}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box>
+                  {type == "month" ? (
+                    <span>
+                      <b>Weekly</b>
+                    </span>
+                  ) : (
+                    <span>
+                      <b>Days</b>
+                    </span>
+                  )}
+                </Box>
+                <Box>
+                  <span style={{ marginRight: "10px", color: "#518ef8" }}>
+                    <b>
+                      Landfill Total : {data?.data?.total?.[0]?.Landfill.toLocaleString() || 0}{" "}
+                      kgco2e
+                    </b>
+                  </span>{" "}
+                  <span style={{ color: "#50D226" }}>
+                    <b>
+                      Recycled Total: {data?.data?.total?.[0]?.Recycled.toLocaleString() || 0}{" "}
+                      kgco2e{" "}
+                    </b>
+                  </span>
+                </Box>
+              </Box>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </>
   );
 };
