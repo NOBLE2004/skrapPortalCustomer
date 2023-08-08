@@ -11,6 +11,8 @@ export const getWasteEmssionData = (data) => {
             LandFill: [],
             date: [],
             Recycled: [],
+            total:response?.data?.total
+
           };
           response?.data?.data?.map((data) => {
             filterData.Recycled.push(data?.Recycled);
