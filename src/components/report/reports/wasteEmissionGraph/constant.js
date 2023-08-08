@@ -26,7 +26,7 @@ export const chartOptions = (data) => ({
     labels: {
       formatter() {
         const getLabel = (value) => {
-          return `${numberWithCommas(value)} kgco2e`;
+          return `${numberWithCommas(value)} kgCo2e`;
         };
         return getLabel(numberWithCommas(this.value));
       },
