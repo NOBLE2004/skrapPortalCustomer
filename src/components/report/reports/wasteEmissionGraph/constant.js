@@ -87,7 +87,6 @@ export const chartOptions = (data) => ({
           [1, "#5391F9"],
         ],
       },
-      borderRadius: 6,
       dataLabels: {
         enabled: true,
         color: "#6cacf5",
@@ -110,7 +109,6 @@ export const chartOptions = (data) => ({
           [1, "#50D226"],
         ],
       },
-      borderRadius: 6,
       dataLabels: {
         enabled: true,
         color: "#50D226",
