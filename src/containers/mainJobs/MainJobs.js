@@ -354,14 +354,23 @@ const MainJobsNew = (props) => {
           )}
           {jobData?.data?.length &&
             userData.personal_detail.first_name.includes("Amazon") && (
-              <Paper className="box" style={{ width: "15%", padding: "1%" }}>
-                <span>*</span>
-                <span>100% skip utilisation</span>
-                <span>Wood = 3.5 Tonnes</span>
-                <span>General = 3 Tonnes</span>
-                <span>Plastic = 2.5 Tonnes</span>
-                <span>Cardboard = 2 Tonnes</span>
-              </Paper>
+                <>
+                    {currency == '$' ? (<Paper className="box" style={{ width: "15%", padding: "1%" }}>
+                        <span>*</span>
+                        <span>100% skip utilisation</span>
+                        <span>Wood = 3 Tonnes</span>
+                        <span>General = 2.5 Tonnes</span>
+                        <span>Plastic = 2 Tonnes</span>
+                        <span>Cardboard = 1.5 Tonnes</span>
+                    </Paper>) : (<Paper className="box" style={{ width: "15%", padding: "1%" }}>
+                            <span>*</span>
+                            <span>100% skip utilisation</span>
+                            <span>Wood = 3.5 Tonnes</span>
+                            <span>General = 3 Tonnes</span>
+                            <span>Plastic = 2.5 Tonnes</span>
+                            <span>Cardboard = 2 Tonnes</span>
+                        </Paper>)}
+                </>
             )}
         </>
       ) : (
