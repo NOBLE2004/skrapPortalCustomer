@@ -358,10 +358,10 @@ const MainJobsNew = (props) => {
                     {currency == '$' ? (<Paper className="box" style={{ width: "15%", padding: "1%" }}>
                         <span>*</span>
                         <span>100% skip utilisation</span>
-                        <span>Wood = 3 Tonnes</span>
-                        <span>General = 2.5 Tonnes</span>
-                        <span>Plastic = 2 Tonnes</span>
-                        <span>Cardboard = 1.5 Tonnes</span>
+                        <span>Wood = 2.5 Tonnes</span>
+                        <span>General = 2 Tonnes</span>
+                        <span>Plastic = 1.5 Tonnes</span>
+                        <span>Cardboard = 1 Tonnes</span>
                     </Paper>) : (<Paper className="box" style={{ width: "15%", padding: "1%" }}>
                             <span>*</span>
                             <span>100% skip utilisation</span>
