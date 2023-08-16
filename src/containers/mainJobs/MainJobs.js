@@ -290,6 +290,12 @@ const MainJobsNew = (props) => {
           />
         </Grid>
       </CommonHeader>
+        {userData.account_type !== 3 && <div style={{ paddingBottom: "2%", marginTop: "-2%", display: 'flex', justifyContent: 'end' }}>
+            <Paper className="box" style={{ padding: "1%", display: 'flex' }}>
+                {userData.market_finance_balance > 0 && <label style={{paddingBottom: '1%'}}>Available Kriya balance : <b>{currency ? currency : "£"} {userData.market_finance_balance.toLocaleString()}</b></label>}
+                {userData.credit_balance > 0 && <label>Available Credit balance : <b>{currency ? currency : "£"} {userData.credit_balance.toLocaleString()}</b></label>}
+            </Paper>
+        </div>}
       <div className="jobs-search-header">
         <Grid container spacing={2}>
           <Grid item xs={4}>
