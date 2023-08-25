@@ -125,7 +125,9 @@ const SitesDetailPage = (props) => {
           (a, [k, v]) => (v ? ((a[k] = v), a) : a),
           {}
         );
-        const res = await sitesService.showSitesDetail(id, params);
+        const res = await sitesService.showSitesDetail(id, params).then(resp => {
+          setJobsData(resp.data);
+        });
         setJobsData(res.data);
         setState({
           ...state,
