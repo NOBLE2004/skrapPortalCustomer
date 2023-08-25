@@ -50,7 +50,7 @@ const SiteManagerTable = ({
   const [jobId, setJobId] = React.useState(null);
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
-    setJobs(managerData?.jobs?.data);
+    setJobs(pagination?.data);
     const user = getUserDataFromLocalStorage();
     setUserData(user);
   }, []);

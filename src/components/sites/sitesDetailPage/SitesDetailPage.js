@@ -100,6 +100,7 @@ const SitesDetailPage = (props) => {
         );
         setState({ ...state, managerData: {} });
         const res = await sitesService.showSitesDetail(id, params);
+        setJobsData(res.data.jobs);
         setState({
           ...state,
           managerData: res.data,
@@ -125,18 +126,11 @@ const SitesDetailPage = (props) => {
           (a, [k, v]) => (v ? ((a[k] = v), a) : a),
           {}
         );
-        const res = await sitesService.showSitesDetail(id, params).then(resp => {
-          setJobsData(resp.data);
-        });
-        setJobsData(res.data);
-        setState({
-          ...state,
-          managerData: res.data,
-          addressData: res.data?.address?.address,
-          sitename: res.data?.address?.site_name,
-          postCode: res.data?.address?.postcode,
-          stats: res.data?.stats,
-          isLoadings: false,
+        await sitesService.showSitesDetail(id, params).then(resp => {
+          console.log(resp.data.jobs);
+          if(resp){
+            setJobsData(resp.data.jobs);
+          }
         });
         setJobLoading(false);
       } catch (err) {
@@ -145,7 +139,11 @@ const SitesDetailPage = (props) => {
     };
 
     getJobData();
-  }, [filters, reload, isReload]);
+  }, [filters]);
+
+  useEffect(()=>{
+    console.log('jobs data', jobsData);
+  },[jobsData]);
 
   const handlePagination = (page) => {
     const duplicate = { ...jobsFilter };
@@ -290,10 +288,10 @@ const SitesDetailPage = (props) => {
                   loading={isJobLoading}
                   width={4}
                 />
-              ) : jobsData && jobsData.jobs?.data?.length ? (
+              ) : jobsData && jobsData?.data?.length ? (
                 <SiteManagerTable
-                  managerData={jobsData}
-                  pagination={jobsData.jobs}
+                  managerData={state.managerData}
+                  pagination={jobsData}
                   handlePagination={handlePagination}
                   siteDetail={true}
                   reload={() => setIsReload(!isReload)}
