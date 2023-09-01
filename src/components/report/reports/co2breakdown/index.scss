@@ -1,13 +1,11 @@
 .salesWp {
   .salesWp-inner-wrap {
-    justify-content: space-evenly;
     .salesWp-sub {
       .guage-with-text {
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: center;
-        width: 100%;
 
         .text {
           display: flex;
@@ -27,6 +25,7 @@
             color: #0f2851;
             padding: 0;
             margin: 0;
+            width: 120px
           }
 
           p {
