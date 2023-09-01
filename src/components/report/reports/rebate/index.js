@@ -133,15 +133,6 @@ const RebateReport = (props) => {
                         </div>
                     )}
                 </div>
-                <div
-                    className="see-more"
-                    // onClick={() => {
-                    //     setShow(!show);
-                    // }}
-                    style={{ opacity: 0}}
-                >
-                    See more
-                </div>
             </CardContent>
         </Card>
         </div>}
