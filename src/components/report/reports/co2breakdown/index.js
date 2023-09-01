@@ -104,9 +104,9 @@ const Co2breakdownReport = (props) => {
                   </span>
                 </div>
               </div>
-              <div className="salesWp-sub" style={{ alignItems: "flex-start", width: '60%' }}>
+              <div className="salesWp-sub" style={{ alignItems: "center"}}>
                 <div className="guage-with-text">
-                  <div className="salesWp-sub" style={{ alignItems: "center" }}>
+                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
                   <CircleProgress
                     width={100}
                     strokeWidth={10}
@@ -143,7 +143,7 @@ const Co2breakdownReport = (props) => {
                     {/*</p>*/}
                   </div>
                   </div>
-                  <div className="salesWp-sub" style={{ alignItems: "center" }}>
+                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
                   <CircleProgress
                       width={100}
                       strokeWidth={10}
@@ -175,7 +175,7 @@ const Co2breakdownReport = (props) => {
                   </div>
                 </div>
                 <div className="guage-with-text">
-                  <div className="salesWp-sub" style={{ alignItems: "center" }}>
+                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
                   <CircleProgress
                       width={100}
                       strokeWidth={10}
@@ -205,7 +205,7 @@ const Co2breakdownReport = (props) => {
                     {/*</label>*/}
                   </div>
                   </div>
-                  <div className="salesWp-sub" style={{ alignItems: "center" }}>
+                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
                   <CircleProgress
                       width={100}
                       strokeWidth={10}
