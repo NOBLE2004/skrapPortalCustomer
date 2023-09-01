@@ -104,8 +104,9 @@ const Co2breakdownReport = (props) => {
                   </span>
                 </div>
               </div>
-              <div className="salesWp-sub" style={{ alignItems: "flex-start" }}>
+              <div className="salesWp-sub" style={{ alignItems: "center"}}>
                 <div className="guage-with-text">
+                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
                   <CircleProgress
                     width={100}
                     strokeWidth={10}
@@ -145,6 +146,8 @@ const Co2breakdownReport = (props) => {
                     {/*      : "Saved to landfill"}*/}
                     {/*</p>*/}
                   </div>
+                  </div>
+                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
                   <CircleProgress
                       width={100}
                       strokeWidth={10}
@@ -177,6 +180,7 @@ const Co2breakdownReport = (props) => {
                   </div>
                 </div>
                 <div className="guage-with-text">
+                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
                   <CircleProgress
                       width={100}
                       strokeWidth={10}
@@ -209,6 +213,8 @@ const Co2breakdownReport = (props) => {
                     {/*  smartphone charges*/}
                     {/*</label>*/}
                   </div>
+                  </div>
+                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
                   <CircleProgress
                       width={100}
                       strokeWidth={10}
