@@ -130,10 +130,6 @@ const SitesDetailPage = (props) => {
           console.log(resp.data.jobs);
           if(resp){
             setJobsData(resp.data.jobs);
-            setState({
-              ...state,
-              stats: resp.data?.stats,
-            });
           }
         });
         setJobLoading(false);
