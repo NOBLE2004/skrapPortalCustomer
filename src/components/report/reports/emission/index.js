@@ -300,6 +300,15 @@ const EmissionReport = (props) => {
               </>
             )}
           </div>
+          <div
+              className="see-more"
+              // onClick={() => {
+              //     setShow(!show);
+              // }}
+              style={{ opacity: 0}}
+          >
+            See more
+          </div>
         </CardContent>
         <div className="border-drop"></div>
         {/*<CardContent>*/}
