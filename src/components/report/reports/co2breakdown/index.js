@@ -350,6 +350,7 @@ const Co2breakdownReport = (props) => {
               </div>
             )}
           </div>
+
           {/* )} */}
         </div>
       </CardContent>
