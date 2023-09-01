@@ -34,7 +34,7 @@ const Co2breakdownReport = (props) => {
     dispatch(getLandfillDiversion({ sites: sites, date, currency:siteCurrency }));
     dispatch(getTonnage({ sites: sites, date, currency:siteCurrency }));
     dispatch(getWaste({ sites: sites, date, currency:siteCurrency }));
-    //dispatch(getWasteOfEnergy({ sites: sites, date, currency:siteCurrency }));
+    dispatch(getWasteOfEnergy({ sites: sites, date, currency:siteCurrency }));
     dispatch(getRecycled({ sites: sites, date, currency:siteCurrency }));
   }, [sites, date, siteCurrency]);
 
@@ -116,13 +116,17 @@ const Co2breakdownReport = (props) => {
                     fontWeight={700}
                     secondaryColor={"#F7F7F7"}
                     percentage={
-                      recycledData?.data?.result?.recycled
+                      recycledData?.data?.result?.land_fill
+                        ? recycledData?.data?.result?.land_fill
+                        : 100
                     }
                     primaryColor={["#50D226", "#50D226"]}
                   />
                   <div className="text">
                     <h1>
-                      {"Recycled"}
+                      {recycledData?.data?.result?.title
+                        ? recycledData?.data?.result?.title
+                        : "Recycled"}
                     </h1>
                     {/*<p>*/}
                     {/*  {recycledData?.data?.result?.emco2*/}
@@ -152,12 +156,14 @@ const Co2breakdownReport = (props) => {
                       fontColor={"#0F285"}
                       fontWeight={700}
                       secondaryColor={"#F7F7F7"}
-                      percentage={recycledData?.data?.result?.waste_of_energy}
-                      primaryColor={["#ec5e19", "#ec5e19"]}
+                      percentage={wasteOfEnergyData?.data?.result?.land_fill}
+                      primaryColor={["#0F2851", "#0F2851"]}
                   />
                   <div className="text">
                     <h1>
-                      {"Waste to energy"}
+                      {wasteOfEnergyData?.data?.result?.title
+                          ? wasteOfEnergyData?.data?.result?.title
+                          : "Waste to energy"}
                     </h1>
                     {/*<p>*/}
                     {/*  {wasteOfEnergyData?.data?.result?.kwh*/}
@@ -172,7 +178,6 @@ const Co2breakdownReport = (props) => {
                     {/*  smartphone charges*/}
                     {/*</label>*/}
                   </div>
-                  </div>
                 </div>
                 <div className="guage-with-text">
                   <div className="salesWp-sub2" style={{ alignItems: "center" }}>
@@ -184,8 +189,12 @@ const Co2breakdownReport = (props) => {
                       fontColor={"#0F285"}
                       fontWeight={700}
                       secondaryColor={"#F7F7F7"}
-                      percentage={recycledData?.data?.result?.reuse}
-                      primaryColor={["#0baeae", "#0baeae"]}
+                      percentage={
+                        recycledData?.data?.result?.reuse
+                          ? recycledData?.data?.result?.reuse
+                          : 0
+                      }
+                      primaryColor={["#0F2851", "#0F2851"]}
                   />
                   <div className="text">
                     <h1>
@@ -214,8 +223,12 @@ const Co2breakdownReport = (props) => {
                       fontColor={"#0F285"}
                       fontWeight={700}
                       secondaryColor={"#F7F7F7"}
-                      percentage={recycledData?.data?.result?.recovery}
-                      primaryColor={["#2171df", "#2171df"]}
+                      percentage={
+                        recycledData?.data?.result?.recovery
+                          ? recycledData?.data?.result?.recovery
+                          : 0
+                      }
+                      primaryColor={["#0F2851", "#0F2851"]}
                   />
                   <div className="text">
                     <h1>
@@ -233,7 +246,6 @@ const Co2breakdownReport = (props) => {
                     {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
                     {/*  smartphone charges*/}
                     {/*</label>*/}
-                  </div>
                   </div>
                 </div>
               </div>
@@ -286,7 +298,7 @@ const Co2breakdownReport = (props) => {
                         <div
                           className="waste-detail "
                           style={{
-                            color: "grey",
+                            color: single.waste > 50 ? "#50D226" : "grey",
                           }}
                         >
                           <div className="name">{single.name}</div>
