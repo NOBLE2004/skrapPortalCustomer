@@ -62,7 +62,7 @@ export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
   const checkingError = (name, value) => {
     switch (name) {
       case "cardNumber":
-        errors[name] = value.length < 19 ? "Required" : "";
+        errors[name] = value.length < 18 ? "Required" : "";
         break;
       case "cardExpiry":
         errors[name] = value.length < 5 ? "Required" : "";
