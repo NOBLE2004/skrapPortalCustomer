@@ -194,7 +194,7 @@ export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
               error={errors["cardCVC"].length > 0 ? true : false}
               fullWidth
               name="cardCVC"
-              inputProps={{ maxLength: 3 }}
+              inputProps={{ maxLength: 4 }}
               value={cardCVC}
               onChange={(e) => handleChange(e)}
               variant="outlined"
