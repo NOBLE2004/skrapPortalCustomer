@@ -81,7 +81,7 @@ export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
 
   const handleSaveCard = () => {
     if (
-      cardNumber.length < 19 ||
+      cardNumber.length < 18 ||
       cardExpiry.length < 5 ||
       cardCVC.length < 3 ||
       cardHolderName.length < 3
