@@ -18,39 +18,48 @@ const DashboardServices = ({ servicesData, loading }) => {
   // console.log(country_code,'country Code')
 
   const [showValue, setShowValue] = useState(false);
-  const {
-    Cage,
-    Skip,
-    Grab,
-    NumberOfJobs,
-    Aggregate,
-    PortableToilet,
-    Concrete,
-    Compacter,
-    Trailer,
-    // ,
-    // Compactor,Trailer
-  } = servicesData;
   const [services, setServices] = useState([]);
+  const [totalJobs, setTotalJobs] = useState(0);
 
   useEffect(() => {
+    // if(servicesData){
+    //   Cage.name = "Cage";
+    //   Skip.name = "Skip";
+    //   Grab.name = "Grab";
+    //   Aggregate.name = "Aggregate";
+    //   PortableToilet.name = "PortableToilet";
+    //   Trailer.name = "Trailer";
+    //   Concrete.name = "Concrete";
+    //   Compacter.name = "Compacter";
+    //   let list = [Cage, Skip, Grab, Aggregate, PortableToilet, Trailer, Concrete, Compacter].sort(function (
+    //       a,
+    //       b
+    //   ) {
+    //     console.log(a);
+    //     var x = a["count"];
+    //     var y = b["count"];
+    //     return x < y ? 1 : x > y ? -1 : 0;
+    //   });
+    //   setServices(list);
+    // }
     if(servicesData){
-      Cage.name = "Cage";
-      Skip.name = "Skip";
-      Grab.name = "Grab";
-      Aggregate.name = "Aggregate";
-      PortableToilet.name = "PortableToilet";
-      Trailer.name = "Trailer";
-      Concrete.name = "Concrete";
-      let list = [Cage, Skip, Grab, Aggregate, PortableToilet, Trailer, Concrete].sort(function (
-          a,
-          b
-      ) {
-        console.log(a);
-        var x = a["count"];
-        var y = b["count"];
-        return x < y ? 1 : x > y ? -1 : 0;
+      const ser = []
+      Object.entries(servicesData).map(([key, value], index) => {
+        if(key !== 'NumberOfJobs'){
+          ser.push({name: key, count: value.count, total: value.total});
+        }else {
+          setTotalJobs(value)
+        }
       });
+      let list = ser.sort(function (
+                a,
+                b
+            ) {
+              console.log(a);
+              var x = a["count"];
+              var y = b["count"];
+              return x < y ? 1 : x > y ? -1 : 0;
+            });
       setServices(list);
     }
   }, [servicesData]);
@@ -58,7 +67,7 @@ const DashboardServices = ({ servicesData, loading }) => {
 
   const getPercentage = (service) => {
     if(service?.count){
-      const per = ((service.count / NumberOfJobs) * 100).toFixed(2);
+      const per = ((service.count / totalJobs) * 100).toFixed(2);
       let percentage = 0;
       if(per > 0){
         percentage = per?.split('.')[1]?.substring(1,2) > '5' ? parseFloat(per)?.toFixed(1) : per?.length > 4 ? parseFloat(per?.substring(0,4)) : parseFloat(per?.substring(0,3));
@@ -153,7 +162,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                         {service?.count
                           ? numberWithCommas(service?.count)
                           : 0}{" "}
-                        / {numberWithCommas(NumberOfJobs ? NumberOfJobs : 0)}{" "}
+                        / {numberWithCommas(totalJobs ? totalJobs : 0)}{" "}
                       </span>
                       <span className="orders">orders</span>
                     </div>
