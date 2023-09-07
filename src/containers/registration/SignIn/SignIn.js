@@ -29,19 +29,37 @@ const SignIn = (props) => {
     phone: "",
     password: "",
     notice: null,
+    email: "",
     showPassword: false,
   });
 
   const [errors, setErrors] = useState({
     phone: "",
     password: "",
+    email: "",
   });
+  const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+  const [emailLogin, setEmailLogin] = useState(false);
 
-  const { phone, password, showPassword } = state;
-  const checkingError = (name, value) => {
+  const { phone, password, showPassword, email } = state;
+  const checkingErrorPhone = (name, value) => {
     switch (name) {
       case "phone":
         errors[name] = value.length < 10 || value.length > 15 ? "Required" : "";
+        break;
+      case "password":
+        errors[name] = value.length === 0 ? "Required" : "";
+        break;
+
+      default:
+        break;
+    }
+    setErrors({ ...errors });
+  };
+  const checkingErrorEmail = (name, value) => {
+    switch (name) {
+      case "email":
+        errors[name] = value.length < 4 || !emailRegex.test(value) ? "Required" : "";
         break;
       case "password":
         errors[name] = value.length === 0 ? "Required" : "";
@@ -59,6 +77,9 @@ const SignIn = (props) => {
       case "phone":
         setState({ ...state, phone: value });
         break;
+      case "email":
+        setState({ ...state, email: value });
+        break;
       case "password":
         setState({ ...state, password: value });
         break;
@@ -68,23 +89,35 @@ const SignIn = (props) => {
         break;
     }
 
-    checkingError(name, value);
+    emailLogin ? checkingErrorEmail(name, value): checkingErrorPhone(name, value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((phone.length < 10 || phone.length > 15) | (password === "")) {
+    console.log('inside submit');
+    if(emailLogin && (email === "" || password === "")){
+      console.log('inside if');
+      console.log(email, password, emailLogin);
       Object.keys(errors).forEach((error, index) => {
-        checkingError(error, state[error]);
+        checkingErrorEmail(error, state[error]);
       });
       return;
     }
-
+    else if(!emailLogin && ((phone.length < 10 || phone.length > 15) || (phone === "") || password === "")) {
+      console.log('inside if else');
+      console.log(phone, phone, emailLogin);
+      Object.keys(errors).forEach((error, index) => {
+        checkingErrorPhone(error, state[error]);
+      });
+      return;
+    }
+    const user_name = emailLogin ? state.email : "+" + state?.phone;
     let data = {
-      user_name: "+" + state?.phone,
+      user_name: user_name,
       password: password,
       user_type: 1,
     };
+    console.log(data)
     await props.userLogin(data);
   };
 
@@ -108,7 +141,7 @@ const SignIn = (props) => {
       ...st,
       phone: value,
     }));
-    checkingError("phone", value);
+    checkingErrorPhone("phone", value);
   };
 
   return (
@@ -153,7 +186,7 @@ const SignIn = (props) => {
                           Username:
                         </Typography>
 
-                        <PhoneInput
+                        {!emailLogin ? <><PhoneInput
                           country={"gb"}
                           name="phone"
                           countryCodeEditable={false}
@@ -179,7 +212,27 @@ const SignIn = (props) => {
                             autoFocus: true,
                           }}
                           onChange={(e) => handlePhoneChange(e)}
-                        />
+                        /> <div className="another-account-sign-up" style={{textAlign: 'end', margin:0, cursor: 'pointer'}} onClick={() =>setEmailLogin(true)}><span>login using email</span></div></>
+                            :
+                            <><TextField
+                            margin="normal"
+                            variant="outlined"
+                            size="small"
+                            placeholder="Email"
+                            type="email"
+                            className={
+                              errors["email"].length > 0
+                                  ? classes.error
+                                  : classes.root
+                            }
+                            value={email}
+                            onChange={(e) => handleChange(e)}
+                            name="email"
+                            inputProps={() => {}}
+                            error={errors["email"].length > 0 ? true : false}
+                        /><div className="another-account-sign-up" style={{textAlign: 'end', margin:0, cursor: 'pointer'}} onClick={() => setEmailLogin(false)}><span>login using phone</span></div></>}
+
+
 
                         {/* <TextField
                         placeholder="Enter Username"
