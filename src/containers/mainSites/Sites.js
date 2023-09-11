@@ -9,9 +9,13 @@ import TipingCard from "../../components/tiping/TipingCard";
 import { Marker, InfoWindow } from "react-google-maps";
 import { enRouteMarker } from "../../assets/images/index";
 import FadeLoader from "react-spinners/FadeLoader";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import AssignToManager from "../../components/modals/assignToManager/AssignToManager";
-import { getSites, getSitesList } from "../../store/actions/sites.action";
+import {
+  changeSiteFilter,
+  getSites,
+  getSitesList,
+} from "../../store/actions/sites.action";
 import "./sites.scss";
 import { getDashboardsData } from "../../store/actions/dashboard.action";
 import CreateSite from "../../components/modals/createSite/CreateSite";
@@ -20,6 +24,7 @@ import { getUserDataFromLocalStorage } from "../../services/utils";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
+  const dispatch = useDispatch();
   const [showInfo, setShowInfo] = useState(false);
   const [isJobCreated, setIsJobCreated] = useState(false);
   const [isMapView, setIsMapView] = useState(true);
@@ -28,6 +33,7 @@ const Sites = (props) => {
   const [userData, setUserData] = useState({});
   const currency = localStorage.getItem("currency");
   const { info, loading } = props.dashboard;
+  const siteFilter = useSelector((state) => state?.sitesFilter);
   const [filters, setFilters] = useState({
     page: 1,
     search: "",
@@ -40,31 +46,32 @@ const Sites = (props) => {
     setUserData(getUserDataFromLocalStorage());
   }, []);
 
+  const getData = () => {
+    dispatch(getSitesList(siteFilter));
+    dispatch(getDashboardsData(siteFilter));
+  };
+
   useEffect(() => {
-    //const newFilter = { page: null, search: "", currency };
-    // if (isReload || !compare(newFilter, filters)) {
-    //   props.getSitesList(filters);
-    // }
-    async function fetchData() {
-      await props.getSitesList(filters);
-      await props.getDashboardsData(filters);
-    }
-    fetchData();
+    getData();
   }, [filters, isReload]);
 
   const compare = (a, b) => {
     return JSON.stringify(a) === JSON.stringify(b);
   };
+
   const handlePagination = (page) => {
-    setFilters({ ...filters, page });
+    const duplicate = { ...siteFilter };
+    duplicate.page = page;
+    dispatch(changeSiteFilter({ ...siteFilter, ...duplicate }));
+    setFilters({ ...filters, page: page });
   };
-  const handleChangeSearch = useCallback(
-    (postcode) => {
-      setSearch(postcode);
-      setFilters({ ...filters, search: postcode });
-    },
-    [search, filters]
-  );
+
+  const handleChangeSearch = (search) => {
+    const duplicate = { ...siteFilter };
+    duplicate.search = search;
+    dispatch(changeSiteFilter({ ...siteFilter, ...duplicate }));
+    setFilters({ ...filters, search: search });
+  };
 
   const handleShowMap = useCallback(() => {
     setIsMapView(!isMapView);
@@ -147,7 +154,7 @@ const Sites = (props) => {
             <CommonSearch
               cname=""
               handleChangeSearch={handleChangeSearch}
-              jobsFilter={filters}
+              jobsFilter={siteFilter}
             />
           </Grid>
           <Grid item xs={8}>

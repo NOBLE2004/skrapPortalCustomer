@@ -5,6 +5,14 @@ const initialState = {
   error: null,
 };
 
+const initialFilter = {
+  page: 1,
+  search: "",
+  date: "",
+  address: "",
+  currency: localStorage.getItem("currency"),
+};
+
 export const sitesReducer = (state = initialState, action) => {
   switch (action.type) {
     case constants.SITES_LIST_DATA_START:
@@ -23,6 +31,15 @@ export const sitesReducer = (state = initialState, action) => {
         error: action.payload,
         siteData: null,
       };
+    default:
+      return { ...state };
+  }
+};
+
+export const sitesFilterReducer = (state = initialFilter, action) => {
+  switch (action.type) {
+    case constants.SITES_FILTER:
+      return { ...state, ...action.payload };
     default:
       return { ...state };
   }
