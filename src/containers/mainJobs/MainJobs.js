@@ -290,6 +290,12 @@ const MainJobsNew = (props) => {
           />
         </Grid>
       </CommonHeader>
+        {userData.account_type !== 3 && <div style={{ paddingBottom: "2%", marginTop: "-2%", display: 'flex', justifyContent: 'end' }}>
+            <Paper className="box" style={{ padding: "1%", display: 'flex' }}>
+                {userData.market_finance_balance > 0 && <label style={{paddingBottom: '1%'}}>Available Kriya balance : <b>{currency ? currency : "£"} {userData.market_finance_balance.toLocaleString()}</b></label>}
+                {userData.credit_balance > 0 && <label>Available Credit balance : <b>{currency ? currency : "£"} {userData.credit_balance.toLocaleString()}</b></label>}
+            </Paper>
+        </div>}
       <div className="jobs-search-header">
         <Grid container spacing={2}>
           <Grid item xs={4}>
@@ -354,14 +360,23 @@ const MainJobsNew = (props) => {
           )}
           {jobData?.data?.length &&
             userData.personal_detail.first_name.includes("Amazon") && (
-              <Paper className="box" style={{ width: "15%", padding: "1%" }}>
-                <span>*</span>
-                <span>100% skip utilisation</span>
-                <span>Wood = 3.5 Tonnes</span>
-                <span>General = 3 Tonnes</span>
-                <span>Plastic = 2.5 Tonnes</span>
-                <span>Cardboard = 2 Tonnes</span>
-              </Paper>
+                <>
+                    {currency == '$' ? (<Paper className="box" style={{ width: "15%", padding: "1%" }}>
+                        <span>*</span>
+                        <span>100% skip utilisation</span>
+                        <span>Wood = 2.5 Tonnes</span>
+                        <span>General = 2 Tonnes</span>
+                        <span>Plastic = 1.5 Tonnes</span>
+                        <span>Cardboard = 1 Tonnes</span>
+                    </Paper>) : (<Paper className="box" style={{ width: "15%", padding: "1%" }}>
+                            <span>*</span>
+                            <span>100% skip utilisation</span>
+                            <span>Wood = 3.5 Tonnes</span>
+                            <span>General = 3 Tonnes</span>
+                            <span>Plastic = 2.5 Tonnes</span>
+                            <span>Cardboard = 2 Tonnes</span>
+                        </Paper>)}
+                </>
             )}
         </>
       ) : (

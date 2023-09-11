@@ -62,7 +62,7 @@ export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
   const checkingError = (name, value) => {
     switch (name) {
       case "cardNumber":
-        errors[name] = value.length < 19 ? "Required" : "";
+        errors[name] = value.length < 18 ? "Required" : "";
         break;
       case "cardExpiry":
         errors[name] = value.length < 5 ? "Required" : "";
@@ -81,7 +81,7 @@ export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
 
   const handleSaveCard = () => {
     if (
-      cardNumber.length < 19 ||
+      cardNumber.length < 18 ||
       cardExpiry.length < 5 ||
       cardCVC.length < 3 ||
       cardHolderName.length < 3
@@ -194,7 +194,7 @@ export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
               error={errors["cardCVC"].length > 0 ? true : false}
               fullWidth
               name="cardCVC"
-              inputProps={{ maxLength: 3 }}
+              inputProps={{ maxLength: 4 }}
               value={cardCVC}
               onChange={(e) => handleChange(e)}
               variant="outlined"
