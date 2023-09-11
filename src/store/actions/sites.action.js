@@ -82,3 +82,12 @@ export const sitesListFailure = (error) => {
     payload: error,
   };
 };
+
+export const changeSiteFilter = (data) => {
+  return (dispatch) => {
+    dispatch({
+      type: Constants.SITES_FILTER,
+      payload: data,
+    });
+  };
+};
