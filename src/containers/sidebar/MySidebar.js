@@ -13,6 +13,7 @@ import { appIcon, personImage } from "../../assets/images";
 import useWindowDimensions from "../../hooks/useWindowDimension";
 import "./mySidebar.scss";
 import { changeJobsFilter } from "../../store/actions/jobs.action";
+import { changeSiteFilter } from "../../store/actions/sites.action";
 
 const drawerWidth = 240;
 const MySidebar = (props) => {
@@ -109,6 +110,14 @@ const MySidebar = (props) => {
         site: "",
         address: "",
         page: 1,
+      })
+    );
+    dispatch(
+      changeSiteFilter({
+        page: 1,
+        search: "",
+        date: "",
+        address: "",
       })
     );
   };
