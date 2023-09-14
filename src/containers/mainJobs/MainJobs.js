@@ -52,8 +52,6 @@ const MainJobsNew = (props) => {
   const [isJobCreated, setIsJobCreated] = useState(false);
   const currency = localStorage.getItem("currency");
   const [csvDownload, setCsvDownload] = useState(false);
-
-  const [limit, setLimit] = useState(10);
   const { info, loading } = props.dashboard;
   const history = useHistory();
   const { jobData, isLoading, error } = props.jobs;
@@ -61,7 +59,7 @@ const MainJobsNew = (props) => {
     status: "",
     date: "",
     service: "",
-    page: 1,
+    page: 1, limit: 10,
     address: "",
     search: "",
     show_on_app: [0, 1],
@@ -80,7 +78,7 @@ const MainJobsNew = (props) => {
   const getData = () => {
     dispatch(
       getJobList(
-        { user_id: userData.user_id, limit, orders_type: 4 },
+        { user_id: userData.user_id, orders_type: 4 },
         jobsFilter
       )
     );
@@ -124,6 +122,12 @@ const MainJobsNew = (props) => {
     dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, search: search });
   };
+    const setLimit = (limit) => {
+        const duplicate = { ...jobsFilter };
+        duplicate.limit = limit;
+        dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
+        setFilters({ ...filters, limit: limit });
+    };
 
   const handlePagination = (page) => {
     const duplicate = { ...jobsFilter };
@@ -351,6 +355,8 @@ const MainJobsNew = (props) => {
           ) : (
             jobData && (
               <JobsTable
+                  limit={jobsFilter.limit}
+                  setLimit={setLimit}
                 data={jobData?.data ? jobData?.data : []}
                 pagination={jobData}
                 handleUpdateJobs={handleJobCreated}

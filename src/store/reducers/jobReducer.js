@@ -12,6 +12,7 @@ const initialFilter = {
   service: "",
   address: "",
   page:1,
+  limit: 10,
   search: "",
   show_on_app: [0, 1],
   currency: localStorage.getItem("currency")

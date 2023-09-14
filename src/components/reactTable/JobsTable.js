@@ -25,7 +25,7 @@ const JobsTable = ({
   data,
   pagination,
   handleUpdateJobs,
-  handlePagination,
+  handlePagination, limit, setLimit
 }) => {
   const [state, setState] = useState({
     openMenu: false,
@@ -678,6 +678,8 @@ const JobsTable = ({
             className="-striped -highlight"
           />
           <Pagination
+              limit={limit}
+              setLimit={setLimit}
             last={pagination?.last_page}
             current={pagination?.current_page}
             from={pagination?.from}

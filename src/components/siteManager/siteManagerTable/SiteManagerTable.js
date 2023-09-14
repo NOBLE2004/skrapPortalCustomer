@@ -26,7 +26,7 @@ const SiteManagerTable = ({
   pagination,
   handlePagination,
   siteDetail,
-  reload,
+  reload, limit, setLimit
 }) => {
   const [row, setRow] = useState({});
   const [reorder, setReorder] = useState(false);
@@ -653,6 +653,8 @@ const SiteManagerTable = ({
       />
       <div className="site-pagination">
         <Pagination
+            limit={limit}
+            setLimit={setLimit}
           last={pagination?.last_page}
           current={pagination?.current_page}
           from={pagination?.from}

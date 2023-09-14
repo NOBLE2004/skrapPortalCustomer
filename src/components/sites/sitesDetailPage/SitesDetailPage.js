@@ -151,7 +151,12 @@ const SitesDetailPage = (props) => {
     dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, page: page });
   };
-
+  const setLimit = (limit) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.limit = limit;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
+    setFilters({ ...filters, limit: limit });
+  };
   const handleChangeSearch = (search) => {
     const duplicate = { ...jobsFilter };
     duplicate.search = search;
@@ -290,6 +295,8 @@ const SitesDetailPage = (props) => {
                 />
               ) : jobsData && jobsData?.data?.length ? (
                 <SiteManagerTable
+                    limit={jobsFilter.limit}
+                    setLimit={setLimit}
                   managerData={state.managerData}
                   pagination={jobsData}
                   handlePagination={handlePagination}
