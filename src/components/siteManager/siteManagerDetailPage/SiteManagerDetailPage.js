@@ -89,7 +89,12 @@ const SiteManagerDetailPage = (props) => {
 
     getJobData();
   }, [filters, reload]);
-
+  const setLimit = (limit) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.limit = limit;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
+    setFilters({ ...filters, limit: limit });
+  };
   const handlePagination = (page) => {
     const duplicate = { ...jobsFilter };
     duplicate.page = page;
@@ -139,6 +144,8 @@ const SiteManagerDetailPage = (props) => {
               <FadeLoader color={"#518ef8"} loading={isJobLoading} width={4} />
             ) : jobsData && jobsData.jobs?.data?.length ? (
               <SiteManagerTable
+                  limit={jobsFilter.limit}
+                  setLimit={setLimit}
                 managerData={jobsData}
                 pagination={jobsData.jobs}
                 handlePagination={handlePagination}
