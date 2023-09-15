@@ -10,7 +10,7 @@ function Pagination({
   current,
   last,
   handleNext,
-  handlePrevious,
+  handlePrevious, limit, setLimit
 }) {
   const previousPage = () => {
     let previous = current;
@@ -29,6 +29,14 @@ function Pagination({
 
   return (
     <div className="pagination">
+      <select style={{marginRight: '2%', width: '4%'}} onChange={(e) => {
+        setLimit(e.target.value)
+      }} defaultValue={limit}>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
       <span>
         {from} - {to} of {total}
       </span>
