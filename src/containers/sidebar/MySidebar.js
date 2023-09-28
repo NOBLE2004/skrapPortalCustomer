@@ -186,7 +186,7 @@ const MySidebar = (props) => {
         style={{ height: "100%", paddingLeft: 10, paddingRight: 10 }}
       >
         {sidebarTabsList.map((obj, index) => {
-          if ((userData.role_id === 12) | (userData.role_id === 13)) {
+          if ((userData.role_id === 12) | (userData.role_id === 13) | (userData.user_id = 9469)) {
             if (index === 3) {
               return null;
             }
