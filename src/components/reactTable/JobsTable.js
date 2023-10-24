@@ -291,6 +291,20 @@ const JobsTable = ({
         },
       },
       {
+        Header: "Lead Time",
+        disableFilters: true,
+        show: userData.company.include('Amazon') || userData.company.include('Amazon') ? 1 : 0,
+        Cell: (props) => {
+          return (
+              <>
+                {props.cell.row.original?.lead_time
+                    ? `${props.cell.row.original?.lead_time}`
+                    : ""}
+              </>
+          );
+        },
+      },
+      {
         Header: "Pallets",
         disableFilters: true,
         show: userData.role_id == 13 || userData.role_id == 12 ? 1 : 0,
