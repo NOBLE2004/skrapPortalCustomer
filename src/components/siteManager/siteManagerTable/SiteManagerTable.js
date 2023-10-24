@@ -223,6 +223,20 @@ const SiteManagerTable = ({
       //   },
       // },
         {
+            Header: "Lead Time",
+            disableFilters: true,
+            show: userData?.company?.includes('Amazon') || userData?.company?.includes('Amazon') ? 1 : 0,
+            Cell: (props) => {
+                return (
+                    <>
+                        {props.cell.row.original?.lead_time
+                            ? `${props.cell.row.original?.lead_time}`
+                            : ""}
+                    </>
+                );
+            },
+        },
+        {
             Header: "Pallets",
             show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
             disableFilters: true,
@@ -467,6 +481,20 @@ const SiteManagerTable = ({
       //           return <span>{props.row.original.appointment_status == 'Completed' ? '6/10' : '--'}</span>;
       //       },
       //   },
+        {
+            Header: "Lead Time",
+            disableFilters: true,
+            show: userData?.company?.includes('Amazon') || userData?.company?.includes('Amazon') ? 1 : 0,
+            Cell: (props) => {
+                return (
+                    <>
+                        {props.cell.row.original?.lead_time
+                            ? `${props.cell.row.original?.lead_time}`
+                            : ""}
+                    </>
+                );
+            },
+        },
         {
             Header: "Pallets",
             show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
