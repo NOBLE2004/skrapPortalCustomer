@@ -221,15 +221,15 @@ const JobsTable = ({
         Cell: (props) =>
           new Date(props.value).toLocaleString().substring(0, 17),
       },
-      {
-        Header: "Site Contact",
-        accessor: (d) =>
-          d.site_contact_number !== null
-            ? d.site_contact_number
-            : d.mobile_number,
-        id: "site contact",
-        disableFilters: true,
-      },
+      // {
+      //   Header: "Site Contact",
+      //   accessor: (d) =>
+      //     d.site_contact_number !== null
+      //       ? d.site_contact_number
+      //       : d.mobile_number,
+      //   id: "site contact",
+      //   disableFilters: true,
+      // },
       {
         Header: "Service",
         accessor: "service_name",
