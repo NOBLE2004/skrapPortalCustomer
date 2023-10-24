@@ -293,6 +293,7 @@ const JobsTable = ({
       {
         Header: "Lead Time",
         disableFilters: true,
+        show: userData.company.include('Amazon') || userData.company.include('Amazon') ? 1 : 0,
         Cell: (props) => {
           return (
               <>
