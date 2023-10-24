@@ -293,12 +293,11 @@ const JobsTable = ({
       {
         Header: "Lead Time",
         disableFilters: true,
-        show: userData.role_id == 13 || userData.role_id == 12 ? 1 : 0,
         Cell: (props) => {
           return (
               <>
                 {props.cell.row.original?.lead_time
-                    ? `${Number(props.cell.row.original?.lead_time).toFixed(2)}kg`
+                    ? `${props.cell.row.original?.lead_time}`
                     : ""}
               </>
           );
