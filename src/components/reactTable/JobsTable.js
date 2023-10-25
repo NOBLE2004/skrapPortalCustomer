@@ -133,11 +133,12 @@ const JobsTable = ({
     setViewDocument(true);
   };
 
-  useEffect(() => {
-    const userdata = getUserDataFromLocalStorage();
+  useEffect(async () => {
+    const userdata = await getUserDataFromLocalStorage();
     setUser(userdata.personal_detail);
     setUserData(userdata);
   }, []);
+  console.log(userData?.company?.includes('Amazon'))
   // const handleInvoice = () => {
   //   if (jobIds.length > 0) {
   //     JobService.xeroInvoice({ jobs: jobIds })
@@ -293,7 +294,7 @@ const JobsTable = ({
       {
         Header: "Lead Time",
         disableFilters: true,
-        show: userData?.first_name?.includes('Amazon') ? 0 : 1,
+        show: getUserDataFromLocalStorage()?.company?.includes('Amazon') ? 0 : 1,
         Cell: (props) => {
           return (
               <>
@@ -307,7 +308,7 @@ const JobsTable = ({
       {
         Header: "Pallets",
         disableFilters: true,
-        show: userData.role_id == 13 || userData.role_id == 12 ? 1 : 0,
+        show: user.role_id == 13 || user.role_id == 12 ? 1 : 0,
         Cell: (props) => {
           return (
             <>
@@ -321,7 +322,7 @@ const JobsTable = ({
       {
         Header: "Rebate",
         disableFilters: true,
-        show: userData.role_id == 13 || userData.role_id == 12 ? 1 : 0,
+        show: user.role_id == 13 || user.role_id == 12 ? 1 : 0,
         Cell: (props) => {
           return (
             <>
@@ -335,7 +336,7 @@ const JobsTable = ({
       {
         Header: "Utilisation*",
         disableFilters: true,
-        show: userData.role_id == 13 || userData.role_id == 12 ? 1 : 0,
+        show: user.role_id == 13 || user.role_id == 12 ? 1 : 0,
         Cell: (props) => {
           return (
             <span
@@ -551,7 +552,7 @@ const JobsTable = ({
       //   ),
       // },
     ],
-    [userData]
+    [userData, currency]
   );
   const handleExtend = () => {
     setExtends(true);
