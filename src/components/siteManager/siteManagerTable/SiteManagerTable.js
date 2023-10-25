@@ -225,7 +225,7 @@ const SiteManagerTable = ({
         {
             Header: "Lead Time",
             disableFilters: true,
-            show: userData?.company?.includes('Amazon') || userData?.company?.includes('Amazon') ? 1 : 0,
+            show: userData?.company?.includes('Amazon') ? 1 : 0,
             Cell: (props) => {
                 return (
                     <>
@@ -484,7 +484,7 @@ const SiteManagerTable = ({
         {
             Header: "Lead Time",
             disableFilters: true,
-            show: userData?.company?.includes('Amazon') || userData?.company?.includes('Amazon') ? 1 : 0,
+            show: userData?.company?.includes('Amazon') ? 1 : 0,
             Cell: (props) => {
                 return (
                     <>
