@@ -244,7 +244,7 @@ const SiteManagerTable = ({
                 return (
                     <>
                         {props.cell.row.original?.recycled
-                            ? `${props.cell.row.original?.recycled}`
+                            ? `${props.cell.row.original?.recycled}%`
                             : ""}
                     </>
                 );
@@ -518,7 +518,7 @@ const SiteManagerTable = ({
                 return (
                     <>
                         {props.cell.row.original?.recycled
-                            ? `${props.cell.row.original?.recycled}`
+                            ? `${props.cell.row.original?.recycled}%`
                             : ""}
                     </>
                 );
