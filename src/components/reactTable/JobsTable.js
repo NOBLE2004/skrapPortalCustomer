@@ -306,6 +306,20 @@ const JobsTable = ({
         },
       },
       {
+        Header: "Recylced",
+        disableFilters: true,
+        show: getUserDataFromLocalStorage()?.company?.includes('Amazon') ? 0 : 1,
+        Cell: (props) => {
+          return (
+              <>
+                {props.cell.row.original?.recycled
+                    ? `${props.cell.row.original?.recycled}`
+                    : ""}
+              </>
+          );
+        },
+      },
+      {
         Header: "Pallets",
         disableFilters: true,
         show: user.role_id == 13 || user.role_id == 12 ? 1 : 0,
@@ -418,6 +432,7 @@ const JobsTable = ({
       {
         Header: "Invoice",
         accessor: "job_id",
+        show: getUserDataFromLocalStorage()?.company?.includes('Amazon') ? 1 : 0,
         id: "invoice",
         Cell: (props) => (
           <>

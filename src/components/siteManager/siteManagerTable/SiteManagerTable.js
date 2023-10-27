@@ -237,6 +237,20 @@ const SiteManagerTable = ({
             },
         },
         {
+            Header: "Recylced",
+            disableFilters: true,
+            show: userData?.company?.includes('Amazon') ? 0 : 1,
+            Cell: (props) => {
+                return (
+                    <>
+                        {props.cell.row.original?.recycled
+                            ? `${props.cell.row.original?.recycled}`
+                            : ""}
+                    </>
+                );
+            },
+        },
+        {
             Header: "Pallets",
             show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
             disableFilters: true,
@@ -299,6 +313,7 @@ const SiteManagerTable = ({
       {
         Header: "Invoice",
         accessor: "job_id",
+          show: userData?.company?.includes('Amazon') ? 1 : 0,
         id: "invoice",
         Cell: (props) => {
           return props?.row?.original?.appointment_status == 3 ? (
@@ -496,6 +511,20 @@ const SiteManagerTable = ({
             },
         },
         {
+            Header: "Recylced",
+            disableFilters: true,
+            show: userData?.company?.includes('Amazon') ? 0 : 1,
+            Cell: (props) => {
+                return (
+                    <>
+                        {props.cell.row.original?.recycled
+                            ? `${props.cell.row.original?.recycled}`
+                            : ""}
+                    </>
+                );
+            },
+        },
+        {
             Header: "Pallets",
             show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
             disableFilters: true,
@@ -558,6 +587,7 @@ const SiteManagerTable = ({
       {
         Header: "Invoice",
         accessor: "job_id",
+          show: userData?.company?.includes('Amazon') ? 1 : 0,
         id: "invoice",
         Cell: (props) => {
            return props?.row?.original?.appointment?.appointment_status == 3 ? (
