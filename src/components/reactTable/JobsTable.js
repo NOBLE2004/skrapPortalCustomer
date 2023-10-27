@@ -313,7 +313,7 @@ const JobsTable = ({
           return (
               <>
                 {props.cell.row.original?.recycled
-                    ? `${props.cell.row.original?.recycled}`
+                    ? `${props.cell.row.original?.recycled}%`
                     : ""}
               </>
           );
