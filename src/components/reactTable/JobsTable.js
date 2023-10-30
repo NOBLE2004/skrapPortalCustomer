@@ -121,6 +121,7 @@ const JobsTable = ({
   };
   const handleShowReport = async (e, url) => {
     e.stopPropagation();
+    if(url.includes('skrap-storage');
     var element = document.createElement("a");
     element.href = await toDataURL(url);
     element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
@@ -306,14 +307,14 @@ const JobsTable = ({
         },
       },
       {
-        Header: "Recylced",
+        Header: "Reuse",
         disableFilters: true,
         show: getUserDataFromLocalStorage()?.company?.includes('Amazon') ? 0 : 1,
         Cell: (props) => {
           return (
               <>
-                {props.cell.row.original?.recycled
-                    ? `${props.cell.row.original?.recycled}%`
+                {props.cell.row.original?.reuse
+                    ? `${props.cell.row.original?.reuse}%`
                     : ""}
               </>
           );
