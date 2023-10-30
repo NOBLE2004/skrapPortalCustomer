@@ -121,7 +121,6 @@ const JobsTable = ({
   };
   const handleShowReport = async (e, url) => {
     e.stopPropagation();
-    if(url.includes('skrap-storage');
     var element = document.createElement("a");
     element.href = await toDataURL(url);
     element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
