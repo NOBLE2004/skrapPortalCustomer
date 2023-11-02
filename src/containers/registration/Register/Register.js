@@ -315,24 +315,24 @@ const Register = (props) => {
           {/*          name="row-radio-buttons-group"*/}
           {/*          sx={{ display: "flex", justifyContent: "center" }}*/}
           {/*        >*/}
-          {/*          /!*<FormControlLabel*!/*/}
-          {/*          /!*  value="business"*!/*/}
-          {/*          /!*  control={<Radio checked={radioButton === "business"} />}*!/*/}
-          {/*          /!*  label="Yes, I am a limited company and will like to sign up payment with credit"*!/*/}
-          {/*          /!*  onChange={(e) => {*!/*/}
-          {/*          /!*    setRadioButton(e.target.value);*!/*/}
-          {/*          /!*  }}*!/*/}
-          {/*          /!*  sx={{ display: "flex", justifyContent: "center" }}*!/*/}
-          {/*          /!*/>*!/*/}
-          {/*          /!*<FormControlLabel*!/*/}
-          {/*          /!*  value="one-off"*!/*/}
-          {/*          /!*  control={<Radio checked={radioButton === "one-off"} />}*!/*/}
-          {/*          /!*  label="No, I am not a limited company or I prefer paying now"*!/*/}
-          {/*          /!*  onChange={(e) => {*!/*/}
-          {/*          /!*    setRadioButton(e.target.value);*!/*/}
-          {/*          /!*  }}*!/*/}
-          {/*          /!*  sx={{ display: "flex", justifyContent: "center" }}*!/*/}
-          {/*          /!*/>*!/*/}
+          {/*          <FormControlLabel*/}
+          {/*            value="business"*/}
+          {/*            control={<Radio checked={radioButton === "business"} />}*/}
+          {/*            label="Yes, I am a limited company and will like to sign up payment with credit"*/}
+          {/*            onChange={(e) => {*/}
+          {/*              setRadioButton(e.target.value);*/}
+          {/*            }}*/}
+          {/*            sx={{ display: "flex", justifyContent: "center" }}*/}
+          {/*          />*/}
+          {/*          <FormControlLabel*/}
+          {/*            value="one-off"*/}
+          {/*            control={<Radio checked={radioButton === "one-off"} />}*/}
+          {/*            label="No, I am not a limited company or I prefer paying now"*/}
+          {/*            onChange={(e) => {*/}
+          {/*              setRadioButton(e.target.value);*/}
+          {/*            }}*/}
+          {/*            sx={{ display: "flex", justifyContent: "center" }}*/}
+          {/*          />*/}
           {/*        </RadioGroup>*/}
           {/*      </FormControl>*/}
           {/*    </div>*/}
