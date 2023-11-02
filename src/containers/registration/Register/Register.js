@@ -290,54 +290,54 @@ const Register = (props) => {
               </form>
             </Grid>
           </Grid>
-          <Grid container justifyContent="center">
-            <Grid item xs={12} sm={11} md={10} lg={8}>
-              <div>
-                <h1 className="a-tag-main">
-                  Our business customers can take advantage of our new flexible
-                  credit option, powered by our partner,{" "}
-                  <a
-                    className="a-tag-sign-up"
-                    href="https://marketfinance.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Kriya.
-                  </a>{" "}
-                  To sign up to credit, please fill in the form and submit for
-                  review. If you wish to pay upfront, please continue
-                </h1>
-              </div>
-              <div className="radio-button-in-signup">
-                <FormControl sx={{ width: "100%" }}>
-                  <RadioGroup
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                    sx={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <FormControlLabel
-                      value="business"
-                      control={<Radio checked={radioButton === "business"} />}
-                      label="Yes, I am a limited company and will like to sign up payment with credit"
-                      onChange={(e) => {
-                        setRadioButton(e.target.value);
-                      }}
-                      sx={{ display: "flex", justifyContent: "center" }}
-                    />
-                    <FormControlLabel
-                      value="one-off"
-                      control={<Radio checked={radioButton === "one-off"} />}
-                      label="No, I am not a limited company or I prefer paying now"
-                      onChange={(e) => {
-                        setRadioButton(e.target.value);
-                      }}
-                      sx={{ display: "flex", justifyContent: "center" }}
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </div>
-            </Grid>
-          </Grid>
+          {/*<Grid container justifyContent="center">*/}
+          {/*  <Grid item xs={12} sm={11} md={10} lg={8}>*/}
+          {/*    <div>*/}
+          {/*      <h1 className="a-tag-main">*/}
+          {/*        Our business customers can take advantage of our new flexible*/}
+          {/*        credit option, powered by our partner,{" "}*/}
+          {/*        <a*/}
+          {/*          className="a-tag-sign-up"*/}
+          {/*          href="https://marketfinance.com/"*/}
+          {/*          target="_blank"*/}
+          {/*          rel="noreferrer"*/}
+          {/*        >*/}
+          {/*          Kriya.*/}
+          {/*        </a>{" "}*/}
+          {/*        To sign up to credit, please fill in the form and submit for*/}
+          {/*        review. If you wish to pay upfront, please continue*/}
+          {/*      </h1>*/}
+          {/*    </div>*/}
+          {/*    <div className="radio-button-in-signup">*/}
+          {/*      <FormControl sx={{ width: "100%" }}>*/}
+          {/*        <RadioGroup*/}
+          {/*          aria-labelledby="demo-row-radio-buttons-group-label"*/}
+          {/*          name="row-radio-buttons-group"*/}
+          {/*          sx={{ display: "flex", justifyContent: "center" }}*/}
+          {/*        >*/}
+          {/*          <FormControlLabel*/}
+          {/*            value="business"*/}
+          {/*            control={<Radio checked={radioButton === "business"} />}*/}
+          {/*            label="Yes, I am a limited company and will like to sign up payment with credit"*/}
+          {/*            onChange={(e) => {*/}
+          {/*              setRadioButton(e.target.value);*/}
+          {/*            }}*/}
+          {/*            sx={{ display: "flex", justifyContent: "center" }}*/}
+          {/*          />*/}
+          {/*          <FormControlLabel*/}
+          {/*            value="one-off"*/}
+          {/*            control={<Radio checked={radioButton === "one-off"} />}*/}
+          {/*            label="No, I am not a limited company or I prefer paying now"*/}
+          {/*            onChange={(e) => {*/}
+          {/*              setRadioButton(e.target.value);*/}
+          {/*            }}*/}
+          {/*            sx={{ display: "flex", justifyContent: "center" }}*/}
+          {/*          />*/}
+          {/*        </RadioGroup>*/}
+          {/*      </FormControl>*/}
+          {/*    </div>*/}
+          {/*  </Grid>*/}
+          {/*</Grid>*/}
           {radioButton === "business" && (
             <Grid container justifyContent="center" marginTop={2}>
               <Grid item xs={12} sm={10} md={8} lg={6}>
