@@ -235,6 +235,24 @@ const Co2breakdownReport = (props) => {
                     {/*</label>*/}
                   </div>
                   </div>
+                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
+                    <CircleProgress
+                        width={100}
+                        strokeWidth={10}
+                        fontFamily={"DM Sans"}
+                        fontSize={"14px"}
+                        fontColor={"#0F285"}
+                        fontWeight={700}
+                        secondaryColor={"#F7F7F7"}
+                        percentage={recycledData?.data?.result?.upcycle}
+                        primaryColor={["#ff9205", "#f7a840"]}
+                    />
+                    <div className="text">
+                      <h1>
+                        {"UpCycle"}
+                      </h1>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
