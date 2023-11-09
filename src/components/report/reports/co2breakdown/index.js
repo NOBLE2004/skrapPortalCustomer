@@ -104,7 +104,7 @@ const Co2breakdownReport = (props) => {
         text: null,
       },
       tooltip: {
-        pointFormat: "<b>{point.percentage:.2f}%</b>",
+        pointFormat: "<b>{point.y:.2f}%</b>",
       },
       accessibility: {
         announceNewData: {
@@ -122,7 +122,7 @@ const Co2breakdownReport = (props) => {
           dataLabels: {
             enabled: true,
             format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
-                '<span style="opacity: 0.6">{point.percentage:.2f}% </span>',
+                '<span style="opacity: 0.6">{point.y:.2f}% </span>',
             connectorColor: 'rgba(128,128,128,0.5)',
             distance: 20
           }
