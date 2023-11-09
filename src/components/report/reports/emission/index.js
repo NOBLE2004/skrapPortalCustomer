@@ -6,13 +6,14 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { chartOptions, data2 } from "./constant";
+import { chartOptions, chartOptionsEms } from "./constant";
 import FadeLoader from "react-spinners/FadeLoader";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { getReportEmissions } from "../../../../store/actions/action.reportEmission";
+import { getReportWasteEmissions } from "../../../../store/actions/action.reportWasteEmission";
 import { getReportSiteBreakDownEmissions } from "../../../../store/actions/action.reportEmissionSiteBreakdown";
 import { getReportEmissionVehicles } from "../../../../store/actions/action.reportEmisionVehicle";
 import "./index.scss";
@@ -58,6 +59,7 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 
 const EmissionReport = (props) => {
   const state = useSelector((state) => state?.reportEmission);
+  const wasteEmissions = useSelector((state) => state?.reportWasteEmissions);
   const userDetail = getUserDataFromLocalStorage();
   const stateSiteBreakDown = useSelector(
     (state) => state?.reportEmissionSiteBreakDown
@@ -68,6 +70,7 @@ const EmissionReport = (props) => {
   // const stateEmissionVehicle = useSelector(state => state?.reportEmissionVehicle)
   const dispatch = useDispatch();
   const [chartData, setChartData] = useState(chartOptions(siteCurrency));
+  const [chartDataWaste, setChartDataWaste] = useState(chartOptionsEms(siteCurrency));
   const [isNewYear, setNewYear] = useState(false);
   //dummy states for secend graph date picker
   const [date, setDate] = useState(new Date());
@@ -77,8 +80,12 @@ const EmissionReport = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
   const [max, setMax] = useState(100);
+  const [maxWaste, setMaxWaste] = useState(100);
   const [currency, setCurrency] = useState(siteCurrency);
   const [emission, setEmission] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
+  const [emissionWaste, setEmissionWaste] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
 
@@ -102,10 +109,23 @@ const EmissionReport = (props) => {
     }
   };
 
+  const getWasteData = (year) => {
+      dispatch(
+          getReportWasteEmissions({
+            year: year ? year : startDate.getFullYear(),
+            sites: sites,
+            date: dateM,
+            currency,
+          })
+      );
+  };
+
+
   useEffect(() => {
     if (isNewYear) {
       getData();
     }
+    getWasteData();
   }, [startDate, isNewYear, dateM, currency]);
 
   // useEffect(() => {
@@ -118,6 +138,7 @@ const EmissionReport = (props) => {
 
   useEffect(() => {
     getData();
+    getWasteData();
     dispatch(
       getReportSiteBreakDownEmissions({
         address_id: sites?.toString(),
@@ -127,6 +148,7 @@ const EmissionReport = (props) => {
     );
     dispatch(getReportEmissionVehicles());
     setEmission([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    setEmissionWaste([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   }, [sites, dateM, currency]);
 
   const getMonthData = (month, value) => {
@@ -174,6 +196,52 @@ const EmissionReport = (props) => {
     return emission;
   };
 
+  const getMonthDataWaste = (month, value) => {
+    switch (month) {
+      case "january":
+        emissionWaste[0] = value;
+        break;
+      case "february":
+        emissionWaste[1] = value;
+        break;
+      case "march":
+        emissionWaste[2] = value;
+        break;
+      case "april":
+        emissionWaste[3] = value;
+        break;
+      case "may":
+        emissionWaste[4] = value;
+        break;
+      case "june":
+        emissionWaste[5] = value;
+        break;
+      case "july":
+        emissionWaste[6] = value;
+        break;
+      case "august":
+        emissionWaste[7] = value;
+        break;
+      case "september":
+        emissionWaste[8] = value;
+        break;
+      case "october":
+        emissionWaste[9] = value;
+        break;
+      case "november":
+        emissionWaste[10] = value;
+        break;
+      case "december":
+        emissionWaste[11] = value;
+        break;
+      default:
+        return emissionWaste;
+    }
+    setEmissionWaste(emissionWaste);
+    console.log(emissionWaste)
+    return emissionWaste;
+  };
+
   let value = [
     {
       name: "null",
@@ -212,6 +280,44 @@ const EmissionReport = (props) => {
     },
   ];
 
+  let value2 = [
+    {
+      name: "null",
+      data: maxWaste
+          ? [maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste]
+          : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+      borderWidth: 0,
+      stack: 1,
+      borderSkipped: false,
+      borderRadius: 6,
+      pointStyle: "rectRounded",
+      pointWidth: 15,
+      boxWidth: "100%",
+      color: "#F7F7F7",
+      visible: true,
+      tooltip: {
+        pointFormat: "",
+      },
+    },
+    {
+      type: "column",
+      name: "Waste Emissions",
+      data: emissionWaste,
+      color: {
+        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+        stops: [
+          [0, "#2EF21D"],
+          [1, "#0BC21F"],
+        ],
+      },
+      borderSkipped: false,
+      borderRadius: 6,
+      pointStyle: "rectRounded",
+      pointWidth: 15,
+      boxWidth: "100%",
+    },
+  ];
+
   const filterSeries = () => {
     const dummy = emission?.map((single, index) => {
       return (emission[index] = 0);
@@ -228,12 +334,35 @@ const EmissionReport = (props) => {
     });
   };
 
+  const filterSeriesWaste = () => {
+    const dummy = emissionWaste?.map((single, index) => {
+      return (emissionWaste[index] = 0);
+    });
+    setEmissionWaste(dummy);
+    emissionWaste[0] = 0;
+    emissionWaste[1] = 0;
+    setEmissionWaste(emission);
+    wasteEmissions?.data?.data?.map((single) => {
+      getMonthDataWaste(
+          single.month?.toLowerCase(),
+          parseFloat(single.Recycled.toFixed(2))
+      );
+    });
+  };
+
   useEffect(() => {
     setChartData((st) => ({
       ...st,
       series: value,
     }));
   }, [emission, state?.data?.data, startDate, max]);
+
+  useEffect(() => {
+    setChartDataWaste((st) => ({
+      ...st,
+      series: value2,
+    }));
+  }, [emissionWaste, wasteEmissions?.data?.data, startDate, maxWaste]);
 
   useEffect(() => {
     if (state?.data?.data?.length > 0) {
@@ -245,19 +374,29 @@ const EmissionReport = (props) => {
     }
   }, [state?.data?.data, startDate]);
 
+  useEffect(() => {
+    if (wasteEmissions?.data?.data?.length > 0) {
+      filterSeriesWaste();
+      setMaxWaste(Math?.max(...emissionWaste));
+    } else {
+      setEmissionWaste([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      setMaxWaste(0);
+    }
+  }, [wasteEmissions?.data?.data, startDate]);
+
   return (
     <>
       <PayEmissionModal showModal={showModal} setShowModal={setShowModal} />
       <Card className="report-chart-card" id={"emissions"}>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
+            <div className="sub-heading" style={{paddingBottom: '10px'}}>Transport Emission</div>
             <h1>
               {state?.data?.year?.length > 0
                 ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
                 : `0.00`}{" "}
-              <span>kg of CO2e Cumulative Emissions</span>
+              <span>kg of CO2e Transport Emissions</span>
             </h1>
-            <div className="sub-heading">Transport Emission</div>
             {state?.isLoading ? (
               <div className="d-flex justify-center align-center">
                 <FadeLoader
@@ -322,35 +461,44 @@ const EmissionReport = (props) => {
           />
         </CardContent>*/}
 
-        {/*<CardContent>*/}
-        {/*  <div className="salesWp column-charts-highcharts-">*/}
-            {/*<div className="sub-heading">Waste Emissions</div>*/}
-            {/*<div className="filters">*/}
-            {/*  <div className="year">*/}
-            {/*    <DatePicker*/}
-            {/*      startDate={date}*/}
-            {/*      setStartDate={setDate}*/}
-            {/*      getData={handleDate}*/}
-            {/*    />*/}
-            {/*  </div>*/}
-            {/*  /!*<div className="total">*!/*/}
-            {/*  /!*  Total payment: <span>£0.00</span>*!/*/}
-            {/*  /!*</div>*!/*/}
-            {/*</div>*/}
-            {/*{state?.isLoading ? (*/}
-            {/*  <div className="d-flex justify-center align-center">*/}
-            {/*    <FadeLoader*/}
-            {/*      color={"#518ef8"}*/}
-            {/*      loading={state?.isLoading}*/}
-            {/*      width={4}*/}
-            {/*    />*/}
-            {/*  </div>*/}
-            {/*) : (*/}
-            {/*  <HighchartsReact*/}
-            {/*    highcharts={Highcharts}*/}
-            {/*    options={data2(siteCurrency)}*/}
-            {/*  />*/}
-            {/*)}*/}
+        <CardContent>
+          <div className="salesWp column-charts-highcharts-">
+            <div className="sub-heading" style={{paddingBottom: '10px'}}>Waste Emissions</div>
+            <h1 style={{color: '#0BC21F'}}>
+              {wasteEmissions?.data?.total > 0
+                  ? numberWithCommas(wasteEmissions?.data?.total?.toFixed(2))
+                  : `0.00`}{" "}
+              <span>kg of CO2e Waste Emissions</span>
+            </h1>
+            <div className="filters">
+              <div className="year">
+                <DatePicker
+                  startDate={date}
+                  setStartDate={setDate}
+                  getData={getWasteData}
+                />
+              </div>
+              {/*<div className="total">*/}
+              {/*  Total payment: <span>£0.00</span>*/}
+              {/*</div>*/}
+            </div>
+            {wasteEmissions?.isLoading ? (
+              <div className="d-flex justify-center align-center">
+                <FadeLoader
+                  color={"#518ef8"}
+                  loading={wasteEmissions?.isLoading}
+                  width={4}
+                />
+              </div>
+            ) : (
+                <div>
+                  {chartDataWaste && chartData?.series !== undefined && (<HighchartsReact
+                    highcharts={Highcharts}
+                    options={chartDataWaste}
+                    ref={props.ref2}
+                  />)}
+                </div>
+            )}
             {/*<div*/}
             {/*  className="w-100 button-with-icon-bar-chart"*/}
             {/*  style={showMore ? { opacity: 0 } : { opacity: 1 }}*/}
@@ -480,8 +628,8 @@ const EmissionReport = (props) => {
             {/*    </div>*/}
             {/*  </div>*/}
             {/*)}*/}
-        {/*  </div>*/}
-        {/*</CardContent>*/}
+          </div>
+        </CardContent>
       </Card>
     </>
   );
