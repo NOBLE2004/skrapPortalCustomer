@@ -311,175 +311,175 @@ const EmissionReport = (props) => {
           </div>
         </CardContent>
         <div className="border-drop"></div>
-        {/*<CardContent>*/}
-        {/*  <WasteEmissionGraph*/}
-        {/*    dateM={date}*/}
-        {/*    sites={sites}*/}
-        {/*    startDate={startDate}*/}
-        {/*    setStartDate={setStartDate}*/}
-        {/*    showMore={showMore}*/}
-        {/*    siteCurrency={siteCurrency}*/}
-        {/*  />*/}
-        {/*</CardContent>*/}
+        {/*<CardContent>
+          <WasteEmissionGraph
+            dateM={date}
+            sites={sites}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            showMore={showMore}
+            siteCurrency={siteCurrency}
+          />
+        </CardContent>*/}
 
         {/*<CardContent>*/}
         {/*  <div className="salesWp column-charts-highcharts-">*/}
-        {/*    <div className="sub-heading">Offset payments</div>*/}
-        {/*    <div className="filters">*/}
-        {/*      <div className="year">*/}
-        {/*        <DatePicker*/}
-        {/*          startDate={date}*/}
-        {/*          setStartDate={setDate}*/}
-        {/*          getData={handleDate}*/}
-        {/*        />*/}
-        {/*      </div>*/}
-        {/*      <div className="total">*/}
-        {/*        Total payment: <span>£0.00</span>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*    {state?.isLoading ? (*/}
-        {/*      <div className="d-flex justify-center align-center">*/}
-        {/*        <FadeLoader*/}
-        {/*          color={"#518ef8"}*/}
-        {/*          loading={state?.isLoading}*/}
-        {/*          width={4}*/}
-        {/*        />*/}
-        {/*      </div>*/}
-        {/*    ) : (*/}
-        {/*      <HighchartsReact*/}
-        {/*        highcharts={Highcharts}*/}
-        {/*        options={data2(siteCurrency)}*/}
-        {/*      />*/}
-        {/*    )}*/}
-        {/*    <div*/}
-        {/*      className="w-100 button-with-icon-bar-chart"*/}
-        {/*      style={showMore ? { opacity: 0 } : { opacity: 1 }}*/}
-        {/*    >*/}
-        {/*      <div className="w-100">*/}
-        {/*        <button*/}
-        {/*          onClick={() => {*/}
-        {/*            setShowModal(true);*/}
-        {/*          }}*/}
-        {/*        >*/}
-        {/*          <img src={Vector} alt="" />*/}
-        {/*          <span>Pay CO2e offset</span>*/}
-        {/*        </button>*/}
-        {/*      </div>*/}
-        {/*      <div*/}
-        {/*        className="see-more"*/}
-        {/*        onClick={() => {*/}
-        {/*          setShow(!show);*/}
-        {/*        }}*/}
-        {/*      >*/}
-        {/*        See more*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*    {show && (*/}
-        {/*      <div className="see-more-wrap">*/}
-        {/*        <div className="border-drop"></div>*/}
-        {/*        <div className="more-drop">*/}
-        {/*          <div className="sub-heading">Site breakdown</div>*/}
+            {/*<div className="sub-heading">Waste Emissions</div>*/}
+            {/*<div className="filters">*/}
+            {/*  <div className="year">*/}
+            {/*    <DatePicker*/}
+            {/*      startDate={date}*/}
+            {/*      setStartDate={setDate}*/}
+            {/*      getData={handleDate}*/}
+            {/*    />*/}
+            {/*  </div>*/}
+            {/*  /!*<div className="total">*!/*/}
+            {/*  /!*  Total payment: <span>£0.00</span>*!/*/}
+            {/*  /!*</div>*!/*/}
+            {/*</div>*/}
+            {/*{state?.isLoading ? (*/}
+            {/*  <div className="d-flex justify-center align-center">*/}
+            {/*    <FadeLoader*/}
+            {/*      color={"#518ef8"}*/}
+            {/*      loading={state?.isLoading}*/}
+            {/*      width={4}*/}
+            {/*    />*/}
+            {/*  </div>*/}
+            {/*) : (*/}
+            {/*  <HighchartsReact*/}
+            {/*    highcharts={Highcharts}*/}
+            {/*    options={data2(siteCurrency)}*/}
+            {/*  />*/}
+            {/*)}*/}
+            {/*<div*/}
+            {/*  className="w-100 button-with-icon-bar-chart"*/}
+            {/*  style={showMore ? { opacity: 0 } : { opacity: 1 }}*/}
+            {/*>*/}
+            {/*  <div className="w-100">*/}
+            {/*    <button*/}
+            {/*      onClick={() => {*/}
+            {/*        setShowModal(true);*/}
+            {/*      }}*/}
+            {/*    >*/}
+            {/*      <img src={Vector} alt="" />*/}
+            {/*      <span>Pay CO2e offset</span>*/}
+            {/*    </button>*/}
+            {/*  </div>*/}
+            {/*  <div*/}
+            {/*    className="see-more"*/}
+            {/*    onClick={() => {*/}
+            {/*      setShow(!show);*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    See more*/}
+            {/*  </div>*/}
+            {/*</div>*/}
+            {/*{show && (*/}
+            {/*  <div className="see-more-wrap">*/}
+            {/*    <div className="border-drop"></div>*/}
+            {/*    <div className="more-drop">*/}
+            {/*      <div className="sub-heading">Site breakdown</div>*/}
 
-        {/*          {stateSiteBreakDown?.isLoading ? (*/}
-        {/*            <div className="d-flex justify-center align-center">*/}
-        {/*              <FadeLoader*/}
-        {/*                color={"#518ef8"}*/}
-        {/*                loading={stateSiteBreakDown?.isLoading}*/}
-        {/*                width={4}*/}
-        {/*              />*/}
-        {/*            </div>*/}
-        {/*          ) : (*/}
-        {/*            <div className="main-emission-break-down">*/}
-        {/*              {stateSiteBreakDown?.data?.graph_data?.map(*/}
-        {/*                (service, index) => {*/}
-        {/*                  return (*/}
-        {/*                    <div className="inner-break-down" key={index}>*/}
-        {/*                      <div className="circle-main">*/}
-        {/*                        <div*/}
-        {/*                          className="circle"*/}
-        {/*                          style={{*/}
-        {/*                            width: `${*/}
-        {/*                              service?.Sum_Co2e?.toFixed(1) > 100*/}
-        {/*                                ? 100*/}
-        {/*                                : service?.Sum_Co2e?.toFixed(1)*/}
-        {/*                            }px`,*/}
-        {/*                            height: `${*/}
-        {/*                              service?.Sum_Co2e?.toFixed(1) > 100*/}
-        {/*                                ? 100*/}
-        {/*                                : service?.Sum_Co2e?.toFixed(1)*/}
-        {/*                            }px`,*/}
-        {/*                            background:*/}
-        {/*                              index % 3 === 0*/}
-        {/*                                ? "#0F2851"*/}
-        {/*                                : index % 3 === 1*/}
-        {/*                                ? "#4981F8"*/}
-        {/*                                : "#60A0F8",*/}
-        {/*                            borderRadius: "50%",*/}
-        {/*                          }}*/}
-        {/*                        />*/}
-        {/*                      </div>*/}
-        {/*                      <div className="site-name">*/}
-        {/*                        <div className="site">{service.SiteName}</div>*/}
-        {/*                        <div className="percentage">*/}
-        {/*                          {service?.Sum_Co2e?.toFixed(1)} CO2e*/}
-        {/*                        </div>*/}
-        {/*                      </div>*/}
-        {/*                    </div>*/}
-        {/*                  );*/}
-        {/*                }*/}
-        {/*              )}*/}
-        {/*            </div>*/}
-        {/*          )}*/}
-        {/*          /!*<div className="sub-heading">CO2e breakdown</div>*!/*/}
-        {/*          /!*<div className="sub-heading progress-label">*!/*/}
-        {/*          /!*  <p>Van</p>*!/*/}
-        {/*          /!*  <p>Truck</p>*!/*/}
-        {/*          /!*</div>*!/*/}
-        {/*          /!*<div className="services">*!/*/}
-        {/*          /!*  <div className="progress-div">*!/*/}
-        {/*          /!*    <div className="progress-bar" style={{ width: "40%" }}>*!/*/}
-        {/*          /!*      <label>25%</label>*!/*/}
-        {/*          /!*      <BorderLinearProgress*!/*/}
-        {/*          /!*        value={100}*!/*/}
-        {/*          /!*        variant="determinate"*!/*/}
-        {/*          /!*      />*!/*/}
-        {/*          /!*    </div>*!/*/}
-        {/*          /!*    <div*!/*/}
-        {/*          /!*      className="progress-bar"*!/*/}
-        {/*          /!*      style={{ width: "60%", position: "relative" }}*!/*/}
-        {/*          /!*    >*!/*/}
-        {/*          /!*      <BorderLinearProgress value={0} variant="determinate" />*!/*/}
-        {/*          /!*      <label*!/*/}
-        {/*          /!*        style={{*!/*/}
-        {/*          /!*          right: 0,*!/*/}
-        {/*          /!*          paddingRight: "2.5%",*!/*/}
-        {/*          /!*        }}*!/*/}
-        {/*          /!*      >*!/*/}
-        {/*          /!*        60%*!/*/}
-        {/*          /!*      </label>*!/*/}
-        {/*          /!*    </div>*!/*/}
-        {/*          /!*  </div>*!/*/}
-        {/*          /!*</div>*!/*/}
-        {/*          <Grid container marginTop={5}>*/}
-        {/*            <BorderLinearProgress2 value={60} variant="determinate" />*/}
-        {/*          </Grid>*/}
-        {/*          <Grid container justifyContent="space-between">*/}
-        {/*            {state?.data?.year?.map((value, index) => (*/}
-        {/*              <div className="sub-heading progress-label" key={index}>*/}
-        {/*                <p className="text left">*/}
-        {/*                  Tank-to-well <br />*/}
-        {/*                  <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>*/}
-        {/*                </p>*/}
-        {/*                <p className="text right">*/}
-        {/*                  Well-to-tank <br />*/}
-        {/*                  <span> {value?.WTTCo2e.toFixed(2)} Co2e</span>*/}
-        {/*                </p>*/}
-        {/*              </div>*/}
-        {/*            ))}*/}
-        {/*          </Grid>*/}
-        {/*        </div>*/}
-        {/*      </div>*/}
-        {/*    )}*/}
+            {/*      {stateSiteBreakDown?.isLoading ? (*/}
+            {/*        <div className="d-flex justify-center align-center">*/}
+            {/*          <FadeLoader*/}
+            {/*            color={"#518ef8"}*/}
+            {/*            loading={stateSiteBreakDown?.isLoading}*/}
+            {/*            width={4}*/}
+            {/*          />*/}
+            {/*        </div>*/}
+            {/*      ) : (*/}
+            {/*        <div className="main-emission-break-down">*/}
+            {/*          {stateSiteBreakDown?.data?.graph_data?.map(*/}
+            {/*            (service, index) => {*/}
+            {/*              return (*/}
+            {/*                <div className="inner-break-down" key={index}>*/}
+            {/*                  <div className="circle-main">*/}
+            {/*                    <div*/}
+            {/*                      className="circle"*/}
+            {/*                      style={{*/}
+            {/*                        width: `${*/}
+            {/*                          service?.Sum_Co2e?.toFixed(1) > 100*/}
+            {/*                            ? 100*/}
+            {/*                            : service?.Sum_Co2e?.toFixed(1)*/}
+            {/*                        }px`,*/}
+            {/*                        height: `${*/}
+            {/*                          service?.Sum_Co2e?.toFixed(1) > 100*/}
+            {/*                            ? 100*/}
+            {/*                            : service?.Sum_Co2e?.toFixed(1)*/}
+            {/*                        }px`,*/}
+            {/*                        background:*/}
+            {/*                          index % 3 === 0*/}
+            {/*                            ? "#0F2851"*/}
+            {/*                            : index % 3 === 1*/}
+            {/*                            ? "#4981F8"*/}
+            {/*                            : "#60A0F8",*/}
+            {/*                        borderRadius: "50%",*/}
+            {/*                      }}*/}
+            {/*                    />*/}
+            {/*                  </div>*/}
+            {/*                  <div className="site-name">*/}
+            {/*                    <div className="site">{service.SiteName}</div>*/}
+            {/*                    <div className="percentage">*/}
+            {/*                      {service?.Sum_Co2e?.toFixed(1)} CO2e*/}
+            {/*                    </div>*/}
+            {/*                  </div>*/}
+            {/*                </div>*/}
+            {/*              );*/}
+            {/*            }*/}
+            {/*          )}*/}
+            {/*        </div>*/}
+            {/*      )}*/}
+            {/*      /!*<div className="sub-heading">CO2e breakdown</div>*!/*/}
+            {/*      /!*<div className="sub-heading progress-label">*!/*/}
+            {/*      /!*  <p>Van</p>*!/*/}
+            {/*      /!*  <p>Truck</p>*!/*/}
+            {/*      /!*</div>*!/*/}
+            {/*      /!*<div className="services">*!/*/}
+            {/*      /!*  <div className="progress-div">*!/*/}
+            {/*      /!*    <div className="progress-bar" style={{ width: "40%" }}>*!/*/}
+            {/*      /!*      <label>25%</label>*!/*/}
+            {/*      /!*      <BorderLinearProgress*!/*/}
+            {/*      /!*        value={100}*!/*/}
+            {/*      /!*        variant="determinate"*!/*/}
+            {/*      /!*      />*!/*/}
+            {/*      /!*    </div>*!/*/}
+            {/*      /!*    <div*!/*/}
+            {/*      /!*      className="progress-bar"*!/*/}
+            {/*      /!*      style={{ width: "60%", position: "relative" }}*!/*/}
+            {/*      /!*    >*!/*/}
+            {/*      /!*      <BorderLinearProgress value={0} variant="determinate" />*!/*/}
+            {/*      /!*      <label*!/*/}
+            {/*      /!*        style={{*!/*/}
+            {/*      /!*          right: 0,*!/*/}
+            {/*      /!*          paddingRight: "2.5%",*!/*/}
+            {/*      /!*        }}*!/*/}
+            {/*      /!*      >*!/*/}
+            {/*      /!*        60%*!/*/}
+            {/*      /!*      </label>*!/*/}
+            {/*      /!*    </div>*!/*/}
+            {/*      /!*  </div>*!/*/}
+            {/*      /!*</div>*!/*/}
+            {/*      <Grid container marginTop={5}>*/}
+            {/*        <BorderLinearProgress2 value={60} variant="determinate" />*/}
+            {/*      </Grid>*/}
+            {/*      <Grid container justifyContent="space-between">*/}
+            {/*        {state?.data?.year?.map((value, index) => (*/}
+            {/*          <div className="sub-heading progress-label" key={index}>*/}
+            {/*            <p className="text left">*/}
+            {/*              Tank-to-well <br />*/}
+            {/*              <span> {value?.TTWCo2e?.toFixed(2)} Co2e</span>*/}
+            {/*            </p>*/}
+            {/*            <p className="text right">*/}
+            {/*              Well-to-tank <br />*/}
+            {/*              <span> {value?.WTTCo2e.toFixed(2)} Co2e</span>*/}
+            {/*            </p>*/}
+            {/*          </div>*/}
+            {/*        ))}*/}
+            {/*      </Grid>*/}
+            {/*    </div>*/}
+            {/*  </div>*/}
+            {/*)}*/}
         {/*  </div>*/}
         {/*</CardContent>*/}
       </Card>
