@@ -50,10 +50,18 @@ const SiteMovementsReport = (props) => {
       <CardContent>
         <div className="salesWp">
           {state?.data?.result?.total ? (
-            <h1>
-              {numberWithCommas(state?.data?.result?.total)}{" "}
-              <span>Total bookings</span>
-            </h1>
+              <>
+                <h1>
+                  {numberWithCommas(state?.data?.result?.total)}{" "}
+                  <span>Total bookings</span>
+                </h1>
+                { state?.data?.result?.reduction > 0 && <h1>
+                  <span style={{color: '#848c99', width: '50%'}}>
+                    <span style={{color: 'rgb(80, 210, 38)'}}> {state?.data?.result?.reduction}% </span>
+                    in reduction which is {state?.data?.result?.reduced} dumpsters we considered baseline as 660 dumpsters to landfill.
+                  </span>
+                </h1>}
+              </>
           ) : (
             <h1>0.00</h1>
           )}
