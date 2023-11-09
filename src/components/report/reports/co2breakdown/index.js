@@ -21,6 +21,7 @@ const Co2breakdownReport = (props) => {
   const wasteOfEnergyData = useSelector((state) => state?.energy);
   const recycledData = useSelector((state) => state?.recycled);
   const [chartData, setChartData] = useState();
+  const [chartDataRecycled, setChartDataRecycled] = useState();
   const { sites, showMore, date, siteCurrency } = props;
   const [show, setShow] = useState(false);
   // useEffect(() => {
@@ -56,38 +57,18 @@ const Co2breakdownReport = (props) => {
         pointFormat: "<b>{point.percentage:.1f}%</b>",
       },
       accessibility: {
+        announceNewData: {
+          enabled: true
+        },
         point: {
           valueSuffix: "%",
         },
       },
-      // legend: {
-      //   align: "right",
-      //   size: "40%",
-      //   verticalAlign: "middle",
-      //   layout: "vertical",
-      //   itemStyle: {
-      //     width: 250,
-      //     textOverflow: "ellipsis",
-      //   },
-      //   margin: 0,
-      // },
       plotOptions: {
-        // pie: {
-        //   size: "100%",
-        //   allowPointSelect: true,
-        //   cursor: "pointer",
-        //   colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
-        //   dataLabels: {
-        //     enabled: true,
-        //     distance: 20
-        //   },
-        //   showInLegend: true,
-        // },
         pie: {
           allowPointSelect: true,
           cursor: 'pointer',
           colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
-          //showInLegend: true,
           dataLabels: {
             enabled: true,
             format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
@@ -111,21 +92,59 @@ const Co2breakdownReport = (props) => {
     });
   }, [wasteData?.data]);
 
+  useEffect(() => {
+    setChartDataRecycled({
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: "pie",
+      },
+      title: {
+        text: null,
+      },
+      tooltip: {
+        pointFormat: "<b>{point.percentage:.2f}%</b>",
+      },
+      accessibility: {
+        announceNewData: {
+          enabled: true
+        },
+        point: {
+          valueSuffix: "%",
+        },
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+          dataLabels: {
+            enabled: true,
+            format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
+                '<span style="opacity: 0.6">{point.percentage:.2f}% </span>',
+            connectorColor: 'rgba(128,128,128,0.5)',
+            distance: 20
+          }
+        }
+      },
+      series: [
+        {
+          title: "",
+          type: "pie",
+          data: recycledData?.data?.result,
+        },
+      ],
+      exporting: {
+        filename: `chart-${new Date()?.toLocaleDateString()}`,
+      },
+    });
+  }, [recycledData?.data]);
+
   return (
     <Card className="report-chart-card" id="waste_statistics">
       <CardContent>
         <div className="salesWp">
-          <h1>
-            {tonnageData?.data?.result?.total
-              ? numberWithCommas(tonnageData?.data?.result?.total?.toFixed(2))
-              : "0.00"}
-            &nbsp;
-            <span>
-              {tonnageData?.data?.result?.title
-                ? tonnageData?.data?.result?.title
-                : "Tonnes total weight"}
-            </span>
-          </h1>
           {state?.isLoading ||
           wasteOfEnergyData?.isLoading ||
           recycledData?.isLoading ? (
@@ -134,202 +153,181 @@ const Co2breakdownReport = (props) => {
             </div>
           ) : (
             <div className="salesWp-inner-wrap">
-              <div
-                className="salesWp-sub main-progress-bar-large"
-                style={{ position: "relative" }}
+              <Grid
+                  container
+                  spacing={2}
+                  marginTop={1}
+                  style={{
+                    height:
+                        wasteData?.data?.result?.length > 10 ? "300px" : "unset",
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                  className="waste-main"
               >
-                <div>
-                  <CircleProgress
-                    width={250}
-                    strokeWidth={20}
-                    fontFamily={"DM Sans"}
-                    fontSize={"26px"}
-                    fontColor={"#0F285"}
-                    fontWeight={"700"}
-                    secondaryColor={"#F7F7F7"}
-                    percentage={
-                      state?.data?.result?.land_fill
-                        ? state?.data?.result?.land_fill
-                        : 0
-                    }
-                    primaryColor={["#73C6F9", "#5391F9"]}
+              {recycledData?.data && recycledData?.data?.result && (
+                  <HighchartsReact
+                      highcharts={Highcharts}
+                      options={chartDataRecycled}
+                      ref={props.refFinance}
                   />
-                </div>
-                <div style={{ position: "absolute" }}>
-                  <CircleProgress
-                    width={145}
-                    strokeWidth={4}
-                    fontFamily={"DM Sans"}
-                    fontSize={"26px"}
-                    fontColor={"#0F285"}
-                    fontWeight={"700"}
-                    secondaryColor={"#fff"}
-                    hidePercentageText
-                    percentage={state?.data?.result?.land_fill}
-                    primaryColor={["#50D226", "#000000"]}
-                  />
-                </div>
-                <div className="text-in-progressbar">
-                  <span>
-                    {state?.data?.result?.title
-                      ? state?.data?.result?.title
-                      : "Diverted from landfill"}
-                  </span>
-                </div>
-              </div>
-              <div className="salesWp-sub" style={{ alignItems: "center"}}>
-                <div className="guage-with-text">
-                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
-                  <CircleProgress
-                    width={100}
-                    strokeWidth={10}
-                    fontFamily={"DM Sans"}
-                    fontSize={"14px"}
-                    fontColor={"#0F285"}
-                    fontWeight={700}
-                    secondaryColor={"#F7F7F7"}
-                    percentage={
-                      recycledData?.data?.result?.recycled
-                    }
-                    primaryColor={["#50D226", "#50D226"]}
-                  />
-                  <div className="text">
-                    <h1>
-                      {"Recycled"}
-                    </h1>
-                    {/*<p>*/}
-                    {/*  {recycledData?.data?.result?.emco2*/}
-                    {/*    ? recycledData?.data?.result?.emco2*/}
-                    {/*    : 0}{" "}*/}
-                    {/*  {recycledData?.data?.result?.emco2_title*/}
-                    {/*    ? recycledData?.data?.result?.emco2_title*/}
-                    {/*    : "tonns CO2"}*/}
-                    {/*</p>*/}
-                    {/*<label>Equivalent to 200 trees</label>*/}
-                    {/*<p>*/}
-                    {/*  {recycledData?.data?.result?.saved*/}
-                    {/*      ? recycledData?.data?.result?.saved*/}
-                    {/*      : 0}{" "}*/}
-                    {/*  {recycledData?.data?.result?.saved_title*/}
-                    {/*      ? recycledData?.data?.result?.saved_title*/}
-                    {/*      : "Saved to landfill"}*/}
-                    {/*</p>*/}
-                  </div>
-                  </div>
-                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
-                  <CircleProgress
-                      width={100}
-                      strokeWidth={10}
-                      fontFamily={"DM Sans"}
-                      fontSize={"14px"}
-                      fontColor={"#0F285"}
-                      fontWeight={700}
-                      secondaryColor={"#F7F7F7"}
-                      percentage={recycledData?.data?.result?.waste_of_energy}
-                      primaryColor={["#ec5e19", "#ec5e19"]}
-                  />
-                  <div className="text">
-                    <h1>
-                      {"Waste to energy"}
-                    </h1>
-                    {/*<p>*/}
-                    {/*  {wasteOfEnergyData?.data?.result?.kwh*/}
-                    {/*    ? wasteOfEnergyData?.data?.result?.kwh*/}
-                    {/*    : 0}{" "}*/}
-                    {/*  {wasteOfEnergyData?.data?.result?.kwh_title*/}
-                    {/*    ? wasteOfEnergyData?.data?.result?.kwh_title*/}
-                    {/*    : "KWhr of energy"}*/}
-                    {/*</p>*/}
-                    {/*<label>*/}
-                    {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
-                    {/*  smartphone charges*/}
-                    {/*</label>*/}
-                  </div>
-                  </div>
-                </div>
-                <div className="guage-with-text">
-                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
-                  <CircleProgress
-                      width={100}
-                      strokeWidth={10}
-                      fontFamily={"DM Sans"}
-                      fontSize={"14px"}
-                      fontColor={"#0F285"}
-                      fontWeight={700}
-                      secondaryColor={"#F7F7F7"}
-                      percentage={recycledData?.data?.result?.reuse}
-                      primaryColor={["#0baeae", "#0baeae"]}
-                  />
-                  <div className="text">
-                    <h1>
-                      {"Reuse"}
-                    </h1>
-                    {/*<p>*/}
-                    {/*  {wasteOfEnergyData?.data?.result?.kwh*/}
-                    {/*    ? wasteOfEnergyData?.data?.result?.kwh*/}
-                    {/*    : 0}{" "}*/}
-                    {/*  {wasteOfEnergyData?.data?.result?.kwh_title*/}
-                    {/*    ? wasteOfEnergyData?.data?.result?.kwh_title*/}
-                    {/*    : "KWhr of energy"}*/}
-                    {/*</p>*/}
-                    {/*<label>*/}
-                    {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
-                    {/*  smartphone charges*/}
-                    {/*</label>*/}
-                  </div>
-                  </div>
-                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
-                  <CircleProgress
-                      width={100}
-                      strokeWidth={10}
-                      fontFamily={"DM Sans"}
-                      fontSize={"14px"}
-                      fontColor={"#0F285"}
-                      fontWeight={700}
-                      secondaryColor={"#F7F7F7"}
-                      percentage={recycledData?.data?.result?.recovery}
-                      primaryColor={["#2171df", "#2171df"]}
-                  />
-                  <div className="text">
-                    <h1>
-                      {"Recovery"}
-                    </h1>
-                    {/*<p>*/}
-                    {/*  {wasteOfEnergyData?.data?.result?.kwh*/}
-                    {/*    ? wasteOfEnergyData?.data?.result?.kwh*/}
-                    {/*    : 0}{" "}*/}
-                    {/*  {wasteOfEnergyData?.data?.result?.kwh_title*/}
-                    {/*    ? wasteOfEnergyData?.data?.result?.kwh_title*/}
-                    {/*    : "KWhr of energy"}*/}
-                    {/*</p>*/}
-                    {/*<label>*/}
-                    {/*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*/}
-                    {/*  smartphone charges*/}
-                    {/*</label>*/}
-                  </div>
-                  </div>
-                  <div className="salesWp-sub2" style={{ alignItems: "center" }}>
-                    <CircleProgress
-                        width={100}
-                        strokeWidth={10}
-                        fontFamily={"DM Sans"}
-                        fontSize={"14px"}
-                        fontColor={"#0F285"}
-                        fontWeight={700}
-                        secondaryColor={"#F7F7F7"}
-                        percentage={recycledData?.data?.result?.upcycle}
-                        primaryColor={["#ff9205", "#f7a840"]}
-                    />
-                    <div className="text">
-                      <h1>
-                        {"UpCycle"}
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+              )}
+              </Grid>
+            </div>)}
+            {/*  <div*/}
+            {/*    className="salesWp-sub main-progress-bar-large"*/}
+            {/*    style={{ position: "relative" }}*/}
+            {/*  >*/}
+            {/*    <div>*/}
+            {/*      /!*<CircleProgress*!/*/}
+            {/*      /!*  width={250}*!/*/}
+            {/*      /!*  strokeWidth={20}*!/*/}
+            {/*      /!*  fontFamily={"DM Sans"}*!/*/}
+            {/*      /!*  fontSize={"26px"}*!/*/}
+            {/*      /!*  fontColor={"#0F285"}*!/*/}
+            {/*      /!*  fontWeight={"700"}*!/*/}
+            {/*      /!*  secondaryColor={"#F7F7F7"}*!/*/}
+            {/*      /!*  percentage={*!/*/}
+            {/*      /!*    state?.data?.result?.land_fill*!/*/}
+            {/*      /!*      ? state?.data?.result?.land_fill*!/*/}
+            {/*      /!*      : 0*!/*/}
+            {/*      /!*  }*!/*/}
+            {/*      /!*  primaryColor={["#73C6F9", "#5391F9"]}*!/*/}
+                  {/*/>*/}
+            {/*    </div>*/}
+            {/*    <div style={{ position: "absolute" }}>*/}
+            {/*      <CircleProgress*/}
+            {/*        width={145}*/}
+            {/*        strokeWidth={4}*/}
+            {/*        fontFamily={"DM Sans"}*/}
+            {/*        fontSize={"26px"}*/}
+            {/*        fontColor={"#0F285"}*/}
+            {/*        fontWeight={"700"}*/}
+            {/*        secondaryColor={"#fff"}*/}
+            {/*        hidePercentageText*/}
+            {/*        percentage={state?.data?.result?.land_fill}*/}
+            {/*        primaryColor={["#50D226", "#000000"]}*/}
+            {/*      />*/}
+            {/*    </div>*/}
+            {/*    <div className="text-in-progressbar">*/}
+            {/*      <span>*/}
+            {/*        {state?.data?.result?.title*/}
+            {/*          ? state?.data?.result?.title*/}
+            {/*          : "Diverted from landfill"}*/}
+            {/*      </span>*/}
+            {/*    </div>*/}
+            {/*  </div>*/}
+            {/*  <div className="salesWp-sub" style={{ alignItems: "center"}}>*/}
+            {/*    <div className="guage-with-text">*/}
+            {/*      <div className="salesWp-sub2" style={{ alignItems: "center" }}>*/}
+            {/*      <CircleProgress*/}
+            {/*        width={100}*/}
+            {/*        strokeWidth={10}*/}
+            {/*        fontFamily={"DM Sans"}*/}
+            {/*        fontSize={"14px"}*/}
+            {/*        fontColor={"#0F285"}*/}
+            {/*        fontWeight={700}*/}
+            {/*        secondaryColor={"#F7F7F7"}*/}
+            {/*        percentage={*/}
+            {/*          recycledData?.data?.result?.recycled*/}
+            {/*        }*/}
+            {/*        primaryColor={["#50D226", "#50D226"]}*/}
+            {/*      />*/}
+            {/*      <div className="text">*/}
+            {/*        <h1>*/}
+            {/*          {"Recycled"}*/}
+            {/*        </h1>*/}
+            {/*      </div>*/}
+            {/*      </div>*/}
+            {/*      <div className="salesWp-sub2" style={{ alignItems: "center" }}>*/}
+            {/*      <CircleProgress*/}
+            {/*          width={100}*/}
+            {/*          strokeWidth={10}*/}
+            {/*          fontFamily={"DM Sans"}*/}
+            {/*          fontSize={"14px"}*/}
+            {/*          fontColor={"#0F285"}*/}
+            {/*          fontWeight={700}*/}
+            {/*          secondaryColor={"#F7F7F7"}*/}
+            {/*          percentage={recycledData?.data?.result?.waste_of_energy}*/}
+            {/*          primaryColor={["#ec5e19", "#ec5e19"]}*/}
+            {/*      />*/}
+            {/*      <div className="text">*/}
+            {/*        <h1>*/}
+            {/*          {"Waste to energy"}*/}
+            {/*        </h1>*/}
+            {/*      </div>*/}
+            {/*      </div>*/}
+            {/*    </div>*/}
+            {/*    <div className="guage-with-text">*/}
+            {/*      <div className="salesWp-sub2" style={{ alignItems: "center" }}>*/}
+            {/*      <CircleProgress*/}
+            {/*          width={100}*/}
+            {/*          strokeWidth={10}*/}
+            {/*          fontFamily={"DM Sans"}*/}
+            {/*          fontSize={"14px"}*/}
+            {/*          fontColor={"#0F285"}*/}
+            {/*          fontWeight={700}*/}
+            {/*          secondaryColor={"#F7F7F7"}*/}
+            {/*          percentage={recycledData?.data?.result?.reuse}*/}
+            {/*          primaryColor={["#0baeae", "#0baeae"]}*/}
+            {/*      />*/}
+            {/*      <div className="text">*/}
+            {/*        <h1>*/}
+            {/*          {"Reuse"}*/}
+            {/*        </h1>*/}
+            {/*      </div>*/}
+            {/*      </div>*/}
+            {/*      <div className="salesWp-sub2" style={{ alignItems: "center" }}>*/}
+            {/*      <CircleProgress*/}
+            {/*          width={100}*/}
+            {/*          strokeWidth={10}*/}
+            {/*          fontFamily={"DM Sans"}*/}
+            {/*          fontSize={"14px"}*/}
+            {/*          fontColor={"#0F285"}*/}
+            {/*          fontWeight={700}*/}
+            {/*          secondaryColor={"#F7F7F7"}*/}
+            {/*          percentage={recycledData?.data?.result?.recovery}*/}
+            {/*          primaryColor={["#2171df", "#2171df"]}*/}
+            {/*      />*/}
+            {/*      <div className="text">*/}
+            {/*        <h1>*/}
+            {/*          {"Recovery"}*/}
+            {/*        </h1>*/}
+            {/*        /!*<p>*!/*/}
+            {/*        /!*  {wasteOfEnergyData?.data?.result?.kwh*!/*/}
+            {/*        /!*    ? wasteOfEnergyData?.data?.result?.kwh*!/*/}
+            {/*        /!*    : 0}{" "}*!/*/}
+            {/*        /!*  {wasteOfEnergyData?.data?.result?.kwh_title*!/*/}
+            {/*        /!*    ? wasteOfEnergyData?.data?.result?.kwh_title*!/*/}
+            {/*        /!*    : "KWhr of energy"}*!/*/}
+            {/*        /!*</p>*!/*/}
+            {/*        /!*<label>*!/*/}
+            {/*        /!*  Equivalent to {wasteOfEnergyData?.data?.result?.kwh ? (wasteOfEnergyData?.data?.result?.kwh / 0.2)?.toFixed(2) : 0 } <br />*!/*/}
+            {/*        /!*  smartphone charges*!/*/}
+            {/*        /!*</label>*!/*/}
+            {/*      </div>*/}
+            {/*      </div>*/}
+            {/*      <div className="salesWp-sub2" style={{ alignItems: "center" }}>*/}
+            {/*        <CircleProgress*/}
+            {/*            width={100}*/}
+            {/*            strokeWidth={10}*/}
+            {/*            fontFamily={"DM Sans"}*/}
+            {/*            fontSize={"14px"}*/}
+            {/*            fontColor={"#0F285"}*/}
+            {/*            fontWeight={700}*/}
+            {/*            secondaryColor={"#F7F7F7"}*/}
+            {/*            percentage={recycledData?.data?.result?.upcycle}*/}
+            {/*            primaryColor={["#ff9205", "#f7a840"]}*/}
+            {/*        />*/}
+            {/*        <div className="text">*/}
+            {/*          <h1>*/}
+            {/*            {"UpCycle"}*/}
+            {/*          </h1>*/}
+            {/*        </div>*/}
+            {/*      </div>*/}
+            {/*    </div>*/}
+            {/*  </div>*/}
+            {/*</div>*/}
           {/* <div
             className="see-more"
             style={showMore ? { opacity: 0 } : { opacity: 1 }}
@@ -352,6 +350,17 @@ const Co2breakdownReport = (props) => {
               </div>
             ) : (
               <div className="more-drop">
+                <h1>
+                  {tonnageData?.data?.result?.total
+                      ? numberWithCommas(tonnageData?.data?.result?.total?.toFixed(2))
+                      : "0.00"}
+                  &nbsp;
+                  <span>
+              {tonnageData?.data?.result?.title
+                  ? tonnageData?.data?.result?.title
+                  : "Tonnes total weight"}
+            </span>
+                </h1>
                 <div className="sub-heading">Waste breakdown</div>
                 <Grid
                   container
