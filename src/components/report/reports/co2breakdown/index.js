@@ -10,6 +10,8 @@ import FadeLoader from "react-spinners/FadeLoader";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
 import { numberWithCommas } from "../../../utlils/dashboard";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 const Co2breakdownReport = (props) => {
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ const Co2breakdownReport = (props) => {
   const wasteData = useSelector((state) => state?.waste);
   const wasteOfEnergyData = useSelector((state) => state?.energy);
   const recycledData = useSelector((state) => state?.recycled);
+  const [chartData, setChartData] = useState();
   const { sites, showMore, date, siteCurrency } = props;
   const [show, setShow] = useState(false);
   // useEffect(() => {
@@ -37,6 +40,76 @@ const Co2breakdownReport = (props) => {
     //dispatch(getWasteOfEnergy({ sites: sites, date, currency:siteCurrency }));
     dispatch(getRecycled({ sites: sites, date, currency:siteCurrency }));
   }, [sites, date, siteCurrency]);
+
+  useEffect(() => {
+    setChartData({
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: "pie",
+      },
+      title: {
+        text: null,
+      },
+      tooltip: {
+        pointFormat: "<b>{point.percentage:.1f}%</b>",
+      },
+      accessibility: {
+        point: {
+          valueSuffix: "%",
+        },
+      },
+      // legend: {
+      //   align: "right",
+      //   size: "40%",
+      //   verticalAlign: "middle",
+      //   layout: "vertical",
+      //   itemStyle: {
+      //     width: 250,
+      //     textOverflow: "ellipsis",
+      //   },
+      //   margin: 0,
+      // },
+      plotOptions: {
+        // pie: {
+        //   size: "100%",
+        //   allowPointSelect: true,
+        //   cursor: "pointer",
+        //   colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+        //   dataLabels: {
+        //     enabled: true,
+        //     distance: 20
+        //   },
+        //   showInLegend: true,
+        // },
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+          //showInLegend: true,
+          dataLabels: {
+            enabled: true,
+            format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
+                '<span style="opacity: 0.6">{point.percentage:.1f}% </span>' +
+                '<span style="opacity: 0.6"> ({point.y:.1f}T)</span>',
+            connectorColor: 'rgba(128,128,128,0.5)',
+            distance: 20
+          }
+        }
+      },
+      series: [
+        {
+          title: "",
+          type: "pie",
+          data: wasteData?.data?.result,
+        },
+      ],
+      exporting: {
+        filename: `chart-${new Date()?.toLocaleDateString()}`,
+      },
+    });
+  }, [wasteData?.data]);
 
   return (
     <Card className="report-chart-card" id="waste_statistics">
@@ -287,34 +360,43 @@ const Co2breakdownReport = (props) => {
                   style={{
                     height:
                       wasteData?.data?.result?.length > 10 ? "300px" : "unset",
+                    display: 'flex',
+                    justifyContent: 'center'
                   }}
                   className="waste-main"
                 >
-                  {wasteData?.data?.result?.map((single, index) => {
-                    return (
-                      <Grid
-                        item
-                        md={4}
-                        lg={3}
-                        sm={4}
-                        xs={4}
-                        className="waste-box"
-                        key={index}
-                      >
-                        <div
-                          className="waste-detail "
-                          style={{
-                            color: "grey",
-                          }}
-                        >
-                          <div className="name">{single.name}</div>
-                          <div className="percentage">
-                            {single.waste === null ? 0 : single.waste}T
-                          </div>
-                        </div>
-                      </Grid>
-                    );
-                  })}
+                  {wasteData?.data && wasteData?.data?.result && (
+                      <HighchartsReact
+                          highcharts={Highcharts}
+                          options={chartData}
+                          ref={props.refFinance}
+                      />
+                  )}
+                  {/*{wasteData?.data?.result?.map((single, index) => {*/}
+                  {/*  return (*/}
+                  {/*    <Grid*/}
+                  {/*      item*/}
+                  {/*      md={4}*/}
+                  {/*      lg={3}*/}
+                  {/*      sm={4}*/}
+                  {/*      xs={4}*/}
+                  {/*      className="waste-box"*/}
+                  {/*      key={index}*/}
+                  {/*    >*/}
+                  {/*      <div*/}
+                  {/*        className="waste-detail "*/}
+                  {/*        style={{*/}
+                  {/*          color: "grey",*/}
+                  {/*        }}*/}
+                  {/*      >*/}
+                  {/*        <div className="name">{single.name}</div>*/}
+                  {/*        <div className="percentage">*/}
+                  {/*          {single.waste === null ? 0 : single.waste}T*/}
+                  {/*        </div>*/}
+                  {/*      </div>*/}
+                  {/*    </Grid>*/}
+                  {/*  );*/}
+                  {/*})}*/}
                 </Grid>
                 <div className="sub-heading">Site breakdown</div>
 
