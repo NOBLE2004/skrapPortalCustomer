@@ -350,6 +350,7 @@ const Co2breakdownReport = (props) => {
               </div>
             ) : (
               <div className="more-drop">
+                <div className="sub-heading" style={{paddingBottom: '10px'}}>Waste breakdown</div>
                 <h1>
                   {tonnageData?.data?.result?.total
                       ? numberWithCommas(tonnageData?.data?.result?.total?.toFixed(2))
@@ -361,7 +362,6 @@ const Co2breakdownReport = (props) => {
                   : "Tonnes total weight"}
             </span>
                 </h1>
-                <div className="sub-heading">Waste breakdown</div>
                 <Grid
                   container
                   spacing={2}
