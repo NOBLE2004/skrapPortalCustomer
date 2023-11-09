@@ -236,20 +236,20 @@ const SiteManagerTable = ({
                 );
             },
         },
-        {
-            Header: "Reuse",
-            disableFilters: true,
-            show: userData?.company?.includes('Amazon') ? 0 : 1,
-            Cell: (props) => {
-                return (
-                    <>
-                        {props.cell.row.original?.reuse
-                            ? `${props.cell.row.original?.reuse}%`
-                            : ""}
-                    </>
-                );
-            },
-        },
+        // {
+        //     Header: "Reuse",
+        //     disableFilters: true,
+        //     show: userData?.company?.includes('Amazon') ? 0 : 1,
+        //     Cell: (props) => {
+        //         return (
+        //             <>
+        //                 {props.cell.row.original?.reuse
+        //                     ? `${props.cell.row.original?.reuse}%`
+        //                     : ""}
+        //             </>
+        //         );
+        //     },
+        // },
         {
             Header: "Pallets",
             show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
@@ -510,20 +510,20 @@ const SiteManagerTable = ({
                 );
             },
         },
-        {
-            Header: "Reuse",
-            disableFilters: true,
-            show: userData?.company?.includes('Amazon') ? 0 : 1,
-            Cell: (props) => {
-                return (
-                    <>
-                        {props.cell.row.original?.reuse
-                            ? `${props.cell.row.original?.reuse}%`
-                            : ""}
-                    </>
-                );
-            },
-        },
+        // {
+        //     Header: "Reuse",
+        //     disableFilters: true,
+        //     show: userData?.company?.includes('Amazon') ? 0 : 1,
+        //     Cell: (props) => {
+        //         return (
+        //             <>
+        //                 {props.cell.row.original?.reuse
+        //                     ? `${props.cell.row.original?.reuse}%`
+        //                     : ""}
+        //             </>
+        //         );
+        //     },
+        // },
         {
             Header: "Pallets",
             show: (userData.role_id == 13 || userData.role_id == 12) ? 1 : 0,
