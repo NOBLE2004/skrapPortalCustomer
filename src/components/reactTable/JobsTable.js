@@ -305,20 +305,20 @@ const JobsTable = ({
           );
         },
       },
-      {
-        Header: "Reuse",
-        disableFilters: true,
-        show: getUserDataFromLocalStorage()?.company?.includes('Amazon') ? 0 : 1,
-        Cell: (props) => {
-          return (
-              <>
-                {props.cell.row.original?.reuse
-                    ? `${props.cell.row.original?.reuse}%`
-                    : ""}
-              </>
-          );
-        },
-      },
+      // {
+      //   Header: "Reuse",
+      //   disableFilters: true,
+      //   show: getUserDataFromLocalStorage()?.company?.includes('Amazon') ? 0 : 1,
+      //   Cell: (props) => {
+      //     return (
+      //         <>
+      //           {props.cell.row.original?.reuse
+      //               ? `${props.cell.row.original?.reuse}%`
+      //               : ""}
+      //         </>
+      //     );
+      //   },
+      // },
       {
         Header: "Pallets",
         disableFilters: true,
