@@ -17,7 +17,7 @@ const FinanceReport = (props) => {
 
   const dispatch = useDispatch();
   const stateSites = useSelector((state) => state?.siteBreakdown);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     if (siteCurrency !== null) {
@@ -140,17 +140,17 @@ const FinanceReport = (props) => {
                 )}
             </div>
           )}
-          <div
-            className="see-more"
-            onClick={() => {
-              setShow(!show);
-            }}
-            style={showMore ? { opacity: 0 } : { opacity: 1 }}
-          >
-            See more
-          </div>
+          {/*<div*/}
+          {/*  className="see-more"*/}
+          {/*  onClick={() => {*/}
+          {/*    setShow(!show);*/}
+          {/*  }}*/}
+          {/*  style={showMore ? { opacity: 0 } : { opacity: 1 }}*/}
+          {/*>*/}
+          {/*  See more*/}
+          {/*</div>*/}
 
-          {show && (
+          {/*{show && (*/}
             <div className="see-more-wrap">
               <div className="border-drop"></div>
 
@@ -161,7 +161,7 @@ const FinanceReport = (props) => {
               </div>
               <HireBreakDown sites={sites} />
             </div>
-          )}
+          {/*)}*/}
         </div>
       </CardContent>
     </Card>
