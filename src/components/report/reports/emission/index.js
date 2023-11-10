@@ -263,7 +263,7 @@ const EmissionReport = (props) => {
     },
     {
       type: "column",
-      name: "Emissions produced",
+      name: "Transport Emissions",
       data: emission,
       color: {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -391,12 +391,20 @@ const EmissionReport = (props) => {
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
             <div className="sub-heading" style={{paddingBottom: '10px'}}>Transport Emission</div>
-            <h1>
-              {state?.data?.year?.length > 0
-                ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
-                : `0.00`}{" "}
-              <span>kg of CO2e Transport Emissions</span>
-            </h1>
+            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+              <h1>
+                {state?.data?.year?.length > 0
+                    ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
+                    : `0.00`}{" "}
+                <span>kg of CO2e Transport Emissions</span>
+              </h1>
+              <h1>
+                {(state?.data?.year?.length > 0 || wasteEmissions?.data?.total > 0)
+                    ? numberWithCommas((state?.data?.year[0]?.Sum_Co2e + wasteEmissions?.data?.total)?.toFixed(2))
+                    : `0.00`}{" "}
+                <span>kg of CO2e Emissions Produced</span>
+              </h1>
+            </div>
             {state?.isLoading ? (
               <div className="d-flex justify-center align-center">
                 <FadeLoader
