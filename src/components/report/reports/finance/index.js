@@ -8,6 +8,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HireBreakDown from "./hireBreakDown/hireBreakDown";
 import FadeLoader from "react-spinners/FadeLoader";
+import {numberWithCommas} from "../../../utlils/dashboard";
 
 const FinanceReport = (props) => {
   const { sites, showMore, siteCurrency, date } = props;
@@ -103,6 +104,7 @@ const FinanceReport = (props) => {
     <Card className="report-chart-card" id={"finance"}>
       <CardContent>
         <div className="salesWp">
+          <div className="sub-heading" style={{paddingBottom: '10px'}}>Site breakdown</div>
           {stateSites?.site_breakdown?.result?.total && (
             <h1>
               {`${currency ? currency : "£"}`}
@@ -111,7 +113,13 @@ const FinanceReport = (props) => {
             </h1>
           )}
 
-          <div className="sub-heading">Site breakdown</div>
+          { stateSites?.site_breakdown?.result?.reduction > 0 && <h1>
+                  <span style={{color: '#848c99', width: '50%'}}>
+                    <span style={{color: 'rgb(80, 210, 38)'}}> £{numberWithCommas(stateSites?.site_breakdown?.result?.reduction?.toFixed(2))} </span>
+                    reduction in cost by avoiding use of {stateSites?.site_breakdown?.result?.dumpsters} additional dumpsters.
+                  </span>
+          </h1>}
+
           {stateSites?.isLoading ? (
             <div className="d-flex justify-center align-center">
               <FadeLoader
