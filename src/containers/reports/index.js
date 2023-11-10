@@ -267,7 +267,7 @@ const NewReports = () => {
                 className="report-chart-card-outer"
                 style={{ width: "100%" }}
               >
-                <div className="report-card-title">Waste Emission</div>
+                <div className="report-card-title">Emissions avoided by recycling</div>
                 <WasteEmissionGraph
                   dateM={date}
                   sites={selected}

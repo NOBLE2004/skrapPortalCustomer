@@ -450,16 +450,16 @@ const EmissionReport = (props) => {
           </div>
         </CardContent>
         <div className="border-drop"></div>
-        {/*<CardContent>
-          <WasteEmissionGraph
-            dateM={date}
-            sites={sites}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            showMore={showMore}
-            siteCurrency={siteCurrency}
-          />
-        </CardContent>*/}
+        {/*<CardContent>*/}
+        {/*  <WasteEmissionGraph*/}
+        {/*    dateM={date}*/}
+        {/*    sites={sites}*/}
+        {/*    startDate={startDate}*/}
+        {/*    setStartDate={setStartDate}*/}
+        {/*    showMore={showMore}*/}
+        {/*    siteCurrency={siteCurrency}*/}
+        {/*  />*/}
+        {/*</CardContent>*/}
 
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
@@ -470,6 +470,12 @@ const EmissionReport = (props) => {
                   : `0.00`}{" "}
               <span>kg of CO2e Waste Emissions</span>
             </h1>
+            { wasteEmissions?.data?.avoided > 0 && <h1>
+                  <span style={{color: '#848c99', width: '50%'}}>
+                    <span style={{color: 'rgb(80, 210, 38)'}}> {(wasteEmissions?.data?.avoided).toFixed(2).toLocaleString()} kg </span>
+                    CO2e Avoided by recycling
+                  </span>
+            </h1>}
             <div className="filters">
               <div className="year">
                 <DatePicker
