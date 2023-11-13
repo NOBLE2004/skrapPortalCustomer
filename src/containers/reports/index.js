@@ -21,6 +21,7 @@ import DualAxisGraph from "../../components/report/reports/dualAxis";
 import { getEfficencyList } from "../../store/actions/action.reportEfficenyList";
 import { Grid } from "@mui/material";
 import WasteEmissionGraph from "../../components/report/reports/wasteEmissionGraph/index";
+import WasteBreakDown from "../../components/report/reports/WasteBreakDown";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -251,15 +252,25 @@ const NewReports = () => {
                 siteCurrency={siteCurrency}
               />
             </div>
-            <div className="report-chart-card-outer">
-              <div className="report-card-title">Site Movements</div>
-              <SiteMovementsReport
-                date={date}
-                sites={selected}
-                showMore={showMore}
-                siteCurrency={siteCurrency}
-              />
-            </div>
+
+            {/*<div className="report-chart-card-outer">*/}
+            {/*  <div className="report-card-title">Waste breakdown</div>*/}
+            {/*  <WasteBreakDown*/}
+            {/*      date={date}*/}
+            {/*      sites={selected}*/}
+            {/*      showMore={showMore}*/}
+            {/*      siteCurrency={siteCurrency}*/}
+            {/*  />*/}
+            {/*</div>*/}
+            {/*<div className="report-chart-card-outer">*/}
+            {/*  <div className="report-card-title">Site Movements</div>*/}
+            {/*  <SiteMovementsReport*/}
+            {/*    date={date}*/}
+            {/*    sites={selected}*/}
+            {/*    showMore={showMore}*/}
+            {/*    siteCurrency={siteCurrency}*/}
+            {/*  />*/}
+            {/*</div>*/}
           </Masonry>
           <Grid container spacing={4}>
             <Grid item xs={12}>

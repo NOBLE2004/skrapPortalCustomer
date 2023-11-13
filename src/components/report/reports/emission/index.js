@@ -263,7 +263,7 @@ const EmissionReport = (props) => {
     },
     {
       type: "column",
-      name: "Emissions produced",
+      name: "Transport Emissions",
       data: emission,
       color: {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -390,13 +390,28 @@ const EmissionReport = (props) => {
       <Card className="report-chart-card" id={"emissions"}>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            <div className="sub-heading" style={{paddingBottom: '10px'}}>Transport Emission</div>
             <h1>
-              {state?.data?.year?.length > 0
-                ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
-                : `0.00`}{" "}
-              <span>kg of CO2e Transport Emissions</span>
+              {(state?.data?.year?.length > 0 || wasteEmissions?.data?.total > 0)
+                  ? numberWithCommas((state?.data?.year[0]?.Sum_Co2e + wasteEmissions?.data?.total)?.toFixed(2))
+                  : `0.00`}{" "}
+              <span>kg of CO2e Total Emissions Produced</span>
             </h1>
+            <div className="sub-heading" style={{paddingBottom: '10px'}}>Transport Emission</div>
+            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+              <h1>
+                {state?.data?.year?.length > 0
+                    ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
+                    : `0.00`}{" "}
+                <span>kg of CO2e Transport Emissions</span>
+              </h1>
+            </div>
+            { wasteEmissions?.data?.reduction > 0 && <h1>
+                  <span style={{color: '#848c99', width: '50%'}}>
+                    <span style={{color: 'rgb(80, 210, 38)'}}> {wasteEmissions?.data?.reduction} % </span>
+                    reduction in C02 emissions by avoiding use of {wasteEmissions?.data?.reduced} additional dumpsters.
+                    {/*in reduction which is {state?.data?.result?.reduced} dumpsters we considered baseline as {state?.data?.result?.dumpsters} dumpsters to landfill.*/}
+                  </span>
+            </h1>}
             {state?.isLoading ? (
               <div className="d-flex justify-center align-center">
                 <FadeLoader
