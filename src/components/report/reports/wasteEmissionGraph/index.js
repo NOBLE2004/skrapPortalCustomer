@@ -29,16 +29,18 @@ import { forwardRef } from "react";
 import { getUserService } from "../../../../store/actions/action.userService";
 import { DateRange } from "react-date-range";
 import { getWasteEmssionData } from "../../../../store/actions/action.reportWasteEmssion";
+import YearPicker from "../../../yearPicker/yearPicker";
 
 const WasteEmissionGraph = (props) => {
   const dispatch = useDispatch();
   const { sites, dateM, siteCurrency } = props;
-  const [type, setType] = useState("month");
+  const [type, setType] = useState("year");
   const data = useSelector((state) => state?.wasteEmission);
   const [service, setService] = useState([]);
   const userService = useSelector((state) => state?.userService);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [date, setDate] = useState(new Date());
 
   const ExampleCustomInput2 = forwardRef(({ value, onClick }, ref) => (
     <TextField
@@ -56,6 +58,7 @@ const WasteEmissionGraph = (props) => {
   ));
 
   const getData = () => {
+    sites.length == 1 ? setType('month') : setType('year');
     dispatch(
       getWasteEmssionData({
         sites: sites,
@@ -67,6 +70,7 @@ const WasteEmissionGraph = (props) => {
             endDate?.getMonth() + 1
           }-${endDate?.getFullYear()}`,
         type: type,
+        year: sites.length == 1 ? null : date,
         service_id: service,
         currency: siteCurrency,
       })
@@ -143,11 +147,12 @@ const WasteEmissionGraph = (props) => {
                         placeholder: "testing",
                       }}
                     >
+                      <MenuItem value={"year"}>Year</MenuItem>
                       <MenuItem value={"month"}>Month</MenuItem>
                       <MenuItem value={"day"}>Days</MenuItem>
                     </Select>
                   </div>
-                  <div style={{ marginLeft: "6px" }}>
+                  {type != 'year' ? (<div style={{ marginLeft: "6px" }}>
                     <div className="total" style={{ marginBottom: "5px" }}>
                       <span>Days:</span>
                     </div>
@@ -159,7 +164,16 @@ const WasteEmissionGraph = (props) => {
                       customInput={<ExampleCustomInput2 />}
                       onChange={onChange}
                     />
-                  </div>
+                  </div>) : <div className="year ">
+                    <div className="total" style={{ marginBottom: "15px" }}>
+                      <span>Year:</span>
+                    </div>
+                    <YearPicker
+                        startDate={date}
+                        setStartDate={setDate}
+                        getData={getData}
+                    />
+                  </div> }
                 </Grid>
                 <Grid item xs={5}>
                   <FormControl fullWidth>
@@ -209,8 +223,12 @@ const WasteEmissionGraph = (props) => {
                 }}
               >
                 <Box>
-                  {type == "month" ? (
+                  {type == "year" ? (
                     <span>
+                      <b>Monthly</b>
+                    </span>
+                  ) : type == "month" ? (
+                      <span>
                       <b>Weekly</b>
                     </span>
                   ) : (
