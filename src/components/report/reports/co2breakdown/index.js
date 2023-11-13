@@ -68,7 +68,8 @@ const Co2breakdownReport = (props) => {
         pie: {
           allowPointSelect: true,
           cursor: 'pointer',
-          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc", "#0033FF", "#787878"],
+          borderWidth: 0,
           dataLabels: {
             enabled: true,
             format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
@@ -118,7 +119,8 @@ const Co2breakdownReport = (props) => {
         pie: {
           allowPointSelect: true,
           cursor: 'pointer',
-          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+          borderWidth: 0,
+          colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc", "#0033FF", "#787878"],
           dataLabels: {
             enabled: true,
             format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
@@ -145,35 +147,35 @@ const Co2breakdownReport = (props) => {
     <Card className="report-chart-card" id="waste_statistics">
       <CardContent>
         <div className="salesWp">
-          {/*{state?.isLoading ||*/}
-          {/*wasteOfEnergyData?.isLoading ||*/}
-          {/*recycledData?.isLoading ? (*/}
-          {/*  <div className="d-flex justify-center align-center">*/}
-          {/*    <FadeLoader color={"#518ef8"} loading={true} width={4} />*/}
-          {/*  </div>*/}
-          {/*) : (*/}
-          {/*  <div className="salesWp-inner-wrap">*/}
-          {/*    <Grid*/}
-          {/*        container*/}
-          {/*        spacing={2}*/}
-          {/*        marginTop={1}*/}
-          {/*        style={{*/}
-          {/*          height:*/}
-          {/*              wasteData?.data?.result?.length > 10 ? "300px" : "unset",*/}
-          {/*          display: 'flex',*/}
-          {/*          justifyContent: 'center'*/}
-          {/*        }}*/}
-          {/*        className="waste-main"*/}
-          {/*    >*/}
-          {/*    {recycledData?.data && recycledData?.data?.result && (*/}
-          {/*        <HighchartsReact*/}
-          {/*            highcharts={Highcharts}*/}
-          {/*            options={chartDataRecycled}*/}
-          {/*            ref={props.refFinance}*/}
-          {/*        />*/}
-          {/*    )}*/}
-          {/*    </Grid>*/}
-          {/*  </div>)}*/}
+          {state?.isLoading ||
+          wasteOfEnergyData?.isLoading ||
+          recycledData?.isLoading ? (
+            <div className="d-flex justify-center align-center">
+              <FadeLoader color={"#518ef8"} loading={true} width={4} />
+            </div>
+          ) : (
+            <div className="salesWp-inner-wrap">
+              <Grid
+                  container
+                  spacing={2}
+                  marginTop={1}
+                  style={{
+                    height:
+                        wasteData?.data?.result?.length > 10 ? "300px" : "unset",
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                  className="waste-main"
+              >
+              {recycledData?.data && recycledData?.data?.result && (
+                  <HighchartsReact
+                      highcharts={Highcharts}
+                      options={chartDataRecycled}
+                      ref={props.refFinance}
+                  />
+              )}
+              </Grid>
+            </div>)}
             {/*  <div*/}
             {/*    className="salesWp-sub main-progress-bar-large"*/}
             {/*    style={{ position: "relative" }}*/}
