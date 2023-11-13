@@ -105,13 +105,16 @@ const FinanceReport = (props) => {
       <CardContent>
         <div className="salesWp">
           <div className="sub-heading" style={{paddingBottom: '10px'}}>Site breakdown</div>
-          {stateSites?.site_breakdown?.result?.total && (
+          {stateSites?.site_breakdown?.result?.total ? (
             <h1>
               {`${currency ? currency : "£"}`}
               {stateSites?.site_breakdown?.result?.total.toLocaleString()}
               <span> Total spend</span>
             </h1>
-          )}
+          ): <h1>
+          {`${currency ? currency : "£"}`}0.00
+          <span> Total spend</span>
+        </h1>}
 
           { stateSites?.site_breakdown?.result?.reduction > 0 && <h1>
                   <span style={{color: '#848c99', width: '50%'}}>

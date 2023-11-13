@@ -55,11 +55,12 @@ const WasteBreakDown = (props) => {
           allowPointSelect: true,
           cursor: 'pointer',
           colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+          borderWidth: 0,
           dataLabels: {
             enabled: true,
             format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
                 '<span style="opacity: 0.6">{point.y:.2f}% </span>',
-            connectorColor: 'rgba(128,128,128,0.5)',
+           // connectorColor: 'rgba(128,128,128,0.5)',
             distance: 20
           }
         }

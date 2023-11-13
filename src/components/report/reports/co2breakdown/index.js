@@ -72,10 +72,11 @@ const Co2breakdownReport = (props) => {
           borderWidth: 0,
           dataLabels: {
             enabled: true,
+            //alignTo: 'connectors',
             format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
                 '<span style="opacity: 0.6">{point.percentage:.1f}% </span>' +
                 '<span style="opacity: 0.6"> ({point.y:.2f}T)</span>',
-            connectorColor: 'rgba(128,128,128,0.5)',
+            //connectorColor: 'rgba(128,128,128,0.5)',
             distance: 20
           }
         }
@@ -123,9 +124,10 @@ const Co2breakdownReport = (props) => {
           colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc", "#0033FF", "#787878"],
           dataLabels: {
             enabled: true,
+            //alignTo: 'connectors',
             format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
                 '<span style="opacity: 0.6">{point.y:.2f}% </span>',
-            connectorColor: 'rgba(128,128,128,0.5)',
+            //connectorColor: 'rgba(128,128,128,0.5)',
             distance: 20
           }
         }
@@ -147,35 +149,35 @@ const Co2breakdownReport = (props) => {
     <Card className="report-chart-card" id="waste_statistics">
       <CardContent>
         <div className="salesWp">
-          {state?.isLoading ||
-          wasteOfEnergyData?.isLoading ||
-          recycledData?.isLoading ? (
-            <div className="d-flex justify-center align-center">
-              <FadeLoader color={"#518ef8"} loading={true} width={4} />
-            </div>
-          ) : (
-            <div className="salesWp-inner-wrap">
-              <Grid
-                  container
-                  spacing={2}
-                  marginTop={1}
-                  style={{
-                    height:
-                        wasteData?.data?.result?.length > 10 ? "300px" : "unset",
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                  className="waste-main"
-              >
-              {recycledData?.data && recycledData?.data?.result && (
-                  <HighchartsReact
-                      highcharts={Highcharts}
-                      options={chartDataRecycled}
-                      ref={props.refFinance}
-                  />
-              )}
-              </Grid>
-            </div>)}
+          {/*{state?.isLoading ||*/}
+          {/*wasteOfEnergyData?.isLoading ||*/}
+          {/*recycledData?.isLoading ? (*/}
+          {/*  <div className="d-flex justify-center align-center">*/}
+          {/*    <FadeLoader color={"#518ef8"} loading={true} width={4} />*/}
+          {/*  </div>*/}
+          {/*) : (*/}
+          {/*  <div className="salesWp-inner-wrap">*/}
+          {/*    <Grid*/}
+          {/*        container*/}
+          {/*        spacing={2}*/}
+          {/*        marginTop={1}*/}
+          {/*        style={{*/}
+          {/*          height:*/}
+          {/*              wasteData?.data?.result?.length > 10 ? "300px" : "unset",*/}
+          {/*          display: 'flex',*/}
+          {/*          justifyContent: 'center'*/}
+          {/*        }}*/}
+          {/*        className="waste-main"*/}
+          {/*    >*/}
+          {/*    {recycledData?.data && recycledData?.data?.result && (*/}
+          {/*        <HighchartsReact*/}
+          {/*            highcharts={Highcharts}*/}
+          {/*            options={chartDataRecycled}*/}
+          {/*            ref={props.refFinance}*/}
+          {/*        />*/}
+          {/*    )}*/}
+          {/*    </Grid>*/}
+          {/*  </div>)}*/}
             {/*  <div*/}
             {/*    className="salesWp-sub main-progress-bar-large"*/}
             {/*    style={{ position: "relative" }}*/}
@@ -341,7 +343,7 @@ const Co2breakdownReport = (props) => {
           </div>
           {show && ( */}
           <div className="see-more-wrap">
-            <div className="border-drop"></div>
+            {/*<div className="border-drop"></div>*/}
             {tonnageData?.isLoading && wasteData?.isLoading ? (
               <div className="d-flex justify-center align-center">
                 <FadeLoader
@@ -352,7 +354,7 @@ const Co2breakdownReport = (props) => {
               </div>
             ) : (
               <div className="more-drop">
-                <div className="sub-heading" style={{paddingBottom: '10px'}}>Waste breakdown</div>
+                {/*<div className="sub-heading" style={{paddingBottom: '10px'}}>Waste breakdown</div>*/}
                 <h1>
                   {tonnageData?.data?.result?.total
                       ? numberWithCommas(tonnageData?.data?.result?.total?.toFixed(2))

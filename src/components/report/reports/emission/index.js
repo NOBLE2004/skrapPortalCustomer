@@ -390,9 +390,9 @@ const EmissionReport = (props) => {
       <Card className="report-chart-card" id={"emissions"}>
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            <h1>
-              {(state?.data?.year?.length > 0 || wasteEmissions?.data?.total > 0)
-                  ? numberWithCommas((state?.data?.year[0]?.Sum_Co2e + wasteEmissions?.data?.total)?.toFixed(2))
+            <h1 style={{color: '#0BC21F'}}>
+              {(state?.data?.year?.length > 0 || wasteEmissions?.data?.total >= 0)
+                  ? numberWithCommas(((state?.data?.year?.length > 0 ? state?.data?.year[0]?.Sum_Co2e : 0) + (wasteEmissions?.data?.total > 0 ? wasteEmissions?.data?.total : 0))?.toFixed(2))
                   : `0.00`}{" "}
               <span>kg of CO2e Total Emissions Produced</span>
             </h1>
