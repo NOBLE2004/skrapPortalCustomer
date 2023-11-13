@@ -58,7 +58,7 @@ const WasteEmissionGraph = (props) => {
   ));
 
   const getData = () => {
-    sites.length == 1 ? setType('month') : setType('year');
+    //sites.length == 1 ? setType('month') : setType('year');
     dispatch(
       getWasteEmssionData({
         sites: sites,
@@ -70,7 +70,7 @@ const WasteEmissionGraph = (props) => {
             endDate?.getMonth() + 1
           }-${endDate?.getFullYear()}`,
         type: type,
-        year: sites.length == 1 ? null : date,
+        year: date,
         service_id: service,
         currency: siteCurrency,
       })
