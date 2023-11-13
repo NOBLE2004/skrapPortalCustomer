@@ -244,7 +244,7 @@ const NewReports = () => {
               />
             </div>
             <div className="report-chart-card-outer">
-              <div className="report-card-title">Waste Segregation</div>
+              <div className="report-card-title">Waste breakdown</div>
               <Co2breakdownReport
                 date={date}
                 sites={selected}
@@ -253,15 +253,15 @@ const NewReports = () => {
               />
             </div>
 
-            {/*<div className="report-chart-card-outer">*/}
-            {/*  <div className="report-card-title">Waste breakdown</div>*/}
-            {/*  <WasteBreakDown*/}
-            {/*      date={date}*/}
-            {/*      sites={selected}*/}
-            {/*      showMore={showMore}*/}
-            {/*      siteCurrency={siteCurrency}*/}
-            {/*  />*/}
-            {/*</div>*/}
+            <div className="report-chart-card-outer">
+              <div className="report-card-title">Waste Segregation</div>
+              <WasteBreakDown
+                  date={date}
+                  sites={selected}
+                  showMore={showMore}
+                  siteCurrency={siteCurrency}
+              />
+            </div>
             {/*<div className="report-chart-card-outer">*/}
             {/*  <div className="report-card-title">Site Movements</div>*/}
             {/*  <SiteMovementsReport*/}

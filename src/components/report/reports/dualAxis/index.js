@@ -28,16 +28,18 @@ import { getEfficencyList } from "../../../../store/actions/action.reportEfficen
 import { forwardRef } from "react";
 import { getUserService } from "../../../../store/actions/action.userService";
 import { DateRange } from "react-date-range";
+import YearPicker from "../../../yearPicker/yearPicker";
 
 const DualAxisGraph = (props) => {
   const dispatch = useDispatch();
   const { sites, dateM, siteCurrency } = props;
-  const [type, setType] = useState("month");
+  const [type, setType] = useState("year");
   const data = useSelector((state) => state?.efficencyList);
   const [service, setService] = useState([]);
   const userService = useSelector((state) => state?.userService);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [date, setDate] = useState(new Date());
 
   const ExampleCustomInput2 = forwardRef(({ value, onClick }, ref) => (
     <TextField
@@ -66,6 +68,7 @@ const DualAxisGraph = (props) => {
             endDate?.getMonth() + 1
           }-${endDate?.getFullYear()}`,
         type: type,
+        year: date,
         service_id: service,
         currency: siteCurrency,
       })
@@ -140,23 +143,33 @@ const DualAxisGraph = (props) => {
                         placeholder: "testing",
                       }}
                     >
+                      <MenuItem value={"year"}>Year</MenuItem>
                       <MenuItem value={"month"}>Month</MenuItem>
                       <MenuItem value={"day"}>Days</MenuItem>
                     </Select>
                   </div>
-                  <div style={{ marginLeft: "6px" }}>
+                  {type != 'year' ? (<div style={{ marginLeft: "6px" }}>
                     <div className="total" style={{ marginBottom: "5px" }}>
                       <span>Days:</span>
                     </div>
                     <DatePicker
-                      selectsRange={true}
-                      startDate={startDate}
-                      monthsShown={2}
-                      endDate={endDate}
-                      customInput={<ExampleCustomInput2 />}
-                      onChange={onChange}
+                        selectsRange={true}
+                        startDate={startDate}
+                        monthsShown={2}
+                        endDate={endDate}
+                        customInput={<ExampleCustomInput2 />}
+                        onChange={onChange}
                     />
-                  </div>
+                  </div>) : <div className="year ">
+                    <div className="total" style={{ marginBottom: "15px" }}>
+                      <span>Year:</span>
+                    </div>
+                    <YearPicker
+                        startDate={date}
+                        setStartDate={setDate}
+                        getData={getData}
+                    />
+                  </div> }
                 </Grid>
                 <Grid item xs={5}>
                   <FormControl fullWidth>
@@ -208,14 +221,18 @@ const DualAxisGraph = (props) => {
                 options={chartOptions(data?.data)}
                 ref={props.ref2}
               />
-              {type == "month" ? (
-                <span>
-                  <b>Weekly</b>
-                </span>
+              {type == "year" ? (
+                  <span>
+                      <b>Monthly</b>
+                    </span>
+              ) : type == "month" ? (
+                  <span>
+                      <b>Weekly</b>
+                    </span>
               ) : (
-                <span>
-                  <b>Days</b>
-                </span>
+                  <span>
+                      <b>Days</b>
+                    </span>
               )}
             </div>
             {/* )} */}
