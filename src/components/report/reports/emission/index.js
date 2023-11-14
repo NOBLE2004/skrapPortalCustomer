@@ -247,7 +247,7 @@ const EmissionReport = (props) => {
       name: "null",
       data: max
         ? [max, max, max, max, max, max, max, max, max, max, max, max]
-        : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+        : [],
       borderWidth: 0,
       stack: 1,
       borderSkipped: false,
@@ -264,7 +264,7 @@ const EmissionReport = (props) => {
     {
       type: "column",
       name: "Transport Emissions",
-      data: emission,
+      data: state?.data?.data?.length > 0 ? emission : [],
       color: {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
         stops: [
@@ -285,7 +285,7 @@ const EmissionReport = (props) => {
       name: "null",
       data: maxWaste
           ? [maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste]
-          : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+          : [],
       borderWidth: 0,
       stack: 1,
       borderSkipped: false,
@@ -302,7 +302,7 @@ const EmissionReport = (props) => {
     {
       type: "column",
       name: "Waste Emissions",
-      data: emissionWaste,
+      data: wasteEmissions?.data?.data?.length > 0 ? emissionWaste : [],
       color: {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
         stops: [
@@ -430,17 +430,17 @@ const EmissionReport = (props) => {
                       getData={getData}
                     />
                   </div>
-                  <div className="total">
-                    Total CO2:{" "}
-                    <span>
-                      {state?.data?.year?.length > 0
-                        ? numberWithCommas(
-                            state?.data?.year[0]?.Sum_Co2e?.toFixed(2)
-                          )
-                        : `0.00`}{" "}
-                      Kg
-                    </span>
-                  </div>
+                  {/*<div className="total">*/}
+                  {/*  Total CO2:{" "}*/}
+                  {/*  <span>*/}
+                  {/*    {state?.data?.year?.length > 0*/}
+                  {/*      ? numberWithCommas(*/}
+                  {/*          state?.data?.year[0]?.Sum_Co2e?.toFixed(2)*/}
+                  {/*        )*/}
+                  {/*      : `0.00`}{" "}*/}
+                  {/*    Kg*/}
+                  {/*  </span>*/}
+                  {/*</div>*/}
                 </div>
                 {chartData && chartData?.series !== undefined && (
                   <div style={{ width: "100%" }}>
