@@ -62,13 +62,12 @@ const WasteEmissionGraph = (props) => {
     dispatch(
       getWasteEmssionData({
         sites: sites,
-        date:
-          endDate &&
-          `${startDate?.getDate()}-${
-            startDate?.getMonth() + 1
-          }-${startDate?.getFullYear()},${endDate?.getDate()}-${
-            endDate?.getMonth() + 1
-          }-${endDate?.getFullYear()}`,
+        date: (endDate &&
+            `${startDate?.getDate()}-${
+                startDate?.getMonth() + 1
+            }-${startDate?.getFullYear()},${endDate?.getDate()}-${
+                endDate?.getMonth() + 1
+            }-${endDate?.getFullYear()}`),
         type: type,
         year: date,
         service_id: service,
@@ -85,7 +84,7 @@ const WasteEmissionGraph = (props) => {
 
   useEffect(() => {
     getData();
-  }, [sites, service, siteCurrency, endDate, type]);
+  }, [sites, service, siteCurrency, endDate, type, dateM]);
 
   const handleChange = (e) => {
     setService(e.target.value);
