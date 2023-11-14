@@ -9,6 +9,7 @@ import HighchartsReact from "highcharts-react-official";
 import HireBreakDown from "./hireBreakDown/hireBreakDown";
 import FadeLoader from "react-spinners/FadeLoader";
 import {numberWithCommas} from "../../../utlils/dashboard";
+import NoDataToDisplay from "highcharts/modules/no-data-to-display";
 
 const FinanceReport = (props) => {
   const { sites, showMore, siteCurrency, date } = props;
@@ -18,6 +19,7 @@ const FinanceReport = (props) => {
   const dispatch = useDispatch();
   const stateSites = useSelector((state) => state?.siteBreakdown);
   const [show, setShow] = useState(true);
+  NoDataToDisplay(Highcharts)
 
   useEffect(() => {
     if (siteCurrency !== null) {
@@ -46,6 +48,9 @@ const FinanceReport = (props) => {
           valueSuffix: "%",
         },
       },
+      lang: {
+        noData: "No data to display"
+      },
       legend: {
         align: "right",
         size: "40%",
@@ -59,6 +64,7 @@ const FinanceReport = (props) => {
       },
       plotOptions: {
         pie: {
+          borderWidth: 0,
           size: "100%",
           allowPointSelect: true,
           cursor: "pointer",
@@ -73,14 +79,14 @@ const FinanceReport = (props) => {
         {
           title: "",
           type: "pie",
-          data: stateSites?.site_breakdown?.result?.data,
+          data: stateSites?.site_breakdown?.result?.data || [],
         },
       ],
       exporting: {
         filename: `chart-${new Date()?.toLocaleDateString()}`,
       },
     });
-  }, [stateSites?.site_breakdown]);
+  }, [stateSites?.site_breakdown?.result?.data]);
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -134,7 +140,7 @@ const FinanceReport = (props) => {
           ) : (
             <div className="highchart-sites">
               {stateSites?.site_breakdown &&
-                stateSites?.site_breakdown?.result?.data && (
+                stateSites?.site_breakdown?.result && (
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={chartData}
