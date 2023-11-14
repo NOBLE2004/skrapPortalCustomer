@@ -12,6 +12,7 @@ import "./index.scss";
 import { numberWithCommas } from "../../../utlils/dashboard";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import NoDataToDisplay from "highcharts/modules/no-data-to-display";
 
 const Co2breakdownReport = (props) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Co2breakdownReport = (props) => {
   const [chartDataRecycled, setChartDataRecycled] = useState();
   const { sites, showMore, date, siteCurrency } = props;
   const [show, setShow] = useState(false);
+  NoDataToDisplay(Highcharts)
   // useEffect(() => {
   //    if (sites !== "") {
   //   dispatch(getLandfillDiversion(sites !== "" && { sites: [sites] }));

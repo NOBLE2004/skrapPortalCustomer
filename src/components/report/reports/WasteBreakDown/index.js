@@ -12,6 +12,7 @@ import "./index.scss";
 import { numberWithCommas } from "../../../utlils/dashboard";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import NoDataToDisplay from "highcharts/modules/no-data-to-display";
 
 const WasteBreakDown = (props) => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const WasteBreakDown = (props) => {
   const [chartDataRecycled, setChartDataRecycled] = useState();
   const { sites, showMore, date, siteCurrency } = props;
   const [show, setShow] = useState(false);
-
+  NoDataToDisplay(Highcharts)
   useEffect(() => {
     //dispatch(getLandfillDiversion({ sites: sites, date, currency:siteCurrency }));
     // dispatch(getTonnage({ sites: sites, date, currency:siteCurrency }));
