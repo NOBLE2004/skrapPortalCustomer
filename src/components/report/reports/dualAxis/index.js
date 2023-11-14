@@ -83,7 +83,7 @@ const DualAxisGraph = (props) => {
 
   useEffect(() => {
     getData();
-  }, [sites, service, siteCurrency, endDate, type]);
+  }, [sites, service, siteCurrency, endDate, type, dateM]);
 
   const handleChange = (e) => {
     setService(e.target.value);
