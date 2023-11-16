@@ -432,7 +432,7 @@ const JobsTable = ({
       {
         Header: "Invoice",
         accessor: "job_id",
-        //show: getUserDataFromLocalStorage()?.company?.includes('Amazon') ? 1 : 0,
+        show: (getUserDataFromLocalStorage()?.company?.includes('Amazon') && currency == '$' )? 1 : 0,
         id: "invoice",
         Cell: (props) => (
           <>
