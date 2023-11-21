@@ -25,6 +25,8 @@
     "highcharts-react-official": "^3.1.0",
     "history": "^5.0.1",
     "html-to-image": "^1.9.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "moment": "^2.29.1",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
