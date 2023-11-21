@@ -29,7 +29,7 @@ export const payment = (type) => {
   } else if (type === 7) {
     return "Manual";
   } else if (type === 10) {
-    return "Market Pay";
+    return "Kriya";
   } else {
     return "----";
   }
