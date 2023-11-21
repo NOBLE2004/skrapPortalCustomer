@@ -4,7 +4,7 @@ import React from "react";
 import "./index.scss";
 
 const ReportFooter = (props) => {
-  const { handleChangeReportType, reports, exTest, sites, csvData } = props;
+  const { handleChangeReportType, reports, exTest, sites, csvData, exportPdf } = props;
   return (
     <div className="report-footer">
       <div className="label">Select reports to download</div>
@@ -64,6 +64,15 @@ const ReportFooter = (props) => {
       >
         Download CSV
       </Button>
+
+      {/*<Button*/}
+      {/*    classes="footer-btn"*/}
+      {/*    onClick={() => {*/}
+      {/*      exportPdf();*/}
+      {/*    }}*/}
+      {/*>*/}
+      {/*  Download PDF*/}
+      {/*</Button>*/}
     </div>
   );
 };
