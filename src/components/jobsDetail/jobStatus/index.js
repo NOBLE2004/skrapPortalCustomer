@@ -196,18 +196,18 @@ function JobStatus({status}) {
     };
     return (
         <div className='job-status-detail-container'>
-            <div className='header-sub-title m-0'> Status Updates</div>
-            <Stepper className='stepper-container' activeStep={activeStep} alternativeLabel
-                     connector={<CustomConnector/>}> 
-                {steps.map((label, index) => (
-                    <Step className='step-container' key={label}>
-                        <StepLabel StepIconComponent={StepIcon} className='label-container'>
-                            {getLabelComponent(index, activeStep, label)}
-                        </StepLabel>
+            {/*<div className='header-sub-title m-0'> Status Updates</div>*/}
+            {/*<Stepper className='stepper-container' activeStep={activeStep} alternativeLabel*/}
+            {/*         connector={<CustomConnector/>}> */}
+            {/*    {steps.map((label, index) => (*/}
+            {/*        <Step className='step-container' key={label}>*/}
+            {/*            <StepLabel StepIconComponent={StepIcon} className='label-container'>*/}
+            {/*                {getLabelComponent(index, activeStep, label)}*/}
+            {/*            </StepLabel>*/}
 
-                    </Step>
-                ))}
-            </Stepper>
+            {/*        </Step>*/}
+            {/*    ))}*/}
+            {/*</Stepper>*/}
         </div>
     )
 
