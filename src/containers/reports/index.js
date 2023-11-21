@@ -22,6 +22,8 @@ import { getEfficencyList } from "../../store/actions/action.reportEfficenyList"
 import { Grid } from "@mui/material";
 import WasteEmissionGraph from "../../components/report/reports/wasteEmissionGraph/index";
 import WasteBreakDown from "../../components/report/reports/WasteBreakDown";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -202,6 +204,21 @@ const NewReports = () => {
     dispatch(getSitesMovementList({ sites: selected[0], date, currency }));
   }, [selected, date]);
 
+  const exportPdf = () => {
+    html2canvas(document.querySelector("#pdf-download")).then(canvas => {
+      //document.body.appendChild(canvas);  // if you want see your screenshot in body.
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      const imgProps= pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      console.log(imgProps.height, imgProps.width);
+      const pdfHeight = ((imgProps.height * pdfWidth) / imgProps.width);
+      console.log(pdfWidth, pdfHeight);
+      pdf.addImage(imgData, 'PNG', 2, 2, imgProps.width, imgProps.height);
+      pdf.save("report.pdf");
+    });
+  }
+
   return (
     <>
       <div className="main-report">
@@ -215,7 +232,7 @@ const NewReports = () => {
           setSiteCurrency={setSiteCurrency}
         />
         {/*<ReportFilters />*/}
-        <div className="report-grid">
+        <div className="report-grid" id="pdf-download">
           <Masonry container columns={2} spacing={4}>
             <div className="report-chart-card-outer">
               <div className="report-card-title">Finance report</div>
@@ -315,6 +332,7 @@ const NewReports = () => {
         date={date}
         exTest={exTest}
         csvData={csvData}
+        exportPdf={exportPdf}
       />
     </>
   );

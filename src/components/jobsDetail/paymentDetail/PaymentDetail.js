@@ -70,7 +70,7 @@ const PaymentDetail = ({ job, updateJobs }) => {
 
           <div className="card-payment">
             <div className="card-header-sub-item">
-              {payment(job?.payment_type)} - {job?.is_paid ? "Paid" : "Pending"}
+              {payment(job?.payment_type)}
             </div>
             <div className="card-header-sub ">
               <span className="card-header-sub-item">
