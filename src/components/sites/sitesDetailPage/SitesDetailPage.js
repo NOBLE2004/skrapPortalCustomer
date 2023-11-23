@@ -230,32 +230,32 @@ const SitesDetailPage = (props) => {
           />
         ) : (
           <>
-            <Grid item md={12} xs={12} mb={1}>
-              <div className="landfill">Landfill Diversion Rate</div>
-              <div className="progress-bar">
-                <label
-                  style={
-                    stateLandFill?.data?.result?.land_fill < 6
-                      ? {
-                          left: `${1}%`,
-                        }
-                      : {
-                          left: `${
-                            stateLandFill?.data?.result?.land_fill > 95
-                              ? 95
-                              : stateLandFill?.data?.result?.land_fill - 5
-                          }%`,
-                        }
-                  }
-                >
-                  {stateLandFill?.data?.result?.land_fill}%
-                </label>
-                <BorderLinearProgress
-                  value={stateLandFill?.data?.result?.land_fill}
-                  variant="determinate"
-                />
-              </div>
-            </Grid>
+            {/*<Grid item md={12} xs={12} mb={1}>*/}
+            {/*  <div className="landfill">Landfill Diversion Rate</div>*/}
+            {/*  <div className="progress-bar">*/}
+            {/*    <label*/}
+            {/*      style={*/}
+            {/*        stateLandFill?.data?.result?.land_fill < 6*/}
+            {/*          ? {*/}
+            {/*              left: `${1}%`,*/}
+            {/*            }*/}
+            {/*          : {*/}
+            {/*              left: `${*/}
+            {/*                stateLandFill?.data?.result?.land_fill > 95*/}
+            {/*                  ? 95*/}
+            {/*                  : stateLandFill?.data?.result?.land_fill - 5*/}
+            {/*              }%`,*/}
+            {/*            }*/}
+            {/*      }*/}
+            {/*    >*/}
+            {/*      {stateLandFill?.data?.result?.land_fill}%*/}
+            {/*    </label>*/}
+            {/*    <BorderLinearProgress*/}
+            {/*      value={stateLandFill?.data?.result?.land_fill}*/}
+            {/*      variant="determinate"*/}
+            {/*    />*/}
+            {/*  </div>*/}
+            {/*</Grid>*/}
             <Grid item md={12} xs={12}>
               {userInfo === 12 || userInfo === 13 ? (
                 ""
