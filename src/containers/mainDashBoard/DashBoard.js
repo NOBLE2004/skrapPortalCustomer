@@ -221,34 +221,34 @@ const DashBoard = (props) => {
             />
           </Grid>
         </Grid>
-        <Grid container spacing={3}>
-          <Grid item md={12} className="landfill-main">
-            <div className="landfill">Landfill Diversion Rate</div>
-            <div className="progress-bar">
-              <label
-                style={
-                  state?.data?.result?.land_fill < 6
-                    ? {
-                        left: `${1}%`,
-                      }
-                    : {
-                        left: `${
-                          state?.data?.result?.land_fill > 95
-                            ? 95
-                            : state?.data?.result?.land_fill - 5
-                        }%`,
-                      }
-                }
-              >
-                {state?.data?.result?.land_fill}%
-              </label>
-              <BorderLinearProgress
-                value={state?.data?.result?.land_fill}
-                variant="determinate"
-              />
-            </div>
-          </Grid>
-        </Grid>
+        {/*<Grid container spacing={3}>*/}
+        {/*  <Grid item md={12} className="landfill-main">*/}
+        {/*    <div className="landfill">Landfill Diversion Rate</div>*/}
+        {/*    <div className="progress-bar">*/}
+        {/*      <label*/}
+        {/*        style={*/}
+        {/*          state?.data?.result?.land_fill < 6*/}
+        {/*            ? {*/}
+        {/*                left: `${1}%`,*/}
+        {/*              }*/}
+        {/*            : {*/}
+        {/*                left: `${*/}
+        {/*                  state?.data?.result?.land_fill > 95*/}
+        {/*                    ? 95*/}
+        {/*                    : state?.data?.result?.land_fill - 5*/}
+        {/*                }%`,*/}
+        {/*              }*/}
+        {/*        }*/}
+        {/*      >*/}
+        {/*        {state?.data?.result?.land_fill}%*/}
+        {/*      </label>*/}
+        {/*      <BorderLinearProgress*/}
+        {/*        value={state?.data?.result?.land_fill}*/}
+        {/*        variant="determinate"*/}
+        {/*      />*/}
+        {/*    </div>*/}
+        {/*  </Grid>*/}
+        {/*</Grid>*/}
         <Grid container>
           {dashboardMap?.loading ? (
             <Box
