@@ -38,18 +38,18 @@ const PaymentDetail = ({ job, updateJobs }) => {
       <div className="payment-header-main">
         <div className="header-title">Payment Details</div>
         <div className="header-sub">
-          {job?.is_paid ? (
-            ""
-          ) : (
-            <span
-              className="bold-dsans-12-primary pay-now"
-              onClick={() => {
-                openPayNowModal();
-              }}
-            >
-              Pay Now
-            </span>
-          )}
+          {/*{job?.is_paid ? (*/}
+          {/*  ""*/}
+          {/*) : (*/}
+          {/*  <span*/}
+          {/*    className="bold-dsans-12-primary pay-now"*/}
+          {/*    onClick={() => {*/}
+          {/*      openPayNowModal();*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    Pay Now*/}
+          {/*  </span>*/}
+          {/*)}*/}
           <span onClick={downloadInvoice} className="bold-dsans-12-primary">
             Download Invoice
           </span>
