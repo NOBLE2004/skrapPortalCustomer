@@ -37,7 +37,7 @@ const JobDetail = ({ job }) => {
         <div className="info">
           <div className="designation">Purchase Order</div>
           <div className="personal-title">
-            {job?.purchase_order ? job?.purchase_order : "-----"}
+            {(job?.purchase_order !== null && job?.purchase_order !== "") ? job?.purchase_order : "-----"}
           </div>
         </div>
         <div className="info">

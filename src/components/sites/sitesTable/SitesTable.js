@@ -89,11 +89,11 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         },
       },
       {
-        Header: "Delivered Jobs",
+        Header: "Live Jobs",
         accessor: "delivired",
         disableFilters: true,
         Cell: (props) => {
-          return <span>{props.value || "n/a"}</span>;
+          return <span>{props.value || "----"}</span>;
         },
       },
       {
