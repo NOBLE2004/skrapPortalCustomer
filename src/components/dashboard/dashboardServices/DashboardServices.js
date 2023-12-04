@@ -46,7 +46,7 @@ const DashboardServices = ({ servicesData, loading }) => {
       const ser = []
       Object.entries(servicesData).map(([key, value], index) => {
         if(key !== 'NumberOfJobs'){
-          ser.push({name: key, count: value.count, total: value.total});
+          ser.push({name: key, count: value.count, total: value.total, percentage: value.percentage});
         }else {
           setTotalJobs(value)
         }
@@ -65,19 +65,22 @@ const DashboardServices = ({ servicesData, loading }) => {
   }, [servicesData]);
 
 
-  const getPercentage = (service) => {
-    if(service?.count){
-      const per = ((service.count / totalJobs) * 100).toFixed(2);
-      let percentage = 0;
-      if(per > 0){
-        percentage = per?.split('.')[1]?.substring(1,2) > '5' ? parseFloat(per)?.toFixed(1) : per?.length > 4 ? parseFloat(per?.substring(0,4)) : parseFloat(per?.substring(0,3));
-      }
-      return percentage;
-    }else{
-      return 0
-    }
-
-  }
+  // const getPercentage = (service) => {
+  //   if(service?.count){
+  //     const per = ((service.count / totalJobs) * 100).toFixed(2);
+  //     let percentage = 0;
+  //     if(per > 0){
+  //       console.log(per);
+  //       percentage = parseFloat(per);
+  //       const sum += percentage;
+  //       console.log(sum);
+  //     }
+  //     return percentage;
+  //   }else{
+  //     return 0
+  //   }
+  //
+  // }
 
   return (
     <>
@@ -141,7 +144,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                           fontWeight={"700"}
                           secondaryColor={"#F7F7F7"}
                           hidePercentageText={showValue ? true : false}
-                          percentage={getPercentage(service)}
+                          percentage={service?.percentage}
                           primaryColor={["#73C6F9", "#5391F9"]}
                         />
                         {showValue ? (
