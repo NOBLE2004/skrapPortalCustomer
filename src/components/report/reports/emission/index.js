@@ -407,8 +407,8 @@ const EmissionReport = (props) => {
             </div>
             { wasteEmissions?.data?.reduction > 0 && <h1>
                   <span style={{color: '#848c99', width: '50%'}}>
-                    <span style={{color: 'rgb(80, 210, 38)'}}> {wasteEmissions?.data?.reduction} % </span>
-                    reduction in C02 emissions by avoiding use of {wasteEmissions?.data?.reduced} additional dumpsters.
+                    <span style={{color: 'rgb(80, 210, 38)'}}> {wasteEmissions?.data?.reduction} kg </span>
+                    reduction in C02 emissions by avoiding use of {wasteEmissions?.data?.reduced} additional dumpsters (baseline {wasteEmissions?.data?.dumpsters} dumpsters).
                     {/*in reduction which is {state?.data?.result?.reduced} dumpsters we considered baseline as {state?.data?.result?.dumpsters} dumpsters to landfill.*/}
                   </span>
             </h1>}
