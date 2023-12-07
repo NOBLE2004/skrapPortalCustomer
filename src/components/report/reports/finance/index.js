@@ -125,7 +125,7 @@ const FinanceReport = (props) => {
           { stateSites?.site_breakdown?.result?.reduction > 0 && <h1>
                   <span style={{color: '#848c99', width: '50%'}}>
                     <span style={{color: 'rgb(80, 210, 38)'}}> {`${currency ? currency : "£"}`}{numberWithCommas(stateSites?.site_breakdown?.result?.reduction?.toFixed(2))} </span>
-                    reduction in cost by avoiding use of {stateSites?.site_breakdown?.result?.dumpsters} additional dumpsters (baseline {stateSites?.site_breakdown?.result?.total_dumpsters} dumpsters).
+                    reduction in cost by avoiding use of {stateSites?.site_breakdown?.result?.dumpsters} additional dumpsters (Baseline {stateSites?.site_breakdown?.result?.total_dumpsters} dumpsters).
                   </span>
           </h1>}
 
