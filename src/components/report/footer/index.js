@@ -2,9 +2,12 @@ import Checkbox from "@mui/material/Checkbox";
 import { Button } from "@mui/material";
 import React from "react";
 import "./index.scss";
+import {getUserDataFromLocalStorage} from "../../../services/utils";
 
 const ReportFooter = (props) => {
-  const { handleChangeReportType, reports, exTest, sites, csvData, exportPdf } = props;
+  const data = getUserDataFromLocalStorage();
+  console.log(data);
+  const { handleChangeReportType, reports, exTest, sites, csvData, exportPdf, reductionCsv } = props;
   return (
     <div className="report-footer">
       <div className="label">Select reports to download</div>
@@ -65,14 +68,15 @@ const ReportFooter = (props) => {
         Download CSV
       </Button>
 
-      {/*<Button*/}
-      {/*    classes="footer-btn"*/}
-      {/*    onClick={() => {*/}
-      {/*      exportPdf();*/}
-      {/*    }}*/}
-      {/*>*/}
-      {/*  Download PDF*/}
-      {/*</Button>*/}
+        {data?.company?.includes('Amazon') && <Button
+          classes="footer-btn"
+          style={{marginLeft: '4px'}}
+          onClick={() => {
+            reductionCsv();
+          }}
+      >
+          Reduction Report
+      </Button>}
     </div>
   );
 };
