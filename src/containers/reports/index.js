@@ -34,6 +34,7 @@ const NewReports = () => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [csvData, setCsvData] = useState([]);
+  const [reductionCSV, setReductionCSV] = useState([]);
   let currency = localStorage.getItem("currency");
   const [siteCurrency, setSiteCurrency] = useState(currency);
   const [showMore, setShowMore] = useState(false);
@@ -151,6 +152,31 @@ const NewReports = () => {
       });
   }
 
+  async function reductioncsv() {
+    var workbook = new Excel.Workbook();
+    var worksheet = workbook.addWorksheet("Main sheet");
+    worksheet.columns = [
+      { header: "Site", key: "name", width: 20 },
+      { header: "Reduction in dumpsters", key: "reduction_in_dumpsters", width: 20 },
+      { header: "Reduction transport emission", key: "reduction_transport_emission", width: 20 },
+      { header: "Reduction in waste emission", key: "reduction_waste_emission", width: 20 },
+      { header: "Reduction in cost", key: "reduction_in_cost", width: 20 }
+    ];
+    worksheet.addRows(reductionCSV);
+    workbook.xlsx
+        .writeBuffer()
+        .then(function (buffer) {
+          saveAs(
+              new Blob([buffer], { type: "application/octet-stream" }),
+              `Reduction-report-${new Date().toLocaleDateString()}.xlsx`
+          );
+          setShowMore(false);
+        })
+        .catch(() => {
+          setShowMore(false);
+        });
+  }
+
   useEffect(() => {
     if (reports.ids === "waste_statistics") {
       setCsvData(
@@ -161,7 +187,7 @@ const NewReports = () => {
         })
       );
     }
-    if (reports.ids === "finance") {
+    if (reports.ids === "finance" || reports.ids === "site_movements") {
       setCsvData(
         state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
           obj.recycled = 100;
@@ -179,30 +205,17 @@ const NewReports = () => {
         })
       );
     }
-    if (reports.ids === "site_movements") {
-      setCsvData(
-        state?.siteMovementsList?.data?.result.map((obj) => {
-          obj.recycled = 100;
-          obj.landfill_diversion_rate = 100;
-          return obj;
-        })
-      );
-    }
   }, [state, reports]);
-
-  // useEffect(() => {
-  //   // if (selected) {
-  //     dispatch(getLandfillDiversionList(selected !=='' &&{ sites: [selected] }));
-  //     dispatch(getSiteBreakdownlist(selected !=='' &&{ sites: [selected] }));
-  //     dispatch(getSitesMovementList(selected !=='' &&{ sites: [selected] }));
-  //   // }
-  // }, [selected]);
 
   useEffect(() => {
     dispatch(getLandfillDiversionList({ sites: selected, date, currency }));
     dispatch(getSiteBreakdownlist({ sites: selected, date, currency }));
-    dispatch(getSitesMovementList({ sites: selected[0], date, currency }));
+    dispatch(getSitesMovementList({ sites: selected, date, currency }));
   }, [selected, date]);
+
+  useEffect(()=> {
+    setReductionCSV(state?.siteMovementsList?.data?.result);
+  }, [state?.siteMovementsList?.data]);
 
   const exportPdf = () => {
     html2canvas(document.querySelector("#pdf-download")).then(canvas => {
@@ -332,6 +345,7 @@ const NewReports = () => {
         date={date}
         exTest={exTest}
         csvData={csvData}
+        reductionCsv={reductioncsv}
         exportPdf={exportPdf}
       />
     </>
