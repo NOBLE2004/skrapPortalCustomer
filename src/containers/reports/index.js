@@ -157,7 +157,11 @@ const NewReports = () => {
     var worksheet = workbook.addWorksheet("Main sheet");
     worksheet.columns = [
       { header: "Site", key: "name", width: 20 },
+      { header: "Baseline dumpsters", key: "dumpsters", width: 20 },
+      { header: "Total line dumpsters", key: "total_dumpsters", width: 20 },
       { header: "Reduction in dumpsters", key: "reduction_in_dumpsters", width: 20 },
+      { header: "Baseline transport emission", key: "base_transport_emission", width: 20 },
+      { header: "Total transport emission", key: "total_transport_emission", width: 20 },
       { header: "Reduction transport emission", key: "reduction_transport_emission", width: 20 },
       { header: "Reduction in waste emission", key: "reduction_waste_emission", width: 20 },
       { header: "Reduction in cost", key: "reduction_in_cost", width: 20 }
