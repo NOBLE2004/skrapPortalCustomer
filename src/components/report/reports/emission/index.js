@@ -488,7 +488,7 @@ const EmissionReport = (props) => {
             { wasteEmissions?.data?.avoided > 0 && <h1>
                   <span style={{color: '#848c99', width: '50%'}}>
                     <span style={{color: 'rgb(80, 210, 38)'}}> {wasteEmissions?.data?.avoided} kg </span>
-                    CO2e Avoided by recycling & <span style={{color: 'rgb(80, 210, 38)'}}> {wasteEmissions?.data?.upcycleLandFill} kg </span> kg CO2e Avoided by Upcycle
+                    CO2e Avoided by recycling & <span style={{color: 'rgb(80, 210, 38)'}}> {wasteEmissions?.data?.upcycleLandFill} kg </span> CO2e Avoided by Upcycle
                   </span>
             </h1>}
             <div className="filters">
