@@ -163,7 +163,11 @@ const NewReports = () => {
       { header: "Baseline transport emission", key: "base_transport_emission", width: 20 },
       { header: "Total transport emission", key: "total_transport_emission", width: 20 },
       { header: "Reduction transport emission", key: "reduction_transport_emission", width: 20 },
+      { header: "Baseline waste emission", key: "baseline_waste_emission", width: 20 },
+      { header: "Total waste emission produced", key: "total_waste_emission", width: 20 },
       { header: "Reduction in waste emission", key: "reduction_waste_emission", width: 20 },
+      { header: "Reduction in waste emission by Up cycling", key: "reduction_waste_emission_upcycle", width: 20 },
+      { header: "Total reduction in waste emission", key: "total_reduction_waste_emission", width: 20 },
       { header: "Reduction in cost", key: "reduction_in_cost", width: 20 }
     ];
     worksheet.addRows(reductionCSV);
