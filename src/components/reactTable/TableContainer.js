@@ -65,16 +65,20 @@ const TableContainer = ({ columns, data, name }) => {
   const handleRowClick = (row) => {
     if (name === "jobs") {
       // if (history?.location?.pathname !== "sites/:id") {
-        history.push({ pathname: `/job-detail/${row.job_id}` });
-      
+      history.push({ pathname: `/job-detail/${row.job_id}` });
     }
     if (name === "sites") {
       history.push({
         pathname: `sites/${row.address_id}`,
-        data: { site_address: row.job_address, sales_by_site: row.sales_by_site },
+        data: {
+          site_address: row.job_address,
+          sales_by_site: row.sales_by_site,
+        },
       });
     }
   };
+
+  console.log("header", headerGroups);
   return (
     <div className="table-container-main" ref={inputRef}>
       <table {...getTableProps()}>
@@ -86,7 +90,14 @@ const TableContainer = ({ columns, data, name }) => {
                   return null;
                 } else {
                   return (
-                    <th {...column.getHeaderProps()}>
+                    <th
+                      {...column.getHeaderProps({
+                        style: {
+                          minWidth: column.minWidth,
+                          width: column.width,
+                        },
+                      })}
+                    >
                       {column.render("Header")}
                     </th>
                   );

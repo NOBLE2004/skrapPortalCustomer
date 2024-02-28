@@ -25,7 +25,9 @@ const JobsTable = ({
   data,
   pagination,
   handleUpdateJobs,
-  handlePagination, limit, setLimit
+  handlePagination,
+  limit,
+  setLimit,
 }) => {
   const [state, setState] = useState({
     openMenu: false,
@@ -138,7 +140,7 @@ const JobsTable = ({
     setUser(userdata.personal_detail);
     setUserData(userdata);
   }, []);
-  console.log(userData?.company?.includes('Amazon'))
+  console.log(userData?.company?.includes("Amazon"));
   // const handleInvoice = () => {
   //   if (jobIds.length > 0) {
   //     JobService.xeroInvoice({ jobs: jobIds })
@@ -240,7 +242,9 @@ const JobsTable = ({
             <span>
               {cell.value}
               <br />
-              {(cell.row.original.parent_id == 2 || cell.row.original.parent_id == 602 || cell.row.original.parent_id == 101) && (
+              {(cell.row.original.parent_id == 2 ||
+                cell.row.original.parent_id == 602 ||
+                cell.row.original.parent_id == 101) && (
                 <span style={{ color: "red" }}>
                   {cell.row.original.exchanged_by > 0 && `Exchange`}
                 </span>
@@ -259,6 +263,8 @@ const JobsTable = ({
         accessor: "job_address",
         disableSortBy: true,
         disableFilters: true,
+        maxWidth: 400,
+        minWidth: 160,
       },
       {
         Header: "Cost",
@@ -294,14 +300,16 @@ const JobsTable = ({
       {
         Header: "Lead Time",
         disableFilters: true,
-        show: getUserDataFromLocalStorage()?.company?.includes('Amazon') ? 0 : 1,
+        show: getUserDataFromLocalStorage()?.company?.includes("Amazon")
+          ? 0
+          : 1,
         Cell: (props) => {
           return (
-              <>
-                {props.cell.row.original?.lead_time
-                    ? `${props.cell.row.original?.lead_time}`
-                    : ""}
-              </>
+            <>
+              {props.cell.row.original?.lead_time
+                ? `${props.cell.row.original?.lead_time}`
+                : ""}
+            </>
           );
         },
       },
@@ -341,7 +349,9 @@ const JobsTable = ({
           return (
             <>
               {props.cell.row.original?.rebate
-                ? `${currency}${Number(props.cell.row.original?.rebate).toFixed(2)}`
+                ? `${currency}${Number(props.cell.row.original?.rebate).toFixed(
+                    2
+                  )}`
                 : ""}
             </>
           );
@@ -432,7 +442,11 @@ const JobsTable = ({
       {
         Header: "Invoice",
         accessor: "job_id",
-        show: (getUserDataFromLocalStorage()?.company?.includes('Amazon') && currency == '$' )? 1 : 0,
+        show:
+          getUserDataFromLocalStorage()?.company?.includes("Amazon") &&
+          currency == "$"
+            ? 1
+            : 0,
         id: "invoice",
         Cell: (props) => (
           <>
@@ -708,8 +722,8 @@ const JobsTable = ({
             className="-striped -highlight"
           />
           <Pagination
-              limit={limit}
-              setLimit={setLimit}
+            limit={limit}
+            setLimit={setLimit}
             last={pagination?.last_page}
             current={pagination?.current_page}
             from={pagination?.from}
