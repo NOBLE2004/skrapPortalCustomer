@@ -1,7 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { OutlinedInput, Select, Switch } from "@mui/material";
+import {
+  InputAdornment,
+  ListSubheader,
+  OutlinedInput,
+  Select,
+  Switch,
+  TextField,
+} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { getSites } from "../../../store/actions/sites.action";
 import { getJobsMeta } from "../../../store/actions/action.jobsMeta";
 import { connect, useDispatch } from "react-redux";
@@ -139,6 +146,19 @@ const ReportHeader = (props) => {
     handleCloseDate();
   };
 
+  const containsText = (text, searchText) =>
+    text?.toLowerCase()?.indexOf(searchText?.toLowerCase()) > -1;
+
+  const [searchText, setSearchText] = useState("");
+  const displayedOptions = useMemo(
+    () =>
+      props.allsites.data?.filter((option) =>
+        containsText(option?.job_address, searchText)
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [searchText, props.allsites.data]
+  );
+
   return (
     <div className="report-header">
       <div
@@ -155,6 +175,7 @@ const ReportHeader = (props) => {
             value={selected}
             displayEmpty
             multiple
+            autoFocus
             onChange={(e) => {
               handleChange(e);
               const filterSite = props.allsites.data?.find(
@@ -186,15 +207,39 @@ const ReportHeader = (props) => {
               );
             }}
           >
-            {props.allsites.data &&
-              props.allsites?.data.map((site, index) => (
+            <ListSubheader>
+              <TextField
+                size="small"
+                autoFocus
+                fullWidth
+                value={searchText}
+                placeholder="Search..."
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      {/* <SearchIcon /> */}
+                    </InputAdornment>
+                  ),
+          
+                }}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key !== "Escape") {
+                    // Prevents autoselecting item while typing (default Select behaviour)
+                    e.stopPropagation();
+                  }
+                }}
+              />
+            </ListSubheader>
+            {displayedOptions &&
+              displayedOptions?.map((site, index) => (
                 <MenuItem
                   classes={{
                     selected: classes.selected,
                     root: classes.rootMenuItem,
                   }}
                   key={index}
-                  value={site.address_id}
+                  value={site?.address_id}
                   //style={getStyles(name, personName, theme)}
                 >
                   {site.job_address}
