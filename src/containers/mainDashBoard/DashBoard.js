@@ -113,6 +113,10 @@ const DashBoard = (props) => {
     dispatch(getDashboardsMapData({ sites: selected, date, currency }));
     dispatch(getDashboardServiceData({ sites: selected, date, currency }));
     dispatch(getDashboardsData({ sites: selected, date, currency }));
+  
+  }, [selected, date, currency]);
+
+  useEffect(()=>{
     dispatch(
       getDashboardSaleData({
         year: latestYear,
@@ -121,7 +125,7 @@ const DashBoard = (props) => {
         currency,
       })
     );
-  }, [selected, latestYear, date, currency]);
+  },[latestYear,date,currency])
 
   const gotoJobDetail = (id) => {
     history.push({ pathname: `job-detail/${id}` });
