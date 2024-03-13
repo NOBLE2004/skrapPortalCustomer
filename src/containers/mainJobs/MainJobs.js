@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import JobsTable from "../../components/reactTable/JobsTable";
-import { Card, CardContent, Grid, Paper } from "@mui/material";
+import { Box, Card, CardContent, Grid, Paper } from "@mui/material";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -39,6 +39,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import * as Excel from "exceljs";
 import { saveAs } from "file-saver";
 import JobService from "../../services/job.service";
+import Loader from "react-spinners/FadeLoader";
 
 const MainJobsNew = (props) => {
   const dispatch = useDispatch();
@@ -59,7 +60,8 @@ const MainJobsNew = (props) => {
     status: "",
     date: "",
     service: "",
-    page: 1, limit: 10,
+    page: 1,
+    limit: 10,
     address: "",
     search: "",
     show_on_app: [0, 1],
@@ -77,10 +79,7 @@ const MainJobsNew = (props) => {
 
   const getData = () => {
     dispatch(
-      getJobList(
-        { user_id: userData.user_id, orders_type: 4 },
-        jobsFilter
-      )
+      getJobList({ user_id: userData.user_id, orders_type: 4 }, jobsFilter)
     );
 
     dispatch(getDashboardsData(jobsFilter));
@@ -117,17 +116,17 @@ const MainJobsNew = (props) => {
     setFilters(filtersList);
   };
   const handleChangeSearch = (search) => {
-     const duplicate = { ...jobsFilter };
+    const duplicate = { ...jobsFilter };
     duplicate.search = search;
     dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
     setFilters({ ...filters, search: search });
   };
-    const setLimit = (limit) => {
-        const duplicate = { ...jobsFilter };
-        duplicate.limit = limit;
-        dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
-        setFilters({ ...filters, limit: limit });
-    };
+  const setLimit = (limit) => {
+    const duplicate = { ...jobsFilter };
+    duplicate.limit = limit;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
+    setFilters({ ...filters, limit: limit });
+  };
 
   const handlePagination = (page) => {
     const duplicate = { ...jobsFilter };
@@ -248,58 +247,99 @@ const MainJobsNew = (props) => {
         downloadCSV={false}
         showButton={true}
       >
-        <Grid item container spacing={1}>
-          {userData?.hide_price === 0 && (
+        {loading ? (
+          <Box
+            minHeight={"70px"}
+            display="flex"
+            m={2}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <FadeLoader
+              color={"#518ef8"}
+              loading={loading}
+              width={4}
+            />
+          </Box>
+        ) : (
+          <Grid item container spacing={1}>
+            {userData?.hide_price === 0 && (
+              <CommonJobStatus
+                jobStatus={{
+                  status: "Spend",
+                  price: `${currency ? currency : "£"}${
+                    info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+                  }`,
+                  statusName: "primary",
+                }}
+              />
+            )}
             <CommonJobStatus
               jobStatus={{
-                status: "Spend",
-                price: `${currency ? currency : "£"}${
-                  info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+                status: "Jobs",
+                price: `${
+                  info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0
                 }`,
                 statusName: "primary",
               }}
             />
-          )}
-          <CommonJobStatus
-            jobStatus={{
-              status: "Jobs",
-              price: `${
-                info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0
-              }`,
-              statusName: "primary",
-            }}
-          />
-          <CommonJobStatus
-            jobStatus={{
-              status: "Pending",
-              price: `${info ? info.Pending : 0}`,
-              statusName: "pending",
-            }}
-          />
-          <CommonJobStatus
-            jobStatus={{
-              status: "Completed",
-              price: `${
-                info ? parseFloat(info.Completed).toLocaleString() : 0
-              }`,
-              statusName: "completed",
-            }}
-          />
-          <CommonJobStatus
-            jobStatus={{
-              status: "Delivered",
-              price: `${info ? info.Delivered : 0}`,
-              statusName: "delivered",
-            }}
-          />
-        </Grid>
+            <CommonJobStatus
+              jobStatus={{
+                status: "Pending",
+                price: `${info ? info.Pending : 0}`,
+                statusName: "pending",
+              }}
+            />
+            <CommonJobStatus
+              jobStatus={{
+                status: "Completed",
+                price: `${
+                  info ? parseFloat(info.Completed).toLocaleString() : 0
+                }`,
+                statusName: "completed",
+              }}
+            />
+            <CommonJobStatus
+              jobStatus={{
+                status: "Delivered",
+                price: `${info ? info.Delivered : 0}`,
+                statusName: "delivered",
+              }}
+            />
+          </Grid>
+        )}
       </CommonHeader>
-        {userData.account_type !== 3 && <div style={{ paddingBottom: "2%", marginTop: "-2%", display: 'flex', justifyContent: 'end' }}>
-            <Paper className="box" style={{ padding: "1%", display: 'flex' }}>
-                {(userData.market_finance_balance > 0 && userData?.market_pay) && <label style={{paddingBottom: '1%'}}>Available Kriya balance : <b>{currency ? currency : "£"} {userData.market_finance_balance.toLocaleString()}</b></label>}
-                {userData.credit_balance > 0 && <label>Available Credit balance : <b>{currency ? currency : "£"} {userData.credit_balance.toLocaleString()}</b></label>}
-            </Paper>
-        </div>}
+      {userData.account_type !== 3 && (
+        <div
+          style={{
+            paddingBottom: "2%",
+            marginTop: "-2%",
+            display: "flex",
+            justifyContent: "end",
+          }}
+        >
+          <Paper className="box" style={{ padding: "1%", display: "flex" }}>
+            {userData.market_finance_balance > 0 && userData?.market_pay && (
+              <label style={{ paddingBottom: "1%" }}>
+                Available Kriya balance :{" "}
+                <b>
+                  {currency ? currency : "£"}{" "}
+                  {userData.market_finance_balance.toLocaleString()}
+                </b>
+              </label>
+            )}
+            {userData.credit_balance > 0 && (
+              <label>
+                Available Credit balance :{" "}
+                <b>
+                  {currency ? currency : "£"}{" "}
+                  {userData.credit_balance.toLocaleString()}
+                </b>
+              </label>
+            )}
+          </Paper>
+        </div>
+      )}
       <div className="jobs-search-header">
         <Grid container spacing={2}>
           <Grid item xs={4}>
@@ -355,8 +395,8 @@ const MainJobsNew = (props) => {
           ) : (
             jobData && (
               <JobsTable
-                  limit={jobsFilter.limit}
-                  setLimit={setLimit}
+                limit={jobsFilter.limit}
+                setLimit={setLimit}
                 data={jobData?.data ? jobData?.data : []}
                 pagination={jobData}
                 handleUpdateJobs={handleJobCreated}
@@ -366,23 +406,33 @@ const MainJobsNew = (props) => {
           )}
           {jobData?.data?.length &&
             userData.personal_detail.first_name.includes("Amazon") && (
-                <>
-                    {currency == '$' ? (<Paper className="box" style={{ width: "15%", padding: "1%" }}>
-                        <span>*</span>
-                        <span>100% skip utilisation</span>
-                        <span>Wood = 2.5 Tonnes</span>
-                        <span>General = 2 Tonnes</span>
-                        <span>Plastic = 1.5 Tonnes</span>
-                        <span>Cardboard = 1 Tonnes</span>
-                    </Paper>) : (<Paper className="box" style={{ width: "15%", padding: "1%" }}>
-                            <span>*</span>
-                            <span>100% skip utilisation</span>
-                            <span>Wood = 3.5 Tonnes</span>
-                            <span>General = 3 Tonnes</span>
-                            <span>Plastic = 2.5 Tonnes</span>
-                            <span>Cardboard = 2 Tonnes</span>
-                        </Paper>)}
-                </>
+              <>
+                {currency == "$" ? (
+                  <Paper
+                    className="box"
+                    style={{ width: "15%", padding: "1%" }}
+                  >
+                    <span>*</span>
+                    <span>100% skip utilisation</span>
+                    <span>Wood = 2.5 Tonnes</span>
+                    <span>General = 2 Tonnes</span>
+                    <span>Plastic = 1.5 Tonnes</span>
+                    <span>Cardboard = 1 Tonnes</span>
+                  </Paper>
+                ) : (
+                  <Paper
+                    className="box"
+                    style={{ width: "15%", padding: "1%" }}
+                  >
+                    <span>*</span>
+                    <span>100% skip utilisation</span>
+                    <span>Wood = 3.5 Tonnes</span>
+                    <span>General = 3 Tonnes</span>
+                    <span>Plastic = 2.5 Tonnes</span>
+                    <span>Cardboard = 2 Tonnes</span>
+                  </Paper>
+                )}
+              </>
             )}
         </>
       ) : (
