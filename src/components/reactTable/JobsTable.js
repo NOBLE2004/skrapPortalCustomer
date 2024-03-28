@@ -304,10 +304,12 @@ const JobsTable = ({
           ? 0
           : 1,
         Cell: (props) => {
+          const regex = /-\d+/;
+          const negativeValue = regex.test(props.cell.row.original?.lead_time);
           return (
             <>
               {props.cell.row.original?.lead_time
-                ? `${props.cell.row.original?.lead_time}`
+                ? `${negativeValue ? "" : props.cell.row.original?.lead_time}`
                 : ""}
             </>
           );
