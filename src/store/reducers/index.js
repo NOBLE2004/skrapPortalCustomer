@@ -43,6 +43,7 @@ import { jobFilterReducer } from "./jobReducer";
 import { sitesFilterReducer } from "./sitesReducer";
 import { wasteEmissionReducer } from "./reportWasteEmissionReducer";
 import {reportWasteEmission} from "./wasteEmissonReducer";
+import {getRecycledSuppReducer} from "./rescycledSuppReducer";
 export default combineReducers({
   auth: authReducer,
   signup: signUpReducer,
@@ -86,4 +87,5 @@ export default combineReducers({
   jobsFilter: jobFilterReducer,
   sitesFilter: sitesFilterReducer,
   reportWasteEmissions: reportWasteEmission,
+  recycledSupp: getRecycledSuppReducer
 });

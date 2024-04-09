@@ -27,6 +27,7 @@ class ReportsService extends HttpService {
   getWaste = (data) => this.get("customers/report/wastes", data);
   getWasteOfEnergy = (data) => this.get("customers/report/wasteOfEnergy", data);
   getRecycled = (data) => this.get("customers/report/recycled", data);
+  getRecycledSupp = (data) => this.get("customers/report/recycledSupplier", data);
   getPortfolio = (data) => this.get("portfolios", data);
   payOffSet = (data) => this.post(`placeOrderByValue?${data}`);
   offSetCharge = (data) => this.post(`offsetCharge`, data);
