@@ -140,3 +140,99 @@ export const chartOptions = (data) => ({
     ],
   },
 });
+
+export const chartOptionsWaste = (data) => ({
+  chart: {
+    type: "column",
+    height: 300,
+    style: {
+      fontFamily: "DM Sans",
+      color: "#677790",
+      fontWeight: 700,
+    },
+  },
+  title: {
+    text: console.log(data),
+  },
+
+  subtitle: {
+    text: null,
+  },
+
+  yAxis: {
+    title: {
+      text: null,
+    },
+    labels: {
+      formatter() {
+        const getLabel = (value) => {
+          return `${numberWithCommas(value)} %`;
+        };
+        return getLabel(numberWithCommas(this.value));
+      },
+    },
+  },
+
+  tooltip: {
+    formatter: function () {
+      let s = `<b> ${this.x} </b>`;
+      this.points.forEach((point) => {
+        if (point?.series?.name !== "null") {
+          s += `<br/> ${point.series.name} :  ${numberWithCommas(point.y)} %`;
+        }
+      });
+      return s;
+    },
+    shared: true,
+  },
+
+  xAxis: {
+    categories: data?.labels || [],
+  },
+
+  legend: {
+    symbolRadius: 2,
+    itemStyle: {
+      fontFamily: "DM Sans",
+      color: "#677790",
+      fontWeight: 700,
+    },
+  },
+  plotOptions: {
+    column: {
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: "10px",
+        },
+      },
+    },
+    series: {
+      states: {
+        hover: {
+          enabled: false,
+        },
+      },
+    },
+  },
+
+  series: data.data,
+  colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+
+  responsive: {
+    rules: [
+      {
+        condition: {
+          maxWidth: 500,
+        },
+        chartOptions: {
+          legend: {
+            layout: "horizontal",
+            align: "center",
+            verticalAlign: "bottom",
+          },
+        },
+      },
+    ],
+  },
+});

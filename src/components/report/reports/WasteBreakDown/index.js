@@ -13,13 +13,16 @@ import { numberWithCommas } from "../../../utlils/dashboard";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
+import {getSuppRecycled} from "../../../../store/actions/action.recycledsupp";
+import {chartOptions, chartOptionsWaste} from "../wasteEmissionGraph/constant";
 
 const WasteBreakDown = (props) => {
   const dispatch = useDispatch();
   const recycledData = useSelector((state) => state?.recycled);
+  const recycledSuppData = useSelector((state) => state?.recycledSupp);
   const [chartDataRecycled, setChartDataRecycled] = useState();
   const { sites, showMore, date, siteCurrency } = props;
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   NoDataToDisplay(Highcharts)
   useEffect(() => {
     //dispatch(getLandfillDiversion({ sites: sites, date, currency:siteCurrency }));
@@ -27,6 +30,9 @@ const WasteBreakDown = (props) => {
     // dispatch(getWaste({ sites: sites, date, currency:siteCurrency }));
     //dispatch(getWasteOfEnergy({ sites: sites, date, currency:siteCurrency }));
     dispatch(getRecycled({ sites: sites, date, currency:siteCurrency }));
+    if(sites.length === 1){
+      dispatch(getSuppRecycled({ sites: sites, date, currency:siteCurrency }));
+    }
   }, [sites, date, siteCurrency]);
 
   useEffect(() => {
@@ -110,8 +116,39 @@ const WasteBreakDown = (props) => {
               </Grid>
             </div>)}
           {/* )} */}
+          {(sites.length === 1 && recycledSuppData?.data?.result?.data?.length > 1) && <div
+              className="see-more"
+              onClick={() => {
+                setShow(!show);
+              }}
+              style={showMore ? { opacity: 0 } : { opacity: 1 }}
+          >
+            Suppliers Breakdown
+          </div>}
         </div>
       </CardContent>
+      {show && <CardContent>
+        <div className="salesWp">
+          {recycledData?.isLoading ? (
+              <div className="d-flex justify-center align-center">
+                <FadeLoader color={"#518ef8"} loading={true} width={4} />
+              </div>
+          ) : (
+              <div className="salesWp-inner-wrap">
+                <div style={{ width: "100%" }}>
+                  {recycledSuppData?.data && recycledSuppData?.data?.result && recycledSuppData?.data?.result.data.length > 1 && (
+                      <HighchartsReact
+                          highcharts={Highcharts}
+                          height="400px"
+                          options={chartOptionsWaste(recycledSuppData?.data?.result)}
+                          ref={props.ref2}
+                      />
+                  )}
+                </div>
+              </div>)}
+          {/* )} */}
+        </div>
+      </CardContent>}
     </Card>
   );
 };
