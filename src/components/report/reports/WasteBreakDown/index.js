@@ -22,7 +22,7 @@ const WasteBreakDown = (props) => {
   const recycledSuppData = useSelector((state) => state?.recycledSupp);
   const [chartDataRecycled, setChartDataRecycled] = useState();
   const { sites, showMore, date, siteCurrency } = props;
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   NoDataToDisplay(Highcharts)
   useEffect(() => {
     //dispatch(getLandfillDiversion({ sites: sites, date, currency:siteCurrency }));
