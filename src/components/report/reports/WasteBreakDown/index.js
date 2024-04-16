@@ -116,15 +116,15 @@ const WasteBreakDown = (props) => {
               </Grid>
             </div>)}
           {/* )} */}
-          {(sites.length === 1 && recycledSuppData?.data?.result?.data?.length > 1) && <div
-              className="see-more"
-              onClick={() => {
-                setShow(!show);
-              }}
-              style={showMore ? { opacity: 0 } : { opacity: 1 }}
-          >
-            Suppliers Breakdown
-          </div>}
+          {/*{(sites.length === 1 && recycledSuppData?.data?.result?.data?.length > 1) && <div*/}
+          {/*    className="see-more"*/}
+          {/*    onClick={() => {*/}
+          {/*      setShow(!show);*/}
+          {/*    }}*/}
+          {/*    style={showMore ? { opacity: 0 } : { opacity: 1 }}*/}
+          {/*>*/}
+          {/*  Suppliers Breakdown*/}
+          {/*</div>}*/}
         </div>
       </CardContent>
       {show && <CardContent>
