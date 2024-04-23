@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "../environment/index";
+import {API_URL, PORTAL_URL} from "../environment/index";
 
 if (localStorage.getItem("token")) {
     axios.defaults.headers.common["Authorization"] =
@@ -15,6 +15,8 @@ export default class HttpService {
     };
 
     get = (url, params) => axios.get(`${API_URL}/${url}`, {params});
+
+    getportal = (url, params) => axios.get(`${PORTAL_URL}/${url}`, {params});
 
     post = (url, data, params) => axios.post(`${API_URL}/${url}`, data, {params});
 
