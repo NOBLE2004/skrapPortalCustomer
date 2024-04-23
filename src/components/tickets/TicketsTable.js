@@ -18,6 +18,7 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
       });
   };
   const download = async (url) => {
+      console.log(url);
     var element = document.createElement("a");
     element.href = await toDataURL(url);
     element.download = url.substring(url.lastIndexOf("/") + 1, url.length);
@@ -126,7 +127,7 @@ const TicketsTable = ({ data, pagination, handlePagination }) => {
                                             }}
                                             className="normal-dsans-10-primary1"
                                             onClick={() =>
-                                                download(DOWNLOAD_URL + ticket?.file?.name)
+                                                download(ticket?.url)
                                             }
                                         >
                         {ticket.ticket_type == "delivery"
