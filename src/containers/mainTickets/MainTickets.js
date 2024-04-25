@@ -70,10 +70,12 @@ const MainTickets = (props) => {
     setLoading(true);
     const params = filters;
     params.user_id = localStorage.getItem("user_id");
+    params.search = params.search == "" ? null : params.search;
+    params.date = params.date == "" ? null : params.date;
     ticketService
       .download(params)
       .then((response) => {
-        if (response.data.code === 0) {
+        if (response.data.code === 0 && response.data.result.url != "") {
           download(response.data.result.url);
         } else {
           console.log(response);
