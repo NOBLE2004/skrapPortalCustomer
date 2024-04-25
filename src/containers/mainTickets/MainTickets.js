@@ -75,7 +75,7 @@ const MainTickets = (props) => {
     ticketService
       .download(params)
       .then((response) => {
-        if (response.data.code === 0) {
+        if (response.data.code === 0 && response.data.result.url != "") {
           download(response.data.result.url);
         } else {
           console.log(response);
