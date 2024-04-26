@@ -107,7 +107,7 @@ const FinanceReport = (props) => {
   }, [sites, date, currency]);
 
   return (
-    <Card className="report-chart-card" id={"finance"}>
+    <Card className="report-chart-card">
       <CardContent>
         <div className="salesWp">
           <div className="sub-heading" style={{paddingBottom: '10px'}}>Site breakdown</div>

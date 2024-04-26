@@ -86,7 +86,7 @@ const WasteBreakDown = (props) => {
   }, [recycledData?.data]);
 
   return (
-    <Card className="report-chart-card" id="waste_statistics">
+    <Card className="report-chart-card">
       <CardContent>
         <div className="salesWp">
           {recycledData?.isLoading ? (
