@@ -126,9 +126,9 @@ const NewReports = () => {
       { header: "Movement", key: "movement", width: 20 },
       { header: "Container", key: "container", width: 20 },
       { header: "Customer Cost", key: "customer_cost", width: 20 },
-      { header: "% Recycled", key: "recycled", width: 20 },
+     // { header: "% Recycled", key: "recycled", width: 20 },
       { header: "Tonnage", key: "diverted", width: 20 },
-      { header: "% Landfill", key: "landfill_diversion_rate", width: 20 },
+      //{ header: "% Landfill", key: "landfill_diversion_rate", width: 20 },
       // { header: "Supplier", key: "supplier", width: 20 },
       // { header: "Supplier Postcode", key: "supplier_postcode", width: 20 },
       { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 20 },
@@ -184,36 +184,6 @@ const NewReports = () => {
           setShowMore(false);
         });
   }
-
-  useEffect(() => {
-    if (reports.ids === "waste_statistics") {
-      setCsvData(
-        state?.landfillList?.data?.result.map((obj) => {
-          obj.recycled = 100;
-          obj.landfill_diversion_rate = 100;
-          return obj;
-        })
-      );
-    }
-    if (reports.ids === "finance" || reports.ids === "site_movements") {
-      setCsvData(
-        state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
-          obj.recycled = 100;
-          obj.landfill_diversion_rate = 100;
-          return obj;
-        })
-      );
-    }
-    if (reports.ids === "emissions") {
-      setCsvData(
-        state?.landfillList?.data?.result.map((obj) => {
-          obj.recycled = 100;
-          obj.landfill_diversion_rate = 100;
-          return obj;
-        })
-      );
-    }
-  }, [state, reports]);
 
   useEffect(() => {
     dispatch(getLandfillDiversionList({ sites: selected, date, currency }));
