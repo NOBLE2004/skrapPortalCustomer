@@ -104,7 +104,7 @@ const DualAxisGraph = (props) => {
 
   return (
     <>
-      <Card className="report-chart-card" id={"emissions"}>
+      <Card className="report-chart-card">
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
             <div className="filters" style={{ margin: 0 }}>
