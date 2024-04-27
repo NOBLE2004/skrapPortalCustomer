@@ -32,13 +32,13 @@ deploy:
     - echo "deploying app on server"
   script:
     - chmod 400 $SSH_PRIVATE_KEY
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY brikxsolcp@$SERVER_IP docker pull registry.gitlab.com/zainawan78/sms-frontend:develop
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY brikxsolcp@$SERVER_IP docker stop sms-fronted || true
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY brikxsolcp@$SERVER_IP docker rm sms-fronted || true
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY brikxsolcp@$SERVER_IP docker run -p 3010:80 -d --restart unless-stopped --name sms-fronted registry.gitlab.com/zainawan78/sms-frontend:develop
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY brikxsolcp@$SERVER_IP docker system prune -a -f
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY brikxsolcp@$SERVER_IP docker image prune -a -f
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY brikxsolcp@$SERVER_IP docker volume prune -f
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY root@$SERVER_IP docker pull registry.gitlab.com/zainawan78/sms-frontend:develop
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY root@$SERVER_IP docker stop sms-fronted || true
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY root@$SERVER_IP docker rm sms-fronted || true
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY root@$SERVER_IP docker run -p 3010:80 -d --restart unless-stopped --name sms-fronted registry.gitlab.com/zainawan78/sms-frontend:develop
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY root@$SERVER_IP docker system prune -a -f
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY root@$SERVER_IP docker image prune -a -f
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY root@$SERVER_IP docker volume prune -f
   environment:
     name: develop
 
