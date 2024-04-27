@@ -56,11 +56,24 @@ const NewReports = () => {
     let logos = [];
     for (const id of reportIds){
       let logo = "";
+      const urlToFontFile = 'https://fonts.gstatic.com/s/dmsans/v15/rP2tp2ywxg089UriI5-g4vlH9VoD8CmcqZG40F9JadbnoEwAopxRR23wRmYJp8I5zzw.woff';
+      const fontName = 'DM Sans';
+      const response = await fetch(urlToFontFile);
+      console.log(response)
+      const fontArrayBuffer = await response.arrayBuffer();
+      console.log(fontArrayBuffer)
+      const style = `
+  @font-face {
+    font-family: '${fontName}';
+    src: url(${fontArrayBuffer});
+  }
+`;
       var node = document.getElementById(id);
+      node.style = style;
       var width = node.clientWidth;
       var height = node.clientHeight;
       await htmlToImage
-          .toPng(node)
+          .toPng(node, {quality: 1, style: {fontFamily: 'DM Sans'}})
           .then(function (dataUrl) {
             var img = new Image();
             img.src = dataUrl;
