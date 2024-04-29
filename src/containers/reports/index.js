@@ -80,13 +80,14 @@ const NewReports = () => {
       { header: "Address", key: "job_address", width: 40 },
       { header: "Container", key: "container", width: 30 },
       { header: "Customer Cost", key: "customer_cost", width: 10 },
+      { header: "Ewc Code", key: "ewc_code", width: 10 },
       { header: "Tonnage", key: "diverted", width: 10 },
       { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 10 },
     ];
     worksheet.addRows(csvData);
     logos.map((img)=>{
       worksheet.addImage(img.logo, {
-        tl: { col: 9, row: 1 },
+        tl: { col: 10, row: 1 },
         ext: { width: img.width, height: img.height },
       });
     })
