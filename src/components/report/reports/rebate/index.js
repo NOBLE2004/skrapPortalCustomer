@@ -31,6 +31,11 @@ const RebateReport = (props) => {
                 plotBorderWidth: null,
                 plotShadow: false,
                 type: "pie",
+                style: {
+                    color: "#677790",
+                    fontWeight: 700,
+                },
+                height: 400,
             },
             title: {
                 text: null,

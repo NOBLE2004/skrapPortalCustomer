@@ -60,7 +60,7 @@ const NewReports = () => {
       var width = node.clientWidth;
       var height = node.clientHeight;
       await htmlToImage
-          .toPng(node)
+          .toPng(node, {quality: 1, style: {fontFamily: 'DM Sans'}})
           .then(function (dataUrl) {
             var img = new Image();
             img.src = dataUrl;
@@ -155,19 +155,20 @@ const NewReports = () => {
     setReductionCSV(state?.siteMovementsList?.data?.result);
   }, [state?.siteMovementsList?.data]);
 
-  const exportPdf = () => {
-    html2canvas(document.querySelector("#pdf-download")).then(canvas => {
-      //document.body.appendChild(canvas);  // if you want see your screenshot in body.
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      const imgProps= pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      console.log(imgProps.height, imgProps.width);
-      const pdfHeight = ((imgProps.height * pdfWidth) / imgProps.width);
-      console.log(pdfWidth, pdfHeight);
-      pdf.addImage(imgData, 'PNG', 2, 2, imgProps.width, imgProps.height);
-      pdf.save("report.pdf");
-    });
+  const exportPdf = async () => {
+    var node = document.getElementById('pdf_download');
+    var width = node.clientWidth;
+    var height = node.clientHeight;
+    await htmlToImage
+        .toPng(node, {quality: 1, style: {fontFamily: 'DM Sans'}})
+        .then(function (dataUrl) {
+          const pdf = new jsPDF('p', 'px', [width, height]);
+          pdf.addImage(dataUrl, 'PNG', 0, 0, width, height);
+          pdf.save("report.pdf");
+        })
+        .catch(function (error) {
+          console.error("oops, something went wrong!", error);
+        });
   }
 
   return (

@@ -53,7 +53,14 @@ const ReportFooter = (props) => {
       {/*    />*/}
       {/*  </div>*/}
       {/*</div>*/}
-
+        <Button
+            classes="footer-btn"
+            onClick={() => {
+                exportPdf();
+            }}
+        >
+            Download PDF
+        </Button>
       <Button
         classes="footer-btn"
         disabled={

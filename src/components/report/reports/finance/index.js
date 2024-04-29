@@ -36,6 +36,11 @@ const FinanceReport = (props) => {
         plotBorderWidth: null,
         plotShadow: false,
         type: "pie",
+        style: {
+          fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
+          color: "#677790",
+          fontWeight: 700,
+        },
       },
       title: {
         text: null,
@@ -58,6 +63,7 @@ const FinanceReport = (props) => {
         layout: "vertical",
         itemStyle: {
           width: 250,
+          fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
           textOverflow: "ellipsis",
         },
         margin: 0,

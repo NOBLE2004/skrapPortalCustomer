@@ -4,6 +4,12 @@ import {numberWithCommas} from "../../../utlils/dashboard";
 export const chartOptions = (data) => ({
   chart: {
     zoomType: "xy",
+    height: 350,
+    style: {
+      fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
+      color: "#677790",
+      fontWeight: 700,
+    },
   },
   title: {
     text: null,
