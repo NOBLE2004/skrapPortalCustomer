@@ -44,6 +44,9 @@ const NewReports = () => {
   });
   //const [reportIds, setReportIds] = useState(['finance', 'site_movements', 'emissions', 'waste_statistics', 'waste_segrigation', 'avoided_ems', 'utilization']);
   const [reportIds, setReportIds] = useState(['pdf_download']);
+  const [csvLoading, setCsvLoading] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [redLoading, setRedLoading] = useState(false);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setSelected(value);
@@ -51,6 +54,7 @@ const NewReports = () => {
 
   async function exTest() {
     setShowMore(true);
+    setCsvLoading(true);
     const workbook = new Excel.Workbook();
     const worksheet = workbook.addWorksheet("Main sheet");
     let logos = [];
@@ -79,10 +83,10 @@ const NewReports = () => {
       { header: "Job Date", key: "job_date", width: 10 },
       { header: "Address", key: "job_address", width: 40 },
       { header: "Container", key: "container", width: 30 },
-      { header: "Customer Cost", key: "customer_cost", width: 10 },
+      { header: "Customer Cost", key: "customer_cost", width: 15 },
       { header: "Ewc Code", key: "ewc_code", width: 10 },
       { header: "Tonnage", key: "diverted", width: 10 },
-      { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 10 },
+      { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 15 },
     ];
     worksheet.addRows(csvData);
     logos.map((img)=>{
@@ -96,16 +100,19 @@ const NewReports = () => {
       .then(function (buffer) {
         saveAs(
           new Blob([buffer], { type: "application/octet-stream" }),
-          `${reports?.ids}-${new Date().toLocaleDateString()}.xlsx`
+          `csv-report-${new Date().toLocaleDateString()}.xlsx`
         );
         setShowMore(false);
+        setCsvLoading(false);
       })
       .catch(() => {
         setShowMore(false);
+        setCsvLoading(false);
       });
   }
 
   async function reductioncsv() {
+    setRedLoading(true);
     var workbook = new Excel.Workbook();
     var worksheet = workbook.addWorksheet("Main sheet");
     worksheet.columns = [
@@ -132,17 +139,18 @@ const NewReports = () => {
               `Reduction-report-${new Date().toLocaleDateString()}.xlsx`
           );
           setShowMore(false);
+          setRedLoading(false);
         })
         .catch(() => {
           setShowMore(false);
+          setRedLoading(false);
         });
   }
 
   useEffect(() => {
       setCsvData(
         state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
-          obj.recycled = 100;
-          obj.landfill_diversion_rate = 100;
+          obj.customer_cost = `${currency}${obj.customer_cost}`;
           return obj;
         }));
   }, [state, reports]);
@@ -157,6 +165,7 @@ const NewReports = () => {
   }, [state?.siteMovementsList?.data]);
 
   const exportPdf = async () => {
+    setPdfLoading(true);
     var node = document.getElementById('pdf_download');
     var width = node.clientWidth;
     var height = node.clientHeight;
@@ -165,10 +174,12 @@ const NewReports = () => {
         .then(function (dataUrl) {
           const pdf = new jsPDF('p', 'px', [width, height]);
           pdf.addImage(dataUrl, 'PNG', 0, 0, width, height);
-          pdf.save("report.pdf");
+          pdf.save(`pdf-report-${new Date().toLocaleDateString()}.pdf`);
+          setPdfLoading(false);
         })
         .catch(function (error) {
           console.error("oops, something went wrong!", error);
+          setPdfLoading(false);
         });
   }
 
@@ -282,6 +293,9 @@ const NewReports = () => {
       <ReportFooter
         reports={reports}
         sites={selected}
+        csvLoading={csvLoading}
+        pdfLoading={pdfLoading}
+        redLoading={redLoading}
         date={date}
         exTest={exTest}
         csvData={csvData}

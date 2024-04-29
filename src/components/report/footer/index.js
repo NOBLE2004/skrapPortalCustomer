@@ -3,11 +3,12 @@ import { Button } from "@mui/material";
 import React from "react";
 import "./index.scss";
 import {getUserDataFromLocalStorage} from "../../../services/utils";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const ReportFooter = (props) => {
   const data = getUserDataFromLocalStorage();
   console.log(data);
-  const { reports, exTest, sites, csvData, exportPdf, reductionCsv } = props;
+  const { reports, exTest, sites, csvData, exportPdf, reductionCsv, redLoading, pdfLoading, csvLoading } = props;
   return (
     <div className="report-footer">
       {/*<div className="label">Select reports to download</div>*/}
@@ -53,37 +54,41 @@ const ReportFooter = (props) => {
       {/*    />*/}
       {/*  </div>*/}
       {/*</div>*/}
-        <Button
+        <LoadingButton
             classes="footer-btn"
             onClick={() => {
                 exportPdf();
             }}
+            loading={pdfLoading}
         >
             Download PDF
-        </Button>
-      <Button
+        </LoadingButton>
+        <LoadingButton
         classes="footer-btn"
         disabled={
           sites?.length > 1 
           || sites?.length === 0 
           || csvData?.length === 0
         }
+        style={{marginLeft: '1%'}}
         onClick={() => {
           exTest();
         }}
+        loading={csvLoading}
       >
         Download CSV
-      </Button>
+        </LoadingButton>
 
-        {data?.company?.includes('Amazon') && <Button
+        {data?.company?.includes('Amazon') && <LoadingButton
           classes="footer-btn"
-          style={{marginLeft: '4px'}}
+          style={{marginLeft: '1%'}}
           onClick={() => {
             reductionCsv();
           }}
+          loading={redLoading}
       >
           Reduction Report
-      </Button>}
+      </LoadingButton>}
     </div>
   );
 };
