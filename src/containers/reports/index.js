@@ -56,20 +56,7 @@ const NewReports = () => {
     let logos = [];
     for (const id of reportIds){
       let logo = "";
-      const urlToFontFile = 'https://fonts.gstatic.com/s/dmsans/v15/rP2tp2ywxg089UriI5-g4vlH9VoD8CmcqZG40F9JadbnoEwAopxRR23wRmYJp8I5zzw.woff';
-      const fontName = 'DM Sans';
-      const response = await fetch(urlToFontFile);
-      console.log(response)
-      const fontArrayBuffer = await response.arrayBuffer();
-      console.log(fontArrayBuffer)
-      const style = `
-  @font-face {
-    font-family: '${fontName}';
-    src: url(${fontArrayBuffer});
-  }
-`;
       var node = document.getElementById(id);
-      node.style = style;
       var width = node.clientWidth;
       var height = node.clientHeight;
       await htmlToImage
@@ -168,19 +155,20 @@ const NewReports = () => {
     setReductionCSV(state?.siteMovementsList?.data?.result);
   }, [state?.siteMovementsList?.data]);
 
-  const exportPdf = () => {
-    html2canvas(document.querySelector("#pdf-download")).then(canvas => {
-      //document.body.appendChild(canvas);  // if you want see your screenshot in body.
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      const imgProps= pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      console.log(imgProps.height, imgProps.width);
-      const pdfHeight = ((imgProps.height * pdfWidth) / imgProps.width);
-      console.log(pdfWidth, pdfHeight);
-      pdf.addImage(imgData, 'PNG', 2, 2, imgProps.width, imgProps.height);
-      pdf.save("report.pdf");
-    });
+  const exportPdf = async () => {
+    var node = document.getElementById('pdf_download');
+    var width = node.clientWidth;
+    var height = node.clientHeight;
+    await htmlToImage
+        .toPng(node, {quality: 1, style: {fontFamily: 'DM Sans'}})
+        .then(function (dataUrl) {
+          const pdf = new jsPDF('p', 'px', [width, height]);
+          pdf.addImage(dataUrl, 'PNG', 0, 0, width, height);
+          pdf.save("report.pdf");
+        })
+        .catch(function (error) {
+          console.error("oops, something went wrong!", error);
+        });
   }
 
   return (

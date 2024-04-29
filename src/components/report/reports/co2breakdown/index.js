@@ -51,6 +51,11 @@ const Co2breakdownReport = (props) => {
         plotBorderWidth: null,
         plotShadow: false,
         type: "pie",
+        style: {
+          fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
+          color: "#677790",
+          fontWeight: 700,
+        },
       },
       title: {
         text: null,
@@ -103,6 +108,11 @@ const Co2breakdownReport = (props) => {
         plotBorderWidth: null,
         plotShadow: false,
         type: "pie",
+        style: {
+          fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
+          color: "#677790",
+          fontWeight: 700,
+        },
       },
       title: {
         text: null,
