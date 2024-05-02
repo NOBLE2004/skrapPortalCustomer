@@ -18,6 +18,11 @@ body {
     url("./assets/fonts/BasierCircle-Regular.woff") format("woff");
 }
 
+@font-face {
+  font-family: 'DM Sans';
+  src: local('DMSans'), url("./assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf") format('truetype');
+}
+
 .rdrDateRangeWrapper {
   border-left: 1px solid gainsboro;
 }

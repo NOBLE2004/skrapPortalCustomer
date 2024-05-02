@@ -5,7 +5,7 @@ export const chartOptions = (siteCurrency) => ({
     type: "column",
     height: 300,
     style: {
-      fontFamily: "DM Sans",
+      fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
       color: "#677790",
       fontWeight: 700,
     },
@@ -94,7 +94,8 @@ export const chartOptions = (siteCurrency) => ({
   legend: {
     symbolRadius: 2,
     itemStyle: {
-      fontFamily: "DM Sans",
+      height: 350,
+      fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
       color: "#677790",
       fontWeight: 700,
     },
@@ -105,7 +106,7 @@ export const chartOptionsEms = (siteCurrency) => ({
     type: "column",
     height: 300,
     style: {
-      fontFamily: "DM Sans",
+      fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
       color: "#677790",
       fontWeight: 700,
     },
@@ -194,7 +195,7 @@ export const chartOptionsEms = (siteCurrency) => ({
   legend: {
     symbolRadius: 2,
     itemStyle: {
-      fontFamily: "DM Sans",
+      fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
       color: "#677790",
       fontWeight: 700,
     },
