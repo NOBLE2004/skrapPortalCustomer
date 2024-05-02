@@ -2,7 +2,17 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
-import { Button, Menu, MenuItem } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  LinearProgress,
+  Menu,
+  MenuItem,
+  Tab,
+  Typography,
+} from "@mui/material";
 import "./jobs-react-table.scss";
 import { payment, status } from "../../services/utils";
 import CreateExchange from "../modals/createExchange/CreateExchange";
@@ -20,6 +30,14 @@ import ExtendModal from "../modals/extendModal/ExtendModal";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import ViewJobDocumentsModal from "../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
 import ImageIcon from "@mui/icons-material/Image";
+import {
+  Close,
+  LineWeightOutlined,
+  LocationCityOutlined,
+  LocationSearchingOutlined,
+  SocialDistanceOutlined,
+} from "@mui/icons-material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 const JobsTable = ({
   data,
@@ -44,6 +62,7 @@ const JobsTable = ({
   const [isJobAccepted, setIsJobAccepted] = useState(false);
   const [isJobRejected, setIsJobRejected] = useState(false);
   const [jobData, setJobData] = useState({});
+  const [showDrawer, setShowDrawer] = useState({ show: false });
 
   const { openMenu, mouseX, mouseY, contextRow } = state;
   const [row, setRow] = useState({});
@@ -388,11 +407,17 @@ const JobsTable = ({
         disableFilters: true,
         Cell: (props) => {
           return (
-            <>
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowDrawer({ show: true });
+                console.log("clicked");
+              }}
+            >
               {props.cell.row.original?.co2
                 ? `${Number(props.cell.row.original?.co2).toFixed(2)}kg`
                 : ""}
-            </>
+            </span>
           );
         },
       },
@@ -610,6 +635,12 @@ const JobsTable = ({
     }
   };
 
+  const [value, setValue] = React.useState("1");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <div className={data && data.length > 0 ? "" : "main-jobs-table"}>
       {exchange && (
@@ -797,6 +828,220 @@ const JobsTable = ({
           {`You don’t have any active bookings.`}
         </div>
       )}
+      <Drawer
+        anchor={"right"}
+        open={showDrawer.show}
+        sx={{
+          "& .MuiPaper-root": {
+            width: "450px",
+            borderRadius: "0px",
+          },
+        }}
+        onClose={() => setShowDrawer({ show: false })}
+      >
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "12px",
+              borderBottom: "1px solid #8080803b",
+            }}
+            gap={2}
+          >
+            <Typography variant="subtitle1">Title</Typography>
+            <Close />
+          </Box>
+          <Box sx={{ padding: "12px" }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: "600", mb: 1 }}>
+              Overview
+            </Typography>
+            <Box
+              sx={{
+                padding: "12px",
+                border: "1px solid #8080803b",
+                borderRadius: "8px",
+              }}
+            >
+              <Typography variant="caption">ID: 1563</Typography>
+              <Typography
+                variant="subtitle2"
+                sx={{ fontWeight: "600", mt: 1, lineHeight: "2rem" }}
+              >
+                <span
+                  style={{
+                    background: "#80008026",
+                    padding: "4px 6px",
+                    borderRadius: "4px",
+                  }}
+                >
+                  0.43 kg co2
+                </span>{" "}
+                from{" "}
+                <span
+                  style={{
+                    background: "#80008026",
+                    padding: "4px 6px",
+                    borderRadius: "4px",
+                  }}
+                >
+                  2.89 t-km
+                </span>{" "}
+                of activity with the emissions intensity of{" "}
+                <span
+                  style={{
+                    background: "#80008026",
+                    padding: "4px 6px",
+                    borderRadius: "4px",
+                  }}
+                >
+                  0.14 kg co2e/t-km
+                </span>
+              </Typography>
+              <Box sx={{ mt: 3 }}>
+                <Typography sx={{ fontWeight: 600 }} variant="subtitle2">
+                  Lifecycle analysis
+                </Typography>
+                <Box sx={{ mt: 1, display: "flex", gap: 6 }}>
+                  <Box>
+                    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                      <div
+                        style={{
+                          background: "#1976d2",
+                          width: "10px",
+                          height: "10px",
+                          borderRadius: "2px",
+                        }}
+                      ></div>
+                      <Typography variant="caption">Well to tank</Typography>
+                    </Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontWeight: "600", mt: 0.5, lineHeight: "2rem" }}
+                    >
+                      0.38 kg
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                    <Box>
+                      <Box
+                        sx={{ display: "flex", gap: 1, alignItems: "center" }}
+                      >
+                        <div
+                          style={{
+                            background: "#a7caed",
+                            width: "10px",
+                            height: "10px",
+                            borderRadius: "2px",
+                          }}
+                        ></div>
+                        <Typography variant="caption">Tank to wheel</Typography>
+                      </Box>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ fontWeight: "600", mt: 0.5, lineHeight: "2rem" }}
+                      >
+                        0.38 kg
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+              <Box sx={{ mt: 2 }}>
+                <LinearProgress
+                  variant="determinate"
+                  value={50}
+                  sx={{
+                    height: "24px",
+                    borderRadius: "4px",
+                  }}
+                />
+              </Box>
+
+              <Divider
+                sx={{ background: "#8080803b", height: "unset", my: 2 }}
+              />
+              <Box>
+                <Typography sx={{ fontWeight: 600 }} variant="subtitle2">
+                  Details
+                </Typography>
+                <Divider
+                  sx={{ background: "#8080803b", height: "unset", my: 2 }}
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ lineHeight: "unset", display: "flex" }}
+                  >
+                    <LocationSearchingOutlined sx={{ mr: 1 }} fontSize="14px" />{" "}
+                    Distance
+                  </Typography>
+                  <Typography sx={{ fontWeight: 600 }} variant="subtitle2">
+                    9.64 km
+                  </Typography>
+                </Box>
+                <Divider
+                  sx={{ background: "#8080803b", height: "unset", my: 2 }}
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ lineHeight: "unset", display: "flex" }}
+                  >
+                    <LineWeightOutlined sx={{ mr: 1 }} fontSize="14px" /> Weight
+                  </Typography>
+                  <Typography sx={{ fontWeight: 600 }} variant="subtitle2">
+                    300 kg
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+
+            <Box sx={{ width: "100%", typography: "subtitle2", mt: 2 }}>
+              <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                  <TabList
+                    onChange={handleChange}
+                    aria-label="lab API tabs example"
+                  >
+                    <Tab
+                      sx={{ fontSize: "12px", fontWeight: 600 }}
+                      label="Details"
+                      value="1"
+                    />
+                    <Tab
+                      label="Emission"
+                      value="2"
+                      sx={{ fontSize: "12px", fontWeight: 600 }}
+                    />
+                    <Tab
+                      label="Clarity"
+                      value="3"
+                      sx={{ fontSize: "12px", fontWeight: 600 }}
+                    />
+                  </TabList>
+                </Box>
+                <TabPanel value="1">Details</TabPanel>
+                <TabPanel value="2">Emission</TabPanel>
+                <TabPanel value="3">Clearity</TabPanel>
+              </TabContext>
+            </Box>
+          </Box>
+        </Box>
+      </Drawer>
     </div>
   );
 };
