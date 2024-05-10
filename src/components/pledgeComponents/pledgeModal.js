@@ -44,6 +44,10 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
     }
   }, [showDrawer?.show]);
 
+  const percentage = (partialValue, totalValue) => {
+    return (100 * partialValue) / totalValue;
+  };
+
   console.log({ data });
   return (
     <Drawer
@@ -67,7 +71,9 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
           gap={2}
         >
           <Typography variant="subtitle1">SK{data?.job_id}</Typography>
-          <Close />
+          <div onClick={() => setShowDrawer({ show: false })}>
+            <Close />
+          </div>
         </Box>
         <Box sx={{ padding: "12px" }}>
           <Typography variant="subtitle2" sx={{ fontWeight: "600", mb: 1 }}>
@@ -170,7 +176,10 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
             <Box sx={{ mt: 2 }}>
               <LinearProgress
                 variant="determinate"
-                value={50}
+                value={percentage(
+                  data?.WTT_co2e_value,
+                  data?.WTT_co2e_value + data?.TTW_co2e_value
+                )}
                 sx={{
                   height: "24px",
                   borderRadius: "4px",
@@ -259,7 +268,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                 <EmissionDetails data={data} />
               </TabPanel>
               <TabPanel value="3">
-                <AccuracyDetails />
+                <AccuracyDetails data={data} />
               </TabPanel>
             </TabContext>
           </Box>

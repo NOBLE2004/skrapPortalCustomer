@@ -8,36 +8,71 @@ import {
   TimelineSeparator,
 } from "@mui/lab";
 import { Box, Divider, LinearProgress, Typography } from "@mui/material";
-import GaugeComponent from 'react-gauge-component'
-import FindPostCode from "../jobsDetail/findPostCode/FindPostCode";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import GaugeComponent from "react-gauge-component";
 
 const AccuracyDetails = ({ data }) => {
   return (
     <Box>
-      <GaugeComponent
-          //type="radial"
-          minValue={1}
-          maxValue={4}
-          value={3}
-          arc={{
-            width: 0.12,
-            padding: 0.005,
-            cornerRadius: 1,
-            nbSubArcs: 4,
-            subArcs: [{limit: 1}, {limit: 2},{limit: 3}, {limit: 4}],
-            colorArray: ['red', 'orange', '#08bf08', 'green'],
-          }}
-          labels={{
-            valueLabel:{
-              hide: false,
-              matchColorWithArc:true,
-              formatTextValue: (value) => "2"
-            },
-            tickLabels: {
-              hideMinMax: true,
-            }
-          }}
+      <CircularProgressbar
+        value={
+          data?.accuracy == 1
+            ? 4
+            : data?.accuracy == 2
+            ? 3
+            : data?.accuracy == 3
+            ? 2
+            : data?.accuracy >= 4
+            ? 1
+            : 1
+        }
+        minValue={1}
+        maxValue={4}
+        text={`${data?.accuracy?.toFixed(2)}`}
+        circleRatio={0.75}
+        styles={buildStyles({
+          rotation: 1 / 2 + 1 / 8,
+          strokeLinecap: "butt",
+          trailColor: "#eee",
+          textColor: "#000000b3",
+          pathColor:
+            data?.accuracy == 1
+              ? "green"
+              : data?.accuracy == 2
+              ? "#10a96b"
+              : data?.accuracy == 3
+              ? "orange"
+              : data?.accuracy >= 4
+              ? "red"
+              : "red",
+        })}
       />
+      <Box>
+        <Typography varient="caption">adee</Typography>
+      </Box>
+      {/* <GaugeComponent
+         minValue={1}
+        maxValue={4}
+        value={3}
+        arc={{
+          width: 0.12,
+          padding: 0.005,
+          cornerRadius: 1,
+          nbSubArcs: 4,
+          subArcs: [{ limit: 1 }, { limit: 2 }, { limit: 3 }, { limit: 4 }],
+          colorArray: ["red", "orange", "#08bf08", "green"],
+        }}
+        labels={{
+          valueLabel: {
+            hide: false,
+            matchColorWithArc: true,
+            formatTextValue: (value) => "2",
+          },
+          tickLabels: {
+            hideMinMax: true,
+          },
+        }}
+      /> */}
       <Timeline sx={{ padding: "6px 0px 6px 6px", margin: 0 }}>
         <TimelineItem>
           <TimelineSeparator>
@@ -47,9 +82,13 @@ const AccuracyDetails = ({ data }) => {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="caption">May 07 2024, 16:20</Typography>
+            <Typography variant="caption">
+              {data?.pledges_date || ""}
+            </Typography>
             <Box>
-              <Typography variant="caption">(51.40196,0.29279)</Typography>
+              <Typography variant="caption">
+                ({data?.start_lat},{data?.start_lng})
+              </Typography>
             </Box>
           </TimelineContent>
         </TimelineItem>
@@ -81,7 +120,7 @@ const AccuracyDetails = ({ data }) => {
                   Data Quality Indicator
                 </Typography>
                 <Typography variant="caption" fontWeight={600}>
-                  2
+                  {data?.accuracy}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", gap: 0.2, mt: 1 }}>
@@ -94,7 +133,16 @@ const AccuracyDetails = ({ data }) => {
                       borderRadius: "25px",
                       flex: 1,
                       "& .MuiLinearProgress-bar": {
-                        background: "#10a96b",
+                        background:
+                          data?.accuracy < 4 && data?.accuracy > 2
+                            ? "orange"
+                            : data?.accuracy < 4 && data?.accuracy > 1
+                            ? "#10a96b"
+                            : data?.accuracy < 2
+                            ? "green"
+                            : data?.accuracy == 4
+                            ? "red"
+                            : "red",
                       },
                     }}
                   />
@@ -111,7 +159,14 @@ const AccuracyDetails = ({ data }) => {
                       borderRadius: "25px",
                       flex: 1,
                       "& .MuiLinearProgress-bar": {
-                        background: "#10a96b",
+                        background:
+                          data?.accuracy < 3 && data?.accuracy > 1
+                            ? "#10a96b"
+                            : data?.accuracy < 3 && data?.accuracy < 2
+                            ? "green"
+                            : data?.accuracy == 3
+                            ? "orange"
+                            : "#a7caed",
                       },
                     }}
                   />
@@ -128,7 +183,12 @@ const AccuracyDetails = ({ data }) => {
                       borderRadius: "25px",
                       flex: 1,
                       "& .MuiLinearProgress-bar": {
-                        background: "#10a96b",
+                        background:
+                          data?.accuracy == 2
+                            ? "#10a96b"
+                            : data?.accuracy > 2
+                            ? "#a7caed"
+                            : "green",
                       },
                     }}
                   />
@@ -139,13 +199,13 @@ const AccuracyDetails = ({ data }) => {
                 <Box flex={1} textAlign={"center"}>
                   <LinearProgress
                     variant="determinate"
-                    value={0}
+                    value={100}
                     sx={{
                       height: "10px",
                       borderRadius: "25px",
                       flex: 1,
                       "& .MuiLinearProgress-bar": {
-                        background: "#10a96b",
+                        background: data?.accuracy == 1 ? "green" : "#a7caed",
                       },
                     }}
                   />
@@ -231,9 +291,14 @@ const AccuracyDetails = ({ data }) => {
             </TimelineDot>
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="caption">May 07 2024, 16:45</Typography>
+            <Typography variant="caption">
+              {data?.pledges_date || ""}
+            </Typography>
             <Box>
-              <Typography variant="caption">(51.40196,0.29279)</Typography>
+              <Typography variant="caption">
+                {" "}
+                ({data?.destination_lat},{data?.destination_lng})
+              </Typography>
             </Box>
           </TimelineContent>
         </TimelineItem>

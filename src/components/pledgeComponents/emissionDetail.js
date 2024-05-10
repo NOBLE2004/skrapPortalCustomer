@@ -92,8 +92,9 @@ const EmissionDetails = ({ data }) => {
                     </td>
                     <td style={{ textAlign: "right" }}>
                       <Typography variant="caption">
-                        {data?.WTT_co2e_value?.toFixed(2) +
-                          data?.TTW_co2e_value?.toFixed(2)}{" "}
+                        {Number(
+                          data?.WTT_co2e_value + data?.TTW_co2e_value
+                        )?.toFixed(2)}{" "}
                         {data?.WTT_co2e_unit}
                       </Typography>
                     </td>
