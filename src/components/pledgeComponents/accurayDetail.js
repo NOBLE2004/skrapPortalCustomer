@@ -9,7 +9,6 @@ import {
 } from "@mui/lab";
 import { Box, Divider, LinearProgress, Typography } from "@mui/material";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import GaugeComponent from "react-gauge-component";
 import {useState} from "react";
 
 const AccuracyDetails = ({ data }) => {
