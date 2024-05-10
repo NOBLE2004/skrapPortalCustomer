@@ -8,11 +8,36 @@ import {
   TimelineSeparator,
 } from "@mui/lab";
 import { Box, Divider, LinearProgress, Typography } from "@mui/material";
+import GaugeComponent from 'react-gauge-component'
 import FindPostCode from "../jobsDetail/findPostCode/FindPostCode";
 
 const AccuracyDetails = ({ data }) => {
   return (
     <Box>
+      <GaugeComponent
+          //type="radial"
+          minValue={1}
+          maxValue={4}
+          value={3}
+          arc={{
+            width: 0.12,
+            padding: 0.005,
+            cornerRadius: 1,
+            nbSubArcs: 4,
+            subArcs: [{limit: 1}, {limit: 2},{limit: 3}, {limit: 4}],
+            colorArray: ['red', 'orange', '#08bf08', 'green'],
+          }}
+          labels={{
+            valueLabel:{
+              hide: false,
+              matchColorWithArc:true,
+              formatTextValue: (value) => "2"
+            },
+            tickLabels: {
+              hideMinMax: true,
+            }
+          }}
+      />
       <Timeline sx={{ padding: "6px 0px 6px 6px", margin: 0 }}>
         <TimelineItem>
           <TimelineSeparator>
