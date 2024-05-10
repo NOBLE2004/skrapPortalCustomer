@@ -10,23 +10,30 @@ import {
 import { Box, Divider, LinearProgress, Typography } from "@mui/material";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import GaugeComponent from "react-gauge-component";
+import {useState} from "react";
 
 const AccuracyDetails = ({ data }) => {
-  return (
-    <Box>
-      <CircularProgressbar
-        value={
-          data?.accuracy == 1
-            ? 4
-            : data?.accuracy == 2
+  const [loadGuage, setLoadGuage] = useState(0)
+  setTimeout(() => {
+    setLoadGuage(data?.accuracy == 1
+        ? 4
+        : data?.accuracy == 2
             ? 3
             : data?.accuracy == 3
-            ? 2
-            : data?.accuracy >= 4
-            ? 1
-            : 1
+                ? 2
+                : data?.accuracy >= 4
+                    ? 1
+                    : 1);
+  }, 200)
+  return (
+    <Box>
+      <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', border: '1px solid #e6e4e4', borderRadius: '5px'}}>
+        <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', width: '50%', marginTop: '20px'}}>
+          <CircularProgressbar
+        value={
+          loadGuage
         }
-        minValue={1}
+        minValue={0}
         maxValue={4}
         text={`${data?.accuracy?.toFixed(2)}`}
         circleRatio={0.75}
@@ -47,8 +54,21 @@ const AccuracyDetails = ({ data }) => {
               : "red",
         })}
       />
-      <Box>
-        <Typography varient="caption">adee</Typography>
+        <Typography varient="title" style={{fontSize: '18px', marginTop: '-50px', marginBottom: '20px', fontWeight: 400}}>
+          {data?.accuracy == 1
+              ? "Excellent"
+              : data?.accuracy == 2
+                  ? "Good"
+                  : data?.accuracy == 3
+                      ? "Sufficient"
+                      : data?.accuracy >= 4
+                          ? "Unsatisfactory"
+                          : "Unsatisfactory"}
+        </Typography>
+        </div>
+        <Typography varient="title" style={{fontSize: '14px', marginBottom: '20px', fontWeight: 400}}>
+          Overall Data Quality Indicator
+        </Typography>
       </Box>
       {/* <GaugeComponent
          minValue={1}

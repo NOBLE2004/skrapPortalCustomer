@@ -268,7 +268,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                 <EmissionDetails data={data} />
               </TabPanel>
               <TabPanel value="3">
-                <AccuracyDetails data={data} />
+                {value == 3 && <AccuracyDetails data={data} />}
               </TabPanel>
             </TabContext>
           </Box>
