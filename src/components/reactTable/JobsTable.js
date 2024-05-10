@@ -410,6 +410,7 @@ const JobsTable = ({
         Cell: (props) => {
           return (
             <span
+            className="normal-dsans-10-primary"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowDrawer((st) => ({

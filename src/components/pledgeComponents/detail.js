@@ -60,7 +60,7 @@ const PladgeDetails = ({ data }) => {
               <Box flex={1} borderLeft={"2px solid #458dd5"}>
                 <Box pl={1.5}>
                   <Typography variant="caption" fontWeight={600}>
-                    {data?.em_co2e_value || ""} {data?.em_co2e_unit || ""}
+                    {data?.em_co2e_value?.toFixed(2) || ""} {data?.em_co2e_unit || ""}
                   </Typography>
                   <Box>
                     <Typography variant="caption">Co2e</Typography>
@@ -70,7 +70,7 @@ const PladgeDetails = ({ data }) => {
               <Box flex={1} borderLeft={"2px solid #458dd5"}>
                 <Box pl={1.5}>
                   <Typography variant="caption" fontWeight={600}>
-                    {data?.distance_value || ""} {data?.distance_unit || ""}
+                    {data?.distance_value?.toFixed(2) || ""} {data?.distance_unit || ""}
                   </Typography>
                   <Box>
                     <Typography variant="caption">Distance</Typography>
