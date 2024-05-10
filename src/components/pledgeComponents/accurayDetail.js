@@ -14,6 +14,7 @@ import {useState} from "react";
 
 const AccuracyDetails = ({ data }) => {
   const [loadGuage, setLoadGuage] = useState(0)
+  data.accuracy = data?.accuracy == null ? 2 : data?.accuracy;
   setTimeout(() => {
     setLoadGuage(data?.accuracy == 1
         ? 4
@@ -27,8 +28,8 @@ const AccuracyDetails = ({ data }) => {
   }, 200)
   return (
     <Box>
-      <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', border: '1px solid #e6e4e4', borderRadius: '5px'}}>
-        <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', width: '50%', marginTop: '20px'}}>
+      <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', border: "1px solid #8080803b", borderRadius: "8px"}}>
+        <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', width: '50%', marginTop: '20px', fontFamily: 'Dm Sans'}}>
           <CircularProgressbar
         value={
           loadGuage
@@ -42,6 +43,7 @@ const AccuracyDetails = ({ data }) => {
           strokeLinecap: "butt",
           trailColor: "#eee",
           textColor: "#000000b3",
+          fontFamily: 'Dm Sans',
           pathColor:
             data?.accuracy == 1
               ? "green"
@@ -54,7 +56,7 @@ const AccuracyDetails = ({ data }) => {
               : "red",
         })}
       />
-        <Typography varient="title" style={{fontSize: '18px', marginTop: '-50px', marginBottom: '20px', fontWeight: 400}}>
+        <Typography varient="title" style={{fontSize: '18px', marginTop: '-50px', marginBottom: '20px', fontWeight: 400, fontFamily: 'Dm Sans'}}>
           {data?.accuracy == 1
               ? "Excellent"
               : data?.accuracy == 2
@@ -66,7 +68,7 @@ const AccuracyDetails = ({ data }) => {
                           : "Unsatisfactory"}
         </Typography>
         </div>
-        <Typography varient="title" style={{fontSize: '14px', marginBottom: '20px', fontWeight: 400}}>
+        <Typography varient="title" style={{fontSize: '14px', marginBottom: '20px', fontWeight: 400, fontFamily: 'Dm Sans'}}>
           Overall Data Quality Indicator
         </Typography>
       </Box>
@@ -102,11 +104,11 @@ const AccuracyDetails = ({ data }) => {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="caption">
+            <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>
               {data?.pledges_date || ""}
             </Typography>
             <Box>
-              <Typography variant="caption">
+              <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>
                 ({data?.start_lat},{data?.start_lng})
               </Typography>
             </Box>
@@ -120,10 +122,10 @@ const AccuracyDetails = ({ data }) => {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="caption">{data?.mode || "Road"}</Typography>
+            <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>{data?.mode || "Road"}</Typography>
             <Box>
-              <Typography variant="caption">
-                {data?.type || "Main carriage"}
+              <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>
+                Main carriage
               </Typography>
             </Box>
             <Box
@@ -136,10 +138,10 @@ const AccuracyDetails = ({ data }) => {
               mb={2}
             >
               <Box display={"flex"} justifyContent={"space-between"}>
-                <Typography variant="caption" fontWeight={600}>
+                <Typography variant="caption" style={{fontFamily: 'Dm Sans'}} fontWeight={600}>
                   Data Quality Indicator
                 </Typography>
-                <Typography variant="caption" fontWeight={600}>
+                <Typography variant="caption" style={{fontFamily: 'Dm Sans'}} fontWeight={600}>
                   {data?.accuracy}
                 </Typography>
               </Box>
@@ -166,7 +168,7 @@ const AccuracyDetails = ({ data }) => {
                       },
                     }}
                   />
-                  <Typography variant="caption" mt={1}>
+                  <Typography variant="caption" style={{fontFamily: 'Dm Sans'}} mt={1}>
                     Unsatisfactory
                   </Typography>
                 </Box>
@@ -190,7 +192,7 @@ const AccuracyDetails = ({ data }) => {
                       },
                     }}
                   />
-                  <Typography variant="caption" mt={1}>
+                  <Typography variant="caption" style={{fontFamily: 'Dm Sans'}} mt={1}>
                     Sufficent
                   </Typography>
                 </Box>
@@ -212,7 +214,7 @@ const AccuracyDetails = ({ data }) => {
                       },
                     }}
                   />
-                  <Typography variant="caption" mt={1}>
+                  <Typography variant="caption" style={{fontFamily: 'Dm Sans'}} mt={1}>
                     Good
                   </Typography>
                 </Box>
@@ -229,7 +231,7 @@ const AccuracyDetails = ({ data }) => {
                       },
                     }}
                   />
-                  <Typography variant="caption" mt={1}>
+                  <Typography variant="caption" mt={1} style={{fontFamily: 'Dm Sans'}}>
                     Excellent
                   </Typography>
                 </Box>
@@ -246,9 +248,9 @@ const AccuracyDetails = ({ data }) => {
               <table style={{ width: "100%" }}>
                 <thead>
                   <td>
-                    <Typography variant="caption">Input </Typography>
+                    <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>Input </Typography>
                   </td>
-                  <Typography variant="caption">Level</Typography>
+                  <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>Level</Typography>
                   <td style={{ textAlign: "right" }}>
                     <Typography variant="caption"></Typography>
                   </td>
@@ -264,39 +266,39 @@ const AccuracyDetails = ({ data }) => {
                   </tr>
                   <tr>
                     <td>
-                      <Typography variant="caption">
+                      <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>
                         Origin-destination
                       </Typography>
                     </td>
                     <td>
-                      <Typography variant="caption">post code</Typography>
+                      <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>post code</Typography>
                     </td>
                     <td style={{ textAlign: "right" }}>
-                      <Typography variant="caption">1</Typography>
+                      <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>1</Typography>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <Typography variant="caption">Weight</Typography>
+                      <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>Weight</Typography>
                     </td>
                     <td>
-                      <Typography variant="caption">Actual</Typography>
+                      <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>Actual</Typography>
                     </td>
                     <td style={{ textAlign: "right" }}>
-                      <Typography variant="caption">2-1</Typography>
+                      <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>2-1</Typography>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <Typography variant="caption">
+                      <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>
                         Emission intensity
                       </Typography>
                     </td>
                     <td>
-                      <Typography variant="caption">Molded</Typography>
+                      <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>Molded</Typography>
                     </td>
                     <td style={{ textAlign: "right" }}>
-                      <Typography variant="caption">1</Typography>
+                      <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>1</Typography>
                     </td>
                   </tr>
                 </tbody>
@@ -311,11 +313,11 @@ const AccuracyDetails = ({ data }) => {
             </TimelineDot>
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="caption">
+            <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>
               {data?.pledges_date || ""}
             </Typography>
             <Box>
-              <Typography variant="caption">
+              <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>
                 {" "}
                 ({data?.destination_lat},{data?.destination_lng})
               </Typography>
