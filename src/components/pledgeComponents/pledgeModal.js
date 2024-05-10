@@ -53,9 +53,9 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
     <Drawer
       anchor={"right"}
       open={showDrawer.show}
+      className='right-side'
       sx={{
         width: "550px",
-        borderRadius: "0px",
       }}
       onClose={() => setShowDrawer({ show: false })}
     >
