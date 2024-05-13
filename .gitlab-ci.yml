@@ -10,7 +10,7 @@ docker-build:
     - release/develop
     - release/staging
     - release/production
-    - report-search
+    - currency-updates
 
   services:
     - name: docker:dind
@@ -28,7 +28,7 @@ deploy:
     - release/develop
     - release/staging
     - release/production
-    - report-search
+    - currency-updates
 
   before_script:
     - echo "deploying app on server"
