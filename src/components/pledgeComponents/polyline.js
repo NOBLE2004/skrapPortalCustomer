@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent } from "@mui/material";
 import MainMap from "../../map/MainMap";
 import { Polyline } from "react-google-maps";
-import "./findpostcode.scss";
+import "../jobsDetail/findPostCode/findpostcode.scss";
 const PolylineComp = ({start_lat, start_lng, destination_lat, destination_lng}) => {
     return (
         <div className="postcode-main">
