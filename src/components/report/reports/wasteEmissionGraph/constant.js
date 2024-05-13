@@ -4,9 +4,9 @@ import { numberWithCommas } from "../../../utlils/dashboard";
 export const chartOptions = (data) => ({
   chart: {
     type: "column",
-    height: 300,
+    height: 350,
     style: {
-      fontFamily: "DM Sans",
+      fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
       color: "#677790",
       fontWeight: 700,
     },

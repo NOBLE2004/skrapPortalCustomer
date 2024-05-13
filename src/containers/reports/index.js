@@ -39,120 +39,80 @@ const NewReports = () => {
   const [siteCurrency, setSiteCurrency] = useState(currency);
   const [showMore, setShowMore] = useState(false);
   const [reports, setReports] = useState({
-    finance: false,
-    site_movements: false,
-    emissions: false,
-    waste_statistics: false,
+    finance: true,
     ids: "",
   });
+  //const [reportIds, setReportIds] = useState(['finance', 'site_movements', 'emissions', 'waste_statistics', 'waste_segrigation', 'avoided_ems', 'utilization']);
+  const [reportIds, setReportIds] = useState(['pdf_download']);
+  const [csvLoading, setCsvLoading] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [redLoading, setRedLoading] = useState(false);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setSelected(value);
   };
-  const handleChangeReportType = async (event) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case "finance":
-        setReports({
-          ...reports,
-          finance: true,
-          site_movements: false,
-          emissions: false,
-          waste_statistics: false,
-          ids: "finance",
-        });
-        break;
-      case "site_movements":
-        setReports({
-          ...reports,
-          finance: false,
-          site_movements: true,
-          emissions: false,
-          waste_statistics: false,
-          ids: "site_movements",
-        });
-        break;
-      case "emissions":
-        setReports({
-          ...reports,
-          finance: false,
-          site_movements: false,
-          emissions: true,
-          waste_statistics: false,
-          ids: "emissions",
-        });
-        break;
-      case "waste_statistics":
-        setReports({
-          ...reports,
-          finance: false,
-          site_movements: false,
-          emissions: false,
-          waste_statistics: true,
-          ids: "waste_statistics",
-        });
-        break;
-      default:
-    }
-  };
 
   async function exTest() {
     setShowMore(true);
-    var workbook = new Excel.Workbook();
-    var worksheet = workbook.addWorksheet("Main sheet");
-    var logo = "";
-    var node = document.getElementById(reports.ids);
-    var width = node.clientWidth;
-    var height = node.clientHeight;
-    await htmlToImage
-      .toPng(node)
-      .then(function (dataUrl) {
-        var img = new Image();
-        img.src = dataUrl;
-        logo = workbook.addImage({
-          base64: img.src,
-          extension: "png",
-        });
-      })
-      .catch(function (error) {
-        console.error("oops, something went wrong!", error);
-      });
+    setCsvLoading(true);
+    const workbook = new Excel.Workbook();
+    const worksheet = workbook.addWorksheet("Main sheet");
+    let logos = [];
+    for (const id of reportIds){
+      let logo = "";
+      var node = document.getElementById(id);
+      var width = node.clientWidth;
+      var height = node.clientHeight;
+      await htmlToImage
+          .toPng(node, {quality: 1, style: {fontFamily: 'DM Sans'}})
+          .then(function (dataUrl) {
+            var img = new Image();
+            img.src = dataUrl;
+            logo = workbook.addImage({
+              base64: img.src,
+              extension: "png",
+            });
+            logos.push({logo, width, height});
+          })
+          .catch(function (error) {
+            console.error("oops, something went wrong!", error);
+          });
+    }
     worksheet.columns = [
-      { header: "Job Number", key: "job_number", width: 20 },
-      { header: "Job Date", key: "job_date", width: 20 },
-      { header: "Address", key: "job_address", width: 20 },
-      { header: "Postcode", key: "postcode", width: 20 },
-      { header: "Customer", key: "full_name", width: 20 },
-      { header: "Movement", key: "movement", width: 20 },
-      { header: "Container", key: "container", width: 20 },
-      { header: "Customer Cost", key: "customer_cost", width: 20 },
-      //{ header: "% Recycled", key: "recycled", width: 20 },
-      { header: "Tonnage", key: "diverted", width: 20 },
-      //{ header: "% Landfill", key: "landfill_diversion_rate", width: 20 },
-      // { header: "Supplier", key: "supplier", width: 20 },
-      // { header: "Supplier Postcode", key: "supplier_postcode", width: 20 },
-      { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 20 },
+      { header: "Job Number", key: "job_number", width: 10 },
+      { header: "Job Date", key: "job_date", width: 10 },
+      { header: "Address", key: "job_address", width: 40 },
+      { header: "Container", key: "container", width: 30 },
+      { header: "Customer Cost", key: "customer_cost", width: 15 },
+      { header: "Ewc Code", key: "ewc_code", width: 10 },
+      { header: "Tonnage", key: "diverted", width: 10 },
+      { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 15 },
     ];
     worksheet.addRows(csvData);
-    worksheet.addImage(logo, {
-      tl: { col: 2, row: csvData?.length + 4 },
-      ext: { width: width, height: height },
-    });
+    logos.map((img)=>{
+      worksheet.addImage(img.logo, {
+        tl: { col: 10, row: 1 },
+        ext: { width: img.width, height: img.height },
+      });
+    })
     workbook.xlsx
       .writeBuffer()
       .then(function (buffer) {
         saveAs(
           new Blob([buffer], { type: "application/octet-stream" }),
-          `${reports?.ids}-${new Date().toLocaleDateString()}.xlsx`
+          `csv-report-${new Date().toLocaleDateString()}.xlsx`
         );
         setShowMore(false);
+        setCsvLoading(false);
       })
       .catch(() => {
         setShowMore(false);
+        setCsvLoading(false);
       });
   }
 
   async function reductioncsv() {
+    setRedLoading(true);
     var workbook = new Excel.Workbook();
     var worksheet = workbook.addWorksheet("Main sheet");
     worksheet.columns = [
@@ -179,65 +139,48 @@ const NewReports = () => {
               `Reduction-report-${new Date().toLocaleDateString()}.xlsx`
           );
           setShowMore(false);
+          setRedLoading(false);
         })
         .catch(() => {
           setShowMore(false);
+          setRedLoading(false);
         });
   }
 
   useEffect(() => {
-    if (reports.ids === "waste_statistics") {
-      setCsvData(
-        state?.landfillList?.data?.result.map((obj) => {
-          obj.recycled = 100;
-          obj.landfill_diversion_rate = 100;
-          return obj;
-        })
-      );
-    }
-    if (reports.ids === "finance" || reports.ids === "site_movements") {
       setCsvData(
         state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
-          obj.recycled = 100;
-          obj.landfill_diversion_rate = 100;
+          obj.customer_cost = `${currency}${obj.customer_cost}`;
           return obj;
-        })
-      );
-    }
-    if (reports.ids === "emissions") {
-      setCsvData(
-        state?.landfillList?.data?.result.map((obj) => {
-          obj.recycled = 100;
-          obj.landfill_diversion_rate = 100;
-          return obj;
-        })
-      );
-    }
+        }));
   }, [state, reports]);
 
   useEffect(() => {
     dispatch(getLandfillDiversionList({ sites: selected, date, currency }));
     dispatch(getSiteBreakdownlist({ sites: selected, date, currency }));
-    dispatch(getSitesMovementList({ sites: selected, date, currency }));
   }, [selected, date]);
 
   useEffect(()=> {
     setReductionCSV(state?.siteMovementsList?.data?.result);
   }, [state?.siteMovementsList?.data]);
 
-  const exportPdf = () => {
-    html2canvas(document.querySelector("#pdf-download")).then(canvas => {
-      //document.body.appendChild(canvas);  // if you want see your screenshot in body.
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      const imgProps= pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      console.log(imgProps.height, imgProps.width);
-      const pdfHeight = ((imgProps.height * pdfWidth) / imgProps.width);
-      console.log(pdfWidth, pdfHeight);
-      pdf.addImage(imgData, 'PNG', 2, 2, imgProps.width, imgProps.height);
-      pdf.save("report.pdf");
-    });
+  const exportPdf = async () => {
+    setPdfLoading(true);
+    var node = document.getElementById('pdf_download');
+    var width = node.clientWidth;
+    var height = node.clientHeight;
+    await htmlToImage
+        .toPng(node, {quality: 1, style: {fontFamily: 'DM Sans'}})
+        .then(function (dataUrl) {
+          const pdf = new jsPDF('p', 'px', [width, height]);
+          pdf.addImage(dataUrl, 'PNG', 0, 0, width, height);
+          pdf.save(`pdf-report-${new Date().toLocaleDateString()}.pdf`);
+          setPdfLoading(false);
+        })
+        .catch(function (error) {
+          console.error("oops, something went wrong!", error);
+          setPdfLoading(false);
+        });
   }
 
   return (
@@ -253,9 +196,9 @@ const NewReports = () => {
           setSiteCurrency={setSiteCurrency}
         />
         {/*<ReportFilters />*/}
-        <div className="report-grid" id="pdf-download">
+        <div className="report-grid" id="pdf_download">
           <Masonry container columns={2} spacing={4}>
-            <div className="report-chart-card-outer">
+            <div className="report-chart-card-outer" id={"finance"}>
               <div className="report-card-title">Finance report</div>
               <FinanceReport
                 date={date}
@@ -270,7 +213,7 @@ const NewReports = () => {
               showMore={showMore}
               siteCurrency={siteCurrency}
             />
-            <div className="report-chart-card-outer">
+            <div className="report-chart-card-outer" id={"emissions"}>
               <div className="report-card-title">Emissions</div>
               <EmissionReport
                 dateM={date}
@@ -281,7 +224,7 @@ const NewReports = () => {
                 siteCurrency={siteCurrency}
               />
             </div>
-            <div className="report-chart-card-outer">
+            <div className="report-chart-card-outer" id="waste_statistics">
               <div className="report-card-title">Waste breakdown</div>
               <Co2breakdownReport
                 date={date}
@@ -291,7 +234,7 @@ const NewReports = () => {
               />
             </div>
 
-            <div className="report-chart-card-outer">
+            <div className="report-chart-card-outer" id="waste_segrigation">
               <div className="report-card-title">Waste Segregation</div>
               <WasteBreakDown
                   date={date}
@@ -310,46 +253,49 @@ const NewReports = () => {
             {/*  />*/}
             {/*</div>*/}
           </Masonry>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} style={{padding: '0px 16px'}}>
             <Grid item xs={12}>
               <div
-                className="report-chart-card-outer"
-                style={{ width: "100%" }}
+                  className="report-chart-card-outer"
+                  style={{ width: "100%" }}
               >
                 <div className="report-card-title">Emissions avoided by recycling</div>
                 <WasteEmissionGraph
-                  dateM={date}
-                  sites={selected}
-                  startDate={startDate}
-                  setStartDate={setStartDate}
-                  showMore={showMore}
-                  siteCurrency={siteCurrency}
+                    dateM={date}
+                    sites={selected}
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    showMore={showMore}
+                    siteCurrency={siteCurrency}
                 />
               </div>
             </Grid>
             <Grid item xs={12}>
               <div
-                className="report-chart-card-outer"
-                style={{ width: "100%" }}
+                  className="report-chart-card-outer"
+                  style={{ width: "100%" }}
+                  id={"utilization"}
               >
                 <div className="report-card-title">Delivery Vs Utilization</div>
                 <DualAxisGraph
-                  dateM={date}
-                  sites={selected}
-                  startDate={startDate}
-                  setStartDate={setStartDate}
-                  showMore={showMore}
-                  siteCurrency={siteCurrency}
+                    dateM={date}
+                    sites={selected}
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    showMore={showMore}
+                    siteCurrency={siteCurrency}
                 />
-              </div>{" "}
+              </div>
             </Grid>
           </Grid>
         </div>
       </div>
       <ReportFooter
-        handleChangeReportType={handleChangeReportType}
         reports={reports}
         sites={selected}
+        csvLoading={csvLoading}
+        pdfLoading={pdfLoading}
+        redLoading={redLoading}
         date={date}
         exTest={exTest}
         csvData={csvData}

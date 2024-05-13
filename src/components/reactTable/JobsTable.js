@@ -2,7 +2,17 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "./TableContainer";
 import { SelectColumnFilter } from "./filters";
 import CommonStatus from "../commonComponent/commonStatus/CommonStatus";
-import { Button, Menu, MenuItem } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  LinearProgress,
+  Menu,
+  MenuItem,
+  Tab,
+  Typography,
+} from "@mui/material";
 import "./jobs-react-table.scss";
 import { payment, status } from "../../services/utils";
 import CreateExchange from "../modals/createExchange/CreateExchange";
@@ -20,6 +30,17 @@ import ExtendModal from "../modals/extendModal/ExtendModal";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import ViewJobDocumentsModal from "../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
 import ImageIcon from "@mui/icons-material/Image";
+import {InfoOutlined} from "@mui/icons-material";
+import {
+  Close,
+  LineWeightOutlined,
+  LocationCityOutlined,
+  LocationSearchingOutlined,
+  SocialDistanceOutlined,
+} from "@mui/icons-material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import PladgeDetails from "../pledgeComponents/detail";
+import PledgeModal from "../pledgeComponents/pledgeModal";
 
 const JobsTable = ({
   data,
@@ -44,6 +65,7 @@ const JobsTable = ({
   const [isJobAccepted, setIsJobAccepted] = useState(false);
   const [isJobRejected, setIsJobRejected] = useState(false);
   const [jobData, setJobData] = useState({});
+  const [showDrawer, setShowDrawer] = useState({ show: false });
 
   const { openMenu, mouseX, mouseY, contextRow } = state;
   const [row, setRow] = useState({});
@@ -388,11 +410,21 @@ const JobsTable = ({
         disableFilters: true,
         Cell: (props) => {
           return (
-            <>
+            <span
+            className="primary-text"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowDrawer((st) => ({
+                  ...st,
+                  show: true,
+                  row: props.cell.row.original,
+                }));
+              }}
+            >
               {props.cell.row.original?.co2
-                ? `${Number(props.cell.row.original?.co2).toFixed(2)}kg`
+                ? <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>{Number(props.cell.row.original?.co2).toFixed(2)}kg <InfoOutlined style={{fontSize: '16px'}} /></span>
                 : ""}
-            </>
+            </span>
           );
         },
       },
@@ -661,6 +693,9 @@ const JobsTable = ({
           closeModal={() => setExtends(false)}
           updateJobs={handleUpdateJobs}
         />
+      )}
+      {showDrawer && (
+        <PledgeModal showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
       )}
       {/* <div className="xero-btn">
         <button

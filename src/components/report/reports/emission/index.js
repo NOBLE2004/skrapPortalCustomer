@@ -387,7 +387,7 @@ const EmissionReport = (props) => {
   return (
     <>
       <PayEmissionModal showModal={showModal} setShowModal={setShowModal} />
-      <Card className="report-chart-card" id={"emissions"}>
+      <Card className="report-chart-card">
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
             <h1 style={{color: '#0BC21F'}}>
@@ -513,7 +513,7 @@ const EmissionReport = (props) => {
                 />
               </div>
             ) : (
-                <div>
+                <div style={{ width: "100%" }}>
                   {chartDataWaste && chartData?.series !== undefined && (<HighchartsReact
                     highcharts={Highcharts}
                     options={chartDataWaste}
