@@ -1,10 +1,7 @@
 import React from "react";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
-import { postCodeIcon, searchIcon, locationOval, mapMarker } from "../../../assets/images";
 import { Card, CardContent } from "@mui/material";
 import MainMap from "../../map/MainMap";
-import { Marker } from "react-google-maps";
+import { Polyline } from "react-google-maps";
 import "./findpostcode.scss";
 const Polyline = ({start_lat, start_lng, destination_lat, destination_lng}) => {
     return (
