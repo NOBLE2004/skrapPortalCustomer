@@ -8,7 +8,6 @@ import {
   TimelineSeparator,
 } from "@mui/lab";
 import { Box, Divider, Typography } from "@mui/material";
-import FindPostCode from "../jobsDetail/findPostCode/FindPostCode";
 
 const EmissionDetails = ({ data }) => {
   return (
