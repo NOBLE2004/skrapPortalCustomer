@@ -61,6 +61,7 @@ import bracketIcon from "./bracket.svg";
 import appleIcon from "./apple.svg";
 import chatIcon from "./chat.svg";
 import marketInfoIcon from "./market_info.svg";
+import newMarker from "./mapNew.svg";
 import filterIcon from "./filter.svg";
 export {
   chatIcon,
@@ -126,5 +127,6 @@ export {
   addCredits,
   deliveredMarker,
   marketInfoIcon,
-  filterIcon
+  filterIcon,
+  newMarker,
 };
