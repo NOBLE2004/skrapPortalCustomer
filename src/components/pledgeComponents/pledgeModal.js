@@ -47,6 +47,10 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
   const percentage = (partialValue, totalValue) => {
     return (100 * partialValue) / totalValue;
   };
+  const setComponentData = () => {
+    setData(null)
+    setShowDrawer({ show: false })
+  }
 
   console.log({ data });
   return (
@@ -57,7 +61,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
       sx={{
         width: "550px",
       }}
-      onClose={() => setShowDrawer({ show: false })}
+      onClose={setComponentData}
     >
       <Box width={550} className={'pledge-bar'}>
         <Box
@@ -269,13 +273,13 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                 </TabList>
               </Box>
               <TabPanel value="1" sx={{ padding: "12px 0px", fontFamily: 'Dm Sans' }}>
-                <PladgeDetails data={data} />
+                {data && <PladgeDetails data={data} />}
               </TabPanel>
               <TabPanel value="2">
-                <EmissionDetails data={data} />
+                {data && <EmissionDetails data={data} />}
               </TabPanel>
               <TabPanel value="3">
-                {value == 3 && <AccuracyDetails data={data} />}
+                {(value == 3 && data) && <AccuracyDetails data={data} />}
               </TabPanel>
             </TabContext>
           </Box>

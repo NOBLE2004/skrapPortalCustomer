@@ -101,7 +101,7 @@ const PladgeDetails = ({ data }) => {
         </TimelineItem>
       </Timeline>
       <Box width={"100%"}>
-        <PolylineComp start_lat={data?.start_lat} start_lng={data?.start_lng} destination_lat={data?.destination_lat} destination_lng={data?.destination_lng} />
+        {data?.start_lat && <PolylineComp start_lat={data?.start_lat} start_lng={data?.start_lng} destination_lat={data?.destination_lat} destination_lng={data?.destination_lng} />}
       </Box>
     </Box>
   );
