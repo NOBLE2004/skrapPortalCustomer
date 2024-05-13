@@ -20,6 +20,8 @@ import ExtendModal from "../../modals/extendModal/ExtendModal";
 import { downloadSite } from "../../../assets/images";
 import ImageIcon from '@mui/icons-material/Image';
 import ViewJobDocumentsModal from "../../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
+import {InfoOutlined} from "@mui/icons-material";
+import PledgeModal from "../../pledgeComponents/pledgeModal";
 
 const SiteManagerTable = ({
   managerData,
@@ -283,8 +285,22 @@ const SiteManagerTable = ({
         accessor: "order_job_status",
         disableFilters: true,
         Cell: (props) => {
-          return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
-             : ''}</>;
+          return (<span
+              className="primary-text"
+              onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDrawer((st) => ({
+                      ...st,
+                      show: true,
+                      row: props.cell.row.original,
+                  }));
+              }}
+          >
+              {props.cell.row.original?.co2
+                  ? <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>{Number(props.cell.row.original?.co2).toFixed(2)}kg <InfoOutlined style={{fontSize: '16px'}} /></span>
+                  : ""}
+            </span>
+          );
         },
       },
       {
@@ -557,8 +573,22 @@ const SiteManagerTable = ({
         accessor: "order_job_status",
         disableFilters: true,
         Cell: (props) => {
-          return <>{props.cell.row.original?.co2  ?`${Number(props.cell.row.original?.co2).toFixed(2)}kg`
-             : ''}</>;
+          return (<span
+                    className="primary-text"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setShowDrawer((st) => ({
+                            ...st,
+                            show: true,
+                            row: props.cell.row.original,
+                        }));
+                    }}
+                >
+              {props.cell.row.original?.co2
+                  ? <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>{Number(props.cell.row.original?.co2).toFixed(2)}kg <InfoOutlined style={{fontSize: '16px'}} /></span>
+                  : ""}
+            </span>
+            );;
         },
       },
       {
@@ -663,7 +693,7 @@ const SiteManagerTable = ({
   const handleExtend = () => {
     setExtends(true);
   };
-
+  const [showDrawer, setShowDrawer] = useState({ show: false });
   return (
     <div className={jobs && jobs.length > 0 ? "w-100" : "main-jobs-table"}>
       {exchange && (
@@ -698,6 +728,9 @@ const SiteManagerTable = ({
           updateJobs={reload}
         />
       )}
+        {showDrawer && (
+            <PledgeModal showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
+        )}
       {isViewDocument && (
             <ViewJobDocumentsModal
               handleClose={() => setViewDocument(false)}
