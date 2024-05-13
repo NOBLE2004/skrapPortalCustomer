@@ -3,7 +3,7 @@ import { Card, CardContent } from "@mui/material";
 import MainMap from "../../map/MainMap";
 import { Polyline } from "react-google-maps";
 import "./findpostcode.scss";
-const Polyline = ({start_lat, start_lng, destination_lat, destination_lng}) => {
+const PolylineComp = ({start_lat, start_lng, destination_lat, destination_lng}) => {
     return (
         <div className="postcode-main">
             <Card className="driver-mapCard">
@@ -31,4 +31,4 @@ const Polyline = ({start_lat, start_lng, destination_lat, destination_lng}) => {
     );
 };
 
-export default Polyline;
+export default PolylineComp;
