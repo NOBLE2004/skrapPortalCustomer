@@ -65,11 +65,6 @@ const ReportFooter = (props) => {
         </LoadingButton>
         <LoadingButton
         classes="footer-btn"
-        disabled={
-          sites?.length > 1 
-          || sites?.length === 0 
-          || csvData?.length === 0
-        }
         style={{marginLeft: '1%'}}
         onClick={() => {
           exTest();
