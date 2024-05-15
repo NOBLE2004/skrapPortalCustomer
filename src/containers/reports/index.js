@@ -150,7 +150,7 @@ const NewReports = () => {
   useEffect(() => {
       setCsvData(
         state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
-          obj.customer_cost = `${currency}${obj.customer_cost}`;
+          obj.customer_cost = `${obj.customer_cost}`;
           return obj;
         }));
   }, [state, reports]);
