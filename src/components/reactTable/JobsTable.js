@@ -30,6 +30,7 @@ import ExtendModal from "../modals/extendModal/ExtendModal";
 import { getUserDataFromLocalStorage } from "../../services/utils";
 import ViewJobDocumentsModal from "../modals/ViewJobDocumentsModal/ViewJobDocumentsModal";
 import ImageIcon from "@mui/icons-material/Image";
+import {InfoOutlined} from "@mui/icons-material";
 import {
   Close,
   LineWeightOutlined,
@@ -410,7 +411,7 @@ const JobsTable = ({
         Cell: (props) => {
           return (
             <span
-            className="normal-dsans-10-primary"
+            className="primary-text"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowDrawer((st) => ({
@@ -421,7 +422,7 @@ const JobsTable = ({
               }}
             >
               {props.cell.row.original?.co2
-                ? `${Number(props.cell.row.original?.co2).toFixed(2)}kg`
+                ? <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>{Number(props.cell.row.original?.co2).toFixed(2)}kg <InfoOutlined style={{fontSize: '16px'}} /></span>
                 : ""}
             </span>
           );

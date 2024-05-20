@@ -27,7 +27,13 @@
 .sidebar-container {
   display: flex;
 }
-
+.primary-text{
+  color: #518ef8;
+}
+.MuiDrawer-paperAnchorRight{
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
 .MuiDrawer-paper {
   box-shadow: 0px 4px 14px rgba(78, 82, 192, 0.25) !important;
   border-right: 0px !important;
