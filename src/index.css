@@ -80,3 +80,10 @@ body {
 .MuiDialogTitle-root .MuiIconButton-sizeMedium{
   top: 0px;
 }
+
+
+.stripe-custom-element .StripeElement {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #4c4e6438;
+}
