@@ -48,7 +48,17 @@ const AccuracyDetails = ({ data }) => {
         })}
       />
       <Box>
-        <Typography varient="caption">adee</Typography>
+        <Typography textAlign="center" varient="caption">
+          {data?.accuracy == 1
+            ? "Excellent"
+            : data?.accuracy == 2
+            ? "Good"
+            : data?.accuracy == 3
+            ? "Sufficent"
+            : data?.accuracy >= 4
+            ? "Unsatisfac"
+            : "red"}
+        </Typography>
       </Box>
       {/* <GaugeComponent
          minValue={1}

@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/lab/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import PaymentService from "../../../services/payment.service";
+import StripeContainer from "../../stripe/stripeContainer";
 import "./cardPayment.scss";
 
 export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
@@ -157,6 +158,12 @@ export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
           <img src="https://img.icons8.com/color/36/000000/amex.png" />
         </div>
       </div>
+      <StripeContainer
+        state={state}
+        setState={setState}
+        setOpen={setOpen}
+        handleSaveNewCard={handleSaveNewCard}
+      />
 
       <div className="cardBody">
         <Grid container spacing={3}>
@@ -215,17 +222,6 @@ export default function CardPayment({ user_id, handleSaveNewCard, setOpen }) {
             />
           </Grid>
         </Grid>
-        <Button
-          fullWidth
-          className={`${!disabled && "createCard"} createCardBtn`}
-          disabled={disabled}
-          variant="contained"
-          onClick={() => handleSaveCard()}
-        >
-          Save Card
-          {isLoading && <CircularProgress />}
-        </Button>
-        {notice && <Alert severity={notice.type}>{notice.text}</Alert>}
       </div>
     </div>
   );
