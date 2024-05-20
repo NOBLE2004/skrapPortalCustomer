@@ -147,7 +147,7 @@ const PaymentForm = (props) => {
         fullWidth
         className={`${!state?.disabled && "createCard"} createCardBtn`}
         disabled={state?.disabled}
-        sx={{ mt: 4 }}
+        sx={{ my: 3 }}
         variant="contained"
         type="submit"
       >
