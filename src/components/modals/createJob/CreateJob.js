@@ -877,7 +877,7 @@ export default function CreateJob({
     >
       <DialogTitle onClose={closeModal}> Create Job </DialogTitle>
       <DialogContent dividers>
-        <form noValidate>
+        <div >
           <div className="addressSec">
             <p>Site Address</p>
             <AsychronousAddress
@@ -1433,7 +1433,7 @@ export default function CreateJob({
               {notice.text}
             </Alert>
           )}
-        </form>
+        </div>
         {isCompanyModal && comp_number === "" && (
           <CompanyDetail
             closeModal={() => setState({ ...state, isCompanyModal: false })}
