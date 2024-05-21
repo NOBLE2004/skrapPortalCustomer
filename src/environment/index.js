@@ -23,6 +23,7 @@ export const DOWNLOAD_URL = `https://portal.skrap.app/storage`;
 export const PORTAL_URL = `https://portal.skrap.app/api`;
 export const API_URL = `${APP_URL}`;
 export const RECAPTCHA_KEY = "6LdPaA8jAAAAACq9tEZOoVR4GPtKOfelW7o6Kh0z";
+export const stripeKey="pk_test_51PGlRWKE3ud1y1q8zI5sWJLWBzMivN2KFP0yJXV5wHXjyKrm0FlDW5NBMay4E0shEwL0xOEbD9ME5Otn9kaNTxGr00Hx5qNr1n";
 export const ENV = `prod`;
 export const USER = 236;
 export const FILE_DIR = "/storage";
