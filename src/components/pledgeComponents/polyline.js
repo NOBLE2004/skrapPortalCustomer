@@ -14,7 +14,7 @@ const PolylineComp = ({start_lat, start_lng, destination_lat, destination_lng}) 
         setTimeout(() => {
             const routeOptions = new window.google.maps.Polyline({
                 strokeOpacity: 1,
-                strokeColor: '#dd00fd',
+                strokeColor: '#1976d2',
             });
             const marker = new window.google.maps.Marker({
                 position:{
