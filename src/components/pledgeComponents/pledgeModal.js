@@ -364,7 +364,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                 <Box>
                   {" "}
                   <Typography variant="caption" style={{fontFamily: "Dm Sans"}}>
-                    Use the button below to offset this carbon emission.
+                      By offsetting this, you are supporting Global Carbon Avoidance and Removals ’23 Q1. Click the offset button below for more information.
                   </Typography>
                 </Box>
 
