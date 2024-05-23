@@ -1,4 +1,4 @@
-import { LocalShippingOutlined, LocationOnOutlined } from "@mui/icons-material";
+import {InfoOutlined, LocalShippingOutlined, LocationOnOutlined} from "@mui/icons-material";
 import {
   Timeline,
   TimelineConnector,
@@ -7,7 +7,7 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from "@mui/lab";
-import { Box, Typography } from "@mui/material";
+import {Box, Tooltip, Typography} from "@mui/material";
 import React from "react";
 import PolylineComp from "./polyline";
 
@@ -63,8 +63,23 @@ const PladgeDetails = ({ data }) => {
                   <Typography variant="caption" fontWeight={600} style={{textTransform: 'lowercase', fontFamily: 'Dm Sans'}}>
                     {data?.em_co2e_value?.toFixed(2) || ""} {data?.em_co2e_unit || ""}
                   </Typography>
-                  <Box>
+                  <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>CO<sub>2</sub>e</Typography>
+                    <Tooltip
+                        placement="top"
+                        title={
+                          <div>
+                            <Typography variant="body1" style={{fontFamily: "Dm Sans"}}>
+                              CO₂e is a sum of carbon dioxide (CO₂), methane (CH₄), nitrous oxide (N₂O) emissions).
+                            </Typography>
+                          </div>
+                        }
+                    >
+                      <InfoOutlined
+                          fontSize="14px"
+                          sx={{ cursor: "pointer" }}
+                      />
+                    </Tooltip>
                   </Box>
                 </Box>
               </Box>

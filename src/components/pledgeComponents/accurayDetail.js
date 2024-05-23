@@ -55,7 +55,7 @@ const AccuracyDetails = ({ data }) => {
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
-            width: "50%",
+            width: "35%",
             marginTop: "20px",
             fontFamily: "Dm Sans",
           }}
@@ -120,7 +120,7 @@ const AccuracyDetails = ({ data }) => {
             placement="top"
             title={
               <div>
-                <Typography variant="body1">
+                <Typography variant="body1" style={{fontFamily: "Dm Sans"}}>
                   A weighted average of each transport chain element's Data
                   Quality Indicator.
                 </Typography>
@@ -211,7 +211,7 @@ const AccuracyDetails = ({ data }) => {
                     placement="top"
                     title={
                       <div>
-                        <Typography variant="body1">
+                        <Typography variant="body1" style={{fontFamily: "Dm Sans"}}>
                           A tiered quality ranking indicator that can be applied
                           to transport chains or transport chain elements.
                         </Typography>
