@@ -383,7 +383,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
               </Box>
               <Box>
                 <img
-                  style={{ height: "100px" }}
+                  style={{ height: "115px" }}
                   src={ImpactImg}
                   alt=""
                 />
