@@ -211,7 +211,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                   >
                     <div
                       style={{
-                        background: "#6900d7",
+                        background: "#1a4dc4",
                         width: "12px",
                         height: "12px",
                         borderRadius: "2px",
@@ -278,7 +278,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                     >
                       <div
                         style={{
-                          background: "#a364e6",
+                          background: "#518ef8",
                           width: "12px",
                           height: "12px",
                           borderRadius: "2px",
@@ -370,7 +370,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
 
                 <Button
                   variant="contained"
-                  sx={{ mt: 2, background: "#6900d7", textTransform: 'none', fontFamily: "Dm Sans"}}
+                  sx={{ mt: 2, textTransform: 'none', fontFamily: "Dm Sans"}}
                   onClick={() => {
                     window.open(
                       `https://impact.pledge.io/lnk_GwkTfqmp?selected_amount_in_kg=${data?.em_co2e_value}`,
@@ -383,7 +383,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
               </Box>
               <Box>
                 <img
-                  style={{ height: "100px" }}
+                  style={{ height: "115px" }}
                   src={ImpactImg}
                   alt=""
                 />
@@ -533,7 +533,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
 
                     <Button
                         variant="contained"
-                        sx={{ mt: 2, background: "#6900d7", textTransform: 'none', fontFamily: "Dm Sans"}}
+                        sx={{ mt: 2, textTransform: 'none', fontFamily: "Dm Sans"}}
                         onClick={() => {
                             window.open(
                                 `https://app.pledge.io/calculators/freight`,
