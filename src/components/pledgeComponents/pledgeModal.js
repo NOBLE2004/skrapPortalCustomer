@@ -5,6 +5,7 @@ import {
   Drawer,
   LinearProgress,
   Tab,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import {
@@ -165,7 +166,19 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                     {data?.intensity_unit || ""}
                   </span>{" "}
                   <span>
-                    <InfoOutlined sx={{ mb: "-5px" }} />
+                    <Tooltip
+                      placement="top"
+                      title={
+                        <div>
+                          <Typography variant="body1">
+                            Intensity ratio excludes non t-km values e.g.
+                            logistics hubs emissions
+                          </Typography>
+                        </div>
+                      }
+                    >
+                      <InfoOutlined sx={{ mb: "-5px", cursor: "pointer" }} />
+                    </Tooltip>
                   </span>
                 </span>
               ) : (
@@ -211,7 +224,24 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                       >
                         Well to tank
                       </Typography>
-                      <InfoOutlined fontSize="14px" />
+                      <Tooltip
+                        placement="top"
+                        title={
+                          <div>
+                            <Typography variant="body1">
+                              Emissions released to atmosphere during the
+                              process of producing, storing, processing, and
+                              distributing an energy carrier for vehicle
+                              operation.
+                            </Typography>
+                          </div>
+                        }
+                      >
+                        <InfoOutlined
+                          fontSize="14px"
+                          sx={{ cursor: "pointer" }}
+                        />
+                      </Tooltip>
                     </Box>
                   </Box>
                   <Typography
@@ -261,7 +291,21 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                         >
                           Tank to wheel
                         </Typography>
-                        <InfoOutlined fontSize="14px" />
+                        <Tooltip
+                          placement="top"
+                          title={
+                            <div>
+                              <Typography variant="body1">
+                              Emissions released to atmosphere as a result of vehicle operation.
+                              </Typography>
+                            </div>
+                          }
+                        >
+                          <InfoOutlined
+                            fontSize="14px"
+                            sx={{ cursor: "pointer" }}
+                          />
+                        </Tooltip>
                       </Box>
                     </Box>
                     <Typography
@@ -326,6 +370,12 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                 <Button
                   variant="contained"
                   sx={{ mt: 2, background: "#6900d7" }}
+                  onClick={() => {
+                    window.open(
+                      `https://impact.pledge.io/lnk_GwkTfqmp?selected_amount_in_kg=${data?.em_co2e_value}`,
+                      "_blank"
+                    );
+                  }}
                 >
                   Create Impact Link
                 </Button>

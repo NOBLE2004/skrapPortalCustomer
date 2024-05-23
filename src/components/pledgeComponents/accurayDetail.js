@@ -11,7 +11,13 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from "@mui/lab";
-import { Box, Divider, LinearProgress, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  LinearProgress,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { useState } from "react";
 import "./style.scss";
@@ -110,7 +116,19 @@ const AccuracyDetails = ({ data }) => {
           >
             Overall Data Quality Indicator
           </Typography>
-          <InfoOutlined fontSize="14px" />
+          <Tooltip
+            placement="top"
+            title={
+              <div>
+                <Typography variant="body1">
+                  A weighted average of each transport chain element's Data
+                  Quality Indicator.
+                </Typography>
+              </div>
+            }
+          >
+            <InfoOutlined fontSize="14px" sx={{ cursor: "pointer" }} />
+          </Tooltip>
         </Box>
       </Box>
       {/* <GaugeComponent
@@ -189,7 +207,19 @@ const AccuracyDetails = ({ data }) => {
                   >
                     Data Quality Indicator
                   </Typography>
-                  <InfoOutlined fontSize="14px" />
+                  <Tooltip
+                    placement="top"
+                    title={
+                      <div>
+                        <Typography variant="body1">
+                          A tiered quality ranking indicator that can be applied
+                          to transport chains or transport chain elements.
+                        </Typography>
+                      </div>
+                    }
+                  >
+                    <InfoOutlined fontSize="14px" sx={{ cursor: "pointer" }} />
+                  </Tooltip>
                 </Box>
                 <Box>
                   <p
@@ -367,12 +397,12 @@ const AccuracyDetails = ({ data }) => {
                         Origin-destination
                       </Typography>
                     </td>
-                    <td>
+                    <td style={{width:"50%"}}>
                       <Typography
                         variant="caption"
                         style={{ fontFamily: "Dm Sans" }}
                       >
-                        post code
+                        Postal code/ coordinates/ planned distance
                       </Typography>
                     </td>
                     <td style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -391,7 +421,7 @@ const AccuracyDetails = ({ data }) => {
                         }}
                         fontWeight={600}
                       >
-                        {data?.accuracy}
+                        1
                       </p>
                     </td>
                   </tr>
@@ -404,7 +434,7 @@ const AccuracyDetails = ({ data }) => {
                         Weight
                       </Typography>
                     </td>
-                    <td>
+                    <td style={{width:"50%"}}>
                       <Typography
                         variant="caption"
                         style={{ fontFamily: "Dm Sans" }}
@@ -417,9 +447,9 @@ const AccuracyDetails = ({ data }) => {
                         variant="caption"
                         style={{
                           fontFamily: "Dm Sans",
-                          width: "22px",
+                          width: "40px",
                           height: "22px",
-                          borderRadius: "50%",
+                          borderRadius: "50px",
                           background: "#32d583",
                           margin: 0,
                           fontSize: "14px",
@@ -428,7 +458,7 @@ const AccuracyDetails = ({ data }) => {
                         }}
                         fontWeight={600}
                       >
-                        1
+                        2-1
                       </p>
                     </td>
                   </tr>
@@ -441,13 +471,24 @@ const AccuracyDetails = ({ data }) => {
                         Emission intensity
                       </Typography>
                     </td>
-                    <td>
-                      <Typography
+                    <td style={{width:"50%"}}>
+                      {data?.accuracy > 2 ? (
+                        <Typography
+                          variant="caption"
+                          style={{ fontFamily: "Dm Sans" }}
+                        >
+                          Default value
+                        </Typography>
+                      ) : (
+                        <Typography
                         variant="caption"
-                        style={{ fontFamily: "Dm Sans" }}
-                      >
-                        Molded
-                      </Typography>
+                          style={{ fontFamily: "Dm Sans" }}
+                        >
+                          {" "}
+                          Modeled or carrier- specific annual emission intensity
+                          factor
+                        </Typography>
+                      )}
                     </td>
                     <td style={{ display: "flex", justifyContent: "flex-end" }}>
                       <p
@@ -465,7 +506,7 @@ const AccuracyDetails = ({ data }) => {
                         }}
                         fontWeight={600}
                       >
-                        1
+                        {data?.accuracy}
                       </p>
                     </td>
                   </tr>
