@@ -63,6 +63,7 @@ import chatIcon from "./chat.svg";
 import marketInfoIcon from "./market_info.svg";
 import newMarker from "./mapNew.svg";
 import filterIcon from "./filter.svg";
+import calculator from "./empty_state.png";
 export {
   chatIcon,
   appleIcon,
@@ -129,4 +130,5 @@ export {
   marketInfoIcon,
   filterIcon,
   newMarker,
+  calculator
 };
