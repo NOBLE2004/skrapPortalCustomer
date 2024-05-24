@@ -25,7 +25,7 @@ const EmissionDetails = ({ data }) => {
         <TimelineItem>
           <TimelineSeparator>
             <TimelineDot sx={{ background: "#d18ddb85" }}>
-              <LocationOnOutlined sx={{ color: "#dd00fd" }} />
+              <LocationOnOutlined sx={{ color: "#6900d7" }} />
             </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
@@ -106,7 +106,7 @@ const EmissionDetails = ({ data }) => {
         <TimelineItem>
           <TimelineSeparator>
             <TimelineDot sx={{ background: "#d18ddb85" }}>
-              <LocationOnOutlined sx={{ color: "#dd00fd" }} />
+              <LocationOnOutlined sx={{ color: "#6900d7" }} />
             </TimelineDot>
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>

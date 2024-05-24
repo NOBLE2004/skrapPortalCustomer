@@ -1,4 +1,4 @@
-import { LocalShippingOutlined, LocationOnOutlined } from "@mui/icons-material";
+import {InfoOutlined, LocalShippingOutlined, LocationOnOutlined} from "@mui/icons-material";
 import {
   Timeline,
   TimelineConnector,
@@ -7,7 +7,7 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from "@mui/lab";
-import { Box, Typography } from "@mui/material";
+import {Box, Tooltip, Typography} from "@mui/material";
 import React from "react";
 import PolylineComp from "./polyline";
 
@@ -18,11 +18,11 @@ const PladgeDetails = ({ data }) => {
         Route
       </Typography>
 
-      <Timeline sx={{ padding: "6px 0px 6px 6px", margin: 0 }}>
+      <Timeline sx={{ padding: "6px 0px 6px 6px", margin: 0, fontFamily: 'Dm Sans' }}>
         <TimelineItem>
           <TimelineSeparator>
             <TimelineDot sx={{ background: "#d18ddb85", fontFamily: 'Dm Sans' }}>
-              <LocationOnOutlined sx={{ color: "#dd00fd" }} />
+              <LocationOnOutlined sx={{ color: "#6900d7" }} />
             </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
@@ -58,17 +58,32 @@ const PladgeDetails = ({ data }) => {
                 background: "#80808017", fontFamily: 'Dm Sans'
               }}
             >
-              <Box flex={1} borderLeft={"2px solid #458dd5"}>
+              <Box flex={1} borderLeft={"2px solid #6900d7"}>
                 <Box pl={1.5}>
                   <Typography variant="caption" fontWeight={600} style={{textTransform: 'lowercase', fontFamily: 'Dm Sans'}}>
                     {data?.em_co2e_value?.toFixed(2) || ""} {data?.em_co2e_unit || ""}
                   </Typography>
-                  <Box>
+                  <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <Typography variant="caption" style={{fontFamily: 'Dm Sans'}}>CO<sub>2</sub>e</Typography>
+                    <Tooltip
+                        placement="top"
+                        title={
+                          <div>
+                            <Typography variant="body1" style={{fontFamily: "Dm Sans"}}>
+                              CO₂e is a sum of carbon dioxide (CO₂), methane (CH₄), nitrous oxide (N₂O) emissions).
+                            </Typography>
+                          </div>
+                        }
+                    >
+                      <InfoOutlined
+                          fontSize="14px"
+                          sx={{ cursor: "pointer" }}
+                      />
+                    </Tooltip>
                   </Box>
                 </Box>
               </Box>
-              {data?.distance_value > 0 && <Box flex={1} borderLeft={"2px solid #458dd5"}>
+              {data?.distance_value > 0 && <Box flex={1} borderLeft={"2px solid #6900d7"}>
                 <Box pl={1.5}>
                   <Typography variant="caption" fontWeight={600} style={{textTransform: 'lowercase', fontFamily: 'Dm Sans'}}>
                     {data?.distance_value?.toFixed(2) || ""} {data?.distance_unit || ""}
@@ -84,7 +99,7 @@ const PladgeDetails = ({ data }) => {
         <TimelineItem>
           <TimelineSeparator>
             <TimelineDot sx={{ background: "#d18ddb85" }}>
-              <LocationOnOutlined sx={{ color: "#dd00fd" }} />
+              <LocationOnOutlined sx={{ color: "#6900d7" }} />
             </TimelineDot>
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2, fontFamily: 'Dm Sans' }}>
