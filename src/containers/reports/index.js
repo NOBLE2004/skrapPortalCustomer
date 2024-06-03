@@ -47,10 +47,19 @@ const NewReports = () => {
   const [csvLoading, setCsvLoading] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [redLoading, setRedLoading] = useState(false);
+  const [disableSelect, setDisableSelect] = useState(false);
+  const [selectedSites, setSelectedSites] = useState([]);
+  const recycledData = useSelector((state) => state?.recycled);
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setSelected(value);
+      const { name, value } = event.target;
+      setSelectedSites(value);
   };
+
+  useEffect(() => {
+    if(!recycledData?.isLoading){
+      setSelected(selectedSites);
+    }
+  }, [recycledData?.isLoading, selectedSites])
 
   async function exTest() {
     setShowMore(true);
@@ -241,6 +250,7 @@ const NewReports = () => {
                   sites={selected}
                   showMore={showMore}
                   siteCurrency={siteCurrency}
+                  setDisableSelect={setDisableSelect}
               />
             </div>
             {/*<div className="report-chart-card-outer">*/}
