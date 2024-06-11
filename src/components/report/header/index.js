@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  debounce,
+  Box,
+  Grid,
   InputAdornment,
   ListSubheader,
   OutlinedInput,
   Select,
+  Skeleton,
   Switch,
   TextField,
 } from "@mui/material";
@@ -172,7 +174,6 @@ const ReportHeader = (props) => {
             displayEmpty
             multiple
             autoFocus
-            onClose={()=>setSearch(!search)}
             onChange={(e) => {
              handleChange(e);
             }}
@@ -213,7 +214,7 @@ const ReportHeader = (props) => {
                       {/* <SearchIcon /> */}
                     </InputAdornment>
                   ),
-          
+
                 }}
                 onChange={(e) => setSearchText(e.target.value)}
                 onKeyDown={(e) => {
@@ -233,7 +234,7 @@ const ReportHeader = (props) => {
                   }}
                   key={index}
                   value={site?.address_id}
-                  //style={getStyles(name, personName, theme)}
+                //style={getStyles(name, personName, theme)}
                 >
                   {site.job_address}
                 </MenuItem>
@@ -287,12 +288,21 @@ const ReportHeader = (props) => {
         }
       >
         {props?.totalSites?.isLoading ? (
-          <div className="d-flex justify-center align-center">
-            <FadeLoader
-              color={"#518ef8"}
-              loading={props?.totalSites?.isLoading}
-              width={4}
-            />
+          <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
+            <Grid container spacing={1} px={2} justifyContent={"space-around"}>
+              <Grid item xs={2}>
+                <Skeleton variant='rounded' sx={{ fontSize: '3rem', borderRadius: "8px" }} />
+              </Grid>
+              <Grid item xs={2}>
+                <Skeleton variant='rounded' sx={{ fontSize: '3rem', borderRadius: "8px" }} />
+              </Grid>
+              <Grid item xs={2}>
+                <Skeleton variant='rounded' sx={{ fontSize: '3rem', borderRadius: "8px" }} />
+              </Grid>
+              <Grid item xs={2}>
+                <Skeleton variant='rounded' sx={{ fontSize: '3rem', borderRadius: "8px" }} />
+              </Grid>
+            </Grid >
           </div>
         ) : (
           <>

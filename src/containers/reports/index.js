@@ -19,7 +19,7 @@ import { saveAs } from "file-saver";
 import RebateReport from "../../components/report/reports/rebate";
 import DualAxisGraph from "../../components/report/reports/dualAxis";
 import { getEfficencyList } from "../../store/actions/action.reportEfficenyList";
-import {debounce, Grid} from "@mui/material";
+import {Grid} from "@mui/material";
 import WasteEmissionGraph from "../../components/report/reports/wasteEmissionGraph/index";
 import WasteBreakDown from "../../components/report/reports/WasteBreakDown";
 import jsPDF from 'jspdf';
@@ -56,7 +56,7 @@ const NewReports = () => {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       setSelected(selectedSites);
-    }, 2000)
+    }, 1500)
 
     return () => clearTimeout(delayDebounceFn)
   }, [selectedSites])

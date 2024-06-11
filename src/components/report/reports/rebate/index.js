@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Skeleton, Stack } from "@mui/material";
 import "./style.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { getRebateBreakdown } from "../../../../store/actions/action.rebateBd";
@@ -104,53 +104,54 @@ const RebateReport = (props) => {
     return (
         <>
             {(stateSites?.rebate_breakdown?.code == 0 && stateSites?.rebate_breakdown?.result?.total != '0.00') && <div className="report-chart-card-outer">
-        <div className="report-card-title">Rebate report</div>
-        <Card className="report-chart-card" id={"finance"}>
-            <CardContent>
-                <div className="salesWp">
-                    {stateSites?.rebate_breakdown?.result?.total && (
-                        <h1>
-                            {`${currency ? currency : "£"}`}
-                            {stateSites?.rebate_breakdown?.result?.total.toLocaleString()}
-                            <span> Total rebate</span>
-                        </h1>
-                    )}
+                <div className="report-card-title">Rebate report</div>
+                <Card className="report-chart-card" id={"finance"}>
+                    <CardContent>
+                        <div className="salesWp">
+                            {stateSites?.rebate_breakdown?.result?.total && (
+                                <h1>
+                                    {`${currency ? currency : "£"}`}
+                                    {stateSites?.rebate_breakdown?.result?.total.toLocaleString()}
+                                    <span> Total rebate</span>
+                                </h1>
+                            )}
 
-                    <div className="sub-heading">Site breakdown</div>
-                    {stateSites?.isLoading ? (
-                        <div className="d-flex justify-center align-center">
-                            <FadeLoader
-                                color={"#518ef8"}
-                                loading={stateSites?.isLoading}
-                                width={4}
-                            />
+                            <div className="sub-heading">Site breakdown</div>
+                            {stateSites?.isLoading ? (
+                                <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
+                                    <Stack spacing={1} px={2} sx={{ width: "100%" }} mt={1}>
+                                        <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+                                        <Skeleton variant='rounded' height={20} />
+                                        <Skeleton variant='rectangular' width={'100%'} height={200} />
+                                        <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+                                    </Stack>
+                                </div>
+                            ) : (
+                                <div className="highchart-sites">
+                                    {stateSites?.rebate_breakdown &&
+                                        stateSites?.rebate_breakdown?.result?.data && (
+                                            <HighchartsReact
+                                                highcharts={Highcharts}
+                                                options={chartData}
+                                                ref={props.refFinance}
+                                            />
+                                        )}
+                                </div>
+                            )}
                         </div>
-                    ) : (
-                        <div className="highchart-sites">
-                            {stateSites?.rebate_breakdown &&
-                                stateSites?.rebate_breakdown?.result?.data && (
-                                    <HighchartsReact
-                                        highcharts={Highcharts}
-                                        options={chartData}
-                                        ref={props.refFinance}
-                                    />
-                                )}
+                        <div
+                            className="see-more"
+                            // onClick={() => {
+                            //     setShow(!show);
+                            // }}
+                            style={{ opacity: 0 }}
+                        >
+                            See more
                         </div>
-                    )}
-                </div>
-                <div
-                    className="see-more"
-                    // onClick={() => {
-                    //     setShow(!show);
-                    // }}
-                    style={{ opacity: 0}}
-                >
-                    See more
-                </div>
-            </CardContent>
-        </Card>
-        </div>}
-            </>
+                    </CardContent>
+                </Card>
+            </div>}
+        </>
     );
 };
 export default RebateReport;
