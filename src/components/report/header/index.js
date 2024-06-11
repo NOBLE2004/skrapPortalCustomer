@@ -11,7 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import React, { useEffect, useMemo, useState } from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import { getSites } from "../../../store/actions/sites.action";
 import { getJobsMeta } from "../../../store/actions/action.jobsMeta";
 import {connect, useDispatch, useSelector} from "react-redux";
@@ -22,6 +22,7 @@ import "./index.scss";
 import reportsService from "../../../services/reports.service";
 import { downloadSite } from "../../../assets/images";
 import { ArrowDropDown } from "@mui/icons-material";
+import { SearchRounded } from "@mui/icons-material";
 import RangeDatePicker from "../../RangePicker/index";
 import moment from "moment";
 
@@ -57,7 +58,7 @@ const ReportHeader = (props) => {
     sites,
     setSiteCurrency,
     setSelected,
-    currency,
+    currency
   } = props;
   const classes = useStyles();
 
@@ -163,9 +164,9 @@ const ReportHeader = (props) => {
         style={{ width: "50%", justifyContent: "flex-start" }}
       >
         <div className="report-header-card first">
-          <div className="text" style={{ width: "20%" }}>
-            <span>Reporting</span>
-          </div>
+          {/*<div className="text" style={{ width: "20%" }}>*/}
+          {/*  <span>Reporting</span>*/}
+          {/*</div>*/}
           <Select
             labelId="demo-multiple-name-label"
             id="demo-multiple-name"
@@ -174,11 +175,7 @@ const ReportHeader = (props) => {
             multiple
             autoFocus
             onChange={(e) => {
-              handleChange(e);
-              const filterSite = props.allsites.data?.find(
-                (x) => x.address_id === e.target.value
-              );
-              //setSiteCurrency(filterSite?.currency_symbol);
+             handleChange(e);
             }}
             input={
               <OutlinedInput
