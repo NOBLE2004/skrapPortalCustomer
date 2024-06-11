@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Card, CardContent, Divider, Grid } from "@mui/material";
+import { Card, CardContent, Divider, Grid, Skeleton, Stack } from "@mui/material";
 import DatePicker from "../../../yearPicker/yearPicker";
 import Vector from "../../../../assets/images/vector.svg";
 import React, { useEffect, useState } from "react";
@@ -110,14 +110,14 @@ const EmissionReport = (props) => {
   };
 
   const getWasteData = (year) => {
-      dispatch(
-          getReportWasteEmissions({
-            year: year ? year : startDate.getFullYear(),
-            sites: sites,
-            date: dateM,
-            currency,
-          })
-      );
+    dispatch(
+      getReportWasteEmissions({
+        year: year ? year : startDate.getFullYear(),
+        sites: sites,
+        date: dateM,
+        currency,
+      })
+    );
   };
 
 
@@ -284,8 +284,8 @@ const EmissionReport = (props) => {
     {
       name: "null",
       data: maxWaste
-          ? [maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste]
-          : [],
+        ? [maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste, maxWaste]
+        : [],
       borderWidth: 0,
       stack: 1,
       borderSkipped: false,
@@ -344,8 +344,8 @@ const EmissionReport = (props) => {
     setEmissionWaste(emission);
     wasteEmissions?.data?.data?.map((single) => {
       getMonthDataWaste(
-          single.month?.toLowerCase(),
-          parseFloat(single.Recycled.toFixed(2))
+        single.month?.toLowerCase(),
+        parseFloat(single.Recycled.toFixed(2))
       );
     });
   };
@@ -390,35 +390,68 @@ const EmissionReport = (props) => {
       <Card className="report-chart-card">
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            <h1 style={{color: '#0BC21F'}}>
+            <h1 style={{ color: '#0BC21F' }}>
               {(state?.data?.year?.length > 0 || wasteEmissions?.data?.total >= 0)
-                  ? numberWithCommas(((state?.data?.year?.length > 0 ? state?.data?.year[0]?.Sum_Co2e : 0) + (wasteEmissions?.data?.total > 0 ? wasteEmissions?.data?.total : 0))?.toFixed(2))
-                  : `0.00`}{" "}
+                ? numberWithCommas(((state?.data?.year?.length > 0 ? state?.data?.year[0]?.Sum_Co2e : 0) + (wasteEmissions?.data?.total > 0 ? wasteEmissions?.data?.total : 0))?.toFixed(2))
+                : `0.00`}{" "}
               <span>kg of CO2e Total Emissions Produced</span>
             </h1>
-            <div className="sub-heading" style={{paddingBottom: '10px'}}>Transport Emission</div>
-            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+            <div className="sub-heading" style={{ paddingBottom: '10px' }}>Transport Emission</div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
               <h1>
                 {state?.data?.year?.length > 0
-                    ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
-                    : `0.00`}{" "}
+                  ? numberWithCommas(state?.data?.year[0]?.Sum_Co2e?.toFixed(2))
+                  : `0.00`}{" "}
                 <span>kg of CO2e Transport Emissions</span>
               </h1>
             </div>
-            { wasteEmissions?.data?.reduction > 0 && <h1>
-                  <span style={{color: '#848c99', width: '50%'}}>
-                    <span style={{color: 'rgb(80, 210, 38)'}}> {wasteEmissions?.data?.reduction} kg </span>
-                    reduction in C02 emissions by avoiding use of {wasteEmissions?.data?.reduced} additional dumpsters (Baseline {wasteEmissions?.data?.dumpsters} dumpsters).
-                    {/*in reduction which is {state?.data?.result?.reduced} dumpsters we considered baseline as {state?.data?.result?.dumpsters} dumpsters to landfill.*/}
-                  </span>
+            {wasteEmissions?.data?.reduction > 0 && <h1>
+              <span style={{ color: '#848c99', width: '50%' }}>
+                <span style={{ color: 'rgb(80, 210, 38)' }}> {wasteEmissions?.data?.reduction} kg </span>
+                reduction in C02 emissions by avoiding use of {wasteEmissions?.data?.reduced} additional dumpsters (Baseline {wasteEmissions?.data?.dumpsters} dumpsters).
+                {/*in reduction which is {state?.data?.result?.reduced} dumpsters we considered baseline as {state?.data?.result?.dumpsters} dumpsters to landfill.*/}
+              </span>
             </h1>}
             {state?.isLoading ? (
-              <div className="d-flex justify-center align-center">
-                <FadeLoader
-                  color={"#518ef8"}
-                  loading={state?.isLoading}
-                  width={4}
-                />
+              <div className="d-flex justify-center align-center" style={{ width: "100% " }}>
+                <Grid container justifyContent="space-between" spacing={1} px={2} sx={{ width: "100%" }} mt={1}>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                </Grid >
               </div>
             ) : (
               <>
@@ -455,11 +488,11 @@ const EmissionReport = (props) => {
             )}
           </div>
           <div
-              className="see-more"
-              // onClick={() => {
-              //     setShow(!show);
-              // }}
-              style={{ opacity: 0}}
+            className="see-more"
+            // onClick={() => {
+            //     setShow(!show);
+            // }}
+            style={{ opacity: 0 }}
           >
             See more
           </div>
@@ -478,19 +511,19 @@ const EmissionReport = (props) => {
 
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            <div className="sub-heading" style={{paddingBottom: '10px'}}>Waste Emissions</div>
-            <h1 style={{color: '#0BC21F'}}>
+            <div className="sub-heading" style={{ paddingBottom: '10px' }}>Waste Emissions</div>
+            <h1 style={{ color: '#0BC21F' }}>
               {wasteEmissions?.data?.total > 0
-                  ? numberWithCommas(wasteEmissions?.data?.total?.toFixed(2))
-                  : `0.00`}{" "}
+                ? numberWithCommas(wasteEmissions?.data?.total?.toFixed(2))
+                : `0.00`}{" "}
               <span>kg of CO2e Waste Emissions</span>
             </h1>
-            { wasteEmissions?.data?.avoided > "0.00" && <h1>
-                  <span style={{color: '#848c99', width: '50%'}}>
-                    <span style={{color: 'rgb(80, 210, 38)'}}> {wasteEmissions?.data?.avoided} kg </span>
-                    CO2e Avoided by recycling
-                    {wasteEmissions?.data?.upcycleLandFill > "0.00" && <>& <span style={{color: 'rgb(80, 210, 38)'}}> {wasteEmissions?.data?.upcycleLandFill} kg </span> CO2e Avoided by Upcycle</>}
-                  </span>
+            {wasteEmissions?.data?.avoided > "0.00" && <h1>
+              <span style={{ color: '#848c99', width: '50%' }}>
+                <span style={{ color: 'rgb(80, 210, 38)' }}> {wasteEmissions?.data?.avoided} kg </span>
+                CO2e Avoided by recycling
+                {wasteEmissions?.data?.upcycleLandFill > "0.00" && <>& <span style={{ color: 'rgb(80, 210, 38)' }}> {wasteEmissions?.data?.upcycleLandFill} kg </span> CO2e Avoided by Upcycle</>}
+              </span>
             </h1>}
             <div className="filters">
               <div className="year">
@@ -505,21 +538,54 @@ const EmissionReport = (props) => {
               {/*</div>*/}
             </div>
             {wasteEmissions?.isLoading ? (
-              <div className="d-flex justify-center align-center">
-                <FadeLoader
-                  color={"#518ef8"}
-                  loading={wasteEmissions?.isLoading}
-                  width={4}
-                />
+              <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
+                <Grid container justifyContent="space-between" spacing={1} px={2} sx={{ width: "100%" }} mt={1}>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                  <Grid item xs={.5}>
+                    <Skeleton variant='text' sx={{ fontSize: '1rem', height: 350 }} />
+                  </Grid>
+                </Grid >
               </div>
             ) : (
-                <div style={{ width: "100%" }}>
-                  {chartDataWaste && chartData?.series !== undefined && (<HighchartsReact
-                    highcharts={Highcharts}
-                    options={chartDataWaste}
-                    ref={props.ref2}
-                  />)}
-                </div>
+              <div style={{ width: "100%" }}>
+                {chartDataWaste && chartData?.series !== undefined && (<HighchartsReact
+                  highcharts={Highcharts}
+                  options={chartDataWaste}
+                  ref={props.ref2}
+                />)}
+              </div>
             )}
             {/*<div*/}
             {/*  className="w-100 button-with-icon-bar-chart"*/}

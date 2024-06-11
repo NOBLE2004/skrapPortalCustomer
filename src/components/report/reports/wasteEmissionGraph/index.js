@@ -6,6 +6,7 @@ import {
   Grid,
   Popover,
   Popper,
+  Skeleton,
   TextField,
   Typography,
 } from "@mui/material";
@@ -63,11 +64,9 @@ const WasteEmissionGraph = (props) => {
       getWasteEmssionData({
         sites: sites,
         date: (endDate &&
-            `${startDate?.getDate()}-${
-                startDate?.getMonth() + 1
-            }-${startDate?.getFullYear()},${endDate?.getDate()}-${
-                endDate?.getMonth() + 1
-            }-${endDate?.getFullYear()}`),
+          `${startDate?.getDate()}-${startDate?.getMonth() + 1
+          }-${startDate?.getFullYear()},${endDate?.getDate()}-${endDate?.getMonth() + 1
+          }-${endDate?.getFullYear()}`),
         type: type,
         year: date,
         service_id: service,
@@ -102,8 +101,6 @@ const WasteEmissionGraph = (props) => {
     setStartDate(null);
     setEndDate(null);
   };
-
-  console.log("data", data);
 
   return (
     <>
@@ -168,11 +165,11 @@ const WasteEmissionGraph = (props) => {
                       <span>Year:</span>
                     </div>
                     <YearPicker
-                        startDate={date}
-                        setStartDate={setDate}
-                        getData={getData}
+                      startDate={date}
+                      setStartDate={setDate}
+                      getData={getData}
                     />
-                  </div> }
+                  </div>}
                 </Grid>
                 <Grid item xs={5}>
                   <FormControl fullWidth>
@@ -206,52 +203,93 @@ const WasteEmissionGraph = (props) => {
                 </Grid>
               </Grid>
             </div>
+            {data?.isLoading ?
+              <Grid container  justifyContent="space-between" spacing={1} px={2} sx={{ width: "90%" }} mt={1}>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+              </Grid >
+              :
 
-            <div style={{ width: "100%", marginTop: "20px" }}>
-              <HighchartsReact
-                highcharts={Highcharts}
-                height="300px"
-                options={chartOptions(data?.data)}
-                ref={props.ref2}
-              />
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Box>
-                  {type == "year" ? (
-                    <span>
-                      <b>Monthly</b>
-                    </span>
-                  ) : type == "month" ? (
+              <div style={{ width: "100%", marginTop: "20px" }}>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  height="300px"
+                  options={chartOptions(data?.data)}
+                  ref={props.ref2}
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box>
+                    {type == "year" ? (
                       <span>
-                      <b>Weekly</b>
+                        <b>Monthly</b>
+                      </span>
+                    ) : type == "month" ? (
+                      <span>
+                        <b>Weekly</b>
+                      </span>
+                    ) : (
+                      <span>
+                        <b>Days</b>
+                      </span>
+                    )}
+                  </Box>
+                  <Box>
+                    <span style={{ marginRight: "10px", color: "#518ef8" }}>
+                      <b>
+                        Emissions avoided by recycling: {((data?.data?.total?.Landfill > 0 ? data?.data?.total?.Landfill : 0)).toLocaleString() || 0}
+                        kg Co2e
+                      </b>
+                    </span>{" "}
+                    <span style={{ color: "#50D226" }}>
+                      <b>
+                        Emissions produced from actual waste collected: {((data?.data?.total?.Recycled > 0 ? data?.data?.total?.Recycled : 0)).toLocaleString() || 0}
+                        kg Co2e{" "}
+                      </b>
                     </span>
-                  ) : (
-                    <span>
-                      <b>Days</b>
-                    </span>
-                  )}
+                  </Box>
                 </Box>
-                <Box>
-                  <span style={{ marginRight: "10px", color: "#518ef8" }}>
-                    <b>
-                      Emissions avoided by recycling: {((data?.data?.total?.Landfill > 0 ? data?.data?.total?.Landfill : 0)).toLocaleString() || 0}
-                       kg Co2e
-                    </b>
-                  </span>{" "}
-                  <span style={{ color: "#50D226" }}>
-                    <b>
-                      Emissions produced from actual waste collected: {((data?.data?.total?.Recycled > 0 ? data?.data?.total?.Recycled : 0)).toLocaleString() || 0}
-                       kg Co2e{" "}
-                    </b>
-                  </span>
-                </Box>
-              </Box>
-            </div>
+              </div>
+            }
           </div>
         </CardContent>
       </Card>

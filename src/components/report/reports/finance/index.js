@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@mui/material";
+import { Box, Card, CardContent, Skeleton, Stack } from "@mui/material";
 import "./style.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { getSiteBreakdown } from "../../../../store/actions/action.siteBd";
@@ -8,7 +8,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HireBreakDown from "./hireBreakDown/hireBreakDown";
 import FadeLoader from "react-spinners/FadeLoader";
-import {numberWithCommas} from "../../../utlils/dashboard";
+import { numberWithCommas } from "../../../utlils/dashboard";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
 
 const FinanceReport = (props) => {
@@ -116,32 +116,30 @@ const FinanceReport = (props) => {
     <Card className="report-chart-card">
       <CardContent>
         <div className="salesWp">
-          <div className="sub-heading" style={{paddingBottom: '10px'}}>Site breakdown</div>
+          <div className="sub-heading" style={{ paddingBottom: '10px' }}>Site breakdown</div>
           {stateSites?.site_breakdown?.result?.total ? (
             <h1>
               {`${currency ? currency : "£"}`}
               {stateSites?.site_breakdown?.result?.total.toLocaleString()}
               <span> Total spend</span>
             </h1>
-          ): <h1>
-          {`${currency ? currency : "£"}`}0.00
-          <span> Total spend</span>
-        </h1>}
+          ) : <h1>
+            {`${currency ? currency : "£"}`}0.00
+            <span> Total spend</span>
+          </h1>}
 
-          { stateSites?.site_breakdown?.result?.reduction > 0 && <h1>
-                  <span style={{color: '#848c99', width: '50%'}}>
-                    <span style={{color: 'rgb(80, 210, 38)'}}> {`${currency ? currency : "£"}`}{numberWithCommas(stateSites?.site_breakdown?.result?.reduction?.toFixed(2))} </span>
-                    reduction in cost by avoiding use of {stateSites?.site_breakdown?.result?.dumpsters} additional dumpsters (Baseline {stateSites?.site_breakdown?.result?.total_dumpsters} dumpsters).
-                  </span>
+          {stateSites?.site_breakdown?.result?.reduction > 0 && <h1>
+            <span style={{ color: '#848c99', width: '50%' }}>
+              <span style={{ color: 'rgb(80, 210, 38)' }}> {`${currency ? currency : "£"}`}{numberWithCommas(stateSites?.site_breakdown?.result?.reduction?.toFixed(2))} </span>
+              reduction in cost by avoiding use of {stateSites?.site_breakdown?.result?.dumpsters} additional dumpsters (Baseline {stateSites?.site_breakdown?.result?.total_dumpsters} dumpsters).
+            </span>
           </h1>}
 
           {stateSites?.isLoading ? (
-            <div className="d-flex justify-center align-center">
-              <FadeLoader
-                color={"#518ef8"}
-                loading={stateSites?.isLoading}
-                width={4}
-              />
+            <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
+              <Box display={"flex"} justifyContent={"center"} spacing={1} p={2} sx={{ width: "100%" }} mt={1}>
+                <Skeleton variant="circular" width={300} height={300} />
+              </Box >
             </div>
           ) : (
             <div className="highchart-sites">
@@ -166,16 +164,16 @@ const FinanceReport = (props) => {
           {/*</div>*/}
 
           {/*{show && (*/}
-            <div className="see-more-wrap">
-              <div className="border-drop"></div>
+          <div className="see-more-wrap">
+            <div className="border-drop"></div>
 
-              <div className="more-drop">
-                <div className="sub-heading">Hire breakdown</div>
+            <div className="more-drop">
+              <div className="sub-heading">Hire breakdown</div>
 
-                <div className="services"></div>
-              </div>
-              <HireBreakDown sites={sites} />
+              <div className="services"></div>
             </div>
+            <HireBreakDown sites={sites} />
+          </div>
           {/*)}*/}
         </div>
       </CardContent>
