@@ -6,6 +6,7 @@ import {
   Grid,
   Popover,
   Popper,
+  Skeleton,
   TextField,
   Typography,
 } from "@mui/material";
@@ -62,10 +63,8 @@ const DualAxisGraph = (props) => {
         sites: sites,
         date:
           endDate &&
-          `${startDate?.getDate()}-${
-            startDate?.getMonth() + 1
-          }-${startDate?.getFullYear()},${endDate?.getDate()}-${
-            endDate?.getMonth() + 1
+          `${startDate?.getDate()}-${startDate?.getMonth() + 1
+          }-${startDate?.getFullYear()},${endDate?.getDate()}-${endDate?.getMonth() + 1
           }-${endDate?.getFullYear()}`,
         type: type,
         year: date,
@@ -153,23 +152,23 @@ const DualAxisGraph = (props) => {
                       <span>Days:</span>
                     </div>
                     <DatePicker
-                        selectsRange={true}
-                        startDate={startDate}
-                        monthsShown={2}
-                        endDate={endDate}
-                        customInput={<ExampleCustomInput2 />}
-                        onChange={onChange}
+                      selectsRange={true}
+                      startDate={startDate}
+                      monthsShown={2}
+                      endDate={endDate}
+                      customInput={<ExampleCustomInput2 />}
+                      onChange={onChange}
                     />
                   </div>) : <div className="year ">
                     <div className="total" style={{ marginBottom: "15px" }}>
                       <span>Year:</span>
                     </div>
                     <YearPicker
-                        startDate={date}
-                        setStartDate={setDate}
-                        getData={getData}
+                      startDate={date}
+                      setStartDate={setDate}
+                      getData={getData}
                     />
-                  </div> }
+                  </div>}
                 </Grid>
                 <Grid item xs={5}>
                   <FormControl fullWidth>
@@ -215,26 +214,67 @@ const DualAxisGraph = (props) => {
                 />
               </div>
             ) : ( */}
-            <div style={{ width: "100%", marginTop: "20px" }}>
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={chartOptions(data?.data)}
-                ref={props.ref2}
-              />
-              {type == "year" ? (
+            {data?.isLoading ?
+              <Grid container justifyContent="space-between" spacing={1} px={2} sx={{ width: "90%" }} mt={1}>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+                <Grid item xs={.5}>
+                  <Skeleton variant='text' sx={{ fontSize: '1rem', height: 400 }} />
+                </Grid>
+              </Grid >
+              :
+              <div style={{ width: "100%", marginTop: "20px" }}>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={chartOptions(data?.data)}
+                  ref={props.ref2}
+                />
+                {type == "year" ? (
                   <span>
-                      <b>Monthly</b>
-                    </span>
-              ) : type == "month" ? (
+                    <b>Monthly</b>
+                  </span>
+                ) : type == "month" ? (
                   <span>
-                      <b>Weekly</b>
-                    </span>
-              ) : (
+                    <b>Weekly</b>
+                  </span>
+                ) : (
                   <span>
-                      <b>Days</b>
-                    </span>
-              )}
-            </div>
+                    <b>Days</b>
+                  </span>
+                )}
+              </div>
+            }
             {/* )} */}
           </div>
         </CardContent>

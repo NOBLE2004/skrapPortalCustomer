@@ -5,7 +5,7 @@ import Select from "@mui/material/Select";
 import DatePicker from "react-datepicker";
 import MenuItem from "@mui/material/MenuItem";
 import { Bar } from "react-chartjs-2";
-import {Box, Grid} from "@mui/material";
+import { Box, Grid, Skeleton, Stack } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { lineChartData, data2 } from "./constant";
@@ -85,11 +85,10 @@ const SpendChart = ({
       labels: {
         formatter() {
           const getLabel = (value) => {
-            return `${
-              localStorage.getItem("currency")
-                ? localStorage.getItem("currency")
-                : "£"
-            }${numberWithCommas(value)}`;
+            return `${localStorage.getItem("currency")
+              ? localStorage.getItem("currency")
+              : "£"
+              }${numberWithCommas(value)}`;
           };
           return getLabel(numberWithCommas(this.value));
         },
@@ -100,11 +99,10 @@ const SpendChart = ({
         let s = `<b> ${this.x} </b>`;
         this.points.forEach((point) => {
           if (point?.series?.name !== "null") {
-            s += `<br/> ${point.series.name} : ${
-              localStorage.getItem("currency")
-                ? localStorage.getItem("currency")
-                : "£"
-            } ${numberWithCommas(point.y)}`;
+            s += `<br/> ${point.series.name} : ${localStorage.getItem("currency")
+              ? localStorage.getItem("currency")
+              : "£"
+              } ${numberWithCommas(point.y)}`;
           }
         });
         return s;
@@ -236,45 +234,74 @@ const SpendChart = ({
 
   return (
     <div className="wrapper">
-      {loading ? (
-        <Box
-          height={"100px"}
-          display="flex"
-          // my={2}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <FadeLoader color={"#518ef8"} loading={loading} width={4} />
-        </Box>
-      ) : (
-        <>
-          <div className="salesWp">
-            <div className="dateWp">
-              <div>
-                <span className="primary-title">Spend</span>
-                <div className="spend-filter-year">
-                 <p>Filter by year:</p>
-                 <div className="date-picker-main">
-                   <DatePicker
-                     selected={startDate}
-                     onChange={(date) => handleYearChange(date)}
-                     showYearPicker
-                     dateFormat="yyyy"
-                     yearItemNumber={15}
-                     customInput={<ExampleCustomInput />}
-                     maxDate={new Date()}
-                   />
-                 </div>
+      <>
+        <div className="salesWp">
+          <div className="dateWp">
+            <div>
+              <span className="primary-title">Spend</span>
+              <div className="spend-filter-year">
+                <p>Filter by year:</p>
+                <div className="date-picker-main">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => handleYearChange(date)}
+                    showYearPicker
+                    dateFormat="yyyy"
+                    yearItemNumber={15}
+                    customInput={<ExampleCustomInput />}
+                    maxDate={new Date()}
+                  />
                 </div>
               </div>
             </div>
           </div>
-
+        </div>
+        {loading ? (
+          <Grid container justifyContent="space-between" pb={2} spacing={1} px={2} sx={{ width: "100%" }} mt={1}>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+            <Grid item xs={.5}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem', height: 320 }} />
+            </Grid>
+          </Grid >
+        ) : (
           <Box className="spend-bar-chart">
             <HighchartsReact highcharts={Highcharts} options={spendChartData} />
           </Box>
-        </>
-      )}
+        )}
+      </>
+
     </div>
   );
 };

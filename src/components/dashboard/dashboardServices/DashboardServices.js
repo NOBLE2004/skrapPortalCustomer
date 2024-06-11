@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { CircleProgress } from "react-gradient-progress";
 
-import { Box, Switch } from "@mui/material";
+import { Box, Skeleton, Stack, Switch } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { dashboardServiceStyle } from "../../../assets/styles/muiStyles/MuiStyles";
 import "./dashboardservices.scss";
@@ -42,24 +42,24 @@ const DashboardServices = ({ servicesData, loading }) => {
     //   });
     //   setServices(list);
     // }
-    if(servicesData){
+    if (servicesData) {
       const ser = []
       Object.entries(servicesData).map(([key, value], index) => {
-        if(key !== 'NumberOfJobs'){
-          ser.push({name: key, count: value.count, total: value.total, percentage: value.percentage});
-        }else {
+        if (key !== 'NumberOfJobs') {
+          ser.push({ name: key, count: value.count, total: value.total, percentage: value.percentage });
+        } else {
           setTotalJobs(value)
         }
       });
       let list = ser.sort(function (
-                a,
-                b
-            ) {
-              console.log(a);
-              var x = a["count"];
-              var y = b["count"];
-              return x < y ? 1 : x > y ? -1 : 0;
-            });
+        a,
+        b
+      ) {
+        console.log(a);
+        var x = a["count"];
+        var y = b["count"];
+        return x < y ? 1 : x > y ? -1 : 0;
+      });
       setServices(list);
     }
   }, [servicesData]);
@@ -86,13 +86,13 @@ const DashboardServices = ({ servicesData, loading }) => {
     <>
       {loading ? (
         <Box
-          height={"100px"}
+          height={"400px"}
           display="flex"
           my={2}
           justifyContent="center"
           alignItems="center"
           sx={{
-            width: "60%",
+            width: "96%",
             background: "#fff",
             boxShadow: "0px 17px 24px rgb(58 58 58 / 5%) !important",
             borderRadius: "11.6836px",
@@ -100,8 +100,13 @@ const DashboardServices = ({ servicesData, loading }) => {
             marginRight: "10px",
           }}
         >
-          <FadeLoader color={"#518ef8"} loading={loading} width={4} />
-        </Box>
+          <Stack spacing={1} px={2} width={'100%'}>
+            <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+            <Skeleton variant='rounded' height={20} />
+            <Skeleton variant='rectangular' width={'100%'} height={200} />
+            <Skeleton variant='rounded' height={20} />
+            <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+          </Stack>        </Box>
       ) : (
         <div className="dashboard-services-main">
           <>
@@ -124,7 +129,7 @@ const DashboardServices = ({ servicesData, loading }) => {
               </div>
             </div>
             <div className="progress-main">
-              {services?.map((service,index) => {
+              {services?.map((service, index) => {
                 return (
                   <div className="progress-sub" key={index}>
                     <div
@@ -151,7 +156,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                           <div className="circle-text" style={{}}>
                             {service?.total
                               ? `${currency ? currency : "£"}` +
-                                parseInt(service?.total)?.toLocaleString()
+                              parseInt(service?.total)?.toLocaleString()
                               : `${currency ? currency : "£"}` + 0}
                           </div>
                         ) : (

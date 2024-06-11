@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid } from "@mui/material";
+import { Box, Card, CardContent, Grid, Skeleton, Stack } from "@mui/material";
 import { CircleProgress } from "react-gradient-progress";
 import { useDispatch, useSelector } from "react-redux";
 import { getLandfillDiversion } from "../../../../store/actions/action.landfillDiversion";
@@ -13,8 +13,8 @@ import { numberWithCommas } from "../../../utlils/dashboard";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
-import {getSuppRecycled} from "../../../../store/actions/action.recycledsupp";
-import {chartOptions, chartOptionsWaste} from "../wasteEmissionGraph/constant";
+import { getSuppRecycled } from "../../../../store/actions/action.recycledsupp";
+import { chartOptions, chartOptionsWaste } from "../wasteEmissionGraph/constant";
 
 const WasteBreakDown = (props) => {
   const dispatch = useDispatch();
@@ -29,9 +29,9 @@ const WasteBreakDown = (props) => {
     // dispatch(getTonnage({ sites: sites, date, currency:siteCurrency }));
     // dispatch(getWaste({ sites: sites, date, currency:siteCurrency }));
     //dispatch(getWasteOfEnergy({ sites: sites, date, currency:siteCurrency }));
-    dispatch(getRecycled({ sites: sites, date, currency:siteCurrency }));
-    if(sites.length === 1){
-      dispatch(getSuppRecycled({ sites: sites, date, currency:siteCurrency }));
+    dispatch(getRecycled({ sites: sites, date, currency: siteCurrency }));
+    if (sites.length === 1) {
+      dispatch(getSuppRecycled({ sites: sites, date, currency: siteCurrency }));
     }
   }, [sites, date, siteCurrency]);
 
@@ -71,8 +71,8 @@ const WasteBreakDown = (props) => {
           dataLabels: {
             enabled: true,
             format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
-                '<span style="opacity: 0.6">{point.y:.2f}% </span>',
-           // connectorColor: 'rgba(128,128,128,0.5)',
+              '<span style="opacity: 0.6">{point.y:.2f}% </span>',
+            // connectorColor: 'rgba(128,128,128,0.5)',
             distance: 20
           }
         }
@@ -95,29 +95,33 @@ const WasteBreakDown = (props) => {
       <CardContent>
         <div className="salesWp">
           {recycledData?.isLoading ? (
-            <div className="d-flex justify-center align-center">
-              <FadeLoader color={"#518ef8"} loading={true} width={4} />
-            </div>
+            <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
+              <Stack spacing={1} px={2} sx={{ width: "100%" }} mt={1}>
+                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+                <Skeleton variant='rounded' height={20} />
+                <Skeleton variant='rectangular' width={'100%'} height={200} />
+                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+              </Stack>            </div>
           ) : (
             <div className="salesWp-inner-wrap">
               <Grid
-                  container
-                  spacing={2}
-                  marginTop={1}
-                  style={{
-                    height: "unset",
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                  className="waste-main"
+                container
+                spacing={2}
+                marginTop={1}
+                style={{
+                  height: "unset",
+                  display: 'flex',
+                  justifyContent: 'center'
+                }}
+                className="waste-main"
               >
-              {recycledData?.data && recycledData?.data?.result && (
+                {recycledData?.data && recycledData?.data?.result && (
                   <HighchartsReact
-                      highcharts={Highcharts}
-                      options={chartDataRecycled}
-                      ref={props.refFinance}
+                    highcharts={Highcharts}
+                    options={chartDataRecycled}
+                    ref={props.refFinance}
                   />
-              )}
+                )}
               </Grid>
             </div>)}
           {/* )} */}
@@ -135,22 +139,24 @@ const WasteBreakDown = (props) => {
       {show && <CardContent>
         <div className="salesWp">
           {recycledData?.isLoading ? (
-              <div className="d-flex justify-center align-center">
-                <FadeLoader color={"#518ef8"} loading={true} width={4} />
-              </div>
+            <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
+              <Box display={"flex"} justifyContent={"center"} spacing={1} p={2} sx={{ width: "100%" }} mt={1}>
+                <Skeleton variant="circular" width={300} height={300} />
+              </Box >
+            </div>
           ) : (
-              <div className="salesWp-inner-wrap">
-                <div style={{ width: "100%" }}>
-                  {recycledSuppData?.data && recycledSuppData?.data?.result && recycledSuppData?.data?.result.data.length > 1 && (
-                      <HighchartsReact
-                          highcharts={Highcharts}
-                          height="400px"
-                          options={chartOptionsWaste(recycledSuppData?.data?.result)}
-                          ref={props.ref2}
-                      />
-                  )}
-                </div>
-              </div>)}
+            <div className="salesWp-inner-wrap">
+              <div style={{ width: "100%" }}>
+                {recycledSuppData?.data && recycledSuppData?.data?.result && recycledSuppData?.data?.result.data.length > 1 && (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    height="400px"
+                    options={chartOptionsWaste(recycledSuppData?.data?.result)}
+                    ref={props.ref2}
+                  />
+                )}
+              </div>
+            </div>)}
           {/* )} */}
         </div>
       </CardContent>}

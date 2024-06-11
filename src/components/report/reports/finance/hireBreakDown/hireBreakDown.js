@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Grid, Skeleton, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
 import FadeLoader from "react-spinners/FadeLoader";
 import "../style.scss";
@@ -27,7 +27,11 @@ const HireBreakDown = () => {
     <>
       {state?.isLoading ? (
         <div className="d-flex justify-center align-center">
-          <FadeLoader color={"#518ef8"} loading={state?.isLoading} width={4} />
+          <Stack spacing={1} px={2} sx={{ width: "100%" }} mt={1}>
+            <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+            <Skeleton variant='rounded' height={20} />
+             <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+          </Stack>
         </div>
       ) : (
         <>

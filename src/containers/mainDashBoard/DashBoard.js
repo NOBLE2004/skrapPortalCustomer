@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TotalSpend from "../../components/dashboard/totalSpend/TotalSpend";
 import JobStatus from "../../components/dashboard/jobStatus/JobStatus";
 import DashboardFilter from "../../components/dashboard/filter/DashboardFilter";
-import { Box, Grid, OutlinedInput, Select } from "@mui/material";
+import { Box, Grid, OutlinedInput, Select, Skeleton, Stack } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import SpendChart from "../../components/dashboard/spendChart/SpendChart";
@@ -113,10 +113,10 @@ const DashBoard = (props) => {
     dispatch(getDashboardsMapData({ sites: selected, date, currency }));
     dispatch(getDashboardServiceData({ sites: selected, date, currency }));
     dispatch(getDashboardsData({ sites: selected, date, currency }));
-  
+
   }, [selected, date, currency]);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(
       getDashboardSaleData({
         year: latestYear,
@@ -125,7 +125,7 @@ const DashBoard = (props) => {
         currency,
       })
     );
-  },[latestYear,date,currency])
+  }, [latestYear, date, currency])
 
   const gotoJobDetail = (id) => {
     history.push({ pathname: `job-detail/${id}` });
@@ -149,19 +149,26 @@ const DashBoard = (props) => {
       {/* // info && ( */}
       <>
         {dashboardData?.loading ? (
-          <Box
-            height={"42px"}
-            display="flex"
-            my={2}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <FadeLoader
-              color={"#518ef8"}
-              loading={dashboardData?.loading}
-              width={4}
-            />
-          </Box>
+          <Grid container spacing={1} px={2} justifyContent={"space-between"}>
+            <Grid item xs={5}>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <Skeleton variant='rounded' sx={{ fontSize: '2rem', borderRadius: "8px" }} />
+                <Skeleton variant='rounded' sx={{ fontSize: '2rem', borderRadius: "8px" }} />
+              </Box>
+            </Grid>
+            <Grid item xs={1.5}>
+              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+            </Grid>
+            <Grid item xs={1.5}>
+              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+            </Grid>
+            <Grid item xs={1.5}>
+              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+            </Grid>
+            <Grid item xs={1.5}>
+              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+            </Grid>
+          </Grid >
         ) : (
           <Grid container spacing={3}>
             <>
@@ -175,8 +182,8 @@ const DashBoard = (props) => {
                 totalSpend={
                   dashboardData?.info?.TotalSpend
                     ? parseFloat(
-                        dashboardData?.info?.TotalSpend
-                      ).toLocaleString()
+                      dashboardData?.info?.TotalSpend
+                    ).toLocaleString()
                     : ""
                 }
               />
@@ -253,21 +260,29 @@ const DashBoard = (props) => {
         {/*    </div>*/}
         {/*  </Grid>*/}
         {/*</Grid>*/}
+
         <Grid container>
           {dashboardMap?.loading ? (
             <Box
-              height={"100px"}
+              height={"500px"}
               display="flex"
               width={"100%"}
               // my={2}
               justifyContent="center"
               alignItems="center"
+              sx={{
+                background: "#fff",
+                boxShadow: "0px 17px 24px rgb(58 58 58 / 5%) !important",
+                borderRadius: "11.6836px",
+                padding: "12px 12px",
+              }}
             >
-              <FadeLoader
-                color={"#518ef8"}
-                loading={dashboardMap?.loading}
-                width={4}
-              />
+              <Stack spacing={1} px={2} sx={{ width: "100%", height: "100%" }}>
+                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+                <Skeleton variant='rounded' height={80} />
+                <Skeleton variant='rectangular' width={'100%'} height={400} />
+                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+              </Stack>
             </Box>
           ) : (
             <Grid item xs={12} className="jobMpWp">
@@ -287,47 +302,47 @@ const DashBoard = (props) => {
                   >
                     {dashboardMap?.info
                       ? dashboardMap?.info?.Map?.data.length > 0 &&
-                        dashboardMap?.info?.Map?.data.map((data, index) => (
-                          <Marker
-                            key={index}
-                            position={{
-                              lat: data.job_location_lat
-                                ? data.job_location_lat
-                                : currency == "$"
+                      dashboardMap?.info?.Map?.data.map((data, index) => (
+                        <Marker
+                          key={index}
+                          position={{
+                            lat: data.job_location_lat
+                              ? data.job_location_lat
+                              : currency == "$"
                                 ? "37.17567"
                                 : "51.5506351",
-                              lng: data.job_location_lng
-                                ? data.job_location_lng
-                                : currency == "$"
+                            lng: data.job_location_lng
+                              ? data.job_location_lng
+                              : currency == "$"
                                 ? "-95.84670"
                                 : "-0.0460716",
-                            }}
-                            icon={{
-                              url:
-                                data.jobStatus === "Pending"
-                                  ? pendingMarker
-                                  : data.jobStatus === "Delivered"
+                          }}
+                          icon={{
+                            url:
+                              data.jobStatus === "Pending"
+                                ? pendingMarker
+                                : data.jobStatus === "Delivered"
                                   ? deliveredMarker
                                   : data.jobStatus === "Completed"
-                                  ? completeMarker
-                                  : assignMarker,
-                            }}
-                            onClick={() => {
-                              setShowInfoIndex(index);
-                            }}
-                          >
-                            {showInfoIndex === index && (
-                              <InfoWindow>
-                                <TipingCard
-                                  jobInfo={data}
-                                  gotoJobDetail={() =>
-                                    gotoJobDetail(data.job_id)
-                                  }
-                                />
-                              </InfoWindow>
-                            )}
-                          </Marker>
-                        ))
+                                    ? completeMarker
+                                    : assignMarker,
+                          }}
+                          onClick={() => {
+                            setShowInfoIndex(index);
+                          }}
+                        >
+                          {showInfoIndex === index && (
+                            <InfoWindow>
+                              <TipingCard
+                                jobInfo={data}
+                                gotoJobDetail={() =>
+                                  gotoJobDetail(data.job_id)
+                                }
+                              />
+                            </InfoWindow>
+                          )}
+                        </Marker>
+                      ))
                       : ""}
                   </MainMap>
                 </CardContent>
