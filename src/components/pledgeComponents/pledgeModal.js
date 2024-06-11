@@ -23,6 +23,7 @@ import plegeService from "../../services/plege.service";
 import EmissionDetails from "./emissionDetail";
 import AccuracyDetails from "./accurayDetail";
 import ImpactImg from "../../assets/images/createimpact.webp";
+import { calculator } from "../../assets/images";
 import "./style.scss";
 
 const PledgeModal = ({ showDrawer, setShowDrawer }) => {
@@ -170,7 +171,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                       placement="top"
                       title={
                         <div>
-                          <Typography variant="body1">
+                          <Typography variant="body1" style={{fontFamily: "Dm Sans"}}>
                             Intensity ratio excludes non t-km values e.g.
                             logistics hubs emissions
                           </Typography>
@@ -210,9 +211,9 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                   >
                     <div
                       style={{
-                        background: "#6900d7",
-                        width: "10px",
-                        height: "10px",
+                        background: "#1a4dc4",
+                        width: "12px",
+                        height: "12px",
                         borderRadius: "2px",
                         fontFamily: "Dm Sans",
                       }}
@@ -220,7 +221,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                     <Box display="flex" alignItems="center" gap={0.5}>
                       <Typography
                         variant="caption"
-                        style={{ fontFamily: "Dm Sans" }}
+                        style={{ fontFamily: "Dm Sans", fontSize: '14px'}}
                       >
                         Well to tank
                       </Typography>
@@ -228,7 +229,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                         placement="top"
                         title={
                           <div>
-                            <Typography variant="body1">
+                            <Typography variant="body1" style={{fontFamily: "Dm Sans"}}>
                               Emissions released to atmosphere during the
                               process of producing, storing, processing, and
                               distributing an energy carrier for vehicle
@@ -277,9 +278,9 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                     >
                       <div
                         style={{
-                          background: "#a364e6",
-                          width: "10px",
-                          height: "10px",
+                          background: "#518ef8",
+                          width: "12px",
+                          height: "12px",
                           borderRadius: "2px",
                           fontFamily: "Dm Sans",
                         }}
@@ -287,7 +288,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                       <Box display="flex" alignItems="center" gap={0.5}>
                         <Typography
                           variant="caption"
-                          style={{ fontFamily: "Dm Sans" }}
+                          style={{ fontFamily: "Dm Sans", fontSize: '14px'}}
                         >
                           Tank to wheel
                         </Typography>
@@ -295,7 +296,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                           placement="top"
                           title={
                             <div>
-                              <Typography variant="body1">
+                              <Typography variant="body1" style={{fontFamily: "Dm Sans"}}>
                               Emissions released to atmosphere as a result of vehicle operation.
                               </Typography>
                             </div>
@@ -333,7 +334,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                   data?.WTT_co2e_value + data?.TTW_co2e_value
                 )}
                 sx={{
-                  height: "24px",
+                  height: "30px",
                   borderRadius: "4px",
                   fontFamily: "Dm Sans",
                   "& .MuiLinearProgress-root": {
@@ -348,6 +349,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                 padding: "16px",
                 border: "1px solid #8080803b",
                 borderRadius: "8px",
+                  justifyContent: 'space-between',
                 my: 3,
                 display: "flex",
                 gap: 4,
@@ -355,21 +357,20 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
             >
               <Box>
                 <Box>
-                  <Typography variant="body1">
-                    Empower your customers to offset their emissions
+                  <Typography variant="body1" style={{fontFamily: "Dm Sans"}}>
+                    Offset your carbon emission.
                   </Typography>
                 </Box>
                 <Box>
                   {" "}
-                  <Typography variant="caption">
-                    Create an Impact link generate a pre-populated link for your
-                    customers to offset these emissions.
+                  <Typography variant="caption" style={{fontFamily: "Dm Sans"}}>
+                      By offsetting this, you are supporting Global Carbon Avoidance and Removals ’23 Q1. Click the offset button below for more information.
                   </Typography>
                 </Box>
 
                 <Button
                   variant="contained"
-                  sx={{ mt: 2, background: "#6900d7" }}
+                  sx={{ mt: 2, textTransform: 'none', fontFamily: "Dm Sans"}}
                   onClick={() => {
                     window.open(
                       `https://impact.pledge.io/lnk_GwkTfqmp?selected_amount_in_kg=${data?.em_co2e_value}`,
@@ -377,12 +378,12 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                     );
                   }}
                 >
-                  Create Impact Link
+                  Offset emission
                 </Button>
               </Box>
               <Box>
                 <img
-                  style={{ height: "150px", width: "90px" }}
+                  style={{ height: "115px" }}
                   src={ImpactImg}
                   alt=""
                 />
@@ -484,6 +485,74 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
             )}
           </Box>
 
+            <Box
+                sx={{
+                    padding: "16px",
+                    border: "1px solid #8080803b",
+                    borderRadius: "8px",
+                    justifyContent: 'space-between',
+                    my: 3,
+                    display: "flex",
+                    gap: 4,
+                }}
+            >
+                <Box>
+                    <Box sx={{
+                        paddingBottom: "10px",
+                        display: "flex",
+                    }}>
+                        <Typography sx={{
+                            background: 'rgb(236, 218, 255)',
+                            padding: '3px 5px',
+                            borderRadius: '5px',
+                            marginRight: '5px',
+                            fontSize: '12px',
+                        }} variant="body4">
+                            Measure
+                        </Typography>
+                        <Typography sx={{
+                            background: 'rgb(169, 243, 255)',
+                            padding: '3px 5px',
+                            borderRadius: '5px',
+                            fontSize: '12px',
+                        }} variant="body4">
+                            No code
+                        </Typography>
+                    </Box>
+                    <Box>
+                        <Typography variant="body1" style={{fontFamily: "Dm Sans"}}>
+                            Explore different variables of emission
+                        </Typography>
+                    </Box>
+                    <Box>
+                        {" "}
+                        <Typography variant="caption" style={{fontFamily: "Dm Sans"}}>
+                            Open the freight calculator, and tweak the different variables to see their impact.
+                        </Typography>
+                    </Box>
+
+                    <Button
+                        variant="contained"
+                        sx={{ mt: 2, textTransform: 'none', fontFamily: "Dm Sans"}}
+                        onClick={() => {
+                            window.open(
+                                `https://app.pledge.io/calculators/freight`,
+                                "_blank"
+                            );
+                        }}
+                    >
+                        Open calculator
+                    </Button>
+                </Box>
+                <Box sx={{marginTop: '17px'}}>
+                    <img
+                        style={{ height: "130px" }}
+                        src={calculator}
+                        alt=""
+                    />
+                </Box>
+            </Box>
+
           <Box
             sx={{
               width: "100%",
@@ -506,9 +575,10 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                 >
                   <Tab
                     sx={{
-                      fontSize: "12px",
-                      fontWeight: 600,
+                      fontSize: "15px",
+                      fontWeight: 500,
                       fontFamily: "Dm Sans",
+                        textTransform: 'none',
                     }}
                     label="Details"
                     value="1"
@@ -517,18 +587,20 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
                     label="Emission"
                     value="2"
                     sx={{
-                      fontSize: "12px",
-                      fontWeight: 600,
+                      fontSize: "15px",
+                      fontWeight: 500,
                       fontFamily: "Dm Sans",
+                        textTransform: 'none',
                     }}
                   />
                   <Tab
                     label="Accuracy"
                     value="3"
                     sx={{
-                      fontSize: "12px",
-                      fontWeight: 600,
+                      fontSize: "15px",
+                      fontWeight: 500,
                       fontFamily: "Dm Sans",
+                        textTransform: 'none',
                     }}
                   />
                 </TabList>

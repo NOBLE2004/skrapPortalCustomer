@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import React, { useEffect, useMemo, useState } from "react";
 import { getSites } from "../../../store/actions/sites.action";
 import { getJobsMeta } from "../../../store/actions/action.jobsMeta";
-import { connect, useDispatch } from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import { makeStyles } from "@mui/styles";
 import { FadeLoader, ClipLoader } from "react-spinners";
 import { DateRangePicker } from "react-date-range";
@@ -80,12 +80,6 @@ const ReportHeader = (props) => {
 
     fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   if (props?.allsites?.data) {
-  //     setSelected(props?.allsites?.data?.[0]?.address_id);
-  //   }
-  // }, [props.allsites.data]);
 
   useEffect(() => {
     // if (sites !== "") {
