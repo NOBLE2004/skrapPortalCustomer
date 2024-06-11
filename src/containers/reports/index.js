@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { Masonry } from "@mui/lab";
 import "chart.js/auto";
 import "./report.scss";
@@ -19,7 +19,7 @@ import { saveAs } from "file-saver";
 import RebateReport from "../../components/report/reports/rebate";
 import DualAxisGraph from "../../components/report/reports/dualAxis";
 import { getEfficencyList } from "../../store/actions/action.reportEfficenyList";
-import { Grid } from "@mui/material";
+import {debounce, Grid} from "@mui/material";
 import WasteEmissionGraph from "../../components/report/reports/wasteEmissionGraph/index";
 import WasteBreakDown from "../../components/report/reports/WasteBreakDown";
 import jsPDF from 'jspdf';
@@ -47,19 +47,19 @@ const NewReports = () => {
   const [csvLoading, setCsvLoading] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [redLoading, setRedLoading] = useState(false);
-  const [disableSelect, setDisableSelect] = useState(false);
   const [selectedSites, setSelectedSites] = useState([]);
-  const recycledData = useSelector((state) => state?.recycled);
   const handleChange = (event) => {
       const { name, value } = event.target;
       setSelectedSites(value);
   };
 
   useEffect(() => {
-    if(!recycledData?.isLoading){
+    const delayDebounceFn = setTimeout(() => {
       setSelected(selectedSites);
-    }
-  }, [recycledData?.isLoading, selectedSites])
+    }, 2000)
+
+    return () => clearTimeout(delayDebounceFn)
+  }, [selectedSites])
 
   async function exTest() {
     setShowMore(true);
@@ -199,8 +199,8 @@ const NewReports = () => {
           setDate={setDate}
           sites={selected}
           handleChange={handleChange}
-          selected={selected}
-          setSelected={setSelected}
+          selected={selectedSites}
+          setSelected={setSelectedSites}
           currency={currency}
           setSiteCurrency={setSiteCurrency}
         />
@@ -250,7 +250,6 @@ const NewReports = () => {
                   sites={selected}
                   showMore={showMore}
                   siteCurrency={siteCurrency}
-                  setDisableSelect={setDisableSelect}
               />
             </div>
             {/*<div className="report-chart-card-outer">*/}
