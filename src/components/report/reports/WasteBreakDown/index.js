@@ -96,12 +96,11 @@ const WasteBreakDown = (props) => {
         <div className="salesWp">
           {recycledData?.isLoading ? (
             <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
-              <Stack spacing={1} px={2} sx={{ width: "100%" }} mt={1}>
-                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
-                <Skeleton variant='rounded' height={20} />
-                <Skeleton variant='rectangular' width={'100%'} height={200} />
-                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
-              </Stack>            </div>
+                <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
+              <Box display={"flex"} justifyContent={"center"} spacing={1} p={2} sx={{ width: "100%" }} mt={1}>
+                <Skeleton variant="circular" width={300} height={300} />
+              </Box >
+            </div>            </div>
           ) : (
             <div className="salesWp-inner-wrap">
               <Grid
@@ -140,9 +139,7 @@ const WasteBreakDown = (props) => {
         <div className="salesWp">
           {recycledData?.isLoading ? (
             <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
-              <Box display={"flex"} justifyContent={"center"} spacing={1} p={2} sx={{ width: "100%" }} mt={1}>
-                <Skeleton variant="circular" width={300} height={300} />
-              </Box >
+             
             </div>
           ) : (
             <div className="salesWp-inner-wrap">
