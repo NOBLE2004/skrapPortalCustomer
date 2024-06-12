@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import JobsTable from "../../components/reactTable/JobsTable";
-import { Box, Card, CardContent, Grid, Paper } from "@mui/material";
+import { Box, Card, CardContent, Grid, Paper, Skeleton, Stack } from "@mui/material";
 import MainMap from "../../components/map/MainMap";
 import { Marker, InfoWindow } from "react-google-maps";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -40,6 +40,7 @@ import * as Excel from "exceljs";
 import { saveAs } from "file-saver";
 import JobService from "../../services/job.service";
 import Loader from "react-spinners/FadeLoader";
+import TableLoader from "../../components/commonComponent/tableLoader";
 
 const MainJobsNew = (props) => {
   const dispatch = useDispatch();
@@ -216,13 +217,11 @@ const MainJobsNew = (props) => {
                 ? `${currency}${obj?.rebate?.toFixed(2)}`
                 : `${currency}0`;
             if (obj.parent_id == 2) {
-              obj.service_name = `${obj?.service_name} ${
-                obj?.exchanged_by > 0 ? `(Exchange)` : ``
-              }`;
+              obj.service_name = `${obj?.service_name} ${obj?.exchanged_by > 0 ? `(Exchange)` : ``
+                }`;
             } else if (obj.parent_id != 2) {
-              obj.service_name = `${obj?.service_name} ${
-                obj?.extended_job_id > 0 ? `(Extension)` : ``
-              }`;
+              obj.service_name = `${obj?.service_name} ${obj?.extended_job_id > 0 ? `(Extension)` : ``
+                }`;
             }
             obj.appointment_status = status(obj?.appointment_status);
             return obj;
@@ -248,28 +247,31 @@ const MainJobsNew = (props) => {
         showButton={true}
       >
         {loading ? (
-          <Box
-            minHeight={"70px"}
-            display="flex"
-            m={2}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <FadeLoader
-              color={"#518ef8"}
-              loading={loading}
-              width={4}
-            />
-          </Box>
+          <Grid container spacing={1} px={2} gap={2}>
+            <Grid item xs={1.5}>
+              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+            </Grid>
+            <Grid item xs={1.5}>
+              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+            </Grid>
+            <Grid item xs={1.5}>
+              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+            </Grid>
+            <Grid item xs={1.5}>
+              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+            </Grid>
+            <Grid item xs={1.5}>
+              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+            </Grid>
+          </Grid >
         ) : (
           <Grid item container spacing={1}>
             {userData?.hide_price === 0 && (
               <CommonJobStatus
                 jobStatus={{
                   status: "Spend",
-                  price: `${currency ? currency : "£"}${
-                    info ? parseFloat(info.TotalSpend).toLocaleString() : 0
-                  }`,
+                  price: `${currency ? currency : "£"}${info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+                    }`,
                   statusName: "primary",
                 }}
               />
@@ -277,9 +279,8 @@ const MainJobsNew = (props) => {
             <CommonJobStatus
               jobStatus={{
                 status: "Jobs",
-                price: `${
-                  info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0
-                }`,
+                price: `${info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0
+                  }`,
                 statusName: "primary",
               }}
             />
@@ -293,9 +294,8 @@ const MainJobsNew = (props) => {
             <CommonJobStatus
               jobStatus={{
                 status: "Completed",
-                price: `${
-                  info ? parseFloat(info.Completed).toLocaleString() : 0
-                }`,
+                price: `${info ? parseFloat(info.Completed).toLocaleString() : 0
+                  }`,
                 statusName: "completed",
               }}
             />
@@ -387,9 +387,19 @@ const MainJobsNew = (props) => {
       {isMapView ? (
         <>
           {isLoading ? (
-            <div className="loader">
-              <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
-            </div>
+            <Box padding={2}
+              sx={{
+                background: "#fff",
+                boxShadow: "0px 17px 24px rgb(58 58 58 / 5%) !important",
+                borderRadius: "11.6836px",
+              }}
+            >
+              <Stack spacing={1}>
+                <Grid container spacing={2}>
+                  <TableLoader />
+                </Grid>
+              </Stack>
+            </Box>
           ) : props.jobs.error ? (
             <div className="jobs-not-found">{props.jobs.error}</div>
           ) : (
@@ -475,15 +485,15 @@ const MainJobsNew = (props) => {
                                   ? pendingMarker
                                   : status(job.appointment_status) ===
                                     "Completed"
-                                  ? completeMarker
-                                  : status(job.appointment_status) === "Heading"
-                                  ? cancelMarker
-                                  : status(job.appointment_status) ===
-                                    "Delivered"
-                                  ? deliveredMarker
-                                  : status(job.appointment_status) === "Ongoing"
-                                  ? enRouteMarker
-                                  : cancelMarker
+                                    ? completeMarker
+                                    : status(job.appointment_status) === "Heading"
+                                      ? cancelMarker
+                                      : status(job.appointment_status) ===
+                                        "Delivered"
+                                        ? deliveredMarker
+                                        : status(job.appointment_status) === "Ongoing"
+                                          ? enRouteMarker
+                                          : cancelMarker
                               }
                               onClick={() => {
                                 setSelectedItem(job);
@@ -512,7 +522,7 @@ const MainJobsNew = (props) => {
                                       ),
                                       site_manager_mobile_number:
                                         selectedItem.site_contact_number !==
-                                        null
+                                          null
                                           ? selectedItem.site_contact_number
                                           : selectedItem.mobile_number,
                                     }}

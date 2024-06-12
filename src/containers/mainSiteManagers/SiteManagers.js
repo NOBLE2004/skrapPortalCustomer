@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
-import { Grid } from "@mui/material";
+import { Box, Grid, Skeleton, Stack } from "@mui/material";
 import ManagerDetail from "../../components/siteManager/managerDetail/ManagerDetail";
 import { viewMoreBtn } from "../../assets/images";
 import FadeLoader from "react-spinners/FadeLoader";
@@ -22,7 +22,7 @@ const SiteManagers = (props) => {
   };
 
   const getManagerList = () => {
-    props.getSiteManager({currency});
+    props.getSiteManager({ currency });
   };
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const SiteManagers = (props) => {
 
   const handleManagerCreated = useCallback(() => {
     setSiteBooked(!isSiteBooked);
-    props.getSiteManager({currency});
+    props.getSiteManager({ currency });
   }, [isSiteBooked]);
 
   return (
@@ -46,11 +46,26 @@ const SiteManagers = (props) => {
       </div>
       <Grid container className="main-site-manager" spacing={5}>
         {props.siteManager.loading ? (
-          <FadeLoader
-            color={"#518ef8"}
-            loading={props.siteManager.loading}
-            width={4}
-          />
+          <Box
+             display="flex"
+            my={2}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              width: "90%",
+              background: "#fff",
+              boxShadow: "0px 17px 24px rgb(58 58 58 / 5%) !important",
+              borderRadius: "11.6836px",
+              padding: "12px 12px",
+             }}
+          >
+            <Stack spacing={1} px={2} width={'100%'}>
+              <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+              <Skeleton variant='rounded' height={20} />
+              <Skeleton variant='rectangular' width={'100%'} height={200} />
+              <Skeleton variant='rounded' height={20} />
+              <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+            </Stack>        </Box>
         ) : props.siteManager.sites && props.siteManager.sites.length > 0 ? (
           props.siteManager.sites.map((site, index) => (
             <Grid item xm={12} sm={8} md={6} key={index}>

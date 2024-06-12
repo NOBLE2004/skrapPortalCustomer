@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import SitesTable from "../../components/sites/sitesTable/SitesTable";
-import { Grid, Card, CardContent } from "@mui/material";
+import { Grid, Card, CardContent, Box, Stack } from "@mui/material";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import MainMap from "../../components/map/MainMap";
 import TipingCard from "../../components/tiping/TipingCard";
@@ -21,6 +21,7 @@ import { getDashboardsData } from "../../store/actions/dashboard.action";
 import CreateSite from "../../components/modals/createSite/CreateSite";
 import SiteFilters from "../../components/filters/SiteFilters";
 import { getUserDataFromLocalStorage } from "../../services/utils";
+import TableLoader from "../../components/commonComponent/tableLoader";
 
 const Sites = (props) => {
   const { siteData, isLoading, error } = props.sites;
@@ -123,9 +124,8 @@ const Sites = (props) => {
             <CommonJobStatus
               jobStatus={{
                 status: "Spend",
-                price: `${currency ? currency : "£"}${
-                  info ? parseFloat(info.TotalSpend).toLocaleString() : 0
-                }`,
+                price: `${currency ? currency : "£"}${info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+                  }`,
                 statusName: "primary",
               }}
             />
@@ -185,20 +185,32 @@ const Sites = (props) => {
         <>
           <Grid container className="sites-table-loader">
             {isLoading ? (
-              <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
-            ) : siteData && siteData.data.length > 0 ? (
-              <>
-                <Grid item md={12} sm={12}>
-                  <SitesTable
-                    data={siteData ? siteData?.data : []}
-                    pagination={siteData}
-                    handlePagination={handlePagination}
-                    reload={() => setIsReload(!isReload)}
-                    searchData={search}
-                  />
-                </Grid>
-              </>
-            ) : (
+              <Box padding={2}
+                sx={{
+                  background: "#fff",
+                  boxShadow: "0px 17px 24px rgb(58 58 58 / 5%) !important",
+                  borderRadius: "11.6836px",
+                  width: "100%"
+                }}
+              >
+                <Stack spacing={1}>
+                  <Grid container spacing={2}>
+                    <TableLoader />
+                  </Grid>
+                </Stack>
+              </Box>) : siteData && siteData.data.length > 0 ? (
+                <>
+                  <Grid item md={12} sm={12}>
+                    <SitesTable
+                      data={siteData ? siteData?.data : []}
+                      pagination={siteData}
+                      handlePagination={handlePagination}
+                      reload={() => setIsReload(!isReload)}
+                      searchData={search}
+                    />
+                  </Grid>
+                </>
+              ) : (
               <div className="sitenotfound">No active sites found</div>
             )}
           </Grid>
