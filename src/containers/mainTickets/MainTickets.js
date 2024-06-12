@@ -3,11 +3,12 @@ import TicketsTable from "../../components/tickets/TicketsTable";
 import { connect } from "react-redux";
 import { getTicketList } from "../../store/actions/ticket.action";
 import FadeLoader from "react-spinners/FadeLoader";
-import { Grid } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import SiteFilters from "../../components/filters/SiteFilters";
 import ticketService from "../../services/ticket.service";
 import CircularProgress from "@mui/material/CircularProgress";
+import TableLoader from "../../components/commonComponent/tableLoader";
 
 const MainTickets = (props) => {
   const currency = localStorage.getItem("currency");
@@ -137,7 +138,20 @@ const MainTickets = (props) => {
 
       {isLoading ? (
         <div className="tickets-main-div">
-          <FadeLoader color={"#518ef8"} loading={isLoading} width={4} />
+          <Box padding={2}
+            sx={{
+              background: "#fff",
+              boxShadow: "0px 17px 24px rgb(58 58 58 / 5%) !important",
+              borderRadius: "11.6836px",
+              width: "98%"
+            }}
+          >
+            <Stack spacing={1}>
+              <Grid container spacing={2}>
+                <TableLoader />
+              </Grid>
+            </Stack>
+          </Box>
         </div>
       ) : ticketList && ticketList?.data?.length > 0 ? (
         <TicketsTable

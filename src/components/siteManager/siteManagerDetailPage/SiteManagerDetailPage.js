@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NewManagerDetail from "../newManagerDetail/NewManagerDetail";
 import SiteManagerTable from "../siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
-import { Grid } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import sitesService from "../../../services/sites.service";
 import FadeLoader from "react-spinners/FadeLoader";
 import JobFilters from "../../filters/jobFilters";
@@ -11,6 +11,7 @@ import "./siteManagerDetailPage.scss";
 import PoDetail from "../poDetail/PoDetail";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { changeJobsFilter } from "../../../store/actions/jobs.action";
+import TableLoader from "../../commonComponent/tableLoader";
 
 const SiteManagerDetailPage = (props) => {
   const { id } = useParams();
@@ -120,12 +121,12 @@ const SiteManagerDetailPage = (props) => {
                 setReload={() => setReload(!reload)}
               />
             </Grid>
-            { managerData && <Grid className="po-detail-page">
+            {managerData && <Grid className="po-detail-page">
               <PoDetail managerData={managerData} isManager={true} />
             </Grid>}
             <Grid item md={12} className="site-manager-filter">
               <div className="jobs-search-header">
-              <Grid container spacing={2}>
+                <Grid container spacing={2}>
                   <Grid item xs={4}>
                     <CommonSearch
                       handleChangeSearch={handleChangeSearch}
@@ -141,16 +142,28 @@ const SiteManagerDetailPage = (props) => {
               </div>
             </Grid>
             {isJobLoading ? (
-              <FadeLoader color={"#518ef8"} loading={isJobLoading} width={4} />
-            ) : jobsData && jobsData.jobs?.data?.length ? (
-              <SiteManagerTable
+              <Box padding={2}
+                sx={{
+                  background: "#fff",
+                  boxShadow: "0px 17px 24px rgb(58 58 58 / 5%) !important",
+                  borderRadius: "11.6836px",
+                  width: "100%"
+                }}
+              >
+                <Stack spacing={1}>
+                  <Grid container spacing={2}>
+                    <TableLoader />
+                  </Grid>
+                </Stack>
+              </Box>) : jobsData && jobsData.jobs?.data?.length ? (
+                <SiteManagerTable
                   limit={jobsFilter.limit}
                   setLimit={setLimit}
-                managerData={jobsData}
-                pagination={jobsData.jobs}
-                handlePagination={handlePagination}
-              />
-            ) : (
+                  managerData={jobsData}
+                  pagination={jobsData.jobs}
+                  handlePagination={handlePagination}
+                />
+              ) : (
               "Jobs Not Found Yet !"
             )}
           </>

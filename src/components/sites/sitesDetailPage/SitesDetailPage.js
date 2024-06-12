@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import NewManagerDetail from "../../siteManager/newManagerDetail/NewManagerDetail";
 import SiteManagerTable from "../../siteManager/siteManagerTable/SiteManagerTable";
 import CommonSearch from "../../commonComponent/commonSearch/CommonSearch";
-import { Grid } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import sitesService from "../../../services/sites.service";
 import FadeLoader from "react-spinners/FadeLoader";
 import JobFilters from "../../filters/jobFilters";
@@ -18,9 +18,10 @@ import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
- import { changeJobsFilter } from "../../../store/actions/jobs.action";
-import {useLocation} from "react-router-dom";
+import { changeJobsFilter } from "../../../store/actions/jobs.action";
+import { useLocation } from "react-router-dom";
 import CommonJobStatus from "../../commonComponent/commonJobStatus/CommonJobStatus";
+import TableLoader from "../../commonComponent/tableLoader";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -128,7 +129,7 @@ const SitesDetailPage = (props) => {
         );
         await sitesService.showSitesDetail(id, params).then(resp => {
           console.log(resp.data.jobs);
-          if(resp){
+          if (resp) {
             setJobsData(resp.data.jobs);
           }
         });
@@ -141,9 +142,9 @@ const SitesDetailPage = (props) => {
     getJobData();
   }, [filters]);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log('jobs data', jobsData);
-  },[jobsData]);
+  }, [jobsData]);
 
   const handlePagination = (page) => {
     const duplicate = { ...jobsFilter };
@@ -182,32 +183,32 @@ const SitesDetailPage = (props) => {
       </div>
       <Grid container item spacing={1} mb={2}>
         <CommonJobStatus
-            jobStatus={{
-              status: "Spend",
-              price: `${currency ? currency : "£"}${state?.stats?.sale || 0}`,
-              statusName: "primary"
-            }}
+          jobStatus={{
+            status: "Spend",
+            price: `${currency ? currency : "£"}${state?.stats?.sale || 0}`,
+            statusName: "primary"
+          }}
         />
         <CommonJobStatus
-            jobStatus={{
-              status: "Total",
-              price: `${state?.stats?.total || 0}`,
-              statusName: "primary"
-            }}
+          jobStatus={{
+            status: "Total",
+            price: `${state?.stats?.total || 0}`,
+            statusName: "primary"
+          }}
         />
         <CommonJobStatus
-            jobStatus={{
-              status: "Delivered",
-              price: `${state?.stats?.delivered || 0}`,
-              statusName: "primary"
-            }}
+          jobStatus={{
+            status: "Delivered",
+            price: `${state?.stats?.delivered || 0}`,
+            statusName: "primary"
+          }}
         />
         <CommonJobStatus
-            jobStatus={{
-              status: "Completed",
-              price: `${state?.stats?.completed || 0}`,
-              statusName: "primary"
-            }}
+          jobStatus={{
+            status: "Completed",
+            price: `${state?.stats?.completed || 0}`,
+            statusName: "primary"
+          }}
         />
       </Grid>
       {isJobCreated && (
@@ -223,11 +224,20 @@ const SitesDetailPage = (props) => {
       )}
       <Grid container className="manager-detail-page">
         {isLoadings || stateLandFill?.isLoading ? (
-          <FadeLoader
-            color={"#518ef8"}
-            loading={isLoadings || stateLandFill?.isLoading}
-            width={4}
-          />
+          <Box padding={2}
+            sx={{
+              background: "#fff",
+              boxShadow: "0px 17px 24px rgb(58 58 58 / 5%) !important",
+              borderRadius: "11.6836px",
+              width: "100%"
+            }}
+          >
+            <Stack spacing={1}>
+              <Grid container spacing={2}>
+                <TableLoader />
+              </Grid>
+            </Stack>
+          </Box>
         ) : (
           <>
             {/*<Grid item md={12} xs={12} mb={1}>*/}
@@ -288,15 +298,24 @@ const SitesDetailPage = (props) => {
             </Grid>
             <div className="site-tabel-detail">
               {isJobLoading ? (
-                <FadeLoader
-                  color={"#518ef8"}
-                  loading={isJobLoading}
-                  width={4}
-                />
+                <Box padding={2}
+                  sx={{
+                    background: "#fff",
+                    boxShadow: "0px 17px 24px rgb(58 58 58 / 5%) !important",
+                    borderRadius: "11.6836px",
+                    width: "100%"
+                  }}
+                >
+                  <Stack spacing={1}>
+                    <Grid container spacing={2}>
+                      <TableLoader />
+                    </Grid>
+                  </Stack>
+                </Box>
               ) : jobsData && jobsData?.data?.length ? (
                 <SiteManagerTable
-                    limit={jobsFilter.limit}
-                    setLimit={setLimit}
+                  limit={jobsFilter.limit}
+                  setLimit={setLimit}
                   managerData={state.managerData}
                   pagination={jobsData}
                   handlePagination={handlePagination}
