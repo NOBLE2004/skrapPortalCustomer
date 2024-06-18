@@ -30,7 +30,7 @@ const NewReports = () => {
   const dispatch = useDispatch();
   // const [selected, setSelected] = useState('');
   const [selected, setSelected] = useState([]);
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(null);
 
   const [startDate, setStartDate] = useState(new Date());
   const [csvData, setCsvData] = useState([]);

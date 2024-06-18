@@ -13,9 +13,11 @@ import { Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getSites } from "../../store/actions/sites.action";
 
-const SiteFilters = ({ handleReset, filters, setFilters, name }) => {
+const SiteFilters = ({ handleReset, filters, setFilters, name ,handleChangeFilters}) => {
   const dispatch = useDispatch();
   const siteState = useSelector((state) => state?.allsites);
+  const siteFilter = useSelector((state) => state?.sitesFilter);
+
   const currency = localStorage.getItem("currency");
   const [togle, setTogle] = useState(false);
   const [state, setState] = useState([
@@ -41,10 +43,9 @@ const SiteFilters = ({ handleReset, filters, setFilters, name }) => {
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFilters((st) => ({
-      ...st,
-      [name]: value,
-    }));
+    const duplicateFilter = { ...siteFilter };
+    duplicateFilter[name] = value;
+    handleChangeFilters(duplicateFilter);
   };
 
   const resetFilters = () => {

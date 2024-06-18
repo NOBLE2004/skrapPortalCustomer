@@ -35,13 +35,8 @@ const Sites = (props) => {
   const currency = localStorage.getItem("currency");
   const { info, loading } = props.dashboard;
   const siteFilter = useSelector((state) => state?.sitesFilter);
-  const [filters, setFilters] = useState({
-    page: 1,
-    search: "",
-    date: "",
-    address: "",
-    currency,
-  });
+  const [filters, setFilters] = useState(
+    siteFilter);
   const [search, setSearch] = useState("");
   useEffect(() => {
     setUserData(getUserDataFromLocalStorage());
@@ -91,12 +86,13 @@ const Sites = (props) => {
   }, [isJobCreated]);
 
   const handleChangeFilters = (filtersList) => {
-    let all = {
-      ...filters,
-      ...filtersList,
-    };
-    setFilters(all);
+    dispatch(changeSiteFilter({ ...siteFilter, ...filtersList }));
+    filtersList.show_on_app = [0, 1];
+    filtersList.currency = currency;
+    setFilters(filtersList);
   };
+
+  console.log({ filters })
 
   const handleReset = () => {
     setFilters({
@@ -163,6 +159,8 @@ const Sites = (props) => {
               handleReset={handleReset}
               filters={filters}
               setFilters={setFilters}
+              handleChangeFilters={handleChangeFilters}
+
             />
           </Grid>
         </Grid>
