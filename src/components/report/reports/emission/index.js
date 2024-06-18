@@ -456,13 +456,16 @@ const EmissionReport = (props) => {
             ) : (
               <>
                 <div className="filters">
-                  <div className="year ">
-                    <DatePicker
-                      startDate={startDate}
-                      setStartDate={setStartDate}
-                      getData={getData}
-                    />
-                  </div>
+                  {dateM == null &&
+                    <div className="year ">
+                      <DatePicker
+                        startDate={startDate}
+                        setStartDate={setStartDate}
+                        getData={getData}
+                      />
+
+                    </div>
+                  }
                   {/*<div className="total">*/}
                   {/*  Total CO2:{" "}*/}
                   {/*  <span>*/}
@@ -526,13 +529,15 @@ const EmissionReport = (props) => {
               </span>
             </h1>}
             <div className="filters">
-              <div className="year">
-                <DatePicker
-                  startDate={date}
-                  setStartDate={setDate}
-                  getData={getWasteData}
-                />
-              </div>
+              {dateM == null &&
+                <div className="year">
+                  <DatePicker
+                    startDate={date}
+                    setStartDate={setDate}
+                    getData={getWasteData}
+                  />
+                </div>
+              }
               {/*<div className="total">*/}
               {/*  Total payment: <span>£0.00</span>*/}
               {/*</div>*/}

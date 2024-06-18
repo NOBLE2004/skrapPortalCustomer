@@ -106,102 +106,104 @@ const DualAxisGraph = (props) => {
       <Card className="report-chart-card">
         <CardContent>
           <div className="salesWp column-charts-highcharts-">
-            <div className="filters" style={{ margin: 0 }}>
-              <Grid container spacing={1} justifyContent={"space-between"}>
-                <Grid item xs={12}>
-                  <Typography
-                    color="primary"
-                    component="h4"
-                    sx={{ textAlign: "end" }}
-                  >
-                    <span
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        handleReset();
-                      }}
+            {dateM == null &&
+              <div className="filters" style={{ margin: 0 }}>
+                <Grid container spacing={1} justifyContent={"space-between"}>
+                  <Grid item xs={12}>
+                    <Typography
+                      color="primary"
+                      component="h4"
+                      sx={{ textAlign: "end" }}
                     >
-                      Reset
-                    </span>
-                  </Typography>
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          handleReset();
+                        }}
+                      >
+                        Reset
+                      </span>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6} sx={{ display: "flex" }}>
+                    <div>
+                      <div className="total" style={{ marginBottom: "5px" }}>
+                        <span>Type:</span>
+                      </div>
+                      <Select
+                        value={type}
+                        onChange={(e) => {
+                          setType(e.target.value);
+                        }}
+                        sx={{ borderRadius: "12px" }}
+                        size="small"
+                        displayEmpty
+                        inputProps={{
+                          "aria-label": "Without label",
+                          placeholder: "testing",
+                        }}
+                      >
+                        <MenuItem value={"year"}>Year</MenuItem>
+                        <MenuItem value={"month"}>Month</MenuItem>
+                        <MenuItem value={"day"}>Days</MenuItem>
+                      </Select>
+                    </div>
+                    {type != 'year' ? (<div style={{ marginLeft: "6px" }}>
+                      <div className="total" style={{ marginBottom: "5px" }}>
+                        <span>Days:</span>
+                      </div>
+                      <DatePicker
+                        selectsRange={true}
+                        startDate={startDate}
+                        monthsShown={2}
+                        endDate={endDate}
+                        customInput={<ExampleCustomInput2 />}
+                        onChange={onChange}
+                      />
+                    </div>) : <div className="year ">
+                      <div className="total" style={{ marginBottom: "15px" }}>
+                        <span>Year:</span>
+                      </div>
+                      <YearPicker
+                        startDate={date}
+                        setStartDate={setDate}
+                        getData={getData}
+                      />
+                    </div>}
+                  </Grid>
+                  <Grid item xs={5}>
+                    <FormControl fullWidth>
+                      <div className="total" style={{ marginBottom: "5px" }}>
+                        <span>Hire Type</span>
+                      </div>
+                      <Select
+                        value={service || []}
+                        onChange={handleChange}
+                        sx={{
+                          borderRadius: "12px",
+                        }}
+                        multiple
+                        size="small"
+                        displayEmpty
+                        inputProps={{
+                          "aria-label": "Without label",
+                          placeholder: "testing",
+                        }}
+                      >
+                        {userService?.data?.result?.map((single) => (
+                          <MenuItem
+                            key={single?.service_id}
+                            value={single?.service_id}
+                          >
+                            {single?.service_name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6} sx={{ display: "flex" }}>
-                  <div>
-                    <div className="total" style={{ marginBottom: "5px" }}>
-                      <span>Type:</span>
-                    </div>
-                    <Select
-                      value={type}
-                      onChange={(e) => {
-                        setType(e.target.value);
-                      }}
-                      sx={{ borderRadius: "12px" }}
-                      size="small"
-                      displayEmpty
-                      inputProps={{
-                        "aria-label": "Without label",
-                        placeholder: "testing",
-                      }}
-                    >
-                      <MenuItem value={"year"}>Year</MenuItem>
-                      <MenuItem value={"month"}>Month</MenuItem>
-                      <MenuItem value={"day"}>Days</MenuItem>
-                    </Select>
-                  </div>
-                  {type != 'year' ? (<div style={{ marginLeft: "6px" }}>
-                    <div className="total" style={{ marginBottom: "5px" }}>
-                      <span>Days:</span>
-                    </div>
-                    <DatePicker
-                      selectsRange={true}
-                      startDate={startDate}
-                      monthsShown={2}
-                      endDate={endDate}
-                      customInput={<ExampleCustomInput2 />}
-                      onChange={onChange}
-                    />
-                  </div>) : <div className="year ">
-                    <div className="total" style={{ marginBottom: "15px" }}>
-                      <span>Year:</span>
-                    </div>
-                    <YearPicker
-                      startDate={date}
-                      setStartDate={setDate}
-                      getData={getData}
-                    />
-                  </div>}
-                </Grid>
-                <Grid item xs={5}>
-                  <FormControl fullWidth>
-                    <div className="total" style={{ marginBottom: "5px" }}>
-                      <span>Hire Type</span>
-                    </div>
-                    <Select
-                      value={service || []}
-                      onChange={handleChange}
-                      sx={{
-                        borderRadius: "12px",
-                      }}
-                      multiple
-                      size="small"
-                      displayEmpty
-                      inputProps={{
-                        "aria-label": "Without label",
-                        placeholder: "testing",
-                      }}
-                    >
-                      {userService?.data?.result?.map((single) => (
-                        <MenuItem
-                          key={single?.service_id}
-                          value={single?.service_id}
-                        >
-                          {single?.service_name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </div>
+              </div>
+            }
             {/* {data?.isLoading ? (
               <div
                 className="d-flex justify-center align-center"
