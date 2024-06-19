@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CommonHeader from "../../components/commonComponent/CommonHeader";
 import CommonJobStatus from "../../components/commonComponent/commonJobStatus/CommonJobStatus";
 import SitesTable from "../../components/sites/sitesTable/SitesTable";
-import { Grid, Card, CardContent, Box, Stack } from "@mui/material";
+import {Grid, Card, CardContent, Box, Stack, Skeleton} from "@mui/material";
 import CommonSearch from "../../components/commonComponent/commonSearch/CommonSearch";
 import MainMap from "../../components/map/MainMap";
 import TipingCard from "../../components/tiping/TipingCard";
@@ -43,6 +43,7 @@ const Sites = (props) => {
   }, []);
 
   const getData = () => {
+    console.log(siteFilter);
     dispatch(getSitesList(siteFilter));
     dispatch(getDashboardsData(siteFilter));
   };
@@ -100,8 +101,25 @@ const Sites = (props) => {
       search: "",
       date: "",
       currency: currency,
+      site: "",
+      address: ""
     });
+    dispatch(changeSiteFilter({
+      page: 1,
+      search: "",
+      date: "",
+      currency: currency,
+      site: "",
+      address: ""
+    }));
   };
+  const setLimit = (limit) => {
+    console.log(limit);
+    const duplicate = { ...siteFilter };
+    duplicate.limit = limit;
+    dispatch(changeSiteFilter({ ...siteFilter, ...duplicate }));
+    setFilters({ ...filters, limit: limit });
+  }
 
   return (
     <>
@@ -115,33 +133,48 @@ const Sites = (props) => {
         isSite={true}
         handleCreateSite={handleCreateSite}
       >
-        <Grid item container spacing={1}>
-          {userData?.hide_price === 0 && (
-            <CommonJobStatus
-              jobStatus={{
-                status: "Spend",
-                price: `${currency ? currency : "£"}${info ? parseFloat(info.TotalSpend).toLocaleString() : 0
-                  }`,
-                statusName: "primary",
-              }}
-            />
-          )}
-          <CommonJobStatus
-            jobStatus={{
-              status: "Jobs",
-              price: info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0,
+        {loading ? (
+            <Grid container spacing={1} px={2} gap={2}>
+              <Grid item xs={1.5}>
+                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+              </Grid>
+              <Grid item xs={1.5}>
+                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+              </Grid>
+              <Grid item xs={1.5}>
+                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+              </Grid>
+            </Grid >
+        ) : (
+            <Grid item container spacing={1}>
+              {userData?.hide_price === 0 && (
+                  <CommonJobStatus
+                      jobStatus={{
+                        status: "Spend",
+                        price: `${currency ? currency : "£"}${info ? parseFloat(info.TotalSpend).toLocaleString() : 0
+                        }`,
+                        statusName: "primary",
+                      }}
+                  />
+              )}
+              <CommonJobStatus
+                  jobStatus={{
+                    status: "Jobs",
+                    price: info ? parseFloat(info.NumberOfJobs).toLocaleString() : 0,
 
-              statusName: "primary",
-            }}
-          />
-          <CommonJobStatus
-            jobStatus={{
-              status: "Sites",
-              price: `${siteData ? siteData.total : 0}`,
-              statusName: "primary",
-            }}
-          />
-        </Grid>
+                    statusName: "primary",
+                  }}
+              />
+              <CommonJobStatus
+                  jobStatus={{
+                    status: "Sites",
+                    price: `${siteData ? siteData.total : 0}`,
+                    statusName: "primary",
+                  }}
+              />
+            </Grid>
+        )
+        }
       </CommonHeader>
 
       <div className="common-search-for-tables">
@@ -203,8 +236,10 @@ const Sites = (props) => {
                       data={siteData ? siteData?.data : []}
                       pagination={siteData}
                       handlePagination={handlePagination}
+                      limit={siteFilter?.limit}
                       reload={() => setIsReload(!isReload)}
                       searchData={search}
+                      setLimit={setLimit}
                     />
                   </Grid>
                 </>
