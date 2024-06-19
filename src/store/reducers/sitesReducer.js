@@ -11,6 +11,8 @@ const initialFilter = {
   date: "",
   address: "",
   currency: localStorage.getItem("currency"),
+  site: "",
+  limit: 10,
 };
 
 export const sitesReducer = (state = initialState, action) => {
