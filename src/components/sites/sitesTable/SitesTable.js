@@ -6,7 +6,7 @@ import SiteAssignToManager from "../../modals/siteAssignToManager/SiteAssignToMa
 import AllocatePoModal from "../../modals/allocatePo/AllocatePoModal";
 import { getUserDataFromLocalStorage } from "../../../services/utils";
 
-const SitesTable = ({ data, pagination, handlePagination, reload }) => {
+const SitesTable = ({ data, pagination, handlePagination, reload, limit, setLimit }) => {
   const [isManagerOpen, setIsManagerOpen] = useState(false);
   const [isAllocate, setIsAllocate] = useState(false);
   const [siteData, setSiteData] = useState(null);
@@ -175,12 +175,14 @@ const SitesTable = ({ data, pagination, handlePagination, reload }) => {
         from={pagination.from}
         to={pagination.to}
         total={pagination.total}
+        limit={limit}
         handleNext={(page) => {
           handlePagination(page);
         }}
         handlePrevious={(page) => {
           handlePagination(page);
         }}
+        setLimit={setLimit}
       />
       {isManagerOpen && (
         <SiteAssignToManager
