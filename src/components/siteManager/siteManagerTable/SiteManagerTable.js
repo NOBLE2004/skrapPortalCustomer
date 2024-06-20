@@ -329,7 +329,7 @@ const SiteManagerTable = ({
       {
         Header: "Invoice",
         accessor: "job_id",
-          show: (userData?.company?.includes('Amazon') && currency == '$' ) ? 1 : 0,
+          show: (userData?.company?.includes('Amazon')) ? 1 : 0,
         id: "invoice",
         Cell: (props) => {
           return props?.row?.original?.appointment_status == 3 ? (
@@ -617,7 +617,7 @@ const SiteManagerTable = ({
       {
         Header: "Invoice",
         accessor: "job_id",
-        show: (userData?.company?.includes('Amazon') && currency == '$' ) ? 1 : 0,
+        show: (userData?.company?.includes('Amazon')) ? 1 : 0,
         id: "invoice",
         Cell: (props) => {
            return props?.row?.original?.appointment?.appointment_status == 3 ? (
