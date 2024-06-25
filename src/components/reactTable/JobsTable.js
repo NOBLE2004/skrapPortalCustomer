@@ -232,11 +232,13 @@ const JobsTable = ({
         Filter: SelectColumnFilter,
         filter: "equals",
         Cell: (props) => `SK${props.value}`,
+        maxWidth: 50,
       },
       {
         Header: "Booked",
         accessor: "job_time",
         disableFilters: true,
+        maxWidth: 80,
         Cell: (props) => new Date(props.value).toLocaleDateString(),
       },
       {
@@ -259,10 +261,11 @@ const JobsTable = ({
         Header: "Service",
         accessor: "service_name",
         disableFilters: true,
+        minWidth: 200,
         Cell: (cell) => {
           return (
             <span>
-              {cell.value}
+              {cell.value.includes('Extra') ?  `Extra ${cell.value.split('Extra')[1]}`:  cell.value}
               <br />
               {(cell.row.original.parent_id == 2 ||
                 cell.row.original.parent_id == 602 ||
@@ -276,6 +279,7 @@ const JobsTable = ({
                   {cell.row.original.extended_job_id > 0 && `Extension`}
                 </span>
               )}
+              {cell.row.original.ref_job_id ? ` (SK${cell.row.original.ref_job_id})` : ''}
             </span>
           );
         },
@@ -289,20 +293,10 @@ const JobsTable = ({
         minWidth: 160,
       },
       {
-        Header: "Cost",
-        accessor: "transaction_cost",
-        disableSortBy: true,
-        disableFilters: true,
-        show: userData?.hide_price,
-        filter: "equals",
-        Cell: (props) => {
-          return `${currency}${props.value.toFixed(2)}`;
-        },
-      },
-      {
         Header: "Status",
         accessor: "appointment_status",
         id: "status",
+        minWidth: 130,
         disableFilters: true,
         Cell: (cell) => {
           return (
@@ -317,6 +311,17 @@ const JobsTable = ({
               )}
             />
           );
+        },
+      },
+      {
+        Header: "Cost",
+        accessor: "transaction_cost",
+        disableSortBy: true,
+        disableFilters: true,
+        show: userData?.hide_price,
+        filter: "equals",
+        Cell: (props) => {
+          return `${currency}${props.value.toFixed(2)}`;
         },
       },
       {
