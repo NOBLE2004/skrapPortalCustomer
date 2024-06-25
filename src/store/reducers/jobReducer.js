@@ -21,7 +21,7 @@ const initialFilter = {
 export const jobReducer = (state = initialState, action) => {
   switch (action.type) {
     case constants.JOB_LIST_DATA_START:
-      return { ...state, isLoading: true, error: null, jobData: null };
+      return { ...state, isLoading: true, error: null, jobData: [] };
     case constants.JOB_LIST_DATA_SUCCESS:
       return {
         ...state,
