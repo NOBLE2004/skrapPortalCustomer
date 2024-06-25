@@ -49,6 +49,8 @@ const JobsTable = ({
   handlePagination,
   limit,
   setLimit,
+    showCo2,
+    setShowCo2
 }) => {
   const [state, setState] = useState({
     openMenu: false,
@@ -79,6 +81,18 @@ const JobsTable = ({
   const [isViewDocument, setViewDocument] = useState(false);
   const [jobId, setJobId] = React.useState(null);
   const currency = localStorage.getItem("currency");
+
+  useEffect(() => {
+    if (showCo2) {
+      const obj = data.find(x => x.co2 > 0);
+      if(obj){
+        setShowDrawer({
+          show: true,
+          row: obj,
+        })
+      }
+    }
+  }, [data])
   const handleButtonClick = (e, props) => {
     e.stopPropagation();
     // if (contextRow === null) {

@@ -54,6 +54,7 @@ const MainJobsNew = (props) => {
   const [isJobCreated, setIsJobCreated] = useState(false);
   const currency = localStorage.getItem("currency");
   const [csvDownload, setCsvDownload] = useState(false);
+  const [showCo2, setShowCo2] = useState(false);
   const { info, loading } = props.dashboard;
   const history = useHistory();
   const { jobData, isLoading, error } = props.jobs;
@@ -68,6 +69,13 @@ const MainJobsNew = (props) => {
     show_on_app: [0, 1],
     currency: currency,
   });
+
+  useEffect(() => {
+    if(jobData === null){
+      setShowCo2(true);
+      console.log('null data', jobData);
+    }
+  }, [jobData])
   let userData = getUserDataFromLocalStorage();
 
   const handleJobCreated = useCallback(() => {
@@ -407,6 +415,8 @@ const MainJobsNew = (props) => {
               <JobsTable
                 limit={jobsFilter.limit}
                 setLimit={setLimit}
+                showCo2={showCo2}
+                setShowCo2={setShowCo2}
                 data={jobData?.data ? jobData?.data : []}
                 pagination={jobData}
                 handleUpdateJobs={handleJobCreated}
