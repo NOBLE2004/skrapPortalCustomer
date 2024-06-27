@@ -52,11 +52,13 @@ const MainJobDetail = (props) => {
           <JobNotes comments={job?.comments} />
         </Grid>
         <Grid item md={5}>
-          <DrawerComponent showDrawer={{
-            row: {
-              job_id: id
-            }
-          }} icon={false} />
+          {job?.co2 != null &&
+            <DrawerComponent showDrawer={{
+              row: {
+                job_id: id
+              }
+            }} icon={false} />
+          }
           {job?.driver_id && <DriverDetail job={job} />}
           {/* <SmallCard />*/}
         </Grid>

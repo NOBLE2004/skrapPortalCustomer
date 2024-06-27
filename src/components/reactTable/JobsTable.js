@@ -712,7 +712,7 @@ const JobsTable = ({
           updateJobs={handleUpdateJobs}
         />
       )}
-      {showDrawer && (
+      {showDrawer?.show && (
         <PledgeModal showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
       )}
       {/* <div className="xero-btn">

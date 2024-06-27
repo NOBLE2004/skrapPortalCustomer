@@ -1,7 +1,8 @@
 .mapCard {
   border-radius: 12px;
-  height: 809px;
+  height: calc(100% - 40px);
   padding: none;
+  min-height: 809px;
   .MuiCardContent-root {
     height: 100%;
     padding: 0px;
@@ -33,7 +34,7 @@
 }
 
 .sites-header-title {
-  font-family: 'DM Sans';
+  font-family: "DM Sans";
   font-style: normal;
   font-weight: bold;
   font-size: 32px;
@@ -41,8 +42,8 @@
   color: #0d0d39;
 }
 
-.jobs-not-found{
-  font-family: 'DM Sans';
+.jobs-not-found {
+  font-family: "DM Sans";
   font-style: normal;
   font-size: 20px;
   color: red;

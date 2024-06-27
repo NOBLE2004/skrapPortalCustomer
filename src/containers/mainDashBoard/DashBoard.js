@@ -147,121 +147,122 @@ const DashBoard = (props) => {
   return (
     <>
       {/* // info && ( */}
-      <>
-        {dashboardData?.loading ? (
-          <Grid container spacing={1} px={2} justifyContent={"space-between"}>
-            <Grid item xs={5}>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <Skeleton variant='rounded' sx={{ fontSize: '2rem', borderRadius: "8px" }} />
-                <Skeleton variant='rounded' sx={{ fontSize: '2rem', borderRadius: "8px" }} />
-              </Box>
-            </Grid>
-            <Grid item xs={1.5}>
-              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
-            </Grid>
-            <Grid item xs={1.5}>
-              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
-            </Grid>
-            <Grid item xs={1.5}>
-              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
-            </Grid>
-            <Grid item xs={1.5}>
-              <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
-            </Grid>
-          </Grid >
-        ) : (
-          <Grid container spacing={3}>
-            <>
-              <DashboardHeader
-                sites={selected}
-                handleChange={handleChange}
-                selected={selected}
-                setSelected={setSelected}
-                setSiteCurrency={setCurrency}
-                setDate={setDate}
-                totalSpend={
-                  dashboardData?.info?.TotalSpend
-                    ? parseFloat(
-                      dashboardData?.info?.TotalSpend
-                    ).toLocaleString()
-                    : ""
-                }
-              />
-              {/*{userData?.hide_price === 0 && (*/}
-              {/*  <Grid item md={4}>*/}
-              {/*    <TotalSpend*/}
-              {/*      totalSpend={*/}
-              {/*        dashboardData?.info?.TotalSpend*/}
-              {/*          ? parseFloat(*/}
-              {/*              dashboardData?.info?.TotalSpend*/}
-              {/*            ).toLocaleString()*/}
-              {/*          : ""*/}
-              {/*      }*/}
-              {/*    />*/}
-              {/*  </Grid>*/}
-              {/*)}*/}
-              <Grid item lg={7} md={12}>
-                <div className="job-status-outer">
-                  <JobStatus
-                    jobStatus={dashboardData?.info ? dashboardData?.info : ""}
-                  />
-                </div>
+      <Grid container spacing={2}>
+        <Grid item xs={7}>
+          {dashboardData?.loading ? (
+            <Grid container spacing={1} px={2} justifyContent={"space-between"}>
+              <Grid item xs={5}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <Skeleton variant='rounded' sx={{ fontSize: '2rem', borderRadius: "8px" }} />
+                  <Skeleton variant='rounded' sx={{ fontSize: '2rem', borderRadius: "8px" }} />
+                </Box>
               </Grid>
-            </>
+              <Grid item xs={1.5}>
+                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+              </Grid>
+              <Grid item xs={1.5}>
+                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+              </Grid>
+              <Grid item xs={1.5}>
+                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+              </Grid>
+              <Grid item xs={1.5}>
+                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+              </Grid>
+            </Grid >
+          ) : (
+            <Grid container spacing={2}>
+              <>
+                <DashboardHeader
+                  sites={selected}
+                  handleChange={handleChange}
+                  selected={selected}
+                  setSelected={setSelected}
+                  setSiteCurrency={setCurrency}
+                  setDate={setDate}
+                  totalSpend={
+                    dashboardData?.info?.TotalSpend
+                      ? parseFloat(
+                        dashboardData?.info?.TotalSpend
+                      ).toLocaleString()
+                      : ""
+                  }
+                />
+                {/*{userData?.hide_price === 0 && (*/}
+                {/*  <Grid item md={4}>*/}
+                {/*    <TotalSpend*/}
+                {/*      totalSpend={*/}
+                {/*        dashboardData?.info?.TotalSpend*/}
+                {/*          ? parseFloat(*/}
+                {/*              dashboardData?.info?.TotalSpend*/}
+                {/*            ).toLocaleString()*/}
+                {/*          : ""*/}
+                {/*      }*/}
+                {/*    />*/}
+                {/*  </Grid>*/}
+                {/*)}*/}
+                <Grid item lg={12} md={12}>
+                  <div className="job-status-outer">
+                    <JobStatus
+                      jobStatus={dashboardData?.info ? dashboardData?.info : ""}
+                    />
+                  </div>
+                </Grid>
+              </>
 
-            {/* <Grid item md={2} xs={12}>
+              {/* <Grid item md={2} xs={12}>
           <DashboardFilter handelSearch={() => {}} title="Jobs"/>
         </Grid> */}
+            </Grid>
+          )}
+          <Grid container spacing={2} mt={1}>
+            <Grid item lg={12} md={12}>
+              <SpendChart
+                chartData={dashboardSale?.info}
+                loading={dashboardSale?.loading}
+                getDashBoardData={getData}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                setLatestYear={setLatestYear}
+              />
+            </Grid>
+            <Grid item lg={12} md={12} mt={1}>
+              <DashboardServices
+                servicesData={dashboardService?.info ? dashboardService.info : ""}
+                loading={dashboardService?.loading}
+              />
+            </Grid>
           </Grid>
-        )}
-        <Grid container className="spend-service-main" mt={1}>
-          <Grid item lg={5} md={12}>
-            <SpendChart
-              chartData={dashboardSale?.info}
-              loading={dashboardSale?.loading}
-              getDashBoardData={getData}
-              startDate={startDate}
-              setStartDate={setStartDate}
-              setLatestYear={setLatestYear}
-            />
-          </Grid>
-          <Grid item lg={7} md={12}>
-            <DashboardServices
-              servicesData={dashboardService?.info ? dashboardService.info : ""}
-              loading={dashboardService?.loading}
-            />
-          </Grid>
+          {/*<Grid container spacing={3}>*/}
+          {/*  <Grid item md={12} className="landfill-main">*/}
+          {/*    <div className="landfill">Landfill Diversion Rate</div>*/}
+          {/*    <div className="progress-bar">*/}
+          {/*      <label*/}
+          {/*        style={*/}
+          {/*          state?.data?.result?.land_fill < 6*/}
+          {/*            ? {*/}
+          {/*                left: `${1}%`,*/}
+          {/*              }*/}
+          {/*            : {*/}
+          {/*                left: `${*/}
+          {/*                  state?.data?.result?.land_fill > 95*/}
+          {/*                    ? 95*/}
+          {/*                    : state?.data?.result?.land_fill - 5*/}
+          {/*                }%`,*/}
+          {/*              }*/}
+          {/*        }*/}
+          {/*      >*/}
+          {/*        {state?.data?.result?.land_fill}%*/}
+          {/*      </label>*/}
+          {/*      <BorderLinearProgress*/}
+          {/*        value={state?.data?.result?.land_fill}*/}
+          {/*        variant="determinate"*/}
+          {/*      />*/}
+          {/*    </div>*/}
+          {/*  </Grid>*/}
+          {/*</Grid>*/}
         </Grid>
-        {/*<Grid container spacing={3}>*/}
-        {/*  <Grid item md={12} className="landfill-main">*/}
-        {/*    <div className="landfill">Landfill Diversion Rate</div>*/}
-        {/*    <div className="progress-bar">*/}
-        {/*      <label*/}
-        {/*        style={*/}
-        {/*          state?.data?.result?.land_fill < 6*/}
-        {/*            ? {*/}
-        {/*                left: `${1}%`,*/}
-        {/*              }*/}
-        {/*            : {*/}
-        {/*                left: `${*/}
-        {/*                  state?.data?.result?.land_fill > 95*/}
-        {/*                    ? 95*/}
-        {/*                    : state?.data?.result?.land_fill - 5*/}
-        {/*                }%`,*/}
-        {/*              }*/}
-        {/*        }*/}
-        {/*      >*/}
-        {/*        {state?.data?.result?.land_fill}%*/}
-        {/*      </label>*/}
-        {/*      <BorderLinearProgress*/}
-        {/*        value={state?.data?.result?.land_fill}*/}
-        {/*        variant="determinate"*/}
-        {/*      />*/}
-        {/*    </div>*/}
-        {/*  </Grid>*/}
-        {/*</Grid>*/}
-
-        <Grid container>
+        <Grid item xs={5}>
           {dashboardMap?.loading ? (
             <Box
               height={"500px"}
@@ -285,7 +286,7 @@ const DashBoard = (props) => {
               </Stack>
             </Box>
           ) : (
-            <Grid item xs={12} className="jobMpWp">
+            <div className="jobMpWp">
               <div className="live-job-title">
                 <img src={mapMarker} alt="map-marker" />
                 <h1>Orders On Map</h1>
@@ -347,10 +348,10 @@ const DashBoard = (props) => {
                   </MainMap>
                 </CardContent>
               </Card>
-            </Grid>
+            </div>
           )}
         </Grid>
-      </>
+      </Grid>
     </>
   );
 };
