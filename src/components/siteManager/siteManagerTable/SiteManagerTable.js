@@ -162,6 +162,7 @@ const SiteManagerTable = ({
         Header: "Order #",
         accessor: "job_id",
         disableSortBy: true,
+          maxWidth: 50,
         Filter: SelectColumnFilter,
         filter: "equals",
         Cell: (props) => `SK${props.value}`,
@@ -170,6 +171,7 @@ const SiteManagerTable = ({
         Header: "Booked",
         accessor: "job_date",
         disableFilters: true,
+          maxWidth: 80,
         Cell: (props) => {
           return props.value;
         },
@@ -184,30 +186,22 @@ const SiteManagerTable = ({
             Header: "Service",
             accessor: "service_name",
             disableFilters: true,
+            minWidth: 200,
             Cell: (cell) => {
                 return <span>
-            {cell.value}<br />
+            {cell.value.includes('Extra') ?  `Extra ${cell.value.split('Extra')[1]}`:  cell.value}
+                    <br />
                     {(cell.row.original.parent_id == 2 || cell.row.original.parent_id == 602 || cell.row.original.parent_id == 101) && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
                     {cell.row.original.parent_id != 2 && <span style={{color: 'red'}}>{cell.row.original.extended_job_id > 0 && `Extension`}</span>}
+                    {cell.row.original.ref_job_id ? ` (SK${cell.row.original.ref_job_id})` : ''}
           </span>
             }
-        },,
-
-      {
-        Header: "Cost",
-        accessor: "transaction_cost",
-        disableSortBy: true,
-        show: userData?.hide_price,
-        disableFilters: true,
-        filter: "equals",
-        Cell: (props) => {
-          return `${currency}${props?.value}`;
         },
-      },
       {
         Header: "Status",
         accessor: "appointment_status",
         disableFilters: true,
+          minWidth: 130,
           Cell: (cell) => {
               return (
                   <CommonStatus
@@ -216,6 +210,17 @@ const SiteManagerTable = ({
               );
           },
       },
+        {
+            Header: "Cost",
+            accessor: "transaction_cost",
+            disableSortBy: true,
+            show: userData?.hide_price,
+            disableFilters: true,
+            filter: "equals",
+            Cell: (props) => {
+                return `${currency}${props?.value}`;
+            },
+        },
       // {
       //   Header: "Ewc Code",
       //   accessor: "ewc_code",
@@ -329,7 +334,7 @@ const SiteManagerTable = ({
       {
         Header: "Invoice",
         accessor: "job_id",
-          show: (userData?.company?.includes('Amazon') && currency == '$' ) ? 1 : 0,
+          show: (userData?.company?.includes('Amazon')) ? 1 : 0,
         id: "invoice",
         Cell: (props) => {
           return props?.row?.original?.appointment_status == 3 ? (
@@ -414,12 +419,14 @@ const SiteManagerTable = ({
         disableSortBy: true,
         Filter: SelectColumnFilter,
         filter: "equals",
+          maxWidth: 50,
         Cell: (props) => `SK${props.value}`,
       },
       {
         Header: "Booked",
         accessor: "job_date",
         disableFilters: true,
+          maxWidth: 80,
         Cell: (props) => {
           return props.value;
         },
@@ -430,7 +437,7 @@ const SiteManagerTable = ({
         disableFilters: true,
         Cell: (props) => new Date(props.value).toLocaleString(),
       },
-      {
+      /*{
         Header: "Site Contact",
         accessor: (d) =>
           d.site_contact_number !== null
@@ -441,16 +448,19 @@ const SiteManagerTable = ({
         Cell: (props) => {
           return <span>{props.value || "n/a"}</span>;
         },
-      },
+      },*/
         {
             Header: "Service",
             accessor: "service_name",
             disableFilters: true,
+            minWidth: 200,
             Cell: (cell) => {
                 return <span>
-            {cell.row.original.service.service_name}<br />
+            {cell.value.includes('Extra') ?  `Extra ${cell.value.split('Extra')[1]}`:  cell.value}
+                    <br />
                     {(cell.row.original.parent_id == 2 || cell.row.original.parent_id == 602 || cell.row.original.parent_id == 101) && <span style={{color: 'red'}}>{cell.row.original.exchanged_by > 0 && `Exchange`}</span>}
                     {cell.row.original.service.parent_id != 2 && <span style={{color: 'red'}}>{cell.row.original.extended_job_id > 0 && `Extension`}</span>}
+                    {cell.row.original.ref_job_id ? ` (SK${cell.row.original.ref_job_id})` : ''}
           </span>
             }
         },
@@ -459,21 +469,13 @@ const SiteManagerTable = ({
         accessor: "job_address",
         disableSortBy: true,
         disableFilters: true,
-      },
-      {
-        Header: "Cost",
-        accessor: "transaction_cost",
-        disableSortBy: true,
-        show: userData?.hide_price,
-        disableFilters: true,
-        filter: "equals",
-        Cell: (props) => {
-          return `${currency}${props?.value}`;
-        },
+          maxWidth: 400,
+          minWidth: 160,
       },
       {
         Header: "Status",
         accessor: "appointment_status",
+          minWidth: 130,
         disableFilters: true,
           Cell: (props) => {
               return (
@@ -483,6 +485,17 @@ const SiteManagerTable = ({
               );
           },
       },
+        {
+            Header: "Cost",
+            accessor: "transaction_cost",
+            disableSortBy: true,
+            show: userData?.hide_price,
+            disableFilters: true,
+            filter: "equals",
+            Cell: (props) => {
+                return `${currency}${props?.value}`;
+            },
+        },
       // {
       //   Header: "Payment",
       //   accessor: "payment_type",
@@ -617,7 +630,7 @@ const SiteManagerTable = ({
       {
         Header: "Invoice",
         accessor: "job_id",
-        show: (userData?.company?.includes('Amazon') && currency == '$' ) ? 1 : 0,
+        show: (userData?.company?.includes('Amazon')) ? 1 : 0,
         id: "invoice",
         Cell: (props) => {
            return props?.row?.original?.appointment?.appointment_status == 3 ? (
