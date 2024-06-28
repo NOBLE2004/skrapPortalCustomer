@@ -13,6 +13,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { getJob } from "../../store/actions/jobs.action";
 import FadeLoader from "react-spinners/FadeLoader";
 import { connect } from "react-redux";
+import DrawerComponent from "../../components/pledgeComponents/drawerComponent";
 
 const MainJobDetail = (props) => {
   let { id } = useParams();
@@ -51,6 +52,13 @@ const MainJobDetail = (props) => {
           <JobNotes comments={job?.comments} />
         </Grid>
         <Grid item md={5}>
+          {job?.co2 != null &&
+            <DrawerComponent showDrawer={{
+              row: {
+                job_id: id
+              }
+            }} icon={false} />
+          }
           {job?.driver_id && <DriverDetail job={job} />}
           {/* <SmallCard />*/}
         </Grid>
