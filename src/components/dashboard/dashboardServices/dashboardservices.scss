@@ -8,7 +8,9 @@
   padding: 0px 12px;
   height: 415px;
   max-height: 100%;
- 
+  margin-right: 10px;
+  margin-left: 10px;
+  
   @media only screen and (max-width: 768px) {
     width: 100% !important;
   }

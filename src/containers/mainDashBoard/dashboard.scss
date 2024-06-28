@@ -33,9 +33,7 @@ hr {
 }
 
 .jobMpWp {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  margin-top: 20px;
   .live-job-title {
     display: flex;
     align-items: center;
@@ -52,8 +50,7 @@ hr {
 
   .mapCard {
     border-radius: 12px;
-    height: calc(100% - 10px);
-    min-height: 809px;
+    height: 809px;
     padding: none;
     .MuiCardContent-root {
       height: 100%;
