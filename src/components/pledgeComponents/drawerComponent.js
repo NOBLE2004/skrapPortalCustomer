@@ -26,7 +26,7 @@ import AccuracyDetails from "./accurayDetail";
 import ImpactImg from "../../assets/images/createimpact.webp";
 import { calculator } from "../../assets/images";
 
-const DrawerComponent = ({ showDrawer, setShowDrawer, icon = true }) => {
+const DrawerComponent = ({ showDrawer, setShowDrawer, icon = true, setShowCo }) => {
     const [value, setValue] = useState("1");
     const [data, setData] = useState(null);
 
@@ -80,7 +80,10 @@ const DrawerComponent = ({ showDrawer, setShowDrawer, icon = true }) => {
                     >
                         Emissions Summary - SK{data?.job_id}
                     </Typography>
-                    <div onClick={() => setShowDrawer({ show: false })}>
+                    <div onClick={() => {
+                        setShowDrawer({ show: false })
+                        setShowCo(false)
+                    }}>
                         <Close />
                     </div>
                 </Box>
