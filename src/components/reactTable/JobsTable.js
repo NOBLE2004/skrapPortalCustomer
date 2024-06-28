@@ -49,8 +49,7 @@ const JobsTable = ({
   handlePagination,
   limit,
   setLimit,
-    showCo2,
-    setShowCo2
+    showCo2, setShowCo
 }) => {
   const [state, setState] = useState({
     openMenu: false,
@@ -90,6 +89,8 @@ const JobsTable = ({
           show: true,
           row: obj,
         })
+      }else{
+        setShowCo(false)
       }
     }
   }, [data])
@@ -713,7 +714,7 @@ const JobsTable = ({
         />
       )}
       {showDrawer && (
-        <PledgeModal showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
+        <PledgeModal showDrawer={showDrawer} setShowDrawer={setShowDrawer} setShowCo={setShowCo} />
       )}
       {/* <div className="xero-btn">
         <button

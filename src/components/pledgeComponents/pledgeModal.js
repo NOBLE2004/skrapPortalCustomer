@@ -26,7 +26,7 @@ import ImpactImg from "../../assets/images/createimpact.webp";
 import { calculator } from "../../assets/images";
 import "./style.scss";
 
-const PledgeModal = ({ showDrawer, setShowDrawer }) => {
+const PledgeModal = ({ showDrawer, setShowDrawer, setShowCo }) => {
   const [value, setValue] = React.useState("1");
   const [data, setData] = useState(null);
 
@@ -55,7 +55,9 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
   };
   const setComponentData = () => {
     setData(null);
+    console.log('modal closed');
     setShowDrawer({ show: false });
+      setShowCo(false)
   };
 
   return (
@@ -86,7 +88,10 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
           >
             Emissions Summary - SK{data?.job_id}
           </Typography>
-          <div onClick={() => setShowDrawer({ show: false })}>
+          <div onClick={() => {
+              setShowDrawer({ show: false })
+              setShowCo(false)
+          }}>
             <Close />
           </div>
         </Box>
