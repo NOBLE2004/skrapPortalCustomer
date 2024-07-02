@@ -137,13 +137,17 @@ const MainJobsNew = (props) => {
   };
   const handleChangeSearch = (search) => {
     const duplicate = { ...jobsFilter };
-    const delayDebounceFn = setTimeout(() => {
-      duplicate.search = search;
-      dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
-      setFilters({ ...filters, search: search });
-    }, 800)
-    return () => clearTimeout(delayDebounceFn)
+    duplicate.search = search;
+    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
   };
+  useEffect(() => {
+    if(jobsFilter.search.length > 0){
+      const delayDebounceFn = setTimeout(() => {
+        setFilters({ ...filters, search: jobsFilter.search });
+      }, 1000)
+      return () => clearTimeout(delayDebounceFn)
+    }
+  }, [jobsFilter.search])
   const setLimit = (limit) => {
     const duplicate = { ...jobsFilter };
     duplicate.limit = limit;
