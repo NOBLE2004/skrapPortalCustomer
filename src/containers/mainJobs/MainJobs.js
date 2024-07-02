@@ -137,9 +137,12 @@ const MainJobsNew = (props) => {
   };
   const handleChangeSearch = (search) => {
     const duplicate = { ...jobsFilter };
-    duplicate.search = search;
-    dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
-    setFilters({ ...filters, search: search });
+    const delayDebounceFn = setTimeout(() => {
+      duplicate.search = search;
+      dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
+      setFilters({ ...filters, search: search });
+    }, 800)
+    return () => clearTimeout(delayDebounceFn)
   };
   const setLimit = (limit) => {
     const duplicate = { ...jobsFilter };
