@@ -2,13 +2,23 @@ import React, { useState, useEffect } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { CircleProgress } from "react-gradient-progress";
 
-import { Box, Skeleton, Stack, Switch } from "@mui/material";
+import { Box, Grid, Skeleton, Stack, Switch } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { dashboardServiceStyle } from "../../../assets/styles/muiStyles/MuiStyles";
 import "./dashboardservices.scss";
 import { numberWithCommas } from "../../utlils/dashboard";
+import Carousel, { consts } from "react-elastic-carousel";
+import IconVehicle from '../../../assets/images/icon-vehicles.png'
 import FadeLoader from "react-spinners/FadeLoader";
 
+const breakPoints = [
+  { width: 1, itemsToShow: 3, pagination: false },
+  { width: 550, itemsToShow: 4, itemsToScroll: 2, pagination: false },
+  { width: 850, itemsToShow: 3, pagination: false },
+  { width: 1150, itemsToShow: 4, itemsToScroll: 2, pagination: false },
+  { width: 1450, itemsToShow: 4, pagination: false },
+  { width: 1750, itemsToShow: 4, pagination: false },
+];
 const DashboardServices = ({ servicesData, loading }) => {
   const classes = dashboardServiceStyle();
   const currency = localStorage.getItem("currency");
@@ -82,6 +92,15 @@ const DashboardServices = ({ servicesData, loading }) => {
   //
   // }
 
+  const myArrow = ({ type, onClick, isEdge }) => {
+    const pointer = type === consts.PREV ? "<" : ">";
+    return (
+      <span className="span-for-arrows" onClick={onClick} disabled={isEdge}>
+        {pointer}
+      </span>
+    );
+  };
+
   return (
     <>
       {loading ? (
@@ -123,12 +142,52 @@ const DashboardServices = ({ servicesData, loading }) => {
                       className={classes.toggle}
                     />
                   }
-                  label="Show Amount"
+                  style={{color:"#677790"}}
+                  label="Show value/percent"
                   labelPlacement="start"
                 />
               </div>
             </div>
-            <div className="progress-main">
+            <Grid container spacing={1} marginTop={1} alignItems="center">
+              <Grid
+                item
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+                className="main-for-carusal"
+              >
+                <Carousel
+                  itemsToShow={4}
+                  renderArrow={myArrow}
+                  breakPoints={breakPoints}
+                >
+                  {services?.map((service, index) => {
+                    return (
+                      <div className="service-box p-2" key={index}>
+                        <img
+                          src={IconVehicle}
+                          alt=""
+                          style={{ height: "30px" }}
+                        />
+                        <div className="service-detail">
+                          <div className="name">{service.name}</div>
+                          {showValue ? (
+                            <div className="percentage">{service?.total
+                              ? `${currency ? currency : "£"}` +
+                              parseInt(service?.total)?.toLocaleString()
+                              : `${currency ? currency : "£"}` + 0}</div>
+                          ) : (
+                            <div className="percentage">{service?.percentage}%</div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </Carousel>
+              </Grid>
+            </Grid>
+            {/* <div className="progress-main">
               {services?.map((service, index) => {
                 return (
                   <div className="progress-sub" key={index}>
@@ -178,174 +237,8 @@ const DashboardServices = ({ servicesData, loading }) => {
                 );
               })}
 
-              {/*<div className="progress-sub">*/}
-              {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
-              {/*    <p style={{ position: "absolute", bottom: "60px" }}>Grab</p>*/}
-              {/*    <div>*/}
-              {/*      <CircleProgress*/}
-              {/*        width={180}*/}
-              {/*        strokeWidth={15}*/}
-              {/*        fontFamily={"DM Sans"}*/}
-              {/*        bottom={20}*/}
-              {/*        fontSize={"20px"}*/}
-              {/*        fontColor={"#5a9df9"}*/}
-              {/*        fontWeight={"700"}*/}
-              {/*        secondaryColor={"#F7F7F7"}*/}
-              {/*        hidePercentageText={showValue ? true : false}*/}
-              {/*        percentage={*/}
-              {/*          Grab*/}
-              {/*            ? Grab?.count*/}
-              {/*              ? ((Grab.count / NumberOfJobs) * 100).toFixed(0)*/}
-              {/*              : 0*/}
-              {/*            : 0*/}
-              {/*        }*/}
-              {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
-              {/*      />*/}
-              {/*      {showValue ? (*/}
-              {/*        <div className="circle-text" style={{}}>*/}
-              {/*          {Grab?.total*/}
-              {/*            ? "£" + parseInt(Grab.total).toLocaleString()*/}
-              {/*            : "£" + 0}*/}
-              {/*        </div>*/}
-              {/*      ) : (*/}
-              {/*        ""*/}
-              {/*      )}*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-              {/*  <div className="order-percentage">*/}
-              {/*    <span className="order-title">*/}
-              {/*      {Grab?.count ? Grab.count : 0} / {NumberOfJobs}*/}
-              {/*    </span>*/}
-              {/*    <span className="orders">orders</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-
-              {/*<div className="progress-sub">*/}
-              {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
-              {/*    <p style={{ position: "absolute", bottom: "60px" }}>Cage</p>*/}
-              {/*    <div>*/}
-              {/*      <CircleProgress*/}
-              {/*        width={180}*/}
-              {/*        strokeWidth={15}*/}
-              {/*        fontFamily={"DM Sans"}*/}
-              {/*        fontSize={"20px"}*/}
-              {/*        fontColor={"#5a9df9"}*/}
-              {/*        fontWeight={"700"}*/}
-              {/*        secondaryColor={"#F7F7F7"}*/}
-              {/*        hidePercentageText={showValue ? true : false}*/}
-              {/*        percentage={*/}
-              {/*          Cage*/}
-              {/*            ? Cage?.count*/}
-              {/*              ? ((Cage.count / NumberOfJobs) * 100).toFixed(0)*/}
-              {/*              : 0*/}
-              {/*            : 0*/}
-              {/*        }*/}
-              {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
-              {/*      />*/}
-              {/*      {showValue ? (*/}
-              {/*        <div className="circle-text" style={{}}>*/}
-              {/*          {Cage?.total*/}
-              {/*            ? "£" + parseInt(Cage.total).toLocaleString()*/}
-              {/*            : "£" + 0}*/}
-              {/*        </div>*/}
-              {/*      ) : (*/}
-              {/*        ""*/}
-              {/*      )}*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-              {/*  <div className="order-percentage">*/}
-              {/*    <span className="order-title">*/}
-              {/*      {Cage?.count ? Cage.count : 0} / {NumberOfJobs}*/}
-              {/*    </span>*/}
-              {/*    <span className="orders">orders</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-
-              {/*<div className="progress-sub">*/}
-              {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
-              {/*    <p style={{ position: "absolute", bottom: "60px" }}>Aggregate</p>*/}
-              {/*    <div>*/}
-              {/*      <CircleProgress*/}
-              {/*        width={180}*/}
-              {/*        strokeWidth={15}*/}
-              {/*        fontFamily={"DM Sans"}*/}
-              {/*        fontSize={"20px"}*/}
-              {/*        fontColor={"#5a9df9"}*/}
-              {/*        fontWeight={"700"}*/}
-              {/*        secondaryColor={"#F7F7F7"}*/}
-              {/*        hidePercentageText={showValue ? true : false}*/}
-              {/*        percentage={*/}
-              {/*          Aggregate*/}
-              {/*            ? Aggregate?.count*/}
-              {/*              ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0)*/}
-              {/*              : 0*/}
-              {/*            : 0*/}
-              {/*        }*/}
-              {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
-              {/*      />*/}
-              {/*      {showValue ? (*/}
-              {/*        <div className="circle-text" style={{}}>*/}
-              {/*          {Aggregate?.count*/}
-              {/*            ? "£" + parseInt(Aggregate.total).toLocaleString()*/}
-              {/*            : "£" + 0}*/}
-              {/*        </div>*/}
-              {/*      ) : (*/}
-              {/*        ""*/}
-              {/*      )}*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-              {/*  <div className="order-percentage">*/}
-              {/*    <span className="order-title">*/}
-              {/*      {Aggregate?.count ? Aggregate.count : 0} / {NumberOfJobs}*/}
-              {/*    </span>*/}
-              {/*    <span className="orders">orders</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-
-              {/*<div className="progress-sub">*/}
-              {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
-              {/*    <p style={{ position: "absolute", bottom: "60px" }}>*/}
-              {/*      PortableToilet*/}
-              {/*    </p>*/}
-              {/*    <div>*/}
-              {/*      <CircleProgress*/}
-              {/*        width={180}*/}
-              {/*        strokeWidth={15}*/}
-              {/*        fontFamily={"DM Sans"}*/}
-              {/*        fontSize={"20px"}*/}
-              {/*        fontColor={"#5a9df9"}*/}
-              {/*        fontWeight={"700"}*/}
-              {/*        secondaryColor={"#F7F7F7"}*/}
-              {/*        hidePercentageText={showValue ? true : false}*/}
-              {/*        percentage={*/}
-              {/*          PortableToilet*/}
-              {/*            ? PortableToilet?.count*/}
-              {/*              ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0)*/}
-              {/*              : 0*/}
-              {/*            : 0*/}
-              {/*        }*/}
-              {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
-              {/*      />*/}
-              {/*      {showValue ? (*/}
-              {/*        <div className="circle-text" style={{}}>*/}
-              {/*          {PortableToilet?.total*/}
-              {/*            ? "£" + parseInt(PortableToilet.total).toLocaleString()*/}
-              {/*            : "£" + 0}*/}
-              {/*        </div>*/}
-              {/*      ) : (*/}
-              {/*        ""*/}
-              {/*      )}*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-              {/*  <div className="order-percentage">*/}
-              {/*    <span className="order-title">*/}
-              {/*      {PortableToilet?.count ? PortableToilet.count : 0} /{" "}*/}
-              {/*      {NumberOfJobs}*/}
-              {/*    </span>*/}
-              {/*    <span className="orders">orders</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-            </div>
+              
+            </div> */}
           </>
         </div>
       )}

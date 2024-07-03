@@ -96,7 +96,7 @@ const DashboardHeader = (props) => {
   };
 
   return (
-    <Grid item lg={5} md={12}>
+    <Grid item lg={12} md={12}>
       <div className="report-header-card first">
         <Select
           labelId="demo-multiple-name-label"
@@ -156,7 +156,7 @@ const DashboardHeader = (props) => {
             ))}
         </Select>
       </div>
-      <div className="report-header-card first">
+      {/* <div className="report-header-card first">
         <div className="date-filter">
           <div className="left-text" onClick={handleClick}>
             <span className="small-text">Filter By : </span>{" "}
@@ -194,7 +194,7 @@ const DashboardHeader = (props) => {
             ranges={state}
           />
         )}
-      </div>
+      </div> */}
     </Grid>
   );
 };

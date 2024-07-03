@@ -1,7 +1,8 @@
 .mapCard {
   border-radius: 12px;
-  height: 809px;
+  height: calc(100% - 40px);
   padding: none;
+  min-height: 809px;
   .MuiCardContent-root {
     height: 100%;
     padding: 0px;
