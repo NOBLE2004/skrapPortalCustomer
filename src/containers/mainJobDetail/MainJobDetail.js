@@ -59,6 +59,7 @@ const MainJobDetail = (props) => {
               }
             }} icon={false} />
           }
+          setShowCo={() => {}}
           {job?.driver_id && <DriverDetail job={job} />}
           {/* <SmallCard />*/}
         </Grid>

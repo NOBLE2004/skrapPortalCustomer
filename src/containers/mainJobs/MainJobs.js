@@ -54,7 +54,7 @@ const MainJobsNew = (props) => {
   const [isJobCreated, setIsJobCreated] = useState(false);
   const currency = localStorage.getItem("currency");
   const [csvDownload, setCsvDownload] = useState(false);
-  const [showCo2, setShowCo2] = useState(false);
+  const [showCo2, setShowCo] = useState(false);
   const { info, loading } = props.dashboard;
   const history = useHistory();
   const { jobData, isLoading, error } = props.jobs;
@@ -71,11 +71,22 @@ const MainJobsNew = (props) => {
   });
 
   useEffect(() => {
-    if(jobData === null){
-      setShowCo2(true);
-      console.log('null data', jobData);
+    const isEmpty = checkEmptyFilters();
+    if(jobData == null && isEmpty !== false) {
+      setShowCo(true);
     }
-  }, [jobData])
+  }, [jobData, jobsFilter, showCo2])
+  const checkEmptyFilters = () => {
+    let empty = false;
+    if(jobsFilter.status == "" && jobsFilter.date == ""
+        && jobsFilter.service == "" && jobsFilter.address == ""
+        && jobsFilter.search == "" && jobsFilter.page == 1
+        && jobsFilter.limit == 10
+    ){
+      empty = true
+    }
+    return empty;
+  }
   let userData = getUserDataFromLocalStorage();
 
   const handleJobCreated = useCallback(() => {
@@ -128,8 +139,15 @@ const MainJobsNew = (props) => {
     const duplicate = { ...jobsFilter };
     duplicate.search = search;
     dispatch(changeJobsFilter({ ...jobsFilter, ...duplicate }));
-    setFilters({ ...filters, search: search });
   };
+  useEffect(() => {
+    if(jobsFilter.search.length > 0){
+      const delayDebounceFn = setTimeout(() => {
+        setFilters({ ...filters, search: jobsFilter.search });
+      }, 1000)
+      return () => clearTimeout(delayDebounceFn)
+    }
+  }, [jobsFilter.search])
   const setLimit = (limit) => {
     const duplicate = { ...jobsFilter };
     duplicate.limit = limit;
@@ -416,7 +434,7 @@ const MainJobsNew = (props) => {
                 limit={jobsFilter.limit}
                 setLimit={setLimit}
                 showCo2={showCo2}
-                setShowCo2={setShowCo2}
+                setShowCo={setShowCo}
                 data={jobData?.data ? jobData?.data : []}
                 pagination={jobData}
                 handleUpdateJobs={handleJobCreated}

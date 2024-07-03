@@ -1,33 +1,13 @@
 import {
   Box,
-  Button,
-  Divider,
   Drawer,
-  LinearProgress,
-  Tab,
-  Tooltip,
-  Typography,
 } from "@mui/material";
-import {
-  Close,
-  InfoOutlined,
-  LineWeightOutlined,
-  LocationCityOutlined,
-  LocationSearchingOutlined,
-  SocialDistanceOutlined,
-} from "@mui/icons-material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import React, { useEffect, useState } from "react";
-import PladgeDetails from "./detail";
 import plegeService from "../../services/plege.service";
-import EmissionDetails from "./emissionDetail";
-import AccuracyDetails from "./accurayDetail";
-import ImpactImg from "../../assets/images/createimpact.webp";
-import { calculator } from "../../assets/images";
 import "./style.scss";
 import DrawerComponent from "./drawerComponent";
 
-const PledgeModal = ({ showDrawer, setShowDrawer }) => {
+const PledgeModal = ({ showDrawer, setShowDrawer, setShowCo }) => {
   const [value, setValue] = React.useState("1");
   const [data, setData] = useState(null);
 
@@ -53,7 +33,9 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
 
   const setComponentData = () => {
     setData(null);
+    console.log('modal closed');
     setShowDrawer({ show: false });
+      setShowCo(false)
   };
 
   return (
@@ -67,7 +49,7 @@ const PledgeModal = ({ showDrawer, setShowDrawer }) => {
       onClose={setComponentData}
     >
       <Box width={650}>
-        <DrawerComponent showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
+        <DrawerComponent showDrawer={showDrawer} setShowDrawer={setShowDrawer} setShowCo={setShowCo} />
       </Box>
     </Drawer>
   );
