@@ -5,7 +5,7 @@ import Select from "@mui/material/Select";
 import DatePicker from "react-datepicker";
 import MenuItem from "@mui/material/MenuItem";
 import { Bar } from "react-chartjs-2";
-import { Box, Grid, Skeleton, Stack } from "@mui/material";
+import { Box, FormControl, Grid, Menu, Skeleton, Stack } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { lineChartData, data2 } from "./constant";
@@ -13,6 +13,8 @@ import { spendChartOptions, dates } from "../../utlils/constants";
 import "./spendchart.scss";
 import { numberWithCommas } from "../../utlils/dashboard";
 import FadeLoader from "react-spinners/FadeLoader";
+import { ExpandMoreOutlined } from "@mui/icons-material";
+import FilterCard from "../cardFilter";
 
 const SpendChart = ({
   chartData,
@@ -28,6 +30,7 @@ const SpendChart = ({
     setLatestYear(event.getFullYear())
     getDashBoardData(event.getFullYear());
   };
+
   let arr = [];
   useEffect(() => {
     if (chartData !== null) {
@@ -152,7 +155,7 @@ const SpendChart = ({
         borderSkipped: false,
         borderRadius: 6,
         pointStyle: "rectRounded",
-        pointWidth: 15,
+        pointWidth: 10,
         boxWidth: "100%",
         color: "#F7F7F7",
         visible: true,
@@ -187,7 +190,7 @@ const SpendChart = ({
         borderSkipped: false,
         borderRadius: 6,
         pointStyle: "rectRounded",
-        pointWidth: 15,
+        pointWidth: 10,
         boxWidth: "100%",
       },
     ],
@@ -237,23 +240,34 @@ const SpendChart = ({
       <>
         <div className="salesWp">
           <div className="dateWp">
-            <div>
-              <span className="primary-title">Spend</span>
+            <Box width={"100%"}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span className="primary-title2">Spending Breakdown</span>
+                <FilterCard />
+              </Box>
               <div className="spend-filter-year">
-                <p>Filter by year:</p>
-                <div className="date-picker-main">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => handleYearChange(date)}
-                    showYearPicker
-                    dateFormat="yyyy"
-                    yearItemNumber={15}
-                    customInput={<ExampleCustomInput />}
-                    maxDate={new Date()}
-                  />
-                </div>
+                <Box display={"flex"} alignItems="center">
+                  <p>Filter by year:</p>
+                  <div className="date-picker-main">
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => handleYearChange(date)}
+                      showYearPicker
+                      dateFormat="yyyy"
+                      yearItemNumber={15}
+                      customInput={<ExampleCustomInput />}
+                      maxDate={new Date()}
+                    />
+                  </div>
+                </Box>
+                <Box>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <p className="" style={{ margin: 0 }}>Spent this Year:</p>
+                    <p style={{ color: "#0F2851", margin: 0, fontWeight: 700, opacity: 1 }}>£313,163</p>
+                  </Box>
+                </Box>
               </div>
-            </div>
+            </Box>
           </div>
         </div>
         {loading ? (
@@ -296,7 +310,7 @@ const SpendChart = ({
             </Grid>
           </Grid >
         ) : (
-          <Box className="spend-bar-chart">
+          <Box className="spend-bar-chart" p={2}>
             <HighchartsReact highcharts={Highcharts} options={spendChartData} />
           </Box>
         )}
