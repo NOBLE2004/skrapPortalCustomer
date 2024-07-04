@@ -5,7 +5,7 @@ const MainMap = ({ children }) => {
   const currency = localStorage.getItem("currency");
   return (
     <GoogleMap
-      defaultZoom={5}
+      defaultZoom={8}
       defaultCenter={{
         lat: currency == "$" ? 37.17567 : 51.55063,
         lng: currency == "$" ? -95.8467 : -0.0461,

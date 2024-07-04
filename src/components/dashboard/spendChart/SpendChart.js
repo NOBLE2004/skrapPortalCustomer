@@ -9,7 +9,7 @@ import { Box, FormControl, Grid, Menu, Skeleton, Stack } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { lineChartData, data2 } from "./constant";
-import { spendChartOptions, dates } from "../../utlils/constants";
+import { spendChartOptions, dates, numberFormatter } from "../../utlils/constants";
 import "./spendchart.scss";
 import { numberWithCommas } from "../../utlils/dashboard";
 import FadeLoader from "react-spinners/FadeLoader";
@@ -91,9 +91,9 @@ const SpendChart = ({
             return `${localStorage.getItem("currency")
               ? localStorage.getItem("currency")
               : "£"
-              }${numberWithCommas(value)}`;
+              }${numberFormatter(value)}`;
           };
-          return getLabel(numberWithCommas(this.value));
+          return getLabel(numberFormatter(this.value));
         },
       },
     },
@@ -155,7 +155,7 @@ const SpendChart = ({
         borderSkipped: false,
         borderRadius: 6,
         pointStyle: "rectRounded",
-        pointWidth: 10,
+        pointWidth: 14,
         boxWidth: "100%",
         color: "#F7F7F7",
         visible: true,
@@ -190,7 +190,7 @@ const SpendChart = ({
         borderSkipped: false,
         borderRadius: 6,
         pointStyle: "rectRounded",
-        pointWidth: 10,
+        pointWidth: 14,
         boxWidth: "100%",
       },
     ],
@@ -310,7 +310,7 @@ const SpendChart = ({
             </Grid>
           </Grid >
         ) : (
-          <Box className="spend-bar-chart" p={2}>
+          <Box className="spend-bar-chart" px={2}>
             <HighchartsReact highcharts={Highcharts} options={spendChartData} />
           </Box>
         )}

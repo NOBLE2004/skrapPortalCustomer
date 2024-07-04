@@ -149,7 +149,7 @@ const DashBoard = (props) => {
     <>
       {/* // info && ( */}
       <Grid container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           {dashboardData?.loading ? (
             <Grid container spacing={1} px={2} justifyContent={"space-between"}>
               <Grid item xs={5}>
@@ -275,7 +275,7 @@ const DashBoard = (props) => {
           {/*  </Grid>*/}
           {/*</Grid>*/}
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           {dashboardMap?.loading ? (
             <Box
               height={"500px"}
@@ -291,6 +291,7 @@ const DashBoard = (props) => {
                 padding: "12px 12px",
               }}
             >
+
               <Stack spacing={1} px={2} sx={{ width: "100%", height: "100%" }}>
                 <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
                 <Skeleton variant='rounded' height={80} />
@@ -299,10 +300,10 @@ const DashBoard = (props) => {
               </Stack>
             </Box>
           ) : (
-            <div className="jobMpWp">
+            <div className="jobMpWp wrapper" style={{ padding: "12px" }}>
               <div className="live-job-title">
                 <img src={mapMarker} alt="map-marker" />
-                <h1>Orders On Map</h1>
+                <h1 style={{ marginTop: 0, marginBottom: 0 }}>Orders On Map</h1>
               </div>
               <Card className="mapCard">
                 <CardContent>
