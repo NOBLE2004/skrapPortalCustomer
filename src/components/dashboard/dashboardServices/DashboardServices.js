@@ -8,16 +8,16 @@ import { dashboardServiceStyle } from "../../../assets/styles/muiStyles/MuiStyle
 import "./dashboardservices.scss";
 import { numberWithCommas } from "../../utlils/dashboard";
 import Carousel, { consts } from "react-elastic-carousel";
-import IconVehicle from '../../../assets/images/icon-vehicles.png'
+import IconVehicle from '../../../assets/images/icon-vehicles.svg'
 import FadeLoader from "react-spinners/FadeLoader";
 
 const breakPoints = [
   { width: 1, itemsToShow: 3, pagination: false },
   { width: 550, itemsToShow: 4, itemsToScroll: 2, pagination: false },
-  { width: 850, itemsToShow: 3, pagination: false },
-  { width: 1150, itemsToShow: 4, itemsToScroll: 2, pagination: false },
+  { width: 850, itemsToShow: 5, pagination: false },
+  { width: 1150, itemsToShow: 5, itemsToScroll: 2, pagination: false },
   { width: 1450, itemsToShow: 4, pagination: false },
-  { width: 1750, itemsToShow: 4, pagination: false },
+  { width: 1750, itemsToShow: 5, pagination: false },
 ];
 const DashboardServices = ({ servicesData, loading }) => {
   const classes = dashboardServiceStyle();
@@ -142,7 +142,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                       className={classes.toggle}
                     />
                   }
-                  style={{color:"#677790"}}
+                  style={{ color: "#677790" }}
                   label="Show value/percent"
                   labelPlacement="start"
                 />
@@ -168,10 +168,10 @@ const DashboardServices = ({ servicesData, loading }) => {
                         <img
                           src={IconVehicle}
                           alt=""
-                          style={{ height: "30px" }}
+                          style={{ width: "60px" }}
                         />
                         <div className="service-detail">
-                          <div className="name">{service.name}</div>
+                          <div className="name" style={{ padding: 0 }}>{service.name}</div>
                           {showValue ? (
                             <div className="percentage">{service?.total
                               ? `${currency ? currency : "£"}` +

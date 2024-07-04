@@ -36,8 +36,8 @@ const MenuProps = {
 const useStyles = makeStyles((theme) => ({
   selected: {},
   rootMenuItem: {
-    margin: "2% !important",
-    padding: "2% !important",
+    margin: "8px !important",
+    padding: "8px !important",
     "&$selected": {
       background: `linear-gradient(135deg, #76CCF8 27.99%, #518EF8 68.87%, #4981F8 77.07%)`,
       borderRadius: "8px",
