@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import './style.scss'
-import TrashIcon from '../../../assets/images/trash-1.png'
-import SmokeIcon from '../../../assets/images/smoke-1.png'
+import TrashIcon from '../../../assets/images/trash 1.svg'
+import SmokeIcon from '../../../assets/images/smoke 1.svg'
 import FilterCard from '../cardFilter'
 const Sustainability = ({ jobStatus }) => {
     return (

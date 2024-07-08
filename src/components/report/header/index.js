@@ -187,7 +187,7 @@ const ReportHeader = (props) => {
             MenuProps={MenuProps}
             renderValue={(selected) => {
               if (selected.length === 0) {
-                return <em>Sites</em>;
+                return <em>All Sites</em>;
               }
               return (
                 selected.length > 0 && (

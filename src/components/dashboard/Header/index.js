@@ -97,7 +97,7 @@ const DashboardHeader = (props) => {
 
   return (
     <Grid item lg={12} md={12}>
-      <div className="report-header-card first">
+      <div className="report-header-card first" style={{paddingTop: 0}}>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
@@ -107,6 +107,7 @@ const DashboardHeader = (props) => {
           sx={{
             ".MuiSelect-select": {
               width: "100%!important",
+              padding: "1% 2% !important"
             },
           }}
           onChange={(e) => {
@@ -126,7 +127,7 @@ const DashboardHeader = (props) => {
           MenuProps={MenuProps}
           renderValue={(selected) => {
             if (selected.length === 0) {
-              return <em>Sites</em>;
+              return <em>All Sites</em>;
             }
             return (
               selected.length > 0 && (

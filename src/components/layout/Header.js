@@ -12,12 +12,12 @@ const Header = (props) => {
         },100)
     }
     return (
-        <Grid container style={{display: 'flex', justifyContent: 'flex-end', paddingRight: '13px'}}>
+        <Grid container style={{display: 'flex', justifyContent: 'flex-end'}}>
             <Grid item md={1} xs={12}>
-                <FormControl variant="outlined" margin="dense" style={{width: '100%'}}>
+                <FormControl variant="outlined" margin="dense" style={{width: '100%', alignItems: 'flex-end'}}>
                     <select
                         value={props.currency}
-                        style={{width: '100%', padding: '4px', marginRight: '2px'}}
+                        style={{width: '70%', padding: '4px', background: 'white', border: '1px solid rgb(181, 208, 255)', color: 'rgb(81, 142, 248)', borderRadius: '5px'}}
                         onChange={handleChange}
                         label="service"
                         name="service"

@@ -20,6 +20,7 @@ import {
 import { getLandfillDiversion } from "../../store/actions/action.landfillDiversion";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
 
 import FadeLoader from "react-spinners/FadeLoader";
 import {
@@ -144,7 +145,7 @@ const DashBoard = (props) => {
   //     </div>
   //   );
   // }
-
+const pt = '6px';
   return (
     <>
       {/* // info && ( */}
@@ -202,7 +203,7 @@ const DashBoard = (props) => {
                 {/*    />*/}
                 {/*  </Grid>*/}
                 {/*)}*/}
-                <Grid item lg={12} md={12}>
+                <Grid item lg={12} md={12} style={{paddingTop: 0}}>
                   <div className="job-status-outer">
                     <JobStatus
                       jobStatus={dashboardData?.info ? dashboardData?.info : ""}
@@ -224,7 +225,7 @@ const DashBoard = (props) => {
             </Grid>
           )}
           <Grid container spacing={2} mt={1}>
-            <Grid item lg={12} md={12}>
+            <Grid item lg={12} md={12} style={{paddingTop: pt}}>
               <SpendChart
                 chartData={dashboardSale?.info}
                 loading={dashboardSale?.loading}
@@ -234,13 +235,13 @@ const DashBoard = (props) => {
                 setLatestYear={setLatestYear}
               />
             </Grid>
-            <Grid item lg={12} md={12} mt={1}>
+            <Grid item lg={12} md={12} mt={1} style={{paddingTop: pt}}>
               <DashboardServices
                 servicesData={dashboardService?.info ? dashboardService.info : ""}
                 loading={dashboardService?.loading}
               />
             </Grid>
-            <Grid item lg={12} md={12} mt={1}>
+            <Grid item lg={12} md={12} mt={1} style={{paddingTop: pt}}>
               <Sustainability
                 jobStatus={dashboardData?.info ? dashboardData?.info : ""}
               />
@@ -300,19 +301,20 @@ const DashBoard = (props) => {
               </Stack>
             </Box>
           ) : (
-            <div className="jobMpWp wrapper" style={{ padding: "12px" }}>
-              <div className="live-job-title">
-                <img src={mapMarker} alt="map-marker" />
-                <h1 style={{ marginTop: 0, marginBottom: 0 }}>Orders On Map</h1>
+            <div className="jobMpWp wrapper" style={{ padding: "12px", paddingTop: '5px', borderRadius: '12px 0px 0px 12px !important' }}>
+              <div className="live-job-title" style={{ padding: "0px", justifyContent: 'space-between' }}>
+                {/*<img src={mapMarker} alt="map-marker" />*/}
+                <h1 style={{ marginTop: 0, marginBottom: 0, fontSize: '14p', color: '#60A0F8', fontFamily: 'DM Sans', fontWeight: '500', marginLeft:0 }}>Bookings near me</h1>
+                <FullscreenIcon style={{ fontSize: '32px', background: '#60A0F8', color: 'white', fontFamily: 'DM Sans' }} />
               </div>
               <Card className="mapCard">
                 <CardContent>
                   <MainMap
                     googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA6AYxz5ok7Wkt3SOsquumACIECcH933ws`}
                     loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `100%`,position: 'sticky' }} />}
                     mapElement={
-                      <div style={{ height: `100%`, borderRadius: "12px" }} />
+                      <div style={{ height: `100%`}} />
                     }
                   >
                     {dashboardMap?.info
