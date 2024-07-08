@@ -1,9 +1,9 @@
 import React from "react";
 import { Paper, Grid, Box } from "@mui/material";
 import "./jobStatus.scss";
-import UnionIcon from "../../../assets/images/Union.png"
-import LocationIcon from "../../../assets/images/location.png"
-import VectorCheck from "../../../assets/images/Vector.png"
+import UnionIcon from "../../../assets/images/Union.svg"
+import LocationIcon from "../../../assets/images/LocationDb.svg"
+import VectorCheck from "../../../assets/images/VectorDb.svg"
 import FilterCard from "../cardFilter";
 import { ScaleOutlined } from "@mui/icons-material";
 

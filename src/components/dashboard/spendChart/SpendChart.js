@@ -25,6 +25,7 @@ const SpendChart = ({
   loading,
 }) => {
   const [max, setMax] = useState();
+  const [total, setTotal] = useState(0.00)
   const handleYearChange = (event) => {
     setStartDate(event);
     setLatestYear(event.getFullYear())
@@ -34,9 +35,12 @@ const SpendChart = ({
   let arr = [];
   useEffect(() => {
     if (chartData !== null) {
+      let sum = 0;
       Object.keys(chartData?.salesTotal?.Months).map(function (key, index) {
         arr.push(chartData?.salesTotal?.Months[key].total);
+        sum += parseFloat(chartData?.salesTotal?.Months[key].total);
       });
+      setTotal(parseFloat(sum));
       setMax(Math.max(...arr));
     }
   }, [chartData]);
@@ -243,7 +247,13 @@ const SpendChart = ({
             <Box width={"100%"}>
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span className="primary-title2">Spending Breakdown</span>
-                <FilterCard />
+                {/*<FilterCard />*/}
+                <Box>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <p className="" style={{ margin: 0 }}>Spent this Year:</p>
+                    <p style={{ color: "#0F2851", margin: 0, fontWeight: 700, opacity: 1 }}>{localStorage.getItem("currency")}{total.toLocaleString()}</p>
+                  </Box>
+                </Box>
               </Box>
               <div className="spend-filter-year">
                 <Box display={"flex"} alignItems="center">
@@ -259,12 +269,6 @@ const SpendChart = ({
                       maxDate={new Date()}
                     />
                   </div>
-                </Box>
-                <Box>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <p className="" style={{ margin: 0 }}>Spent this Year:</p>
-                    <p style={{ color: "#0F2851", margin: 0, fontWeight: 700, opacity: 1 }}>£313,163</p>
-                  </Box>
                 </Box>
               </div>
             </Box>
