@@ -177,6 +177,11 @@ const ReportHeader = (props) => {
             onChange={(e) => {
              handleChange(e);
             }}
+            sx={{
+              ".MuiSelect-select": {
+                width: "100%!important"
+              },
+            }}
             input={
               <OutlinedInput
                 notched={false}
@@ -187,7 +192,7 @@ const ReportHeader = (props) => {
             MenuProps={MenuProps}
             renderValue={(selected) => {
               if (selected.length === 0) {
-                return <em>All Sites</em>;
+                return <div className="text-sec">All Sites</div>;;
               }
               return (
                 selected.length > 0 && (

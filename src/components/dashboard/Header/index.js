@@ -2,14 +2,14 @@
 import {
   Box,
   Button,
-  Grid,
+  Grid, InputAdornment, ListSubheader,
   OutlinedInput,
   Popover,
   Select,
-  Switch,
+  Switch, TextField,
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { getSites } from "../../../store/actions/sites.action";
 import { getJobsMeta } from "../../../store/actions/action.jobsMeta";
 import { connect, useDispatch } from "react-redux";
@@ -94,67 +94,166 @@ const DashboardHeader = (props) => {
     const newEndDate = moment(state?.[0]?.endDate).format("DD-MM-YYYY");
     props.setDate(`${newStartDate},${newEndDate}`);
   };
-
+  const containsText = (text, searchText) =>
+      text?.toLowerCase()?.indexOf(searchText?.toLowerCase()) > -1;
+  const [searchText, setSearchText] = useState("");
+  const displayedOptions = useMemo(
+      () =>
+          props.allsites.data?.filter((option) =>
+              containsText(option?.job_address, searchText)
+          ),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [searchText, props.allsites.data]
+  );
   return (
     <Grid item lg={12} md={12}>
       <div className="report-header-card first" style={{paddingTop: 0}}>
+        {/*<Select*/}
+        {/*  labelId="demo-multiple-name-label"*/}
+        {/*  id="demo-multiple-name"*/}
+        {/*  value={selected}*/}
+        {/*  displayEmpty*/}
+        {/*  multiple*/}
+        {/*  sx={{*/}
+        {/*    ".MuiSelect-select": {*/}
+        {/*      width: "100%!important",*/}
+        {/*      padding: "1% 2% !important"*/}
+        {/*    },*/}
+        {/*  }}*/}
+        {/*  onChange={(e) => {*/}
+        {/*    handleChange(e);*/}
+        {/*    const filterSite = props.allsites.data?.find(*/}
+        {/*      (x) => x.address_id === e.target.value*/}
+        {/*    );*/}
+        {/*    setSiteCurrency(filterSite?.currency_symbol);*/}
+        {/*  }}*/}
+        {/*  input={*/}
+        {/*    <OutlinedInput*/}
+        {/*      notched={false}*/}
+        {/*      notchedOutline={false}*/}
+        {/*      label="Name"*/}
+        {/*    />*/}
+        {/*  }*/}
+        {/*  MenuProps={MenuProps}*/}
+        {/*  renderValue={(selected) => {*/}
+        {/*    if (selected.length === 0) {*/}
+        {/*      return <div className="text-sec">All Sites</div>;*/}
+        {/*    }*/}
+        {/*    return (*/}
+        {/*      selected.length > 0 && (*/}
+        {/*        <div className="text-sec">*/}
+        {/*          Viewing: Multiple sites{" "}*/}
+        {/*          <span>*/}
+        {/*            {selected.length} of {props.allsites.data.length} sites*/}
+        {/*          </span>*/}
+        {/*        </div>*/}
+        {/*      )*/}
+        {/*    );*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  {props.allsites.data &&*/}
+        {/*    props.allsites?.data.map((site, index) => (*/}
+        {/*      <MenuItem*/}
+        {/*        classes={{*/}
+        {/*          selected: classes.selected,*/}
+        {/*          root: classes.rootMenuItem,*/}
+        {/*        }}*/}
+        {/*        key={index}*/}
+        {/*        value={site.address_id}*/}
+        {/*        //style={getStyles(name, personName, theme)}*/}
+        {/*      >*/}
+        {/*        {site.job_address}*/}
+        {/*      </MenuItem>*/}
+        {/*    ))}*/}
+        {/*</Select>*/}
+
         <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          value={selected}
-          displayEmpty
-          multiple
-          sx={{
-            ".MuiSelect-select": {
-              width: "100%!important",
-              padding: "1% 2% !important"
-            },
-          }}
-          onChange={(e) => {
-            handleChange(e);
-            const filterSite = props.allsites.data?.find(
-              (x) => x.address_id === e.target.value
-            );
-            setSiteCurrency(filterSite?.currency_symbol);
-          }}
-          input={
-            <OutlinedInput
-              notched={false}
-              notchedOutline={false}
-              label="Name"
-            />
-          }
-          MenuProps={MenuProps}
-          renderValue={(selected) => {
-            if (selected.length === 0) {
-              return <em>All Sites</em>;
+            labelId="demo-multiple-name-label"
+            id="demo-multiple-name"
+            value={selected}
+            displayEmpty
+            multiple
+            autoFocus
+            onChange={(e) => {
+              handleChange(e);
+            }}
+              sx={{
+                ".MuiSelect-select": {
+                  width: "100%!important",
+                  padding: "1% 2% !important"
+                },
+                '.MuiOutlinedInput-notchedOutline': { border: 0 },
+                "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                    {
+                      border: 0,
+                    },
+                "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                    {
+                      border: 0,
+                    },
+              }}
+            input={
+              <OutlinedInput
+                  notched={false}
+                  notchedOutline={false}
+                  label="Name"
+              />
             }
-            return (
-              selected.length > 0 && (
-                <div className="text-sec">
-                  Viewing: Multiple sites{" "}
-                  <span>
-                    {selected.length} of {props.allsites.data.length} sites
-                  </span>
-                </div>
-              )
-            );
-          }}
+            MenuProps={MenuProps}
+            renderValue={(selected) => {
+              if (selected.length === 0) {
+                return <div className="text-sec">All Sites</div>;
+              }
+              return (
+                  selected.length > 0 && (
+                      <div className="text-sec">
+                        Viewing: Multiple sites{" "}
+                        <span>
+                      {selected.length} of {props.allsites.data.length} sites
+                    </span>
+                      </div>
+                  )
+              );
+            }}
         >
-          {props.allsites.data &&
-            props.allsites?.data.map((site, index) => (
-              <MenuItem
-                classes={{
-                  selected: classes.selected,
-                  root: classes.rootMenuItem,
+          <ListSubheader>
+            <TextField
+                size="small"
+                autoFocus
+                fullWidth
+                value={searchText}
+                placeholder="Search..."
+                InputProps={{
+                  startAdornment: (
+                      <InputAdornment position="start">
+                        {/* <SearchIcon /> */}
+                      </InputAdornment>
+                  ),
+
                 }}
-                key={index}
-                value={site.address_id}
-                //style={getStyles(name, personName, theme)}
-              >
-                {site.job_address}
-              </MenuItem>
-            ))}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key !== "Escape") {
+                    // Prevents autoselecting item while typing (default Select behaviour)
+                    e.stopPropagation();
+                  }
+                }}
+            />
+          </ListSubheader>
+          {displayedOptions &&
+              displayedOptions?.map((site, index) => (
+                  <MenuItem
+                      classes={{
+                        selected: classes.selected,
+                        root: classes.rootMenuItem,
+                      }}
+                      key={index}
+                      value={site?.address_id}
+                      //style={getStyles(name, personName, theme)}
+                  >
+                    {site.job_address}
+                  </MenuItem>
+              ))}
         </Select>
       </div>
       {/* <div className="report-header-card first">

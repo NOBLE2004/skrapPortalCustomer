@@ -10,6 +10,7 @@ import { numberWithCommas } from "../../utlils/dashboard";
 import Carousel, { consts } from "react-elastic-carousel";
 import IconVehicle from '../../../assets/images/icon-vehicles.svg'
 import FadeLoader from "react-spinners/FadeLoader";
+import logo from "../../../assets/images/logo_blue.svg"
 
 const breakPoints = [
   { width: 1, itemsToShow: 3, pagination: false },
@@ -56,7 +57,7 @@ const DashboardServices = ({ servicesData, loading }) => {
       const ser = []
       Object.entries(servicesData).map(([key, value], index) => {
         if (key !== 'NumberOfJobs') {
-          ser.push({ name: key, count: value.count, total: value.total, percentage: value.percentage });
+          ser.push({ name: key, count: value.count, total: value.total, percentage: value.percentage, icon: value.icon });
         } else {
           setTotalJobs(value)
         }
@@ -166,9 +167,9 @@ const DashboardServices = ({ servicesData, loading }) => {
                     return (
                       <div className="service-box p-2" key={index}>
                         <img
-                          src={IconVehicle}
+                          src={service.icon || logo}
                           alt=""
-                          style={{ width: "60px" }}
+                          style={{ width: service.icon ? "80px" : "40px" }}
                         />
                         <div className="service-detail">
                           <div className="name" style={{ padding: 0 }}>{service.name}</div>

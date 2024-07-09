@@ -6,6 +6,7 @@ import LocationIcon from "../../../assets/images/LocationDb.svg"
 import VectorCheck from "../../../assets/images/VectorDb.svg"
 import FilterCard from "../cardFilter";
 import { ScaleOutlined } from "@mui/icons-material";
+import AccountBalanceWalletOutlined from '@mui/icons-material/AccountBalanceWalletOutlined';
 
 const JobStatus = (props) => {
     const { totalSpend, jobStatus } = props
@@ -15,9 +16,12 @@ const JobStatus = (props) => {
         <Grid item container spacing={1} justifyContent={"space-between"}>
             <Grid item lg={3.4} md={4} xs={6}>
                 <Paper className="box">
-                    <Box>
-                        <FilterCard />
-                    </Box>
+                    {/*<Box>*/}
+                    {/*    <FilterCard />*/}
+                    {/*</Box>*/}
+                    {/*<div className="img-main">*/}
+                    {/*    <AccountBalanceWalletOutlined sx={{ color: "#60a0f8", fontSize: "20px" }} />*/}
+                    {/*</div>*/}
                     <h1 style={{ color: "#60A0F8" }}>{`${currency ? currency : "£"}${totalSpend ? totalSpend : "00.00"
                         }`}</h1>
                     <span style={{ color: "#60A0F8" }}>Total spent</span>

@@ -8,9 +8,9 @@ const Sustainability = ({ jobStatus }) => {
         <div className="main-sus">
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span className="primary-title">Sustainability </span>
-                <FilterCard
-                    title="All bookings"
-                />
+                {/*<FilterCard*/}
+                {/*    title="All bookings"*/}
+                {/*/>*/}
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
                 <Box className='item' mt={2}>

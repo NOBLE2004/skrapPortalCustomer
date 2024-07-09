@@ -304,8 +304,8 @@ const pt = '6px';
             <div className="jobMpWp wrapper" style={{ padding: "12px", paddingTop: '5px', borderRadius: '12px 0px 0px 12px !important' }}>
               <div className="live-job-title" style={{ padding: "0px", justifyContent: 'space-between' }}>
                 {/*<img src={mapMarker} alt="map-marker" />*/}
-                <h1 style={{ marginTop: 0, marginBottom: 0, fontSize: '14p', color: '#60A0F8', fontFamily: 'DM Sans', fontWeight: '500', marginLeft:0 }}>Bookings near me</h1>
-                <FullscreenIcon style={{ fontSize: '32px', background: '#60A0F8', color: 'white', fontFamily: 'DM Sans' }} />
+                <h1 style={{ marginTop: 5, marginBottom: 2, fontSize: '14p', color: '#60A0F8', fontFamily: 'DM Sans', fontWeight: '500', marginLeft:0 }}>Bookings</h1>
+                {/*<FullscreenIcon style={{ fontSize: '32px', background: '#60A0F8', color: 'white', fontFamily: 'DM Sans' }} />*/}
               </div>
               <Card className="mapCard">
                 <CardContent>
@@ -335,14 +335,14 @@ const pt = '6px';
                                 : "-0.0460716",
                           }}
                           icon={{
-                            url:
-                              data.jobStatus === "Pending"
-                                ? pendingMarker
-                                : data.jobStatus === "Delivered"
-                                  ? deliveredMarker
-                                  : data.jobStatus === "Completed"
-                                    ? completeMarker
-                                    : assignMarker,
+                            url: deliveredMarker
+                              // data.jobStatus === "Pending"
+                              //   ? pendingMarker
+                              //   : data.jobStatus === "Delivered"
+                              //     ? deliveredMarker
+                              //     : data.jobStatus === "Completed"
+                              //       ? completeMarker
+                              //       : assignMarker,
                           }}
                           onClick={() => {
                             setShowInfoIndex(index);
