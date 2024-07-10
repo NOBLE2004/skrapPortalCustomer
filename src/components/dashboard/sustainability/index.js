@@ -14,15 +14,15 @@ const Sustainability = ({ jobStatus }) => {
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
                 <Box className='item' mt={2}>
-                    <h2>87% <span>Waste diverted</span></h2>
-                    <p>7.36 tonnes diverted</p>
+                    <h2>{parseFloat(jobStatus.divertedLandfill)}% <span>Waste diverted</span></h2>
+                    <p>{parseFloat(jobStatus.divertedTonnage)} tonnes diverted</p>
                 </Box>
                 <Box className='item2' mt={2} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <Box>
                         <img src={TrashIcon} alt="" />
                     </Box>
                     <Box>
-                        <h2>8.75 <span>kg CO2</span></h2>
+                        <h2>{parseFloat(jobStatus.TotalCo2Waste > 500 ? jobStatus.TotalCo2Waste / 1000 : jobStatus.TotalCo2Waste).toFixed(2).toLocaleString()} <span>{jobStatus.TotalCo2Waste > 500 ? 'tn':'kg'} CO2</span></h2>
                         <p>Waste emissions</p>
                     </Box>
                 </Box>
@@ -31,8 +31,8 @@ const Sustainability = ({ jobStatus }) => {
                         <img src={SmokeIcon} alt="" />
                     </Box>
                     <Box>
-                        <h2>{parseFloat(jobStatus.TotalCo2 > 500 ? jobStatus.TotalCo2 / 1000 : jobStatus.TotalCo2).toFixed(2).toLocaleString()} <span>kg CO2</span></h2>
-                        <p>Total Co2</p>
+                        <h2>{parseFloat(jobStatus.TransportCo2 > 500 ? jobStatus.TransportCo2 / 1000 : jobStatus.TransportCo2).toFixed(2).toLocaleString()} <span>{jobStatus.TransportCo2 > 500 ? 'tn':'kg'} CO2</span></h2>
+                        <p>Transport emissions</p>
                     </Box>
                 </Box>
             </Box>
