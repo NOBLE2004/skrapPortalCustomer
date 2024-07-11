@@ -5,12 +5,12 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 const MainMap = ({ children, defaultCenter }) => {
   const currency = localStorage.getItem("currency");
-  const [zoom, setZoom] = useState(10)
+  const [zoom, setZoom] = useState(8)
     console.log('childrens', defaultCenter);
   return (
       <>
           <GoogleMap
-              defaultZoom={10}
+              defaultZoom={8}
               zoom={zoom}
               defaultCenter={{
                   lat: defaultCenter ? defaultCenter.job_location_lat : currency == "$" ? 37.17567 : 51.55063,

@@ -251,7 +251,7 @@ const SpendChart = ({
                 <Box>
                   <Box display="flex" alignItems="center" gap={1}>
                     <p className="" style={{ margin: 0 }}>Spent this Year:</p>
-                    <p style={{ color: "#0F2851", margin: 0, fontWeight: 700, opacity: 1 }}>{localStorage.getItem("currency")}{total.toLocaleString()}</p>
+                    <p style={{ color: "#0F2851", margin: 0, fontWeight: 700, fontSize: '14px', opacity: 1 }}>{localStorage.getItem("currency")}{total.toLocaleString()}</p>
                   </Box>
                 </Box>
               </Box>
