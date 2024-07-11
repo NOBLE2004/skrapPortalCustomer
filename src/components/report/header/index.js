@@ -311,7 +311,7 @@ const ReportHeader = (props) => {
           </div>
         ) : (
           <>
-            <div className="report-header-card">
+            <div className="report-header-card small">
               <div
                 onClick={handleClick}
                 className="text"
@@ -350,18 +350,18 @@ const ReportHeader = (props) => {
                 dateState={state}
               />
             </div>
-            <div className="report-header-card">
+            <div className="report-header-card small">
               <div className="text">
                 <span>{props?.totalSites?.data?.result?.sites} </span> Sites
               </div>
             </div>
-            <div className="report-header-card">
+            <div className="report-header-card small">
               <div className="text">
                 <span>{props?.totalSites?.data?.result?.total_jobs} </span>{" "}
                 Bookings complete
               </div>
             </div>
-            <div className="report-header-card">
+            <div className="report-header-card small">
               <div className="text">
                 <span>{props?.totalSites?.data?.result?.hires} </span> Hire
                 Types

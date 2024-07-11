@@ -3,17 +3,18 @@ import { withGoogleMap, withScriptjs, GoogleMap } from "react-google-maps";
 import mapStyles from "./mapStyles";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-const MainMap = ({ children }) => {
+const MainMap = ({ children, defaultCenter }) => {
   const currency = localStorage.getItem("currency");
-  const [zoom, setZoom] = useState(8)
+  const [zoom, setZoom] = useState(10)
+    console.log('childrens', defaultCenter);
   return (
       <>
           <GoogleMap
-              defaultZoom={8}
+              defaultZoom={10}
               zoom={zoom}
               defaultCenter={{
-                  lat: currency == "$" ? 37.17567 : 51.55063,
-                  lng: currency == "$" ? -95.8467 : -0.0461,
+                  lat: defaultCenter ? defaultCenter.job_location_lat : currency == "$" ? 37.17567 : 51.55063,
+                  lng: defaultCenter ? defaultCenter.job_location_lng : currency == "$" ? -95.8467 : -0.0461,
               }}
               defaultOptions={{ styles: mapStyles, fullscreenControl: false, mapTypeControl: false, disableDefaultUI: true, zoomControl: false }}
           >

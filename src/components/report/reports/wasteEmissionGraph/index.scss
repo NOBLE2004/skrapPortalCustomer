@@ -1,5 +1,17 @@
 .report-chart-card {
   .salesWp {
+    .we-bottom{
+      @media only screen and (max-width: 1024px) {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .text{
+        @media only screen and (max-width: 1024px) {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
     .services {
       display: flex;
       justify-content: space-evenly;
