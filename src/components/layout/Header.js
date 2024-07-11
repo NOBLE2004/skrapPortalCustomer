@@ -17,7 +17,7 @@ const Header = (props) => {
                 <FormControl variant="outlined" margin="dense" style={{width: '100%', alignItems: 'flex-end'}}>
                     <select
                         value={props.currency}
-                        style={{width: '70%', padding: '4px', background: 'white', border: '1px solid rgb(181, 208, 255)', color: 'rgb(81, 142, 248)', borderRadius: '5px'}}
+                        style={{width: '100%', padding: '4px', background: 'white', border: '1px solid rgb(181, 208, 255)', color: 'rgb(81, 142, 248)', borderRadius: '5px'}}
                         onChange={handleChange}
                         label="service"
                         name="service"
