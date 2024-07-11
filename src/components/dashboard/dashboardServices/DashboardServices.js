@@ -106,7 +106,7 @@ const DashboardServices = ({ servicesData, loading }) => {
     <>
       {loading ? (
         <Box
-          height={"400px"}
+          height={"120px"}
           display="flex"
           my={2}
           justifyContent="center"
@@ -121,11 +121,7 @@ const DashboardServices = ({ servicesData, loading }) => {
           }}
         >
           <Stack spacing={1} px={2} width={'100%'}>
-            <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
-            <Skeleton variant='rounded' height={20} />
-            <Skeleton variant='rectangular' width={'100%'} height={200} />
-            <Skeleton variant='rounded' height={20} />
-            <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+            <Skeleton variant='rectangular' width={'100%'} height={100} />
           </Stack>        </Box>
       ) : (
         <div className="dashboard-services-main">

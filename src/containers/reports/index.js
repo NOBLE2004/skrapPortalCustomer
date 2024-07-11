@@ -54,11 +54,17 @@ const NewReports = () => {
   };
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      setSelected(selectedSites);
-    }, 1500)
+    console.log('triggrer testing');
+  }, [selected, date, siteCurrency])
 
-    return () => clearTimeout(delayDebounceFn)
+  useEffect(() => {
+      const delayDebounceFn = setTimeout(() => {
+        if(selectedSites.length > 0 || selected.length > 0 ){
+          setSelected(selectedSites);
+        }
+      }, 1500)
+
+      return () => clearTimeout(delayDebounceFn)
   }, [selectedSites])
 
   async function exTest() {

@@ -259,8 +259,9 @@ const WasteEmissionGraph = (props) => {
                     alignItems: "center",
                     justifyContent: "space-between",
                   }}
+                  className="we-bottom"
                 >
-                  <Box>
+                  <Box className="type">
                     {type == "year" ? (
                       <span>
                         <b>Monthly</b>
@@ -275,7 +276,7 @@ const WasteEmissionGraph = (props) => {
                       </span>
                     )}
                   </Box>
-                  <Box>
+                  <Box className="text">
                     <span style={{ marginRight: "10px", color: "#518ef8" }}>
                       <b>
                         Emissions avoided by recycling: {((data?.data?.total?.Landfill > 0 ? data?.data?.total?.Landfill : 0)).toLocaleString() || 0}

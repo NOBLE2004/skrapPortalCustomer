@@ -152,26 +152,30 @@ const pt = '6px';
       <Grid container spacing={2}>
         <Grid item xs={7}>
           {dashboardData?.loading ? (
-            <Grid container spacing={1} px={2} justifyContent={"space-between"}>
-              <Grid item xs={5}>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <>
+              <Grid container spacing={1} px={2} py={2} justifyContent={"space-between"}>
+                <Grid item xs={15}>
                   <Skeleton variant='rounded' sx={{ fontSize: '2rem', borderRadius: "8px" }} />
-                  <Skeleton variant='rounded' sx={{ fontSize: '2rem', borderRadius: "8px" }} />
-                </Box>
+                </Grid>
               </Grid>
-              <Grid item xs={1.5}>
-                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
-              </Grid>
-              <Grid item xs={1.5}>
-                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
-              </Grid>
-              <Grid item xs={1.5}>
-                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
-              </Grid>
-              <Grid item xs={1.5}>
-                <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
-              </Grid>
-            </Grid >
+                <Grid container spacing={1} px={2} justifyContent={"space-between"}>
+                  <Grid item xs={3.5}>
+                    <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Skeleton variant='rounded' sx={{ fontSize: '5rem', borderRadius: "8px" }} />
+                  </Grid>
+                </Grid >
+              </>
           ) : (
             <Grid container spacing={2}>
               <>
@@ -243,6 +247,7 @@ const pt = '6px';
             </Grid>
             <Grid item lg={12} md={12} mt={1} style={{paddingTop: pt}}>
               <Sustainability
+                  loading={dashboardData?.loading}
                 jobStatus={dashboardData?.info ? dashboardData?.info : ""}
               />
             </Grid>
@@ -279,7 +284,7 @@ const pt = '6px';
         <Grid item xs={5}>
           {dashboardMap?.loading ? (
             <Box
-              height={"500px"}
+              height={"100%"}
               display="flex"
               width={"100%"}
               // my={2}
@@ -295,9 +300,7 @@ const pt = '6px';
 
               <Stack spacing={1} px={2} sx={{ width: "100%", height: "100%" }}>
                 <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
-                <Skeleton variant='rounded' height={80} />
-                <Skeleton variant='rectangular' width={'100%'} height={400} />
-                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+                <Skeleton variant='rectangular' width={'100%'} height={"100%"} />
               </Stack>
             </Box>
           ) : (
@@ -316,6 +319,7 @@ const pt = '6px';
                     mapElement={
                       <div style={{ height: `100%`}} />
                     }
+                    defaultCenter={dashboardMap?.info?.Map?.data.length > 0 ? dashboardMap?.info?.Map?.data[0]: {}}
                   >
                     {dashboardMap?.info
                       ? dashboardMap?.info?.Map?.data.length > 0 &&
