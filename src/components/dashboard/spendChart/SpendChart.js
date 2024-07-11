@@ -5,14 +5,16 @@ import Select from "@mui/material/Select";
 import DatePicker from "react-datepicker";
 import MenuItem from "@mui/material/MenuItem";
 import { Bar } from "react-chartjs-2";
-import { Box, Grid, Skeleton, Stack } from "@mui/material";
+import { Box, FormControl, Grid, Menu, Skeleton, Stack } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { lineChartData, data2 } from "./constant";
-import { spendChartOptions, dates } from "../../utlils/constants";
+import { spendChartOptions, dates, numberFormatter } from "../../utlils/constants";
 import "./spendchart.scss";
 import { numberWithCommas } from "../../utlils/dashboard";
 import FadeLoader from "react-spinners/FadeLoader";
+import { ExpandMoreOutlined } from "@mui/icons-material";
+import FilterCard from "../cardFilter";
 
 const SpendChart = ({
   chartData,
@@ -23,17 +25,22 @@ const SpendChart = ({
   loading,
 }) => {
   const [max, setMax] = useState();
+  const [total, setTotal] = useState(0.00)
   const handleYearChange = (event) => {
     setStartDate(event);
     setLatestYear(event.getFullYear())
     getDashBoardData(event.getFullYear());
   };
+
   let arr = [];
   useEffect(() => {
     if (chartData !== null) {
+      let sum = 0;
       Object.keys(chartData?.salesTotal?.Months).map(function (key, index) {
         arr.push(chartData?.salesTotal?.Months[key].total);
+        sum += parseFloat(chartData?.salesTotal?.Months[key].total);
       });
+      setTotal(parseFloat(sum));
       setMax(Math.max(...arr));
     }
   }, [chartData]);
@@ -88,9 +95,9 @@ const SpendChart = ({
             return `${localStorage.getItem("currency")
               ? localStorage.getItem("currency")
               : "£"
-              }${numberWithCommas(value)}`;
+              }${numberFormatter(value)}`;
           };
-          return getLabel(numberWithCommas(this.value));
+          return getLabel(numberFormatter(this.value));
         },
       },
     },
@@ -152,7 +159,7 @@ const SpendChart = ({
         borderSkipped: false,
         borderRadius: 6,
         pointStyle: "rectRounded",
-        pointWidth: 15,
+        pointWidth: 16,
         boxWidth: "100%",
         color: "#F7F7F7",
         visible: true,
@@ -187,7 +194,7 @@ const SpendChart = ({
         borderSkipped: false,
         borderRadius: 6,
         pointStyle: "rectRounded",
-        pointWidth: 15,
+        pointWidth: 16,
         boxWidth: "100%",
       },
     ],
@@ -237,23 +244,34 @@ const SpendChart = ({
       <>
         <div className="salesWp">
           <div className="dateWp">
-            <div>
-              <span className="primary-title">Spend</span>
+            <Box width={"100%"}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span className="primary-title2">Spending Breakdown</span>
+                {/*<FilterCard />*/}
+                <Box>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <p className="" style={{ margin: 0 }}>Spent this Year:</p>
+                    <p style={{ color: "#0F2851", margin: 0, fontWeight: 700, fontSize: '14px', opacity: 1 }}>{localStorage.getItem("currency")}{total.toLocaleString()}</p>
+                  </Box>
+                </Box>
+              </Box>
               <div className="spend-filter-year">
-                <p>Filter by year:</p>
-                <div className="date-picker-main">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => handleYearChange(date)}
-                    showYearPicker
-                    dateFormat="yyyy"
-                    yearItemNumber={15}
-                    customInput={<ExampleCustomInput />}
-                    maxDate={new Date()}
-                  />
-                </div>
+                <Box display={"flex"} alignItems="center">
+                  <p>Filter by year:</p>
+                  <div className="date-picker-main">
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => handleYearChange(date)}
+                      showYearPicker
+                      dateFormat="yyyy"
+                      yearItemNumber={15}
+                      customInput={<ExampleCustomInput />}
+                      maxDate={new Date()}
+                    />
+                  </div>
+                </Box>
               </div>
-            </div>
+            </Box>
           </div>
         </div>
         {loading ? (
@@ -296,7 +314,7 @@ const SpendChart = ({
             </Grid>
           </Grid >
         ) : (
-          <Box className="spend-bar-chart">
+          <Box className="spend-bar-chart" px={2}>
             <HighchartsReact highcharts={Highcharts} options={spendChartData} />
           </Box>
         )}

@@ -2,14 +2,25 @@ import React, { useState, useEffect } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { CircleProgress } from "react-gradient-progress";
 
-import { Box, Skeleton, Stack, Switch } from "@mui/material";
+import { Box, Grid, Skeleton, Stack, Switch } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { dashboardServiceStyle } from "../../../assets/styles/muiStyles/MuiStyles";
 import "./dashboardservices.scss";
 import { numberWithCommas } from "../../utlils/dashboard";
+import Carousel, { consts } from "react-elastic-carousel";
+import IconVehicle from '../../../assets/images/icon-vehicles.svg'
 import FadeLoader from "react-spinners/FadeLoader";
+import logo from "../../../assets/images/logo_blue.svg"
 
-const DashboardServices = ({ servicesData, loading }) => {
+const breakPoints = [
+  { width: 1, itemsToShow: 3, pagination: false },
+  { width: 550, itemsToShow: 4, itemsToScroll: 2, pagination: false },
+  { width: 850, itemsToShow: 5, pagination: false },
+  { width: 1150, itemsToShow: 5, itemsToScroll: 2, pagination: false },
+  { width: 1450, itemsToShow: 4, pagination: false },
+  { width: 1750, itemsToShow: 5, pagination: false },
+];
+const DashboardServices = ({ servicesData, loading, total }) => {
   const classes = dashboardServiceStyle();
   const currency = localStorage.getItem("currency");
 
@@ -21,7 +32,7 @@ const DashboardServices = ({ servicesData, loading }) => {
   const [services, setServices] = useState([]);
   const [totalJobs, setTotalJobs] = useState(0);
 
-  useEffect(() => {
+  // useEffect(() => {
     // if(servicesData){
     //   Cage.name = "Cage";
     //   Skip.name = "Skip";
@@ -42,27 +53,27 @@ const DashboardServices = ({ servicesData, loading }) => {
     //   });
     //   setServices(list);
     // }
-    if (servicesData) {
-      const ser = []
-      Object.entries(servicesData).map(([key, value], index) => {
-        if (key !== 'NumberOfJobs') {
-          ser.push({ name: key, count: value.count, total: value.total, percentage: value.percentage });
-        } else {
-          setTotalJobs(value)
-        }
-      });
-      let list = ser.sort(function (
-        a,
-        b
-      ) {
-        console.log(a);
-        var x = a["count"];
-        var y = b["count"];
-        return x < y ? 1 : x > y ? -1 : 0;
-      });
-      setServices(list);
-    }
-  }, [servicesData]);
+  //   if (servicesData) {
+  //     const ser = []
+  //     Object.entries(servicesData).map(([key, value], index) => {
+  //       if (key !== 'NumberOfJobs') {
+  //         ser.push({ name: key, count: value.count, total: value.total, percentage: value.percentage, icon: value.icon });
+  //       } else {
+  //         setTotalJobs(value)
+  //       }
+  //     });
+  //     let list = ser.sort(function (
+  //       a,
+  //       b
+  //     ) {
+  //       console.log(a);
+  //       var x = a["count"];
+  //       var y = b["count"];
+  //       return x < y ? 1 : x > y ? -1 : 0;
+  //     });
+  //     setServices(list);
+  //   }
+  // }, [servicesData]);
 
 
   // const getPercentage = (service) => {
@@ -82,11 +93,20 @@ const DashboardServices = ({ servicesData, loading }) => {
   //
   // }
 
+  const myArrow = ({ type, onClick, isEdge }) => {
+    const pointer = type === consts.PREV ? "<" : ">";
+    return (
+      <span className="span-for-arrows" onClick={onClick} disabled={isEdge}>
+        {pointer}
+      </span>
+    );
+  };
+
   return (
     <>
       {loading ? (
         <Box
-          height={"400px"}
+          height={"120px"}
           display="flex"
           my={2}
           justifyContent="center"
@@ -101,11 +121,7 @@ const DashboardServices = ({ servicesData, loading }) => {
           }}
         >
           <Stack spacing={1} px={2} width={'100%'}>
-            <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
-            <Skeleton variant='rounded' height={20} />
-            <Skeleton variant='rectangular' width={'100%'} height={200} />
-            <Skeleton variant='rounded' height={20} />
-            <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+            <Skeleton variant='rectangular' width={'100%'} height={100} />
           </Stack>        </Box>
       ) : (
         <div className="dashboard-services-main">
@@ -119,16 +135,64 @@ const DashboardServices = ({ servicesData, loading }) => {
                     <Switch
                       color="primary"
                       checked={showValue}
+                      disabled={servicesData.length > 0 ? false : true}
                       onChange={() => setShowValue(!showValue)}
                       className={classes.toggle}
                     />
                   }
-                  label="Show Amount"
+                  style={{ color: "#677790" }}
+                  label="Show value/percent"
                   labelPlacement="start"
                 />
               </div>
             </div>
-            <div className="progress-main">
+            <Grid container spacing={1} alignItems="center">
+              <Grid
+                item
+                style={{paddingTop: 0}}
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+                className="main-for-carusal"
+              >
+                <>
+                  {servicesData.length > 0 ? <Carousel
+                      itemsToShow={4}
+                      renderArrow={myArrow}
+                      breakPoints={breakPoints}
+                  >
+                    {servicesData?.map((service, index) => {
+                      return (
+                          <div className="service-box p-2" key={index}>
+                            <div style={{minHeight: '60px', display: "flex", justifyContent: "center", alignItems: "center"}}>
+                              <img
+                                  src={service.full_url || logo}
+                                  alt=""
+                                  style={{ width: service.full_url ? "80px" : "40px" }}
+                              />
+                            </div>
+                            <div className="service-detail">
+                              <div className="name" style={{ padding: 0 }}>{service.parent_name}</div>
+                              {showValue ? (
+                                  <div className="percentage">{service?.total
+                                      ? `${currency ? currency : "£"}` +
+                                      parseFloat(service?.total).toLocaleString()
+                                      : `${currency ? currency : "£"}` + 0}</div>
+                              ) : (
+                                  <div className="percentage">{service.cnt > 0 ? ((service.cnt / total)  * 100).toFixed(2) : service.cnt.toFixed(2)}%</div>
+                              )}
+                            </div>
+                          </div>
+                      );
+                    })}
+                  </Carousel> : <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: '80px'}}>
+                    <div className="name">No data.</div>
+                  </div>}
+                </>
+              </Grid>
+            </Grid>
+            {/* <div className="progress-main">
               {services?.map((service, index) => {
                 return (
                   <div className="progress-sub" key={index}>
@@ -178,174 +242,8 @@ const DashboardServices = ({ servicesData, loading }) => {
                 );
               })}
 
-              {/*<div className="progress-sub">*/}
-              {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
-              {/*    <p style={{ position: "absolute", bottom: "60px" }}>Grab</p>*/}
-              {/*    <div>*/}
-              {/*      <CircleProgress*/}
-              {/*        width={180}*/}
-              {/*        strokeWidth={15}*/}
-              {/*        fontFamily={"DM Sans"}*/}
-              {/*        bottom={20}*/}
-              {/*        fontSize={"20px"}*/}
-              {/*        fontColor={"#5a9df9"}*/}
-              {/*        fontWeight={"700"}*/}
-              {/*        secondaryColor={"#F7F7F7"}*/}
-              {/*        hidePercentageText={showValue ? true : false}*/}
-              {/*        percentage={*/}
-              {/*          Grab*/}
-              {/*            ? Grab?.count*/}
-              {/*              ? ((Grab.count / NumberOfJobs) * 100).toFixed(0)*/}
-              {/*              : 0*/}
-              {/*            : 0*/}
-              {/*        }*/}
-              {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
-              {/*      />*/}
-              {/*      {showValue ? (*/}
-              {/*        <div className="circle-text" style={{}}>*/}
-              {/*          {Grab?.total*/}
-              {/*            ? "£" + parseInt(Grab.total).toLocaleString()*/}
-              {/*            : "£" + 0}*/}
-              {/*        </div>*/}
-              {/*      ) : (*/}
-              {/*        ""*/}
-              {/*      )}*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-              {/*  <div className="order-percentage">*/}
-              {/*    <span className="order-title">*/}
-              {/*      {Grab?.count ? Grab.count : 0} / {NumberOfJobs}*/}
-              {/*    </span>*/}
-              {/*    <span className="orders">orders</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-
-              {/*<div className="progress-sub">*/}
-              {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
-              {/*    <p style={{ position: "absolute", bottom: "60px" }}>Cage</p>*/}
-              {/*    <div>*/}
-              {/*      <CircleProgress*/}
-              {/*        width={180}*/}
-              {/*        strokeWidth={15}*/}
-              {/*        fontFamily={"DM Sans"}*/}
-              {/*        fontSize={"20px"}*/}
-              {/*        fontColor={"#5a9df9"}*/}
-              {/*        fontWeight={"700"}*/}
-              {/*        secondaryColor={"#F7F7F7"}*/}
-              {/*        hidePercentageText={showValue ? true : false}*/}
-              {/*        percentage={*/}
-              {/*          Cage*/}
-              {/*            ? Cage?.count*/}
-              {/*              ? ((Cage.count / NumberOfJobs) * 100).toFixed(0)*/}
-              {/*              : 0*/}
-              {/*            : 0*/}
-              {/*        }*/}
-              {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
-              {/*      />*/}
-              {/*      {showValue ? (*/}
-              {/*        <div className="circle-text" style={{}}>*/}
-              {/*          {Cage?.total*/}
-              {/*            ? "£" + parseInt(Cage.total).toLocaleString()*/}
-              {/*            : "£" + 0}*/}
-              {/*        </div>*/}
-              {/*      ) : (*/}
-              {/*        ""*/}
-              {/*      )}*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-              {/*  <div className="order-percentage">*/}
-              {/*    <span className="order-title">*/}
-              {/*      {Cage?.count ? Cage.count : 0} / {NumberOfJobs}*/}
-              {/*    </span>*/}
-              {/*    <span className="orders">orders</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-
-              {/*<div className="progress-sub">*/}
-              {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
-              {/*    <p style={{ position: "absolute", bottom: "60px" }}>Aggregate</p>*/}
-              {/*    <div>*/}
-              {/*      <CircleProgress*/}
-              {/*        width={180}*/}
-              {/*        strokeWidth={15}*/}
-              {/*        fontFamily={"DM Sans"}*/}
-              {/*        fontSize={"20px"}*/}
-              {/*        fontColor={"#5a9df9"}*/}
-              {/*        fontWeight={"700"}*/}
-              {/*        secondaryColor={"#F7F7F7"}*/}
-              {/*        hidePercentageText={showValue ? true : false}*/}
-              {/*        percentage={*/}
-              {/*          Aggregate*/}
-              {/*            ? Aggregate?.count*/}
-              {/*              ? ((Aggregate.count / NumberOfJobs) * 100).toFixed(0)*/}
-              {/*              : 0*/}
-              {/*            : 0*/}
-              {/*        }*/}
-              {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
-              {/*      />*/}
-              {/*      {showValue ? (*/}
-              {/*        <div className="circle-text" style={{}}>*/}
-              {/*          {Aggregate?.count*/}
-              {/*            ? "£" + parseInt(Aggregate.total).toLocaleString()*/}
-              {/*            : "£" + 0}*/}
-              {/*        </div>*/}
-              {/*      ) : (*/}
-              {/*        ""*/}
-              {/*      )}*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-              {/*  <div className="order-percentage">*/}
-              {/*    <span className="order-title">*/}
-              {/*      {Aggregate?.count ? Aggregate.count : 0} / {NumberOfJobs}*/}
-              {/*    </span>*/}
-              {/*    <span className="orders">orders</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-
-              {/*<div className="progress-sub">*/}
-              {/*  <div className="circular-progress" style={{ position: "relative" }}>*/}
-              {/*    <p style={{ position: "absolute", bottom: "60px" }}>*/}
-              {/*      PortableToilet*/}
-              {/*    </p>*/}
-              {/*    <div>*/}
-              {/*      <CircleProgress*/}
-              {/*        width={180}*/}
-              {/*        strokeWidth={15}*/}
-              {/*        fontFamily={"DM Sans"}*/}
-              {/*        fontSize={"20px"}*/}
-              {/*        fontColor={"#5a9df9"}*/}
-              {/*        fontWeight={"700"}*/}
-              {/*        secondaryColor={"#F7F7F7"}*/}
-              {/*        hidePercentageText={showValue ? true : false}*/}
-              {/*        percentage={*/}
-              {/*          PortableToilet*/}
-              {/*            ? PortableToilet?.count*/}
-              {/*              ? ((PortableToilet.count / NumberOfJobs) * 100).toFixed(0)*/}
-              {/*              : 0*/}
-              {/*            : 0*/}
-              {/*        }*/}
-              {/*        primaryColor={["#73C6F9", "#5391F9"]}*/}
-              {/*      />*/}
-              {/*      {showValue ? (*/}
-              {/*        <div className="circle-text" style={{}}>*/}
-              {/*          {PortableToilet?.total*/}
-              {/*            ? "£" + parseInt(PortableToilet.total).toLocaleString()*/}
-              {/*            : "£" + 0}*/}
-              {/*        </div>*/}
-              {/*      ) : (*/}
-              {/*        ""*/}
-              {/*      )}*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-              {/*  <div className="order-percentage">*/}
-              {/*    <span className="order-title">*/}
-              {/*      {PortableToilet?.count ? PortableToilet.count : 0} /{" "}*/}
-              {/*      {NumberOfJobs}*/}
-              {/*    </span>*/}
-              {/*    <span className="orders">orders</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-            </div>
+              
+            </div> */}
           </>
         </div>
       )}

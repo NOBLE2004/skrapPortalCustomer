@@ -177,6 +177,11 @@ const ReportHeader = (props) => {
             onChange={(e) => {
              handleChange(e);
             }}
+            sx={{
+              ".MuiSelect-select": {
+                width: "100%!important"
+              },
+            }}
             input={
               <OutlinedInput
                 notched={false}
@@ -187,7 +192,7 @@ const ReportHeader = (props) => {
             MenuProps={MenuProps}
             renderValue={(selected) => {
               if (selected.length === 0) {
-                return <em>Sites</em>;
+                return <div className="text-sec">All Sites</div>;;
               }
               return (
                 selected.length > 0 && (
@@ -306,7 +311,7 @@ const ReportHeader = (props) => {
           </div>
         ) : (
           <>
-            <div className="report-header-card">
+            <div className="report-header-card small">
               <div
                 onClick={handleClick}
                 className="text"
@@ -345,18 +350,18 @@ const ReportHeader = (props) => {
                 dateState={state}
               />
             </div>
-            <div className="report-header-card">
+            <div className="report-header-card small">
               <div className="text">
                 <span>{props?.totalSites?.data?.result?.sites} </span> Sites
               </div>
             </div>
-            <div className="report-header-card">
+            <div className="report-header-card small">
               <div className="text">
                 <span>{props?.totalSites?.data?.result?.total_jobs} </span>{" "}
                 Bookings complete
               </div>
             </div>
-            <div className="report-header-card">
+            <div className="report-header-card small">
               <div className="text">
                 <span>{props?.totalSites?.data?.result?.hires} </span> Hire
                 Types

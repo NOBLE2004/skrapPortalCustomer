@@ -1,4 +1,10 @@
 .status-main {
+  span{
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500 !important;
+    font-size: 10px !important;
+  }
   display: flex;
   align-items: center;
   .circle {
@@ -10,8 +16,8 @@
   .active-title {
     font-family: 'DM Sans';
     font-style: normal;
-    font-weight: 500;
-    font-size: 10px;
+    font-weight: 500 !important;
+    font-size: 10px !important;
     line-height: 13px;
     text-transform: uppercase;
     color: #0d0d39;

@@ -60,8 +60,17 @@ $v110: 110px;
 .common-title {
   font-family: "BasierCircleReg";
   font-style: normal;
-  font-weight: normal;
-  font-size: 10.7582px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+}
+.common-title2 {
+  font-family: "BasierCircleReg";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
   line-height: 18px;
   display: flex;
   align-items: center;
@@ -79,8 +88,13 @@ $v110: 110px;
   font-weight: bolder;
 }
 .primary-title {
-  @extend .common-title;
-  color: rgb(81, 142, 248);
+  @extend .common-title2;
+  color: #60A0F8
+}
+
+.primary-title2{
+  @extend .common-title2;
+  color: #60A0F8
 }
 .pending-title {
   @extend .common-title;
