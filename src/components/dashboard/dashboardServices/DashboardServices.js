@@ -20,7 +20,7 @@ const breakPoints = [
   { width: 1450, itemsToShow: 4, pagination: false },
   { width: 1750, itemsToShow: 5, pagination: false },
 ];
-const DashboardServices = ({ servicesData, loading }) => {
+const DashboardServices = ({ servicesData, loading, total }) => {
   const classes = dashboardServiceStyle();
   const currency = localStorage.getItem("currency");
 
@@ -32,7 +32,7 @@ const DashboardServices = ({ servicesData, loading }) => {
   const [services, setServices] = useState([]);
   const [totalJobs, setTotalJobs] = useState(0);
 
-  useEffect(() => {
+  // useEffect(() => {
     // if(servicesData){
     //   Cage.name = "Cage";
     //   Skip.name = "Skip";
@@ -53,27 +53,27 @@ const DashboardServices = ({ servicesData, loading }) => {
     //   });
     //   setServices(list);
     // }
-    if (servicesData) {
-      const ser = []
-      Object.entries(servicesData).map(([key, value], index) => {
-        if (key !== 'NumberOfJobs') {
-          ser.push({ name: key, count: value.count, total: value.total, percentage: value.percentage, icon: value.icon });
-        } else {
-          setTotalJobs(value)
-        }
-      });
-      let list = ser.sort(function (
-        a,
-        b
-      ) {
-        console.log(a);
-        var x = a["count"];
-        var y = b["count"];
-        return x < y ? 1 : x > y ? -1 : 0;
-      });
-      setServices(list);
-    }
-  }, [servicesData]);
+  //   if (servicesData) {
+  //     const ser = []
+  //     Object.entries(servicesData).map(([key, value], index) => {
+  //       if (key !== 'NumberOfJobs') {
+  //         ser.push({ name: key, count: value.count, total: value.total, percentage: value.percentage, icon: value.icon });
+  //       } else {
+  //         setTotalJobs(value)
+  //       }
+  //     });
+  //     let list = ser.sort(function (
+  //       a,
+  //       b
+  //     ) {
+  //       console.log(a);
+  //       var x = a["count"];
+  //       var y = b["count"];
+  //       return x < y ? 1 : x > y ? -1 : 0;
+  //     });
+  //     setServices(list);
+  //   }
+  // }, [servicesData]);
 
 
   // const getPercentage = (service) => {
@@ -135,6 +135,7 @@ const DashboardServices = ({ servicesData, loading }) => {
                     <Switch
                       color="primary"
                       checked={showValue}
+                      disabled={servicesData.length > 0 ? false : true}
                       onChange={() => setShowValue(!showValue)}
                       className={classes.toggle}
                     />
@@ -145,43 +146,50 @@ const DashboardServices = ({ servicesData, loading }) => {
                 />
               </div>
             </div>
-            <Grid container spacing={1} marginTop={1} alignItems="center">
+            <Grid container spacing={1} alignItems="center">
               <Grid
                 item
+                style={{paddingTop: 0}}
                 lg={12}
                 md={12}
                 sm={12}
                 xs={12}
                 className="main-for-carusal"
               >
-                <Carousel
-                  itemsToShow={4}
-                  renderArrow={myArrow}
-                  breakPoints={breakPoints}
-                >
-                  {services?.map((service, index) => {
-                    return (
-                      <div className="service-box p-2" key={index}>
-                        <img
-                          src={service.icon || logo}
-                          alt=""
-                          style={{ width: service.icon ? "80px" : "40px" }}
-                        />
-                        <div className="service-detail">
-                          <div className="name" style={{ padding: 0 }}>{service.name}</div>
-                          {showValue ? (
-                            <div className="percentage">{service?.total
-                              ? `${currency ? currency : "£"}` +
-                              parseInt(service?.total)?.toLocaleString()
-                              : `${currency ? currency : "£"}` + 0}</div>
-                          ) : (
-                            <div className="percentage">{service?.percentage}%</div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </Carousel>
+                <>
+                  {servicesData.length > 0 ? <Carousel
+                      itemsToShow={4}
+                      renderArrow={myArrow}
+                      breakPoints={breakPoints}
+                  >
+                    {servicesData?.map((service, index) => {
+                      return (
+                          <div className="service-box p-2" key={index}>
+                            <div style={{minHeight: '60px', display: "flex", justifyContent: "center", alignItems: "center"}}>
+                              <img
+                                  src={service.full_url || logo}
+                                  alt=""
+                                  style={{ width: service.full_url ? "80px" : "40px" }}
+                              />
+                            </div>
+                            <div className="service-detail">
+                              <div className="name" style={{ padding: 0 }}>{service.parent_name}</div>
+                              {showValue ? (
+                                  <div className="percentage">{service?.total
+                                      ? `${currency ? currency : "£"}` +
+                                      parseFloat(service?.total).toLocaleString()
+                                      : `${currency ? currency : "£"}` + 0}</div>
+                              ) : (
+                                  <div className="percentage">{service.cnt > 0 ? ((service.cnt / total)  * 100).toFixed(2) : service.cnt.toFixed(2)}%</div>
+                              )}
+                            </div>
+                          </div>
+                      );
+                    })}
+                  </Carousel> : <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: '80px'}}>
+                    <div className="name">No data.</div>
+                  </div>}
+                </>
               </Grid>
             </Grid>
             {/* <div className="progress-main">

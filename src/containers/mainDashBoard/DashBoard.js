@@ -81,7 +81,7 @@ const DashBoard = (props) => {
   const getData = async (year) => {
     // setLatestYear(year);
     if (isNewYear) {
-      await getDashboardsData({ year: year, currency });
+      await getDashboardsData({ year: year, currency, sites: selected });
     }
     setNewYear(true);
   };
@@ -95,26 +95,27 @@ const DashBoard = (props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(getLandfillDiversion({ sites: selected, date, currency }));
+    //dispatch(getLandfillDiversion({ sites: selected, date, currency }));
     if (!dashboardMap?.info) {
       dispatch(getDashboardsMapData({ sites: selected, date, currency }));
     }
     if (!dashboardService?.info) {
       dispatch(getDashboardServiceData({ sites: selected, date, currency }));
     }
-    // if (!dashboardSale?.info) {
-    // dispatch(getDashboardSaleData());
-    // }
+    if (!dashboardSale?.info) {
+      dispatch(getDashboardSaleData());
+    }
     if (!dashboardData?.info) {
       dispatch(getDashboardsData({ sites: selected, date, currency }));
     }
   }, []);
 
   useEffect(() => {
-    dispatch(getLandfillDiversion({ sites: selected, date, currency }));
+    //dispatch(getLandfillDiversion({ sites: selected, date, currency }));
     dispatch(getDashboardsMapData({ sites: selected, date, currency }));
     dispatch(getDashboardServiceData({ sites: selected, date, currency }));
     dispatch(getDashboardsData({ sites: selected, date, currency }));
+    dispatch(getDashboardSaleData({ sites: selected, date, currency, year: latestYear }));
 
   }, [selected, date, currency]);
 
@@ -241,7 +242,8 @@ const pt = '6px';
             </Grid>
             <Grid item lg={12} md={12} mt={1} style={{paddingTop: pt}}>
               <DashboardServices
-                servicesData={dashboardService?.info ? dashboardService.info : ""}
+                servicesData={dashboardService?.info?.data || []}
+                total={dashboardService?.info?.total || 0}
                 loading={dashboardService?.loading}
               />
             </Grid>
