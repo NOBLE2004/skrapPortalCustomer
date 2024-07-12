@@ -13,8 +13,8 @@ const MainMap = ({ children, defaultCenter }) => {
               defaultZoom={8}
               zoom={zoom}
               defaultCenter={{
-                  lat: defaultCenter ? defaultCenter.job_location_lat : currency == "$" ? 37.17567 : 51.55063,
-                  lng: defaultCenter ? defaultCenter.job_location_lng : currency == "$" ? -95.8467 : -0.0461,
+                  lat: defaultCenter?.job_location_lat ? defaultCenter.job_location_lat : currency == "$" ? 37.17567 : 51.55063,
+                  lng: defaultCenter?.job_location_lng ? defaultCenter.job_location_lng : currency == "$" ? -95.8467 : -0.0461,
               }}
               defaultOptions={{ styles: mapStyles, fullscreenControl: false, mapTypeControl: false, disableDefaultUI: true, zoomControl: false }}
           >
