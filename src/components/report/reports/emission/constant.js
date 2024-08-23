@@ -293,3 +293,56 @@ export const newChart = () => ({
 //    },
   ],
 });
+
+export const wasteEmissionsServiceChart = (data) => ({
+    chart: {
+      plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: "pie",
+          style: {
+        fontFamily: "DM Sans, Lucida Grande, Lucida Sans Unicode, Arial, Helvetica, sans-serif",
+            color: "#677790",
+            fontWeight: 700,
+      },
+    },
+    title: {
+      text: null,
+    },
+    tooltip: {
+      pointFormat: "<b>{point.y:.2f} KgCo2e</b>",
+    },
+    accessibility: {
+      announceNewData: {
+        enabled: true
+      },
+      point: {
+        valueSuffix: "%",
+      },
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+            cursor: 'pointer',
+            colors: ["#0f2851", "#4981f8", "#60a0f8", "#a4adbc"],
+            borderWidth: 0,
+            dataLabels: {
+          enabled: true,
+              format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
+          '<span style="opacity: 0.6">{point.y:.2f} KgCo2e </span>',
+              // connectorColor: 'rgba(128,128,128,0.5)',
+              distance: 20
+        }
+      }
+    },
+    series: [
+      {
+        title: "",
+        type: "pie",
+        data: data,
+      },
+    ],
+        exporting: {
+    filename: `chart-${new Date()?.toLocaleDateString()}`,
+  }
+});

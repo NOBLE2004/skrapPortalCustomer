@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { chartOptions, chartOptionsEms } from "./constant";
+import {chartOptions, chartOptionsEms, wasteEmissionsServiceChart} from "./constant";
 import FadeLoader from "react-spinners/FadeLoader";
 import LinearProgress, {
   linearProgressClasses,
@@ -19,9 +19,10 @@ import { getReportEmissionVehicles } from "../../../../store/actions/action.repo
 import "./index.scss";
 import PayEmissionModal from "../../../modals/payEmissionModal/payEmissionModal";
 import { numberWithCommas } from "../../../utlils/dashboard";
-import { newChart } from "./constant";
 import { getUserDataFromLocalStorage } from "../../../../services/utils";
-import WasteEmissionGraph from "../wasteEmissionGraph";
+import {chartOptionsWaste} from "../wasteEmissionGraph/constant";
+import {getWasteEmissionServiceBased} from "../../../../store/actions/action.wasteEmissionService";
+import {getEmissionServiceBased} from "../../../../store/actions/action.emissionService";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -60,6 +61,8 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 const EmissionReport = (props) => {
   const state = useSelector((state) => state?.reportEmission);
   const wasteEmissions = useSelector((state) => state?.reportWasteEmissions);
+  const wasteEmissionService = useSelector((state) => state?.wasteEmissionService);
+  const emissionService = useSelector((state) => state?.emissionService);
   const userDetail = getUserDataFromLocalStorage();
   const stateSiteBreakDown = useSelector(
     (state) => state?.reportEmissionSiteBreakDown
@@ -79,6 +82,7 @@ const EmissionReport = (props) => {
   };
   const [showModal, setShowModal] = useState(false);
   const [show, setShow] = useState(false);
+  const [showWaste, setShowWaste] = useState(false);
   const [max, setMax] = useState(100);
   const [maxWaste, setMaxWaste] = useState(100);
   const [currency, setCurrency] = useState(siteCurrency);
@@ -106,6 +110,12 @@ const EmissionReport = (props) => {
           currency,
         })
       );
+      dispatch(getEmissionServiceBased({
+        year: year ? year : startDate.getFullYear(),
+        sites: sites,
+        date: dateM,
+        currency,
+      }))
     }
   };
 
@@ -117,6 +127,14 @@ const EmissionReport = (props) => {
         date: dateM,
         currency,
       })
+    );
+    dispatch(
+        getWasteEmissionServiceBased({
+          year: year ? year : startDate.getFullYear(),
+          sites: sites,
+          date: dateM,
+          currency,
+        })
     );
   };
 
@@ -492,12 +510,20 @@ const EmissionReport = (props) => {
           </div>
           <div
             className="see-more"
-            // onClick={() => {
-            //     setShow(!show);
-            // }}
-            style={{ opacity: 0 }}
+            onClick={() => {
+                setShow(!show);
+            }}
+            style={{ opacity: 1 }}
           >
             See more
+          </div>
+          <div>
+            {show && <HighchartsReact
+                highcharts={Highcharts}
+                height="400px"
+                options={wasteEmissionsServiceChart(emissionService?.data?.data || [])}
+                ref={props.ref2}
+            />}
           </div>
         </CardContent>
         <div className="border-drop"></div>
@@ -590,6 +616,24 @@ const EmissionReport = (props) => {
                   options={chartDataWaste}
                   ref={props.ref2}
                 />)}
+
+                <div
+                    className="see-more"
+                    onClick={() => {
+                      setShowWaste(!showWaste);
+                    }}
+                    style={{ opacity: 1 }}
+                >
+                  See more
+                </div>
+                <div>
+                  {showWaste && <HighchartsReact
+                      highcharts={Highcharts}
+                      height="400px"
+                      options={wasteEmissionsServiceChart(wasteEmissionService?.data || [])}
+                      ref={props.ref2}
+                  />}
+                </div>
               </div>
             )}
             {/*<div*/}
