@@ -4,7 +4,7 @@ import "./poDetail.scss";
 import PoTable from "./poTable/PoTable";
 import {personImage} from "../../../assets/images";
 
-const PoDetail = ({ managerData, isManager }) => {
+const PoDetail = ({ managerData, isManager, currency }) => {
   const { purchase_orders, data } = managerData;
   return (
     <div>
@@ -35,7 +35,7 @@ const PoDetail = ({ managerData, isManager }) => {
               <div className="change-info">
                 <div className="info">
                   <div className="designation">Total</div>
-                  <div className="personal-title">{purchase_orders?.total?.toFixed(2)?.toString()}</div>
+                  <div className="personal-title">{currency}{purchase_orders?.total?.toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
                 </div>
               </div>
             </Grid>
@@ -43,13 +43,13 @@ const PoDetail = ({ managerData, isManager }) => {
               <div className="info">
                 <div className="designation">Used</div>
                 <div className="personal-title">
-                  {purchase_orders?.used?.toFixed(2)?.toString()}
+                  {currency}{purchase_orders?.used?.toLocaleString(undefined, {minimumFractionDigits: 2})}
                 </div>
               </div>
               <div className="info">
                 <div className="designation">Remaining</div>
                 <div className="personal-title">
-                  {purchase_orders?.remaining?.toFixed(2)?.toString()}
+                  {currency}{purchase_orders?.remaining?.toLocaleString(undefined, {minimumFractionDigits: 2})}
                 </div>
               </div>
             </Grid>
