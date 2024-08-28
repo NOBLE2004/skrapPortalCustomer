@@ -23,8 +23,8 @@ const PoDetail = ({ managerData, isManager, currency }) => {
           {/*  "Purchase Order not found!"*/}
           {/*)}*/}
           {data && purchase_orders ? <Grid container spacing={3} className="manager-sub-detail">
-            <Grid item md={2}>
-            </Grid>
+            {/*<Grid item md={2}>*/}
+            {/*</Grid>*/}
             <Grid item md={3} className="new-personal-info">
               <div className="info">
                 <div className="designation">PO Number</div>
@@ -35,7 +35,10 @@ const PoDetail = ({ managerData, isManager, currency }) => {
               <div className="change-info">
                 <div className="info">
                   <div className="designation">Total</div>
-                  <div className="personal-title">{currency}{purchase_orders?.total?.toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
+                  <div className="personal-title">
+                    {currency}{purchase_orders?.total?.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                    ( {currency}{(purchase_orders?.total - 5000).toLocaleString(undefined, {minimumFractionDigits: 2})} + 5000 Overdraft limit )
+                  </div>
                 </div>
               </div>
             </Grid>
@@ -50,6 +53,10 @@ const PoDetail = ({ managerData, isManager, currency }) => {
                 <div className="designation">Remaining</div>
                 <div className="personal-title">
                   {currency}{purchase_orders?.remaining?.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                  {(purchase_orders?.remaining - 5000) < 0 ?
+                      `( Using an overdraft limit of ${currency}${(5000 - purchase_orders?.remaining)?.toLocaleString(undefined, {minimumFractionDigits: 2})} )`
+                    : ''
+                  }
                 </div>
               </div>
             </Grid>
