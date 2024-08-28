@@ -58,13 +58,13 @@ const PoDetail = ({ managerData, isManager }) => {
               <div className="info">
                 <div className="designation">Created On</div>
                 <div className="personal-title">
-                  {purchase_orders?.created_at}
+                  {new Date(purchase_orders?.created_at).toLocaleDateString()}
                 </div>
               </div>
               <div className="info">
                 <div className="designation">Last Used</div>
                 <div className="personal-title">
-                  {purchase_orders?.updated_at}
+                  {new Date(purchase_orders?.updated_at).toLocaleDateString()}
                 </div>
               </div>
             </Grid>
