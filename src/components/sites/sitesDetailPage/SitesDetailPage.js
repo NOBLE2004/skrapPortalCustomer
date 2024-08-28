@@ -277,7 +277,7 @@ const SitesDetailPage = (props) => {
               )}
             </Grid>
             <Grid className="po-detail-page">
-              <PoDetail managerData={managerData} />
+              <PoDetail managerData={managerData} currency={currency} />
             </Grid>
             <Grid item md={12} className="site-manager-filter">
               <div className="jobs-search-header">
