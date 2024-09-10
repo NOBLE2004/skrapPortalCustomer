@@ -307,9 +307,9 @@ const NewReports = () => {
               <div
                   className="report-chart-card-outer"
                   style={{ width: "100%" }}
-                  id={"deliveries"}
+                  id={"services"}
               >
-                <div className="report-card-title">Deliveries and exchanges</div>
+                <div className="report-card-title">Services</div>
                 <DeliveriesGraph
                     dateM={date}
                     sites={selected}

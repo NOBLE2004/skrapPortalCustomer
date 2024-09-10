@@ -12,7 +12,7 @@ export const chartOptions = (data) => ({
     },
   },
   title: {
-    text: 'Deliveries and Exchanges',
+    text: 'Services',
   },
 
   subtitle: {
