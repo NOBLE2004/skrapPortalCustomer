@@ -20,6 +20,7 @@ const WasteBreakDown = (props) => {
   const dispatch = useDispatch();
   const recycledData = useSelector((state) => state?.recycled);
   const recycledSuppData = useSelector((state) => state?.recycledSupp);
+  const tonnageData = useSelector((state) => state?.tonnage);
   const [chartDataRecycled, setChartDataRecycled] = useState();
   const { sites, showMore, date, siteCurrency } = props;
   const [show, setShow] = useState(true);
@@ -70,8 +71,15 @@ const WasteBreakDown = (props) => {
           borderWidth: 0,
           dataLabels: {
             enabled: true,
-            format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
-              '<span style="opacity: 0.6">{point.y:.2f}% </span>',
+            formatter: function() {
+              const p = ((this.y / 100) * tonnageData?.data?.result?.total).toFixed(2);
+              return '<span style="font-size: 1.2em"><b>'+ this.point.name +'</b></span><br>' +
+              '<span style="opacity: 0.6">'+ this.y.toFixed(2) +'% </span>'+
+              '<span style="opacity: 0.6">(' + p +'T)</span>';
+            },
+            // format: '<span style="font-size: 1.2em"><b>{point.name}</b></span><br>' +
+            //   '<span style="opacity: 0.6">{point.y:.2f}% </span>'+
+            //     '<span style="opacity: 0.6"> ({(point.y/100) * tonnageData?.data?.result?.total:.2f}T)</span>',
             // connectorColor: 'rgba(128,128,128,0.5)',
             distance: 20
           }
@@ -88,7 +96,7 @@ const WasteBreakDown = (props) => {
         filename: `chart-${new Date()?.toLocaleDateString()}`,
       },
     });
-  }, [recycledData?.data]);
+  }, [recycledData?.data, tonnageData]);
 
   return (
     <Card className="report-chart-card">

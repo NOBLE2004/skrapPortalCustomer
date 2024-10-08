@@ -24,6 +24,7 @@ import WasteEmissionGraph from "../../components/report/reports/wasteEmissionGra
 import WasteBreakDown from "../../components/report/reports/WasteBreakDown";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import DeliveriesGraph from "../../components/report/reports/deliveriesGraph";
 
 const NewReports = () => {
   const state = useSelector((state) => state);
@@ -293,6 +294,23 @@ const NewReports = () => {
               >
                 <div className="report-card-title">Delivery Vs Utilization</div>
                 <DualAxisGraph
+                    dateM={date}
+                    sites={selected}
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    showMore={showMore}
+                    siteCurrency={siteCurrency}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div
+                  className="report-chart-card-outer"
+                  style={{ width: "100%" }}
+                  id={"services"}
+              >
+                <div className="report-card-title">Services</div>
+                <DeliveriesGraph
                     dateM={date}
                     sites={selected}
                     startDate={startDate}

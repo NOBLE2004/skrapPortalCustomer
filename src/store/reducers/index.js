@@ -29,6 +29,7 @@ import { portfolio } from "./portfolioReducer";
 import { getTonnageReducer } from "./tonnageReducer";
 import { getWasteReducer } from "./wasteReducer";
 import { getWasteOfEnergyReducer } from "./wasteOfEnergyReducer";
+import { deliveriesReducer } from "./deliveriesReportReducer";
 // import { getWasteOfEnergyListReducer } from "./wasteOfEnergyReducer";
 import { siteBreakdownListReducer } from "./siteBreakdownReducer";
 import { getRecycledReducer } from "./recycledReducer";
@@ -91,5 +92,6 @@ export default combineReducers({
   reportWasteEmissions: reportWasteEmission,
   recycledSupp: getRecycledSuppReducer,
   wasteEmissionService: wasteEmissionServiceReducer,
-  emissionService: emissionServiceReducer
+  emissionService: emissionServiceReducer,
+  deliveriesReport: deliveriesReducer
 });
