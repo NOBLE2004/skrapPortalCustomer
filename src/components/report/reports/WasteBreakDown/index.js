@@ -73,7 +73,7 @@ const WasteBreakDown = (props) => {
             enabled: true,
             formatter: function() {
               const p = ((this.y / 100) * tonnageData?.data?.result?.total).toFixed(2);
-              return '<span style="font-size: 1.2em"><b>'+ this.name +'</b></span><br>' +
+              return '<span style="font-size: 1.2em"><b>'+ this.point.name +'</b></span><br>' +
               '<span style="opacity: 0.6">'+ this.y.toFixed(2) +'% </span>'+
               '<span style="opacity: 0.6">(' + p +'T)</span>';
             },
