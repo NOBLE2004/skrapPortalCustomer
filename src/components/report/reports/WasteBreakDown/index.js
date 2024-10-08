@@ -90,7 +90,7 @@ const WasteBreakDown = (props) => {
         filename: `chart-${new Date()?.toLocaleDateString()}`,
       },
     });
-  }, [recycledData?.data]);
+  }, [recycledData?.data, tonnageData]);
 
   return (
     <Card className="report-chart-card">
