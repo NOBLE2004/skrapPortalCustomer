@@ -135,7 +135,7 @@ const FinanceReport = (props) => {
             </span>
           </h1>}
 
-          {stateSites?.isLoading && !stateSites?.site_breakdown?.result ? (
+          {stateSites?.isLoading ? (
             <div className="d-flex justify-center align-center" style={{ width: "100%" }}>
               <Box display={"flex"} justifyContent={"center"} spacing={1} p={2} sx={{ width: "100%" }} mt={1}>
                 <Skeleton variant="circular" width={300} height={300} />
