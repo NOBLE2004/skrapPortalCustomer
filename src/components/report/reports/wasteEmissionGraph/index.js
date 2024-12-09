@@ -85,6 +85,9 @@ const WasteEmissionGraph = (props) => {
     getData();
   }, [sites, service, siteCurrency, endDate, type, dateM]);
 
+  useEffect(() => {
+    console.log(data?.data)
+  }, [data]);
   const handleChange = (e) => {
     setService(e.target.value);
   };
