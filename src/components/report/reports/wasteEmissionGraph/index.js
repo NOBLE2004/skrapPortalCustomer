@@ -85,6 +85,9 @@ const WasteEmissionGraph = (props) => {
     getData();
   }, [sites, service, siteCurrency, endDate, type, dateM]);
 
+  useEffect(() => {
+    console.log(data?.data)
+  }, [data]);
   const handleChange = (e) => {
     setService(e.target.value);
   };
@@ -279,13 +282,13 @@ const WasteEmissionGraph = (props) => {
                   <Box className="text">
                     <span style={{ marginRight: "10px", color: "#518ef8" }}>
                       <b>
-                        Emissions avoided by recycling: {((data?.data?.total?.Landfill > 0 ? data?.data?.total?.Landfill : 0)).toLocaleString() || 0}
+                        {data?.data?.texts?.landfill}: {((data?.data?.total?.Landfill > 0 ? data?.data?.total?.Landfill : 0)).toLocaleString() || 0}
                         kg Co2e
                       </b>
                     </span>{" "}
                     <span style={{ color: "#50D226" }}>
                       <b>
-                        Emissions produced from actual waste collected: {((data?.data?.total?.Recycled > 0 ? data?.data?.total?.Recycled : 0)).toLocaleString() || 0}
+                        {data?.data?.texts?.recycle}: {((data?.data?.total?.Recycled > 0 ? data?.data?.total?.Recycled : 0)).toLocaleString() || 0}
                         kg Co2e{" "}
                       </b>
                     </span>
