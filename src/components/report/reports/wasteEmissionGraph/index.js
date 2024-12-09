@@ -282,7 +282,7 @@ const WasteEmissionGraph = (props) => {
                   <Box className="text">
                     <span style={{ marginRight: "10px", color: "#518ef8" }}>
                       <b>
-                        {data?.data?.texts?.landfill}: {((data?.data?.total?.Landfill > 0 ? data?.data?.total?.Landfill : 0)).toLocaleString() || 0}
+                        {data?.data?.texts?.landfill}: {((data?.data?.total?.Total > 0 ? data?.data?.total?.Total : 0)).toLocaleString() || 0}
                         kg Co2e
                       </b>
                     </span>{" "}
