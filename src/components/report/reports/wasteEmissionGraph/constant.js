@@ -60,6 +60,9 @@ export const chartOptions = (data) => ({
   },
   plotOptions: {
     column: {
+      groupPadding: 0.1,
+      pointPadding: 0,
+      pointWidth: 10,
       dataLabels: {
         enabled: true,
         style: {
@@ -83,13 +86,13 @@ export const chartOptions = (data) => ({
       color: {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
         stops: [
-          [0, "#73C6F9"],
-          [1, "#5391F9"],
+          [0, "#f69697"],
+          [1, "#f69697"],
         ],
       },
       dataLabels: {
         enabled: true,
-        color: "#6cacf5",
+        color: "#ff0000",
         formatter() {
           if (this.y > 0) {
             return numberWithCommas(this.y);
@@ -112,6 +115,28 @@ export const chartOptions = (data) => ({
       dataLabels: {
         enabled: true,
         color: "#50D226",
+        formatter() {
+          if (this.y > 0) {
+            return numberWithCommas(this.y);
+          } else {
+            return null;
+          }
+        },
+      },
+    },
+    {
+      name: `Avoided`,
+      data: data?.Total || [],
+      color: {
+        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+        stops: [
+          [0, "#73C6F9"],
+          [1, "#5391F9"],
+        ],
+      },
+      dataLabels: {
+        enabled: true,
+        color: "#6cacf5",
         formatter() {
           if (this.y > 0) {
             return numberWithCommas(this.y);
