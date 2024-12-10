@@ -63,7 +63,7 @@ const NewReports = () => {
         if(selectedSites.length > 0 || selected.length > 0 ){
           setSelected(selectedSites);
         }
-      }, 1500)
+      }, 2500)
 
       return () => clearTimeout(delayDebounceFn)
   }, [selectedSites])
