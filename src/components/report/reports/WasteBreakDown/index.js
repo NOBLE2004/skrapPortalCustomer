@@ -23,18 +23,26 @@ const WasteBreakDown = (props) => {
   const tonnageData = useSelector((state) => state?.tonnage);
   const [chartDataRecycled, setChartDataRecycled] = useState();
   const { sites, showMore, date, siteCurrency } = props;
+  const [currency, setCurrency] = useState(siteCurrency);
   const [show, setShow] = useState(true);
   NoDataToDisplay(Highcharts)
+  useEffect(() => {
+    if (siteCurrency !== null) {
+      setCurrency(siteCurrency);
+    } else {
+      setCurrency(localStorage.getItem("currency"));
+    }
+  }, [siteCurrency]);
   useEffect(() => {
     //dispatch(getLandfillDiversion({ sites: sites, date, currency:siteCurrency }));
     // dispatch(getTonnage({ sites: sites, date, currency:siteCurrency }));
     // dispatch(getWaste({ sites: sites, date, currency:siteCurrency }));
     //dispatch(getWasteOfEnergy({ sites: sites, date, currency:siteCurrency }));
-    dispatch(getRecycled({ sites: sites, date, currency: siteCurrency }));
+    dispatch(getRecycled({ sites: sites, date, currency }));
     if (sites.length === 1) {
-      dispatch(getSuppRecycled({ sites: sites, date, currency: siteCurrency }));
+      dispatch(getSuppRecycled({ sites: sites, date, currency }));
     }
-  }, [sites, date, siteCurrency]);
+  }, [sites, date, currency]);
 
   useEffect(() => {
     setChartDataRecycled({
