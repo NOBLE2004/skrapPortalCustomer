@@ -1,5 +1,5 @@
 # Set the base image to node:12-alpine
-FROM node:14-alpine as build
+FROM node:16-alpine as build
 
 # Specify where our app will live in the container
 WORKDIR /app
@@ -13,7 +13,7 @@ RUN node -e 'console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))'
 
 # Prepare the container for building React
 # RUN npm install
-RUN yarn && yarn build
+RUN yarn install --ignore-platform --ignore-optional && yarn build
 
 # Prepare nginx
 FROM nginx:1.19.3-alpine
