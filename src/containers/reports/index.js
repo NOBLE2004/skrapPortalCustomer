@@ -103,11 +103,17 @@ const NewReports = () => {
       { header: "Ewc Code", key: "ewc_code", width: 10 },
       { header: "Tonnage", key: "diverted", width: 10 },
       { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 15 },
+      { header: "Recycled", key: "recycled", width: 15 },
+      { header: "Waste to energy", key: "waste_to_energy", width: 15 },
+      { header: "Landfill", key: "landfill", width: 15 },
+      { header: "Reuse", key: "reuse", width: 15 },
+      { header: "Recovery", key: "recovery", width: 15 },
+      { header: "Upcycle", key: "upcycle", width: 15 },
     ];
     worksheet.addRows(csvData);
     logos.map((img)=>{
       worksheet.addImage(img.logo, {
-        tl: { col: 10, row: 1 },
+        tl: { col: 16, row: 1 },
         ext: { width: img.width, height: img.height },
       });
     })
@@ -163,10 +169,24 @@ const NewReports = () => {
         });
   }
 
+  const getValueWithTonnage = (name) => {
+    const totalTonnage = state?.tonnage?.data?.result?.total || 0;
+    const item = state?.recycled?.data?.result?.find((item) => item.name === name);
+    const percentage = item?.y || 0;
+    const tonnage = ((percentage / 100) * totalTonnage).toFixed(2);
+    return `${percentage}% (${tonnage}T)`;
+  };
+
   useEffect(() => {
       setCsvData(
         state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
           obj.customer_cost = `${obj.customer_cost}`;
+          obj.recycled = getValueWithTonnage('Recycled');
+          obj.waste_to_energy = getValueWithTonnage('Waste to energy');
+          obj.landfill = getValueWithTonnage('Landfill');
+          obj.reuse = getValueWithTonnage('Reuse');
+          obj.recovery = getValueWithTonnage('Recovery');
+          obj.upcycle = getValueWithTonnage('Upcycle');
           return obj;
         }));
   }, [state, reports]);
