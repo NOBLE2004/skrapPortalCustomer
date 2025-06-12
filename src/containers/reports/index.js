@@ -103,11 +103,17 @@ const NewReports = () => {
       { header: "Ewc Code", key: "ewc_code", width: 10 },
       { header: "Tonnage", key: "diverted", width: 10 },
       { header: "CO2 emitted (KGS)", key: "em_co2e_value", width: 15 },
+      { header: "Recycled", key: "recycled", width: 15 },
+      { header: "Waste to energy", key: "waste_to_energy", width: 15 },
+      { header: "Landfill", key: "landfill", width: 15 },
+      { header: "Reuse", key: "reuse", width: 15 },
+      { header: "Recovery", key: "recovery", width: 15 },
+      { header: "Upcycle", key: "upcycle", width: 15 },
     ];
     worksheet.addRows(csvData);
     logos.map((img)=>{
       worksheet.addImage(img.logo, {
-        tl: { col: 10, row: 1 },
+        tl: { col: 16, row: 1 },
         ext: { width: img.width, height: img.height },
       });
     })
@@ -163,10 +169,16 @@ const NewReports = () => {
         });
   }
 
-  useEffect(() => {
+useEffect(() => {
       setCsvData(
         state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
           obj.customer_cost = `${obj.customer_cost}`;
+          obj.recycled = `${state?.recycled?.data?.result?.find((item) => item.name === 'Recycled')?.y || 0}%`;
+          obj.waste_to_energy = `${state?.recycled?.data?.result?.find((item) => item.name === 'Waste to energy')?.y || 0}%`;
+          obj.landfill = `${state?.recycled?.data?.result?.find((item) => item.name === 'Landfill')?.y || 0}%`;
+          obj.reuse = `${state?.recycled?.data?.result?.find((item) => item.name === 'Reuse')?.y || 0}%`;
+          obj.recovery = `${state?.recycled?.data?.result?.find((item) => item.name === 'Recovery')?.y || 0}%`;
+          obj.upcycle = `${state?.recycled?.data?.result?.find((item) => item.name === 'Upcycle')?.y || 0}%`;
           return obj;
         }));
   }, [state, reports]);
