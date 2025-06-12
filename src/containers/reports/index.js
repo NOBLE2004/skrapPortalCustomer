@@ -169,24 +169,16 @@ const NewReports = () => {
         });
   }
 
-  const getValueWithTonnage = (name) => {
-    const totalTonnage = state?.tonnage?.data?.result?.total || 0;
-    const item = state?.recycled?.data?.result?.find((item) => item.name === name);
-    const percentage = item?.y || 0;
-    const tonnage = ((percentage / 100) * totalTonnage).toFixed(2);
-    return `${percentage}% (${tonnage}T)`;
-  };
-
-  useEffect(() => {
+useEffect(() => {
       setCsvData(
         state?.siteBreakdownList?.site_breakdown?.result.map((obj) => {
           obj.customer_cost = `${obj.customer_cost}`;
-          obj.recycled = getValueWithTonnage('Recycled');
-          obj.waste_to_energy = getValueWithTonnage('Waste to energy');
-          obj.landfill = getValueWithTonnage('Landfill');
-          obj.reuse = getValueWithTonnage('Reuse');
-          obj.recovery = getValueWithTonnage('Recovery');
-          obj.upcycle = getValueWithTonnage('Upcycle');
+          obj.recycled = `${state?.recycled?.data?.result?.find((item) => item.name === 'Recycled')?.y || 0}%`;
+          obj.waste_to_energy = `${state?.recycled?.data?.result?.find((item) => item.name === 'Waste to energy')?.y || 0}%`;
+          obj.landfill = `${state?.recycled?.data?.result?.find((item) => item.name === 'Landfill')?.y || 0}%`;
+          obj.reuse = `${state?.recycled?.data?.result?.find((item) => item.name === 'Reuse')?.y || 0}%`;
+          obj.recovery = `${state?.recycled?.data?.result?.find((item) => item.name === 'Recovery')?.y || 0}%`;
+          obj.upcycle = `${state?.recycled?.data?.result?.find((item) => item.name === 'Upcycle')?.y || 0}%`;
           return obj;
         }));
   }, [state, reports]);
